@@ -24,7 +24,7 @@ func (tool *Tools) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplTools,
-			FilePath: path.Join(dir, "utils", "tools"),
+			FilePath: path.Join(dir, "util", "tools"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 		},

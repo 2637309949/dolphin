@@ -12,7 +12,7 @@ package app
 
 import (
 	"context"
-	"{{.PackageName}}/utils"
+	"example/util"
 	"fmt"
 	"net/http"
 	"os"
@@ -22,6 +22,8 @@ import (
 
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
+	method "github.com/bu/gin-method-override"
+	nice "github.com/ekyoung/gin-nice-recovery"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/xormplus/xorm"
@@ -35,7 +37,7 @@ type Engine struct {
 
 // Query struct
 type Query struct {
-	m   utils.M
+	m   map[string]interface{}
 	ctx *Context
 }
 
@@ -72,37 +74,36 @@ func (q *Query) SetString(key string, init ...string) {
 }
 
 // Value defined
-func (q *Query) Value() *utils.M {
-	return &q.m
+func (q *Query) Value() map[string]interface{} {
+	return q.m
 }
 
 // Query defined
 func (e *Engine) Query(ctx *Context) *Query {
-	return &Query{m: utils.M{}, ctx: ctx}
+	return &Query{m: util.M{}, ctx: ctx}
 }
 
 // PageSearch defined
-func (e *Engine) PageSearch(controller, api, table string, q *utils.M) (interface{}, error) {
-	page := (*q)["page"].(int)
-	size := (*q)["size"].(int)
-	(*q)["offset"] = (page - 1) * size
+func (e *Engine) PageSearch(controller, api, table string, q map[string]interface{}) (interface{}, error) {
+	page := q["page"].(int)
+	size := q["size"].(int)
+	q["offset"] = (page - 1) * size
 
 	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
 	result, err := e.Xorm.SqlTemplateClient(sqlTagName, q).Query().List()
+
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	sqlTagName = fmt.Sprintf("%s_%s_count.tpl", controller, api)
-	cresult, err := e.Xorm.SqlTemplateClient(sqlTagName, &q).Query().List()
+	cresult, err := e.Xorm.SqlTemplateClient(sqlTagName, q).Query().List()
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	if result == nil {
-		ret := utils.M{}
+		ret := util.M{}
 		ret["page"] = page
 		ret["size"] = size
 		ret["data"] = []interface{}{}
@@ -121,7 +122,8 @@ func (e *Engine) PageSearch(controller, api, table string, q *utils.M) (interfac
 	} else {
 		totalpages = records/int64(size) + 1
 	}
-	ret := utils.M{}
+
+	ret := util.M{}
 	ret["page"] = page
 	ret["size"] = size
 	ret["data"] = result
@@ -173,7 +175,7 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 }
 
 func init() {
-	cli.Provider(func(lc dol.Lifecycle) *Engine {
+	cli.Provider(func(lc srv.Lifecycle) *Engine {
 		Xorm, err := xorm.NewEngine("mysql", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 		if err != nil {
 			logrus.Fatal(err)
@@ -181,18 +183,40 @@ func init() {
 		if err = Xorm.Ping(); err != nil {
 			logrus.Fatal(err)
 		}
-		if err = os.MkdirAll(path.Join(".", "sql"), os.ModePerm); err != nil {
+		sqlDir := path.Join(".", "sql")
+		if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
 			logrus.Fatal(err)
 		}
-		err = Xorm.RegisterSqlMap(xorm.Xml(path.Join(".", "sql"), ".xml"))
+		if err = Xorm.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
+			logrus.Fatal(err)
+		}
 		if err != nil {
 			logrus.Fatal(err)
 		}
 		engine := &Engine{}
-		engine.Gin = gin.New()
 		engine.Xorm = Xorm
+		engine.Gin = gin.New()
+		engine.Gin.Use(gin.Logger())
+		engine.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
+			code := 500
+			if err, ok := err.(util.Error); ok {
+				code = err.Code
+			}
+			ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
+		}))
+		engine.Gin.Use(method.ProcessMethodOverride(engine.Gin))
 		http := &http.Server{Addr: fmt.Sprintf(":%v", "8091"), Handler: engine.Gin}
-		lc.Append(dol.Hook{
+
+		lc.Append(srv.Hook{
 			OnStart: func(context.Context) error {
 				go func() {
 					if err = http.ListenAndServe(); err != nil {

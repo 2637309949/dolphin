@@ -12,7 +12,7 @@ package app
 
 import (
 	"{{.PackageName}}/model"
-	"{{.PackageName}}/utils"
+	"{{.PackageName}}/util"
 	"net/http"
 
 	"github.com/gin-gonic/gin/binding"
@@ -43,21 +43,36 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
 	{{- if eq .Function "page"}}
 	q := ctr.Query(ctx)
+	q.SetInt("page", 1)
+	q.SetInt("size", 20)
+	q.SetInt("del_flag")
+	q.SetString("title")
+	q.SetString("campus")
+	q.SetString("city")
+	q.SetString("hidden")
+
 	ret, err := ctr.PageSearch("{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	{{- else if eq .Function "add"}}
+	var bean model.{{.ToUpperCase .Table}}
+	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		return
+	}
+	ret, err := ctr.Xorm.Insert(&bean)
 	{{- else}}
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": 500, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := utils.AppAction(form)
+	ret, err := util.AppAction(form)
 	{{end}}
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)

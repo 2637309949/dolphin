@@ -4,7 +4,8 @@
 package app
 
 import (
-	"example/utils"
+	"example/model"
+	"example/util"
 	"net/http"
 
 	"github.com/gin-gonic/gin/binding"
@@ -22,6 +23,7 @@ func BuildPusherActivity(build func(*PusherActivity)) func(engine *Engine) {
 	}
 }
 
+
 // Increase 增加次数
 // @Title Increase
 // @Description 增加次数
@@ -33,17 +35,17 @@ func BuildPusherActivity(build func(*PusherActivity)) func(engine *Engine) {
 func (ctr *PusherActivity) Increase(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": 500, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := utils.AppAction(form)
-
+	ret, err := util.AppAction(form)
+	
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)
@@ -57,19 +59,18 @@ func (ctr *PusherActivity) Increase(ctx *Context) {
 // @Failure 403 :id is empty
 // @Router /api/pusher_activity/add [post]
 func (ctr *PusherActivity) Add(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": 500, "message": err.Error()})
+	var bean model.PusherActivity
+	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := utils.AppAction(form)
-
+	ret, err := ctr.Xorm.Insert(&bean)
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)
@@ -85,17 +86,17 @@ func (ctr *PusherActivity) Add(ctx *Context) {
 func (ctr *PusherActivity) Update(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": 500, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := utils.AppAction(form)
-
+	ret, err := util.AppAction(form)
+	
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)
@@ -111,17 +112,17 @@ func (ctr *PusherActivity) Update(ctx *Context) {
 func (ctr *PusherActivity) Delete(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": 500, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := utils.AppAction(form)
-
+	ret, err := util.AppAction(form)
+	
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)
@@ -139,13 +140,21 @@ func (ctr *PusherActivity) Delete(ctx *Context) {
 // @Router /api/pusher_activity/page [get]
 func (ctr *PusherActivity) Page(ctx *Context) {
 	q := ctr.Query(ctx)
+	q.SetInt("page", 1)
+	q.SetInt("size", 20)
+	q.SetInt("del_flag")
+	q.SetString("title")
+	q.SetString("campus")
+	q.SetString("city")
+	q.SetString("hidden")
+
 	ret, err := ctr.PageSearch("pusher_activity", "page", "pusher_activity", q.Value())
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)
@@ -165,13 +174,21 @@ func (ctr *PusherActivity) Page(ctx *Context) {
 // @Router /api/pusher_activity/page_by_area [get]
 func (ctr *PusherActivity) PageByArea(ctx *Context) {
 	q := ctr.Query(ctx)
+	q.SetInt("page", 1)
+	q.SetInt("size", 20)
+	q.SetInt("del_flag")
+	q.SetString("title")
+	q.SetString("campus")
+	q.SetString("city")
+	q.SetString("hidden")
+
 	ret, err := ctr.PageSearch("pusher_activity", "page_by_area", "pusher_activity", q.Value())
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)
@@ -187,18 +204,19 @@ func (ctr *PusherActivity) PageByArea(ctx *Context) {
 func (ctr *PusherActivity) Get(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": 500, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := utils.AppAction(form)
-
+	ret, err := util.AppAction(form)
+	
 	if err != nil {
 		code := 500
-		if err, ok := err.(utils.Error); ok {
+		if err, ok := err.(util.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, utils.M{"code": code, "message": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusOK, ret)
 }
+

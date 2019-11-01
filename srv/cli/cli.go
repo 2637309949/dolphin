@@ -8,22 +8,22 @@ import (
 	"github.com/2637309949/dolphin/srv"
 )
 
-var _dol = dol.New()
+var _dol = srv.New()
 
 // Use defined use plugin
-func Use(opts ...dol.Option) {
+func Use(opts ...srv.Option) {
 	_dol.Use(opts...)
 }
 
 // Invoke defined use plugin
 func Invoke(invokers ...interface{}) error {
-	_dol.Use(dol.InvokeOptions(invokers...))
+	_dol.Use(srv.InvokeOptions(invokers...))
 	return nil
 }
 
 // Provider defined use plugin
 func Provider(providers ...interface{}) error {
-	_dol.Use(dol.ProviderOptions(providers...))
+	_dol.Use(srv.ProviderOptions(providers...))
 	return nil
 }
 

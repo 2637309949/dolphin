@@ -5,7 +5,7 @@ package app
 
 import (
 	"context"
-	"example/utils"
+	"example/util"
 	"fmt"
 	"net/http"
 	"os"
@@ -13,8 +13,10 @@ import (
 	"strconv"
 	"strings"
 
-	dol "github.com/2637309949/dolphin/srv"
+	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
+	method "github.com/bu/gin-method-override"
+	nice "github.com/ekyoung/gin-nice-recovery"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/xormplus/xorm"
@@ -28,7 +30,7 @@ type Engine struct {
 
 // Query struct
 type Query struct {
-	m   utils.M
+	m   map[string]interface{}
 	ctx *Context
 }
 
@@ -65,37 +67,36 @@ func (q *Query) SetString(key string, init ...string) {
 }
 
 // Value defined
-func (q *Query) Value() *utils.M {
-	return &q.m
+func (q *Query) Value() map[string]interface{} {
+	return q.m
 }
 
 // Query defined
 func (e *Engine) Query(ctx *Context) *Query {
-	return &Query{m: utils.M{}, ctx: ctx}
+	return &Query{m: util.M{}, ctx: ctx}
 }
 
 // PageSearch defined
-func (e *Engine) PageSearch(controller, api, table string, q *utils.M) (interface{}, error) {
-	page := (*q)["page"].(int)
-	size := (*q)["size"].(int)
-	(*q)["offset"] = (page - 1) * size
+func (e *Engine) PageSearch(controller, api, table string, q map[string]interface{}) (interface{}, error) {
+	page := q["page"].(int)
+	size := q["size"].(int)
+	q["offset"] = (page - 1) * size
 
 	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
 	result, err := e.Xorm.SqlTemplateClient(sqlTagName, q).Query().List()
+
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	sqlTagName = fmt.Sprintf("%s_%s_count.tpl", controller, api)
-	cresult, err := e.Xorm.SqlTemplateClient(sqlTagName, &q).Query().List()
+	cresult, err := e.Xorm.SqlTemplateClient(sqlTagName, q).Query().List()
 	if err != nil {
-		fmt.Println(err)
 		return nil, err
 	}
 
 	if result == nil {
-		ret := utils.M{}
+		ret := util.M{}
 		ret["page"] = page
 		ret["size"] = size
 		ret["data"] = []interface{}{}
@@ -107,101 +108,4 @@ func (e *Engine) PageSearch(controller, api, table string, q *utils.M) (interfac
 
 	records := cresult[0]["records"].(int64)
 	var totalpages int64 = 0
-	if records < int64(size) {
-		totalpages = 1
-	} else if records%int64(size) == 0 {
-		totalpages = records / int64(size)
-	} else {
-		totalpages = records/int64(size) + 1
-	}
-	ret := utils.M{}
-	ret["page"] = page
-	ret["size"] = size
-	ret["data"] = result
-	ret["totalrecords"] = records
-	ret["totalpages"] = totalpages
-	return &ret, nil
-}
-
-// Group handlers
-func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
-	gp := e.Gin.Group(relativePath, handlers...)
-	rg := &RouterGroup{gp}
-	return rg
-}
-
-// Sync2 handlers
-func (e *Engine) Sync2(beans ...interface{}) error {
-	return e.Xorm.Sync2(beans...)
-}
-
-// Context struct
-type Context struct {
-	*gin.Context
-}
-
-// HandlerFunc defines the handler used by gin middleware as return value.
-type HandlerFunc func(*Context)
-
-// HandlerFunc convert to gin.HandlerFunc
-func (h HandlerFunc) HandlerFunc() gin.HandlerFunc {
-	return gin.HandlerFunc(func(ctx *gin.Context) {
-		c := &Context{Context: ctx}
-		h(c)
-	})
-}
-
-// RouterGroup struct
-type RouterGroup struct {
-	*gin.RouterGroup
-}
-
-// Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
-	var newHandlers []gin.HandlerFunc
-	for _, h := range handlers {
-		newHandlers = append(newHandlers, h.HandlerFunc())
-	}
-	return rg.RouterGroup.Handle(httpMethod, relativePath, newHandlers...)
-}
-
-func init() {
-	cli.Provider(func(lc dol.Lifecycle) *Engine {
-		Xorm, err := xorm.NewEngine("mysql", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		if err = Xorm.Ping(); err != nil {
-			logrus.Fatal(err)
-		}
-		if err = os.MkdirAll(path.Join(".", "sql"), os.ModePerm); err != nil {
-			logrus.Fatal(err)
-		}
-		err = Xorm.RegisterSqlMap(xorm.Xml(path.Join(".", "sql"), ".xml"))
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		engine := &Engine{}
-		engine.Gin = gin.New()
-		engine.Xorm = Xorm
-		http := &http.Server{Addr: fmt.Sprintf(":%v", "8091"), Handler: engine.Gin}
-		lc.Append(dol.Hook{
-			OnStart: func(context.Context) error {
-				go func() {
-					if err = http.ListenAndServe(); err != nil {
-						logrus.Fatal(err)
-					}
-				}()
-				return nil
-			},
-			OnStop: func(ctx context.Context) error {
-				if err = http.Shutdown(ctx); err != nil {
-					logrus.Fatal(err)
-					return err
-				}
-				return nil
-			},
-		})
-		return engine
-	})
-}
+	if records 

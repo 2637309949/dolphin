@@ -5,7 +5,6 @@
 package pipes
 
 import (
-	"fmt"
 	"path"
 
 	"github.com/2637309949/dolphin/cli/gen"
@@ -19,7 +18,6 @@ type App struct {
 
 // Build func
 func (app *App) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
-	fmt.Println(node.Common)
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Application": node,
