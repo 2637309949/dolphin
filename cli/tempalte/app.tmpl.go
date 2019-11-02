@@ -92,14 +92,14 @@ func (e *Engine) PageSearch(controller, api, table string, q map[string]interfac
 	q["offset"] = (page - 1) * size
 
 	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
-	result, err := e.Xorm.SqlTemplateClient(sqlTagName, q).Query().List()
+	result, err := e.Xorm.SqlTemplateClient(sqlTagName, &q).Query().List()
 
 	if err != nil {
 		return nil, err
 	}
 
 	sqlTagName = fmt.Sprintf("%s_%s_count.tpl", controller, api)
-	cresult, err := e.Xorm.SqlTemplateClient(sqlTagName, q).Query().List()
+	cresult, err := e.Xorm.SqlTemplateClient(sqlTagName, &q).Query().List()
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +191,7 @@ func init() {
 	viper.SetDefault("dbType", "mysql")
 	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	if err := viper.ReadInConfig(); err != nil {
-		logrus.WithError(err).Warn("unable to read config from file")
+		logrus.Warn("unable to read config file")
 	}
 	// provider
 	cli.Provider(func(lc srv.Lifecycle) *Engine {
