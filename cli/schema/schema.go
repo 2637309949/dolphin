@@ -123,7 +123,6 @@ type Prop struct {
 	Name string `validate:"required"`
 	Desc string `validate:"required"`
 	Type string
-	JSON string
 }
 
 // Bean struct

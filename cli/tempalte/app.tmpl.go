@@ -117,6 +117,7 @@ func (e *Engine) PageSearch(controller, api, table string, q map[string]interfac
 
 	records := cresult[0]["records"].(int64)
 	var totalpages int64 = 0
+	// if records {{.Application.Unescaped "<"}} int64(size) {
 	if records {{.Application.Unescaped "<"}} int64(size) {
 		totalpages = 1
 	} else if records%int64(size) == 0 {
@@ -149,6 +150,13 @@ func (e *Engine) Sync2(beans ...interface{}) error {
 // Context struct
 type Context struct {
 	*gin.Context
+	User *interface{}
+}
+
+// WithUser defined User
+func (ctx *Context) WithUser(user interface{}) {
+	*ctx.User = user
+	return
 }
 
 // HandlerFunc defines the handler used by gin middleware as return value.
@@ -158,6 +166,7 @@ type HandlerFunc func(*Context)
 func (h HandlerFunc) HandlerFunc() gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
 		c := &Context{Context: ctx}
+		c.WithUser(nil)
 		h(c)
 	})
 }
@@ -189,6 +198,7 @@ func init() {
 	viper.AutomaticEnv()
 	viper.SetDefault("sqlDir", "sql")
 	viper.SetDefault("dbType", "mysql")
+	viper.SetDefault("port", "8089")
 	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")
@@ -240,7 +250,7 @@ func init() {
 			ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
 		}))
 		engine.Gin.Use(method.ProcessMethodOverride(engine.Gin))
-		http := &http.Server{Addr: fmt.Sprintf(":%v", "8091"), Handler: engine.Gin}
+		http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("port")), Handler: engine.Gin}
 
 		// lifecycle
 		lc.Append(srv.Hook{

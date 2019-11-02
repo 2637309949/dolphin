@@ -16,7 +16,7 @@ package model
 type {{.Bean.ToUpperCase .Bean.Name}} struct {
 	{{- range .Bean.Props}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.Type}} {{if ne .JSON ""}}  ` + "`" + `json:"{{.JSON}}"` + "`" + `{{end}}
+	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `json:"{{.Name}}"` + "`" + `
 	{{- end}}
 }
 `
