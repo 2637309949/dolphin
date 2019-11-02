@@ -13,8 +13,10 @@ package model
 {{.Bean.Import .Bean.Packages}}
 
 // {{.Bean.ToUpperCase .Bean.Name}} defined {{.Bean.Desc}} 
-type {{.Bean.ToUpperCase .Bean.Name}} struct { {{range .Bean.Props}}
+type {{.Bean.ToUpperCase .Bean.Name}} struct {
+	{{- range .Bean.Props}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.Type}}{{end}}
+	{{.ToUpperCase .Name}} {{.Type}} {{if ne .JSON ""}}  ` + "`" + `json:"{{.JSON}}"` + "`" + `{{end}}
+	{{- end}}
 }
 `

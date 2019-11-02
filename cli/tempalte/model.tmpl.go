@@ -13,9 +13,11 @@ package model
 {{.Table.Import .Table.Packages}}
 
 // {{.Table.ToUpperCase .Table.Name}} defined {{.Table.Desc}} 
-type {{.Table.ToUpperCase .Table.Name}} struct { {{range .Table.Columns}}
+type {{.Table.ToUpperCase .Table.Name}} struct {
+	{{- range .Table.Columns}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.Type}}{{end}}
+	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `xorm:"{{.Xorm}}"` + "`" + `
+	{{- end}}
 }
 
 // TableName table name of defined {{.Table.ToUpperCase .Table.Name}}

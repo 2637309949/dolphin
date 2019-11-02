@@ -123,6 +123,7 @@ type Prop struct {
 	Name string `validate:"required"`
 	Desc string `validate:"required"`
 	Type string
+	JSON string
 }
 
 // Bean struct
@@ -137,12 +138,10 @@ type Bean struct {
 // Column struct
 type Column struct {
 	Common
-	Name   string `validate:"required"`
-	Desc   string `validate:"required"`
-	Type   string
-	ISNULL bool
-	DBType string
-	Size   int
+	Name string `validate:"required"`
+	Desc string `validate:"required"`
+	Type string
+	Xorm string
 }
 
 // Table struct

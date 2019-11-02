@@ -19,6 +19,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
@@ -26,6 +27,7 @@ import (
 	nice "github.com/ekyoung/gin-nice-recovery"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"github.com/xormplus/xorm"
 )
 
@@ -175,15 +177,37 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 }
 
 func init() {
+	// set logger
+	logrus.SetFormatter(&logrus.TextFormatter{
+		FullTimestamp:   true,
+		TimestampFormat: time.RFC3339,
+	})
+	// read config
+	viper.SetConfigName("app")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("conf")
+	viper.AutomaticEnv()
+	viper.SetDefault("sqlDir", "sql")
+	viper.SetDefault("dbType", "mysql")
+	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
+	if err := viper.ReadInConfig(); err != nil {
+		logrus.WithError(err).Warn("unable to read config from file")
+	}
+	// provider
 	cli.Provider(func(lc srv.Lifecycle) *Engine {
-		Xorm, err := xorm.NewEngine("mysql", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
+		// init xorm
+		engine := &Engine{}
+		Xorm, err := xorm.NewEngine(viper.GetString("dbType"), viper.GetString("dbUri"))
 		if err != nil {
 			logrus.Fatal(err)
 		}
 		if err = Xorm.Ping(); err != nil {
 			logrus.Fatal(err)
 		}
-		sqlDir := path.Join(".", "sql")
+		xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+		xLogger.ShowSQL(true)
+		Xorm.SetLogger(xLogger)
+		sqlDir := path.Join(".", viper.GetString("sqlDir"))
 		if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
 			logrus.Fatal(err)
 		}
@@ -202,8 +226,10 @@ func init() {
 		if err != nil {
 			logrus.Fatal(err)
 		}
-		engine := &Engine{}
 		engine.Xorm = Xorm
+
+		// init gin
+		gin.SetMode(gin.ReleaseMode)
 		engine.Gin = gin.New()
 		engine.Gin.Use(gin.Logger())
 		engine.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
@@ -216,6 +242,7 @@ func init() {
 		engine.Gin.Use(method.ProcessMethodOverride(engine.Gin))
 		http := &http.Server{Addr: fmt.Sprintf(":%v", "8091"), Handler: engine.Gin}
 
+		// lifecycle
 		lc.Append(srv.Hook{
 			OnStart: func(context.Context) error {
 				go func() {

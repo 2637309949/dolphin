@@ -12,6 +12,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
@@ -19,6 +20,7 @@ import (
 	nice "github.com/ekyoung/gin-nice-recovery"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"github.com/xormplus/xorm"
 )
 
@@ -108,4 +110,149 @@ func (e *Engine) PageSearch(controller, api, table string, q map[string]interfac
 
 	records := cresult[0]["records"].(int64)
 	var totalpages int64 = 0
-	if records 
+	if records < int64(size) {
+		totalpages = 1
+	} else if records%int64(size) == 0 {
+		totalpages = records / int64(size)
+	} else {
+		totalpages = records/int64(size) + 1
+	}
+
+	ret := util.M{}
+	ret["page"] = page
+	ret["size"] = size
+	ret["data"] = result
+	ret["totalrecords"] = records
+	ret["totalpages"] = totalpages
+	return &ret, nil
+}
+
+// Group handlers
+func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
+	gp := e.Gin.Group(relativePath, handlers...)
+	rg := &RouterGroup{gp}
+	return rg
+}
+
+// Sync2 handlers
+func (e *Engine) Sync2(beans ...interface{}) error {
+	return e.Xorm.Sync2(beans...)
+}
+
+// Context struct
+type Context struct {
+	*gin.Context
+}
+
+// HandlerFunc defines the handler used by gin middleware as return value.
+type HandlerFunc func(*Context)
+
+// HandlerFunc convert to gin.HandlerFunc
+func (h HandlerFunc) HandlerFunc() gin.HandlerFunc {
+	return gin.HandlerFunc(func(ctx *gin.Context) {
+		c := &Context{Context: ctx}
+		h(c)
+	})
+}
+
+// RouterGroup struct
+type RouterGroup struct {
+	*gin.RouterGroup
+}
+
+// Handle overwrite RouterGroup.Handle
+func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
+	var newHandlers []gin.HandlerFunc
+	for _, h := range handlers {
+		newHandlers = append(newHandlers, h.HandlerFunc())
+	}
+	return rg.RouterGroup.Handle(httpMethod, relativePath, newHandlers...)
+}
+
+func init() {
+	// set logger
+	logrus.SetFormatter(&logrus.TextFormatter{
+		FullTimestamp:   true,
+		TimestampFormat: time.RFC3339,
+	})
+	// read config
+	viper.SetConfigName("app")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("conf")
+	viper.AutomaticEnv()
+	viper.SetDefault("sqlDir", "sql")
+	viper.SetDefault("dbType", "mysql")
+	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
+	if err := viper.ReadInConfig(); err != nil {
+		logrus.WithError(err).Warn("unable to read config from file")
+	}
+	// provider
+	cli.Provider(func(lc srv.Lifecycle) *Engine {
+		// init xorm
+		engine := &Engine{}
+		Xorm, err := xorm.NewEngine(viper.GetString("dbType"), viper.GetString("dbUri"))
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.Ping(); err != nil {
+			logrus.Fatal(err)
+		}
+		xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+		xLogger.ShowSQL(true)
+		Xorm.SetLogger(xLogger)
+		sqlDir := path.Join(".", viper.GetString("sqlDir"))
+		if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
+			logrus.Fatal(err)
+		}
+		if err = Xorm.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
+			logrus.Fatal(err)
+		}
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		engine.Xorm = Xorm
+
+		// init gin
+		gin.SetMode(gin.ReleaseMode)
+		engine.Gin = gin.New()
+		engine.Gin.Use(gin.Logger())
+		engine.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
+			code := 500
+			if err, ok := err.(util.Error); ok {
+				code = err.Code
+			}
+			ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
+		}))
+		engine.Gin.Use(method.ProcessMethodOverride(engine.Gin))
+		http := &http.Server{Addr: fmt.Sprintf(":%v", "8091"), Handler: engine.Gin}
+
+		// lifecycle
+		lc.Append(srv.Hook{
+			OnStart: func(context.Context) error {
+				go func() {
+					if err = http.ListenAndServe(); err != nil {
+						logrus.Fatal(err)
+					}
+				}()
+				return nil
+			},
+			OnStop: func(ctx context.Context) error {
+				if err = http.Shutdown(ctx); err != nil {
+					logrus.Fatal(err)
+					return err
+				}
+				return nil
+			},
+		})
+		return engine
+	})
+}

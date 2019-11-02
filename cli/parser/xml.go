@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 
 	"github.com/2637309949/dolphin/cli/schema"
@@ -151,6 +150,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						prop.Desc = attrValue
 					case attrName == "type":
 						prop.Type = attrValue
+					case attrName == "json":
+						prop.JSON = attrValue
 					}
 				}
 			case token.Name.Local == "table":
@@ -183,22 +184,10 @@ func (parser *AppParser) parse(xmlPath string) error {
 						column.Name = attrValue
 					case attrName == "desc":
 						column.Desc = attrValue
-					case attrName == "isNull":
-						v, err := strconv.ParseBool(attrValue)
-						if err != nil {
-							panic(err)
-						}
-						column.ISNULL = v
+					case attrName == "xorm":
+						column.Xorm = attrValue
 					case attrName == "type":
 						column.Type = attrValue
-					case attrName == "dbtype":
-						column.DBType = attrValue
-					case attrName == "size":
-						v, err := strconv.ParseInt(attrValue, 10, 32)
-						if err != nil {
-							panic(err)
-						}
-						column.Size = int(v)
 					}
 				}
 			}
