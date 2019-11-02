@@ -12,12 +12,12 @@ import (
 	"github.com/2637309949/dolphin/cli/tempalte"
 )
 
-// Invoke struct
-type Invoke struct {
+// Auto struct
+type Auto struct {
 }
 
 // Build func
-func (auto *Invoke) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
+func (auto *Auto) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Controllers": node.Controllers,
@@ -26,7 +26,7 @@ func (auto *Invoke) Build(dir string, node *schema.Application) ([]*gen.TmplCfg,
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplAuto,
-			FilePath: path.Join(dir, "app", "invoke.auto"),
+			FilePath: path.Join(dir, "app", "auto"),
 			Data:     data,
 			Overlap:  gen.OverlapWrite,
 		},

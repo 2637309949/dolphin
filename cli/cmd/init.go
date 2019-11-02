@@ -31,7 +31,7 @@ var initCmd = &cobra.Command{
 		g.AddPipe(&pipes.Ctr{})
 		g.AddPipe(&pipes.Model{})
 		g.AddPipe(&pipes.Bean{})
-		g.AddPipe(&pipes.Invoke{})
+		g.AddPipe(&pipes.Auto{})
 		g.AddPipe(&pipes.Tools{})
 		if err := g.Build(wd); err != nil {
 			return err

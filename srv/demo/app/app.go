@@ -24,17 +24,29 @@ import (
 	"github.com/xormplus/xorm"
 )
 
-// Engine struct
-type Engine struct {
-	Gin  *gin.Engine
-	Xorm *xorm.Engine
-}
-
-// Query struct
-type Query struct {
-	m   map[string]interface{}
-	ctx *Context
-}
+type (
+	// Query defined parse struct from query
+	Query struct {
+		ctx *Context
+		m   map[string]interface{}
+	}
+	// Engine defined parse app engine
+	Engine struct {
+		Gin  *gin.Engine
+		Xorm *xorm.Engine
+	}
+	// Context defined http handle hook context
+	Context struct {
+		*gin.Context
+		User *interface{}
+	}
+	// HandlerFunc defines the handler used by gin middleware as return value.
+	HandlerFunc func(*Context)
+	// RouterGroup defines struct that extend from gin.RouterGroup
+	RouterGroup struct {
+		*gin.RouterGroup
+	}
+)
 
 // SetInt defined
 func (q *Query) SetInt(key string, init ...int) {
@@ -140,20 +152,13 @@ func (e *Engine) Sync2(beans ...interface{}) error {
 	return e.Xorm.Sync2(beans...)
 }
 
-// Context struct
-type Context struct {
-	*gin.Context
-	User *interface{}
-}
-
 // WithUser defined User
 func (ctx *Context) WithUser(user interface{}) {
-	*ctx.User = user
+	if ctx.User != nil {
+		*ctx.User = user
+	}
 	return
 }
-
-// HandlerFunc defines the handler used by gin middleware as return value.
-type HandlerFunc func(*Context)
 
 // HandlerFunc convert to gin.HandlerFunc
 func (h HandlerFunc) HandlerFunc() gin.HandlerFunc {
@@ -162,11 +167,6 @@ func (h HandlerFunc) HandlerFunc() gin.HandlerFunc {
 		c.WithUser(nil)
 		h(c)
 	})
-}
-
-// RouterGroup struct
-type RouterGroup struct {
-	*gin.RouterGroup
 }
 
 // Handle overwrite RouterGroup.Handle
@@ -178,12 +178,37 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	return rg.RouterGroup.Handle(httpMethod, relativePath, newHandlers...)
 }
 
-func init() {
+// NewLifeHook create lifecycle hook
+func NewLifeHook(e *Engine) srv.Hook {
+	http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("port")), Handler: e.Gin}
+	return srv.Hook{
+		OnStart: func(context.Context) error {
+			go func() {
+				if err := http.ListenAndServe(); err != nil {
+					logrus.Fatal(err)
+				}
+			}()
+			return nil
+		},
+		OnStop: func(ctx context.Context) error {
+			if err := http.Shutdown(ctx); err != nil {
+				logrus.Fatal(err)
+				return err
+			}
+			return nil
+		},
+	}
+}
+
+// NewEngine init Engine
+func NewEngine() *Engine {
+	var err error
 	// set logger
 	logrus.SetFormatter(&logrus.TextFormatter{
 		FullTimestamp:   true,
 		TimestampFormat: time.RFC3339,
 	})
+
 	// read config
 	viper.SetConfigName("app")
 	viper.AddConfigPath(".")
@@ -193,76 +218,60 @@ func init() {
 	viper.SetDefault("dbType", "mysql")
 	viper.SetDefault("port", "8089")
 	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
-	if err := viper.ReadInConfig(); err != nil {
+	if err = viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")
 	}
-	// provider
-	cli.Provider(func(lc srv.Lifecycle) *Engine {
-		// init xorm
-		engine := &Engine{}
-		Xorm, err := xorm.NewEngine(viper.GetString("dbType"), viper.GetString("dbUri"))
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		if err = Xorm.Ping(); err != nil {
-			logrus.Fatal(err)
-		}
-		xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
-		xLogger.ShowSQL(true)
-		Xorm.SetLogger(xLogger)
-		sqlDir := path.Join(".", viper.GetString("sqlDir"))
-		if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
-			logrus.Fatal(err)
-		}
-		if err = Xorm.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
-			logrus.Fatal(err)
-		}
-		if err = Xorm.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
-			logrus.Fatal(err)
-		}
-		if err = Xorm.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
-			logrus.Fatal(err)
-		}
-		if err = Xorm.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
-			logrus.Fatal(err)
-		}
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		engine.Xorm = Xorm
 
-		// init gin
-		gin.SetMode(gin.ReleaseMode)
-		engine.Gin = gin.New()
-		engine.Gin.Use(gin.Logger())
-		engine.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
-			code := 500
-			if err, ok := err.(util.Error); ok {
-				code = err.Code
-			}
-			ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
-		}))
-		engine.Gin.Use(method.ProcessMethodOverride(engine.Gin))
-		http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("port")), Handler: engine.Gin}
+	// init xorm
+	e := &Engine{}
+	e.Xorm, err = xorm.NewEngine(viper.GetString("dbType"), viper.GetString("dbUri"))
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.Xorm.Ping(); err != nil {
+		logrus.Fatal(err)
+	}
+	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+	xLogger.ShowSQL(true)
+	e.Xorm.SetLogger(xLogger)
+	sqlDir := path.Join(".", viper.GetString("sqlDir"))
+	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.Xorm.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.Xorm.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.Xorm.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.Xorm.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err != nil {
+		logrus.Fatal(err)
+	}
 
-		// lifecycle
-		lc.Append(srv.Hook{
-			OnStart: func(context.Context) error {
-				go func() {
-					if err = http.ListenAndServe(); err != nil {
-						logrus.Fatal(err)
-					}
-				}()
-				return nil
-			},
-			OnStop: func(ctx context.Context) error {
-				if err = http.Shutdown(ctx); err != nil {
-					logrus.Fatal(err)
-					return err
-				}
-				return nil
-			},
-		})
-		return engine
-	})
+	// init gin
+	gin.SetMode(gin.ReleaseMode)
+	e.Gin = gin.New()
+	e.Gin.Use(gin.Logger())
+	e.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
+		code := 500
+		if err, ok := err.(util.Error); ok {
+			code = err.Code
+		}
+		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
+	}))
+	e.Gin.Use(method.ProcessMethodOverride(e.Gin))
+	return e
 }
+
+// lazy init Engine
+var _ = cli.Provider(func(lc srv.Lifecycle) *Engine {
+	e := NewEngine()
+	lc.Append(NewLifeHook(e))
+	return e
+})

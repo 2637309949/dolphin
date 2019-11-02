@@ -15,6 +15,7 @@
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="time notnull" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="update_time" desc="最后更新时间" type="null.Int" xorm="time notnull" />
-	<column name="del_flag" desc="是否删除 0：删除 1：正常" type="null.Int" xorm="int notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="time notnull" />
+	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="time notnull" />
 </table>
