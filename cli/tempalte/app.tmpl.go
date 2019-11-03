@@ -36,6 +36,7 @@ type RouterGroup struct {
 type HandlerFunc func(*Context)
 
 // HandlerFunc convert to platformApp.HandlerFunc
+// rewrite if you need
 func (h HandlerFunc) HandlerFunc(e *platformApp.Engine) platformApp.HandlerFunc {
 	// rewrite hook if you need
 	pgc := platformApp.HandlerFunc(func(ctx *platformApp.Context) {
@@ -65,7 +66,7 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	return rg.RouterGroup.Handle(httpMethod, relativePath, newHandlers...)
 }
 
-// PageSearch Rewrite
+// PageSearch Rewrite if you need
 func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
 	return e.Engine.PageSearch(db, controller, api, table, q)
 }
