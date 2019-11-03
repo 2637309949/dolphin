@@ -36,7 +36,7 @@ func (h HandlerFunc) HandlerFunc(e *platformApp.Engine) platformApp.HandlerFunc 
 		h(c)
 	})
 	pgc.HandlerFunc(e)
-	return pgch(c)
+	return pgc
 }
 
 // Query defined

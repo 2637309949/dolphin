@@ -13,8 +13,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
-
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
 	method "github.com/bu/gin-method-override"
@@ -259,8 +259,11 @@ func NewEngine() *Engine {
 	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
 		logrus.Fatal(err)
 	}
-	if err != nil {
-		logrus.Fatal(err)
+	for k, v := range sql.SQLTPL {
+		logrus.Info(k, v)
+		if err = e.PlatformDB.AddSqlTemplate(k, v); err != nil {
+			logrus.Fatal(err)
+		}
 	}
 
 	// init gin
