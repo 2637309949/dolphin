@@ -8,6 +8,7 @@ import (
 	"example/util"
 	"net/http"
 
+	platformApp "github.com/2637309949/dolphin/cli/platform/app"
 	"github.com/gin-gonic/gin/binding"
 )
 
@@ -17,9 +18,9 @@ type PusherActivity struct {
 }
 
 // BuildPusherActivity return PusherActivity
-func BuildPusherActivity(build func(*PusherActivity)) func(engine *Engine) {
-	return func(engine *Engine) {
-		build(&PusherActivity{Engine: engine})
+func BuildPusherActivity(build func(*PusherActivity)) func(engine *platformApp.Engine) {
+	return func(engine *platformApp.Engine) {
+		build(&PusherActivity{Engine: &Engine{Engine: engine}})
 	}
 }
 
@@ -64,7 +65,7 @@ func (ctr *PusherActivity) Add(ctx *Context) {
 		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := ctr.Xorm.Insert(&bean)
+	ret, err := ctx.DB.Insert(&bean)
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -148,7 +149,7 @@ func (ctr *PusherActivity) Page(ctx *Context) {
 	q.SetString("city")
 	q.SetString("hidden")
 
-	ret, err := ctr.PageSearch("pusher_activity", "page", "pusher_activity", q.Value())
+	ret, err := ctr.PageSearch(ctx.DB, "pusher_activity", "page", "pusher_activity", q.Value())
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -182,7 +183,7 @@ func (ctr *PusherActivity) PageByArea(ctx *Context) {
 	q.SetString("city")
 	q.SetString("hidden")
 
-	ret, err := ctr.PageSearch("pusher_activity", "page_by_area", "pusher_activity", q.Value())
+	ret, err := ctr.PageSearch(ctx.DB, "pusher_activity", "page_by_area", "pusher_activity", q.Value())
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {

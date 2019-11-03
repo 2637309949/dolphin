@@ -1,0 +1,3 @@
+<table name="user" desc="用户" packages="gopkg.in/guregu/null.v3">
+	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+</table>

@@ -15,6 +15,7 @@ import (
 	"{{.PackageName}}/util"
 	"net/http"
 
+	platformApp "github.com/2637309949/dolphin/cli/platform/app"
 	"github.com/gin-gonic/gin/binding"
 )
 
@@ -24,9 +25,9 @@ type {{.Controller.ToUpperCase .Controller.Name}} struct {
 }
 
 // Build{{.Controller.ToUpperCase .Controller.Name}} return {{.Controller.ToUpperCase .Controller.Name}}
-func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *Engine) {
-	return func(engine *Engine) {
-		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: engine})
+func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *platformApp.Engine) {
+	return func(engine *platformApp.Engine) {
+		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: &Engine{Engine: engine}})
 	}
 }
 
@@ -51,14 +52,14 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	q.SetString("city")
 	q.SetString("hidden")
 
-	ret, err := ctr.PageSearch("{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	ret, err := ctr.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	{{- else if eq .Function "add"}}
 	var bean model.{{.ToUpperCase .Table}}
 	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
 		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
-	ret, err := ctr.Xorm.Insert(&bean)
+	ret, err := ctx.DB.Insert(&bean)
 	{{- else}}
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
