@@ -22,6 +22,7 @@ func (m *Bean) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, erro
 	for _, bean := range node.Beans {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
+			"Name":        node.Name,
 			"Bean":        bean,
 		}
 		tmplCfg := &gen.TmplCfg{

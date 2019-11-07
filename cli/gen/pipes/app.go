@@ -20,6 +20,7 @@ type App struct {
 func (app *App) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
+		"Name":        node.Name,
 		"Application": node,
 	}
 	return []*gen.TmplCfg{

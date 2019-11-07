@@ -20,6 +20,7 @@ type Main struct {
 func (m *Main) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
+		"Name":        node.Name,
 	}
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{

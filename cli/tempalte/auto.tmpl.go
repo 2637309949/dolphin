@@ -16,10 +16,13 @@ import (
 	"github.com/2637309949/dolphin/srv/cli"
 )
 
+// Name project
+var Name = "{{.Name}}"
+
 // Sync models
 var _ = cli.Invoke(BuildEngine(func(e *Engine) {
 	{{- range .Tables}}
-	e.MSets.Add(new(model.{{.ToUpperCase .Name}}))
+	e.MSets.Add(Name, new(model.{{.ToUpperCase .Name}}))
 	{{- end}}
 }))
 {{range .Controllers}}

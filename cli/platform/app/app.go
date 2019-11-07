@@ -21,6 +21,7 @@ func NewLifeHook(e *Engine) srv.Hook {
 	return srv.Hook{
 		OnStart: func(context.Context) error {
 			go func() {
+				logrus.Infof("Listen on port:%v", viper.GetString("port"))
 				if err := http.ListenAndServe(); err != nil {
 					logrus.Fatal(err)
 				}

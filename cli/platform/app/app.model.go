@@ -2,21 +2,21 @@ package app
 
 // MSeti model template
 type MSeti interface {
-	Add(m interface{})
-	Get(func(interface{}) bool) interface{}
-	ForEach(func(interface{}))
+	Add(string, interface{})
+	Get(func(string, interface{}) bool) interface{}
+	ForEach(func(string, interface{}))
 }
 
 // MSets struct
 type MSets struct {
-	m []interface{}
+	m map[string][]interface{}
 }
 
 // Get defined get models
-func (s *MSets) Get(cb func(interface{}) bool) interface{} {
+func (s *MSets) Get(cb func(string, interface{}) bool) interface{} {
 	var model interface{}
-	s.ForEach(func(m interface{}) {
-		if cb(m) {
+	s.ForEach(func(name string, m interface{}) {
+		if cb(name, m) {
 			model = m
 		}
 	})
@@ -24,13 +24,15 @@ func (s *MSets) Get(cb func(interface{}) bool) interface{} {
 }
 
 // Add defined add models
-func (s *MSets) Add(m interface{}) {
-	s.m = append(s.m, m)
+func (s *MSets) Add(n string, m interface{}) {
+	s.m[n] = append(s.m[n], m)
 }
 
 // ForEach defined foreach models
-func (s *MSets) ForEach(cb func(m interface{})) {
-	for index := 0; index < len(s.m); index++ {
-		cb(s.m[index])
+func (s *MSets) ForEach(cb func(name string, m interface{})) {
+	for name, m := range s.m {
+		for index := 0; index < len(m); index++ {
+			cb(name, m[index])
+		}
 	}
 }

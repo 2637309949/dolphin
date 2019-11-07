@@ -22,6 +22,7 @@ func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 	for _, c := range node.Controllers {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
+			"Name":        node.Name,
 			"Controller":  c,
 		}
 		tmplCfg := &gen.TmplCfg{

@@ -33,11 +33,15 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 
 // Migration models
 func (e *Engine) Migration() error {
-	e.MSets.ForEach(func(m interface{}) {
-		for _, db := range e.BusinessDBSet {
-			db.Sync2(m)
+	e.MSets.ForEach(func(n string, m interface{}) {
+		if n != Name {
+			for _, db := range e.BusinessDBSet {
+				db.Sync2(m)
+			}
+		} else {
+			e.PlatformDB.Sync2(m)
 		}
-		e.PlatformDB.Sync2(m)
+
 	})
 	return nil
 }
@@ -136,7 +140,7 @@ func BuildEngine(build func(*Engine)) func(*Engine) {
 func NewEngine() *Engine {
 	gin.SetMode(gin.ReleaseMode)
 	e := &Engine{}
-	e.MSets = &MSets{m: []interface{}{}}
+	e.MSets = &MSets{m: map[string][]interface{}{}}
 	e.Gin = gin.New()
 	e.Gin.Use(gin.Logger())
 	e.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
