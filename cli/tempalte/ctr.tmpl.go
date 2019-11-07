@@ -26,9 +26,9 @@ type {{.Controller.ToUpperCase .Controller.Name}} struct {
 
 // Build{{.Controller.ToUpperCase .Controller.Name}} return {{.Controller.ToUpperCase .Controller.Name}}
 func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *platformApp.Engine) {
-	return func(engine *platformApp.Engine) {
-		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: &Engine{Engine: engine}})
-	}
+	return BuildEngine(func(engine *Engine) {
+		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: engine})
+	})
 }
 
 {{range .Controller.APIS}}

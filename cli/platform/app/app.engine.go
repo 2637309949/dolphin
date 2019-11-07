@@ -2,12 +2,14 @@ package app
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"os"
 	"path"
-	"time"
 
 	"github.com/2637309949/dolphin/cli/platform/sql"
+
+	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/util"
 	method "github.com/bu/gin-method-override"
 	nice "github.com/ekyoung/gin-nice-recovery"
@@ -20,6 +22,7 @@ import (
 // Engine defined parse app engine
 type Engine struct {
 	Gin           *gin.Engine
+	MSets         MSeti
 	PlatformDB    *xorm.Engine
 	BusinessDBSet map[string]*xorm.Engine
 }
@@ -84,38 +87,69 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 	return &RouterGroup{Engine: e, RouterGroup: e.Gin.Group(relativePath, handlers...)}
 }
 
-// Sync2 handlers
-func (e *Engine) Sync2(beans ...interface{}) error {
-	for _, db := range e.BusinessDBSet {
-		db.Sync2(beans...)
-	}
+// Sync models
+func (e *Engine) Sync(beans ...interface{}) error {
+	e.MSets.ForEach(func(m interface{}) {
+		for _, db := range e.BusinessDBSet {
+			db.Sync2(beans...)
+		}
+		e.PlatformDB.Sync2(beans...)
+	})
 	return nil
 }
 
-// NewEngine init Engine
-func NewEngine() *Engine {
-	var err error
-	// set logger
-	logrus.SetFormatter(&logrus.TextFormatter{
-		FullTimestamp:   true,
-		TimestampFormat: time.RFC3339,
-	})
-
-	// read config
-	viper.SetConfigName("app")
-	viper.AddConfigPath(".")
-	viper.AddConfigPath("conf")
-	viper.AutomaticEnv()
-	viper.SetDefault("sqlDir", "sql")
-	viper.SetDefault("dbType", "mysql")
-	viper.SetDefault("port", "8089")
-	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
-	if err = viper.ReadInConfig(); err != nil {
-		logrus.Warn("unable to read config file")
+// LoadBusinessDB load BusinessDBSet
+func (e *Engine) LoadBusinessDB() {
+	domains := []model.Domain{}
+	if err := e.PlatformDB.Where("delete_time is null and data_source <> null and domain <> null").Find(&domains); err != nil {
+		logrus.Fatal(err)
 	}
+	for _, domain := range domains {
+		e.AddBusinessDB(domain.Domain.String, domain.DriverName.String, domain.DataSource.String)
+	}
+}
 
-	// init xorm
-	e := &Engine{}
+// GetBusinessDB businessDB
+func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
+	db, ok = e.BusinessDBSet[domain]
+	return
+}
+
+// AddBusinessDB adddb
+func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
+	sqlDir := viper.GetString("sqlDir")
+	sqlDir = path.Join(".", sqlDir)
+	db, err := xorm.NewEngine(driverName, dataSource)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+	xLogger.ShowSQL(true)
+	db.SetLogger(xLogger)
+	// RegisterSqlMap
+	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	e.BusinessDBSet[domain] = db
+}
+
+// LoadPlatformDB adddb
+func (e *Engine) LoadPlatformDB() {
+	var err error
+	sqlDir := viper.GetString("sqlDir")
+	sqlDir = path.Join(".", sqlDir)
 	e.PlatformDB, err = xorm.NewEngine(viper.GetString("dbType"), viper.GetString("dbUri"))
 	if err != nil {
 		logrus.Fatal(err)
@@ -126,32 +160,39 @@ func NewEngine() *Engine {
 	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
 	xLogger.ShowSQL(true)
 	e.PlatformDB.SetLogger(xLogger)
-	// RegisterSqlMap
-	sqlDir := path.Join(".", viper.GetString("sqlDir"))
-	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
-		logrus.Fatal(err)
+	// only load Platform sql
+	e.PlatformDB.SqlTemplate = &xorm.HTMLTemplate{
+		Template: make(map[string]*template.Template, 100),
+		Funcs:    make(map[string]xorm.FuncMap, 20),
 	}
 	for k, v := range sql.SQLTPL {
-		logrus.Info(k, v)
 		if err = e.PlatformDB.AddSqlTemplate(k, v); err != nil {
 			logrus.Fatal(err)
 		}
 	}
+	// Sync model
+	e.Sync()
+}
 
-	// init gin
+// StartUp booting system
+func (e *Engine) StartUp() {
+	e.LoadPlatformDB()
+	e.LoadBusinessDB()
+}
+
+// BuildEngine build engine
+// Action after Init Engine
+func BuildEngine(build func(*Engine)) func(*Engine) {
+	return func(e *Engine) {
+		build(e)
+	}
+}
+
+// NewEngine init Engine
+func NewEngine() *Engine {
 	gin.SetMode(gin.ReleaseMode)
+	e := &Engine{}
+	e.MSets = &MSets{m: []interface{}{}}
 	e.Gin = gin.New()
 	e.Gin.Use(gin.Logger())
 	e.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {

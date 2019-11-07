@@ -19,9 +19,9 @@ type User struct {
 
 // BuildUser return User
 func BuildUser(build func(*User)) func(engine *Engine) {
-	return func(engine *Engine) {
+	return BuildEngine(func(engine *Engine) {
 		build(&User{Engine: engine})
-	}
+	})
 }
 
 // Add 添加用户信息

@@ -15,6 +15,13 @@ import (
 
 	"github.com/2637309949/dolphin/srv/cli"
 )
+
+// Sync models
+var _ = cli.Invoke(BuildEngine(func(e *Engine) {
+	{{- range .Tables}}
+	e.MSets.Add(new(model.{{.ToUpperCase .Name}}))
+	{{- end}}
+}))
 {{range .Controllers}}
 // Build{{.ToUpperCase .Name}}
 var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}}) {
@@ -26,10 +33,8 @@ var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}})
 	{{end}}
 }))
 {{- end}}
-{{range .Tables}}
-// Sync2 {{.ToUpperCase .Name}}
-var _ = cli.Invoke(func(engine *Engine) {
-	engine.Sync2(new(model.{{.ToUpperCase .Name}}))
-})
-{{- end}}
+// StartUp booting system
+var _ = cli.Invoke(BuildEngine(func(e *Engine) {
+	e.StartUp()
+}))
 `

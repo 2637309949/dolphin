@@ -6,6 +6,7 @@
 	<column name="contact_email" desc="负责人邮箱" type="null.String" xorm="varchar(50) notnull" />
 	<column name="contact_mobile" desc="负责人电话" type="null.String" xorm="varchar(50) notnull" />
 	<column name="data_source" desc="数据库链接串" type="null.String" xorm="varchar(200) notnull" />
+	<column name="driver_name" desc="驱动名称" type="null.String" xorm="varchar(50) notnull" />
     <column name="domain_url" desc="网址" type="null.String" xorm="varchar(200) notnull" />
     <column name="login_url" desc="登录页" type="null.String" xorm="varchar(200) notnull" />
     <column name="theme" desc="样式" type="null.String" xorm="varchar(50) notnull" />

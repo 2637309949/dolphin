@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
@@ -36,9 +37,28 @@ func NewLifeHook(e *Engine) srv.Hook {
 	}
 }
 
-// lazy init Engine
-var _ = cli.Provider(func(lc srv.Lifecycle) *Engine {
-	e := NewEngine()
-	lc.Append(NewLifeHook(e))
-	return e
-})
+func init() {
+	// set logger
+	logrus.SetFormatter(&logrus.TextFormatter{
+		FullTimestamp:   true,
+		TimestampFormat: time.RFC3339,
+	})
+	// read config
+	viper.SetConfigName("app")
+	viper.AddConfigPath(".")
+	viper.AddConfigPath("conf")
+	viper.AutomaticEnv()
+	viper.SetDefault("sqlDir", "sql")
+	viper.SetDefault("dbType", "mysql")
+	viper.SetDefault("port", "8089")
+	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
+	if err := viper.ReadInConfig(); err != nil {
+		logrus.Warn("unable to read config file")
+	}
+	// lazy init Engine
+	var _ = cli.Provider(func(lc srv.Lifecycle) *Engine {
+		e := NewEngine()
+		lc.Append(NewLifeHook(e))
+		return e
+	})
+}

@@ -19,11 +19,10 @@ type PusherActivity struct {
 
 // BuildPusherActivity return PusherActivity
 func BuildPusherActivity(build func(*PusherActivity)) func(engine *platformApp.Engine) {
-	return func(engine *platformApp.Engine) {
-		build(&PusherActivity{Engine: &Engine{Engine: engine}})
-	}
+	return BuildEngine(func(engine *Engine) {
+		build(&PusherActivity{Engine: engine})
+	})
 }
-
 
 // Increase 增加次数
 // @Title Increase
@@ -40,7 +39,7 @@ func (ctr *PusherActivity) Increase(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -91,7 +90,7 @@ func (ctr *PusherActivity) Update(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -117,7 +116,7 @@ func (ctr *PusherActivity) Delete(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -209,7 +208,7 @@ func (ctr *PusherActivity) Get(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -220,4 +219,3 @@ func (ctr *PusherActivity) Get(ctx *Context) {
 	}
 	ctx.JSON(http.StatusOK, ret)
 }
-

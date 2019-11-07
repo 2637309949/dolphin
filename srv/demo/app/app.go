@@ -33,11 +33,20 @@ type HandlerFunc func(*Context)
 func (h HandlerFunc) HandlerFunc(e *platformApp.Engine) platformApp.HandlerFunc {
 	// rewrite hook if you need
 	pgc := platformApp.HandlerFunc(func(ctx *platformApp.Context) {
-		c := &Context{Context: ctx}
-		h(c)
+		h(&Context{Context: ctx})
 	})
 	pgc.HandlerFunc(e)
 	return pgc
+}
+
+// BuildEngine build engine
+func BuildEngine(build func(*Engine)) func(*platformApp.Engine) {
+	return func(e *platformApp.Engine) {
+		if engine == nil {
+			engine = &Engine{Engine: e}
+		}
+		build(engine)
+	}
 }
 
 // Query defined
@@ -63,3 +72,6 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
 	return e.Engine.PageSearch(db, controller, api, table, q)
 }
+
+// Engine instance
+var engine *Engine

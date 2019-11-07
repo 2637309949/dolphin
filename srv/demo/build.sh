@@ -1,0 +1,1 @@
+go run github.com/2637309949/dolphin/cli build
