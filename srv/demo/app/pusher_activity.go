@@ -24,6 +24,7 @@ func BuildPusherActivity(build func(*PusherActivity)) func(engine *platformApp.E
 	})
 }
 
+
 // Increase 增加次数
 // @Title Increase
 // @Description 增加次数
@@ -39,7 +40,7 @@ func (ctr *PusherActivity) Increase(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-
+	
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -90,7 +91,7 @@ func (ctr *PusherActivity) Update(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-
+	
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -116,7 +117,7 @@ func (ctr *PusherActivity) Delete(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-
+	
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -208,7 +209,7 @@ func (ctr *PusherActivity) Get(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-
+	
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -219,3 +220,4 @@ func (ctr *PusherActivity) Get(ctx *Context) {
 	}
 	ctx.JSON(http.StatusOK, ret)
 }
+

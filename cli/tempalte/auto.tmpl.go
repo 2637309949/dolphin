@@ -26,13 +26,13 @@ var _ = cli.Invoke(BuildEngine(func(e *Engine) {
 // Build{{.ToUpperCase .Name}}
 var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}}) {
 	group := ctr.Group("/api")
-	{{$ctr := .}}
+	{{- $ctr := .}}
 	{{- range .APIS}}
-	// {{.Desc}}
 	group.Handle("{{.ToUpper .Method}}", "{{.Version}}/{{$ctr.Name}}/{{.Name}}", ctr.{{.ToUpperCase .Name}})
-	{{end}}
+	{{- end}}
 }))
 {{- end}}
+
 // StartUp booting system
 var _ = cli.Invoke(BuildEngine(func(e *Engine) {
 	e.StartUp()

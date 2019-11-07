@@ -80,6 +80,11 @@ func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q ma
 	return e.Engine.PageSearch(db, controller, api, table, q)
 }
 
+// StartUp booting system
+func (e *Engine) StartUp() {
+	e.Engine.StartUp()
+}
+
 // Engine instance
 var engine *Engine
 `

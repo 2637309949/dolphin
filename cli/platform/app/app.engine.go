@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"os"
@@ -27,73 +26,18 @@ type Engine struct {
 	BusinessDBSet map[string]*xorm.Engine
 }
 
-// Query defined
-func (e *Engine) Query(ctx *Context) *Query {
-	return &Query{m: util.M{}, ctx: ctx}
-}
-
-// PageSearch defined
-func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
-	page := q["page"].(int)
-	size := q["size"].(int)
-	q["offset"] = (page - 1) * size
-
-	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
-	result, err := db.SqlTemplateClient(sqlTagName, &q).Query().List()
-
-	if err != nil {
-		return nil, err
-	}
-
-	sqlTagName = fmt.Sprintf("%s_%s_count.tpl", controller, api)
-	cresult, err := db.SqlTemplateClient(sqlTagName, &q).Query().List()
-	if err != nil {
-		return nil, err
-	}
-
-	if result == nil {
-		ret := util.M{}
-		ret["page"] = page
-		ret["size"] = size
-		ret["data"] = []interface{}{}
-		ret["totalrecords"] = 0
-		ret["totalpages"] = 0
-		ret[""] = 0
-		return &ret, nil
-	}
-
-	records := cresult[0]["records"].(int64)
-	var totalpages int64 = 0
-	// if records < int64(size) {
-	if records < int64(size) {
-		totalpages = 1
-	} else if records%int64(size) == 0 {
-		totalpages = records / int64(size)
-	} else {
-		totalpages = records/int64(size) + 1
-	}
-
-	ret := util.M{}
-	ret["page"] = page
-	ret["size"] = size
-	ret["data"] = result
-	ret["totalrecords"] = records
-	ret["totalpages"] = totalpages
-	return &ret, nil
-}
-
 // Group handlers
 func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
 	return &RouterGroup{Engine: e, RouterGroup: e.Gin.Group(relativePath, handlers...)}
 }
 
-// Sync models
-func (e *Engine) Sync(beans ...interface{}) error {
+// Migration models
+func (e *Engine) Migration() error {
 	e.MSets.ForEach(func(m interface{}) {
 		for _, db := range e.BusinessDBSet {
-			db.Sync2(beans...)
+			db.Sync2(m)
 		}
-		e.PlatformDB.Sync2(beans...)
+		e.PlatformDB.Sync2(m)
 	})
 	return nil
 }
@@ -170,8 +114,8 @@ func (e *Engine) LoadPlatformDB() {
 			logrus.Fatal(err)
 		}
 	}
-	// Sync model
-	e.Sync()
+	// Migration model
+	e.Migration()
 }
 
 // StartUp booting system
