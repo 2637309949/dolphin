@@ -1,4 +1,4 @@
-<table name="pusher_activity" desc="活动" packages="gopkg.in/guregu/null.v3">
+<table name="activity" desc="活动" packages="gopkg.in/guregu/null.v3">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="title" desc="标题" type="null.String" xorm="varchar(36) notnull" />
 	<column name="content" desc="内容" type="null.String" xorm="varchar(1500) notnull" />
@@ -13,9 +13,9 @@
 	<column name="is_entry" desc="是否报名 0(否) 1(是)" type="null.Int" xorm="int notnull" />
 	<column name="hidden" desc="是否隐藏 0(否) 1(是)" type="null.Int" xorm="int notnull" />
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="create_time" desc="创建时间" type="null.Time" xorm="time notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="time notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
 	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="delete_time" desc="删除时间" type="null.Time" xorm="time notnull" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime notnull" />
 </table>

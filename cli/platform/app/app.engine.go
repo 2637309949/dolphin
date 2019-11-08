@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"os"
@@ -32,16 +33,11 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 }
 
 // Migration models
-func (e *Engine) Migration() error {
+func (e *Engine) Migration(name string, db *xorm.Engine) error {
 	e.MSets.ForEach(func(n string, m interface{}) {
-		if n != Name {
-			for _, db := range e.BusinessDBSet {
-				db.Sync2(m)
-			}
-		} else {
-			e.PlatformDB.Sync2(m)
+		if n == name {
+			db.Sync2(m)
 		}
-
 	})
 	return nil
 }
@@ -49,11 +45,23 @@ func (e *Engine) Migration() error {
 // LoadBusinessDB load BusinessDBSet
 func (e *Engine) LoadBusinessDB() {
 	domains := []model.Domain{}
-	if err := e.PlatformDB.Where("delete_time is null and data_source <> null and domain <> null").Find(&domains); err != nil {
+	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null").Find(&domains); err != nil {
 		logrus.Fatal(err)
 	}
 	for _, domain := range domains {
 		e.AddBusinessDB(domain.Domain.String, domain.DriverName.String, domain.DataSource.String)
+	}
+
+	fmt.Println(e.BusinessDBSet)
+
+	// async domain model
+	nset := e.MSets.Name(func(n string) bool {
+		return n != Name
+	})
+	for _, db := range e.BusinessDBSet {
+		for _, n := range nset {
+			e.Migration(n, db)
+		}
 	}
 }
 
@@ -74,6 +82,7 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
 	xLogger.ShowSQL(true)
 	db.SetLogger(xLogger)
+
 	// RegisterSqlMap
 	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
 		logrus.Fatal(err)
@@ -118,8 +127,8 @@ func (e *Engine) LoadPlatformDB() {
 			logrus.Fatal(err)
 		}
 	}
-	// Migration model
-	e.Migration()
+	// async platform model
+	e.Migration(Name, e.PlatformDB)
 }
 
 // StartUp booting system
@@ -141,6 +150,7 @@ func NewEngine() *Engine {
 	gin.SetMode(gin.ReleaseMode)
 	e := &Engine{}
 	e.MSets = &MSets{m: map[string][]interface{}{}}
+	e.BusinessDBSet = map[string]*xorm.Engine{}
 	e.Gin = gin.New()
 	e.Gin.Use(gin.Logger())
 	e.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {

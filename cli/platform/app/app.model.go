@@ -5,6 +5,7 @@ type MSeti interface {
 	Add(string, interface{})
 	Get(func(string, interface{}) bool) interface{}
 	ForEach(func(string, interface{}))
+	Name(func(string) bool) []string
 }
 
 // MSets struct
@@ -26,6 +27,16 @@ func (s *MSets) Get(cb func(string, interface{}) bool) interface{} {
 // Add defined add models
 func (s *MSets) Add(n string, m interface{}) {
 	s.m[n] = append(s.m[n], m)
+}
+
+// Name defined add models
+func (s *MSets) Name(cb func(string) bool) (m []string) {
+	for k := range s.m {
+		if cb(k) {
+			m = append(m, k)
+		}
+	}
+	return
 }
 
 // ForEach defined foreach models

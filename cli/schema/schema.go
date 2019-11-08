@@ -15,9 +15,9 @@ type Common struct {
 }
 
 // Import packages
-func (c *Common) Import(name string) template.HTML {
-	if len(name) > 0 {
-		packages := strings.Split(name, ",")
+func (c *Common) Import(pkg string) template.HTML {
+	if len(pkg) > 0 {
+		packages := strings.Split(pkg, ",")
 		for i, v := range packages {
 			packages[i] = fmt.Sprintf(`    "%v"`, v)
 		}

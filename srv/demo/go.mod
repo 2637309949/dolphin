@@ -4,6 +4,8 @@ go 1.13
 
 replace github.com/2637309949/dolphin => ../../
 
+replace github.com/xormplus/xorm => /home/double/Work/i2/repo/xorm/
+
 require (
 	github.com/2637309949/dolphin v0.0.0-00010101000000-000000000000
 	github.com/bu/gin-method-override v0.0.0-20180528072813-3f56fc145a4b
@@ -24,7 +26,6 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/xormplus/xorm v0.0.0-20190926190243-42377f593eb1
 	github.com/ziutek/mymysql v1.5.4 // indirect
-	golang.org/x/sys v0.0.0-20191029155521-f43be2a4598c // indirect
 	gopkg.in/guregu/null.v3 v3.4.0
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 )

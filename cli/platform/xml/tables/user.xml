@@ -3,7 +3,7 @@
 	<column name="login_id" desc="登录ID" type="null.String" xorm="varchar(36) notnull" />
 	<column name="password" desc="密码" type="null.String" xorm="varchar(36) notnull" />
 	<column name="name" desc="名字" type="null.String" xorm="varchar(36) notnull" />
-	<column name="full_name" desc="全名" type="null.String" xorm="varchar(36) notnull" />
+	<column name="full_name" desc="全名" type="null.String" xorm="varchar(36)" />
 	<column name="mobile" desc="电话" type="null.String" xorm="varchar(50) notnull" />
 	<column name="email" desc="邮箱" type="null.String" xorm="varchar(50) notnull" />
 	<column name="org_id" desc="组织ID" type="null.String" xorm="varchar(36) notnull" />
@@ -13,9 +13,9 @@
 	<column name="avatar" desc="头像" type="null.String" xorm="varchar(255) notnull" />
 	<column name="domain" desc="域" type="null.String" xorm="varchar(50) notnull" />
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="create_time" desc="创建时间" type="null.Time" xorm="time notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="time notnull" />
-	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="delete_time" desc="删除时间" type="null.Time" xorm="time notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36)" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime" />
 </table>

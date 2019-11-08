@@ -16,12 +16,12 @@ package model
 type {{.Table.ToUpperCase .Table.Name}} struct {
 	{{- range .Table.Columns}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `xorm:"{{.Xorm}}"` + "`" + `
+	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `xorm:"{{.Xorm}} '{{.Name}}'" json:"{{.Name}}" xml:"{{.Name}}"` + "`" + `
 	{{- end}}
 }
 
 // TableName table name of defined {{.Table.ToUpperCase .Table.Name}}
 func (m *{{.Table.ToUpperCase .Table.Name}}) TableName() string {
-	return "{{.Table.Name}}"
+	return "{{.Name}}_{{.Table.Name}}"
 }
 `
