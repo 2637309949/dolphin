@@ -49,9 +49,7 @@ func (h HandlerFunc) HandlerFunc(e *platformApp.Engine) platformApp.HandlerFunc 
 // BuildEngine build engine
 func BuildEngine(build func(*Engine)) func(*platformApp.Engine) {
 	return func(e *platformApp.Engine) {
-		if engine == nil {
-			engine = &Engine{Engine: e}
-		}
+		engine.Engine = e
 		build(engine)
 	}
 }
@@ -86,5 +84,5 @@ func (e *Engine) StartUp() {
 }
 
 // Engine instance
-var engine *Engine
+var engine = &Engine{}
 `

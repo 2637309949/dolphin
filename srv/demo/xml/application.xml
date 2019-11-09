@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<application xmlns="http://qianqiusoft.com/developer" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://qianqiusoft.com/developer" name="example" desc="i2推手" packagename="example">
+<application name="example" desc="i2推手" packagename="example">
     <controllers></controllers>
     <beans></beans>
     <tables></tables>
