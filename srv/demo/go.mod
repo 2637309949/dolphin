@@ -4,8 +4,6 @@ go 1.13
 
 replace github.com/2637309949/dolphin => ../../
 
-replace github.com/xormplus/xorm => /home/double/Work/i2/repo/xorm/
-
 require (
 	github.com/2637309949/dolphin v0.0.0-00010101000000-000000000000
 	github.com/bu/gin-method-override v0.0.0-20180528072813-3f56fc145a4b

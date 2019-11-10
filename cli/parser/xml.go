@@ -101,6 +101,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						api.Function = attrValue
 					case attrName == "table":
 						api.Table = attrValue
+					case attrName == "version":
+						api.Version = attrValue
 					}
 				}
 			case token.Name.Local == "param":

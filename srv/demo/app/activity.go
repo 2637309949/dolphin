@@ -24,23 +24,24 @@ func BuildActivity(build func(*Activity)) func(engine *platformApp.Engine) {
 	})
 }
 
-
-// Increase 增加次数
-// @Title Increase
-// @Description 增加次数
-// @Param	id        记录id
-// @Param	action        点赞（like），分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
+// InCrease api implementation
+// @Summary 增加次数
+// @Tags 活动
+// @version 1.0
+// @Accept application/json
+// @Param query id        记录id
+// @Param query action        点赞（like），分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
-// @Router /api/activity/increase [get]
-func (ctr *Activity) Increase(ctx *Context) {
+// @Failure 500 :id is empty
+// @Router /api1.0/activity/in_crease [get]
+func (ctr *Activity) InCrease(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
 		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -52,12 +53,13 @@ func (ctr *Activity) Increase(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Add 添加活动
-// @Title Add
-// @Description 添加活动
-// @Param	pusher_activity        活动对象
+// Add api implementation
+// @Summary 添加活动
+// @Tags 活动
+// @Accept application/json
+// @Param body pusher_activity        活动对象
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
+// @Failure 500 :id is empty
 // @Router /api/activity/add [post]
 func (ctr *Activity) Add(ctx *Context) {
 	var bean model.Activity
@@ -77,12 +79,13 @@ func (ctr *Activity) Add(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Update 更新活动
-// @Title Update
-// @Description 更新活动
-// @Param	pusher_activity        活动对象
+// Update api implementation
+// @Summary 更新活动
+// @Tags 活动
+// @Accept application/json
+// @Param body pusher_activity        活动对象
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
+// @Failure 500 :id is empty
 // @Router /api/activity/update [post]
 func (ctr *Activity) Update(ctx *Context) {
 	var form = &struct{}{}
@@ -91,7 +94,7 @@ func (ctr *Activity) Update(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -103,12 +106,13 @@ func (ctr *Activity) Update(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Delete 删除活动
-// @Title Delete
-// @Description 删除活动
-// @Param	ids        活动id对象数组
+// Delete api implementation
+// @Summary 删除活动
+// @Tags 活动
+// @Accept application/json
+// @Param body ids        活动id对象数组
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
+// @Failure 500 :id is empty
 // @Router /api/activity/delete [post]
 func (ctr *Activity) Delete(ctx *Context) {
 	var form = &struct{}{}
@@ -117,7 +121,7 @@ func (ctr *Activity) Delete(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -129,15 +133,16 @@ func (ctr *Activity) Delete(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Page 活动分页查询
-// @Title Page
-// @Description 活动分页查询
-// @Param	page        页码
-// @Param	rows        单页数
-// @Param	title        标题筛选
-// @Param	hidden        是否隐藏筛选
+// Page api implementation
+// @Summary 活动分页查询
+// @Tags 活动
+// @Accept application/json
+// @Param query page        页码
+// @Param query rows        单页数
+// @Param query title        标题筛选
+// @Param query hidden        是否隐藏筛选
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
+// @Failure 500 :id is empty
 // @Router /api/activity/page [get]
 func (ctr *Activity) Page(ctx *Context) {
 	q := ctr.Query(ctx)
@@ -161,17 +166,18 @@ func (ctr *Activity) Page(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// PageByArea 活动分页按区域查询
-// @Title PageByArea
-// @Description 活动分页按区域查询
-// @Param	page        页码
-// @Param	rows        单页数
-// @Param	title        标题筛选
-// @Param	campus        校区id筛选
-// @Param	city        城市筛选
-// @Param	hidden        是否隐藏筛选
+// PageByArea api implementation
+// @Summary 活动分页按区域查询
+// @Tags 活动
+// @Accept application/json
+// @Param query page        页码
+// @Param query rows        单页数
+// @Param query title        标题筛选
+// @Param query campus        校区id筛选
+// @Param query city        城市筛选
+// @Param query hidden        是否隐藏筛选
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
+// @Failure 500 :id is empty
 // @Router /api/activity/page_by_area [get]
 func (ctr *Activity) PageByArea(ctx *Context) {
 	q := ctr.Query(ctx)
@@ -195,12 +201,13 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Get 获取活动
-// @Title Get
-// @Description 获取活动
-// @Param	id        活动id
+// Get api implementation
+// @Summary 获取活动
+// @Tags 活动
+// @Accept application/json
+// @Param query id        活动id
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
+// @Failure 500 :id is empty
 // @Router /api/activity/get [get]
 func (ctr *Activity) Get(ctx *Context) {
 	var form = &struct{}{}
@@ -209,7 +216,7 @@ func (ctr *Activity) Get(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-	
+
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -220,4 +227,3 @@ func (ctr *Activity) Get(ctx *Context) {
 	}
 	ctx.JSON(http.StatusOK, ret)
 }
-

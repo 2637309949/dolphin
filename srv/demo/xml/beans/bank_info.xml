@@ -2,5 +2,5 @@
     <prop name="code" desc="编码" type="null.String" />
     <prop name="name" desc="名称" type="null.String" />
     <prop name="logo" desc="图标" type="null.String" />
-    <prop name="card_type" desc="卡类型" type="null.String" json="card_type"/>
+    <prop name="card_type" desc="卡类型" type="null.String" json="card_type" />
 </bean>

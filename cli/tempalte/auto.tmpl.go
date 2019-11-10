@@ -36,8 +36,8 @@ var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}})
 }))
 {{- end}}
 
-// StartUp booting system
+// Run booting system
 var _ = cli.Invoke(BuildEngine(func(e *Engine) {
-	e.StartUp()
+	e.Run()
 }))
 `

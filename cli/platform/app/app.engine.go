@@ -131,8 +131,8 @@ func (e *Engine) LoadPlatformDB() {
 	e.Migration(Name, e.PlatformDB)
 }
 
-// StartUp booting system
-func (e *Engine) StartUp() {
+// Run booting system
+func (e *Engine) Run() {
 	e.LoadPlatformDB()
 	e.LoadBusinessDB()
 }

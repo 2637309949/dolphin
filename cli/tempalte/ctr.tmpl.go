@@ -30,16 +30,20 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: engine})
 	})
 }
-
 {{range .Controller.APIS}}
-// {{.ToUpperCase .Name}} {{.ToUpperCase .Desc}}
-// @Title {{.ToUpperCase .Name}}
-// @Description {{.ToUpperCase .Desc}}
+// {{.ToUpperCase .Name}} api implementation
+// @Summary {{.Desc}} 
+// @Tags {{$.Controller.Desc}}
+{{- if ne .Version "" }}
+// @version {{.Version}}
+{{- end}}
+// @Accept application/json
+{{- $api := .}}
 {{- range .Params}}
-// @Param	{{.Name}}      {{.Type}}  {{.Desc}}
+// @Param {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Name}} {{.Type}} {{.Desc}}
 {{- end}}
 // @Success 200 {object} Account
-// @Failure 403 :id is empty
+// @Failure 500 :id is empty
 // @Router /api{{.Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
 	{{- if eq .Function "page"}}
