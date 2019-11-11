@@ -1,7 +1,10 @@
 package app
 
 import (
+	"net/http"
+
 	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin"
 	"github.com/xormplus/xorm"
 )
@@ -20,6 +23,34 @@ type HandlerFunc func(*Context)
 type RouterGroup struct {
 	*gin.RouterGroup
 	Engine *Engine
+}
+
+// Success defined success result
+func (ctx *Context) Success(data interface{}) {
+	code := 200
+	ctx.JSON(http.StatusOK, struct {
+		code int
+		data interface{}
+	}{
+		code: code,
+		data: data,
+	})
+}
+
+// Fail defined failt result
+func (ctx *Context) Fail(err error) {
+	code := 500
+	msg := err.Error()
+	if cusErr, ok := err.(util.Error); ok {
+		code = cusErr.Code
+	}
+	ctx.JSON(http.StatusInternalServerError, struct {
+		code int
+		msg  string
+	}{
+		code: code,
+		msg:  msg,
+	})
 }
 
 // WithUser defined User

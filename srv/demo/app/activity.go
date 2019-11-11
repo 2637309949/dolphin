@@ -5,10 +5,9 @@ package app
 
 import (
 	"example/model"
-	"example/util"
-	"net/http"
 
 	platformApp "github.com/2637309949/dolphin/cli/platform/app"
+	platformUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )
 
@@ -37,20 +36,15 @@ func BuildActivity(build func(*Activity)) func(engine *platformApp.Engine) {
 func (ctr *Activity) InCrease(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ret, err := util.AppAction(form)
-
+	ret, err := platformUtil.AppAction(form)
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Add api implementation
@@ -64,19 +58,15 @@ func (ctr *Activity) InCrease(ctx *Context) {
 func (ctr *Activity) Add(ctx *Context) {
 	var bean model.Activity
 	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
 	ret, err := ctx.DB.Insert(&bean)
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Update api implementation
@@ -90,20 +80,15 @@ func (ctr *Activity) Add(ctx *Context) {
 func (ctr *Activity) Update(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ret, err := util.AppAction(form)
-
+	ret, err := platformUtil.AppAction(form)
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Delete api implementation
@@ -117,20 +102,15 @@ func (ctr *Activity) Update(ctx *Context) {
 func (ctr *Activity) Delete(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ret, err := util.AppAction(form)
-
+	ret, err := platformUtil.AppAction(form)
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Page api implementation
@@ -153,17 +133,12 @@ func (ctr *Activity) Page(ctx *Context) {
 	q.SetString("campus")
 	q.SetString("city")
 	q.SetString("hidden")
-
 	ret, err := ctr.PageSearch(ctx.DB, "activity", "page", "activity", q.Value())
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // PageByArea api implementation
@@ -188,17 +163,12 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 	q.SetString("campus")
 	q.SetString("city")
 	q.SetString("hidden")
-
 	ret, err := ctr.PageSearch(ctx.DB, "activity", "page_by_area", "activity", q.Value())
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Get api implementation
@@ -212,18 +182,13 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 func (ctr *Activity) Get(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ret, err := util.AppAction(form)
-
+	ret, err := platformUtil.AppAction(form)
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }

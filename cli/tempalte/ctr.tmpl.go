@@ -12,10 +12,9 @@ package app
 
 import (
 	"{{.PackageName}}/model"
-	"{{.PackageName}}/util"
-	"net/http"
-
+	
 	platformApp "github.com/2637309949/dolphin/cli/platform/app"
+	platformUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )
 
@@ -55,32 +54,27 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	q.SetString("campus")
 	q.SetString("city")
 	q.SetString("hidden")
-
 	ret, err := ctr.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	{{- else if eq .Function "add"}}
 	var bean model.{{.ToUpperCase .Table}}
 	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
 	ret, err := ctx.DB.Insert(&bean)
 	{{- else}}
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ret, err := util.AppAction(form)
-	{{end}}
+	ret, err := platformUtil.AppAction(form)
+	{{- end}}
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 {{end}}
 `
