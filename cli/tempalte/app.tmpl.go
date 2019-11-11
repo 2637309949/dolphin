@@ -14,29 +14,26 @@ import (
 	"github.com/gin-gonic/gin"
 
 	platformApp "github.com/2637309949/dolphin/cli/platform/app"
-	"github.com/xormplus/xorm"
 )
 
-// Engine defined parse app engine
-type Engine struct {
-	*platformApp.Engine
-}
-
-// Context defined http handle hook context
-type Context struct {
-	*platformApp.Context
-}
-
-// RouterGroup defines struct that extend from gin.RouterGroup
-type RouterGroup struct {
-	*platformApp.RouterGroup
-}
-
-// HandlerFunc defines the handler used by gin middleware as return value.
-type HandlerFunc func(*Context)
+type (
+	// Engine defined parse app engine
+	Engine struct {
+		*platformApp.Engine
+	}
+	// Context defined http handle hook context
+	Context struct {
+		*platformApp.Context
+	}
+	// RouterGroup defines struct that extend from gin.RouterGroup
+	RouterGroup struct {
+		*platformApp.RouterGroup
+	}
+	// HandlerFunc defines the handler used by gin middleware as return value.
+	HandlerFunc func(*Context)
+)
 
 // HandlerFunc convert to platformApp.HandlerFunc
-// rewrite if you need
 func (h HandlerFunc) HandlerFunc(e *platformApp.Engine) platformApp.HandlerFunc {
 	pgc := platformApp.HandlerFunc(func(ctx *platformApp.Context) {
 		h(&Context{Context: ctx})
@@ -70,16 +67,6 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 		newHandlers = append(newHandlers, h.HandlerFunc(rg.Engine))
 	}
 	return rg.RouterGroup.Handle(httpMethod, relativePath, newHandlers...)
-}
-
-// PageSearch Rewrite if you need
-func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
-	return e.Engine.PageSearch(db, controller, api, table, q)
-}
-
-// Run booting system
-func (e *Engine) Run() {
-	e.Engine.Run()
 }
 
 // Engine instance
