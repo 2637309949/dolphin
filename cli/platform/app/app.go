@@ -49,10 +49,11 @@ func init() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")
 	viper.AutomaticEnv()
-	viper.SetDefault("sqlDir", "sql")
-	viper.SetDefault("dbType", "mysql")
 	viper.SetDefault("port", "8089")
-	viper.SetDefault("dbUri", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
+	viper.SetDefault("sqlTemplate", "sql")
+	viper.SetDefault("db.driver", "mysql")
+	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
+	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")
 	}

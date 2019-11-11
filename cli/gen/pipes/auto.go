@@ -27,7 +27,7 @@ func (auto *Auto) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, e
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplAuto,
-			FilePath: path.Join(dir, "app", "app.auto"),
+			FilePath: path.Join(dir, "app", "auto"),
 			Data:     data,
 			Overlap:  gen.OverlapWrite,
 		},

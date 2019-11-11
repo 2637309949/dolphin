@@ -29,8 +29,8 @@ func BuildActivity(build func(*Activity)) func(engine *platformApp.Engine) {
 // @Tags 活动
 // @version 1.0
 // @Accept application/json
-// @Param query id        记录id
-// @Param query action        点赞（like），分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
+// @Param query id  记录id
+// @Param query action  点赞（like），分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
 // @Success 200 {object} Account
 // @Failure 500 :id is empty
 // @Router /api1.0/activity/in_crease [get]
@@ -57,7 +57,7 @@ func (ctr *Activity) InCrease(ctx *Context) {
 // @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
-// @Param body pusher_activity        活动对象
+// @Param body activity  活动对象
 // @Success 200 {object} Account
 // @Failure 500 :id is empty
 // @Router /api/activity/add [post]
@@ -83,7 +83,7 @@ func (ctr *Activity) Add(ctx *Context) {
 // @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
-// @Param body pusher_activity        活动对象
+// @Param body activity  活动对象
 // @Success 200 {object} Account
 // @Failure 500 :id is empty
 // @Router /api/activity/update [post]
@@ -110,7 +110,7 @@ func (ctr *Activity) Update(ctx *Context) {
 // @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
-// @Param body ids        活动id对象数组
+// @Param body ids  活动id对象数组
 // @Success 200 {object} Account
 // @Failure 500 :id is empty
 // @Router /api/activity/delete [post]
@@ -137,10 +137,10 @@ func (ctr *Activity) Delete(ctx *Context) {
 // @Summary 活动分页查询
 // @Tags 活动
 // @Accept application/json
-// @Param query page        页码
-// @Param query rows        单页数
-// @Param query title        标题筛选
-// @Param query hidden        是否隐藏筛选
+// @Param query page  页码
+// @Param query rows  单页数
+// @Param query title  标题筛选
+// @Param query hidden  是否隐藏筛选
 // @Success 200 {object} Account
 // @Failure 500 :id is empty
 // @Router /api/activity/page [get]
@@ -170,12 +170,12 @@ func (ctr *Activity) Page(ctx *Context) {
 // @Summary 活动分页按区域查询
 // @Tags 活动
 // @Accept application/json
-// @Param query page        页码
-// @Param query rows        单页数
-// @Param query title        标题筛选
-// @Param query campus        校区id筛选
-// @Param query city        城市筛选
-// @Param query hidden        是否隐藏筛选
+// @Param query page  页码
+// @Param query rows  单页数
+// @Param query title  标题筛选
+// @Param query campus  校区id筛选
+// @Param query city  城市筛选
+// @Param query hidden  是否隐藏筛选
 // @Success 200 {object} Account
 // @Failure 500 :id is empty
 // @Router /api/activity/page_by_area [get]
@@ -189,7 +189,7 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 	q.SetString("city")
 	q.SetString("hidden")
 
-	ret, err := ctr.PageSearch(ctx.DB, "activity", "page_by_area", "pusher_activity", q.Value())
+	ret, err := ctr.PageSearch(ctx.DB, "activity", "page_by_area", "activity", q.Value())
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {
@@ -205,7 +205,7 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 // @Summary 获取活动
 // @Tags 活动
 // @Accept application/json
-// @Param query id        活动id
+// @Param query id  活动id
 // @Success 200 {object} Account
 // @Failure 500 :id is empty
 // @Router /api/activity/get [get]

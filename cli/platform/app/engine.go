@@ -1,13 +1,14 @@
 package app
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"os"
 	"path"
+	"strconv"
 
 	"github.com/2637309949/dolphin/cli/platform/sql"
+	"github.com/go-redis/redis"
 
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/util"
@@ -21,8 +22,9 @@ import (
 
 // Engine defined parse app engine
 type Engine struct {
-	Gin           *gin.Engine
 	MSets         MSeti
+	Gin           *gin.Engine
+	Redis         *redis.Client
 	PlatformDB    *xorm.Engine
 	BusinessDBSet map[string]*xorm.Engine
 }
@@ -52,8 +54,6 @@ func (e *Engine) LoadBusinessDB() {
 		e.AddBusinessDB(domain.Domain.String, domain.DriverName.String, domain.DataSource.String)
 	}
 
-	fmt.Println(e.BusinessDBSet)
-
 	// async domain model
 	nset := e.MSets.Name(func(n string) bool {
 		return n != Name
@@ -73,7 +73,7 @@ func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
 
 // AddBusinessDB adddb
 func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
-	sqlDir := viper.GetString("sqlDir")
+	sqlDir := viper.GetString("sqlTemplate")
 	sqlDir = path.Join(".", sqlDir)
 	db, err := xorm.NewEngine(driverName, dataSource)
 	if err != nil {
@@ -105,9 +105,9 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 // LoadPlatformDB adddb
 func (e *Engine) LoadPlatformDB() {
 	var err error
-	sqlDir := viper.GetString("sqlDir")
+	sqlDir := viper.GetString("sqlTemplate")
 	sqlDir = path.Join(".", sqlDir)
-	e.PlatformDB, err = xorm.NewEngine(viper.GetString("dbType"), viper.GetString("dbUri"))
+	e.PlatformDB, err = xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	if err != nil {
 		logrus.Fatal(err)
 	}
@@ -131,8 +131,30 @@ func (e *Engine) LoadPlatformDB() {
 	e.Migration(Name, e.PlatformDB)
 }
 
+// LoadRedis redis
+func (e *Engine) LoadRedis() {
+	uri, err := util.Parse(viper.GetString("rd.dataSource"))
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	db, err := strconv.ParseInt(uri.DbName, 10, 64)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	rds := redis.NewClient(&redis.Options{
+		Addr:     uri.Laddr,
+		Password: uri.Passwd,
+		DB:       int(db),
+	})
+	if _, err := rds.Ping().Result(); err != nil {
+		logrus.Fatal(err)
+	}
+	e.Redis = rds
+}
+
 // Run booting system
 func (e *Engine) Run() {
+	e.LoadRedis()
 	e.LoadPlatformDB()
 	e.LoadBusinessDB()
 }

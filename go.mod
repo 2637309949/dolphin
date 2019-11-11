@@ -16,6 +16,7 @@ require (
 	github.com/go-errors/errors v1.0.1 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.16.0 // indirect
+	github.com/go-redis/redis v6.15.6+incompatible
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gorilla/mux v1.7.3
 	github.com/leodido/go-urn v1.2.0 // indirect
@@ -38,4 +39,5 @@ require (
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	gopkg.in/go-playground/validator.v9 v9.30.0
 	gopkg.in/guregu/null.v3 v3.4.0
+	xorm.io/core v0.7.2
 )
