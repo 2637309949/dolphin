@@ -121,7 +121,6 @@ func (ctr *Activity) Delete(ctx *Context) {
 		return
 	}
 	ret, err := util.AppAction(form)
-
 	if err != nil {
 		code := 500
 		if err, ok := err.(util.Error); ok {

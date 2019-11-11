@@ -31,7 +31,6 @@ type HandlerFunc func(*Context)
 // HandlerFunc convert to platformApp.HandlerFunc
 // rewrite if you need
 func (h HandlerFunc) HandlerFunc(e *platformApp.Engine) platformApp.HandlerFunc {
-	// rewrite hook if you need
 	pgc := platformApp.HandlerFunc(func(ctx *platformApp.Context) {
 		h(&Context{Context: ctx})
 	})
