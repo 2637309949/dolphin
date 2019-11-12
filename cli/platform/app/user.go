@@ -24,12 +24,13 @@ func BuildUser(build func(*User)) func(engine *Engine) {
 	})
 }
 
-// Add 添加用户信息
-// @Title Add
-// @Description 添加用户信息
-// @Param	user        用户信息
-// @Success 200 {object} Account
-// @Failure 403 :id is empty
+// Add api implementation
+// @Summary 添加用户信息
+// @Tags 用户
+// @Accept application/json
+// @Param user body model.User false "用户信息"
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/user/add [post]
 func (ctr *User) Add(ctx *Context) {
 	var bean model.User
@@ -49,12 +50,13 @@ func (ctr *User) Add(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Update 更新用户信息
-// @Title Update
-// @Description 更新用户信息
-// @Param	user        用户信息
-// @Success 200 {object} Account
-// @Failure 403 :id is empty
+// Update api implementation
+// @Summary 更新用户信息
+// @Tags 用户
+// @Accept application/json
+// @Param user body model.User false "用户信息"
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/user/update [post]
 func (ctr *User) Update(ctx *Context) {
 	var form = &struct{}{}
@@ -75,12 +77,13 @@ func (ctr *User) Update(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Delete 删除用户信息
-// @Title Delete
-// @Description 删除用户信息
-// @Param	ids        用户信息id对象数组
-// @Success 200 {object} Account
-// @Failure 403 :id is empty
+// Delete api implementation
+// @Summary 删除用户信息
+// @Tags 用户
+// @Accept application/json
+// @Param ids body []string false "用户信息id对象数组"
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/user/delete [post]
 func (ctr *User) Delete(ctx *Context) {
 	var form = &struct{}{}
@@ -101,15 +104,15 @@ func (ctr *User) Delete(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Page 用户信息分页查询
-// @Title Page
-// @Description 用户信息分页查询
-// @Param	page        页码
-// @Param	rows        单页数
-// @Param	title        标题筛选
-// @Param	hidden        是否隐藏筛选
-// @Success 200 {object} Account
-// @Failure 403 :id is empty
+// Page api implementation
+// @Summary 用户信息分页查询
+// @Tags 用户
+// @Param page query int false "页码"
+// @Param rows query int false "单页数"
+// @Param title query string false "标题筛选"
+// @Param hidden query int false "是否隐藏筛选"
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/user/page [get]
 func (ctr *User) Page(ctx *Context) {
 	q := ctr.Query(ctx)
@@ -133,12 +136,12 @@ func (ctr *User) Page(ctx *Context) {
 	ctx.JSON(http.StatusOK, ret)
 }
 
-// Get 获取用户信息
-// @Title Get
-// @Description 获取用户信息
-// @Param	id        用户信息id
-// @Success 200 {object} Account
-// @Failure 403 :id is empty
+// Get api implementation
+// @Summary 获取用户信息
+// @Tags 用户
+// @Param id query string false "用户信息id"
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/user/get [get]
 func (ctr *User) Get(ctx *Context) {
 	var form = &struct{}{}

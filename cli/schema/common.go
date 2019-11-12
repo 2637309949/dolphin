@@ -80,3 +80,11 @@ func (c *Common) VPath(v string) string {
 	}
 	return fmt.Sprintf("/v%v", vi)
 }
+
+// Ref defined model name
+func (c *Common) Ref(m string) string {
+	if fmt.Sprintf("%v", string(m[0])) == "$" {
+		return fmt.Sprintf("model.%v", c.ToUpperCase(m))
+	}
+	return m
+}

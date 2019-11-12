@@ -1,12 +1,173 @@
 definitions:
-  util.Response:
+  model.Activity:
+    properties:
+      campus:
+        $ref: '#/definitions/null.String'
+        description: 校区
+        type: object
+      content:
+        $ref: '#/definitions/null.String'
+        description: 内容
+        type: object
+      create_by:
+        $ref: '#/definitions/null.String'
+        description: 创建人
+        type: object
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        $ref: '#/definitions/null.String'
+        description: 删除人
+        type: object
+      delete_time:
+        description: 删除时间
+        type: string
+      forward_count:
+        $ref: '#/definitions/null.Int'
+        description: 转发次数
+        type: object
+      hidden:
+        $ref: '#/definitions/null.Int'
+        description: 是否隐藏 0(否) 1(是)
+        type: object
+      id:
+        $ref: '#/definitions/null.String'
+        description: 主键
+        type: object
+      image:
+        $ref: '#/definitions/null.String'
+        description: 图片
+        type: object
+      is_entry:
+        $ref: '#/definitions/null.Int'
+        description: 是否报名 0(否) 1(是)
+        type: object
+      like_count:
+        $ref: '#/definitions/null.Int'
+        description: 点赞次数
+        type: object
+      priority:
+        $ref: '#/definitions/null.Int'
+        description: 优先级
+        type: object
+      read_count:
+        $ref: '#/definitions/null.Int'
+        description: 阅读次数
+        type: object
+      share_count:
+        $ref: '#/definitions/null.Int'
+        description: 分享次数
+        type: object
+      title:
+        $ref: '#/definitions/null.String'
+        description: 标题
+        type: object
+      type:
+        $ref: '#/definitions/null.Int'
+        description: 类型
+        type: object
+      update_by:
+        $ref: '#/definitions/null.String'
+        description: 最后更新人
+        type: object
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
+  model.Response:
     properties:
       code:
-        type: integer
+        $ref: '#/definitions/null.Int'
+        description: 编码
+        type: object
       data:
+        description: 卡类型
         type: object
       msg:
+        $ref: '#/definitions/null.String'
+        description: 消息
+        type: object
+    type: object
+  model.User:
+    properties:
+      avatar:
+        $ref: '#/definitions/null.String'
+        description: 头像
+        type: object
+      create_by:
+        $ref: '#/definitions/null.String'
+        description: 创建人
+        type: object
+      create_time:
+        description: 创建时间
         type: string
+      delete_by:
+        $ref: '#/definitions/null.String'
+        description: 删除人
+        type: object
+      delete_time:
+        description: 删除时间
+        type: string
+      domain:
+        $ref: '#/definitions/null.String'
+        description: 域
+        type: object
+      email:
+        $ref: '#/definitions/null.String'
+        description: 邮箱
+        type: object
+      full_name:
+        $ref: '#/definitions/null.String'
+        description: 全名
+        type: object
+      gender:
+        $ref: '#/definitions/null.Int'
+        description: 性别 0：女 1：男
+        type: object
+      id:
+        $ref: '#/definitions/null.String'
+        description: 主键
+        type: object
+      login_id:
+        $ref: '#/definitions/null.String'
+        description: 登录ID
+        type: object
+      mobile:
+        $ref: '#/definitions/null.String'
+        description: 电话
+        type: object
+      name:
+        $ref: '#/definitions/null.String'
+        description: 名字
+        type: object
+      org_id:
+        $ref: '#/definitions/null.String'
+        description: 组织ID
+        type: object
+      password:
+        $ref: '#/definitions/null.String'
+        description: 密码
+        type: object
+      status:
+        $ref: '#/definitions/null.Int'
+        description: 状态 0：禁用   1：正常
+        type: object
+      type:
+        $ref: '#/definitions/null.Int'
+        description: 用户类型
+        type: object
+      update_by:
+        $ref: '#/definitions/null.String'
+        description: 最后更新人
+        type: object
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
+  null.Int:
+    type: object
+  null.String:
     type: object
 info:
   contact: {}
@@ -21,17 +182,17 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/$activity'
+          $ref: '#/definitions/model.Activity'
           type: object
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
       summary: 添加活动
       tags:
       - 活动
@@ -51,11 +212,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
       summary: 删除活动
       tags:
       - 活动
@@ -70,11 +231,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
       summary: 获取活动
       tags:
       - 活动
@@ -101,11 +262,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
       summary: 活动分页查询
       tags:
       - 活动
@@ -140,11 +301,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
       summary: 活动分页按区域查询
       tags:
       - 活动
@@ -157,21 +318,141 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/$activity'
+          $ref: '#/definitions/model.Activity'
           type: object
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
       summary: 更新活动
       tags:
       - 活动
-  /api1.0/activity/in_crease:
+  /api/user/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.User'
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加用户信息
+      tags:
+      - 用户
+  /api/user/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户信息id对象数组
+        in: body
+        name: ids
+        schema:
+          items:
+            type: string
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除用户信息
+      tags:
+      - 用户
+  /api/user/get:
+    get:
+      parameters:
+      - description: 用户信息id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取用户信息
+      tags:
+      - 用户
+  /api/user/page:
+    get:
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: rows
+        type: integer
+      - description: 标题筛选
+        in: query
+        name: title
+        type: string
+      - description: 是否隐藏筛选
+        in: query
+        name: hidden
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户信息分页查询
+      tags:
+      - 用户
+  /api/user/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.User'
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新用户信息
+      tags:
+      - 用户
+  /api/v1/activity/in_crease:
     get:
       parameters:
       - description: 记录id
@@ -186,11 +467,11 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/util.Response'
+            $ref: '#/definitions/model.Response'
       summary: 增加次数
       tags:
       - 活动

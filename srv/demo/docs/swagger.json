@@ -21,7 +21,7 @@
                         "in": "body",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/$activity"
+                            "$ref": "#/definitions/model.Activity"
                         }
                     }
                 ],
@@ -29,13 +29,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     }
                 }
@@ -67,13 +67,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     }
                 }
@@ -97,13 +97,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     }
                 }
@@ -145,13 +145,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     }
                 }
@@ -205,13 +205,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     }
                 }
@@ -233,7 +233,7 @@
                         "in": "body",
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/$activity"
+                            "$ref": "#/definitions/model.Activity"
                         }
                     }
                 ],
@@ -241,19 +241,207 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     }
                 }
             }
         },
-        "/api1.0/activity/in_crease": {
+        "/api/user/add": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "添加用户信息",
+                "parameters": [
+                    {
+                        "description": "用户信息",
+                        "name": "user",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/delete": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "删除用户信息",
+                "parameters": [
+                    {
+                        "description": "用户信息id对象数组",
+                        "name": "ids",
+                        "in": "body",
+                        "schema": {
+                            "type": "string",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/get": {
+            "get": {
+                "tags": [
+                    "用户"
+                ],
+                "summary": "获取用户信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "用户信息id",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/page": {
+            "get": {
+                "tags": [
+                    "用户"
+                ],
+                "summary": "用户信息分页查询",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "单页数",
+                        "name": "rows",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "标题筛选",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "是否隐藏筛选",
+                        "name": "hidden",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/update": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "summary": "更新用户信息",
+                "parameters": [
+                    {
+                        "description": "用户信息",
+                        "name": "user",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/model.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/activity/in_crease": {
             "get": {
                 "tags": [
                     "活动"
@@ -277,13 +465,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/util.Response"
+                            "$ref": "#/definitions/model.Response"
                         }
                     }
                 }
@@ -291,19 +479,224 @@
         }
     },
     "definitions": {
-        "util.Response": {
+        "model.Activity": {
             "type": "object",
             "properties": {
-                "code": {
-                    "type": "integer"
+                "campus": {
+                    "description": "校区",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
                 },
-                "data": {
-                    "type": "object"
+                "content": {
+                    "description": "内容",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
                 },
-                "msg": {
+                "create_by": {
+                    "description": "创建人",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "create_time": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delete_by": {
+                    "description": "删除人",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "delete_time": {
+                    "description": "删除时间",
+                    "type": "string"
+                },
+                "forward_count": {
+                    "description": "转发次数",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "hidden": {
+                    "description": "是否隐藏 0(否) 1(是)",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "image": {
+                    "description": "图片",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "is_entry": {
+                    "description": "是否报名 0(否) 1(是)",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "like_count": {
+                    "description": "点赞次数",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "priority": {
+                    "description": "优先级",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "read_count": {
+                    "description": "阅读次数",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "share_count": {
+                    "description": "分享次数",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "title": {
+                    "description": "标题",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "type": {
+                    "description": "类型",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "update_by": {
+                    "description": "最后更新人",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "update_time": {
+                    "description": "最后更新时间",
                     "type": "string"
                 }
             }
+        },
+        "model.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "编码",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "data": {
+                    "description": "卡类型",
+                    "type": "object"
+                },
+                "msg": {
+                    "description": "消息",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "头像",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "create_by": {
+                    "description": "创建人",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "create_time": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delete_by": {
+                    "description": "删除人",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "delete_time": {
+                    "description": "删除时间",
+                    "type": "string"
+                },
+                "domain": {
+                    "description": "域",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "email": {
+                    "description": "邮箱",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "full_name": {
+                    "description": "全名",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "gender": {
+                    "description": "性别 0：女 1：男",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "login_id": {
+                    "description": "登录ID",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "mobile": {
+                    "description": "电话",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "name": {
+                    "description": "名字",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "org_id": {
+                    "description": "组织ID",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "password": {
+                    "description": "密码",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "status": {
+                    "description": "状态 0：禁用   1：正常",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "type": {
+                    "description": "用户类型",
+                    "type": "object",
+                    "$ref": "#/definitions/null.Int"
+                },
+                "update_by": {
+                    "description": "最后更新人",
+                    "type": "object",
+                    "$ref": "#/definitions/null.String"
+                },
+                "update_time": {
+                    "description": "最后更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "null.Int": {
+            "type": "object"
+        },
+        "null.String": {
+            "type": "object"
         }
     }
 }

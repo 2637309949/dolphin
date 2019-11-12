@@ -3,20 +3,10 @@
 
 package util
 
-// Error struct
-type Error struct {
-	Code int
-	Msg  string
-}
+import "github.com/2637309949/dolphin/cli/platform/model"
 
-func (e Error) Error() string {
-	return e.Msg
-}
-
-// AppAction defined
-func AppAction(v interface{}) (interface{}, error) {
-	return nil, Error{Msg: "No implementation found"}
-}
+// Response http
+type Response model.Response
 
 // M defined
 type M map[string]interface{}

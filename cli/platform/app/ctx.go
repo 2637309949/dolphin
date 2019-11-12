@@ -3,6 +3,8 @@ package app
 import (
 	"net/http"
 
+	"gopkg.in/guregu/null.v3"
+
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin"
@@ -27,8 +29,8 @@ type RouterGroup struct {
 
 // Success defined success result
 func (ctx *Context) Success(data interface{}) {
-	ctx.JSON(http.StatusOK, util.Response{
-		Code: 200,
+	ctx.JSON(http.StatusOK, model.Response{
+		Code: null.IntFrom(200),
 		Data: data,
 	})
 }
@@ -40,9 +42,9 @@ func (ctx *Context) Fail(err error) {
 	if cusErr, ok := err.(util.Error); ok {
 		code = cusErr.Code
 	}
-	ctx.JSON(http.StatusInternalServerError, util.Response{
-		Code: code,
-		Msg:  msg,
+	ctx.JSON(http.StatusInternalServerError, model.Response{
+		Code: null.IntFrom(int64(code)),
+		Msg:  null.StringFrom(msg),
 	})
 }
 

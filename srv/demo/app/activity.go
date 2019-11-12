@@ -6,8 +6,8 @@ package app
 import (
 	"example/model"
 
-	platformApp "github.com/2637309949/dolphin/cli/platform/app"
-	platformUtil "github.com/2637309949/dolphin/cli/platform/util"
+	pApp "github.com/2637309949/dolphin/cli/platform/app"
+	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )
 
@@ -17,7 +17,7 @@ type Activity struct {
 }
 
 // BuildActivity return Activity
-func BuildActivity(build func(*Activity)) func(engine *platformApp.Engine) {
+func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 	return BuildEngine(func(engine *Engine) {
 		build(&Activity{Engine: engine})
 	})
@@ -29,16 +29,16 @@ func BuildActivity(build func(*Activity)) func(engine *platformApp.Engine) {
 // @version 1.0
 // @Param id query string false "记录id"
 // @Param action query string false "点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一"
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
-// @Router /api1.0/activity/in_crease [get]
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/activity/in_crease [get]
 func (ctr *Activity) InCrease(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := platformUtil.AppAction(form)
+	ret, err := pUtil.AppAction(form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -50,9 +50,9 @@ func (ctr *Activity) InCrease(ctx *Context) {
 // @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
-// @Param activity body $activity false "活动对象"
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
+// @Param activity body model.Activity false "活动对象"
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/activity/add [post]
 func (ctr *Activity) Add(ctx *Context) {
 	var bean model.Activity
@@ -72,9 +72,9 @@ func (ctr *Activity) Add(ctx *Context) {
 // @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
-// @Param activity body $activity false "活动对象"
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
+// @Param activity body model.Activity false "活动对象"
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/activity/update [post]
 func (ctr *Activity) Update(ctx *Context) {
 	var form = &struct{}{}
@@ -82,7 +82,7 @@ func (ctr *Activity) Update(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := platformUtil.AppAction(form)
+	ret, err := pUtil.AppAction(form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -95,8 +95,8 @@ func (ctr *Activity) Update(ctx *Context) {
 // @Tags 活动
 // @Accept application/json
 // @Param ids body []string false "活动id对象数组"
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/activity/delete [post]
 func (ctr *Activity) Delete(ctx *Context) {
 	var form = &struct{}{}
@@ -104,7 +104,7 @@ func (ctr *Activity) Delete(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := platformUtil.AppAction(form)
+	ret, err := pUtil.AppAction(form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -119,8 +119,8 @@ func (ctr *Activity) Delete(ctx *Context) {
 // @Param rows query int false "单页数"
 // @Param title query string false "标题筛选"
 // @Param hidden query int false "是否隐藏筛选"
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/activity/page [get]
 func (ctr *Activity) Page(ctx *Context) {
 	q := ctr.Query(ctx)
@@ -148,8 +148,8 @@ func (ctr *Activity) Page(ctx *Context) {
 // @Param campus query string false "校区id筛选"
 // @Param city query string false "城市筛选"
 // @Param hidden query int false "是否隐藏筛选"
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/activity/page_by_area [get]
 func (ctr *Activity) PageByArea(ctx *Context) {
 	q := ctr.Query(ctx)
@@ -172,8 +172,8 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 // @Summary 获取活动
 // @Tags 活动
 // @Param id query string false "活动id"
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/activity/get [get]
 func (ctr *Activity) Get(ctx *Context) {
 	var form = &struct{}{}
@@ -181,7 +181,7 @@ func (ctr *Activity) Get(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := platformUtil.AppAction(form)
+	ret, err := pUtil.AppAction(form)
 	if err != nil {
 		ctx.Fail(err)
 		return

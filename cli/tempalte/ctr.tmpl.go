@@ -13,8 +13,8 @@ package app
 import (
 	"{{.PackageName}}/model"
 	
-	platformApp "github.com/2637309949/dolphin/cli/platform/app"
-	platformUtil "github.com/2637309949/dolphin/cli/platform/util"
+	pApp "github.com/2637309949/dolphin/cli/platform/app"
+	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )
 
@@ -24,7 +24,7 @@ type {{.Controller.ToUpperCase .Controller.Name}} struct {
 }
 
 // Build{{.Controller.ToUpperCase .Controller.Name}} return {{.Controller.ToUpperCase .Controller.Name}}
-func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *platformApp.Engine) {
+func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *pApp.Engine) {
 	return BuildEngine(func(engine *Engine) {
 		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: engine})
 	})
@@ -41,11 +41,11 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 {{- end}}
 {{- $api := .}}
 {{- range .Params}}
-// @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Type}} false "{{.Desc}}"
+// @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Ref .Type}} false "{{.Desc}}"
 {{- end}}
-// @Success 200 {object} util.Response
-// @Failure 500 {object} util.Response
-// @Router /api{{.Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api{{.VPath .Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
 	{{- if eq .Function "page"}}
 	q := ctr.Query(ctx)
@@ -70,7 +70,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 		ctx.Fail(err)
 		return
 	}
-	ret, err := platformUtil.AppAction(form)
+	ret, err := pUtil.AppAction(form)
 	{{- end}}
 	if err != nil {
 		ctx.Fail(err)

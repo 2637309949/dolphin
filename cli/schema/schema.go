@@ -28,7 +28,6 @@ type Param struct {
 	Common
 	Name string `validate:"required"`
 	Desc string `validate:"required"`
-	Ref  string
 	Type string
 }
 
