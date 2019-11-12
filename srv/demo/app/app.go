@@ -4,9 +4,9 @@
 package app
 
 import (
-	"github.com/gin-gonic/gin"
-
 	platformApp "github.com/2637309949/dolphin/cli/platform/app"
+	"github.com/gin-gonic/gin"
+	"github.com/thoas/go-funk"
 )
 
 type (
@@ -27,25 +27,21 @@ type (
 )
 
 // HandlerFunc convert to platformApp.HandlerFunc
-func (h HandlerFunc) HandlerFunc(e *platformApp.Engine) platformApp.HandlerFunc {
-	pgc := platformApp.HandlerFunc(func(ctx *platformApp.Context) {
-		h(&Context{Context: ctx})
+func (hf HandlerFunc) HandlerFunc(e *platformApp.Engine) (phf platformApp.HandlerFunc) {
+	phf = platformApp.HandlerFunc(func(base *platformApp.Context) {
+		ctx := &Context{Context: base}
+		hf(ctx)
 	})
-	pgc.HandlerFunc(e)
-	return pgc
+	phf.HandlerFunc(e)
+	return
 }
 
 // BuildEngine build engine
 func BuildEngine(build func(*Engine)) func(*platformApp.Engine) {
-	return func(e *platformApp.Engine) {
-		engine.Engine = e
+	return func(base *platformApp.Engine) {
+		engine.Engine = base
 		build(engine)
 	}
-}
-
-// Query defined
-func (e *Engine) Query(ctx *Context) *platformApp.Query {
-	return e.Engine.Query(ctx.Context)
 }
 
 // Group handlers
@@ -55,11 +51,12 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
-	var newHandlers []platformApp.HandlerFunc
-	for _, h := range handlers {
-		newHandlers = append(newHandlers, h.HandlerFunc(rg.Engine))
-	}
-	return rg.RouterGroup.Handle(httpMethod, relativePath, newHandlers...)
+	return rg.RouterGroup.Handle(
+		httpMethod, relativePath,
+		funk.Map(handlers, func(h HandlerFunc) platformApp.HandlerFunc {
+			return h.HandlerFunc(rg.Engine)
+		}).([]platformApp.HandlerFunc)...,
+	)
 }
 
 // Engine instance

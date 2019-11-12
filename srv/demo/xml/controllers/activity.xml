@@ -1,7 +1,7 @@
 <controller name="activity" desc="活动">
     <api name="in_crease" table="activity" desc="增加次数" method="get" version="1.0">
         <param name="id" type="string" desc="记录id" />
-        <param name="action" type="string" desc="点赞（like），分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一" />
+        <param name="action" type="string" desc="点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一" />
     </api>
     <api name="add" function="add" table="activity" desc="添加活动" method="post">
         <param name="activity" type="$activity" desc="活动对象" />

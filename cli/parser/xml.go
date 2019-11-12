@@ -118,6 +118,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						param.Name = attrValue
 					case attrName == "desc":
 						param.Desc = attrValue
+					case attrName == "type":
+						param.Type = attrValue
 					}
 				}
 			case token.Name.Local == "bean":

@@ -27,13 +27,9 @@ type RouterGroup struct {
 
 // Success defined success result
 func (ctx *Context) Success(data interface{}) {
-	code := 200
-	ctx.JSON(http.StatusOK, struct {
-		code int
-		data interface{}
-	}{
-		code: code,
-		data: data,
+	ctx.JSON(http.StatusOK, util.Response{
+		Code: 200,
+		Data: data,
 	})
 }
 
@@ -44,12 +40,9 @@ func (ctx *Context) Fail(err error) {
 	if cusErr, ok := err.(util.Error); ok {
 		code = cusErr.Code
 	}
-	ctx.JSON(http.StatusInternalServerError, struct {
-		code int
-		msg  string
-	}{
-		code: code,
-		msg:  msg,
+	ctx.JSON(http.StatusInternalServerError, util.Response{
+		Code: code,
+		Msg:  msg,
 	})
 }
 

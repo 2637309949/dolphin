@@ -6,7 +6,6 @@ import (
 	"os"
 	"path"
 	"strconv"
-	"strings"
 
 	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/go-redis/redis"
@@ -134,10 +133,6 @@ func (e *Engine) LoadPlatformDB() {
 
 // LoadRedis redis
 func (e *Engine) LoadRedis() {
-	// check if disabled or not
-	if strings.TrimSpace(viper.GetString("rd.disabled")) != "" {
-		return
-	}
 	uri, err := util.Parse(viper.GetString("rd.dataSource"))
 	if err != nil {
 		logrus.Fatal(err)

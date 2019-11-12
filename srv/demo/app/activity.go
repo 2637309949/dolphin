@@ -27,11 +27,10 @@ func BuildActivity(build func(*Activity)) func(engine *platformApp.Engine) {
 // @Summary 增加次数
 // @Tags 活动
 // @version 1.0
-// @Accept application/json
-// @Param query id  记录id
-// @Param query action  点赞（like），分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Param id query string false "记录id"
+// @Param action query string false "点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一"
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api1.0/activity/in_crease [get]
 func (ctr *Activity) InCrease(ctx *Context) {
 	var form = &struct{}{}
@@ -51,9 +50,9 @@ func (ctr *Activity) InCrease(ctx *Context) {
 // @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
-// @Param body activity  活动对象
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Param activity body $activity false "活动对象"
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api/activity/add [post]
 func (ctr *Activity) Add(ctx *Context) {
 	var bean model.Activity
@@ -73,9 +72,9 @@ func (ctr *Activity) Add(ctx *Context) {
 // @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
-// @Param body activity  活动对象
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Param activity body $activity false "活动对象"
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api/activity/update [post]
 func (ctr *Activity) Update(ctx *Context) {
 	var form = &struct{}{}
@@ -95,9 +94,9 @@ func (ctr *Activity) Update(ctx *Context) {
 // @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
-// @Param body ids  活动id对象数组
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Param ids body []string false "活动id对象数组"
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api/activity/delete [post]
 func (ctr *Activity) Delete(ctx *Context) {
 	var form = &struct{}{}
@@ -116,13 +115,12 @@ func (ctr *Activity) Delete(ctx *Context) {
 // Page api implementation
 // @Summary 活动分页查询
 // @Tags 活动
-// @Accept application/json
-// @Param query page  页码
-// @Param query rows  单页数
-// @Param query title  标题筛选
-// @Param query hidden  是否隐藏筛选
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Param page query int false "页码"
+// @Param rows query int false "单页数"
+// @Param title query string false "标题筛选"
+// @Param hidden query int false "是否隐藏筛选"
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api/activity/page [get]
 func (ctr *Activity) Page(ctx *Context) {
 	q := ctr.Query(ctx)
@@ -144,15 +142,14 @@ func (ctr *Activity) Page(ctx *Context) {
 // PageByArea api implementation
 // @Summary 活动分页按区域查询
 // @Tags 活动
-// @Accept application/json
-// @Param query page  页码
-// @Param query rows  单页数
-// @Param query title  标题筛选
-// @Param query campus  校区id筛选
-// @Param query city  城市筛选
-// @Param query hidden  是否隐藏筛选
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Param page query int false "页码"
+// @Param rows query int false "单页数"
+// @Param title query string false "标题筛选"
+// @Param campus query string false "校区id筛选"
+// @Param city query string false "城市筛选"
+// @Param hidden query int false "是否隐藏筛选"
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api/activity/page_by_area [get]
 func (ctr *Activity) PageByArea(ctx *Context) {
 	q := ctr.Query(ctx)
@@ -174,10 +171,9 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 // Get api implementation
 // @Summary 获取活动
 // @Tags 活动
-// @Accept application/json
-// @Param query id  活动id
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Param id query string false "活动id"
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api/activity/get [get]
 func (ctr *Activity) Get(ctx *Context) {
 	var form = &struct{}{}

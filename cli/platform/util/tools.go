@@ -3,6 +3,13 @@
 
 package util
 
+// Response http
+type Response struct {
+	Code int         `json:"code" xml:"xml"`
+	Msg  string      `json:"msg" xml:"msg"`
+	Data interface{} `json:"data" xml:"data"`
+}
+
 // Error struct
 type Error struct {
 	Code int

@@ -9,15 +9,27 @@ import (
 	"github.com/xormplus/xorm"
 )
 
-// Query defined parse struct from query
-type Query struct {
-	ctx *Context
-	m   map[string]interface{}
-}
+type (
+	// Qi defined func
+	Qi interface {
+		Query(key string) string
+		DefaultQuery(key, defaultValue string) string
+		GetQuery(key string) (string, bool)
+		QueryArray(key string) []string
+		GetQueryArray(key string) ([]string, bool)
+		QueryMap(key string) map[string]string
+		GetQueryMap(key string) (map[string]string, bool)
+	}
+	// Query defined parse struct from query
+	Query struct {
+		i Qi
+		m map[string]interface{}
+	}
+)
 
 // SetInt defined
 func (q *Query) SetInt(key string, init ...int) {
-	v := q.ctx.Query(key)
+	v := q.i.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
 			q.m[key] = init[0]
@@ -35,7 +47,7 @@ func (q *Query) SetInt(key string, init ...int) {
 
 // SetString defined
 func (q *Query) SetString(key string, init ...string) {
-	v := q.ctx.Query(key)
+	v := q.i.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
 			q.m[key] = init[0]
@@ -53,8 +65,8 @@ func (q *Query) Value() map[string]interface{} {
 }
 
 // Query defined
-func (e *Engine) Query(ctx *Context) *Query {
-	return &Query{m: util.M{}, ctx: ctx}
+func (e *Engine) Query(i Qi) *Query {
+	return &Query{m: util.M{}, i: i}
 }
 
 // PageSearch defined

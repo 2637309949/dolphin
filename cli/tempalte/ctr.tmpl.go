@@ -36,13 +36,15 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 {{- if ne .Version "" }}
 // @version {{.Version}}
 {{- end}}
+{{- if ne .Method "get"}}
 // @Accept application/json
+{{- end}}
 {{- $api := .}}
 {{- range .Params}}
-// @Param {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Name}} {{.Type}} {{.Desc}}
+// @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Type}} false "{{.Desc}}"
 {{- end}}
-// @Success 200 {object} Account
-// @Failure 500 :id is empty
+// @Success 200 {object} util.Response
+// @Failure 500 {object} util.Response
 // @Router /api{{.Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
 	{{- if eq .Function "page"}}
