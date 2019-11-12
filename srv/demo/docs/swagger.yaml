@@ -1,5 +1,197 @@
+definitions:
+  util.Response:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      msg:
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
-paths: {}
+paths:
+  /api/activity/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          $ref: '#/definitions/$activity'
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.Response'
+      summary: 添加活动
+      tags:
+      - 活动
+  /api/activity/delete:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 活动id对象数组
+        in: body
+        name: ids
+        schema:
+          items:
+            type: string
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.Response'
+      summary: 删除活动
+      tags:
+      - 活动
+  /api/activity/get:
+    get:
+      parameters:
+      - description: 活动id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.Response'
+      summary: 获取活动
+      tags:
+      - 活动
+  /api/activity/page:
+    get:
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: rows
+        type: integer
+      - description: 标题筛选
+        in: query
+        name: title
+        type: string
+      - description: 是否隐藏筛选
+        in: query
+        name: hidden
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.Response'
+      summary: 活动分页查询
+      tags:
+      - 活动
+  /api/activity/page_by_area:
+    get:
+      parameters:
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: rows
+        type: integer
+      - description: 标题筛选
+        in: query
+        name: title
+        type: string
+      - description: 校区id筛选
+        in: query
+        name: campus
+        type: string
+      - description: 城市筛选
+        in: query
+        name: city
+        type: string
+      - description: 是否隐藏筛选
+        in: query
+        name: hidden
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.Response'
+      summary: 活动分页按区域查询
+      tags:
+      - 活动
+  /api/activity/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          $ref: '#/definitions/$activity'
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.Response'
+      summary: 更新活动
+      tags:
+      - 活动
+  /api1.0/activity/in_crease:
+    get:
+      parameters:
+      - description: 记录id
+        in: query
+        name: id
+        type: string
+      - description: 点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
+        in: query
+        name: action
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/util.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/util.Response'
+      summary: 增加次数
+      tags:
+      - 活动
 swagger: "2.0"

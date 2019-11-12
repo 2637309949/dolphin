@@ -31,7 +31,7 @@ var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}})
 	group := ctr.Group("/api")
 	{{- $ctr := .}}
 	{{- range .APIS}}
-	group.Handle("{{.ToUpper .Method}}", "{{.Version}}/{{$ctr.Name}}/{{.Name}}", ctr.{{.ToUpperCase .Name}})
+	group.Handle("{{.ToUpper .Method}}", "{{.VPath .Version}}/{{$ctr.Name}}/{{.Name}}", ctr.{{.ToUpperCase .Name}})
 	{{- end}}
 }))
 {{- end}}

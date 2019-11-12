@@ -7,6 +7,7 @@ package schema
 import (
 	"fmt"
 	"html/template"
+	"strconv"
 	"strings"
 )
 
@@ -65,4 +66,17 @@ func (c *Common) ToUpperCase(name string) string {
 		}
 	}
 	return newName
+}
+
+// VPath version path
+func (c *Common) VPath(v string) string {
+	if v == "" {
+		return ""
+	}
+	vf, err := strconv.ParseFloat(v, 64)
+	vi := int(vf)
+	if err != nil {
+		panic(err)
+	}
+	return fmt.Sprintf("/v%v", vi)
 }
