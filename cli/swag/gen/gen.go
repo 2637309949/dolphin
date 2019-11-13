@@ -119,7 +119,7 @@ func (g *Gen) Build(config *Config) error {
 
 	// log.Printf("create docs.go at  %+v", docFileName)
 	// log.Printf("create swagger.json at  %+v", jsonFileName)
-	logrus.Info("create swagger.yaml at  %+v", yamlFileName)
+	logrus.Infof("create swagger.yaml at  %+v", yamlFileName)
 
 	return nil
 }
