@@ -3,5 +3,12 @@
 
 package util
 
+import "github.com/2637309949/dolphin/cli/platform/model"
+
+// AppAction defined
+func AppAction(v interface{}) (interface{}, error) {
+	return nil, model.Error{Msg: "No implementation found"}
+}
+
 // M defined
 type M map[string]interface{}

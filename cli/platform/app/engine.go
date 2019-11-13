@@ -177,7 +177,7 @@ func NewEngine() *Engine {
 	e.Gin.Use(gin.Logger())
 	e.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
 		code := 500
-		if err, ok := err.(util.Error); ok {
+		if err, ok := err.(model.Error); ok {
 			code = err.Code
 		}
 		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})

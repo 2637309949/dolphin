@@ -1,0 +1,4 @@
+<bean name="error" desc="错误信息">
+    <prop name="code" desc="编码" type="int" />
+    <prop name="msg" desc="消息" type="string" />
+</bean>

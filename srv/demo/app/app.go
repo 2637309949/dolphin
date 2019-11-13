@@ -26,16 +26,6 @@ type (
 	HandlerFunc func(*Context)
 )
 
-// HandlerFunc convert to pApp.HandlerFunc
-func (hf HandlerFunc) HandlerFunc(e *pApp.Engine) (phf pApp.HandlerFunc) {
-	phf = pApp.HandlerFunc(func(base *pApp.Context) {
-		ctx := &Context{Context: base}
-		hf(ctx)
-	})
-	phf.HandlerFunc(e)
-	return
-}
-
 // BuildEngine build engine
 func BuildEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
@@ -47,6 +37,16 @@ func BuildEngine(build func(*Engine)) func(*pApp.Engine) {
 // Group handlers
 func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
 	return &RouterGroup{RouterGroup: e.Engine.Group(relativePath, handlers...)}
+}
+
+// HandlerFunc convert to pApp.HandlerFunc
+func (hf HandlerFunc) HandlerFunc(e *pApp.Engine) (phf pApp.HandlerFunc) {
+	phf = pApp.HandlerFunc(func(base *pApp.Context) {
+		ctx := &Context{Context: base}
+		hf(ctx)
+	})
+	phf.HandlerFunc(e)
+	return
 }
 
 // Handle overwrite RouterGroup.Handle

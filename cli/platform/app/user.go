@@ -4,8 +4,6 @@
 package app
 
 import (
-	"net/http"
-
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/util"
 
@@ -28,90 +26,84 @@ func BuildUser(build func(*User)) func(engine *Engine) {
 // @Summary 添加用户信息
 // @Tags 用户
 // @Accept application/json
+// @Param token header query string true "认证令牌"
 // @Param user body model.User false "用户信息"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/user/add [post]
 func (ctr *User) Add(ctx *Context) {
 	var bean model.User
 	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
 	ret, err := ctx.DB.Insert(&bean)
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Update api implementation
 // @Summary 更新用户信息
 // @Tags 用户
 // @Accept application/json
+// @Param token header query string true "认证令牌"
 // @Param user body model.User false "用户信息"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/user/update [post]
 func (ctr *User) Update(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
 	ret, err := util.AppAction(form)
-
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Delete api implementation
 // @Summary 删除用户信息
 // @Tags 用户
 // @Accept application/json
+// @Param token header query string true "认证令牌"
 // @Param ids body []string false "用户信息id对象数组"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/user/delete [post]
 func (ctr *User) Delete(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
 	ret, err := util.AppAction(form)
-
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Page api implementation
 // @Summary 用户信息分页查询
 // @Tags 用户
+// @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
 // @Param rows query int false "单页数"
 // @Param title query string false "标题筛选"
 // @Param hidden query int false "是否隐藏筛选"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/user/page [get]
 func (ctr *User) Page(ctx *Context) {
@@ -123,41 +115,33 @@ func (ctr *User) Page(ctx *Context) {
 	q.SetString("campus")
 	q.SetString("city")
 	q.SetString("hidden")
-
 	ret, err := ctr.PageSearch(ctx.DB, "user", "page", "user", q.Value())
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }
 
 // Get api implementation
 // @Summary 获取用户信息
 // @Tags 用户
+// @Param token header query string true "认证令牌"
 // @Param id query string false "用户信息id"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/user/get [get]
 func (ctr *User) Get(ctx *Context) {
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": 500, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
 	ret, err := util.AppAction(form)
-
 	if err != nil {
-		code := 500
-		if err, ok := err.(util.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err.Error()})
+		ctx.Fail(err)
 		return
 	}
-	ctx.JSON(http.StatusOK, ret)
+	ctx.Success(ret)
 }

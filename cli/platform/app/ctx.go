@@ -6,7 +6,6 @@ import (
 	"gopkg.in/guregu/null.v3"
 
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin"
 	"github.com/xormplus/xorm"
 )
@@ -39,7 +38,7 @@ func (ctx *Context) Success(data interface{}) {
 func (ctx *Context) Fail(err error) {
 	code := 500
 	msg := err.Error()
-	if cusErr, ok := err.(util.Error); ok {
+	if cusErr, ok := err.(model.Error); ok {
 		code = cusErr.Code
 	}
 	ctx.JSON(http.StatusInternalServerError, model.Response{
