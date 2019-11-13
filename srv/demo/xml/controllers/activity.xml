@@ -7,7 +7,7 @@
         <param name="activity" type="$activity" desc="活动对象" />
     </api>
     <api name="update" function="update" table="activity" desc="更新活动" method="post">
-        <param name="activity" type="$activity" desc="活动对象" />
+        <param name="activity" type="[]$activity" desc="活动对象" />
     </api>
     <api name="delete" desc="删除活动" method="post">
         <param name="ids" type="[]string" desc="活动id对象数组" />

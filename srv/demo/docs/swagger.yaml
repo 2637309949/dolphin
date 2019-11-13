@@ -186,7 +186,6 @@ paths:
         schema:
           items:
             type: string
-          type: string
       responses:
         "200":
           description: OK
@@ -333,7 +332,8 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/model.Activity'
+          items:
+            $ref: '#/definitions/model.Activity'
       responses:
         "200":
           description: OK
@@ -397,7 +397,6 @@ paths:
         schema:
           items:
             type: string
-          type: string
       responses:
         "200":
           description: OK

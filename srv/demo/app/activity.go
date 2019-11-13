@@ -76,7 +76,7 @@ func (ctr *Activity) Add(ctx *Context) {
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
-// @Param activity body model.Activity false "活动对象"
+// @Param activity body []model.Activity false "活动对象"
 // @Success 200 {object} model.Response
 // @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
@@ -135,7 +135,6 @@ func (ctr *Activity) Page(ctx *Context) {
 	q := ctr.Query(ctx)
 	q.SetInt("page", 1)
 	q.SetInt("size", 20)
-	q.SetInt("del_flag")
 	q.SetString("title")
 	q.SetString("campus")
 	q.SetString("city")
@@ -166,7 +165,6 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 	q := ctr.Query(ctx)
 	q.SetInt("page", 1)
 	q.SetInt("size", 20)
-	q.SetInt("del_flag")
 	q.SetString("title")
 	q.SetString("campus")
 	q.SetString("city")

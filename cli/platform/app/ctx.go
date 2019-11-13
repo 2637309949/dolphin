@@ -60,7 +60,7 @@ func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 		// with user
 		c.WithUser(model.User{})
 		// find db by PlatformDB
-		c.DB = e.PlatformDB
+		c.DB = e.BusinessDBSet["localhost"]
 		h(c)
 	})
 }

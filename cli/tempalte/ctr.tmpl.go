@@ -55,7 +55,6 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	q := ctr.Query(ctx)
 	q.SetInt("page", 1)
 	q.SetInt("size", 20)
-	q.SetInt("del_flag")
 	q.SetString("title")
 	q.SetString("campus")
 	q.SetString("city")

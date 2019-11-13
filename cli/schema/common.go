@@ -83,7 +83,10 @@ func (c *Common) VPath(v string) string {
 
 // Ref defined model name
 func (c *Common) Ref(m string) string {
-	if fmt.Sprintf("%v", string(m[0])) == "$" {
+	if strings.HasPrefix(m, "$") || strings.HasPrefix(m, "[]$") {
+		if strings.HasPrefix(m, "[]$") {
+			return fmt.Sprintf("[]model.%v", c.ToUpperCase(strings.ReplaceAll(m, "[]", "")))
+		}
 		return fmt.Sprintf("model.%v", c.ToUpperCase(m))
 	}
 	return m
