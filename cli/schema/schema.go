@@ -34,6 +34,7 @@ type Param struct {
 // API struct
 type API struct {
 	Common
+	Auth     bool
 	Name     string `validate:"required"`
 	Desc     string `validate:"required"`
 	Version  string

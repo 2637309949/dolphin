@@ -30,6 +30,7 @@ func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 			FilePath: path.Join(dir, "app", c.Name),
 			Data:     data,
 			Overlap:  gen.OverlapInc,
+			Suffix:   ".go",
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 	}

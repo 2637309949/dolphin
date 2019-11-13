@@ -30,6 +30,7 @@ func (m *Bean) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, erro
 			FilePath: path.Join(dir, "model", bean.Name+".auto"),
 			Data:     data,
 			Overlap:  gen.OverlapWrite,
+			Suffix:   ".go",
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 	}

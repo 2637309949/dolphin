@@ -1,76 +1,61 @@
+basePath: /
 definitions:
   model.Activity:
     properties:
       campus:
-        $ref: '#/definitions/null.String'
         description: 校区
-        type: object
+        type: string
       content:
-        $ref: '#/definitions/null.String'
         description: 内容
-        type: object
+        type: string
       create_by:
-        $ref: '#/definitions/null.String'
         description: 创建人
-        type: object
+        type: string
       create_time:
         description: 创建时间
         type: string
       delete_by:
-        $ref: '#/definitions/null.String'
         description: 删除人
-        type: object
+        type: string
       delete_time:
         description: 删除时间
         type: string
       forward_count:
-        $ref: '#/definitions/null.Int'
         description: 转发次数
-        type: object
+        type: number
       hidden:
-        $ref: '#/definitions/null.Int'
         description: 是否隐藏 0(否) 1(是)
-        type: object
+        type: number
       id:
-        $ref: '#/definitions/null.String'
         description: 主键
-        type: object
+        type: string
       image:
-        $ref: '#/definitions/null.String'
         description: 图片
-        type: object
+        type: string
       is_entry:
-        $ref: '#/definitions/null.Int'
         description: 是否报名 0(否) 1(是)
-        type: object
+        type: number
       like_count:
-        $ref: '#/definitions/null.Int'
         description: 点赞次数
-        type: object
+        type: number
       priority:
-        $ref: '#/definitions/null.Int'
         description: 优先级
-        type: object
+        type: number
       read_count:
-        $ref: '#/definitions/null.Int'
         description: 阅读次数
-        type: object
+        type: number
       share_count:
-        $ref: '#/definitions/null.Int'
         description: 分享次数
-        type: object
+        type: number
       title:
-        $ref: '#/definitions/null.String'
         description: 标题
-        type: object
+        type: string
       type:
-        $ref: '#/definitions/null.Int'
         description: 类型
-        type: object
+        type: number
       update_by:
-        $ref: '#/definitions/null.String'
         description: 最后更新人
-        type: object
+        type: string
       update_time:
         description: 最后更新时间
         type: string
@@ -78,89 +63,71 @@ definitions:
   model.Response:
     properties:
       code:
-        $ref: '#/definitions/null.Int'
         description: 编码
-        type: object
+        type: number
       data:
         description: 卡类型
         type: object
       msg:
-        $ref: '#/definitions/null.String'
         description: 消息
-        type: object
+        type: string
     type: object
   model.User:
     properties:
       avatar:
-        $ref: '#/definitions/null.String'
         description: 头像
-        type: object
+        type: string
       create_by:
-        $ref: '#/definitions/null.String'
         description: 创建人
-        type: object
+        type: string
       create_time:
         description: 创建时间
         type: string
       delete_by:
-        $ref: '#/definitions/null.String'
         description: 删除人
-        type: object
+        type: string
       delete_time:
         description: 删除时间
         type: string
       domain:
-        $ref: '#/definitions/null.String'
         description: 域
-        type: object
+        type: string
       email:
-        $ref: '#/definitions/null.String'
         description: 邮箱
-        type: object
+        type: string
       full_name:
-        $ref: '#/definitions/null.String'
         description: 全名
-        type: object
+        type: string
       gender:
-        $ref: '#/definitions/null.Int'
         description: 性别 0：女 1：男
-        type: object
+        type: number
       id:
-        $ref: '#/definitions/null.String'
         description: 主键
-        type: object
+        type: string
       login_id:
-        $ref: '#/definitions/null.String'
         description: 登录ID
-        type: object
+        type: string
       mobile:
-        $ref: '#/definitions/null.String'
         description: 电话
-        type: object
+        type: string
       name:
-        $ref: '#/definitions/null.String'
         description: 名字
-        type: object
+        type: string
       org_id:
-        $ref: '#/definitions/null.String'
         description: 组织ID
-        type: object
+        type: string
       password:
-        $ref: '#/definitions/null.String'
         description: 密码
-        type: object
+        type: string
       status:
-        $ref: '#/definitions/null.Int'
         description: 状态 0：禁用   1：正常
-        type: object
+        type: number
       type:
-        $ref: '#/definitions/null.Int'
         description: 用户类型
-        type: object
+        type: number
       update_by:
-        $ref: '#/definitions/null.String'
         description: 最后更新人
-        type: object
+        type: string
       update_time:
         description: 最后更新时间
         type: string
@@ -169,15 +136,30 @@ definitions:
     type: object
   null.String:
     type: object
+host: 127.0.0.1:8089
 info:
-  contact: {}
-  license: {}
+  contact:
+    email: support@swagger.io
+    name: api support
+    url: http://www.swagger.io/support
+  description: This is a example server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: example api doc
+  version: "1.0"
 paths:
   /api/activity/add:
     post:
       consumes:
       - application/json
       parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
       - description: 活动对象
         in: body
         name: activity
@@ -187,6 +169,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
         "500":
@@ -201,6 +187,11 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
       - description: 活动id对象数组
         in: body
         name: ids
@@ -213,6 +204,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
@@ -223,6 +218,11 @@ paths:
   /api/activity/get:
     get:
       parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
       - description: 活动id
         in: query
         name: id
@@ -230,6 +230,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
         "500":
@@ -242,6 +246,11 @@ paths:
   /api/activity/page:
     get:
       parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
       - description: 页码
         in: query
         name: page
@@ -263,6 +272,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
@@ -273,6 +286,11 @@ paths:
   /api/activity/page_by_area:
     get:
       parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
       - description: 页码
         in: query
         name: page
@@ -302,6 +320,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
         "500":
           description: Internal Server Error
           schema:
@@ -314,6 +336,11 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
       - description: 活动对象
         in: body
         name: activity
@@ -323,6 +350,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
         "500":
@@ -466,6 +497,10 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
         "500":

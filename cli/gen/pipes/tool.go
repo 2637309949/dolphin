@@ -12,22 +12,23 @@ import (
 	"github.com/2637309949/dolphin/cli/tempalte"
 )
 
-// Tools struct
-type Tools struct {
+// Tool struct
+type Tool struct {
 }
 
 // Build func
-func (tool *Tools) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
+func (tool *Tool) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 	}
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
-			Text:     tempalte.TmplTools,
-			FilePath: path.Join(dir, "util", "tools"),
+			Text:     tempalte.TmplTool,
+			FilePath: path.Join(dir, "util", "tool"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
+			Suffix:   ".go",
 		},
 	}, nil
 }

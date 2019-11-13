@@ -1,9 +1,22 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {},
-        "license": {}
+        "description": "This is a example server celler server.",
+        "title": "example api doc",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "api support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
     },
+    "host": "127.0.0.1:8089",
+    "basePath": "/",
     "paths": {
         "/api/activity/add": {
             "post": {
@@ -15,6 +28,13 @@
                 ],
                 "summary": "添加活动",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "认证令牌",
+                        "name": "header",
+                        "in": "query",
+                        "required": true
+                    },
                     {
                         "description": "活动对象",
                         "name": "activity",
@@ -28,6 +48,12 @@
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
                         }
@@ -52,6 +78,13 @@
                 "summary": "删除活动",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "认证令牌",
+                        "name": "header",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
                         "description": "活动id对象数组",
                         "name": "ids",
                         "in": "body",
@@ -66,6 +99,12 @@
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
                         }
@@ -88,6 +127,13 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "认证令牌",
+                        "name": "header",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "活动id",
                         "name": "id",
                         "in": "query"
@@ -96,6 +142,12 @@
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
                         }
@@ -116,6 +168,13 @@
                 ],
                 "summary": "活动分页查询",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "认证令牌",
+                        "name": "header",
+                        "in": "query",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "页码",
@@ -148,6 +207,12 @@
                             "$ref": "#/definitions/model.Response"
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -164,6 +229,13 @@
                 ],
                 "summary": "活动分页按区域查询",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "认证令牌",
+                        "name": "header",
+                        "in": "query",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "页码",
@@ -208,6 +280,12 @@
                             "$ref": "#/definitions/model.Response"
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -228,6 +306,13 @@
                 "summary": "更新活动",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "认证令牌",
+                        "name": "header",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
                         "description": "活动对象",
                         "name": "activity",
                         "in": "body",
@@ -240,6 +325,12 @@
                 "responses": {
                     "200": {
                         "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
                         "schema": {
                             "$ref": "#/definitions/model.Response"
                         }
@@ -468,6 +559,12 @@
                             "$ref": "#/definitions/model.Response"
                         }
                     },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/model.Response"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -484,18 +581,15 @@
             "properties": {
                 "campus": {
                     "description": "校区",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "content": {
                     "description": "内容",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "create_by": {
                     "description": "创建人",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "create_time": {
                     "description": "创建时间",
@@ -503,8 +597,7 @@
                 },
                 "delete_by": {
                     "description": "删除人",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "delete_time": {
                     "description": "删除时间",
@@ -512,63 +605,51 @@
                 },
                 "forward_count": {
                     "description": "转发次数",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "hidden": {
                     "description": "是否隐藏 0(否) 1(是)",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "id": {
                     "description": "主键",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "image": {
                     "description": "图片",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "is_entry": {
                     "description": "是否报名 0(否) 1(是)",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "like_count": {
                     "description": "点赞次数",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "priority": {
                     "description": "优先级",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "read_count": {
                     "description": "阅读次数",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "share_count": {
                     "description": "分享次数",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "title": {
                     "description": "标题",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "type": {
                     "description": "类型",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "update_by": {
                     "description": "最后更新人",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "update_time": {
                     "description": "最后更新时间",
@@ -581,8 +662,7 @@
             "properties": {
                 "code": {
                     "description": "编码",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "data": {
                     "description": "卡类型",
@@ -590,8 +670,7 @@
                 },
                 "msg": {
                     "description": "消息",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 }
             }
         },
@@ -600,13 +679,11 @@
             "properties": {
                 "avatar": {
                     "description": "头像",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "create_by": {
                     "description": "创建人",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "create_time": {
                     "description": "创建时间",
@@ -614,8 +691,7 @@
                 },
                 "delete_by": {
                     "description": "删除人",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "delete_time": {
                     "description": "删除时间",
@@ -623,68 +699,55 @@
                 },
                 "domain": {
                     "description": "域",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "email": {
                     "description": "邮箱",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "full_name": {
                     "description": "全名",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "gender": {
                     "description": "性别 0：女 1：男",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "id": {
                     "description": "主键",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "login_id": {
                     "description": "登录ID",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "mobile": {
                     "description": "电话",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "name": {
                     "description": "名字",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "org_id": {
                     "description": "组织ID",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "password": {
                     "description": "密码",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "status": {
                     "description": "状态 0：禁用   1：正常",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "type": {
                     "description": "用户类型",
-                    "type": "object",
-                    "$ref": "#/definitions/null.Int"
+                    "type": "number"
                 },
                 "update_by": {
                     "description": "最后更新人",
-                    "type": "object",
-                    "$ref": "#/definitions/null.String"
+                    "type": "string"
                 },
                 "update_time": {
                     "description": "最后更新时间",

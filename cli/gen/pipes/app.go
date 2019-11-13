@@ -29,6 +29,7 @@ func (app *App) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 			FilePath: path.Join(dir, "app", "app"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
+			Suffix:   ".go",
 		},
 	}, nil
 }

@@ -12,25 +12,24 @@ import (
 	"github.com/2637309949/dolphin/cli/tempalte"
 )
 
-// Auto struct
-type Auto struct {
+// Doc struct
+type Doc struct {
 }
 
 // Build func
-func (auto *Auto) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
+func (m *Doc) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
+	var tmplCfgs []*gen.TmplCfg
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
-		"Controllers": node.Controllers,
-		"Tables":      node.Tables,
 	}
-	return []*gen.TmplCfg{
-		&gen.TmplCfg{
-			Text:     tempalte.TmplAuto,
-			FilePath: path.Join(dir, "app", "auto"),
-			Data:     data,
-			Overlap:  gen.OverlapWrite,
-			Suffix:   ".go",
-		},
-	}, nil
+	tmplCfg := &gen.TmplCfg{
+		Text:     tempalte.TmplDoc,
+		FilePath: path.Join(dir, "docs", "build"),
+		Data:     data,
+		Overlap:  gen.OverlapSkip,
+		Suffix:   ".sh",
+	}
+	tmplCfgs = append(tmplCfgs, tmplCfg)
+	return tmplCfgs, nil
 }

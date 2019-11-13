@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/2637309949/dolphin/cli/schema"
@@ -83,7 +84,7 @@ func (parser *AppParser) parse(xmlPath string) error {
 					}
 				}
 			case token.Name.Local == "api":
-				api = &schema.API{}
+				api = &schema.API{Auth: true}
 				for _, attr := range token.Attr {
 					attrName := attr.Name.Local
 					attrValue := attr.Value
@@ -103,6 +104,12 @@ func (parser *AppParser) parse(xmlPath string) error {
 						api.Table = attrValue
 					case attrName == "version":
 						api.Version = attrValue
+					case attrName == "auth":
+						ret, err := strconv.ParseBool(strings.TrimSpace(attrValue))
+						if err != nil {
+							panic(err)
+						}
+						api.Auth = ret
 					}
 				}
 			case token.Name.Local == "param":

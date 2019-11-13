@@ -40,10 +40,14 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 // @Accept application/json
 {{- end}}
 {{- $api := .}}
+{{- if .Auth}}
+// @Param token header query string true "认证令牌"
+{{- end}}
 {{- range .Params}}
 // @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Ref .Type}} false "{{.Desc}}"
 {{- end}}
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api{{.VPath .Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {

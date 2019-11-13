@@ -3,10 +3,5 @@
 
 package util
 
-import "github.com/2637309949/dolphin/cli/platform/model"
-
-// Response http
-type Response model.Response
-
 // M defined
 type M map[string]interface{}

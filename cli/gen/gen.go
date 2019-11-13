@@ -23,6 +23,7 @@ type (
 		Text     string
 		FilePath string
 		Data     interface{}
+		Suffix   string
 		Overlap  Overlap
 	}
 	// Pipe interface
@@ -76,7 +77,7 @@ func (g *Gen) buildTmpl(tmpcfg *TmplCfg) error {
 	var err error
 
 	tmpl = template.New("buildTmpl")
-	suffix = ".go"
+	suffix = tmpcfg.Suffix
 	if tmpl, err = tmpl.Parse(tmpcfg.Text); err != nil {
 		return err
 	}

@@ -16,7 +16,7 @@ package model
 type {{.Table.ToUpperCase .Table.Name}} struct {
 	{{- range .Table.Columns}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `xorm:"{{.Xorm}} '{{.Name}}'" json:"{{.Name}}" xml:"{{.Name}}"` + "`" + `
+	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `xorm:"{{.Xorm}} '{{.Name}}'" json:"{{.Name}}" xml:"{{.Name}}" swaggertype:"{{.SwaggerType .Type}}"` + "`" + `
 	{{- end}}
 }
 

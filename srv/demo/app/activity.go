@@ -30,6 +30,7 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 // @Param id query string false "记录id"
 // @Param action query string false "点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/activity/in_crease [get]
 func (ctr *Activity) InCrease(ctx *Context) {
@@ -50,8 +51,10 @@ func (ctr *Activity) InCrease(ctx *Context) {
 // @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
+// @Param token header query string true "认证令牌"
 // @Param activity body model.Activity false "活动对象"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/add [post]
 func (ctr *Activity) Add(ctx *Context) {
@@ -72,8 +75,10 @@ func (ctr *Activity) Add(ctx *Context) {
 // @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
+// @Param token header query string true "认证令牌"
 // @Param activity body model.Activity false "活动对象"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/update [post]
 func (ctr *Activity) Update(ctx *Context) {
@@ -94,8 +99,10 @@ func (ctr *Activity) Update(ctx *Context) {
 // @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
+// @Param token header query string true "认证令牌"
 // @Param ids body []string false "活动id对象数组"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/delete [post]
 func (ctr *Activity) Delete(ctx *Context) {
@@ -115,11 +122,13 @@ func (ctr *Activity) Delete(ctx *Context) {
 // Page api implementation
 // @Summary 活动分页查询
 // @Tags 活动
+// @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
 // @Param rows query int false "单页数"
 // @Param title query string false "标题筛选"
 // @Param hidden query int false "是否隐藏筛选"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/page [get]
 func (ctr *Activity) Page(ctx *Context) {
@@ -142,6 +151,7 @@ func (ctr *Activity) Page(ctx *Context) {
 // PageByArea api implementation
 // @Summary 活动分页按区域查询
 // @Tags 活动
+// @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
 // @Param rows query int false "单页数"
 // @Param title query string false "标题筛选"
@@ -149,6 +159,7 @@ func (ctr *Activity) Page(ctx *Context) {
 // @Param city query string false "城市筛选"
 // @Param hidden query int false "是否隐藏筛选"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/page_by_area [get]
 func (ctr *Activity) PageByArea(ctx *Context) {
@@ -171,8 +182,10 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 // Get api implementation
 // @Summary 获取活动
 // @Tags 活动
+// @Param token header query string true "认证令牌"
 // @Param id query string false "活动id"
 // @Success 200 {object} model.Response
+// @Failure 403 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/get [get]
 func (ctr *Activity) Get(ctx *Context) {
