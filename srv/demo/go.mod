@@ -12,8 +12,6 @@ require (
 	github.com/denisenkom/go-mssqldb v0.0.0-20191001013358-cfbb681360f0 // indirect
 	github.com/ekyoung/gin-nice-recovery v0.0.0-20160510022553-1654dca486db
 	github.com/gin-gonic/gin v1.4.0
-	github.com/go-openapi/jsonreference v0.19.3 // indirect
-	github.com/go-openapi/spec v0.19.4 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
 	github.com/hashicorp/go-multierror v1.0.0
@@ -25,7 +23,6 @@ require (
 	github.com/shopspring/decimal v0.0.0-20191009025716-f1972eb1d1f5 // indirect
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.4.0
-	github.com/swaggo/swag v1.6.3 // indirect
 	github.com/thoas/go-funk v0.4.0
 	github.com/urfave/cli v1.22.1 // indirect
 	github.com/xormplus/xorm v0.0.0-20190926190243-42377f593eb1

@@ -88,32 +88,3 @@ func (c *Common) Ref(m string) string {
 	}
 	return m
 }
-
-// SwaggerType defined model field type in swagger
-func (c *Common) SwaggerType(t string) (ret string) {
-	switch t {
-	case "null.String":
-		ret = "primitive,string"
-	case "null.Int":
-		ret = "number"
-	case "null.Time":
-		ret = "primitive,string"
-	case "null.Bool":
-		ret = "primitive,boolean"
-	case "null.Float":
-		ret = "primitive,number"
-	case "interface{}":
-		ret = "primitive,object"
-	case "[]null.String":
-		ret = "array,string"
-	case "[]null.Int":
-		ret = "array,number"
-	case "[]null.Time":
-		ret = "array,string"
-	case "[]null.Bool":
-		ret = "array,boolean"
-	case "[]ull.Float":
-		ret = "array,number"
-	}
-	return
-}

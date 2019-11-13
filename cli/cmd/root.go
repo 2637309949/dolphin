@@ -5,8 +5,6 @@
 package cmd
 
 import (
-	"time"
-
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
@@ -20,11 +18,13 @@ var (
 		Long:  `Dolphin, a cli tools for generate golang code`,
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			if !terminal.IsTerminal(unix.Stdout) {
-				logrus.SetFormatter(&logrus.JSONFormatter{})
+				logrus.SetFormatter(&logrus.JSONFormatter{
+					TimestampFormat: "2006/01/02 15:04:05",
+				})
 			} else {
 				logrus.SetFormatter(&logrus.TextFormatter{
 					FullTimestamp:   true,
-					TimestampFormat: time.RFC3339Nano,
+					TimestampFormat: "2006/01/02 15:04:05",
 				})
 			}
 			if verbose, _ := cmd.Flags().GetBool("verbose"); verbose {

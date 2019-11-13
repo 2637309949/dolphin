@@ -5,7 +5,7 @@ package app
 
 import (
 	"example/model"
-
+	
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
@@ -24,7 +24,7 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 }
 
 // InCrease api implementation
-// @Summary 增加次数
+// @Summary 增加次数 
 // @Tags 活动
 // @version 1.0
 // @Param id query string false "记录id"
@@ -48,7 +48,7 @@ func (ctr *Activity) InCrease(ctx *Context) {
 }
 
 // Add api implementation
-// @Summary 添加活动
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -72,7 +72,7 @@ func (ctr *Activity) Add(ctx *Context) {
 }
 
 // Update api implementation
-// @Summary 更新活动
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -96,7 +96,7 @@ func (ctr *Activity) Update(ctx *Context) {
 }
 
 // Delete api implementation
-// @Summary 删除活动
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -120,7 +120,7 @@ func (ctr *Activity) Delete(ctx *Context) {
 }
 
 // Page api implementation
-// @Summary 活动分页查询
+// @Summary 活动分页查询 
 // @Tags 活动
 // @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
@@ -149,7 +149,7 @@ func (ctr *Activity) Page(ctx *Context) {
 }
 
 // PageByArea api implementation
-// @Summary 活动分页按区域查询
+// @Summary 活动分页按区域查询 
 // @Tags 活动
 // @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
@@ -180,7 +180,7 @@ func (ctr *Activity) PageByArea(ctx *Context) {
 }
 
 // Get api implementation
-// @Summary 获取活动
+// @Summary 获取活动 
 // @Tags 活动
 // @Param token header query string true "认证令牌"
 // @Param id query string false "活动id"
@@ -201,3 +201,4 @@ func (ctr *Activity) Get(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

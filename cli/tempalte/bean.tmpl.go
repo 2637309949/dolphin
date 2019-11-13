@@ -16,7 +16,7 @@ package model
 type {{.Bean.ToUpperCase .Bean.Name}} struct {
 	{{- range .Bean.Props}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `json:"{{.Name}}" xml:"{{.Name}}" swaggertype:"{{.SwaggerType .Type}}"` + "`" + `
+	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `json:"{{.Name}}" xml:"{{.Name}}"` + "`" + `
 	{{- end}}
 }
 `
