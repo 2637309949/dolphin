@@ -19,6 +19,8 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/spf13/viper"
+
 	"github.com/KyleBanks/depth"
 	"github.com/go-openapi/jsonreference"
 	"github.com/go-openapi/spec"
@@ -179,10 +181,12 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 	if err != nil {
 		return fmt.Errorf("cannot parse source files %s: %s", mainAPIFile, err)
 	}
-
 	parser.swagger.Swagger = "2.0"
+	parser.swagger.Info.Title = viper.GetString("name")
+	parser.swagger.Info.Version = viper.GetString("version")
+	parser.swagger.Info.License.Name = viper.GetString("license.name")
+	parser.swagger.Info.License.URL = viper.GetString("license.url")
 	securityMap := map[string]*spec.SecurityScheme{}
-
 	for _, comment := range fileTree.Comments {
 		if !isGeneralAPIComment(comment) {
 			continue

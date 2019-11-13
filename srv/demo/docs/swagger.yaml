@@ -1,4 +1,3 @@
-basePath: /
 definitions:
   model.Activity:
     properties:
@@ -132,18 +131,12 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
-host: 127.0.0.1:8089
 info:
-  contact:
-    email: support@swagger.io
-    name: api support
-    url: http://www.swagger.io/support
-  description: This is a example server celler server.
+  contact: {}
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: example api doc
+  title: example
   version: "1.0"
 paths:
   /api/activity/add:

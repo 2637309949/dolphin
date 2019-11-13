@@ -7,6 +7,7 @@ package cmd
 import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
 )
@@ -30,6 +31,14 @@ var (
 			if verbose, _ := cmd.Flags().GetBool("verbose"); verbose {
 				logrus.SetLevel(logrus.DebugLevel)
 			}
+			viper.SetConfigName("app")
+			viper.AddConfigPath(".")
+			viper.AddConfigPath("conf")
+			viper.AutomaticEnv()
+			viper.SetDefault("name", "example")
+			viper.SetDefault("version", "1.0")
+			viper.SetDefault("license.name", "Apache 2.0")
+			viper.SetDefault("license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
 		},
 	}
 )

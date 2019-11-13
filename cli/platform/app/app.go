@@ -7,12 +7,13 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/sys/unix"
 )
 
 // NewLifeHook create lifecycle hook
@@ -40,10 +41,16 @@ func NewLifeHook(e *Engine) srv.Hook {
 
 func init() {
 	// set logger
-	logrus.SetFormatter(&logrus.TextFormatter{
-		FullTimestamp:   true,
-		TimestampFormat: time.RFC3339,
-	})
+	if !terminal.IsTerminal(unix.Stdout) {
+		logrus.SetFormatter(&logrus.JSONFormatter{
+			TimestampFormat: "2006/01/02 15:04:05",
+		})
+	} else {
+		logrus.SetFormatter(&logrus.TextFormatter{
+			FullTimestamp:   true,
+			TimestampFormat: "2006/01/02 15:04:05",
+		})
+	}
 	// read config
 	viper.SetConfigName("app")
 	viper.AddConfigPath(".")
