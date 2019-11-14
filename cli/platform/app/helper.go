@@ -45,6 +45,24 @@ func (q *Query) SetInt(key string, init ...int) {
 	}
 }
 
+// SetBool defined
+func (q *Query) SetBool(key string, init ...bool) {
+	v := q.i.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = false
+		}
+	} else {
+		i, err := strconv.ParseBool(v)
+		if err != nil {
+			panic(err)
+		}
+		q.m[key] = i
+	}
+}
+
 // SetString defined
 func (q *Query) SetString(key string, init ...string) {
 	v := q.i.Query(key)

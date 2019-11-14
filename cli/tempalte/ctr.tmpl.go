@@ -46,19 +46,21 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 {{- range .Params}}
 // @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Ref .Type}} false "{{.Desc}}"
 {{- end}}
-// @Success 200 {object} model.Response
 // @Failure 403 {object} model.Response
+{{- if ne .Return.Success.Type ""}}
+// @Success 200 {object} model.Response
+{{- end}}
+{{- if ne .Return.Failure.Type ""}}
 // @Failure 500 {object} model.Response
+{{- end}}
 // @Router /api{{.VPath .Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
 	{{- if eq .Function "page"}}
 	q := ctr.Query(ctx)
-	q.SetInt("page", 1)
-	q.SetInt("size", 20)
-	q.SetString("title")
-	q.SetString("campus")
-	q.SetString("city")
-	q.SetString("hidden")
+	{{- range .Params}}
+	{{- $tv := .ToTypeValue .Type .Value}}
+	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
+	{{- end}}
 	ret, err := ctr.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	{{- else if eq .Function "add"}}
 	var bean model.{{.ToUpperCase .Table}}

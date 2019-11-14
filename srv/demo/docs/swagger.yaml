@@ -244,7 +244,7 @@ paths:
         type: integer
       - description: 单页数
         in: query
-        name: rows
+        name: size
         type: integer
       - description: 标题筛选
         in: query

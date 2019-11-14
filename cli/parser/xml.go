@@ -84,7 +84,7 @@ func (parser *AppParser) parse(xmlPath string) error {
 					}
 				}
 			case token.Name.Local == "api":
-				api = &schema.API{Auth: true}
+				api = &schema.API{Auth: true, Return: &schema.Return{Success: &schema.Success{}, Failure: &schema.Failure{}}}
 				for _, attr := range token.Attr {
 					attrName := attr.Name.Local
 					attrValue := attr.Value
@@ -112,6 +112,30 @@ func (parser *AppParser) parse(xmlPath string) error {
 						api.Auth = ret
 					}
 				}
+			case token.Name.Local == "success":
+				for _, attr := range token.Attr {
+					attrName := attr.Name.Local
+					attrValue := attr.Value
+					if strings.TrimSpace(attrValue) == "" {
+						continue
+					}
+					switch true {
+					case attrName == "type":
+						api.Return.Success.Type = attrValue
+					}
+				}
+			case token.Name.Local == "failure":
+				for _, attr := range token.Attr {
+					attrName := attr.Name.Local
+					attrValue := attr.Value
+					if strings.TrimSpace(attrValue) == "" {
+						continue
+					}
+					switch true {
+					case attrName == "type":
+						api.Return.Failure.Type = attrValue
+					}
+				}
 			case token.Name.Local == "param":
 				param = &schema.Param{}
 				for _, attr := range token.Attr {
@@ -127,6 +151,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						param.Desc = attrValue
 					case attrName == "type":
 						param.Type = attrValue
+					case attrName == "value":
+						param.Value = attrValue
 					}
 				}
 			case token.Name.Local == "bean":

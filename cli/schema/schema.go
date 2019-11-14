@@ -7,13 +7,13 @@ package schema
 // Success struct
 type Success struct {
 	Common
-	Ref string
+	Type string
 }
 
 // Failure struct
 type Failure struct {
 	Common
-	Ref string
+	Type string
 }
 
 // Return struct
@@ -26,9 +26,10 @@ type Return struct {
 // Param struct
 type Param struct {
 	Common
-	Name string `validate:"required"`
-	Desc string `validate:"required"`
-	Type string
+	Name  string `validate:"required"`
+	Desc  string `validate:"required"`
+	Type  string
+	Value string
 }
 
 // API struct

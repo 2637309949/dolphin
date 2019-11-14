@@ -27,7 +27,7 @@ func (c *Common) Import(pkg string) template.HTML {
 )`
 		return c.Unescaped(fmt.Sprintf(tmpl, strings.Join(packages, "\n")))
 	}
-	return template.HTML("")
+	return c.Unescaped("")
 }
 
 // Unescaped unescaped
@@ -38,6 +38,30 @@ func (c *Common) Unescaped(x string) template.HTML {
 // ToUpper toUpper
 func (c *Common) ToUpper(name string) string {
 	return strings.ToUpper(name)
+}
+
+// ToTypeValue value
+func (c *Common) ToTypeValue(t string, v string) template.HTML {
+	if strings.TrimSpace(v) == "" {
+		return c.Unescaped("")
+	}
+	switch t {
+	case "int":
+		i, e := strconv.ParseInt(v, 10, 64)
+		if e != nil {
+			panic(e)
+		}
+		return c.Unescaped(fmt.Sprintf("%v", i))
+	case "string":
+		return c.Unescaped(fmt.Sprintf(`"%v"`, v))
+	case "bool":
+		b, e := strconv.ParseBool(v)
+		if e != nil {
+			panic(e)
+		}
+		return c.Unescaped(fmt.Sprintf("%v", b))
+	}
+	return c.Unescaped("")
 }
 
 // ToUpperCase uppercase
@@ -79,6 +103,11 @@ func (c *Common) VPath(v string) string {
 		panic(err)
 	}
 	return fmt.Sprintf("/v%v", vi)
+}
+
+// ToTitle title
+func (c *Common) ToTitle(title string) string {
+	return strings.Title(title)
 }
 
 // Ref defined model name
