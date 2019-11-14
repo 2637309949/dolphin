@@ -163,8 +163,22 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	}
 	ctx.Success(ret)
 {{- else}}
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
+	{{- if eq .Method "get"}}
+	q := ctr.Query(ctx)
+	{{- range .Params}}
+	{{- $tv := .ToTypeValue .Type .Value}}
+	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
+	{{- end}}
+	ret, err := pUtil.AppAction(q)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+	{{- else }}
+	{{- $bp := index .Params 0}}
+	var form {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
@@ -174,6 +188,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 		return
 	}
 	ctx.Success(ret)
+	{{- end}}
 {{- end}}
 }
 {{end}}

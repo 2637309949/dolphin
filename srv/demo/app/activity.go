@@ -23,30 +23,6 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 	})
 }
 
-// InCrease api implementation
-// @Summary 增加次数
-// @Tags 活动
-// @version 1.0
-// @Param id query string false "记录id"
-// @Param action query string false "点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
-// @Router /api/v1/activity/in_crease [get]
-func (ctr *Activity) InCrease(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ret, err := pUtil.AppAction(form)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}
-
 // AddMany api implementation
 // @Summary 添加活动
 // @Tags 活动
@@ -88,62 +64,6 @@ func (ctr *Activity) AddOne(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.Insert(&form)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}
-
-// UpdateMany api implementation
-// @Summary 更新活动
-// @Tags 活动
-// @Accept application/json
-// @Param token header query string true "认证令牌"
-// @Param activity body []model.Activity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
-// @Router /api/activity/updateMany [post]
-func (ctr *Activity) UpdateMany(ctx *Context) {
-	var form []model.Activity
-	var err error
-	var ret []int64
-	var r int64
-	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	s := ctx.DB.NewSession()
-	for _, f := range form {
-		r, err = s.ID(f.ID).Update(&f)
-		ret = append(ret, r)
-	}
-	if err != nil {
-		s.Rollback()
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}
-
-// UpdateOne api implementation
-// @Summary 更新活动
-// @Tags 活动
-// @Accept application/json
-// @Param token header query string true "认证令牌"
-// @Param activity body model.Activity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
-// @Router /api/activity/updateOne [post]
-func (ctr *Activity) UpdateOne(ctx *Context) {
-	var form model.Activity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ret, err := ctx.DB.ID(form.ID).Update(&form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -207,6 +127,62 @@ func (ctr *Activity) DeleteOne(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// UpdateMany api implementation
+// @Summary 更新活动
+// @Tags 活动
+// @Accept application/json
+// @Param token header query string true "认证令牌"
+// @Param activity body []model.Activity false "活动对象"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/activity/updateMany [post]
+func (ctr *Activity) UpdateMany(ctx *Context) {
+	var form []model.Activity
+	var err error
+	var ret []int64
+	var r int64
+	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for _, f := range form {
+		r, err = s.ID(f.ID).Update(&f)
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// UpdateOne api implementation
+// @Summary 更新活动
+// @Tags 活动
+// @Accept application/json
+// @Param token header query string true "认证令牌"
+// @Param activity body model.Activity false "活动对象"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/activity/updateOne [post]
+func (ctr *Activity) UpdateOne(ctx *Context) {
+	var form model.Activity
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.ID(form.ID).Update(&form)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // List api implementation
 // @Summary 活动分页查询
 // @Tags 活动
@@ -246,6 +222,53 @@ func (ctr *Activity) One(ctx *Context) {
 	var entity model.Activity
 	id := ctx.Query("id")
 	ret, err := ctx.DB.Id(id).Get(&entity)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// InCrease api implementation
+// @Summary 增加次数
+// @Tags 活动
+// @version 1.0
+// @Param id query string false "记录id"
+// @Param action query string false "点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v1/activity/in_crease [get]
+func (ctr *Activity) InCrease(ctx *Context) {
+	q := ctr.Query(ctx)
+	q.SetString("id")
+	q.SetString("action")
+	ret, err := pUtil.AppAction(q)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// InCreaseV2 api implementation
+// @Summary 增加次数
+// @Tags 活动
+// @version 2.0
+// @Accept application/json
+// @Param id body string false "记录id"
+// @Param action body string false "点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/v2/activity/in_crease_v2 [post]
+func (ctr *Activity) InCreaseV2(ctx *Context) {
+	var form string
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := pUtil.AppAction(form)
 	if err != nil {
 		ctx.Fail(err)
 		return

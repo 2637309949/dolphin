@@ -585,4 +585,35 @@ paths:
       summary: 增加次数
       tags:
       - 活动
+  /api/v2/activity/in_crease_v2:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 记录id
+        in: body
+        name: id
+        schema:
+          type: string
+      - description: 点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
+        in: body
+        name: action
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 增加次数
+      tags:
+      - 活动
 swagger: "2.0"
