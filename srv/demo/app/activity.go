@@ -5,7 +5,7 @@ package app
 
 import (
 	"example/model"
-
+	
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
@@ -24,7 +24,7 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 }
 
 // AddMany api implementation
-// @Summary 添加活动
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -32,7 +32,7 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/addMany [post]
+// @Router /api/activity/add_many [post]
 func (ctr *Activity) AddMany(ctx *Context) {
 	var form []model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -48,7 +48,7 @@ func (ctr *Activity) AddMany(ctx *Context) {
 }
 
 // AddOne api implementation
-// @Summary 添加活动
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -56,7 +56,7 @@ func (ctr *Activity) AddMany(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/addOne [post]
+// @Router /api/activity/add_one [post]
 func (ctr *Activity) AddOne(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -72,7 +72,7 @@ func (ctr *Activity) AddOne(ctx *Context) {
 }
 
 // DeleteMany api implementation
-// @Summary 删除活动
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -80,7 +80,7 @@ func (ctr *Activity) AddOne(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/deleteMany [post]
+// @Router /api/activity/delete_many [post]
 func (ctr *Activity) DeleteMany(ctx *Context) {
 	var form []model.Activity
 	var err error
@@ -104,7 +104,7 @@ func (ctr *Activity) DeleteMany(ctx *Context) {
 }
 
 // DeleteOne api implementation
-// @Summary 删除活动
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -112,7 +112,7 @@ func (ctr *Activity) DeleteMany(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/deleteOne [post]
+// @Router /api/activity/delete_one [post]
 func (ctr *Activity) DeleteOne(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -128,7 +128,7 @@ func (ctr *Activity) DeleteOne(ctx *Context) {
 }
 
 // UpdateMany api implementation
-// @Summary 更新活动
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -136,7 +136,7 @@ func (ctr *Activity) DeleteOne(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/updateMany [post]
+// @Router /api/activity/update_many [post]
 func (ctr *Activity) UpdateMany(ctx *Context) {
 	var form []model.Activity
 	var err error
@@ -160,7 +160,7 @@ func (ctr *Activity) UpdateMany(ctx *Context) {
 }
 
 // UpdateOne api implementation
-// @Summary 更新活动
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -168,7 +168,7 @@ func (ctr *Activity) UpdateMany(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/updateOne [post]
+// @Router /api/activity/update_one [post]
 func (ctr *Activity) UpdateOne(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -184,7 +184,7 @@ func (ctr *Activity) UpdateOne(ctx *Context) {
 }
 
 // List api implementation
-// @Summary 活动分页查询
+// @Summary 活动分页查询 
 // @Tags 活动
 // @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
@@ -210,7 +210,7 @@ func (ctr *Activity) List(ctx *Context) {
 }
 
 // One api implementation
-// @Summary 获取活动
+// @Summary 获取活动 
 // @Tags 活动
 // @Param token header query string true "认证令牌"
 // @Param id query string false "活动id"
@@ -230,7 +230,7 @@ func (ctr *Activity) One(ctx *Context) {
 }
 
 // InCrease api implementation
-// @Summary 增加次数
+// @Summary 增加次数 
 // @Tags 活动
 // @version 1.0
 // @Param id query string false "记录id"
@@ -252,7 +252,7 @@ func (ctr *Activity) InCrease(ctx *Context) {
 }
 
 // InCreaseV2 api implementation
-// @Summary 增加次数
+// @Summary 增加次数 
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
@@ -275,3 +275,4 @@ func (ctr *Activity) InCreaseV2(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

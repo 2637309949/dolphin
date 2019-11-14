@@ -37,6 +37,7 @@ var (
 			viper.AutomaticEnv()
 			viper.SetDefault("name", "example")
 			viper.SetDefault("version", "1.0")
+			viper.SetDefault("sqlTemplate", "sql")
 			viper.SetDefault("license.name", "Apache 2.0")
 			viper.SetDefault("license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
 		},

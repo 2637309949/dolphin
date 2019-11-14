@@ -139,7 +139,7 @@ info:
   title: example
   version: "1.0"
 paths:
-  /api/activity/addMany:
+  /api/activity/add_many:
     post:
       consumes:
       - application/json
@@ -171,7 +171,7 @@ paths:
       summary: 添加活动
       tags:
       - 活动
-  /api/activity/addOne:
+  /api/activity/add_one:
     post:
       consumes:
       - application/json
@@ -202,7 +202,7 @@ paths:
       summary: 添加活动
       tags:
       - 活动
-  /api/activity/deleteMany:
+  /api/activity/delete_many:
     post:
       consumes:
       - application/json
@@ -234,7 +234,7 @@ paths:
       summary: 删除活动
       tags:
       - 活动
-  /api/activity/deleteOne:
+  /api/activity/delete_one:
     post:
       consumes:
       - application/json
@@ -333,7 +333,7 @@ paths:
       summary: 获取活动
       tags:
       - 活动
-  /api/activity/updateMany:
+  /api/activity/update_many:
     post:
       consumes:
       - application/json
@@ -365,7 +365,7 @@ paths:
       summary: 更新活动
       tags:
       - 活动
-  /api/activity/updateOne:
+  /api/activity/update_one:
     post:
       consumes:
       - application/json

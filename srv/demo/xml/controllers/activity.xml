@@ -1,40 +1,40 @@
 <controller name="activity" desc="活动">
-    <api name="addMany" function="add" table="activity" desc="添加活动" method="post">
+    <api name="add_many" function="add" table="activity" desc="添加活动" method="post">
         <param name="activity" type="[]$activity" desc="活动对象"/>
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="addOne" function="add" table="activity" desc="添加活动" method="post">
+    <api name="add_one" function="add" table="activity" desc="添加活动" method="post">
         <param name="activity" type="$activity" desc="活动对象"/>
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="deleteMany" function="delete" table="activity" desc="删除活动" method="post">
+    <api name="delete_many" function="delete" table="activity" desc="删除活动" method="post">
         <param name="activity" type="[]$activity" desc="活动对象" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="deleteOne" function="delete" table="activity" desc="删除活动" method="post">
+    <api name="delete_one" function="delete" table="activity" desc="删除活动" method="post">
         <param name="activity" type="$activity" desc="活动对象" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="updateMany" function="update" table="activity" desc="更新活动" method="post">
+    <api name="update_many" function="update" table="activity" desc="更新活动" method="post">
         <param name="activity" type="[]$activity" desc="活动对象" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="updateOne" function="update" table="activity" desc="更新活动" method="post">
+    <api name="update_one" function="update" table="activity" desc="更新活动" method="post">
         <param name="activity" type="$activity" desc="活动对象" />
         <return>
             <success type="$response"/>

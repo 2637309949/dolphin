@@ -125,3 +125,8 @@ func (c *Common) Ref(m string) string {
 func (c *Common) ISArray(m string) bool {
 	return strings.HasPrefix(m, "[]")
 }
+
+// TableName defined table
+func (c *Common) TableName(app string, table string) string {
+	return fmt.Sprintf("%v_%v", app, table)
+}
