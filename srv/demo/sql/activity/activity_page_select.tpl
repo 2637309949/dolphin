@@ -3,5 +3,5 @@ select
 from
 	example_activity
 where
-	example_activity <> ""
+	example_activity.id <> ""
 LIMIT  OFFSET 
