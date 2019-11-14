@@ -55,33 +55,116 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 {{- end}}
 // @Router /api{{.VPath .Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
-	{{- if eq .Function "page"}}
+{{- if eq .Function "list"}}
 	q := ctr.Query(ctx)
 	{{- range .Params}}
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
 	ret, err := ctr.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
-	{{- else if eq .Function "add"}}
-	var bean model.{{.ToUpperCase .Table}}
-	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
+	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Insert(&bean)
-	{{- else}}
+	ctx.Success(ret)
+{{- else if eq .Function "add"}}
+	{{- $bp := index .Params 0}}
+	var form {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.Insert(&form)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+{{- else if eq .Function "delete"}}
+	{{- $bp := index .Params 0}}
+	{{- $isArr := $bp.ISArray $bp.Type}}
+	{{- if $isArr}}
+	var form {{$bp.Ref $bp.Type}}
+	var err error
+	var ret []int64
+	var r int64
+	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for _, f := range form {
+		r, err = s.ID(f.ID).Delete(&f)
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+	{{- else }}
+	var form {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.ID(form.ID).Delete(&form)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+	{{- end}}
+{{- else if eq .Function "update"}}
+	{{- $bp := index .Params 0}}
+	{{- $isArr := $bp.ISArray $bp.Type}}
+	{{- if $isArr}}
+	var form {{$bp.Ref $bp.Type}}
+	var err error
+	var ret []int64
+	var r int64
+	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for _, f := range form {
+		r, err = s.ID(f.ID).Update(&f)
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+	{{- else }}
+	var form {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.ID(form.ID).Update(&form)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+	{{- end}}
+{{- else}}
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
 	ret, err := pUtil.AppAction(form)
-	{{- end}}
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
 	ctx.Success(ret)
+{{- end}}
 }
 {{end}}
 `

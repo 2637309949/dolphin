@@ -107,7 +107,6 @@ func SetMarkdownFileDirectory(directoryPath string) func(*Parser) {
 
 // ParseAPI parses general api info for given searchDir and mainAPIFile
 func (parser *Parser) ParseAPI(searchDir string, mainAPIFile string) error {
-	Printf("Generate general API Info, search dir:%s", searchDir)
 
 	if err := parser.getAllGoFileInfo(searchDir); err != nil {
 		return err
@@ -578,8 +577,6 @@ func (parser *Parser) ParseDefinition(pkgName, typeName string, typeSpec *ast.Ty
 		return nil
 	}
 	parser.structStack = append(parser.structStack, refTypeName)
-
-	Println("Generating " + refTypeName)
 
 	schema, err := parser.parseTypeExpr(pkgName, typeName, typeSpec.Type)
 	if err != nil {

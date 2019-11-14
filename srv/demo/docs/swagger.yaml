@@ -139,7 +139,39 @@ info:
   title: example
   version: "1.0"
 paths:
-  /api/activity/add:
+  /api/activity/addMany:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          items:
+            $ref: '#/definitions/model.Activity'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加活动
+      tags:
+      - 活动
+  /api/activity/addOne:
     post:
       consumes:
       - application/json
@@ -170,7 +202,7 @@ paths:
       summary: 添加活动
       tags:
       - 活动
-  /api/activity/delete:
+  /api/activity/deleteMany:
     post:
       consumes:
       - application/json
@@ -180,12 +212,43 @@ paths:
         name: header
         required: true
         type: string
-      - description: 活动id对象数组
+      - description: 活动对象
         in: body
-        name: ids
+        name: activity
         schema:
           items:
-            type: string
+            $ref: '#/definitions/model.Activity'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除活动
+      tags:
+      - 活动
+  /api/activity/deleteOne:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          $ref: '#/definitions/model.Activity'
       responses:
         "200":
           description: OK
@@ -270,55 +333,7 @@ paths:
       summary: 活动分页查询
       tags:
       - 活动
-  /api/activity/page_by_area:
-    get:
-      parameters:
-      - description: 认证令牌
-        in: query
-        name: header
-        required: true
-        type: string
-      - description: 页码
-        in: query
-        name: page
-        type: integer
-      - description: 单页数
-        in: query
-        name: rows
-        type: integer
-      - description: 标题筛选
-        in: query
-        name: title
-        type: string
-      - description: 校区id筛选
-        in: query
-        name: campus
-        type: string
-      - description: 城市筛选
-        in: query
-        name: city
-        type: string
-      - description: 是否隐藏筛选
-        in: query
-        name: hidden
-        type: integer
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 活动分页按区域查询
-      tags:
-      - 活动
-  /api/activity/update:
+  /api/activity/updateMany:
     post:
       consumes:
       - application/json
@@ -334,6 +349,37 @@ paths:
         schema:
           items:
             $ref: '#/definitions/model.Activity'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新活动
+      tags:
+      - 活动
+  /api/activity/updateOne:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          $ref: '#/definitions/model.Activity'
       responses:
         "200":
           description: OK

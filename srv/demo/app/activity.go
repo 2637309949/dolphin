@@ -5,7 +5,7 @@ package app
 
 import (
 	"example/model"
-	
+
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
@@ -24,7 +24,7 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 }
 
 // InCrease api implementation
-// @Summary 增加次数 
+// @Summary 增加次数
 // @Tags 活动
 // @version 1.0
 // @Param id query string false "记录id"
@@ -47,32 +47,8 @@ func (ctr *Activity) InCrease(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Add api implementation
-// @Summary 添加活动 
-// @Tags 活动
-// @Accept application/json
-// @Param token header query string true "认证令牌"
-// @Param activity body model.Activity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
-// @Router /api/activity/add [post]
-func (ctr *Activity) Add(ctx *Context) {
-	var bean model.Activity
-	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ret, err := ctx.DB.Insert(&bean)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}
-
-// Update api implementation
-// @Summary 更新活动 
+// AddMany api implementation
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
@@ -80,14 +56,14 @@ func (ctr *Activity) Add(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/update [post]
-func (ctr *Activity) Update(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
+// @Router /api/activity/addMany [post]
+func (ctr *Activity) AddMany(ctx *Context) {
+	var form []model.Activity
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := pUtil.AppAction(form)
+	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -95,23 +71,135 @@ func (ctr *Activity) Update(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Delete api implementation
-// @Summary 删除活动 
+// AddOne api implementation
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param token header query string true "认证令牌"
-// @Param ids body []string false "活动id对象数组"
+// @Param activity body model.Activity false "活动对象"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/delete [post]
-func (ctr *Activity) Delete(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
+// @Router /api/activity/addOne [post]
+func (ctr *Activity) AddOne(ctx *Context) {
+	var form model.Activity
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := pUtil.AppAction(form)
+	ret, err := ctx.DB.Insert(&form)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// UpdateMany api implementation
+// @Summary 更新活动
+// @Tags 活动
+// @Accept application/json
+// @Param token header query string true "认证令牌"
+// @Param activity body []model.Activity false "活动对象"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/activity/updateMany [post]
+func (ctr *Activity) UpdateMany(ctx *Context) {
+	var form []model.Activity
+	var err error
+	var ret []int64
+	var r int64
+	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for _, f := range form {
+		r, err = s.ID(f.ID).Update(&f)
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// UpdateOne api implementation
+// @Summary 更新活动
+// @Tags 活动
+// @Accept application/json
+// @Param token header query string true "认证令牌"
+// @Param activity body model.Activity false "活动对象"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/activity/updateOne [post]
+func (ctr *Activity) UpdateOne(ctx *Context) {
+	var form model.Activity
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.ID(form.ID).Update(&form)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// DeleteMany api implementation
+// @Summary 删除活动
+// @Tags 活动
+// @Accept application/json
+// @Param token header query string true "认证令牌"
+// @Param activity body []model.Activity false "活动对象"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/activity/deleteMany [post]
+func (ctr *Activity) DeleteMany(ctx *Context) {
+	var form []model.Activity
+	var err error
+	var ret []int64
+	var r int64
+	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for _, f := range form {
+		r, err = s.ID(f.ID).Delete(&f)
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// DeleteOne api implementation
+// @Summary 删除活动
+// @Tags 活动
+// @Accept application/json
+// @Param token header query string true "认证令牌"
+// @Param activity body model.Activity false "活动对象"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/activity/deleteOne [post]
+func (ctr *Activity) DeleteOne(ctx *Context) {
+	var form model.Activity
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.ID(form.ID).Delete(&form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -120,7 +208,7 @@ func (ctr *Activity) Delete(ctx *Context) {
 }
 
 // Page api implementation
-// @Summary 活动分页查询 
+// @Summary 活动分页查询
 // @Tags 活动
 // @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
@@ -145,38 +233,8 @@ func (ctr *Activity) Page(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// PageByArea api implementation
-// @Summary 活动分页按区域查询 
-// @Tags 活动
-// @Param token header query string true "认证令牌"
-// @Param page query int false "页码"
-// @Param rows query int false "单页数"
-// @Param title query string false "标题筛选"
-// @Param campus query string false "校区id筛选"
-// @Param city query string false "城市筛选"
-// @Param hidden query int false "是否隐藏筛选"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
-// @Router /api/activity/page_by_area [get]
-func (ctr *Activity) PageByArea(ctx *Context) {
-	q := ctr.Query(ctx)
-	q.SetInt("page")
-	q.SetInt("rows")
-	q.SetString("title")
-	q.SetString("campus")
-	q.SetString("city")
-	q.SetInt("hidden")
-	ret, err := ctr.PageSearch(ctx.DB, "activity", "page_by_area", "activity", q.Value())
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}
-
 // Get api implementation
-// @Summary 获取活动 
+// @Summary 获取活动
 // @Tags 活动
 // @Param token header query string true "认证令牌"
 // @Param id query string false "活动id"
@@ -197,4 +255,3 @@ func (ctr *Activity) Get(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

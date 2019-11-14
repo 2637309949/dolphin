@@ -66,7 +66,6 @@ func (g *Gen) Build(config *Config) error {
 		return fmt.Errorf("dir: %s is not exist", config.SearchDir)
 	}
 
-	logrus.Info("Generate swagger docs....")
 	p := swag.New(swag.SetMarkdownFileDirectory(config.MarkdownFilesDir))
 	p.PropNamingStrategy = config.PropNamingStrategy
 	p.ParseVendor = config.ParseVendor
@@ -119,7 +118,7 @@ func (g *Gen) Build(config *Config) error {
 
 	// log.Printf("create docs.go at  %+v", docFileName)
 	// log.Printf("create swagger.json at  %+v", jsonFileName)
-	logrus.Infof("create swagger.yaml at  %+v", yamlFileName)
+	logrus.Infof("Generating %v", yamlFileName)
 
 	return nil
 }

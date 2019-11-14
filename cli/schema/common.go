@@ -120,3 +120,8 @@ func (c *Common) Ref(m string) string {
 	}
 	return m
 }
+
+// ISArray defined isarray
+func (c *Common) ISArray(m string) bool {
+	return strings.HasPrefix(m, "[]")
+}
