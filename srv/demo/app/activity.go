@@ -207,7 +207,7 @@ func (ctr *Activity) DeleteOne(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Page api implementation
+// List api implementation
 // @Summary 活动分页查询
 // @Tags 活动
 // @Param token header query string true "认证令牌"
@@ -218,14 +218,14 @@ func (ctr *Activity) DeleteOne(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/page [get]
-func (ctr *Activity) Page(ctx *Context) {
+// @Router /api/activity/list [get]
+func (ctr *Activity) List(ctx *Context) {
 	q := ctr.Query(ctx)
 	q.SetInt("page", 1)
 	q.SetInt("size", 20)
 	q.SetString("title", "nn")
 	q.SetInt("hidden")
-	ret, err := ctr.PageSearch(ctx.DB, "activity", "page", "activity", q.Value())
+	ret, err := ctr.PageSearch(ctx.DB, "activity", "list", "activity", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -233,7 +233,7 @@ func (ctr *Activity) Page(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Get api implementation
+// One api implementation
 // @Summary 获取活动
 // @Tags 活动
 // @Param token header query string true "认证令牌"
@@ -241,14 +241,11 @@ func (ctr *Activity) Page(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/get [get]
-func (ctr *Activity) Get(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ret, err := pUtil.AppAction(form)
+// @Router /api/activity/one [get]
+func (ctr *Activity) One(ctx *Context) {
+	var entity model.Activity
+	id := ctx.Query("id")
+	ret, err := ctx.DB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

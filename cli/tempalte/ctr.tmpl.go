@@ -152,6 +152,16 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	}
 	ctx.Success(ret)
 	{{- end}}
+{{- else if eq .Function "one"}}
+	{{- $bp := index .Params 0}}
+	var entity model.{{.ToUpperCase .Table}}
+	id := ctx.Query("{{$bp.Name}}")
+	ret, err := ctx.DB.Id(id).Get(&entity)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
 {{- else}}
 	var form = &struct{}{}
 	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {

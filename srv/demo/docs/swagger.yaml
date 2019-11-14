@@ -265,35 +265,7 @@ paths:
       summary: 删除活动
       tags:
       - 活动
-  /api/activity/get:
-    get:
-      parameters:
-      - description: 认证令牌
-        in: query
-        name: header
-        required: true
-        type: string
-      - description: 活动id
-        in: query
-        name: id
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 获取活动
-      tags:
-      - 活动
-  /api/activity/page:
+  /api/activity/list:
     get:
       parameters:
       - description: 认证令牌
@@ -331,6 +303,34 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 活动分页查询
+      tags:
+      - 活动
+  /api/activity/one:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 活动id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取活动
       tags:
       - 活动
   /api/activity/updateMany:
