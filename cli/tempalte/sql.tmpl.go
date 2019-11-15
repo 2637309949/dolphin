@@ -2,11 +2,11 @@ package tempalte
 
 // TmplSQLSel sql
 var TmplSQLSel = `select
-    {{.Application.Name}}_{{.Api.Table}}.id
+    {{.Api.TableName .Application.Name .Api.Table}}.id
 from
-	{{.Application.Name}}_{{.Api.Table}}
+	{{.Api.TableName .Application.Name .Api.Table}}
 where
-	{{.Application.Name}}_{{.Api.Table}}.id {{.Application.Unescaped "<>"}} ""
+	{{.Api.TableName .Application.Name .Api.Table}}.id {{.Application.Unescaped "<>"}} ""
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 
@@ -14,7 +14,7 @@ LIMIT {{.size}} OFFSET {{.offset}}
 var TmplSQLCount = `select
     count(*) records
 from
-	{{.Application.Name}}_{{.Api.Table}}
+	{{.Api.TableName .Application.Name .Api.Table}}
 where
-	{{.Application.Name}}_{{.Api.Table}}.id {{.Application.Unescaped "<>"}} ""
+	{{.Api.TableName .Application.Name .Api.Table}}.id {{.Application.Unescaped "<>"}} ""
 `

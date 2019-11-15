@@ -22,6 +22,7 @@ type SQL struct {
 // Build func
 func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg
+	tplCache := map[string]bool{}
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
 			if strings.TrimSpace(api.Table) != "" {
@@ -32,22 +33,30 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 					"Application": node,
 					"Api":         api,
 				}
-				tmplCfg := &gen.TmplCfg{
-					Text:     tempalte.TmplSQLCount,
-					FilePath: path.Join(dir, viper.GetString("sqlTemplate"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "page", "count")),
-					Data:     data,
-					Overlap:  gen.OverlapSkip,
-					Suffix:   ".tpl",
+				cpath := path.Join(dir, viper.GetString("sqlTemplate"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "page", "count"))
+				if _, ok := tplCache[cpath]; !ok {
+					tmplCfg := &gen.TmplCfg{
+						Text:     tempalte.TmplSQLCount,
+						FilePath: cpath,
+						Data:     data,
+						Overlap:  gen.OverlapSkip,
+						Suffix:   ".tpl",
+					}
+					tmplCfgs = append(tmplCfgs, tmplCfg)
+					tplCache[cpath] = true
 				}
-				tmplCfgs = append(tmplCfgs, tmplCfg)
-				tmplCfg = &gen.TmplCfg{
-					Text:     tempalte.TmplSQLSel,
-					FilePath: path.Join(dir, viper.GetString("sqlTemplate"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "page", "select")),
-					Data:     data,
-					Overlap:  gen.OverlapSkip,
-					Suffix:   ".tpl",
+				spath := path.Join(dir, viper.GetString("sqlTemplate"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "page", "select"))
+				if _, ok := tplCache[spath]; !ok {
+					tmplCfg := &gen.TmplCfg{
+						Text:     tempalte.TmplSQLSel,
+						FilePath: spath,
+						Data:     data,
+						Overlap:  gen.OverlapSkip,
+						Suffix:   ".tpl",
+					}
+					tmplCfgs = append(tmplCfgs, tmplCfg)
+					tplCache[spath] = true
 				}
-				tmplCfgs = append(tmplCfgs, tmplCfg)
 			}
 		}
 
