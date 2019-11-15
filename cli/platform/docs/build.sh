@@ -1,1 +1,0 @@
-swag init --parseDependency github.com/2637309949/dolphin/cli/platform
