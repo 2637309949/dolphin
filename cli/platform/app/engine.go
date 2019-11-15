@@ -12,8 +12,6 @@ import (
 
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/util"
-	method "github.com/bu/gin-method-override"
-	nice "github.com/ekyoung/gin-nice-recovery"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -137,14 +135,14 @@ func (e *Engine) LoadRedis() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	db, err := strconv.ParseInt(uri.DbName, 10, 64)
+	db, err := strconv.Atoi(uri.DbName)
 	if err != nil {
 		logrus.Fatal(err)
 	}
 	rds := redis.NewClient(&redis.Options{
 		Addr:     uri.Laddr,
 		Password: uri.Passwd,
-		DB:       int(db),
+		DB:       db,
 	})
 	if _, err := rds.Ping().Result(); err != nil {
 		logrus.Fatal(err)
@@ -175,13 +173,13 @@ func NewEngine() *Engine {
 	e.BusinessDBSet = map[string]*xorm.Engine{}
 	e.Gin = gin.New()
 	e.Gin.Use(gin.Logger())
-	e.Gin.Use(nice.Recovery(func(ctx *gin.Context, err interface{}) {
+	e.Gin.Use(util.Recovery(func(ctx *gin.Context, err interface{}) {
 		code := 500
 		if err, ok := err.(model.Error); ok {
 			code = err.Code
 		}
 		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
 	}))
-	e.Gin.Use(method.ProcessMethodOverride(e.Gin))
+	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
 	return e
 }
