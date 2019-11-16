@@ -3,7 +3,11 @@
 
 package util
 
-import "github.com/2637309949/dolphin/cli/platform/model"
+import (
+	"math/rand"
+
+	"github.com/2637309949/dolphin/cli/platform/model"
+)
 
 // AppAction defined
 func AppAction(v interface{}) (interface{}, error) {
@@ -12,3 +16,27 @@ func AppAction(v interface{}) (interface{}, error) {
 
 // M defined
 type M map[string]interface{}
+
+var defaultLetters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+// RandomString returns a random string with a fixed length
+func RandomString(n int, allowedChars ...[]rune) string {
+	var letters []rune
+
+	if len(allowedChars) == 0 {
+		letters = defaultLetters
+	} else {
+		letters = allowedChars[0]
+	}
+
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
+}
+
+// RandomInt generates a random int, based on a min and max values
+func RandomInt(min, max int) int {
+	return min + rand.Intn(max-min)
+}

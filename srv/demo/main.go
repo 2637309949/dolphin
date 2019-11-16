@@ -5,7 +5,6 @@ package main
 
 import (
 	_ "example/app"
-	_ "example/model"
 
 	"github.com/2637309949/dolphin/srv/cli"
 	_ "github.com/go-sql-driver/mysql"
