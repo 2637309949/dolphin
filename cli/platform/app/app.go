@@ -18,11 +18,11 @@ import (
 
 // NewLifeHook create lifecycle hook
 func NewLifeHook(e *Engine) srv.Hook {
-	http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("port")), Handler: e.Gin}
+	http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.post")), Handler: e.Gin}
 	return srv.Hook{
 		OnStart: func(context.Context) error {
 			go func() {
-				logrus.Infof("Listen on port:%v", viper.GetString("port"))
+				logrus.Infof("Listen on port:%v", viper.GetString("http.post"))
 				if err := http.ListenAndServe(); err != nil {
 					logrus.Fatal(err)
 				}
@@ -56,7 +56,8 @@ func init() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")
 	viper.AutomaticEnv()
-	viper.SetDefault("port", "8089")
+	viper.SetDefault("http.post", "8089")
+	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("dir.sql", "sql")
 	viper.SetDefault("db.driver", "mysql")
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")

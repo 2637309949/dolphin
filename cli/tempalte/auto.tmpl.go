@@ -12,7 +12,7 @@ package app
 
 import (
 	"{{.PackageName}}/model"
-
+	"github.com/spf13/viper"
 	"github.com/2637309949/dolphin/srv/cli"
 )
 
@@ -28,7 +28,7 @@ var _ = cli.Invoke(BuildEngine(func(e *Engine) {
 {{range .Controllers}}
 // Build{{.ToUpperCase .Name}}
 var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}}) {
-	group := ctr.Group("/api")
+	group := ctr.Group(viper.GetString("http.prefix"))
 	{{- $ctr := .}}
 	{{- range .APIS}}
 	group.Handle("{{.ToUpper .Method}}", "{{.VPath .Version}}/{{$ctr.Name}}/{{.Name}}", ctr.{{.ToUpperCase .Name}})

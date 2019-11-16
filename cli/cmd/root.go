@@ -13,19 +13,20 @@ import (
 )
 
 var (
-	rootCmd = &cobra.Command{
+	timeFormat = "2006/01/02 15:04:05"
+	rootCmd    = &cobra.Command{
 		Use:   "Dolphin",
 		Short: "Dol",
 		Long:  `Dolphin, a cli tools for generate golang code`,
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			if !terminal.IsTerminal(unix.Stdout) {
 				logrus.SetFormatter(&logrus.JSONFormatter{
-					TimestampFormat: "2006/01/02 15:04:05",
+					TimestampFormat: timeFormat,
 				})
 			} else {
 				logrus.SetFormatter(&logrus.TextFormatter{
 					FullTimestamp:   true,
-					TimestampFormat: "2006/01/02 15:04:05",
+					TimestampFormat: timeFormat,
 				})
 			}
 			if verbose, _ := cmd.Flags().GetBool("verbose"); verbose {
@@ -34,8 +35,7 @@ var (
 			viper.SetConfigName("app")
 			viper.AddConfigPath(".")
 			viper.AddConfigPath("conf")
-			viper.AutomaticEnv()
-			viper.SetDefault("name", "example")
+			viper.SetDefault("name", "dolphin")
 			viper.SetDefault("version", "1.0")
 			viper.SetDefault("dir.sql", "sql")
 			viper.SetDefault("dir.app", "app")
@@ -44,6 +44,7 @@ var (
 			viper.SetDefault("dir.model", "model")
 			viper.SetDefault("license.name", "Apache 2.0")
 			viper.SetDefault("license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
+			viper.AutomaticEnv()
 		},
 	}
 )
