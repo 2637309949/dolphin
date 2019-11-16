@@ -152,7 +152,7 @@ paths:
         schema:
           items:
             $ref: '#/definitions/model.Activity'
-          type: model.Activity
+          type: array
       responses:
         "200":
           description: OK
@@ -216,7 +216,7 @@ paths:
         schema:
           items:
             $ref: '#/definitions/model.Activity'
-          type: model.Activity
+          type: array
       responses:
         "200":
           description: OK
@@ -348,7 +348,7 @@ paths:
         schema:
           items:
             $ref: '#/definitions/model.Activity'
-          type: model.Activity
+          type: array
       responses:
         "200":
           description: OK
