@@ -7,6 +7,8 @@ package pipes
 import (
 	"path"
 
+	"github.com/spf13/viper"
+
 	"github.com/2637309949/dolphin/cli/gen"
 	"github.com/2637309949/dolphin/cli/schema"
 	"github.com/2637309949/dolphin/cli/tempalte"
@@ -26,7 +28,7 @@ func (app *App) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplGin,
-			FilePath: path.Join(dir, "app", "app"),
+			FilePath: path.Join(dir, viper.GetString("dir.app"), "app"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".go",

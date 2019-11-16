@@ -7,6 +7,8 @@ package pipes
 import (
 	"path"
 
+	"github.com/spf13/viper"
+
 	"github.com/2637309949/dolphin/cli/gen"
 	"github.com/2637309949/dolphin/cli/schema"
 	swag "github.com/2637309949/dolphin/cli/swag/gen"
@@ -22,7 +24,7 @@ func (m *Doc) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error
 		SearchDir:          dir,
 		MainAPIFile:        "main.go",
 		PropNamingStrategy: "camelcase",
-		OutputDir:          path.Join(dir, "docs"),
+		OutputDir:          path.Join(dir, viper.GetString("dir.doc")),
 		ParseVendor:        true,
 		ParseDependency:    true,
 		MarkdownFilesDir:   "",

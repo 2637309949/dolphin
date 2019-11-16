@@ -10,6 +10,7 @@ import (
 	"github.com/2637309949/dolphin/cli/gen"
 	"github.com/2637309949/dolphin/cli/schema"
 	"github.com/2637309949/dolphin/cli/tempalte"
+	"github.com/spf13/viper"
 )
 
 // Ctr struct
@@ -27,7 +28,7 @@ func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 		}
 		tmplCfg := &gen.TmplCfg{
 			Text:     tempalte.TmplCtr,
-			FilePath: path.Join(dir, "app", c.Name),
+			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name),
 			Data:     data,
 			Overlap:  gen.OverlapInc,
 			Suffix:   ".go",

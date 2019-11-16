@@ -57,7 +57,7 @@ func init() {
 	viper.AddConfigPath("conf")
 	viper.AutomaticEnv()
 	viper.SetDefault("port", "8089")
-	viper.SetDefault("sqlTemplate", "sql")
+	viper.SetDefault("dir.sql", "sql")
 	viper.SetDefault("db.driver", "mysql")
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")

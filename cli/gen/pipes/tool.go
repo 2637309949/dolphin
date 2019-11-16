@@ -10,6 +10,7 @@ import (
 	"github.com/2637309949/dolphin/cli/gen"
 	"github.com/2637309949/dolphin/cli/schema"
 	"github.com/2637309949/dolphin/cli/tempalte"
+	"github.com/spf13/viper"
 )
 
 // Tool struct
@@ -25,7 +26,7 @@ func (tool *Tool) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, e
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplTool,
-			FilePath: path.Join(dir, "util", "tool"),
+			FilePath: path.Join(dir, viper.GetString("dir.util"), "tool"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".go",

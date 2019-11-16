@@ -71,7 +71,7 @@ func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
 
 // AddBusinessDB adddb
 func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
-	sqlDir := viper.GetString("sqlTemplate")
+	sqlDir := viper.GetString("dir.sql")
 	sqlDir = path.Join(".", sqlDir)
 	db, err := xorm.NewEngine(driverName, dataSource)
 	if err != nil {
@@ -103,7 +103,7 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 // LoadPlatformDB adddb
 func (e *Engine) LoadPlatformDB() {
 	var err error
-	sqlDir := viper.GetString("sqlTemplate")
+	sqlDir := viper.GetString("dir.sql")
 	sqlDir = path.Join(".", sqlDir)
 	e.PlatformDB, err = xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	if err != nil {
