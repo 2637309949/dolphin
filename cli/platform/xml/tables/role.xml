@@ -1,0 +1,13 @@
+<table name="role" desc="角色" packages="gopkg.in/guregu/null.v3">
+    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+	<column name="name" desc="名称" type="null.String" xorm="varchar(36) notnull" />
+    <column name="code" desc="编码" type="null.String" xorm="varchar(36) notnull" />
+	<column name="status" desc="状态 0：禁用 1：正常" type="null.Int" xorm="notnull" />
+	<column name="domain" desc="域" type="null.String" xorm="varchar(50) notnull" />
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36)" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime" />
+</table>

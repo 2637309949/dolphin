@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/util"
 
 	"github.com/gin-gonic/gin/binding"
 )
@@ -23,22 +22,20 @@ func BuildUser(build func(*User)) func(engine *Engine) {
 }
 
 // Add api implementation
-// @Summary 添加用户信息
+// @Summary 添加用户
 // @Tags 用户
 // @Accept application/json
 // @Param token header query string true "认证令牌"
 // @Param user body model.User false "用户信息"
-// @Success 200 {object} model.Response
 // @Failure 403 {object} model.Response
-// @Failure 500 {object} model.Response
 // @Router /api/user/add [post]
 func (ctr *User) Add(ctx *Context) {
-	var bean model.User
-	if err := ctx.ShouldBindBodyWith(&bean, binding.JSON); err != nil {
+	var form model.User
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Insert(&bean)
+	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -47,46 +44,20 @@ func (ctr *User) Add(ctx *Context) {
 }
 
 // Update api implementation
-// @Summary 更新用户信息
+// @Summary 更新用户
 // @Tags 用户
 // @Accept application/json
 // @Param token header query string true "认证令牌"
 // @Param user body model.User false "用户信息"
-// @Success 200 {object} model.Response
 // @Failure 403 {object} model.Response
-// @Failure 500 {object} model.Response
 // @Router /api/user/update [post]
 func (ctr *User) Update(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
+	var form model.User
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := util.AppAction(form)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}
-
-// Delete api implementation
-// @Summary 删除用户信息
-// @Tags 用户
-// @Accept application/json
-// @Param token header query string true "认证令牌"
-// @Param ids body []string false "用户信息id对象数组"
-// @Success 200 {object} model.Response
-// @Failure 403 {object} model.Response
-// @Failure 500 {object} model.Response
-// @Router /api/user/delete [post]
-func (ctr *User) Delete(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ret, err := util.AppAction(form)
+	ret, err := ctx.DB.ID(form.ID).Update(&form)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -95,26 +66,17 @@ func (ctr *User) Delete(ctx *Context) {
 }
 
 // Page api implementation
-// @Summary 用户信息分页查询
+// @Summary 用户分页查询
 // @Tags 用户
 // @Param token header query string true "认证令牌"
 // @Param page query int false "页码"
-// @Param rows query int false "单页数"
-// @Param title query string false "标题筛选"
-// @Param hidden query int false "是否隐藏筛选"
-// @Success 200 {object} model.Response
+// @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
-// @Failure 500 {object} model.Response
 // @Router /api/user/page [get]
 func (ctr *User) Page(ctx *Context) {
 	q := ctr.Query(ctx)
-	q.SetInt("page", 1)
-	q.SetInt("size", 20)
-	q.SetInt("del_flag")
-	q.SetString("title")
-	q.SetString("campus")
-	q.SetString("city")
-	q.SetString("hidden")
+	q.SetInt("page")
+	q.SetInt("size")
 	ret, err := ctr.PageSearch(ctx.DB, "user", "page", "user", q.Value())
 	if err != nil {
 		ctx.Fail(err)
@@ -127,18 +89,13 @@ func (ctr *User) Page(ctx *Context) {
 // @Summary 获取用户信息
 // @Tags 用户
 // @Param token header query string true "认证令牌"
-// @Param id query string false "用户信息id"
-// @Success 200 {object} model.Response
+// @Param id query string false "用户id"
 // @Failure 403 {object} model.Response
-// @Failure 500 {object} model.Response
 // @Router /api/user/get [get]
 func (ctr *User) Get(ctx *Context) {
-	var form = &struct{}{}
-	if err := ctx.ShouldBindBodyWith(form, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ret, err := util.AppAction(form)
+	var entity model.User
+	id := ctx.Query("id")
+	ret, err := ctx.DB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

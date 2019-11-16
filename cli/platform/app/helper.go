@@ -113,13 +113,11 @@ func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q ma
 		ret["data"] = []interface{}{}
 		ret["totalrecords"] = 0
 		ret["totalpages"] = 0
-		ret[""] = 0
 		return &ret, nil
 	}
 
 	records := cresult[0]["records"].(int64)
 	var totalpages int64 = 0
-	// if records < int64(size) {
 	if records < int64(size) {
 		totalpages = 1
 	} else if records%int64(size) == 0 {
