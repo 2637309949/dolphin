@@ -257,7 +257,6 @@ func (ctr *Activity) InCrease(ctx *Context) {
 // @version 2.0
 // @Accept application/json
 // @Param id body string false "记录id"
-// @Param action body string false "点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response

@@ -98,13 +98,10 @@ definitions:
         description: 全名
         type: string
       gender:
-        description: 性别 0：女 1：男
+        description: 性别(0：女,1：男)
         type: number
       id:
         description: 主键
-        type: string
-      login_id:
-        description: 登录ID
         type: string
       mobile:
         description: 电话
@@ -119,7 +116,7 @@ definitions:
         description: 密码
         type: string
       status:
-        description: 状态 0：禁用   1：正常
+        description: 状态(0：禁用,1：正常)
         type: number
       type:
         description: 用户类型
@@ -136,7 +133,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: example
+  title: dolphin
   version: "1.0"
 paths:
   /api/activity/add_many:
@@ -155,6 +152,7 @@ paths:
         schema:
           items:
             $ref: '#/definitions/model.Activity'
+          type: model.Activity
       responses:
         "200":
           description: OK
@@ -218,6 +216,7 @@ paths:
         schema:
           items:
             $ref: '#/definitions/model.Activity'
+          type: model.Activity
       responses:
         "200":
           description: OK
@@ -349,6 +348,7 @@ paths:
         schema:
           items:
             $ref: '#/definitions/model.Activity'
+          type: model.Activity
       responses:
         "200":
           description: OK
@@ -412,51 +412,11 @@ paths:
         schema:
           $ref: '#/definitions/model.User'
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 添加用户信息
-      tags:
-      - 用户
-  /api/user/delete:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: query
-        name: header
-        required: true
-        type: string
-      - description: 用户信息id对象数组
-        in: body
-        name: ids
-        schema:
-          items:
-            type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 删除用户信息
+      summary: 添加用户
       tags:
       - 用户
   /api/user/get:
@@ -467,21 +427,13 @@ paths:
         name: header
         required: true
         type: string
-      - description: 用户信息id
+      - description: 用户id
         in: query
         name: id
         type: string
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Response'
       summary: 获取用户信息
@@ -501,30 +453,14 @@ paths:
         type: integer
       - description: 单页数
         in: query
-        name: rows
-        type: integer
-      - description: 标题筛选
-        in: query
-        name: title
-        type: string
-      - description: 是否隐藏筛选
-        in: query
-        name: hidden
+        name: size
         type: integer
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 用户信息分页查询
+      summary: 用户分页查询
       tags:
       - 用户
   /api/user/update:
@@ -543,19 +479,11 @@ paths:
         schema:
           $ref: '#/definitions/model.User'
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 更新用户信息
+      summary: 更新用户
       tags:
       - 用户
   /api/v1/activity/in_crease:
@@ -593,11 +521,6 @@ paths:
       - description: 记录id
         in: body
         name: id
-        schema:
-          type: string
-      - description: 点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一
-        in: body
-        name: action
         schema:
           type: string
       responses:
