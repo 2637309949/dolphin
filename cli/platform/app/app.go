@@ -67,8 +67,7 @@ func init() {
 	}
 	// lazy init Engine
 	var _ = cli.Provider(func(lc srv.Lifecycle) *Engine {
-		e := NewEngine()
-		lc.Append(NewLifeHook(e))
-		return e
+		lc.Append(NewLifeHook(engine))
+		return engine
 	})
 }

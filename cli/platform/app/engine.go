@@ -183,3 +183,6 @@ func NewEngine() *Engine {
 	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
 	return e
 }
+
+// Engine instance
+var engine = NewEngine()
