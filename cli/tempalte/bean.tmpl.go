@@ -14,6 +14,10 @@ package model
 
 // {{.Bean.ToUpperCase .Bean.Name}} defined {{.Bean.Desc}} 
 type {{.Bean.ToUpperCase .Bean.Name}} struct {
+	{{- $ext:= .Bean.SplitExtends .Bean.Extends }}
+	{{- range $ext }}
+	*{{.}}
+	{{- end}}
 	{{- range .Bean.Props}}
 	// {{.Desc}}
 	{{.ToUpperCase .Name}} {{.Type}} ` + "`" + `json:"{{.Name}}" xml:"{{.Name}}"` + "`" + `

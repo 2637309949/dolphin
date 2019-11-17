@@ -9,6 +9,8 @@ import (
 	"html/template"
 	"strconv"
 	"strings"
+
+	"github.com/thoas/go-funk"
 )
 
 // Common struct
@@ -129,4 +131,11 @@ func (c *Common) ISArray(m string) bool {
 // TableName defined table
 func (c *Common) TableName(app string, table string) string {
 	return fmt.Sprintf("%v_%v", app, table)
+}
+
+// SplitExtends extends model,bean
+func (c *Common) SplitExtends(parent string) []string {
+	return funk.Map(strings.Split(parent, ","), func(p string) string {
+		return strings.ReplaceAll(c.Ref(p), "model.", "")
+	}).([]string)
 }

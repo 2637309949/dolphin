@@ -170,6 +170,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						bean.Desc = attrValue
 					case attrName == "packages":
 						bean.Packages = attrValue
+					case attrName == "extends":
+						bean.Extends = attrValue
 					}
 				}
 			case token.Name.Local == "prop":
@@ -204,6 +206,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						table.Desc = attrValue
 					case attrName == "packages":
 						table.Packages = attrValue
+					case attrName == "extends":
+						table.Extends = attrValue
 					}
 				}
 			case token.Name.Local == "column":

@@ -70,6 +70,7 @@ type Bean struct {
 	Desc     string `validate:"required"`
 	Packages string
 	Props    []*Prop
+	Extends  string
 }
 
 // Column struct
@@ -88,6 +89,7 @@ type Table struct {
 	Desc     string `validate:"required"`
 	Packages string
 	Columns  []*Column
+	Extends  string
 }
 
 // Application struct
