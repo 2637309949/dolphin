@@ -92,8 +92,8 @@ func (c *Common) ToUpperCase(name string) string {
 	return newName
 }
 
-// VPath version path
-func (c *Common) VPath(v string) string {
+// VersionPrefix version path
+func (c *Common) VersionPrefix(v string) string {
 	if v == "" {
 		return ""
 	}

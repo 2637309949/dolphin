@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: platform
+  namespace: dolphin
+  labels:
+    app: platform
+binaryData:
+ cert.p12: MIIKqgIBAzCCCnQGCSqGSIb3DQEHAa
+data:
+ app.properties: |
+    http.port=8082
+    db.dataSource=root:111111@tcp(127.0.0.1:3306)/dolphin?charset=utf8&parseTime=True&loc=Local
+    rd.dataSource=:@127.0.0.1:6379/0

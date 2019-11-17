@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  platform
+  namespace: dolphin
+spec:
+  selector:
+    app:  platform
+  type:  ClusterIP
+  ports:
+  - name:  2368tcp02
+    port: 2368
+    protocol: TCP
+    targetPort: 2368

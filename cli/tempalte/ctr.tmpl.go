@@ -53,7 +53,7 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 {{- if ne .Return.Failure.Type ""}}
 // @Failure 500 {object} model.Response
 {{- end}}
-// @Router /api{{.VPath .Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
+// @Router /api{{.VersionPrefix .Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
 func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
 {{- if eq .Function "list"}}
 	q := ctr.Query(ctx)

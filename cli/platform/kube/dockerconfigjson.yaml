@@ -1,0 +1,10 @@
+# kubectl create secret docker-registry NAME --docker-username=user --docker-password=password --docker-email=email [--docker-server=string] [--from-literal=key1=value1] [--dry-run] 
+# dockerconfigjson is a base64 encoded string:  cat ~/.docker/config.json | base64 -w 0 
+apiVersion: v1
+kind: Secret
+metadata:
+  name:  dockerconfigjson
+  namespace: dolphin
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXIuaTJlcnAuY24iOnsidXNlcm5hbWUiOiJodWFuZ3JmIiwicGFzc3dvcmQiOiJoaHVhbmdyZkAjMTk4NiIsImVtYWlsIjoiaHVhbmdyZkBxaWFucWl1c29mdC5jb20iLCJhdXRoIjoiYUhWaGJtZHlaanBvYUhWaGJtZHlaa0FqTVRrNE5nPT0ifX19
+type: kubernetes.io/dockerconfigjson

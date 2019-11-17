@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  platform
+  namespace: dolphin
+  labels:
+    name:  platform
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name:  platform
+    spec:
+      containers:
+      - image:  ghost
+        name:  platform
+        resources:
+          requests:
+            cpu: "20m"
+            memory: "55M"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 2368
+          initialDelaySeconds: 90
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 2368
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        env:
+        - name:  ENVVARNAME
+          value:  ENVVARVALUE       
+        ports:
+        - containerPort:  2368
+          name:  2368tcp02
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/ghost/content
+          name: vol1
+          subPath: ghost
+      volumes:
+      - name: vol1
+        persistentVolumeClaim:
+          claimName: default-nfs
+      restartPolicy: Always
+      imagePullPolicy: Always
+      imagePullSecrets:
+      - name: dockerconfigjson

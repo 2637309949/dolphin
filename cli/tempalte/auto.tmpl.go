@@ -31,7 +31,7 @@ var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}})
 	group := ctr.Group(viper.GetString("http.prefix"))
 	{{- $ctr := .}}
 	{{- range .APIS}}
-	group.Handle("{{.ToUpper .Method}}", "{{.VPath .Version}}/{{$ctr.Name}}/{{.Name}}", ctr.{{.ToUpperCase .Name}})
+	group.Handle("{{.ToUpper .Method}}", "{{.VersionPrefix .Version}}/{{$ctr.Name}}/{{.Name}}", ctr.{{.ToUpperCase .Name}})
 	{{- end}}
 }))
 {{- end}}

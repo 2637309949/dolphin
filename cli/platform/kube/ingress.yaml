@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name:  platform
+  namespace: dolphin
+  labels:
+    name:  platform
+spec:
+  rules:
+  - host: api.platform.cn
+    http:
+      paths:
+      - backend:
+          serviceName: platform
+          servicePort: 2368
+        path: /
+  tls:
+  - hosts:
+    - api.platform.cn
+    secretName: platform
