@@ -11,6 +11,42 @@ definitions:
         description: 消息
         type: string
     type: object
+  model.Role:
+    properties:
+      code:
+        description: 编码
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      domain:
+        description: 域
+        type: string
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      status:
+        description: 状态 0：禁用 1：正常
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.User:
     properties:
       avatar:
@@ -76,6 +112,96 @@ info:
   title: dolphin
   version: "1.0"
 paths:
+  /api/role/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 角色信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.Role'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加角色
+      tags:
+      - 角色
+  /api/role/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 角色id
+        in: query
+        name: id
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取角色信息
+      tags:
+      - 角色
+  /api/role/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 角色分页查询
+      tags:
+      - 角色
+  /api/role/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      - description: 角色信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.Role'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新角色
+      tags:
+      - 角色
   /api/user/add:
     post:
       consumes:
@@ -92,51 +218,11 @@ paths:
         schema:
           $ref: '#/definitions/model.User'
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 添加用户信息
-      tags:
-      - 用户
-  /api/user/delete:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: query
-        name: header
-        required: true
-        type: string
-      - description: 用户信息id对象数组
-        in: body
-        name: ids
-        schema:
-          items:
-            type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 删除用户信息
+      summary: 添加用户
       tags:
       - 用户
   /api/user/get:
@@ -147,21 +233,13 @@ paths:
         name: header
         required: true
         type: string
-      - description: 用户信息id
+      - description: 用户id
         in: query
         name: id
         type: string
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Response'
       summary: 获取用户信息
@@ -181,30 +259,14 @@ paths:
         type: integer
       - description: 单页数
         in: query
-        name: rows
-        type: integer
-      - description: 标题筛选
-        in: query
-        name: title
-        type: string
-      - description: 是否隐藏筛选
-        in: query
-        name: hidden
+        name: size
         type: integer
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 用户信息分页查询
+      summary: 用户分页查询
       tags:
       - 用户
   /api/user/update:
@@ -223,19 +285,11 @@ paths:
         schema:
           $ref: '#/definitions/model.User'
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
           schema:
             $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 更新用户信息
+      summary: 更新用户
       tags:
       - 用户
 swagger: "2.0"

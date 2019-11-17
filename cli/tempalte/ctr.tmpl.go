@@ -13,7 +13,7 @@ package app
 import (
 	"{{.PackageName}}/model"
 	
-	pApp "github.com/2637309949/dolphin/cli/platform/app"
+	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{end}}
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )
@@ -24,7 +24,7 @@ type {{.Controller.ToUpperCase .Controller.Name}} struct {
 }
 
 // Build{{.Controller.ToUpperCase .Controller.Name}} return {{.Controller.ToUpperCase .Controller.Name}}
-func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *pApp.Engine) {
+func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *{{- if ne .Name "platform"}}pApp.{{- end}}Engine) {
 	return BuildEngine(func(engine *Engine) {
 		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: engine})
 	})
