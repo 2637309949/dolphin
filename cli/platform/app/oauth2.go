@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/go-session/session"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
@@ -177,13 +178,9 @@ func (ctr *Oauth2) URL(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/refresh [get]
 func (ctr *Oauth2) Refresh(ctx *Context) {
-	var refreshToken string
 	oldToken := oauth2.Token{}
 	oldToken.Expiry = time.Now()
-	if refreshToken = ctx.GetHeader("refreshtoken"); refreshToken == "" {
-		refreshToken = ctx.GetHeader("token")
-	}
-	oldToken.RefreshToken = refreshToken
+	oldToken.RefreshToken = util.Some(ctx.GetHeader("refreshtoken"), ctx.GetHeader("token")).(string)
 	ret, err := oa2cfg.TokenSource(context.Background(), &oldToken).Token()
 	if err != nil {
 		ctx.Fail(err)

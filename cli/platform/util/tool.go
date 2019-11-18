@@ -5,6 +5,7 @@ package util
 
 import (
 	"math/rand"
+	"reflect"
 
 	"github.com/2637309949/dolphin/cli/platform/model"
 )
@@ -39,4 +40,12 @@ func RandomString(n int, allowedChars ...[]rune) string {
 // RandomInt generates a random int, based on a min and max values
 func RandomInt(min, max int) int {
 	return min + rand.Intn(max-min)
+}
+
+// Some defined value with default
+func Some(src interface{}, init interface{}) interface{} {
+	if !ISBlank(reflect.ValueOf(src)) {
+		return src
+	}
+	return init
 }
