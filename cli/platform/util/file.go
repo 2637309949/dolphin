@@ -11,6 +11,15 @@ const (
 	DirType
 )
 
+// Getwd returns a rooted path name corresponding to the current directory
+func Getwd() string {
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	return wd
+}
+
 // Type decides the type of a file.
 //
 // It returns FileType, DirType, or NotExist.

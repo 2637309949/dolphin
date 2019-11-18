@@ -28,7 +28,7 @@ type RouterGroup struct {
 
 // Success defined success result
 func (ctx *Context) Success(data interface{}, status ...int) {
-	code := http.StatusInternalServerError
+	code := http.StatusOK
 	ctx.JSON(code, model.Response{
 		Code: null.IntFrom(200),
 		Data: data,

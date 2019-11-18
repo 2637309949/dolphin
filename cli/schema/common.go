@@ -73,6 +73,9 @@ func (c *Common) ToUpperCase(name string) string {
 	if name == "id" {
 		return "ID"
 	}
+	if name == "url" {
+		return "URL"
+	}
 	for i, r := range name {
 		if i == 0 {
 			if fmt.Sprintf("%c", r) != "$" {

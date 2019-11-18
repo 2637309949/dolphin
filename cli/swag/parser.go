@@ -181,8 +181,8 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 		return fmt.Errorf("cannot parse source files %s: %s", mainAPIFile, err)
 	}
 	parser.swagger.Swagger = "2.0"
-	parser.swagger.Info.Title = viper.GetString("name")
-	parser.swagger.Info.Version = viper.GetString("version")
+	parser.swagger.Info.Title = viper.GetString("app.name")
+	parser.swagger.Info.Version = viper.GetString("app.version")
 	parser.swagger.Info.License.Name = viper.GetString("license.name")
 	parser.swagger.Info.License.URL = viper.GetString("license.url")
 	securityMap := map[string]*spec.SecurityScheme{}

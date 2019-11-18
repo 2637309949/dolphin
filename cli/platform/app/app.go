@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
@@ -56,17 +57,36 @@ func init() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")
 	viper.AutomaticEnv()
-	viper.SetDefault("http.port", "8089")
+	viper.SetDefault("app.mode", "release")
+	viper.SetDefault("http.port", "8081")
 	viper.SetDefault("http.prefix", "/api")
-	viper.SetDefault("dir.sql", "sql")
+	viper.SetDefault("http.static", "/static")
+	viper.SetDefault("oauth.login", "/static/login.html")
+	viper.SetDefault("oauth.auth", "/static/auth.html")
 	viper.SetDefault("db.driver", "mysql")
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")
+	viper.SetDefault("dir.sql", "sql")
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")
 	}
+
+	// lazy oa2cfg
+	if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
+		viper.SetDefault("oauth.server", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
+	}
+	if strings.TrimSpace(viper.GetString("oauth.cli")) == "" {
+		viper.SetDefault("oauth.cli", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
+	}
+	authServerURL = viper.GetString("oauth.server")
+	oa2cfg.RedirectURL = fmt.Sprintf("%v/api/oauth2/oauth2", viper.GetString("oauth.cli"))
+	oa2cfg.Endpoint.AuthURL = authServerURL + "/api/oauth2/authorize"
+	oa2cfg.Endpoint.TokenURL = authServerURL + "/api/oauth2/token"
+
 	// lazy init Engine
 	var _ = cli.Provider(func(lc srv.Lifecycle) *Engine {
+		// Engine instance
+		var engine = NewEngine()
 		lc.Append(NewLifeHook(engine))
 		return engine
 	})

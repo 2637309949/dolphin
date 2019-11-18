@@ -13,7 +13,7 @@ package app
 import (
 	"{{.PackageName}}/model"
 	
-	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{end}}
+	{{- if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )
@@ -175,9 +175,13 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 		return
 	}
 	ctx.Success(ret)
-	{{- else }}
+	{{- else}}
+	{{- if ne (len .Params) 0}}
 	{{- $bp := index .Params 0}}
 	var form {{$bp.Ref $bp.Type}}
+	{{- else}}
+	var form struct{}
+	{{- end}}
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return

@@ -7,15 +7,23 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/2637309949/dolphin/cli/platform/sql"
-	"github.com/go-redis/redis"
-
 	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis"
+	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xormplus/xorm"
+	oredis "gopkg.in/go-oauth2/redis.v3"
+	"gopkg.in/oauth2.v3/errors"
+	"gopkg.in/oauth2.v3/generates"
+	"gopkg.in/oauth2.v3/manage"
+	"gopkg.in/oauth2.v3/models"
+	"gopkg.in/oauth2.v3/server"
+	"gopkg.in/oauth2.v3/store"
 )
 
 // Engine defined parse app engine
@@ -25,6 +33,7 @@ type Engine struct {
 	Redis         *redis.Client
 	PlatformDB    *xorm.Engine
 	BusinessDBSet map[string]*xorm.Engine
+	OAuth2        *server.Server
 }
 
 // Group handlers
@@ -42,8 +51,8 @@ func (e *Engine) Migration(name string, db *xorm.Engine) error {
 	return nil
 }
 
-// LoadBusinessDB load BusinessDBSet
-func (e *Engine) LoadBusinessDB() {
+// InitBusinessDB load BusinessDBSet
+func (e *Engine) InitBusinessDB() {
 	domains := []model.Domain{}
 	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null").Find(&domains); err != nil {
 		logrus.Fatal(err)
@@ -51,8 +60,6 @@ func (e *Engine) LoadBusinessDB() {
 	for _, domain := range domains {
 		e.AddBusinessDB(domain.Domain.String, domain.DriverName.String, domain.DataSource.String)
 	}
-
-	// async domain model
 	nset := e.MSets.Name(func(n string) bool {
 		return n != Name
 	})
@@ -73,15 +80,18 @@ func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
 func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 	sqlDir := viper.GetString("dir.sql")
 	sqlDir = path.Join(".", sqlDir)
+
 	db, err := xorm.NewEngine(driverName, dataSource)
 	if err != nil {
 		logrus.Fatal(err)
 	}
+
 	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
-	xLogger.ShowSQL(true)
+	if viper.GetString("app.mode") == "debug" {
+		xLogger.ShowSQL(true)
+	}
 	db.SetLogger(xLogger)
 
-	// RegisterSqlMap
 	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
 		logrus.Fatal(err)
 	}
@@ -100,8 +110,8 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 	e.BusinessDBSet[domain] = db
 }
 
-// LoadPlatformDB adddb
-func (e *Engine) LoadPlatformDB() {
+// InitPlatformDB adddb
+func (e *Engine) InitPlatformDB() {
 	var err error
 	sqlDir := viper.GetString("dir.sql")
 	sqlDir = path.Join(".", sqlDir)
@@ -113,7 +123,9 @@ func (e *Engine) LoadPlatformDB() {
 		logrus.Fatal(err)
 	}
 	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
-	xLogger.ShowSQL(true)
+	if viper.GetString("app.mode") == "debug" {
+		xLogger.ShowSQL(true)
+	}
 	e.PlatformDB.SetLogger(xLogger)
 	// only load Platform sql
 	e.PlatformDB.SqlTemplate = &xorm.HTMLTemplate{
@@ -129,8 +141,8 @@ func (e *Engine) LoadPlatformDB() {
 	e.Migration(Name, e.PlatformDB)
 }
 
-// LoadRedis redis
-func (e *Engine) LoadRedis() {
+// InitRedis redis
+func (e *Engine) InitRedis() {
 	uri, err := util.Parse(viper.GetString("rd.dataSource"))
 	if err != nil {
 		logrus.Fatal(err)
@@ -150,11 +162,74 @@ func (e *Engine) LoadRedis() {
 	e.Redis = rds
 }
 
+// InitOAuth2 oauth2
+func (e *Engine) InitOAuth2() {
+	uri, err := util.Parse(viper.GetString("rd.dataSource"))
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	db, err := strconv.Atoi(uri.DbName)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+	manager := manage.NewDefaultManager()
+	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
+	manager.MapTokenStorage(oredis.NewRedisStore(&redis.Options{
+		Addr:     uri.Laddr,
+		Password: uri.Passwd,
+		DB:       db,
+	}))
+	manager.MapAccessGenerate(generates.NewJWTAccessGenerate([]byte("00000000"), jwt.SigningMethodHS512))
+	clientStore := store.NewClientStore()
+	clientStore.Set("222222", &models.Client{
+		ID:     "222222",
+		Secret: "222222",
+		Domain: "http://127.0.0.1:8081",
+	})
+	manager.MapClientStorage(clientStore)
+	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
+	e.OAuth2.SetPasswordAuthorizationHandler(func(username, password string) (userID string, err error) {
+		if username == "test" && password == "test" {
+			userID = "test"
+		}
+		return
+	})
+	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (userID string, err error) {
+		store, err := session.Start(nil, w, r)
+		if err != nil {
+			return
+		}
+		uid, ok := store.Get("LoggedInUserID")
+		if !ok {
+			if r.Form == nil {
+				r.ParseForm()
+			}
+			store.Set("ReturnUri", r.Form)
+			store.Save()
+			w.Header().Set("Location", viper.GetString("oauth.login"))
+			w.WriteHeader(http.StatusFound)
+			return
+		}
+		userID = uid.(string)
+		store.Delete("LoggedInUserID")
+		store.Save()
+		return
+	})
+	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
+		logrus.Error("Internal Error:", err.Error())
+		return
+	})
+	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
+		logrus.Error("Response Error:", re.Error.Error())
+	})
+}
+
 // Run booting system
 func (e *Engine) Run() {
-	e.LoadRedis()
-	e.LoadPlatformDB()
-	e.LoadBusinessDB()
+	e.InitRedis()
+	e.InitPlatformDB()
+	e.InitBusinessDB()
+	e.InitOAuth2()
 }
 
 // BuildEngine build engine
@@ -181,8 +256,6 @@ func NewEngine() *Engine {
 		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
 	}))
 	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
+	e.Gin.Static(viper.GetString("http.static"), path.Join(util.Getwd(), viper.GetString("http.static")))
 	return e
 }
-
-// Engine instance
-var engine = NewEngine()
