@@ -61,6 +61,8 @@ func init() {
 	viper.SetDefault("http.port", "8081")
 	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("http.static", "/static")
+	viper.SetDefault("oauth.id", "Y76U9344RABF4")
+	viper.SetDefault("oauth.secret", "98UYO6FVB865")
 	viper.SetDefault("oauth.login", "/static/login.html")
 	viper.SetDefault("oauth.auth", "/static/auth.html")
 	viper.SetDefault("db.driver", "mysql")

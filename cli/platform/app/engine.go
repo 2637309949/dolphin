@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"os"
@@ -127,7 +128,6 @@ func (e *Engine) InitPlatformDB() {
 		xLogger.ShowSQL(true)
 	}
 	e.PlatformDB.SetLogger(xLogger)
-	// only load Platform sql
 	e.PlatformDB.SqlTemplate = &xorm.HTMLTemplate{
 		Template: make(map[string]*template.Template, 100),
 		Funcs:    make(map[string]xorm.FuncMap, 20),
@@ -181,10 +181,10 @@ func (e *Engine) InitOAuth2() {
 	}))
 	manager.MapAccessGenerate(generates.NewJWTAccessGenerate([]byte("00000000"), jwt.SigningMethodHS512))
 	clientStore := store.NewClientStore()
-	clientStore.Set("222222", &models.Client{
-		ID:     "222222",
-		Secret: "222222",
-		Domain: "http://127.0.0.1:8081",
+	clientStore.Set(viper.GetString("oauth.id"), &models.Client{
+		ID:     viper.GetString("oauth.id"),
+		Secret: viper.GetString("oauth.secret"),
+		Domain: fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")),
 	})
 	manager.MapClientStorage(clientStore)
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
