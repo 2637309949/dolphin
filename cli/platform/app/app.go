@@ -72,8 +72,6 @@ func init() {
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")
 	}
-
-	// lazy oa2cfg
 	if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
 		viper.SetDefault("oauth.server", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
 	}
@@ -81,13 +79,12 @@ func init() {
 		viper.SetDefault("oauth.cli", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
 	}
 	authServerURL = viper.GetString("oauth.server")
+	oa2cfg.ClientID = viper.GetString("oauth.id")
+	oa2cfg.ClientSecret = viper.GetString("oauth.secret")
 	oa2cfg.RedirectURL = fmt.Sprintf("%v/api/oauth2/oauth2", viper.GetString("oauth.cli"))
 	oa2cfg.Endpoint.AuthURL = authServerURL + "/api/oauth2/authorize"
 	oa2cfg.Endpoint.TokenURL = authServerURL + "/api/oauth2/token"
-
-	// lazy init Engine
-	var _ = cli.Provider(func(lc srv.Lifecycle) *Engine {
-		// Engine instance
+	_ = cli.Provider(func(lc srv.Lifecycle) *Engine {
 		var engine = NewEngine()
 		lc.Append(NewLifeHook(engine))
 		return engine

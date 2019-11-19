@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/2637309949/dolphin/cli/platform/util"
@@ -16,6 +17,7 @@ import (
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
+	oaError "gopkg.in/oauth2.v3/errors"
 )
 
 var (
@@ -24,8 +26,8 @@ var (
 
 var (
 	oa2cfg = oauth2.Config{
-		ClientID:     "222222",
-		ClientSecret: "222222",
+		ClientID:     viper.GetString("oauth.id"),
+		ClientSecret: viper.GetString("oauth.login"),
 		Scopes:       []string{"all"},
 		RedirectURL:  fmt.Sprintf("%v/api/oauth2/oauth2", viper.GetString("oauth.cli")),
 		Endpoint: oauth2.Endpoint{
@@ -61,7 +63,19 @@ func (ctr *Oauth2) Login(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	store.Set("LoggedInUserID", "000000")
+	ctx.Request.ParseForm()
+	f := ctx.Request.Form
+	username := f.Get("username")
+	password := f.Get("password")
+	userID, err := ctr.OAuth2.PasswordAuthorizationHandler(username, password)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	} else if strings.TrimSpace(userID) == "" {
+		ctx.Fail(oaError.ErrInvalidGrant)
+		return
+	}
+	store.Set("LoggedInUserID", userID)
 	store.Save()
 	ctx.Redirect(http.StatusFound, viper.GetString("oauth.auth"))
 }

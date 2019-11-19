@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"os"
@@ -137,7 +136,6 @@ func (e *Engine) InitPlatformDB() {
 			logrus.Fatal(err)
 		}
 	}
-	// async platform model
 	e.Migration(Name, e.PlatformDB)
 }
 
@@ -184,7 +182,7 @@ func (e *Engine) InitOAuth2() {
 	clientStore.Set(viper.GetString("oauth.id"), &models.Client{
 		ID:     viper.GetString("oauth.id"),
 		Secret: viper.GetString("oauth.secret"),
-		Domain: fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")),
+		Domain: viper.GetString("oauth.cli"),
 	})
 	manager.MapClientStorage(clientStore)
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
