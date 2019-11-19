@@ -538,7 +538,7 @@ paths:
       tags:
       - OAuth授权
   /api/oauth2/token:
-    get:
+    post:
       parameters:
       - description: 认证令牌
         in: query

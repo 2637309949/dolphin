@@ -12,12 +12,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/go-session/session"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
-	oaError "gopkg.in/oauth2.v3/errors"
+	oaErrors "gopkg.in/oauth2.v3/errors"
 )
 
 var (
@@ -72,7 +71,7 @@ func (ctr *Oauth2) Login(ctx *Context) {
 		ctx.Fail(err)
 		return
 	} else if strings.TrimSpace(userID) == "" {
-		ctx.Fail(oaError.ErrInvalidGrant)
+		ctx.Fail(oaErrors.ErrInvalidGrant)
 		return
 	}
 	store.Set("LoggedInUserID", userID)
@@ -192,10 +191,15 @@ func (ctr *Oauth2) URL(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/refresh [get]
 func (ctr *Oauth2) Refresh(ctx *Context) {
-	oldToken := oauth2.Token{}
-	oldToken.Expiry = time.Now()
-	oldToken.RefreshToken = util.Some(ctx.GetHeader("refreshtoken"), ctx.GetHeader("token")).(string)
-	ret, err := oa2cfg.TokenSource(context.Background(), &oldToken).Token()
+	refreshtoken, ok := ctr.OAuth2.BearerAuth(ctx.Request)
+	if !ok {
+		ctx.Fail(oaErrors.ErrInvalidAccessToken)
+		return
+	}
+	token := oauth2.Token{}
+	token.Expiry = time.Now()
+	token.RefreshToken = refreshtoken
+	ret, err := oa2cfg.TokenSource(context.Background(), &token).Token()
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -219,6 +223,27 @@ func (ctr *Oauth2) Info(ctx *Context) {
 	if err != nil {
 		ctx.Fail(err)
 		return
+	}
+	ctx.Success(ret)
+}
+
+// Test api implementation
+// @Summary 测试接口
+// @Tags OAuth授权
+// @Param token header query string true "认证令牌"
+// @Failure 403 {object} model.Response
+// @Router /api/oauth2/test [get]
+func (ctr *Oauth2) Test(ctx *Context) {
+	ctx.Request.ParseForm()
+	token, err := ctr.OAuth2.ValidationBearerToken(ctx.Request)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret := map[string]interface{}{
+		"expires_in": int64(token.GetAccessCreateAt().Add(token.GetAccessExpiresIn()).Sub(time.Now()).Seconds()),
+		"client_id":  token.GetClientID(),
+		"user_id":    token.GetUserID(),
 	}
 	ctx.Success(ret)
 }

@@ -10,14 +10,13 @@ import (
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xormplus/xorm"
-	oredis "gopkg.in/go-oauth2/redis.v3"
+	oaRedis "gopkg.in/go-oauth2/redis.v3"
 	"gopkg.in/oauth2.v3/errors"
 	"gopkg.in/oauth2.v3/generates"
 	"gopkg.in/oauth2.v3/manage"
@@ -172,13 +171,14 @@ func (e *Engine) InitOAuth2() {
 	}
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.MapTokenStorage(oredis.NewRedisStore(&redis.Options{
+	manager.MapTokenStorage(oaRedis.NewRedisStore(&redis.Options{
 		Addr:     uri.Laddr,
 		Password: uri.Passwd,
 		DB:       db,
 	}))
-	manager.MapAccessGenerate(generates.NewJWTAccessGenerate([]byte("00000000"), jwt.SigningMethodHS512))
+	manager.MapAccessGenerate(generates.NewAccessGenerate())
 	clientStore := store.NewClientStore()
+	// add local ClientInfo
 	clientStore.Set(viper.GetString("oauth.id"), &models.Client{
 		ID:     viper.GetString("oauth.id"),
 		Secret: viper.GetString("oauth.secret"),
