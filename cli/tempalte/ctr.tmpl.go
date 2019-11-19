@@ -41,7 +41,7 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 {{- end}}
 {{- $api := .}}
 {{- if .Auth}}
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 {{- end}}
 {{- range .Params}}
 // @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Ref .Type}} false "{{.Desc}}"

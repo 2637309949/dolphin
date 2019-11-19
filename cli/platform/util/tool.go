@@ -4,21 +4,30 @@
 package util
 
 import (
+	"errors"
 	"math/rand"
 	"reflect"
-
-	"github.com/2637309949/dolphin/cli/platform/model"
 )
 
 // AppAction defined
 func AppAction(v interface{}) (interface{}, error) {
-	return nil, model.Error{Msg: "No implementation found"}
+	return nil, errors.New("No implementation found")
 }
 
 // M defined
 type M map[string]interface{}
 
 var defaultLetters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+// RandomBytes returns securely generated random bytes
+func RandomBytes(n int) ([]byte, error) {
+	b := make([]byte, n)
+	_, err := rand.Read(b)
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
+}
 
 // RandomString returns a random string with a fixed length
 func RandomString(n int, allowedChars ...[]rune) string {

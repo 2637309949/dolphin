@@ -1,11 +1,15 @@
 package app
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"os"
 	"path"
 	"strconv"
+	"time"
+
+	"gopkg.in/guregu/null.v3"
 
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/sql"
@@ -18,6 +22,7 @@ import (
 	"github.com/xormplus/xorm"
 	oaRedis "gopkg.in/go-oauth2/redis.v3"
 	"gopkg.in/oauth2.v3/errors"
+	oaErrors "gopkg.in/oauth2.v3/errors"
 	"gopkg.in/oauth2.v3/generates"
 	"gopkg.in/oauth2.v3/manage"
 	"gopkg.in/oauth2.v3/models"
@@ -57,6 +62,14 @@ func (e *Engine) InitBusinessDB() {
 		logrus.Fatal(err)
 	}
 	for _, domain := range domains {
+		uri, err := util.Parse(domain.DataSource.String)
+		if err != nil {
+			panic(err)
+		}
+		_, err = e.PlatformDB.Sql(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %v DEFAULT CHARACTER SET utf8mb4", uri.DbName)).Execute()
+		if err != nil {
+			panic(err)
+		}
 		e.AddBusinessDB(domain.Domain.String, domain.DriverName.String, domain.DataSource.String)
 	}
 	nset := e.MSets.Name(func(n string) bool {
@@ -136,6 +149,66 @@ func (e *Engine) InitPlatformDB() {
 		}
 	}
 	e.Migration(Name, e.PlatformDB)
+
+	s := e.PlatformDB.NewSession()
+	domain := model.Domain{
+		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		Name:       null.StringFrom("系统默认"),
+		FullName:   null.StringFrom("系统默认"),
+		DataSource: null.StringFrom(""),
+		DriverName: null.StringFrom("mysql"),
+		DomainUrl:  null.StringFrom("localhost"),
+		LoginUrl:   null.StringFrom("localhost"),
+		Type:       null.IntFrom(0),
+		Status:     null.IntFrom(1),
+		SyncFlag:   null.IntFrom(0),
+		Domain:     null.StringFrom("localhost"),
+		CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		CreateTime: null.TimeFrom(time.Now()),
+		UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		UpdateTime: null.TimeFrom(time.Now()),
+	}
+	ct, err := s.Where("id=?", domain.ID).Count(new(model.Domain))
+	if err != nil {
+		s.Rollback()
+		panic(err)
+	}
+	if ct == 0 {
+		_, err := e.PlatformDB.InsertOne(&domain)
+		if err != nil {
+			s.Rollback()
+			panic(err)
+		}
+	}
+
+	admin := model.User{
+		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		Password:   null.StringFrom("123456"),
+		Name:       null.StringFrom("admin"),
+		FullName:   null.StringFrom("admin"),
+		Status:     null.IntFrom(1),
+		Domain:     null.StringFrom("localhost"),
+		CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		CreateTime: null.TimeFrom(time.Now()),
+		UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		UpdateTime: null.TimeFrom(time.Now()),
+	}
+	admin.SetPassword(admin.Password.String)
+	ct, err = s.Where("id=?", admin.ID).Count(new(model.User))
+	if err != nil {
+		s.Rollback()
+		panic(err)
+	}
+	if ct == 0 {
+		_, err := e.PlatformDB.InsertOne(&admin)
+		if err != nil {
+			s.Rollback()
+			panic(err)
+		}
+	}
+	if err := s.Commit(); err != nil {
+		panic(err)
+	}
 }
 
 // InitRedis redis
@@ -187,8 +260,22 @@ func (e *Engine) InitOAuth2() {
 	manager.MapClientStorage(clientStore)
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
 	e.OAuth2.SetPasswordAuthorizationHandler(func(username, password string) (userID string, err error) {
-		if username == "test" && password == "test" {
-			userID = "test"
+		account := model.User{
+			Name: null.StringFrom(username),
+		}
+		ext, err := e.PlatformDB.Where("delete_time is null").Get(&account)
+		if err != nil {
+			return "", err
+		}
+		if !ext {
+			return "", oaErrors.ErrInvalidGrant
+		}
+		fmt.Println("password = ", password)
+		fmt.Println("account = ", account.Password.String)
+		if !account.ValidPassword(password) {
+			err = oaErrors.ErrInvalidGrant
+		} else {
+			userID = account.Name.String
 		}
 		return
 	})

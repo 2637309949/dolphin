@@ -91,6 +91,9 @@ definitions:
       password:
         description: 密码
         type: string
+      salt:
+        description: 盐噪点
+        type: string
       status:
         description: 状态(0：禁用,1：正常)
         type: number

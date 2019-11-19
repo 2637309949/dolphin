@@ -178,8 +178,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 活动对象
@@ -211,8 +211,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 活动对象
@@ -242,8 +242,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 活动对象
@@ -275,8 +275,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 活动对象
@@ -304,8 +304,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 页码
@@ -344,8 +344,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 活动id
@@ -374,8 +374,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 活动对象
@@ -407,8 +407,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 活动对象

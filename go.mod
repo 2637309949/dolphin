@@ -24,7 +24,7 @@ require (
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-redis/redis v6.15.6+incompatible
 	github.com/go-session/session v3.1.2+incompatible
-	github.com/gofrs/uuid v3.2.0+incompatible // indirect
+	github.com/gofrs/uuid v3.2.0+incompatible
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
 	github.com/jackc/pgx v3.6.0+incompatible // indirect
