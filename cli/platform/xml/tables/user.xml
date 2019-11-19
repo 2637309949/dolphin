@@ -1,7 +1,7 @@
 <table name="user" desc="用户" packages="gopkg.in/guregu/null.v3">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="password" desc="密码" type="null.String" xorm="varchar(150) notnull" />
-	<column name="salt" desc="盐噪点" type="null.String" xorm="varchar(150) notnull" />
+	<column name="salt" desc="盐噪点" type="null.String" xorm="varchar(36) notnull" />
 	<column name="name" desc="名字" type="null.String" xorm="varchar(36) notnull" />
 	<column name="full_name" desc="全名" type="null.String" xorm="varchar(36)" />
 	<column name="mobile" desc="电话" type="null.String" xorm="varchar(50)" />

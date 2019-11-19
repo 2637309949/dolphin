@@ -251,7 +251,6 @@ func (e *Engine) InitOAuth2() {
 	}))
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 	clientStore := store.NewClientStore()
-	// add local ClientInfo
 	clientStore.Set(viper.GetString("oauth.id"), &models.Client{
 		ID:     viper.GetString("oauth.id"),
 		Secret: viper.GetString("oauth.secret"),
@@ -267,12 +266,7 @@ func (e *Engine) InitOAuth2() {
 		if err != nil {
 			return "", err
 		}
-		if !ext {
-			return "", oaErrors.ErrInvalidGrant
-		}
-		fmt.Println("password = ", password)
-		fmt.Println("account = ", account.Password.String)
-		if !account.ValidPassword(password) {
+		if !ext || !account.ValidPassword(password) {
 			err = oaErrors.ErrInvalidGrant
 		} else {
 			userID = account.Name.String
@@ -318,7 +312,6 @@ func (e *Engine) Run() {
 }
 
 // BuildEngine build engine
-// Action after Init Engine
 func BuildEngine(build func(*Engine)) func(*Engine) {
 	return func(e *Engine) {
 		build(e)
