@@ -7,6 +7,7 @@ import (
 
 	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/xormplus/xorm"
+	oaErrors "gopkg.in/oauth2.v3/errors"
 )
 
 type (
@@ -80,6 +81,17 @@ func (q *Query) SetString(key string, init ...string) {
 // Value defined
 func (q *Query) Value() map[string]interface{} {
 	return q.m
+}
+
+// Auth middles
+func (e *Engine) Auth(h func(ctx *Context)) func(ctx *Context) {
+	return func(ctx *Context) {
+		if ctx.Token == nil {
+			ctx.Fail(oaErrors.ErrInvalidAccessToken)
+		} else {
+			h(ctx)
+		}
+	}
 }
 
 // Query defined

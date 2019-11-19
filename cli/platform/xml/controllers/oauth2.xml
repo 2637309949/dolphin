@@ -1,15 +1,15 @@
 <controller name="oauth2" desc="OAuth授权">
     <!-- server api -->
-    <api name="login" table="user" desc="登录信息" method="post">
+    <api name="login" table="user" desc="登录信息" method="post" auth="false">
         <param name="user" type="$user" desc="用户信息" />
     </api>
-    <api name="affirm" table="user" desc="用户授权" method="post"></api>
-    <api name="authorize" table="user" desc="用户授权" method="get"></api>
-    <api name="token" table="user" desc="获取令牌" method="post"></api>
+    <api name="affirm" table="user" desc="用户授权" method="post" auth="false"></api>
+    <api name="authorize" table="user" desc="用户授权" method="get" auth="false"></api>
+    <api name="token" table="user" desc="获取令牌" method="post" auth="false"></api>
     <api name="test" desc="测试接口" method="get"></api>
     <!-- cli api -->
-    <api name="url" desc="授权地址" method="get"></api>
-    <api name="oauth2" desc="授权回调" method="get"></api>
-    <api name="refresh" desc="刷新令牌" method="get"></api>
+    <api name="url" desc="授权地址" method="get" auth="false"></api>
+    <api name="oauth2" desc="授权回调" method="get" auth="false"></api>
+    <api name="refresh" desc="刷新令牌" method="get" auth="false"></api>
     <api name="info" desc="客户端信息" method="get"></api>
 </controller>

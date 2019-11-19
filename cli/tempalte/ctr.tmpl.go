@@ -12,8 +12,8 @@ package app
 
 import (
 	"{{.PackageName}}/model"
-	
-	{{- if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
+
+	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )

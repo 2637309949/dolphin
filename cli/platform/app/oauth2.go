@@ -100,7 +100,6 @@ func (ctr *Oauth2) Affirm(ctx *Context) {
 	ctx.Request.Form = form
 	store.Delete("ReturnUri")
 	store.Save()
-
 	err = ctr.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		ctx.Fail(err)
@@ -234,16 +233,10 @@ func (ctr *Oauth2) Info(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/test [get]
 func (ctr *Oauth2) Test(ctx *Context) {
-	ctx.Request.ParseForm()
-	token, err := ctr.OAuth2.ValidationBearerToken(ctx.Request)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
 	ret := map[string]interface{}{
-		"expires_in": int64(token.GetAccessCreateAt().Add(token.GetAccessExpiresIn()).Sub(time.Now()).Seconds()),
-		"client_id":  token.GetClientID(),
-		"user_id":    token.GetUserID(),
+		"expires_in": int64(ctx.Token.GetAccessCreateAt().Add(ctx.Token.GetAccessExpiresIn()).Sub(time.Now()).Seconds()),
+		"client_id":  ctx.Token.GetClientID(),
+		"user_id":    ctx.Token.GetUserID(),
 	}
 	ctx.Success(ret)
 }

@@ -217,6 +217,22 @@ paths:
       summary: 刷新令牌
       tags:
       - OAuth授权
+  /api/oauth2/test:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: query
+        name: header
+        required: true
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 测试接口
+      tags:
+      - OAuth授权
   /api/oauth2/token:
     post:
       parameters:

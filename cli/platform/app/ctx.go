@@ -8,13 +8,14 @@ import (
 	"github.com/thoas/go-funk"
 	"github.com/xormplus/xorm"
 	"gopkg.in/guregu/null.v3"
+	"gopkg.in/oauth2.v3"
 )
 
 // Context defined http handle hook context
 type Context struct {
 	*gin.Context
-	User *model.User
-	DB   *xorm.Engine
+	Token oauth2.TokenInfo
+	DB    *xorm.Engine
 }
 
 // HandlerFunc defines the handler used by gin middleware as return value.
@@ -51,17 +52,16 @@ func (ctx *Context) Fail(err error, status ...int) {
 	})
 }
 
-// WithUser defined User
-func (ctx *Context) WithUser(user model.User) {
-	ctx.User = &user
-	return
-}
-
 // HandlerFunc convert to gin.HandlerFunc
 func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
 		c := &Context{Context: ctx}
-		c.WithUser(model.User{})
+		c.Request.ParseForm()
+		if accessToken, ok := e.OAuth2.BearerAuth(ctx.Request); ok {
+			if token, err := e.OAuth2.Manager.LoadAccessToken(accessToken); err == nil {
+				c.Token = token
+			}
+		}
 		c.DB = e.BusinessDBSet["localhost"]
 		h(c)
 	})

@@ -12,6 +12,7 @@ package app
 
 import (
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
+
 	"github.com/gin-gonic/gin"
 	"github.com/thoas/go-funk"
 )
@@ -38,6 +39,16 @@ func BuildEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
 		engine.Engine = base
 		build(engine)
+	}
+}
+
+// Auth middles
+// Auth middles
+func (e *Engine) Auth(h func(*Context)) func(*Context) {
+	return func(ctx *Context) {
+		e.Engine.Auth(func(*pApp.Context) {
+			h(ctx)
+		})
 	}
 }
 
