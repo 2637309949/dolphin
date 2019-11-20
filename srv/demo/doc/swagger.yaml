@@ -151,6 +151,9 @@ definitions:
       password:
         description: 密码
         type: string
+      salt:
+        description: 盐噪点
+        type: string
       status:
         description: 状态(0：禁用,1：正常)
         type: number
@@ -180,7 +183,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 活动对象
         in: body
@@ -213,7 +215,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 活动对象
         in: body
@@ -244,7 +245,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 活动对象
         in: body
@@ -277,7 +277,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 活动对象
         in: body
@@ -306,7 +305,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 页码
         in: query
@@ -346,7 +344,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 活动id
         in: query
@@ -376,7 +373,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 活动对象
         in: body
@@ -409,7 +405,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 活动对象
         in: body
@@ -438,8 +433,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       responses:
@@ -454,8 +449,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       responses:
@@ -466,30 +461,14 @@ paths:
       summary: 用户授权
       tags:
       - OAuth授权
-  /api/oauth2/info:
-    get:
-      parameters:
-      - description: 认证令牌
-        in: query
-        name: header
-        required: true
-        type: string
-      responses:
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 客户端信息
-      tags:
-      - OAuth授权
   /api/oauth2/login:
     post:
       consumes:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 用户信息
@@ -509,8 +488,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       responses:
@@ -525,8 +504,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       responses:
@@ -537,28 +516,12 @@ paths:
       summary: 刷新令牌
       tags:
       - OAuth授权
-  /api/oauth2/test:
-    get:
-      parameters:
-      - description: 认证令牌
-        in: query
-        name: header
-        required: true
-        type: string
-      responses:
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 测试接口
-      tags:
-      - OAuth授权
   /api/oauth2/token:
     post:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       responses:
@@ -573,8 +536,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       responses:
@@ -591,9 +554,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
-        required: true
+        in: header
+        name: Authorization
         type: string
       - description: 角色信息
         in: body
@@ -612,9 +574,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
-        required: true
+        in: header
+        name: Authorization
         type: string
       - description: 角色id
         in: query
@@ -632,9 +593,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
-        required: true
+        in: header
+        name: Authorization
         type: string
       - description: 页码
         in: query
@@ -658,9 +618,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
-        required: true
+        in: header
+        name: Authorization
         type: string
       - description: 角色信息
         in: body
@@ -681,8 +640,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 用户信息
@@ -702,8 +661,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 用户id
@@ -722,8 +681,8 @@ paths:
     get:
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 页码
@@ -748,8 +707,8 @@ paths:
       - application/json
       parameters:
       - description: 认证令牌
-        in: query
-        name: header
+        in: header
+        name: Authorization
         required: true
         type: string
       - description: 用户信息

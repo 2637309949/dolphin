@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"gopkg.in/guregu/null.v3"
+	"github.com/2637309949/dolphin/cli/null"
 
 	"github.com/2637309949/dolphin/cli/platform/util"
 	"golang.org/x/crypto/scrypt"

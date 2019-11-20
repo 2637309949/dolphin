@@ -25,7 +25,7 @@ func BuildRole(build func(*Role)) func(engine *Engine) {
 // @Summary 添加角色
 // @Tags 角色
 // @Accept application/json
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param role body model.Role false "角色信息"
 // @Failure 403 {object} model.Response
 // @Router /api/role/add [post]
@@ -47,7 +47,7 @@ func (ctr *Role) Add(ctx *Context) {
 // @Summary 更新角色
 // @Tags 角色
 // @Accept application/json
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param role body model.Role false "角色信息"
 // @Failure 403 {object} model.Response
 // @Router /api/role/update [post]
@@ -68,7 +68,7 @@ func (ctr *Role) Update(ctx *Context) {
 // Page api implementation
 // @Summary 角色分页查询
 // @Tags 角色
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
@@ -88,7 +88,7 @@ func (ctr *Role) Page(ctx *Context) {
 // Get api implementation
 // @Summary 获取角色信息
 // @Tags 角色
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param id query string false "角色id"
 // @Failure 403 {object} model.Response
 // @Router /api/role/get [get]

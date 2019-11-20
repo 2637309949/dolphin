@@ -25,7 +25,7 @@ func BuildUser(build func(*User)) func(engine *Engine) {
 // @Summary 添加用户
 // @Tags 用户
 // @Accept application/json
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Param user body model.User false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/user/add [post]
@@ -47,7 +47,7 @@ func (ctr *User) Add(ctx *Context) {
 // @Summary 更新用户
 // @Tags 用户
 // @Accept application/json
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Param user body model.User false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/user/update [post]
@@ -68,7 +68,7 @@ func (ctr *User) Update(ctx *Context) {
 // Page api implementation
 // @Summary 用户分页查询
 // @Tags 用户
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
@@ -88,7 +88,7 @@ func (ctr *User) Page(ctx *Context) {
 // Get api implementation
 // @Summary 获取用户信息
 // @Tags 用户
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Param id query string false "用户id"
 // @Failure 403 {object} model.Response
 // @Router /api/user/get [get]

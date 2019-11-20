@@ -14,7 +14,7 @@ import (
 	"{{.PackageName}}/model"
 
 	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
-	pUtil "github.com/2637309949/dolphin/cli/platform/util"
+	{{if ne .Name "platform"}}pUtil{{end}} "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/gin-gonic/gin/binding"
 )
 
@@ -41,7 +41,7 @@ func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller
 {{- end}}
 {{- $api := .}}
 {{- if .Auth}}
-// @Param Authorization header string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 {{- end}}
 {{- range .Params}}
 // @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Ref .Type}} false "{{.Desc}}"

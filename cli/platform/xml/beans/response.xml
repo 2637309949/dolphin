@@ -1,4 +1,4 @@
-<bean name="response" desc="请求返回" packages="gopkg.in/guregu/null.v3">
+<bean name="response" desc="请求返回" packages="github.com/2637309949/dolphin/cli/null">
     <prop name="code" desc="编码" type="null.Int" />
     <prop name="msg" desc="消息" type="null.String" />
     <prop name="data" desc="卡类型" type="interface{}"/>

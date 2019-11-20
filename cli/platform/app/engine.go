@@ -9,8 +9,14 @@ import (
 	"strconv"
 	"time"
 
-	"gopkg.in/guregu/null.v3"
+	"github.com/2637309949/dolphin/cli/null"
 
+	"github.com/2637309949/dolphin/cli/oauth2/errors"
+	"github.com/2637309949/dolphin/cli/oauth2/generates"
+	"github.com/2637309949/dolphin/cli/oauth2/manage"
+	"github.com/2637309949/dolphin/cli/oauth2/models"
+	"github.com/2637309949/dolphin/cli/oauth2/server"
+	"github.com/2637309949/dolphin/cli/oauth2/store"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
@@ -20,14 +26,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/xormplus/xorm"
-	oaRedis "gopkg.in/go-oauth2/redis.v3"
-	"gopkg.in/oauth2.v3/errors"
-	oaErrors "gopkg.in/oauth2.v3/errors"
-	"gopkg.in/oauth2.v3/generates"
-	"gopkg.in/oauth2.v3/manage"
-	"gopkg.in/oauth2.v3/models"
-	"gopkg.in/oauth2.v3/server"
-	"gopkg.in/oauth2.v3/store"
 )
 
 // Engine defined parse app engine
@@ -180,7 +178,6 @@ func (e *Engine) InitPlatformDB() {
 			panic(err)
 		}
 	}
-
 	admin := model.User{
 		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 		Password:   null.StringFrom("123456"),
@@ -244,7 +241,7 @@ func (e *Engine) InitOAuth2() {
 	}
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.MapTokenStorage(oaRedis.NewRedisStore(&redis.Options{
+	manager.MapTokenStorage(store.NewRedisStore(&redis.Options{
 		Addr:     uri.Laddr,
 		Password: uri.Passwd,
 		DB:       db,
@@ -267,9 +264,9 @@ func (e *Engine) InitOAuth2() {
 			return "", err
 		}
 		if !ext || !account.ValidPassword(password) {
-			err = oaErrors.ErrInvalidGrant
+			err = errors.ErrInvalidGrant
 		} else {
-			userID = account.Name.String
+			userID = account.ID.String
 		}
 		return
 	})

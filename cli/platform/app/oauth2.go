@@ -15,8 +15,7 @@ import (
 	"github.com/go-session/session"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/clientcredentials"
-	oaErrors "gopkg.in/oauth2.v3/errors"
+	oaErrors "github.com/2637309949/dolphin/cli/oauth2/errors"
 )
 
 var (
@@ -52,7 +51,7 @@ func BuildOauth2(build func(*Oauth2)) func(engine *Engine) {
 // @Summary 登录信息
 // @Tags OAuth授权
 // @Accept application/json
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Param user body model.User false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/login [post]
@@ -83,7 +82,7 @@ func (ctr *Oauth2) Login(ctx *Context) {
 // @Summary 用户授权
 // @Tags OAuth授权
 // @Accept application/json
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/affirm [post]
 func (ctr *Oauth2) Affirm(ctx *Context) {
@@ -110,7 +109,7 @@ func (ctr *Oauth2) Affirm(ctx *Context) {
 // Authorize api implementation
 // @Summary 用户授权
 // @Tags OAuth授权
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/authorize [get]
 func (ctr *Oauth2) Authorize(ctx *Context) {
@@ -136,7 +135,7 @@ func (ctr *Oauth2) Authorize(ctx *Context) {
 // Token api implementation
 // @Summary 获取令牌
 // @Tags OAuth授权
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/token [post]
 func (ctr *Oauth2) Token(ctx *Context) {
@@ -149,7 +148,7 @@ func (ctr *Oauth2) Token(ctx *Context) {
 // Oauth2 api implementation
 // @Summary 授权回调
 // @Tags OAuth授权
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/oauth2 [get]
 func (ctr *Oauth2) Oauth2(ctx *Context) {
@@ -172,7 +171,7 @@ func (ctr *Oauth2) Oauth2(ctx *Context) {
 // URL api implementation
 // @Summary 授权地址
 // @Tags OAuth授权
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/url [get]
 func (ctr *Oauth2) URL(ctx *Context) {
@@ -186,7 +185,7 @@ func (ctr *Oauth2) URL(ctx *Context) {
 // Refresh api implementation
 // @Summary 刷新令牌
 // @Tags OAuth授权
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/refresh [get]
 func (ctr *Oauth2) Refresh(ctx *Context) {
@@ -209,34 +208,34 @@ func (ctr *Oauth2) Refresh(ctx *Context) {
 // Info api implementation
 // @Summary 客户端信息
 // @Tags OAuth授权
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/info [get]
-func (ctr *Oauth2) Info(ctx *Context) {
-	cfg := clientcredentials.Config{
-		ClientID:     oa2cfg.ClientID,
-		ClientSecret: oa2cfg.ClientSecret,
-		TokenURL:     oa2cfg.Endpoint.TokenURL,
-	}
-	ret, err := cfg.Token(context.Background())
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}
+// func (ctr *Oauth2) Info(ctx *Context) {
+// 	cfg := clientcredentials.Config{
+// 		ClientID:     oa2cfg.ClientID,
+// 		ClientSecret: oa2cfg.ClientSecret,
+// 		TokenURL:     oa2cfg.Endpoint.TokenURL,
+// 	}
+// 	ret, err := cfg.Token(context.Background())
+// 	if err != nil {
+// 		ctx.Fail(err)
+// 		return
+// 	}
+// 	ctx.Success(ret)
+// }
 
 // Test api implementation
 // @Summary 测试接口
 // @Tags OAuth授权
-// @Param token header query string true "认证令牌"
+// @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/test [get]
-func (ctr *Oauth2) Test(ctx *Context) {
-	ret := map[string]interface{}{
-		"expires_in": int64(ctx.Token.GetAccessCreateAt().Add(ctx.Token.GetAccessExpiresIn()).Sub(time.Now()).Seconds()),
-		"client_id":  ctx.Token.GetClientID(),
-		"user_id":    ctx.Token.GetUserID(),
-	}
-	ctx.Success(ret)
-}
+// func (ctr *Oauth2) Test(ctx *Context) {
+// 	ret := map[string]interface{}{
+// 		"expires_in": int64(ctx.Token.GetAccessCreateAt().Add(ctx.Token.GetAccessExpiresIn()).Sub(time.Now()).Seconds()),
+// 		"client_id":  ctx.Token.GetClientID(),
+// 		"user_id":    ctx.Token.GetUserID(),
+// 	}
+// 	ctx.Success(ret)
+// }

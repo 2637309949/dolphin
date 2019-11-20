@@ -1,4 +1,4 @@
-<table name="role_user" desc="用户与角色" packages="gopkg.in/guregu/null.v3">
+<table name="role_user" desc="用户与角色" packages="github.com/2637309949/dolphin/cli/null">
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="user_id" desc="用户ID" type="null.String" xorm="varchar(36) notnull" />
     <column name="role_id" desc="角色ID" type="null.String" xorm="varchar(36) notnull" />
