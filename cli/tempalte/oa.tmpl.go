@@ -48,6 +48,10 @@ var TmplLogin = `<!DOCTYPE html>
         <h1>Login In</h1>
         <form action="/api/oauth2/login" method="POST">
             <div class="form-group">
+                <label for="domain">Domain</label>
+                <input type="text" class="form-control" name="domain" placeholder="Please enter your domain">
+            </div>
+            <div class="form-group">
                 <label for="username">User Name</label>
                 <input type="text" class="form-control" name="username" placeholder="Please enter your user name">
             </div>

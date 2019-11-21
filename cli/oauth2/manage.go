@@ -10,6 +10,7 @@ type TokenGenerateRequest struct {
 	ClientID       string
 	ClientSecret   string
 	UserID         string
+	Domain         string
 	RedirectURI    string
 	Scope          string
 	Code           string

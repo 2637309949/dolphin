@@ -2,19 +2,21 @@ package app
 
 import (
 	"net/http"
+	"strings"
 
+	"github.com/2637309949/dolphin/cli/null"
+	"github.com/2637309949/dolphin/cli/oauth2"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/gin-gonic/gin"
 	"github.com/thoas/go-funk"
 	"github.com/xormplus/xorm"
-	"github.com/2637309949/dolphin/cli/null"
 )
 
 // Context defined http handle hook context
 type Context struct {
 	*gin.Context
-	DB   *xorm.Engine
-	User *model.User
+	DB    *xorm.Engine
+	Token oauth2.TokenInfo
 }
 
 // HandlerFunc defines the handler used by gin middleware as return value.
@@ -24,11 +26,6 @@ type HandlerFunc func(*Context)
 type RouterGroup struct {
 	*gin.RouterGroup
 	Engine *Engine
-}
-
-// WithUser add user
-func (ctx *Context) WithUser(u *model.User) {
-	ctx.User = u
 }
 
 // Success defined success result
@@ -63,12 +60,10 @@ func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 		c.Request.ParseForm()
 		if accessToken, ok := e.OAuth2.BearerAuth(ctx.Request); ok {
 			if token, err := e.OAuth2.Manager.LoadAccessToken(accessToken); err == nil {
-				account := model.User{
-					ID: null.StringFrom(token.GetUserID()),
+				c.Token = token
+				if domain := strings.TrimSpace(c.Token.GetDomain()); domain != "" {
+					c.DB = e.BusinessDBSet[domain]
 				}
-				e.PlatformDB.Where("delete_time is null").Get(&account)
-				c.WithUser(&account)
-				c.DB = e.BusinessDBSet[account.Domain.String]
 			}
 		}
 		h(c)

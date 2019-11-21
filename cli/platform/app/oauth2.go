@@ -9,13 +9,14 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/cli/null"
+	oaErrors "github.com/2637309949/dolphin/cli/oauth2/errors"
+	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/go-session/session"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
-	oaErrors "github.com/2637309949/dolphin/cli/oauth2/errors"
 )
 
 var (
@@ -63,17 +64,24 @@ func (ctr *Oauth2) Login(ctx *Context) {
 	}
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
+	domain := f.Get("domain")
 	username := f.Get("username")
 	password := f.Get("password")
-	userID, err := ctr.OAuth2.PasswordAuthorizationHandler(username, password)
+	account := model.User{
+		Name:   null.StringFrom(username),
+		Domain: null.StringFrom(domain),
+	}
+	ext, err := ctr.PlatformDB.Where("delete_time is null").Get(&account)
 	if err != nil {
 		ctx.Fail(err)
 		return
-	} else if strings.TrimSpace(userID) == "" {
+	}
+	if !ext || !account.ValidPassword(password) {
 		ctx.Fail(oaErrors.ErrInvalidGrant)
 		return
 	}
-	store.Set("LoggedInUserID", userID)
+	store.Set("LoggedInUserID", account.ID.String)
+	store.Set("LoggedInDomain", account.Domain.String)
 	store.Save()
 	ctx.Redirect(http.StatusFound, viper.GetString("oauth.auth"))
 }

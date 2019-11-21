@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/cli/null"
-
 	"github.com/2637309949/dolphin/cli/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/oauth2/generates"
 	"github.com/2637309949/dolphin/cli/oauth2/manage"
@@ -231,21 +230,9 @@ func (e *Engine) InitRedis() {
 
 // InitOAuth2 oauth2
 func (e *Engine) InitOAuth2() {
-	uri, err := util.Parse(viper.GetString("rd.dataSource"))
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	db, err := strconv.Atoi(uri.DbName)
-	if err != nil {
-		logrus.Fatal(err)
-	}
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.MapTokenStorage(store.NewRedisStore(&redis.Options{
-		Addr:     uri.Laddr,
-		Password: uri.Passwd,
-		DB:       db,
-	}))
+	manager.MapTokenStorage(store.NewRedisStoreWithCli(e.Redis))
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 	clientStore := store.NewClientStore()
 	clientStore.Set(viper.GetString("oauth.id"), &models.Client{
@@ -254,29 +241,16 @@ func (e *Engine) InitOAuth2() {
 		Domain: viper.GetString("oauth.cli"),
 	})
 	manager.MapClientStorage(clientStore)
+
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
-	e.OAuth2.SetPasswordAuthorizationHandler(func(username, password string) (userID string, err error) {
-		account := model.User{
-			Name: null.StringFrom(username),
-		}
-		ext, err := e.PlatformDB.Where("delete_time is null").Get(&account)
-		if err != nil {
-			return "", err
-		}
-		if !ext || !account.ValidPassword(password) {
-			err = errors.ErrInvalidGrant
-		} else {
-			userID = account.ID.String
-		}
-		return
-	})
-	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (userID string, err error) {
+	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
 		store, err := session.Start(nil, w, r)
 		if err != nil {
 			return
 		}
-		uid, ok := store.Get("LoggedInUserID")
-		if !ok {
+		userID, uok := store.Get("LoggedInUserID")
+		domain, dok := store.Get("LoggedInDomain")
+		if !uok || !dok {
 			if r.Form == nil {
 				r.ParseForm()
 			}
@@ -286,8 +260,10 @@ func (e *Engine) InitOAuth2() {
 			w.WriteHeader(http.StatusFound)
 			return
 		}
-		userID = uid.(string)
+		uid = userID.(string)
+		dm = domain.(string)
 		store.Delete("LoggedInUserID")
+		store.Delete("LoggedInDomain")
 		store.Save()
 		return
 	})

@@ -15,6 +15,7 @@ func NewToken() *Token {
 type Token struct {
 	ClientID         string        `bson:"ClientID"`
 	UserID           string        `bson:"UserID"`
+	Domain           string        `bson:"Domain"`
 	RedirectURI      string        `bson:"RedirectURI"`
 	Scope            string        `bson:"Scope"`
 	Code             string        `bson:"Code"`
@@ -51,6 +52,16 @@ func (t *Token) GetUserID() string {
 // SetUserID the user id
 func (t *Token) SetUserID(userID string) {
 	t.UserID = userID
+}
+
+// GetDomain the domain of user
+func (t *Token) GetDomain() string {
+	return t.Domain
+}
+
+// SetDomain the domain of user
+func (t *Token) SetDomain(domain string) {
+	t.Domain = domain
 }
 
 // GetRedirectURI redirect URI

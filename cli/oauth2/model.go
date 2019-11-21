@@ -21,6 +21,8 @@ type (
 		SetClientID(string)
 		GetUserID() string
 		SetUserID(string)
+		GetDomain() string
+		SetDomain(string)
 		GetRedirectURI() string
 		SetRedirectURI(string)
 		GetScope() string

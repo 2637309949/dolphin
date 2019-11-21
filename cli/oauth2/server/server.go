@@ -27,8 +27,8 @@ func NewServer(cfg *Config, manager oauth2.Manager) *Server {
 	// default handler
 	srv.ClientInfoHandler = ClientBasicHandler
 
-	srv.UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (string, error) {
-		return "", errors.ErrAccessDenied
+	srv.UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (string, string, error) {
+		return "", "", errors.ErrAccessDenied
 	}
 
 	srv.PasswordAuthorizationHandler = func(username, password string) (string, error) {
@@ -194,6 +194,7 @@ func (s *Server) GetAuthorizeToken(req *AuthorizeRequest) (oauth2.TokenInfo, err
 	tgr := &oauth2.TokenGenerateRequest{
 		ClientID:       req.ClientID,
 		UserID:         req.UserID,
+		Domain:         req.Domain,
 		RedirectURI:    req.RedirectURI,
 		Scope:          req.Scope,
 		AccessTokenExp: req.AccessTokenExp,
@@ -220,13 +221,14 @@ func (s *Server) HandleAuthorizeRequest(w http.ResponseWriter, r *http.Request) 
 	}
 
 	// user authorization
-	userID, err := s.UserAuthorizationHandler(w, r)
+	userID, domain, err := s.UserAuthorizationHandler(w, r)
 	if err != nil {
 		return s.redirectError(w, req, err)
 	} else if userID == "" {
 		return nil
 	}
 	req.UserID = userID
+	req.Domain = domain
 
 	// specify the scope of authorization
 	if fn := s.AuthorizeScopeHandler; fn != nil {

@@ -37,6 +37,7 @@ type AuthorizeRequest struct {
 	RedirectURI    string
 	State          string
 	UserID         string
+	Domain         string
 	AccessTokenExp time.Duration
 	Request        *http.Request
 }
