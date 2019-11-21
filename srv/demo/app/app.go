@@ -40,7 +40,7 @@ func (e *Engine) Auth(h func(*Context)) func(*Context) {
 	return func(ctx *Context) {
 		e.Engine.Auth(func(*pApp.Context) {
 			h(ctx)
-		})
+		})(ctx.Context)
 	}
 }
 

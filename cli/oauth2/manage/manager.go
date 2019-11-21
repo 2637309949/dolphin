@@ -153,6 +153,7 @@ func (m *Manager) GenerateAuthToken(rt oauth2.ResponseType, tgr *oauth2.TokenGen
 	ti := models.NewToken()
 	ti.SetClientID(tgr.ClientID)
 	ti.SetUserID(tgr.UserID)
+	ti.SetDomain(tgr.Domain)
 	ti.SetRedirectURI(tgr.RedirectURI)
 	ti.SetScope(tgr.Scope)
 
@@ -269,6 +270,7 @@ func (m *Manager) GenerateAccessToken(gt oauth2.GrantType, tgr *oauth2.TokenGene
 			return nil, err
 		}
 		tgr.UserID = ti.GetUserID()
+		tgr.Domain = ti.GetDomain()
 		tgr.Scope = ti.GetScope()
 		if exp := ti.GetAccessExpiresIn(); exp > 0 {
 			tgr.AccessTokenExp = exp
@@ -278,6 +280,7 @@ func (m *Manager) GenerateAccessToken(gt oauth2.GrantType, tgr *oauth2.TokenGene
 	ti := models.NewToken()
 	ti.SetClientID(tgr.ClientID)
 	ti.SetUserID(tgr.UserID)
+	ti.SetDomain(tgr.Domain)
 	ti.SetRedirectURI(tgr.RedirectURI)
 	ti.SetScope(tgr.Scope)
 

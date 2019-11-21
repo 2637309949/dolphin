@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/sirupsen/logrus"
+
 	"github.com/2637309949/dolphin/cli/null"
 	"github.com/2637309949/dolphin/cli/oauth2"
 	"github.com/2637309949/dolphin/cli/platform/model"
@@ -59,7 +61,10 @@ func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 		c := &Context{Context: ctx}
 		c.Request.ParseForm()
 		if accessToken, ok := e.OAuth2.BearerAuth(ctx.Request); ok {
-			if token, err := e.OAuth2.Manager.LoadAccessToken(accessToken); err == nil {
+			token, err := e.OAuth2.Manager.LoadAccessToken(accessToken)
+			if err != nil {
+				logrus.WithError(err).Warning("load accessToken failed.")
+			} else {
 				c.Token = token
 				if domain := strings.TrimSpace(c.Token.GetDomain()); domain != "" {
 					c.DB = e.BusinessDBSet[domain]
