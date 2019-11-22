@@ -5,6 +5,9 @@
 package cmd
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -46,9 +49,16 @@ var (
 			viper.SetDefault("dir.doc", "doc")
 			viper.SetDefault("dir.util", "util")
 			viper.SetDefault("dir.model", "model")
+			viper.SetDefault("cli.plugins", "")
 			viper.SetDefault("license.name", "Apache 2.0")
 			viper.SetDefault("license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
 			viper.AutomaticEnv()
+			if err := viper.ReadInConfig(); err != nil {
+				logrus.Warn("unable to read config file")
+			}
+			if strings.TrimSpace(viper.GetString("host")) == "" {
+				viper.SetDefault("host", fmt.Sprintf("127.0.0.1:%v", viper.GetString("http.port")))
+			}
 		},
 	}
 )

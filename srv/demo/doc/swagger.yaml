@@ -167,12 +167,13 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+host: 127.0.0.1:8081
 info:
   contact: {}
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: dolphin
+  title: example
   version: "1.0"
 paths:
   /api/activity/add_many:
