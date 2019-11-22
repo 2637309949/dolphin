@@ -102,10 +102,14 @@ func (q *Query) SetTags() {
 // Auth middles
 func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	return func(ctx *Context) {
-		if ctx.Token == nil {
-			ctx.Fail(oaErrors.ErrInvalidAccessToken)
-		} else {
+		if ctx.Auth(ctx.Request) {
+			ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]
+			// to next
+			ctx.Set("DB", ctx.DB)
+			ctx.Set("AuthInfo", ctx.AuthInfo)
 			ctx.Next()
+		} else {
+			ctx.Fail(oaErrors.ErrInvalidAccessToken)
 		}
 	}
 }

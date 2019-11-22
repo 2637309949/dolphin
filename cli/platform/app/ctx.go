@@ -3,33 +3,21 @@ package app
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/pkg/errors"
 
-	"github.com/sirupsen/logrus"
-
 	"github.com/2637309949/dolphin/cli/null"
-	"github.com/2637309949/dolphin/cli/oauth2"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/gin-gonic/gin"
 	"github.com/thoas/go-funk"
 	"github.com/xormplus/xorm"
 )
 
-// AuthType authorization model
-type AuthType string
-
-// define authorization model
-const (
-	OAuth2 AuthType = "oauth2"
-)
-
 // Context defined http handle hook context
 type Context struct {
 	*gin.Context
-	DB    *xorm.Engine
-	Token oauth2.TokenInfo
+	AuthInfo
+	DB *xorm.Engine
 }
 
 // HandlerFunc defines the handler used by gin middleware as return value.
@@ -69,20 +57,20 @@ func (ctx *Context) Fail(err error, status ...int) {
 // HandlerFunc convert to gin.HandlerFunc
 func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
-		c := &Context{Context: ctx}
-		c.Request.ParseForm()
-		if accessToken, ok := e.OAuth2.BearerAuth(ctx.Request); ok {
-			token, err := e.OAuth2.Manager.LoadAccessToken(accessToken)
-			if err != nil {
-				logrus.WithError(err).Warning("load accessToken failed.")
-			} else {
-				c.Token = token
-				if domain := strings.TrimSpace(c.Token.GetDomain()); domain != "" {
-					c.DB = e.BusinessDBSet[domain]
-				}
+		c := Context{
+			AuthInfo: &AuthOAuth2{server: e.OAuth2},
+			Context:  ctx,
+		}
+		// from upper dataset
+		for _, v := range ctx.Keys {
+			switch t := v.(type) {
+			case *xorm.Engine:
+				c.DB = t
+			case AuthInfo:
+				c.AuthInfo = t
 			}
 		}
-		h(c)
+		h(&c)
 	})
 }
 

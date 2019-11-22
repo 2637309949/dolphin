@@ -6,7 +6,6 @@ package app
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -17,23 +16,6 @@ import (
 	"github.com/go-session/session"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
-)
-
-var (
-	authServerURL = viper.GetString("oauth.server")
-)
-
-var (
-	oa2cfg = oauth2.Config{
-		ClientID:     viper.GetString("oauth.id"),
-		ClientSecret: viper.GetString("oauth.login"),
-		Scopes:       []string{"all"},
-		RedirectURL:  fmt.Sprintf("%v/api/oauth2/oauth2", viper.GetString("oauth.cli")),
-		Endpoint: oauth2.Endpoint{
-			AuthURL:  authServerURL + "/api/oauth2/authorize",
-			TokenURL: authServerURL + "/api/oauth2/token",
-		},
-	}
 )
 
 // Oauth2 struct
