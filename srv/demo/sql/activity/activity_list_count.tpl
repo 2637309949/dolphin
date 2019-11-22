@@ -3,4 +3,4 @@ select
 from
 	example_activity
 where
-	example_activity.id <> ""
+	example_activity.id {{.lt }}{{.gt}} ""

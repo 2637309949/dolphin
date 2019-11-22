@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"html/template"
 	"strconv"
 	"strings"
 
@@ -29,7 +30,7 @@ type (
 )
 
 // SetInt defined
-func (q *Query) SetInt(key string, init ...int) {
+func (q *Query) SetInt(key string, init ...interface{}) {
 	v := q.i.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -47,7 +48,7 @@ func (q *Query) SetInt(key string, init ...int) {
 }
 
 // SetBool defined
-func (q *Query) SetBool(key string, init ...bool) {
+func (q *Query) SetBool(key string, init ...interface{}) {
 	v := q.i.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -65,7 +66,7 @@ func (q *Query) SetBool(key string, init ...bool) {
 }
 
 // SetString defined
-func (q *Query) SetString(key string, init ...string) {
+func (q *Query) SetString(key string, init ...interface{}) {
 	v := q.i.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -83,6 +84,21 @@ func (q *Query) Value() map[string]interface{} {
 	return q.m
 }
 
+// Unescaped defined
+func (q *Query) Unescaped(s string) template.HTML {
+	return template.HTML(s)
+}
+
+// SetTags defined
+func (q *Query) SetTags() {
+	q.SetString("eq", q.Unescaped("="))
+	q.SetString("ne", q.Unescaped("<>"))
+	q.SetString("lt", q.Unescaped("<"))
+	q.SetString("lte", q.Unescaped("<="))
+	q.SetString("gt", q.Unescaped(">"))
+	q.SetString("gte", q.Unescaped(">="))
+}
+
 // Auth middles
 func (e *Engine) Auth(h func(ctx *Context)) func(ctx *Context) {
 	return func(ctx *Context) {
@@ -96,7 +112,9 @@ func (e *Engine) Auth(h func(ctx *Context)) func(ctx *Context) {
 
 // Query defined
 func (e *Engine) Query(i Qi) *Query {
-	return &Query{m: util.M{}, i: i}
+	q := Query{m: util.M{}, i: i}
+	q.SetTags()
+	return &q
 }
 
 // PageSearch defined
@@ -106,6 +124,8 @@ func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q ma
 	q["offset"] = (page - 1) * size
 
 	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
+
+	fmt.Println("sqlTagName = ", q)
 	result, err := db.SqlTemplateClient(sqlTagName, &q).Query().List()
 
 	if err != nil {

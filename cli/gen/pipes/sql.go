@@ -33,7 +33,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 					"Application": node,
 					"Api":         api,
 				}
-				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "page", "count"))
+				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "list", "count"))
 				if _, ok := tplCache[cpath]; !ok {
 					tmplCfg := &gen.TmplCfg{
 						Text:     tempalte.TmplSQLCount,
@@ -45,7 +45,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 					tmplCfgs = append(tmplCfgs, tmplCfg)
 					tplCache[cpath] = true
 				}
-				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "page", "select"))
+				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", api.Table, "list", "select"))
 				if _, ok := tplCache[spath]; !ok {
 					tmplCfg := &gen.TmplCfg{
 						Text:     tempalte.TmplSQLSel,

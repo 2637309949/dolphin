@@ -1,8 +1,11 @@
 package app
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/pkg/errors"
 
 	"github.com/sirupsen/logrus"
 
@@ -32,9 +35,9 @@ type RouterGroup struct {
 
 // Success defined success result
 func (ctx *Context) Success(data interface{}, status ...int) {
-	code := http.StatusOK
-	ctx.JSON(code, model.Response{
-		Code: null.IntFrom(200),
+	sise, code := http.StatusOK, http.StatusOK
+	ctx.JSON(sise, model.Response{
+		Code: null.IntFrom(int64(code)),
 		Data: data,
 	})
 }
@@ -42,7 +45,7 @@ func (ctx *Context) Success(data interface{}, status ...int) {
 // Fail defined failt result
 func (ctx *Context) Fail(err error, status ...int) {
 	sise, code := http.StatusInternalServerError, http.StatusInternalServerError
-	msg := err.Error()
+	msg := fmt.Sprintf("%v", errors.WithStack(err))
 	if cusErr, ok := err.(model.Error); ok {
 		code = cusErr.Code
 	}
