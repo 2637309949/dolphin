@@ -107,6 +107,7 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+host: 127.0.0.1:8081
 info:
   contact: {}
   license:

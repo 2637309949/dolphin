@@ -100,12 +100,12 @@ func (q *Query) SetTags() {
 }
 
 // Auth middles
-func (e *Engine) Auth(h func(ctx *Context)) func(ctx *Context) {
+func (e *Engine) Auth() func(ctx *Context) {
 	return func(ctx *Context) {
 		if ctx.Token == nil {
 			ctx.Fail(oaErrors.ErrInvalidAccessToken)
 		} else {
-			h(ctx)
+			ctx.Next()
 		}
 	}
 }

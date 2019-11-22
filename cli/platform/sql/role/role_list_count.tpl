@@ -3,4 +3,4 @@ select
 from
 	platform_role
 where
-	platform_role.id <> ""
+	platform_role.id {{.lt }}{{.gt}} ""
