@@ -36,9 +36,9 @@ func BuildEngine(build func(*Engine)) func(*pApp.Engine) {
 }
 
 // Auth middles
-func (e *Engine) Auth() func(*Context) {
+func (e *Engine) Auth(mode ...pApp.AuthType) func(*Context) {
 	return func(ctx *Context) {
-		e.Engine.Auth()(ctx.Context)
+		e.Engine.Auth(mode...)(ctx.Context)
 	}
 }
 

@@ -17,6 +17,14 @@ import (
 	"github.com/xormplus/xorm"
 )
 
+// AuthType authorization model
+type AuthType string
+
+// define authorization model
+const (
+	OAuth2 AuthType = "oauth2"
+)
+
 // Context defined http handle hook context
 type Context struct {
 	*gin.Context

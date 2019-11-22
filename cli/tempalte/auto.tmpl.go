@@ -13,6 +13,7 @@ package app
 import (
 	"{{.PackageName}}/model"
 
+	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 	"github.com/spf13/viper"
 	"github.com/2637309949/dolphin/srv/cli"
 )
@@ -26,13 +27,14 @@ var _ = cli.Invoke(BuildEngine(func(e *Engine) {
 	e.MSets.Add(Name, new(model.{{.ToUpperCase .Name}}))
 	{{- end}}
 }))
-{{range .Controllers}}
+{{- range .Controllers}}
+
 // Build{{.ToUpperCase .Name}}
 var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}}) {
 	group := ctr.Group(viper.GetString("http.prefix"))
 	{{- $ctr := .}}
 	{{- range .APIS}}
-	group.Handle("{{.ToUpper .Method}}", "{{.VersionPrefix .Version}}/{{$ctr.Name}}/{{.Name}}",{{- if .Auth}} ctr.Auth(),{{- end}} ctr.{{.ToUpperCase .Name}})
+	group.Handle("{{.ToUpper .Method}}", "{{.VersionPrefix .Version}}/{{$ctr.Name}}/{{.Name}}",{{- if .Auth}} ctr.Auth({{if ne $.Name "platform"}}pApp.{{- end}}OAuth2),{{- end}} ctr.{{.ToUpperCase .Name}})
 	{{- end}}
 }))
 {{- end}}

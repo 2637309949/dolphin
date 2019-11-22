@@ -100,7 +100,7 @@ func (q *Query) SetTags() {
 }
 
 // Auth middles
-func (e *Engine) Auth() func(ctx *Context) {
+func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	return func(ctx *Context) {
 		if ctx.Token == nil {
 			ctx.Fail(oaErrors.ErrInvalidAccessToken)
@@ -124,10 +124,7 @@ func (e *Engine) PageSearch(db *xorm.Engine, controller, api, table string, q ma
 	q["offset"] = (page - 1) * size
 
 	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
-
-	fmt.Println("sqlTagName = ", q)
 	result, err := db.SqlTemplateClient(sqlTagName, &q).Query().List()
-
 	if err != nil {
 		return nil, err
 	}
