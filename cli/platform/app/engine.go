@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/2637309949/dolphin/cli/null"
@@ -29,22 +30,27 @@ import (
 
 // Engine defined parse app engine
 type Engine struct {
-	MSets         MSeti
+	MSet          MSeti
 	Gin           *gin.Engine
 	Redis         *redis.Client
 	PlatformDB    *xorm.Engine
 	BusinessDBSet map[string]*xorm.Engine
 	OAuth2        *server.Server
+	pool          sync.Pool
+}
+
+func (e *Engine) allocateContext() *Context {
+	return &Context{engine: e, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
 }
 
 // Group handlers
 func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
-	return &RouterGroup{Engine: e, RouterGroup: e.Gin.Group(relativePath, handlers...)}
+	return &RouterGroup{engine: e, RouterGroup: e.Gin.Group(relativePath, handlers...)}
 }
 
 // Migration models
 func (e *Engine) Migration(name string, db *xorm.Engine) error {
-	e.MSets.ForEach(func(n string, m interface{}) {
+	e.MSet.ForEach(func(n string, m interface{}) {
 		if n == name {
 			db.Sync2(m)
 		}
@@ -69,7 +75,7 @@ func (e *Engine) InitBusinessDB() {
 		}
 		e.AddBusinessDB(domain.Domain.String, domain.DriverName.String, domain.DataSource.String)
 	}
-	nset := e.MSets.Name(func(n string) bool {
+	nset := e.MSet.Name(func(n string) bool {
 		return n != Name
 	})
 	for _, db := range e.BusinessDBSet {
@@ -295,7 +301,7 @@ func BuildEngine(build func(*Engine)) func(*Engine) {
 func NewEngine() *Engine {
 	gin.SetMode(gin.ReleaseMode)
 	e := &Engine{}
-	e.MSets = &MSets{m: map[string][]interface{}{}}
+	e.MSet = &MSet{m: map[string][]interface{}{}}
 	e.BusinessDBSet = map[string]*xorm.Engine{}
 	e.Gin = gin.New()
 	e.Gin.Use(gin.Logger())
@@ -308,5 +314,8 @@ func NewEngine() *Engine {
 	}))
 	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
 	e.Gin.Static(viper.GetString("http.static"), path.Join(util.Getwd(), viper.GetString("http.static")))
+	e.pool.New = func() interface{} {
+		return e.allocateContext()
+	}
 	return e
 }

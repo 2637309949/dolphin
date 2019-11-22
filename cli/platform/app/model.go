@@ -8,13 +8,13 @@ type MSeti interface {
 	Name(func(string) bool) []string
 }
 
-// MSets struct
-type MSets struct {
+// MSet struct
+type MSet struct {
 	m map[string][]interface{}
 }
 
 // Get defined get models
-func (s *MSets) Get(cb func(string, interface{}) bool) interface{} {
+func (s *MSet) Get(cb func(string, interface{}) bool) interface{} {
 	var model interface{}
 	s.ForEach(func(name string, m interface{}) {
 		if cb(name, m) {
@@ -25,12 +25,12 @@ func (s *MSets) Get(cb func(string, interface{}) bool) interface{} {
 }
 
 // Add defined add models
-func (s *MSets) Add(n string, m interface{}) {
+func (s *MSet) Add(n string, m interface{}) {
 	s.m[n] = append(s.m[n], m)
 }
 
 // Name defined add models
-func (s *MSets) Name(cb func(string) bool) (m []string) {
+func (s *MSet) Name(cb func(string) bool) (m []string) {
 	for k := range s.m {
 		if cb(k) {
 			m = append(m, k)
@@ -40,7 +40,7 @@ func (s *MSets) Name(cb func(string) bool) (m []string) {
 }
 
 // ForEach defined foreach models
-func (s *MSets) ForEach(cb func(name string, m interface{})) {
+func (s *MSet) ForEach(cb func(name string, m interface{})) {
 	for name, m := range s.m {
 		for index := 0; index < len(m); index++ {
 			cb(name, m[index])

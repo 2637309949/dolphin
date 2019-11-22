@@ -24,7 +24,7 @@ var Name = "{{.Name}}"
 // Sync models
 var _ = cli.Invoke(BuildEngine(func(e *Engine) {
 	{{- range .Tables}}
-	e.MSets.Add(Name, new(model.{{.ToUpperCase .Name}}))
+	e.MSet.Add(Name, new(model.{{.ToUpperCase .Name}}))
 	{{- end}}
 }))
 {{- range .Controllers}}

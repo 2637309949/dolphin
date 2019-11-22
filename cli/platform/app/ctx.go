@@ -17,7 +17,8 @@ import (
 type Context struct {
 	*gin.Context
 	AuthInfo
-	DB *xorm.Engine
+	engine *Engine
+	DB     *xorm.Engine
 }
 
 // HandlerFunc defines the handler used by gin middleware as return value.
@@ -26,7 +27,7 @@ type HandlerFunc func(*Context)
 // RouterGroup defines struct that extend from gin.RouterGroup
 type RouterGroup struct {
 	*gin.RouterGroup
-	Engine *Engine
+	engine *Engine
 }
 
 // Success defined success result
@@ -57,7 +58,8 @@ func (ctx *Context) Fail(err error, status ...int) {
 // HandlerFunc convert to gin.HandlerFunc
 func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
-		c := Context{AuthInfo: &AuthOAuth2{server: e.OAuth2}, Context: ctx}
+		c := e.pool.Get().(*Context)
+		c.Context = ctx
 		// from upper middles dataset
 		for _, v := range ctx.Keys {
 			switch t := v.(type) {
@@ -67,13 +69,14 @@ func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 				c.AuthInfo = t
 			}
 		}
-		h(&c)
+		h(c)
+		e.pool.Put(c)
 	})
 }
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
 	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
-		return h.HandlerFunc(rg.Engine)
+		return h.HandlerFunc(rg.engine)
 	}).([]gin.HandlerFunc)...)
 }
