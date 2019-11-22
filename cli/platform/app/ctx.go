@@ -57,11 +57,8 @@ func (ctx *Context) Fail(err error, status ...int) {
 // HandlerFunc convert to gin.HandlerFunc
 func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
-		c := Context{
-			AuthInfo: &AuthOAuth2{server: e.OAuth2},
-			Context:  ctx,
-		}
-		// from upper dataset
+		c := Context{AuthInfo: &AuthOAuth2{server: e.OAuth2}, Context: ctx}
+		// from upper middles dataset
 		for _, v := range ctx.Keys {
 			switch t := v.(type) {
 			case *xorm.Engine:

@@ -11,21 +11,7 @@ import (
 	xoauth2 "golang.org/x/oauth2"
 )
 
-// AuthType authorization model
-type AuthType string
-
-// AuthInfo defined
-type AuthInfo interface {
-	GetToken() TokenInfo
-	Auth(*http.Request) bool
-}
-
-// AuthOAuth2 deifned
-type AuthOAuth2 struct {
-	server *server.Server
-	token  *Token
-}
-
+// some vars
 var (
 	authServerURL = viper.GetString("oauth.server")
 	oa2cfg        = xoauth2.Config{
@@ -44,6 +30,21 @@ var (
 const (
 	OAuth2 AuthType = "oauth2"
 )
+
+// AuthType authorization model
+type AuthType string
+
+// AuthInfo defined
+type AuthInfo interface {
+	GetToken() TokenInfo
+	Auth(*http.Request) bool
+}
+
+// AuthOAuth2 deifned
+type AuthOAuth2 struct {
+	server *server.Server
+	token  *Token
+}
 
 // Auth defined
 func (auth *AuthOAuth2) parseToken(t oauth2.TokenInfo) {
@@ -81,8 +82,5 @@ func (auth *AuthOAuth2) Auth(req *http.Request) bool {
 
 // GetToken defined
 func (auth *AuthOAuth2) GetToken() TokenInfo {
-	if auth.token != nil {
-		return auth.token
-	}
-	return nil
+	return auth.token
 }
