@@ -78,6 +78,9 @@ func init() {
 	if strings.TrimSpace(viper.GetString("oauth.cli")) == "" {
 		viper.SetDefault("oauth.cli", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
 	}
+	if err := viper.WriteConfig(); err != nil {
+		logrus.Warn("unable to save config file")
+	}
 	authServerURL = viper.GetString("oauth.server")
 	oa2cfg.ClientID = viper.GetString("oauth.id")
 	oa2cfg.ClientSecret = viper.GetString("oauth.secret")

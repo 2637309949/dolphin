@@ -8,6 +8,7 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/2637309949/dolphin/cli/null"
@@ -144,7 +145,7 @@ func (ctr *Oauth2) Token(ctx *Context) {
 func (ctr *Oauth2) Oauth2(ctx *Context) {
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
-	_ = f.Get("state")
+	state := f.Get("state")
 	code := f.Get("code")
 	if code == "" {
 		ctx.Fail(errors.New("Code not found"))
@@ -154,6 +155,25 @@ func (ctr *Oauth2) Oauth2(ctx *Context) {
 	if err != nil {
 		ctx.Fail(err)
 		return
+	}
+	urlState, err := url.Parse(state)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	qState := urlState.Query()
+	rawRedirect := qState.Get("redirect_uri")
+	rawState := qState.Get("state")
+	if strings.TrimSpace(rawRedirect) != "" {
+		urlRedirect, err := url.Parse(rawRedirect)
+		if err != nil {
+			ctx.Fail(err)
+			return
+		}
+		redirect := urlRedirect.Path
+		ctx.Redirect(http.StatusFound, redirect+"?state="+rawState)
+	} else {
+		ctx.Redirect(http.StatusFound, "/?state="+rawState)
 	}
 	ctx.Success(ret)
 }
@@ -165,9 +185,9 @@ func (ctr *Oauth2) Oauth2(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/url [get]
 func (ctr *Oauth2) URL(ctx *Context) {
-	ctx.Request.ParseForm()
-	f := ctx.Request.Form
-	state := f.Get("state")
+	rawRedirect := ctx.Query("redirect_uri")
+	rawState := ctx.Query("state")
+	state := "redirect_uri=" + rawRedirect + "&state=" + rawState
 	ret := oa2cfg.AuthCodeURL(state)
 	ctx.Success(ret)
 }
