@@ -30,6 +30,16 @@ type RouterGroup struct {
 	engine *Engine
 }
 
+// IsAdmin defined
+func (ctx *Context) IsAdmin() bool {
+	return false
+}
+
+// InRole defined
+func (ctx *Context) InRole(role ...string) bool {
+	return false
+}
+
 // Success defined success result
 func (ctx *Context) Success(data interface{}, status ...int) {
 	sise, code := http.StatusOK, http.StatusOK
