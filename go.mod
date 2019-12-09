@@ -17,23 +17,25 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/ghodss/yaml v1.0.0
-	github.com/gin-gonic/gin v1.4.0
+	github.com/gin-contrib/sse v0.1.0
 	github.com/go-errors/errors v1.0.1
 	github.com/go-openapi/jsonreference v0.19.3
 	github.com/go-openapi/spec v0.19.4
-	github.com/go-playground/universal-translator v0.17.0 // indirect
+	github.com/go-playground/validator/v10 v10.0.1
 	github.com/go-redis/redis v6.15.6+incompatible
 	github.com/go-session/session v3.1.2+incompatible
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/sqlfiddle v0.0.0-20180821085327-62ce714f951a
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
-	github.com/golang/protobuf v1.3.2 // indirect
+	github.com/golang/protobuf v1.3.2
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
 	github.com/jackc/pgx v3.6.0+incompatible
 	github.com/json-iterator/go v1.1.6
-	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/lib/pq v1.2.0
+	github.com/mattn/go-isatty v0.0.10
 	github.com/mattn/go-sqlite3 v1.10.0
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/onsi/ginkgo v1.10.3 // indirect
 	github.com/onsi/gomega v1.7.1 // indirect
 	github.com/pkg/errors v0.8.0
@@ -47,6 +49,7 @@ require (
 	github.com/tealeg/xlsx v1.0.5 // indirect
 	github.com/thoas/go-funk v0.4.0
 	github.com/tidwall/buntdb v1.1.2
+	github.com/ugorji/go v1.1.4
 	github.com/ziutek/mymysql v1.5.4
 	go.uber.org/dig v1.8.0 // indirect
 	go.uber.org/fx v1.9.0
@@ -59,8 +62,9 @@ require (
 	golang.org/x/tools v0.0.0-20191114222411-4191b8cbba09
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.30.0
 	gopkg.in/stretchr/testify.v1 v1.2.2
-	gopkg.in/yaml.v2 v2.2.5 // indirect
+	gopkg.in/yaml.v2 v2.2.5
 	xorm.io/core v0.7.2
 )

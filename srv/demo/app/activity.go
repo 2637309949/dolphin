@@ -8,7 +8,7 @@ import (
 
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/gin-gonic/gin/binding"
+	"github.com/2637309949/dolphin/cli/gin/binding"
 )
 
 // Activity struct

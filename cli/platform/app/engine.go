@@ -21,7 +21,7 @@ import (
 	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/2637309949/dolphin/cli/xormplus/xorm"
-	"github.com/gin-gonic/gin"
+	"github.com/2637309949/dolphin/cli/gin"
 	"github.com/go-redis/redis"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"

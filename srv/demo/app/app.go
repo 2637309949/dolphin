@@ -8,7 +8,7 @@ import (
 
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
 
-	"github.com/gin-gonic/gin"
+	"github.com/2637309949/dolphin/cli/gin"
 	"github.com/thoas/go-funk"
 )
 

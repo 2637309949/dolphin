@@ -15,7 +15,7 @@ import (
 
 	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 	{{if ne .Name "platform"}}pUtil{{end}} "github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/gin-gonic/gin/binding"
+	"github.com/2637309949/dolphin/cli/gin/binding"
 )
 
 // {{.Controller.ToUpperCase .Controller.Name}} struct

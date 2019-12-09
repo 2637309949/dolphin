@@ -9,7 +9,7 @@ import (
 	"github.com/2637309949/dolphin/cli/null"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/xormplus/xorm"
-	"github.com/gin-gonic/gin"
+	"github.com/2637309949/dolphin/cli/gin"
 	"github.com/thoas/go-funk"
 )
 
