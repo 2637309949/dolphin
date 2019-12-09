@@ -6,9 +6,11 @@ package app
 import (
 	"example/model"
 
+	"github.com/2637309949/dolphin/cli/gin/binding"
+	"github.com/2637309949/dolphin/cli/null"
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/2637309949/dolphin/cli/gin/binding"
+	"github.com/2637309949/dolphin/cli/platform/util/uuid"
 )
 
 // Activity struct
@@ -39,6 +41,9 @@ func (ctr *Activity) BatchNew(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+	for _, f := range form {
+		f.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
+	}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -63,6 +68,7 @@ func (ctr *Activity) New(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+	form.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)

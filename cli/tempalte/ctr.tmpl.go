@@ -13,9 +13,11 @@ package app
 import (
 	"{{.PackageName}}/model"
 
+	"github.com/2637309949/dolphin/cli/gin/binding"
+	"github.com/2637309949/dolphin/cli/null"
 	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 	{{if ne .Name "platform"}}pUtil{{end}} "github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/2637309949/dolphin/cli/gin/binding"
+	"github.com/2637309949/dolphin/cli/platform/util/uuid"
 )
 
 // {{.Controller.ToUpperCase .Controller.Name}} struct
@@ -74,6 +76,13 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 		ctx.Fail(err)
 		return
 	}
+	{{- if .ISArray $bp.Type}}
+	for _, f := range form {
+		f.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
+	}
+	{{- else}}
+	form.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
+	{{- end}}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
