@@ -11,7 +11,7 @@ import (
 	xoauth2 "golang.org/x/oauth2"
 )
 
-// some vars
+// var defined
 var (
 	authServerURL = viper.GetString("oauth.server")
 	oa2cfg        = xoauth2.Config{

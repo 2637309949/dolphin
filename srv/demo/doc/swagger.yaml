@@ -176,69 +176,7 @@ info:
   title: example
   version: "1.0"
 paths:
-  /api/activity/add_many:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.Activity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 添加活动
-      tags:
-      - 活动
-  /api/activity/add_one:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          $ref: '#/definitions/model.Activity'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 添加活动
-      tags:
-      - 活动
-  /api/activity/delete_many:
+  /api/activity/batch_del:
     post:
       consumes:
       - application/json
@@ -270,7 +208,71 @@ paths:
       summary: 删除活动
       tags:
       - 活动
-  /api/activity/delete_one:
+  /api/activity/batch_new:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          items:
+            $ref: '#/definitions/model.Activity'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加活动
+      tags:
+      - 活动
+  /api/activity/batch_update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          items:
+            $ref: '#/definitions/model.Activity'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新活动
+      tags:
+      - 活动
+  /api/activity/del:
     post:
       consumes:
       - application/json
@@ -339,6 +341,36 @@ paths:
       summary: 活动分页查询
       tags:
       - 活动
+  /api/activity/new:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          $ref: '#/definitions/model.Activity'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加活动
+      tags:
+      - 活动
   /api/activity/one:
     get:
       parameters:
@@ -366,39 +398,7 @@ paths:
       summary: 获取活动
       tags:
       - 活动
-  /api/activity/update_many:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.Activity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 更新活动
-      tags:
-      - 活动
-  /api/activity/update_one:
+  /api/activity/update:
     post:
       consumes:
       - application/json

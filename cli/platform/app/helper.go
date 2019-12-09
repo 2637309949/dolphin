@@ -8,7 +8,7 @@ import (
 
 	oaErrors "github.com/2637309949/dolphin/cli/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/xormplus/xorm"
+	"github.com/2637309949/dolphin/cli/xormplus/xorm"
 )
 
 type (

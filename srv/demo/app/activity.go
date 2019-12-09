@@ -23,8 +23,8 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 	})
 }
 
-// AddMany api implementation
-// @Summary 添加活动
+// BatchNew api implementation
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -32,8 +32,8 @@ func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/add_many [post]
-func (ctr *Activity) AddMany(ctx *Context) {
+// @Router /api/activity/batch_new [post]
+func (ctr *Activity) BatchNew(ctx *Context) {
 	var form []model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -47,8 +47,8 @@ func (ctr *Activity) AddMany(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// AddOne api implementation
-// @Summary 添加活动
+// New api implementation
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -56,8 +56,8 @@ func (ctr *Activity) AddMany(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/add_one [post]
-func (ctr *Activity) AddOne(ctx *Context) {
+// @Router /api/activity/new [post]
+func (ctr *Activity) New(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -71,8 +71,8 @@ func (ctr *Activity) AddOne(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// DeleteMany api implementation
-// @Summary 删除活动
+// BatchDel api implementation
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -80,8 +80,8 @@ func (ctr *Activity) AddOne(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/delete_many [post]
-func (ctr *Activity) DeleteMany(ctx *Context) {
+// @Router /api/activity/batch_del [post]
+func (ctr *Activity) BatchDel(ctx *Context) {
 	var form []model.Activity
 	var err error
 	var ret []int64
@@ -103,8 +103,8 @@ func (ctr *Activity) DeleteMany(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// DeleteOne api implementation
-// @Summary 删除活动
+// Del api implementation
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -112,8 +112,8 @@ func (ctr *Activity) DeleteMany(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/delete_one [post]
-func (ctr *Activity) DeleteOne(ctx *Context) {
+// @Router /api/activity/del [post]
+func (ctr *Activity) Del(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -127,8 +127,8 @@ func (ctr *Activity) DeleteOne(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// UpdateMany api implementation
-// @Summary 更新活动
+// BatchUpdate api implementation
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -136,8 +136,8 @@ func (ctr *Activity) DeleteOne(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/update_many [post]
-func (ctr *Activity) UpdateMany(ctx *Context) {
+// @Router /api/activity/batch_update [post]
+func (ctr *Activity) BatchUpdate(ctx *Context) {
 	var form []model.Activity
 	var err error
 	var ret []int64
@@ -159,8 +159,8 @@ func (ctr *Activity) UpdateMany(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// UpdateOne api implementation
-// @Summary 更新活动
+// Update api implementation
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -168,8 +168,8 @@ func (ctr *Activity) UpdateMany(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/update_one [post]
-func (ctr *Activity) UpdateOne(ctx *Context) {
+// @Router /api/activity/update [post]
+func (ctr *Activity) Update(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -184,7 +184,7 @@ func (ctr *Activity) UpdateOne(ctx *Context) {
 }
 
 // List api implementation
-// @Summary 活动分页查询
+// @Summary 活动分页查询 
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -210,7 +210,7 @@ func (ctr *Activity) List(ctx *Context) {
 }
 
 // One api implementation
-// @Summary 获取活动
+// @Summary 获取活动 
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
@@ -230,7 +230,7 @@ func (ctr *Activity) One(ctx *Context) {
 }
 
 // InCrease api implementation
-// @Summary 增加次数
+// @Summary 增加次数 
 // @Tags 活动
 // @version 1.0
 // @Param id query string false "记录id"
@@ -252,7 +252,7 @@ func (ctr *Activity) InCrease(ctx *Context) {
 }
 
 // InCreaseV2 api implementation
-// @Summary 增加次数
+// @Summary 增加次数 
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
@@ -274,3 +274,4 @@ func (ctr *Activity) InCreaseV2(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

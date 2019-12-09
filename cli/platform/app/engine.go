@@ -20,12 +20,12 @@ import (
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
+	"github.com/2637309949/dolphin/cli/xormplus/xorm"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"github.com/xormplus/xorm"
 )
 
 // Engine defined parse app engine
