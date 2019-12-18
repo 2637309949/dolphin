@@ -15,10 +15,10 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	"github.com/2637309949/dolphin/cli/packages/uuid"
 	{{- $Name := .Name}}
 	{{if ne $Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 	{{if ne $Name "platform"}}pUtil{{- end}} "github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/2637309949/dolphin/cli/platform/util/uuid"
 )
 
 // {{.Controller.ToUpperCase .Controller.Name}} struct

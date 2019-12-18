@@ -8,9 +8,9 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	"github.com/2637309949/dolphin/cli/packages/oauth2/utils/uuid"
 
 	"github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/2637309949/dolphin/cli/platform/util/uuid"
 )
 
 // Menu struct
