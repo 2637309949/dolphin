@@ -70,11 +70,17 @@ func (c *Common) ToTypeValue(t string, v string) template.HTML {
 func (c *Common) ToUpperCase(name string) string {
 	var newName string
 	var toupper bool
-	if name == "id" {
-		return "ID"
+	var initialisms = []string{
+		"ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP",
+		"HTTPS", "ID", "IP", "JSON", "LHS", "QPS", "RAM", "RHS", "RPC", "SLA",
+		"SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "UID", "UUID",
+		"URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS",
 	}
-	if name == "url" {
-		return "URL"
+	sms, ext := funk.FindString(initialisms, func(sms string) bool {
+		return strings.ToUpper(name) == sms
+	})
+	if ext {
+		return sms
 	}
 	for i, r := range name {
 		if i == 0 {
