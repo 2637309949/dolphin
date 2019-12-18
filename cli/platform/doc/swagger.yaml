@@ -1,4 +1,59 @@
 definitions:
+  model.Menu:
+    properties:
+      code:
+        description: 编码
+        type: string
+      component:
+        description: 菜单组件
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      icon:
+        description: 菜单图标
+        type: string
+      id:
+        description: 主键
+        type: string
+      inheritance:
+        description: 继承关系
+        type: string
+      name:
+        description: 名称
+        type: string
+      order_num:
+        description: 排序
+        type: number
+      parent:
+        description: 父菜单ID，一级菜单为null
+        type: string
+      perms:
+        description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        type: string
+      type:
+        description: 类型 0：目录 1：菜单 2：按钮
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      url:
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        type: string
+    type: object
   model.Response:
     properties:
       code:
@@ -116,6 +171,107 @@ info:
   title: dolphin
   version: "1.0"
 paths:
+  /api/menu/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单信息
+        in: body
+        name: menu
+        schema:
+          $ref: '#/definitions/model.Menu'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加菜单
+      tags:
+      - 菜单
+  /api/menu/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单id
+        in: query
+        name: id
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取菜单信息
+      tags:
+      - 菜单
+  /api/menu/list:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 菜单分页查询
+      tags:
+      - 菜单
+  /api/menu/tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 菜单树形结构
+      tags:
+      - 菜单
+  /api/menu/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单信息
+        in: body
+        name: menu
+        schema:
+          $ref: '#/definitions/model.Menu'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新菜单
+      tags:
+      - 菜单
   /api/oauth2/affirm:
     post:
       consumes:

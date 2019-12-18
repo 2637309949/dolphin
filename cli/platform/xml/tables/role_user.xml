@@ -2,6 +2,7 @@
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="user_id" desc="用户ID" type="null.String" xorm="varchar(36) notnull" />
     <column name="role_id" desc="角色ID" type="null.String" xorm="varchar(36) notnull" />
+
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />

@@ -214,38 +214,3 @@ func (ctr *Oauth2) Refresh(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-
-// Info api implementation
-// @Summary 客户端信息
-// @Tags OAuth授权
-// @Param Authorization header string true "认证令牌"
-// @Failure 403 {object} model.Response
-// @Router /api/oauth2/info [get]
-// func (ctr *Oauth2) Info(ctx *Context) {
-// 	cfg := clientcredentials.Config{
-// 		ClientID:     oa2cfg.ClientID,
-// 		ClientSecret: oa2cfg.ClientSecret,
-// 		TokenURL:     oa2cfg.Endpoint.TokenURL,
-// 	}
-// 	ret, err := cfg.Token(context.Background())
-// 	if err != nil {
-// 		ctx.Fail(err)
-// 		return
-// 	}
-// 	ctx.Success(ret)
-// }
-
-// Test api implementation
-// @Summary 测试接口
-// @Tags OAuth授权
-// @Param Authorization header string true "认证令牌"
-// @Failure 403 {object} model.Response
-// @Router /api/oauth2/test [get]
-// func (ctr *Oauth2) Test(ctx *Context) {
-// 	ret := map[string]interface{}{
-// 		"expires_in": int64(ctx.Token.GetAccessCreateAt().Add(ctx.Token.GetAccessExpiresIn()).Sub(time.Now()).Seconds()),
-// 		"client_id":  ctx.Token.GetClientID(),
-// 		"user_id":    ctx.Token.GetUserID(),
-// 	}
-// 	ctx.Success(ret)
-// }

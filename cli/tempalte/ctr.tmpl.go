@@ -15,8 +15,9 @@ import (
 
 	"github.com/2637309949/dolphin/cli/gin/binding"
 	"github.com/2637309949/dolphin/cli/null"
-	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
-	{{if ne .Name "platform"}}pUtil{{end}} "github.com/2637309949/dolphin/cli/platform/util"
+	{{- $Name := .Name}}
+	{{if ne $Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
+	{{if ne $Name "platform"}}pUtil{{- end}} "github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/2637309949/dolphin/cli/platform/util/uuid"
 )
 
@@ -178,7 +179,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
-	ret, err := pUtil.AppAction(q)
+	ret, err := {{if ne $Name "platform"}}pUtil{{else}}util{{end}}.AppAction(q)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -195,7 +196,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 		ctx.Fail(err)
 		return
 	}
-	ret, err := pUtil.AppAction(form)
+	ret, err := {{if ne $Name "platform"}}pUtil{{else}}util{{end}}.AppAction(form)
 	if err != nil {
 		ctx.Fail(err)
 		return
