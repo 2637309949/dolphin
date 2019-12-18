@@ -1,4 +1,4 @@
-<table name="user" desc="用户" packages="github.com/2637309949/dolphin/cli/null">
+<table name="user" desc="用户" packages="github.com/2637309949/dolphin/cli/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="password" desc="密码" type="null.String" xorm="varchar(150) notnull" />
 	<column name="salt" desc="盐噪点" type="null.String" xorm="varchar(36) notnull" />

@@ -6,7 +6,7 @@ package app
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
 
-	"github.com/2637309949/dolphin/cli/gin/binding"
+	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 )
 
 // User struct

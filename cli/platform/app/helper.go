@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	oaErrors "github.com/2637309949/dolphin/cli/oauth2/errors"
+	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/2637309949/dolphin/cli/xormplus/xorm"
+	"github.com/2637309949/dolphin/cli/packages/xormplus/xorm"
 )
 
 type (

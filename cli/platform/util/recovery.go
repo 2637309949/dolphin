@@ -7,7 +7,7 @@ import (
 
 	"github.com/go-errors/errors"
 
-	"github.com/2637309949/dolphin/cli/gin"
+	"github.com/2637309949/dolphin/cli/packages/gin"
 )
 
 // Recovery defined

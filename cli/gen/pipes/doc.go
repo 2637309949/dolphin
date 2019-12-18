@@ -11,7 +11,7 @@ import (
 
 	"github.com/2637309949/dolphin/cli/gen"
 	"github.com/2637309949/dolphin/cli/schema"
-	swag "github.com/2637309949/dolphin/cli/swag/gen"
+	swag "github.com/2637309949/dolphin/cli/packages/swag/gen"
 )
 
 // Doc struct

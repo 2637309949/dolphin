@@ -1,4 +1,4 @@
-<table name="role" desc="角色" packages="github.com/2637309949/dolphin/cli/null">
+<table name="role" desc="角色" packages="github.com/2637309949/dolphin/cli/packages/null">
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="name" desc="名称" type="null.String" xorm="varchar(36) notnull" />
     <column name="code" desc="编码" type="null.String" xorm="varchar(36) notnull" />

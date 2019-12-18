@@ -6,10 +6,10 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/2637309949/dolphin/cli/null"
+	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/xormplus/xorm"
-	"github.com/2637309949/dolphin/cli/gin"
+	"github.com/2637309949/dolphin/cli/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/cli/packages/gin"
 	"github.com/thoas/go-funk"
 )
 

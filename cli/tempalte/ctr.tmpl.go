@@ -13,8 +13,8 @@ package app
 import (
 	"{{.PackageName}}/model"
 
-	"github.com/2637309949/dolphin/cli/gin/binding"
-	"github.com/2637309949/dolphin/cli/null"
+	"github.com/2637309949/dolphin/cli/packages/gin/binding"
+	"github.com/2637309949/dolphin/cli/packages/null"
 	{{- $Name := .Name}}
 	{{if ne $Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 	{{if ne $Name "platform"}}pUtil{{- end}} "github.com/2637309949/dolphin/cli/platform/util"

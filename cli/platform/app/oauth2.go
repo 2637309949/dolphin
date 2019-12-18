@@ -11,8 +11,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/cli/null"
-	oaErrors "github.com/2637309949/dolphin/cli/oauth2/errors"
+	"github.com/2637309949/dolphin/cli/packages/null"
+	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/go-session/session"
 	"github.com/spf13/viper"

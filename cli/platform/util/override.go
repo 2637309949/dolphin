@@ -3,7 +3,7 @@ package util
 import (
 	"strings"
 
-	"github.com/2637309949/dolphin/cli/gin"
+	"github.com/2637309949/dolphin/cli/packages/gin"
 )
 
 // ProcessMethodOverride check POST request and re-dispatch them if _method
