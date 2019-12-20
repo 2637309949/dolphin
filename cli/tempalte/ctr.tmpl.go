@@ -79,10 +79,10 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	}
 	{{- if .ISArray $bp.Type}}
 	for _, f := range form {
-		f.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
+		f.ID = null.StringFrom(uuid.MustString())
 	}
 	{{- else}}
-	form.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
+	form.ID = null.StringFrom(uuid.MustString())
 	{{- end}}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {

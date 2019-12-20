@@ -49,6 +49,11 @@ func Must(uuid UUID, err error) UUID {
 	return uuid
 }
 
+// MustString returns uuid string if err is nil and panics otherwise.
+func MustString() string {
+	return Must(NewRandom()).String()
+}
+
 // NewRandom returns a Random (Version 4) UUID.
 //
 // The strength of the UUIDs is based on the strength of the crypto/rand

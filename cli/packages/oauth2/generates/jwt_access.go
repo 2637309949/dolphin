@@ -10,7 +10,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/2637309949/dolphin/cli/packages/oauth2"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/errors"
-	"github.com/2637309949/dolphin/cli/packages/oauth2/utils/uuid"
+	"github.com/2637309949/dolphin/cli/packages/uuid"
 )
 
 // JWTAccessClaims jwt claims

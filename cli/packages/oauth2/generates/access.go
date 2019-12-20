@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cli/packages/oauth2"
-	"github.com/2637309949/dolphin/cli/packages/oauth2/utils/uuid"
+	"github.com/2637309949/dolphin/cli/packages/uuid"
 )
 
 // NewAccessGenerate create to generate the access token instance

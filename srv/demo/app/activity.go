@@ -42,7 +42,7 @@ func (ctr *Activity) BatchNew(ctx *Context) {
 		return
 	}
 	for _, f := range form {
-		f.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
+		f.ID = null.StringFrom(uuid.MustString())
 	}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
@@ -68,7 +68,7 @@ func (ctr *Activity) New(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	form.ID = null.StringFrom(uuid.Must(uuid.NewRandom()).String())
+	form.ID = null.StringFrom(uuid.MustString())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
