@@ -9,7 +9,7 @@ import (
 	pApp "github.com/2637309949/dolphin/cli/platform/app"
 
 	"github.com/2637309949/dolphin/cli/packages/gin"
-	"github.com/thoas/go-funk"
+	"github.com/2637309949/dolphin/cli/packages/go-funk"
 )
 
 type (

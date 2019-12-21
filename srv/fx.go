@@ -7,7 +7,7 @@ package srv
 import (
 	"reflect"
 
-	"github.com/thoas/go-funk"
+	"github.com/2637309949/dolphin/cli/packages/go-funk"
 	"go.uber.org/fx"
 )
 

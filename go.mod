@@ -52,10 +52,10 @@ require (
 	github.com/stretchr/testify v1.4.0
 	github.com/subosito/gotenv v1.2.0
 	github.com/tealeg/xlsx v1.0.5 // indirect
-	github.com/thoas/go-funk v0.4.0
 	github.com/tidwall/buntdb v1.1.2
 	github.com/ugorji/go v1.1.4
 	github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77
+	go.etcd.io/bbolt v1.3.3 // indirect
 	go.uber.org/dig v1.8.0 // indirect
 	go.uber.org/fx v1.9.0
 	go.uber.org/goleak v0.10.0 // indirect

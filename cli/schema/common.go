@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/thoas/go-funk"
+	"github.com/2637309949/dolphin/cli/packages/go-funk"
 )
 
 // Common struct
