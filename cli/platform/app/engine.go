@@ -24,8 +24,8 @@ import (
 	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/go-redis/redis"
 	"github.com/go-session/session"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
+	"github.com/2637309949/dolphin/cli/packages/logrus"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 )
 
 // Engine defined parse app engine

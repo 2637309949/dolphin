@@ -14,7 +14,7 @@ import (
 	"{{.PackageName}}/model"
 
 	{{if ne .Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
-	"github.com/spf13/viper"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 	"github.com/2637309949/dolphin/srv/cli"
 )
 

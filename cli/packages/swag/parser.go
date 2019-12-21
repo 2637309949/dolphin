@@ -19,7 +19,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/spf13/viper"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 
 	"github.com/KyleBanks/depth"
 	"github.com/go-openapi/jsonreference"

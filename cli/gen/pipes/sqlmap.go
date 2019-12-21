@@ -8,9 +8,9 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/cli/gen"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 	"github.com/2637309949/dolphin/cli/schema"
 	"github.com/2637309949/dolphin/cli/tempalte"
-	"github.com/spf13/viper"
 )
 
 // SQLMap struct

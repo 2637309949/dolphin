@@ -1,7 +1,7 @@
 package swag
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/cli/packages/logrus"
 )
 
 const (

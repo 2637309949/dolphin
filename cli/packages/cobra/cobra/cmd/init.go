@@ -19,7 +19,7 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/cli/packages/cobra"
-	"github.com/spf13/viper"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 )
 
 var (

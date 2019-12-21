@@ -11,8 +11,8 @@ import (
 
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
+	"github.com/2637309949/dolphin/cli/packages/logrus"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
 )

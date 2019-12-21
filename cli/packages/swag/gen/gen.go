@@ -12,7 +12,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/cli/packages/logrus"
 
 	"github.com/go-openapi/spec"
 

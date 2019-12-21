@@ -28,7 +28,7 @@ import (
   "github.com/2637309949/dolphin/cli/packages/cobra"
 {{ if .Viper }}
   homedir "github.com/mitchellh/go-homedir"
-  "github.com/spf13/viper"
+  "github.com/2637309949/dolphin/cli/packages/viper"
 {{ end }}
 )
 

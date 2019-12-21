@@ -15,7 +15,7 @@ import (
 	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/go-session/session"
-	"github.com/spf13/viper"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 	"golang.org/x/oauth2"
 )
 
