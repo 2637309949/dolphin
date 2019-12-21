@@ -1,0 +1,27 @@
+
+<sqlMap>
+    <sql id="insert_platform_role_user">
+        insert into platform_role_user
+        (
+        )
+		values
+		(?id,?activity_title,?activity_cover,?activity_intro,?activity_detail,?apply_begin_time,?apply_end_time,?activity_begin_time,?activity_end_time,?activity_join_condition,?activity_selection_rules,?activity_state,?activity_create_time,?single_dubbing,?create_by,?create_time,?last_update_by,?last_update_time,?del_flag)
+    </sql>
+    <sql id="update_platform_role_user">
+        update platform_role_user set
+		where id = ?id
+    </sql>
+    <sql id="deleteone_platform_role_user">
+        delete from platform_role_user
+		where id =?id
+    </sql>
+    <sql id="selectone_platform_role_user">
+        select 
+        from platform_role_user
+		where id = ?id
+    </sql>
+    <sql id="selectall_platform_role_user">
+        select 
+        from platform_role_user
+    </sql>
+</sqlMap>

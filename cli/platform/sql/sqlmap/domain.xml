@@ -1,0 +1,27 @@
+
+<sqlMap>
+    <sql id="insert_platform_domain">
+        insert into platform_domain
+        (
+        )
+		values
+		(?id,?activity_title,?activity_cover,?activity_intro,?activity_detail,?apply_begin_time,?apply_end_time,?activity_begin_time,?activity_end_time,?activity_join_condition,?activity_selection_rules,?activity_state,?activity_create_time,?single_dubbing,?create_by,?create_time,?last_update_by,?last_update_time,?del_flag)
+    </sql>
+    <sql id="update_platform_domain">
+        update platform_domain set
+		where id = ?id
+    </sql>
+    <sql id="deleteone_platform_domain">
+        delete from platform_domain
+		where id =?id
+    </sql>
+    <sql id="selectone_platform_domain">
+        select 
+        from platform_domain
+		where id = ?id
+    </sql>
+    <sql id="selectall_platform_domain">
+        select 
+        from platform_domain
+    </sql>
+</sqlMap>

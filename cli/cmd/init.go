@@ -10,7 +10,7 @@ import (
 	"github.com/2637309949/dolphin/cli/gen"
 	"github.com/2637309949/dolphin/cli/gen/pipes"
 	"github.com/2637309949/dolphin/cli/parser"
-	"github.com/spf13/cobra"
+	"github.com/2637309949/dolphin/cli/packages/cobra"
 )
 
 var initCmd = &cobra.Command{
