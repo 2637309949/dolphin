@@ -85,11 +85,11 @@ func (g *Gen) buildTmpl(tmpcfg *TmplCfg) error {
 	if _, err = os.Stat(tmpcfg.FilePath); err == nil {
 		if tmpcfg.Overlap == OverlapInc {
 			tmpcfg.FilePath = tmpcfg.FilePath + ".new"
-			logrus.Info(fmt.Sprintf("Generating %s has exitsed, inc generate", tmpcfg.FilePath))
+			logrus.Info(fmt.Sprintf("%s inc generate", tmpcfg.FilePath))
 		} else if tmpcfg.Overlap == OverlapWrite {
-			logrus.Warn(fmt.Sprintf("Generating %s has exitsed, over generate", tmpcfg.FilePath))
+			logrus.Warn(fmt.Sprintf("%s over generate", tmpcfg.FilePath))
 		} else if tmpcfg.Overlap == OverlapSkip {
-			logrus.Info(fmt.Sprintf("Generating %s has exitsed, skip generate", tmpcfg.FilePath))
+			logrus.Info(fmt.Sprintf("%s skip generate", tmpcfg.FilePath))
 			return nil
 		}
 	}

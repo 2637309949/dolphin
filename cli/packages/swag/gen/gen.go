@@ -118,7 +118,7 @@ func (g *Gen) Build(config *Config) error {
 
 	// log.Printf("create docs.go at  %+v", docFileName)
 	// log.Printf("create swagger.json at  %+v", jsonFileName)
-	logrus.Infof("Generating %v", yamlFileName)
+	logrus.Infof("%v", yamlFileName)
 
 	return nil
 }
