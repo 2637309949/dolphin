@@ -3,4 +3,4 @@ select
 from
 	platform_menu
 where
-	platform_menu.id {{.lt }}{{.gt}} ""
+	platform_menu.id {{.ne}} ""

@@ -6,7 +6,7 @@ var TmplSQLSel = `select
 from
 	{{.Api.TableName .Application.Name .Api.Table}}
 where
-	{{.Api.TableName .Application.Name .Api.Table}}.id {{.Application.Unescaped "{{.lt }}{{.gt}}"}} ""
+	{{.Api.TableName .Application.Name .Api.Table}}.id {{.Application.Unescaped "{{.ne}}"}} ""
 LIMIT {{.Application.Unescaped "{{.size}}"}} OFFSET {{.Application.Unescaped "{{.offset}}"}}
 `
 
@@ -16,5 +16,5 @@ var TmplSQLCount = `select
 from
 	{{.Api.TableName .Application.Name .Api.Table}}
 where
-	{{.Api.TableName .Application.Name .Api.Table}}.id {{.Application.Unescaped "{{.lt }}{{.gt}}"}} ""
+	{{.Api.TableName .Application.Name .Api.Table}}.id {{.Application.Unescaped "{{.ne}}"}} ""
 `

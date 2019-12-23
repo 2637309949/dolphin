@@ -3,5 +3,5 @@ select
 from
 	example_activity
 where
-	example_activity.id {{.lt }}{{.gt}} ""
+	example_activity.id {{.ne}} ""
 LIMIT {{.size}} OFFSET {{.offset}}
