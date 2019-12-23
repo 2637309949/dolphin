@@ -21,7 +21,6 @@ func RecoveryWithWriter(f func(c *gin.Context, err interface{}), out io.Writer) 
 	if out != nil {
 		logger = log.New(out, "\n\n\x1b[31m", log.LstdFlags)
 	}
-
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
@@ -35,6 +34,6 @@ func RecoveryWithWriter(f func(c *gin.Context, err interface{}), out io.Writer) 
 				f(c, err)
 			}
 		}()
-		c.Next() // execute all the handlers
+		c.Next()
 	}
 }
