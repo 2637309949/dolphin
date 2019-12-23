@@ -1,27 +1,23 @@
-
 <sqlMap>
     <sql id="insert_platform_role">
         insert into platform_role
-        (
-        )
+		(`id`,`name`,`code`,`status`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
-		(?id,?activity_title,?activity_cover,?activity_intro,?activity_detail,?apply_begin_time,?apply_end_time,?activity_begin_time,?activity_end_time,?activity_join_condition,?activity_selection_rules,?activity_state,?activity_create_time,?single_dubbing,?create_by,?create_time,?last_update_by,?last_update_time,?del_flag)
+		(?id,?name,?code,?status,?domain,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
     <sql id="update_platform_role">
-        update platform_role set
-		where id = ?id
+        update platform_role set `id`=?id,`name`=?name,`code`=?code,`status`=?status,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+		where  id =?id
     </sql>
-    <sql id="deleteone_platform_role">
+    <sql id="delete_platform_role">
         delete from platform_role
 		where id =?id
     </sql>
     <sql id="selectone_platform_role">
-        select 
-        from platform_role
-		where id = ?id
+        select `id`,`name`,`code`,`status`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_role
+		where  id =?id
     </sql>
     <sql id="selectall_platform_role">
-        select 
-        from platform_role
+        select `id`,`name`,`code`,`status`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_role
     </sql>
 </sqlMap>
