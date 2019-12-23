@@ -8,7 +8,6 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/packages/uuid"
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/util"
 )
 
 // Menu struct
@@ -95,13 +94,39 @@ func (ctr *Menu) List(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Router /api/menu/tree [get]
 func (ctr *Menu) Tree(ctx *Context) {
-	q := ctr.Query(ctx)
-	ret, err := util.AppAction(q)
+	var list []*model.Menu
+	err := ctx.DB.Where("del_flag=0").OrderBy("priority").Find(&list)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	var tree []*MenuTreeNode
+	var treeMap = make(map[string]*MenuTreeNode)
+	for _, item := range list {
+		var node = treeMap[item.ID.String]
+		if node == nil {
+			node = NewMenuTreeNode()
+			treeMap[item.ID.String] = node
+		}
+		node.ID = item.ID.String
+		node.Text = item.Name.String
+		node.Data = item
+		if item.Parent.String == "" {
+			tree = append(tree, node)
+		} else {
+			parent := treeMap[item.Parent.String]
+			if parent == nil {
+				parent = NewMenuTreeNode()
+				treeMap[item.Parent.String] = parent
+			}
+			parent.Children = append(parent.Children, node)
+		}
+	}
+	if err == nil {
+		ctx.Success(tree)
+	} else {
+		ctx.Fail(err)
+	}
 }
 
 // Get api implementation

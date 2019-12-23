@@ -9,8 +9,8 @@ import (
 
 	"github.com/2637309949/dolphin/cli/gen"
 	"github.com/2637309949/dolphin/cli/gen/pipes"
-	"github.com/2637309949/dolphin/cli/parser"
 	"github.com/2637309949/dolphin/cli/packages/cobra"
+	"github.com/2637309949/dolphin/cli/parser"
 )
 
 var initCmd = &cobra.Command{
@@ -29,6 +29,7 @@ var initCmd = &cobra.Command{
 		g.AddPipe(&pipes.Main{})
 		g.AddPipe(&pipes.App{})
 		g.AddPipe(&pipes.Ctr{})
+		g.AddPipe(&pipes.Srv{})
 		g.AddPipe(&pipes.Model{})
 		g.AddPipe(&pipes.Bean{})
 		g.AddPipe(&pipes.Auto{})
