@@ -37,6 +37,46 @@ func (c *Common) Unescaped(x string) template.HTML {
 	return template.HTML(x)
 }
 
+// SQLInsertOne insert one
+func (c *Common) SQLInsertOne(table Table, name string) string {
+	names := strings.Join(funk.Map(table.Columns, func(col *Column) string {
+		return fmt.Sprintf("`%v`", col.Name)
+	}).([]string), ",")
+	values := strings.Join(funk.Map(table.Columns, func(col *Column) string {
+		return fmt.Sprintf("?%v", col.Name)
+	}).([]string), ",")
+	return `insert into ` + name + `
+		(` + names + `)
+		values
+		(` + values + `)`
+}
+
+// SQLSelectOne select one
+func (c *Common) SQLSelectOne(table Table, name string) string {
+	names := strings.Join(funk.Map(table.Columns, func(col *Column) string {
+		return fmt.Sprintf("`%v`", col.Name)
+	}).([]string), ",")
+	return `select ` + names + ` from ` + name + `
+		where  id =?id`
+}
+
+// SQLSelectAll select one
+func (c *Common) SQLSelectAll(table Table, name string) string {
+	names := strings.Join(funk.Map(table.Columns, func(col *Column) string {
+		return fmt.Sprintf("`%v`", col.Name)
+	}).([]string), ",")
+	return `select ` + names + ` from ` + name
+}
+
+// SQLUpdateOne update one
+func (c *Common) SQLUpdateOne(table Table, name string) string {
+	names := strings.Join(funk.Map(table.Columns, func(col *Column) string {
+		return fmt.Sprintf("`%v`=?%v", col.Name, col.Name)
+	}).([]string), ",")
+	return `update ` + name + ` set ` + names + `
+		where  id =?id`
+}
+
 // ToUpper toUpper
 func (c *Common) ToUpper(name string) string {
 	return strings.ToUpper(name)
