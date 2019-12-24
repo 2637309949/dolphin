@@ -26,7 +26,6 @@ require (
 	github.com/go-openapi/jsonreference v0.19.3
 	github.com/go-openapi/spec v0.19.5
 	github.com/go-playground/validator/v10 v10.0.1
-	github.com/go-redis/redis v6.15.6+incompatible
 	github.com/go-session/session v3.1.2+incompatible
 	github.com/gogo/protobuf v1.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef // indirect
@@ -45,8 +44,6 @@ require (
 	github.com/mattn/go-isatty v0.0.11
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.1.2
-	github.com/onsi/ginkgo v1.11.0 // indirect
-	github.com/onsi/gomega v1.8.1 // indirect
 	github.com/pelletier/go-toml v1.2.0
 	github.com/pkg/errors v0.8.0
 	github.com/prometheus/client_golang v0.9.3 // indirect

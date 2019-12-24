@@ -22,7 +22,7 @@ import (
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/go-redis/redis"
+	"github.com/2637309949/dolphin/cli/packages/redis"
 	"github.com/go-session/session"
 	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/viper"
