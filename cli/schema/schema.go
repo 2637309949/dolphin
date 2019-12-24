@@ -26,8 +26,6 @@ type Return struct {
 // Param struct
 type Param struct {
 	Common
-	Name  string `validate:"required"`
-	Desc  string `validate:"required"`
 	Type  string
 	Value string
 }
@@ -36,8 +34,6 @@ type Param struct {
 type API struct {
 	Common
 	Auth     bool
-	Name     string `validate:"required"`
-	Desc     string `validate:"required"`
 	Version  string
 	Function string
 	Table    string
@@ -49,8 +45,6 @@ type API struct {
 // Controller struct
 type Controller struct {
 	Common
-	Name      string `validate:"required"`
-	Desc      string `validate:"required"`
 	SkipLogin bool
 	APIS      []*API
 }
@@ -58,16 +52,12 @@ type Controller struct {
 // Prop struct
 type Prop struct {
 	Common
-	Name string `validate:"required"`
-	Desc string `validate:"required"`
 	Type string
 }
 
 // Bean struct
 type Bean struct {
 	Common
-	Name     string `validate:"required"`
-	Desc     string `validate:"required"`
 	Packages string
 	Props    []*Prop
 	Extends  string
@@ -76,8 +66,6 @@ type Bean struct {
 // Column struct
 type Column struct {
 	Common
-	Name string `validate:"required"`
-	Desc string `validate:"required"`
 	Type string
 	Xorm string
 }
@@ -85,8 +73,6 @@ type Column struct {
 // Table struct
 type Table struct {
 	Common
-	Name     string `validate:"required"`
-	Desc     string `validate:"required"`
 	Packages string
 	Columns  []*Column
 	Extends  string
@@ -95,8 +81,6 @@ type Table struct {
 // Application struct
 type Application struct {
 	Common
-	Name        string `validate:"required"`
-	Desc        string `validate:"required"`
 	PackageName string `validate:"required"`
 	Controllers []*Controller
 	Beans       []*Bean

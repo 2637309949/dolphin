@@ -15,6 +15,9 @@ import (
 
 // Common struct
 type Common struct {
+	Name string `validate:"required"`
+	Desc string `validate:"required"`
+	Path string
 }
 
 // Import packages

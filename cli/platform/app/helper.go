@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
-	"github.com/2637309949/dolphin/cli/platform/util"
 	"github.com/2637309949/dolphin/cli/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/cli/platform/util"
 )
 
 type (
@@ -104,7 +104,6 @@ func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	return func(ctx *Context) {
 		if ctx.Auth(ctx.Request) {
 			ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]
-			// to next
 			ctx.Set("DB", ctx.DB)
 			ctx.Set("AuthInfo", ctx.AuthInfo)
 			ctx.Next()
