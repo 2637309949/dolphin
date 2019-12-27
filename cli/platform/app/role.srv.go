@@ -7,7 +7,7 @@ import (
 	"errors"
 )
 
-// Role defined srv
+// RoleAction defined srv
 func RoleAction(v interface{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
 }

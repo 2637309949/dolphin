@@ -123,6 +123,12 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	return &ret, nil
 }
 
+// GetInt defined
+func (q *Query) GetInt(key string, init ...interface{}) int64 {
+	ret, _ := q.m[key].(int64)
+	return ret
+}
+
 // SetInt defined
 func (q *Query) SetInt(key string, init ...interface{}) {
 	v := q.ctx.Query(key)
@@ -141,6 +147,12 @@ func (q *Query) SetInt(key string, init ...interface{}) {
 	}
 }
 
+// GetBool defined
+func (q *Query) GetBool(key string, init ...interface{}) bool {
+	ret, _ := q.m[key].(bool)
+	return ret
+}
+
 // SetBool defined
 func (q *Query) SetBool(key string, init ...interface{}) {
 	v := q.ctx.Query(key)
@@ -157,6 +169,12 @@ func (q *Query) SetBool(key string, init ...interface{}) {
 		}
 		q.m[key] = i
 	}
+}
+
+// GetString defined
+func (q *Query) GetString(key string, init ...interface{}) string {
+	ret, _ := q.m[key].(string)
+	return ret
 }
 
 // SetString defined

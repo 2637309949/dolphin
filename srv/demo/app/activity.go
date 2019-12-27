@@ -11,7 +11,7 @@ import (
 )
 
 // ActivityBatchAdd api implementation
-// @Summary 添加活动 
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -38,7 +38,7 @@ func ActivityBatchAdd(ctx *Context) {
 }
 
 // ActivityAdd api implementation
-// @Summary 添加活动 
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -63,7 +63,7 @@ func ActivityAdd(ctx *Context) {
 }
 
 // ActivityBatchDel api implementation
-// @Summary 删除活动 
+// @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -95,7 +95,7 @@ func ActivityBatchDel(ctx *Context) {
 }
 
 // ActivityDel api implementation
-// @Summary 删除活动 
+// @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -119,7 +119,7 @@ func ActivityDel(ctx *Context) {
 }
 
 // ActivityBatchUpdate api implementation
-// @Summary 更新活动 
+// @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -151,7 +151,7 @@ func ActivityBatchUpdate(ctx *Context) {
 }
 
 // ActivityUpdate api implementation
-// @Summary 更新活动 
+// @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -175,7 +175,7 @@ func ActivityUpdate(ctx *Context) {
 }
 
 // ActivityList api implementation
-// @Summary 活动分页查询 
+// @Summary 活动分页查询
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -201,7 +201,7 @@ func ActivityList(ctx *Context) {
 }
 
 // ActivityOne api implementation
-// @Summary 获取活动 
+// @Summary 获取活动
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
@@ -221,7 +221,7 @@ func ActivityOne(ctx *Context) {
 }
 
 // ActivityInCrease api implementation
-// @Summary 增加次数 
+// @Summary 增加次数
 // @Tags 活动
 // @version 1.0
 // @Param id query string false "记录id"
@@ -243,7 +243,7 @@ func ActivityInCrease(ctx *Context) {
 }
 
 // ActivityInCreaseV2 api implementation
-// @Summary 增加次数 
+// @Summary 增加次数
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
@@ -265,4 +265,3 @@ func ActivityInCreaseV2(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-
