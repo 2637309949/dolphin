@@ -8,7 +8,6 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
-	"github.com/2637309949/dolphin/cli/packages/uuid"
 )
 
 // BatchNew api implementation
@@ -28,7 +27,7 @@ func (ctr *Activity) BatchNew(ctx *Context) {
 		return
 	}
 	for _, f := range form {
-		f.ID = null.StringFrom(uuid.MustString())
+		f.ID = null.StringFromUUID()
 	}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
@@ -54,7 +53,7 @@ func (ctr *Activity) New(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	form.ID = null.StringFrom(uuid.MustString())
+	form.ID = null.StringFromUUID()
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)

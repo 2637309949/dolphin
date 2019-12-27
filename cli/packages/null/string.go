@@ -9,6 +9,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"reflect"
+
+	"github.com/2637309949/dolphin/cli/packages/uuid"
 )
 
 // String is a nullable string. It supports SQL and JSON serialization.
@@ -20,6 +22,11 @@ type String struct {
 // StringFrom creates a new String that will never be blank.
 func StringFrom(s string) String {
 	return NewString(s, true)
+}
+
+// StringFromUUID creates a new String that will never be blank.
+func StringFromUUID() String {
+	return NewString(uuid.MustString(), true)
 }
 
 // StringFromPtr creates a new String that be null if s is nil.
