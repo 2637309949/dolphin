@@ -43,8 +43,8 @@ func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e}
 }
 
-// BuildEngine build engine
-func BuildEngine(build func(*Engine)) func(*pApp.Engine) {
+// InvokeEngine build engine
+func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
 		engine.Engine = base
 		build(engine)

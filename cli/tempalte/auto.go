@@ -22,7 +22,7 @@ import (
 var Name = "{{.Name}}"
 
 // Sync models
-var _ = cli.Invoke(BuildEngine(func(e *Engine) {
+var _ = cli.Invoke(InvokeEngine(func(e *Engine) {
 	{{- range .Tables}}
 	e.MSet.Add(Name, new(model.{{.ToUpperCase .Name}}))
 	{{- end}}
@@ -40,7 +40,7 @@ var _ = cli.Invoke(func(engine *Engine) {
 {{- end}}
 
 // Run booting system
-var _ = cli.Invoke(BuildEngine(func(e *Engine) {
+var _ = cli.Invoke(InvokeEngine(func(e *Engine) {
 	e.Run()
 }))
 `

@@ -26,7 +26,7 @@ type Oauth2 struct {
 
 // BuildOauth2 return Oauth2
 func BuildOauth2(build func(*Oauth2)) func(engine *Engine) {
-	return BuildEngine(func(engine *Engine) {
+	return InvokeEngine(func(engine *Engine) {
 		build(&Oauth2{Engine: engine})
 	})
 }

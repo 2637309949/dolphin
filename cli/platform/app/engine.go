@@ -305,8 +305,8 @@ func (e *Engine) Run() {
 	e.InitOAuth2()
 }
 
-// BuildEngine build engine
-func BuildEngine(build func(*Engine)) func(*Engine) {
+// InvokeEngine build engine
+func InvokeEngine(build func(*Engine)) func(*Engine) {
 	return func(e *Engine) {
 		build(e)
 	}
