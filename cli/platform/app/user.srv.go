@@ -3,9 +3,23 @@
 
 package app
 
-import "fmt"
+import (
+	"errors"
+	
+)
 
-// HelloSrv defined srv
-func (ctr *User) HelloSrv() {
-	fmt.Println("hello")
+type (
+	// User struct
+	User struct {
+		*UserSrv
+		*Engine
+	}
+	// UserSrv struct
+	UserSrv struct {
+	}
+)
+
+// User defined srv
+func UserAction(v interface{}) (interface{}, error) {
+	return nil, errors.New("No implementation found")
 }

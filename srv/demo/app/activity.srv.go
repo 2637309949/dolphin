@@ -5,29 +5,9 @@ package app
 
 import (
 	"errors"
-
-	pApp "github.com/2637309949/dolphin/cli/platform/app"
 )
 
-type (
-	// Activity struct
-	Activity struct {
-		*ActivitySrv
-		*Engine
-	}
-	// ActivitySrv struct
-	ActivitySrv struct {
-	}
-)
-
-// BuildActivity return Activity
-func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
-	return BuildEngine(func(engine *Engine) {
-		build(&Activity{Engine: engine, ActivitySrv: &ActivitySrv{}})
-	})
-}
-
-// Action defined srv
-func (ctr *Activity) Action(v interface{}) (interface{}, error) {
+// ActivityAction defined srv
+func ActivityAction(v interface{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
 }

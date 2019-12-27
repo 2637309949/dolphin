@@ -3,23 +3,11 @@
 
 package app
 
-import "fmt"
+import (
+	"errors"
+)
 
-// MenuTreeNode defined treenode
-type MenuTreeNode struct {
-	ID       string          `json:"id"`
-	Text     string          `json:"text"`
-	Disabled bool            `json:"disabled"`
-	Data     interface{}     `json:"data"`
-	Children []*MenuTreeNode `json:"nodes"`
-}
-
-// NewMenuTreeNode defined
-func NewMenuTreeNode() *MenuTreeNode {
-	return new(MenuTreeNode)
-}
-
-// HelloSrv defined srv
-func (ctr *Menu) HelloSrv() {
-	fmt.Println("hello")
+// MenuAction defined srv
+func MenuAction(v interface{}) (interface{}, error) {
+	return nil, errors.New("No implementation found")
 }

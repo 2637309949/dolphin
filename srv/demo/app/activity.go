@@ -10,8 +10,8 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/null"
 )
 
-// BatchNew api implementation
-// @Summary 添加活动
+// ActivityBatchAdd api implementation
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -19,8 +19,8 @@ import (
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/batch_new [post]
-func (ctr *Activity) BatchNew(ctx *Context) {
+// @Router /api/activity/batch_add [post]
+func ActivityBatchAdd(ctx *Context) {
 	var form []model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -37,8 +37,8 @@ func (ctr *Activity) BatchNew(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// New api implementation
-// @Summary 添加活动
+// ActivityAdd api implementation
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -46,8 +46,8 @@ func (ctr *Activity) BatchNew(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/activity/new [post]
-func (ctr *Activity) New(ctx *Context) {
+// @Router /api/activity/add [post]
+func ActivityAdd(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -62,8 +62,8 @@ func (ctr *Activity) New(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// BatchDel api implementation
-// @Summary 删除活动
+// ActivityBatchDel api implementation
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -72,7 +72,7 @@ func (ctr *Activity) New(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/batch_del [post]
-func (ctr *Activity) BatchDel(ctx *Context) {
+func ActivityBatchDel(ctx *Context) {
 	var form []model.Activity
 	var err error
 	var ret []int64
@@ -94,8 +94,8 @@ func (ctr *Activity) BatchDel(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Del api implementation
-// @Summary 删除活动
+// ActivityDel api implementation
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -104,7 +104,7 @@ func (ctr *Activity) BatchDel(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/del [post]
-func (ctr *Activity) Del(ctx *Context) {
+func ActivityDel(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -118,8 +118,8 @@ func (ctr *Activity) Del(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// BatchUpdate api implementation
-// @Summary 更新活动
+// ActivityBatchUpdate api implementation
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -128,7 +128,7 @@ func (ctr *Activity) Del(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/batch_update [post]
-func (ctr *Activity) BatchUpdate(ctx *Context) {
+func ActivityBatchUpdate(ctx *Context) {
 	var form []model.Activity
 	var err error
 	var ret []int64
@@ -150,8 +150,8 @@ func (ctr *Activity) BatchUpdate(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Update api implementation
-// @Summary 更新活动
+// ActivityUpdate api implementation
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -160,7 +160,7 @@ func (ctr *Activity) BatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/update [post]
-func (ctr *Activity) Update(ctx *Context) {
+func ActivityUpdate(ctx *Context) {
 	var form model.Activity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -174,8 +174,8 @@ func (ctr *Activity) Update(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// List api implementation
-// @Summary 活动分页查询
+// ActivityList api implementation
+// @Summary 活动分页查询 
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -186,13 +186,13 @@ func (ctr *Activity) Update(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/list [get]
-func (ctr *Activity) List(ctx *Context) {
-	q := ctr.Query(ctx)
+func ActivityList(ctx *Context) {
+	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 20)
 	q.SetString("title", "nn")
 	q.SetInt("hidden")
-	ret, err := ctr.PageSearch(ctx.DB, "activity", "list", "activity", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "activity", "list", "activity", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -200,8 +200,8 @@ func (ctr *Activity) List(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// One api implementation
-// @Summary 获取活动
+// ActivityOne api implementation
+// @Summary 获取活动 
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
@@ -209,7 +209,7 @@ func (ctr *Activity) List(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/activity/one [get]
-func (ctr *Activity) One(ctx *Context) {
+func ActivityOne(ctx *Context) {
 	var entity model.Activity
 	id := ctx.Query("id")
 	ret, err := ctx.DB.Id(id).Get(&entity)
@@ -220,8 +220,8 @@ func (ctr *Activity) One(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// InCrease api implementation
-// @Summary 增加次数
+// ActivityInCrease api implementation
+// @Summary 增加次数 
 // @Tags 活动
 // @version 1.0
 // @Param id query string false "记录id"
@@ -230,11 +230,11 @@ func (ctr *Activity) One(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v1/activity/in_crease [get]
-func (ctr *Activity) InCrease(ctx *Context) {
-	q := ctr.Query(ctx)
+func ActivityInCrease(ctx *Context) {
+	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.SetString("action")
-	ret, err := ctr.Action(q)
+	ret, err := ActivityAction(q)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -242,8 +242,8 @@ func (ctr *Activity) InCrease(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// InCreaseV2 api implementation
-// @Summary 增加次数
+// ActivityInCreaseV2 api implementation
+// @Summary 增加次数 
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
@@ -252,16 +252,17 @@ func (ctr *Activity) InCrease(ctx *Context) {
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v2/activity/in_crease_v2 [post]
-func (ctr *Activity) InCreaseV2(ctx *Context) {
+func ActivityInCreaseV2(ctx *Context) {
 	var form string
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Action(form)
+	ret, err := ActivityAction(form)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
 	ctx.Success(ret)
 }
+

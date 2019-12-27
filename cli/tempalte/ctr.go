@@ -15,10 +15,9 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
-	"github.com/2637309949/dolphin/cli/packages/uuid"
 )
 {{range .Controller.APIS}}
-// {{.ToUpperCase .Name}} api implementation
+// {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}} api implementation
 // @Summary {{.Desc}} 
 // @Tags {{$.Controller.Desc}}
 {{- if ne .Version "" }}
@@ -42,14 +41,14 @@ import (
 // @Failure 500 {object} model.Response
 {{- end}}
 // @Router /api{{.VersionPrefix .Version}}/{{$.Controller.Name}}/{{.Name}} [{{.Method}}]
-func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}}(ctx *Context) {
+func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
 {{- if eq .Function "list"}}
-	q := ctr.Query(ctx)
+	q := ctx.TypeQuery()
 	{{- range .Params}}
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
-	ret, err := ctr.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -159,12 +158,12 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	ctx.Success(ret)
 {{- else}}
 	{{- if eq .Method "get"}}
-	q := ctr.Query(ctx)
+	q := ctx.TypeQuery()
 	{{- range .Params}}
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
-	ret, err := ctr.Action(q)
+	ret, err := {{$.Controller.ToUpperCase $.Controller.Name}}Action(q)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -181,7 +180,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Action(form)
+	ret, err := {{$.Controller.ToUpperCase $.Controller.Name}}Action(form)
 	if err != nil {
 		ctx.Fail(err)
 		return

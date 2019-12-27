@@ -13,9 +13,9 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/null"
 	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/go-session/session"
-	"github.com/2637309949/dolphin/cli/packages/viper"
 	"golang.org/x/oauth2"
 )
 
@@ -31,7 +31,7 @@ func BuildOauth2(build func(*Oauth2)) func(engine *Engine) {
 	})
 }
 
-// Login api implementation
+// Oauth2Login api implementation
 // @Summary 登录信息
 // @Tags OAuth授权
 // @Accept application/json
@@ -39,7 +39,7 @@ func BuildOauth2(build func(*Oauth2)) func(engine *Engine) {
 // @Param user body model.User false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/login [post]
-func (ctr *Oauth2) Login(ctx *Context) {
+func Oauth2Login(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
 		ctx.Fail(err)
@@ -54,7 +54,7 @@ func (ctr *Oauth2) Login(ctx *Context) {
 		Name:   null.StringFrom(username),
 		Domain: null.StringFrom(domain),
 	}
-	ext, err := ctr.PlatformDB.Where("delete_time is null").Get(&account)
+	ext, err := ctx.engine.PlatformDB.Where("delete_time is null").Get(&account)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -69,14 +69,14 @@ func (ctr *Oauth2) Login(ctx *Context) {
 	ctx.Redirect(http.StatusFound, viper.GetString("oauth.auth"))
 }
 
-// Affirm api implementation
+// Oauth2Affirm api implementation
 // @Summary 用户授权
 // @Tags OAuth授权
 // @Accept application/json
 // @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/affirm [post]
-func (ctr *Oauth2) Affirm(ctx *Context) {
+func Oauth2Affirm(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
 		ctx.Fail(err)
@@ -90,20 +90,20 @@ func (ctr *Oauth2) Affirm(ctx *Context) {
 	ctx.Request.Form = form
 	store.Delete("ReturnUri")
 	store.Save()
-	err = ctr.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
+	err = ctx.engine.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
 }
 
-// Authorize api implementation
+// Oauth2Authorize api implementation
 // @Summary 用户授权
 // @Tags OAuth授权
 // @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/authorize [get]
-func (ctr *Oauth2) Authorize(ctx *Context) {
+func Oauth2Authorize(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
 		ctx.Fail(err)
@@ -116,33 +116,33 @@ func (ctr *Oauth2) Authorize(ctx *Context) {
 	ctx.Request.Form = form
 	store.Delete("ReturnUri")
 	store.Save()
-	err = ctr.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
+	err = ctx.engine.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
 }
 
-// Token api implementation
+// Oauth2Token api implementation
 // @Summary 获取令牌
 // @Tags OAuth授权
 // @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/token [post]
-func (ctr *Oauth2) Token(ctx *Context) {
-	err := ctr.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
+func Oauth2Token(ctx *Context) {
+	err := ctx.engine.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		ctx.Fail(err)
 	}
 }
 
-// Oauth2 api implementation
+// Oauth2Oauth2 api implementation
 // @Summary 授权回调
 // @Tags OAuth授权
 // @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/oauth2 [get]
-func (ctr *Oauth2) Oauth2(ctx *Context) {
+func Oauth2Oauth2(ctx *Context) {
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
 	state := f.Get("state")
@@ -178,13 +178,13 @@ func (ctr *Oauth2) Oauth2(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// URL api implementation
+// Oauth2URL api implementation
 // @Summary 授权地址
 // @Tags OAuth授权
 // @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/url [get]
-func (ctr *Oauth2) URL(ctx *Context) {
+func Oauth2URL(ctx *Context) {
 	rawRedirect := ctx.Query("redirect_uri")
 	rawState := ctx.Query("state")
 	state := "redirect_uri=" + rawRedirect + "&state=" + rawState
@@ -192,14 +192,14 @@ func (ctr *Oauth2) URL(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Refresh api implementation
+// Oauth2Refresh api implementation
 // @Summary 刷新令牌
 // @Tags OAuth授权
 // @Param Authorization header string true "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/oauth2/refresh [get]
-func (ctr *Oauth2) Refresh(ctx *Context) {
-	refreshtoken, ok := ctr.OAuth2.BearerAuth(ctx.Request)
+func Oauth2Refresh(ctx *Context) {
+	refreshtoken, ok := ctx.engine.OAuth2.BearerAuth(ctx.Request)
 	if !ok {
 		ctx.Fail(oaErrors.ErrInvalidAccessToken)
 		return

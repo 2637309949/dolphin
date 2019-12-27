@@ -231,6 +231,68 @@ info:
   title: example
   version: "1.0"
 paths:
+  /api/activity/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          $ref: '#/definitions/model.Activity'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加活动
+      tags:
+      - 活动
+  /api/activity/batch_add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 活动对象
+        in: body
+        name: activity
+        schema:
+          items:
+            $ref: '#/definitions/model.Activity'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加活动
+      tags:
+      - 活动
   /api/activity/batch_del:
     post:
       consumes:
@@ -261,38 +323,6 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 删除活动
-      tags:
-      - 活动
-  /api/activity/batch_new:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.Activity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 添加活动
       tags:
       - 活动
   /api/activity/batch_update:
@@ -394,36 +424,6 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 活动分页查询
-      tags:
-      - 活动
-  /api/activity/new:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          $ref: '#/definitions/model.Activity'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 添加活动
       tags:
       - 活动
   /api/activity/one:
@@ -799,7 +799,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 用户信息
         in: body
@@ -820,7 +819,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 用户id
         in: query
@@ -840,7 +838,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 页码
         in: query
@@ -866,7 +863,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 用户信息
         in: body

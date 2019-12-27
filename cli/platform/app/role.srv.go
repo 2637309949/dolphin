@@ -3,9 +3,23 @@
 
 package app
 
-import "fmt"
+import (
+	"errors"
+	
+)
 
-// HelloSrv defined srv
-func (ctr *Role) HelloSrv() {
-	fmt.Println("hello")
+type (
+	// Role struct
+	Role struct {
+		*RoleSrv
+		*Engine
+	}
+	// RoleSrv struct
+	RoleSrv struct {
+	}
+)
+
+// Role defined srv
+func RoleAction(v interface{}) (interface{}, error) {
+	return nil, errors.New("No implementation found")
 }

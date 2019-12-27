@@ -7,34 +7,24 @@ import (
 	"github.com/2637309949/dolphin/cli/platform/model"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
+	"github.com/2637309949/dolphin/cli/packages/null"
 )
 
-// User struct
-type User struct {
-	*Engine
-}
-
-// BuildUser return User
-func BuildUser(build func(*User)) func(engine *Engine) {
-	return BuildEngine(func(engine *Engine) {
-		build(&User{Engine: engine})
-	})
-}
-
-// Add api implementation
-// @Summary 添加用户
+// UserAdd api implementation
+// @Summary 添加用户 
 // @Tags 用户
 // @Accept application/json
-// @Param Authorization header string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param user body model.User false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/user/add [post]
-func (ctr *User) Add(ctx *Context) {
+func UserAdd(ctx *Context) {
 	var form model.User
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
+	form.ID = null.StringFromUUID()
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -43,15 +33,15 @@ func (ctr *User) Add(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Update api implementation
-// @Summary 更新用户
+// UserUpdate api implementation
+// @Summary 更新用户 
 // @Tags 用户
 // @Accept application/json
-// @Param Authorization header string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param user body model.User false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/user/update [post]
-func (ctr *User) Update(ctx *Context) {
+func UserUpdate(ctx *Context) {
 	var form model.User
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -65,19 +55,19 @@ func (ctr *User) Update(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Page api implementation
-// @Summary 用户分页查询
+// UserPage api implementation
+// @Summary 用户分页查询 
 // @Tags 用户
-// @Param Authorization header string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
 // @Router /api/user/page [get]
-func (ctr *User) Page(ctx *Context) {
-	q := ctr.Query(ctx)
+func UserPage(ctx *Context) {
+	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
-	ret, err := ctr.PageSearch(ctx.DB, "user", "page", "user", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "user", "page", "user", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -85,14 +75,14 @@ func (ctr *User) Page(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Get api implementation
-// @Summary 获取用户信息
+// UserGet api implementation
+// @Summary 获取用户信息 
 // @Tags 用户
-// @Param Authorization header string true "认证令牌"
+// @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户id"
 // @Failure 403 {object} model.Response
 // @Router /api/user/get [get]
-func (ctr *User) Get(ctx *Context) {
+func UserGet(ctx *Context) {
 	var entity model.User
 	id := ctx.Query("id")
 	ret, err := ctx.DB.Id(id).Get(&entity)
@@ -102,3 +92,4 @@ func (ctr *User) Get(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

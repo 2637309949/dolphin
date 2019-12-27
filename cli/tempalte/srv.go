@@ -8,31 +8,10 @@ package app
 
 import (
 	"errors"
-	
-	{{- $Name := .Name}}
-	{{if ne $Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
 )
 
-type (
-	// {{.Controller.ToUpperCase .Controller.Name}} struct
-	{{.Controller.ToUpperCase .Controller.Name}} struct {
-		*{{.Controller.ToUpperCase .Controller.Name}}Srv
-		*Engine
-	}
-	// {{.Controller.ToUpperCase .Controller.Name}}Srv struct
-	{{.Controller.ToUpperCase .Controller.Name}}Srv struct {
-	}
-)
-
-// Build{{.Controller.ToUpperCase .Controller.Name}} return {{.Controller.ToUpperCase .Controller.Name}}
-func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *{{- if ne .Name "platform"}}pApp.{{- end}}Engine) {
-	return BuildEngine(func(engine *Engine) {
-		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: engine, {{.Controller.ToUpperCase .Controller.Name}}Srv: &{{.Controller.ToUpperCase .Controller.Name}}Srv{}})
-	})
-}
-
-// Action defined srv
-func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) Action(v interface{}) (interface{}, error) {
+// {{$.Controller.ToUpperCase $.Controller.Name}}Action defined srv
+func {{$.Controller.ToUpperCase $.Controller.Name}}Action(v interface{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
 }
 `

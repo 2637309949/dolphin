@@ -4,24 +4,13 @@
 package app
 
 import (
+	"github.com/2637309949/dolphin/cli/platform/model"
+
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
-	"github.com/2637309949/dolphin/cli/platform/model"
 )
 
-// Menu struct
-type Menu struct {
-	*Engine
-}
-
-// BuildMenu return Menu
-func BuildMenu(build func(*Menu)) func(engine *Engine) {
-	return BuildEngine(func(engine *Engine) {
-		build(&Menu{Engine: engine})
-	})
-}
-
-// Add api implementation
+// MenuAdd api implementation
 // @Summary 添加菜单
 // @Tags 菜单
 // @Accept application/json
@@ -29,7 +18,7 @@ func BuildMenu(build func(*Menu)) func(engine *Engine) {
 // @Param menu body model.Menu false "菜单信息"
 // @Failure 403 {object} model.Response
 // @Router /api/menu/add [post]
-func (ctr *Menu) Add(ctx *Context) {
+func MenuAdd(ctx *Context) {
 	var form model.Menu
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -44,7 +33,7 @@ func (ctr *Menu) Add(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Update api implementation
+// MenuUpdate api implementation
 // @Summary 更新菜单
 // @Tags 菜单
 // @Accept application/json
@@ -52,7 +41,7 @@ func (ctr *Menu) Add(ctx *Context) {
 // @Param menu body model.Menu false "菜单信息"
 // @Failure 403 {object} model.Response
 // @Router /api/menu/update [post]
-func (ctr *Menu) Update(ctx *Context) {
+func MenuUpdate(ctx *Context) {
 	var form model.Menu
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
@@ -66,7 +55,7 @@ func (ctr *Menu) Update(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// List api implementation
+// MenuList api implementation
 // @Summary 菜单分页查询
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
@@ -74,11 +63,11 @@ func (ctr *Menu) Update(ctx *Context) {
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
 // @Router /api/menu/list [get]
-func (ctr *Menu) List(ctx *Context) {
-	q := ctr.Query(ctx)
+func MenuList(ctx *Context) {
+	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
-	ret, err := ctr.PageSearch(ctx.DB, "menu", "list", "menu", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "menu", "list", "menu", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -86,56 +75,30 @@ func (ctr *Menu) List(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// Tree api implementation
+// MenuTree api implementation
 // @Summary 菜单树形结构
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Response
 // @Router /api/menu/tree [get]
-func (ctr *Menu) Tree(ctx *Context) {
-	var list []*model.Menu
-	err := ctx.DB.Where("del_flag=0").OrderBy("priority").Find(&list)
+func MenuTree(ctx *Context) {
+	q := ctx.TypeQuery()
+	ret, err := MenuAction(q)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	var tree []*MenuTreeNode
-	var treeMap = make(map[string]*MenuTreeNode)
-	for _, item := range list {
-		var node = treeMap[item.ID.String]
-		if node == nil {
-			node = NewMenuTreeNode()
-			treeMap[item.ID.String] = node
-		}
-		node.ID = item.ID.String
-		node.Text = item.Name.String
-		node.Data = item
-		if item.Parent.String == "" {
-			tree = append(tree, node)
-		} else {
-			parent := treeMap[item.Parent.String]
-			if parent == nil {
-				parent = NewMenuTreeNode()
-				treeMap[item.Parent.String] = parent
-			}
-			parent.Children = append(parent.Children, node)
-		}
-	}
-	if err == nil {
-		ctx.Success(tree)
-	} else {
-		ctx.Fail(err)
-	}
+	ctx.Success(ret)
 }
 
-// Get api implementation
+// MenuGet api implementation
 // @Summary 获取菜单信息
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "菜单id"
 // @Failure 403 {object} model.Response
 // @Router /api/menu/get [get]
-func (ctr *Menu) Get(ctx *Context) {
+func MenuGet(ctx *Context) {
 	var entity model.Menu
 	id := ctx.Query("id")
 	ret, err := ctx.DB.Id(id).Get(&entity)

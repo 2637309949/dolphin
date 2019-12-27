@@ -30,13 +30,13 @@ var _ = cli.Invoke(BuildEngine(func(e *Engine) {
 {{- range .Controllers}}
 
 // Build{{.ToUpperCase .Name}}
-var _ = cli.Invoke(Build{{.ToUpperCase .Name}}(func(ctr *{{.ToUpperCase .Name}}) {
-	group := ctr.Group(viper.GetString("http.prefix"))
+var _ = cli.Invoke(func(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
 	{{- $ctr := .}}
 	{{- range .APIS}}
-	group.Handle("{{.ToUpper .Method}}", "{{.VersionPrefix .Version}}/{{$ctr.Name}}/{{.Name}}",{{- if .Auth}} ctr.Auth({{if ne $.Name "platform"}}pApp.{{- end}}OAuth2),{{- end}} ctr.{{.ToUpperCase .Name}})
+	group.Handle("{{.ToUpper .Method}}", "{{.VersionPrefix .Version}}/{{$ctr.Name}}/{{.Name}}",{{- if .Auth}} engine.Auth({{if ne $.Name "platform"}}pApp.{{- end}}OAuth2),{{- end}} {{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}})
 	{{- end}}
-}))
+})
 {{- end}}
 
 // Run booting system

@@ -487,7 +487,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 用户信息
         in: body
@@ -508,7 +507,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 用户id
         in: query
@@ -528,7 +526,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 页码
         in: query
@@ -554,7 +551,6 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
-        required: true
         type: string
       - description: 用户信息
         in: body

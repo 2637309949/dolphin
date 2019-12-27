@@ -11,21 +11,22 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/cli/packages/gin"
+	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/errors"
+	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/models"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/server"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/store"
+	"github.com/2637309949/dolphin/cli/packages/redis"
+	"github.com/2637309949/dolphin/cli/packages/viper"
 	"github.com/2637309949/dolphin/cli/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/2637309949/dolphin/cli/platform/sql"
 	"github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/2637309949/dolphin/cli/packages/redis"
 	"github.com/go-session/session"
-	"github.com/2637309949/dolphin/cli/packages/logrus"
-	"github.com/2637309949/dolphin/cli/packages/viper"
 )
 
 // Engine defined parse app engine
@@ -280,6 +281,20 @@ func (e *Engine) InitOAuth2() {
 	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
 		logrus.Error("Response Error:", re.Error.Error())
 	})
+}
+
+// Auth middles
+func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
+	return func(ctx *Context) {
+		if ctx.Auth(ctx.Request) {
+			ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]
+			ctx.Set("DB", ctx.DB)
+			ctx.Set("AuthInfo", ctx.AuthInfo)
+			ctx.Next()
+		} else {
+			ctx.Fail(oaErrors.ErrInvalidAccessToken)
+		}
+	}
 }
 
 // Run booting system
