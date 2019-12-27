@@ -30,7 +30,7 @@ func (app *Srv) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 			Text:     tempalte.TmplSrv,
 			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name),
 			Data:     data,
-			Overlap:  gen.OverlapWrite,
+			Overlap:  gen.OverlapSkip,
 			Suffix:   ".srv.go",
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)

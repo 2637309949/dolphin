@@ -9,21 +9,7 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/packages/uuid"
-	pApp "github.com/2637309949/dolphin/cli/platform/app"
-	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 )
-
-// Activity struct
-type Activity struct {
-	*Engine
-}
-
-// BuildActivity return Activity
-func BuildActivity(build func(*Activity)) func(engine *pApp.Engine) {
-	return BuildEngine(func(engine *Engine) {
-		build(&Activity{Engine: engine})
-	})
-}
 
 // BatchNew api implementation
 // @Summary 添加活动
@@ -249,7 +235,7 @@ func (ctr *Activity) InCrease(ctx *Context) {
 	q := ctr.Query(ctx)
 	q.SetString("id")
 	q.SetString("action")
-	ret, err := pUtil.AppAction(q)
+	ret, err := ctr.Action(q)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -273,7 +259,7 @@ func (ctr *Activity) InCreaseV2(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := pUtil.AppAction(form)
+	ret, err := ctr.Action(form)
 	if err != nil {
 		ctx.Fail(err)
 		return

@@ -51,6 +51,7 @@ func (parser *AppParser) parse(xmlPath string) error {
 				if parser.Application == nil {
 					parser.Application = &schema.Application{}
 				}
+				parser.Application.Path = xmlPath
 				for _, attr := range token.Attr {
 					attrName := attr.Name.Local
 					attrValue := attr.Value
@@ -68,6 +69,7 @@ func (parser *AppParser) parse(xmlPath string) error {
 				}
 			case token.Name.Local == "controller":
 				controller = &schema.Controller{}
+				controller.Path = xmlPath
 				for _, attr := range token.Attr {
 					attrName := attr.Name.Local
 					attrValue := attr.Value
@@ -155,6 +157,7 @@ func (parser *AppParser) parse(xmlPath string) error {
 				}
 			case token.Name.Local == "bean":
 				bean = &schema.Bean{}
+				bean.Path = xmlPath
 				for _, attr := range token.Attr {
 					attrName := attr.Name.Local
 					attrValue := attr.Value
@@ -191,6 +194,7 @@ func (parser *AppParser) parse(xmlPath string) error {
 				}
 			case token.Name.Local == "table":
 				table = &schema.Table{}
+				table.Path = xmlPath
 				for _, attr := range token.Attr {
 					attrName := attr.Name.Local
 					attrValue := attr.Value

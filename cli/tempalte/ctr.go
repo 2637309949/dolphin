@@ -16,22 +16,7 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/packages/uuid"
-	{{- $Name := .Name}}
-	{{if ne $Name "platform"}}pApp "github.com/2637309949/dolphin/cli/platform/app"{{- end}}
-	{{if ne $Name "platform"}}pUtil{{- end}} "github.com/2637309949/dolphin/cli/platform/util"
 )
-
-// {{.Controller.ToUpperCase .Controller.Name}} struct
-type {{.Controller.ToUpperCase .Controller.Name}} struct {
-	*Engine
-}
-
-// Build{{.Controller.ToUpperCase .Controller.Name}} return {{.Controller.ToUpperCase .Controller.Name}}
-func Build{{.Controller.ToUpperCase .Controller.Name}}(build func(*{{.Controller.ToUpperCase .Controller.Name}})) func(engine *{{- if ne .Name "platform"}}pApp.{{- end}}Engine) {
-	return BuildEngine(func(engine *Engine) {
-		build(&{{.Controller.ToUpperCase .Controller.Name}}{Engine: engine})
-	})
-}
 {{range .Controller.APIS}}
 // {{.ToUpperCase .Name}} api implementation
 // @Summary {{.Desc}} 
@@ -179,7 +164,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
-	ret, err := {{if ne $Name "platform"}}pUtil{{else}}util{{end}}.AppAction(q)
+	ret, err := ctr.Action(q)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -196,7 +181,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{.ToUpperCase .Name}
 		ctx.Fail(err)
 		return
 	}
-	ret, err := {{if ne $Name "platform"}}pUtil{{else}}util{{end}}.AppAction(form)
+	ret, err := ctr.Action(form)
 	if err != nil {
 		ctx.Fail(err)
 		return
