@@ -5,21 +5,9 @@ package app
 
 import (
 	"errors"
-	
 )
 
-type (
-	// User struct
-	User struct {
-		*UserSrv
-		*Engine
-	}
-	// UserSrv struct
-	UserSrv struct {
-	}
-)
-
-// User defined srv
+// UserAction defined srv
 func UserAction(v interface{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
 }

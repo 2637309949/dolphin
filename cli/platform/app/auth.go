@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/oauth2"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/server"
-	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/viper"
 	xoauth2 "golang.org/x/oauth2"
 )

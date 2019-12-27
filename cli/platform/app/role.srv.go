@@ -5,18 +5,6 @@ package app
 
 import (
 	"errors"
-	
-)
-
-type (
-	// Role struct
-	Role struct {
-		*RoleSrv
-		*Engine
-	}
-	// RoleSrv struct
-	RoleSrv struct {
-	}
 )
 
 // Role defined srv
