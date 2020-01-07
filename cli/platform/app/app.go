@@ -6,25 +6,37 @@ package app
 import (
 	"context"
 	"fmt"
+	"net"
 	"net/http"
 	"strings"
 
-	"github.com/2637309949/dolphin/srv"
-	"github.com/2637309949/dolphin/srv/cli"
 	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/viper"
+	"github.com/2637309949/dolphin/srv"
+	"github.com/2637309949/dolphin/srv/cli"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
 )
 
 // NewLifeHook create lifecycle hook
 func NewLifeHook(e *Engine) srv.Hook {
-	http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port")), Handler: e.Gin}
+	http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
+	grpc, err := net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))
+	if err != nil {
+		logrus.Fatal(err)
+	}
 	return srv.Hook{
 		OnStart: func(context.Context) error {
 			go func() {
-				logrus.Infof("Listen on port:%v", viper.GetString("http.port"))
+				logrus.Infof("Http listen on port:%v", viper.GetString("http.port"))
+				http.Handler = e.Gin
 				if err := http.ListenAndServe(); err != nil {
+					logrus.Fatal(err)
+				}
+			}()
+			go func() {
+				logrus.Infof("Grpc listen on port:%v", viper.GetString("grpc.port"))
+				if err := e.GRPC.Serve(grpc); err != nil {
 					logrus.Fatal(err)
 				}
 			}()
@@ -32,6 +44,10 @@ func NewLifeHook(e *Engine) srv.Hook {
 		},
 		OnStop: func(ctx context.Context) error {
 			if err := http.Shutdown(ctx); err != nil {
+				logrus.Fatal(err)
+				return err
+			}
+			if err := grpc.Close(); err != nil {
 				logrus.Fatal(err)
 				return err
 			}
@@ -60,6 +76,7 @@ func init() {
 	viper.SetDefault("http.port", "8081")
 	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("http.static", "/static")
+	viper.SetDefault("grpc.port", "9081")
 	viper.SetDefault("oauth.id", "Y76U9344RABF4")
 	viper.SetDefault("oauth.secret", "98UYO6FVB865")
 	viper.SetDefault("oauth.login", "/static/login.html")

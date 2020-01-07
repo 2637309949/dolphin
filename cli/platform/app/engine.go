@@ -10,6 +10,8 @@ import (
 	"sync"
 	"time"
 
+	"google.golang.org/grpc"
+
 	"github.com/2637309949/dolphin/cli/packages/gin"
 	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -33,10 +35,11 @@ import (
 type Engine struct {
 	MSet          MSeti
 	Gin           *gin.Engine
+	GRPC          *grpc.Server
+	OAuth2        *server.Server
 	Redis         *redis.Client
 	PlatformDB    *xorm.Engine
 	BusinessDBSet map[string]*xorm.Engine
-	OAuth2        *server.Server
 	pool          sync.Pool
 }
 
@@ -318,6 +321,7 @@ func NewEngine() *Engine {
 	e := &Engine{}
 	e.MSet = &MSet{m: map[string][]interface{}{}}
 	e.BusinessDBSet = map[string]*xorm.Engine{}
+	e.GRPC = grpc.NewServer()
 	e.Gin = gin.New()
 	e.Gin.Use(gin.Logger())
 	e.Gin.Use(util.Recovery(func(ctx *gin.Context, err interface{}) {
