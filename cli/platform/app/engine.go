@@ -315,6 +315,14 @@ func InvokeEngine(build func(*Engine)) func(*Engine) {
 	}
 }
 
+// InvokeContext build context
+func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
+	return func(e *Engine) {
+		group := e.Group(viper.GetString("http.prefix"))
+		group.Handle(httpMethod, relativePath, handlers...)
+	}
+}
+
 // NewEngine init Engine
 func NewEngine() *Engine {
 	gin.SetMode(gin.ReleaseMode)

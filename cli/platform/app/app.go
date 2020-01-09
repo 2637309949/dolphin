@@ -28,14 +28,14 @@ func NewLifeHook(e *Engine) srv.Hook {
 	return srv.Hook{
 		OnStart: func(context.Context) error {
 			go func() {
-				logrus.Infof("Http listen on port:%v", viper.GetString("http.port"))
+				logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 				http.Handler = e.Gin
 				if err := http.ListenAndServe(); err != nil {
 					logrus.Fatal(err)
 				}
 			}()
 			go func() {
-				logrus.Infof("Grpc listen on port:%v", viper.GetString("grpc.port"))
+				logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
 				if err := e.GRPC.Serve(grpc); err != nil {
 					logrus.Fatal(err)
 				}
@@ -79,8 +79,8 @@ func init() {
 	viper.SetDefault("grpc.port", "9081")
 	viper.SetDefault("oauth.id", "Y76U9344RABF4")
 	viper.SetDefault("oauth.secret", "98UYO6FVB865")
-	viper.SetDefault("oauth.login", "/static/login.html")
-	viper.SetDefault("oauth.auth", "/static/auth.html")
+	viper.SetDefault("oauth.login", "/static/sso/login.html")
+	viper.SetDefault("oauth.auth", "/static/sso/auth.html")
 	viper.SetDefault("db.driver", "mysql")
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")

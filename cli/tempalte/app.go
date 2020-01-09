@@ -13,10 +13,10 @@ package app
 import (
 	"sync"
 
-	pApp "github.com/2637309949/dolphin/cli/platform/app"
-
 	"github.com/2637309949/dolphin/cli/packages/gin"
 	"github.com/2637309949/dolphin/cli/packages/go-funk"
+	"github.com/2637309949/dolphin/cli/packages/viper"
+	pApp "github.com/2637309949/dolphin/cli/platform/app"
 )
 
 type (
@@ -48,6 +48,15 @@ func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
 		engine.Engine = base
 		build(engine)
+	}
+}
+
+// InvokeContext build context
+func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
+	return func(base *pApp.Engine) {
+		engine.Engine = base
+		group := engine.Group(viper.GetString("http.prefix"))
+		group.Handle(httpMethod, relativePath, handlers...)
 	}
 }
 

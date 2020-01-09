@@ -3,10 +3,7 @@
 
 package util
 
-import (
-	"errors"
-	"math/rand"
-)
+import "math/rand"
 
 // M defined
 type M map[string]interface{}
@@ -33,9 +30,4 @@ func RandomString(n int, allowedChars ...[]rune) string {
 // RandomInt generates a random int, based on a min and max values
 func RandomInt(min, max int) int {
 	return min + rand.Intn(max-min)
-}
-
-// AppAction defined
-func AppAction(v interface{}) (interface{}, error) {
-	return nil, errors.New("No implementation found")
 }
