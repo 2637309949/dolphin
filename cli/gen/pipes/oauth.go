@@ -8,9 +8,9 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/cli/gen"
+	"github.com/2637309949/dolphin/cli/gen/tempalte"
 	"github.com/2637309949/dolphin/cli/packages/viper"
 	"github.com/2637309949/dolphin/cli/schema"
-	"github.com/2637309949/dolphin/cli/tempalte"
 )
 
 // OAuth struct
@@ -26,14 +26,14 @@ func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, er
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplAuth,
-			FilePath: path.Join(dir, viper.GetString("http.static"), "sso", "auth"),
+			FilePath: path.Join(dir, viper.GetString("http.static"), "h5", "auth"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".html",
 		},
 		&gen.TmplCfg{
 			Text:     tempalte.TmplLogin,
-			FilePath: path.Join(dir, viper.GetString("http.static"), "sso", "login"),
+			FilePath: path.Join(dir, viper.GetString("http.static"), "h5", "login"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".html",
