@@ -12,6 +12,7 @@ package app
 
 import (
 	"{{.PackageName}}/model"
+	"{{.PackageName}}/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -163,7 +164,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
-	ret, err := {{$.Controller.ToUpperCase $.Controller.Name}}Action(q)
+	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}Action(q)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -180,7 +181,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	ret, err := {{$.Controller.ToUpperCase $.Controller.Name}}Action(form)
+	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}Action(form)
 	if err != nil {
 		ctx.Fail(err)
 		return

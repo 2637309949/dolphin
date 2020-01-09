@@ -49,6 +49,7 @@ var (
 			viper.SetDefault("dir.doc", "doc")
 			viper.SetDefault("dir.util", "util")
 			viper.SetDefault("dir.model", "model")
+			viper.SetDefault("dir.srv", "srv")
 			viper.SetDefault("cli.plugins", "")
 			viper.SetDefault("license.name", "Apache 2.0")
 			viper.SetDefault("license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
