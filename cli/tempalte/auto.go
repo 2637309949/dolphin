@@ -34,7 +34,7 @@ var _ = cli.Invoke(func(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	{{- $ctr := .}}
 	{{- range .APIS}}
-	group.Handle("{{.ToUpper .Method}}", "{{.VersionPrefix .Version}}/{{$ctr.Name}}/{{.Name}}",{{- if .Auth}} engine.Auth({{if ne $.Name "platform"}}pApp.{{- end}}OAuth2),{{- end}} {{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}})
+	group.Handle("{{.ToUpper .Method}}", "{{.APIPrefix .Version}}/{{.APIPath $ctr.Name}}/{{.Name}}",{{- if .Auth}} engine.Auth({{if ne $.Name "platform"}}pApp.{{- end}}OAuth2),{{- end}} {{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}})
 	{{- end}}
 })
 {{- end}}

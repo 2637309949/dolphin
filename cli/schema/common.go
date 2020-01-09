@@ -146,8 +146,8 @@ func (c *Common) ToUpperCase(name string) string {
 	return newName
 }
 
-// VersionPrefix version path
-func (c *Common) VersionPrefix(v string) string {
+// APIPrefix version path
+func (c *Common) APIPrefix(v string) string {
 	if v == "" {
 		return ""
 	}
@@ -157,6 +157,14 @@ func (c *Common) VersionPrefix(v string) string {
 		panic(err)
 	}
 	return fmt.Sprintf("/v%v", vi)
+}
+
+// APIPath api path
+func (c *Common) APIPath(v string) string {
+	if v == "" {
+		return ""
+	}
+	return strings.ReplaceAll(v, "_", "/")
 }
 
 // ToTitle title
