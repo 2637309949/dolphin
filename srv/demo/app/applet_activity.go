@@ -12,17 +12,17 @@ import (
 )
 
 // AppletActivityBatchAdd api implementation
-// @Summary 添加活动 
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param activity body []model.Activity false "活动对象"
+// @Param activity body []model.AppletActivity false "活动对象"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/batch_add [post]
 func AppletActivityBatchAdd(ctx *Context) {
-	var form []model.Activity
+	var form []model.AppletActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -39,17 +39,17 @@ func AppletActivityBatchAdd(ctx *Context) {
 }
 
 // AppletActivityAdd api implementation
-// @Summary 添加活动 
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param activity body model.Activity false "活动对象"
+// @Param activity body model.AppletActivity false "活动对象"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/add [post]
 func AppletActivityAdd(ctx *Context) {
-	var form model.Activity
+	var form model.AppletActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -64,17 +64,17 @@ func AppletActivityAdd(ctx *Context) {
 }
 
 // AppletActivityBatchDel api implementation
-// @Summary 删除活动 
+// @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param activity body []model.Activity false "活动对象"
+// @Param activity body []model.AppletActivity false "活动对象"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/batch_del [post]
 func AppletActivityBatchDel(ctx *Context) {
-	var form []model.Activity
+	var form []model.AppletActivity
 	var err error
 	var ret []int64
 	var r int64
@@ -96,17 +96,17 @@ func AppletActivityBatchDel(ctx *Context) {
 }
 
 // AppletActivityDel api implementation
-// @Summary 删除活动 
+// @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param activity body model.Activity false "活动对象"
+// @Param activity body model.AppletActivity false "活动对象"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/del [post]
 func AppletActivityDel(ctx *Context) {
-	var form model.Activity
+	var form model.AppletActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -120,17 +120,17 @@ func AppletActivityDel(ctx *Context) {
 }
 
 // AppletActivityBatchUpdate api implementation
-// @Summary 更新活动 
+// @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param activity body []model.Activity false "活动对象"
+// @Param activity body []model.AppletActivity false "活动对象"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/batch_update [post]
 func AppletActivityBatchUpdate(ctx *Context) {
-	var form []model.Activity
+	var form []model.AppletActivity
 	var err error
 	var ret []int64
 	var r int64
@@ -152,17 +152,17 @@ func AppletActivityBatchUpdate(ctx *Context) {
 }
 
 // AppletActivityUpdate api implementation
-// @Summary 更新活动 
+// @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param activity body model.Activity false "活动对象"
+// @Param activity body model.AppletActivity false "活动对象"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/update [post]
 func AppletActivityUpdate(ctx *Context) {
-	var form model.Activity
+	var form model.AppletActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -176,7 +176,7 @@ func AppletActivityUpdate(ctx *Context) {
 }
 
 // AppletActivityList api implementation
-// @Summary 活动分页查询 
+// @Summary 活动分页查询
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -193,7 +193,7 @@ func AppletActivityList(ctx *Context) {
 	q.SetInt("size", 20)
 	q.SetString("title", "nn")
 	q.SetInt("hidden")
-	ret, err := ctx.PageSearch(ctx.DB, "applet_activity", "list", "activity", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "applet_activity", "list", "applet_activity", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -202,7 +202,7 @@ func AppletActivityList(ctx *Context) {
 }
 
 // AppletActivityOne api implementation
-// @Summary 获取活动 
+// @Summary 获取活动
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
@@ -211,7 +211,7 @@ func AppletActivityList(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/one [get]
 func AppletActivityOne(ctx *Context) {
-	var entity model.Activity
+	var entity model.AppletActivity
 	id := ctx.Query("id")
 	ret, err := ctx.DB.Id(id).Get(&entity)
 	if err != nil {
@@ -222,7 +222,7 @@ func AppletActivityOne(ctx *Context) {
 }
 
 // AppletActivityIncrease api implementation
-// @Summary 增加次数 
+// @Summary 增加次数
 // @Tags 活动
 // @version 1.0
 // @Accept application/json
@@ -247,7 +247,7 @@ func AppletActivityIncrease(ctx *Context) {
 }
 
 // AppletActivityIncreaseV2 api implementation
-// @Summary 增加次数 
+// @Summary 增加次数
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
@@ -269,4 +269,3 @@ func AppletActivityIncreaseV2(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

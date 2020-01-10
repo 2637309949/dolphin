@@ -8,7 +8,8 @@
 	<column name="data_source" desc="数据库链接串" type="null.String" xorm="varchar(200) notnull" />
 	<column name="driver_name" desc="驱动名称" type="null.String" xorm="varchar(50) notnull" />
 	<column name="domain_url" desc="网址" type="null.String" xorm="varchar(200) notnull" />
-	<column name="login_url" desc="登录页" type="null.String" xorm="varchar(200) notnull" />
+	<column name="login_url" desc="登录地址" type="null.String" xorm="varchar(200) notnull" />
+	<column name="api_url" desc="请求地址" type="null.String" xorm="varchar(200) notnull" />
 	<column name="theme" desc="样式" type="null.String" xorm="varchar(50) " />
 	<column name="type" desc="域类型" type="null.Int" xorm="notnull" />
 	<column name="status" desc="状态 0：禁用 1：正常" type="null.Int" xorm="notnull" />

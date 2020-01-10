@@ -1,5 +1,5 @@
 definitions:
-  model.Activity:
+  model.AppletActivity:
     properties:
       campus:
         description: 校区
@@ -222,6 +222,66 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.WechatActivity:
+    properties:
+      campus:
+        description: 校区
+        type: string
+      content:
+        description: 内容
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      forward_count:
+        description: 转发次数
+        type: number
+      hidden:
+        description: 是否隐藏 0(否) 1(是)
+        type: number
+      id:
+        description: 主键
+        type: string
+      image:
+        description: 图片
+        type: string
+      is_entry:
+        description: 是否报名 0(否) 1(是)
+        type: number
+      like_count:
+        description: 点赞次数
+        type: number
+      priority:
+        description: 优先级
+        type: number
+      read_count:
+        description: 阅读次数
+        type: number
+      share_count:
+        description: 分享次数
+        type: number
+      title:
+        description: 标题
+        type: string
+      type:
+        description: 类型
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
 host: 127.0.0.1:8081
 info:
   contact: {}
@@ -244,7 +304,7 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/model.Activity'
+          $ref: '#/definitions/model.AppletActivity'
       responses:
         "200":
           description: OK
@@ -275,7 +335,7 @@ paths:
         name: activity
         schema:
           items:
-            $ref: '#/definitions/model.Activity'
+            $ref: '#/definitions/model.AppletActivity'
           type: array
       responses:
         "200":
@@ -307,7 +367,7 @@ paths:
         name: activity
         schema:
           items:
-            $ref: '#/definitions/model.Activity'
+            $ref: '#/definitions/model.AppletActivity'
           type: array
       responses:
         "200":
@@ -339,7 +399,7 @@ paths:
         name: activity
         schema:
           items:
-            $ref: '#/definitions/model.Activity'
+            $ref: '#/definitions/model.AppletActivity'
           type: array
       responses:
         "200":
@@ -370,7 +430,7 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/model.Activity'
+          $ref: '#/definitions/model.AppletActivity'
       responses:
         "200":
           description: OK
@@ -466,7 +526,7 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/model.Activity'
+          $ref: '#/definitions/model.AppletActivity'
       responses:
         "200":
           description: OK
@@ -908,7 +968,7 @@ paths:
       summary: 增加次数
       tags:
       - 活动
-  /api/v1/wetchat/activity/increase:
+  /api/v1/wechat/activity/increase:
     post:
       consumes:
       - application/json
@@ -965,7 +1025,7 @@ paths:
       summary: 增加次数
       tags:
       - 活动
-  /api/v2/wetchat/activity/increase_v2:
+  /api/v2/wechat/activity/increase_v2:
     post:
       consumes:
       - application/json
@@ -991,7 +1051,7 @@ paths:
       summary: 增加次数
       tags:
       - 活动
-  /api/wetchat/activity/add:
+  /api/wechat/activity/add:
     post:
       consumes:
       - application/json
@@ -1004,7 +1064,7 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/model.Activity'
+          $ref: '#/definitions/model.WechatActivity'
       responses:
         "200":
           description: OK
@@ -1021,7 +1081,7 @@ paths:
       summary: 添加活动
       tags:
       - 活动
-  /api/wetchat/activity/batch_add:
+  /api/wechat/activity/batch_add:
     post:
       consumes:
       - application/json
@@ -1035,7 +1095,7 @@ paths:
         name: activity
         schema:
           items:
-            $ref: '#/definitions/model.Activity'
+            $ref: '#/definitions/model.WechatActivity'
           type: array
       responses:
         "200":
@@ -1053,7 +1113,7 @@ paths:
       summary: 添加活动
       tags:
       - 活动
-  /api/wetchat/activity/batch_del:
+  /api/wechat/activity/batch_del:
     post:
       consumes:
       - application/json
@@ -1067,7 +1127,7 @@ paths:
         name: activity
         schema:
           items:
-            $ref: '#/definitions/model.Activity'
+            $ref: '#/definitions/model.WechatActivity'
           type: array
       responses:
         "200":
@@ -1085,7 +1145,7 @@ paths:
       summary: 删除活动
       tags:
       - 活动
-  /api/wetchat/activity/batch_update:
+  /api/wechat/activity/batch_update:
     post:
       consumes:
       - application/json
@@ -1099,7 +1159,7 @@ paths:
         name: activity
         schema:
           items:
-            $ref: '#/definitions/model.Activity'
+            $ref: '#/definitions/model.WechatActivity'
           type: array
       responses:
         "200":
@@ -1117,7 +1177,7 @@ paths:
       summary: 更新活动
       tags:
       - 活动
-  /api/wetchat/activity/del:
+  /api/wechat/activity/del:
     post:
       consumes:
       - application/json
@@ -1130,7 +1190,7 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/model.Activity'
+          $ref: '#/definitions/model.WechatActivity'
       responses:
         "200":
           description: OK
@@ -1147,7 +1207,7 @@ paths:
       summary: 删除活动
       tags:
       - 活动
-  /api/wetchat/activity/list:
+  /api/wechat/activity/list:
     get:
       parameters:
       - description: 认证令牌
@@ -1186,7 +1246,7 @@ paths:
       summary: 活动分页查询
       tags:
       - 活动
-  /api/wetchat/activity/one:
+  /api/wechat/activity/one:
     get:
       parameters:
       - description: 认证令牌
@@ -1213,7 +1273,7 @@ paths:
       summary: 获取活动
       tags:
       - 活动
-  /api/wetchat/activity/update:
+  /api/wechat/activity/update:
     post:
       consumes:
       - application/json
@@ -1226,7 +1286,7 @@ paths:
         in: body
         name: activity
         schema:
-          $ref: '#/definitions/model.Activity'
+          $ref: '#/definitions/model.WechatActivity'
       responses:
         "200":
           description: OK

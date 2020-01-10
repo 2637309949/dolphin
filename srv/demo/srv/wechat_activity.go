@@ -7,7 +7,7 @@ import (
 	"errors"
 )
 
-// WetchatActivityAction defined srv
-func WetchatActivityAction(v interface{}) (interface{}, error) {
+// WechatActivityAction defined srv
+func WechatActivityAction(v interface{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
 }

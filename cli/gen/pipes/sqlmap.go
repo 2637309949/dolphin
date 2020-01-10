@@ -29,7 +29,7 @@ func (app *SQLMap) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 		}
 		tmplCfg := &gen.TmplCfg{
 			Text:     tempalte.TmplSQLMap,
-			FilePath: path.Join(dir, viper.GetString("dir.sql"), "sqlmap", t.Name),
+			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sql.sqlmap"), t.Name),
 			Data:     data,
 			Overlap:  gen.OverlapWrite,
 			Suffix:   ".xml",
