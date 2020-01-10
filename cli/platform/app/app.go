@@ -8,97 +8,86 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"strings"
 
 	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/viper"
+
+	// github.com/2637309949/dolphin/cli/platform/conf
+	_ "github.com/2637309949/dolphin/cli/platform/conf"
 	"github.com/2637309949/dolphin/srv"
 	"github.com/2637309949/dolphin/srv/cli"
-	"golang.org/x/crypto/ssh/terminal"
-	"golang.org/x/sys/unix"
 )
+
+// HTTPServer defined http.Server
+var HTTPServer *http.Server
+
+// InitServer defined HTTPServer
+func InitServer() {
+	if HTTPServer == nil {
+		HTTPServer = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
+	}
+}
+
+// RPCListener defined net
+var RPCListener net.Listener
+
+// InitRPCListener defined RPCListener
+func InitRPCListener() {
+	if RPCListener == nil {
+		grpc, err := net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		RPCListener = grpc
+	}
+}
+
+// OnStart defined OnStart
+func OnStart(e *Engine) func(context.Context) error {
+	return func(context.Context) error {
+		go func() {
+			logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
+			HTTPServer.Handler = e.Gin
+			if err := HTTPServer.ListenAndServe(); err != nil {
+				logrus.Fatal(err)
+			}
+		}()
+		go func() {
+			logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
+			if err := e.GRPC.Serve(RPCListener); err != nil {
+				logrus.Fatal(err)
+			}
+		}()
+		return nil
+	}
+}
+
+// OnStop defined OnStop
+func OnStop(e *Engine) func(ctx context.Context) error {
+	return func(ctx context.Context) error {
+		if err := HTTPServer.Shutdown(ctx); err != nil {
+			logrus.Fatal(err)
+			return err
+		}
+		if err := RPCListener.Close(); err != nil {
+			logrus.Fatal(err)
+			return err
+		}
+		return nil
+	}
+}
 
 // NewLifeHook create lifecycle hook
 func NewLifeHook(e *Engine) srv.Hook {
-	http := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
-	grpc, err := net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))
-	if err != nil {
-		logrus.Fatal(err)
-	}
+	InitServer()
+	InitRPCListener()
 	return srv.Hook{
-		OnStart: func(context.Context) error {
-			go func() {
-				logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
-				http.Handler = e.Gin
-				if err := http.ListenAndServe(); err != nil {
-					logrus.Fatal(err)
-				}
-			}()
-			go func() {
-				logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
-				if err := e.GRPC.Serve(grpc); err != nil {
-					logrus.Fatal(err)
-				}
-			}()
-			return nil
-		},
-		OnStop: func(ctx context.Context) error {
-			if err := http.Shutdown(ctx); err != nil {
-				logrus.Fatal(err)
-				return err
-			}
-			if err := grpc.Close(); err != nil {
-				logrus.Fatal(err)
-				return err
-			}
-			return nil
-		},
+		OnStart: OnStart(e),
+		OnStop:  OnStop(e),
 	}
 }
 
 func init() {
-	// set logger
-	if !terminal.IsTerminal(unix.Stdout) {
-		logrus.SetFormatter(&logrus.JSONFormatter{
-			TimestampFormat: "2006/01/02 15:04:05",
-		})
-	} else {
-		logrus.SetFormatter(&logrus.TextFormatter{
-			FullTimestamp:   true,
-			TimestampFormat: "2006/01/02 15:04:05",
-		})
-	}
-	// read config
-	viper.SetConfigName("app")
-	viper.AddConfigPath(".")
-	viper.AddConfigPath("conf")
-	viper.SetDefault("app.mode", "release")
-	viper.SetDefault("http.port", "8081")
-	viper.SetDefault("http.prefix", "/api")
-	viper.SetDefault("http.static", "/static")
-	viper.SetDefault("grpc.port", "9081")
-	viper.SetDefault("oauth.id", "Y76U9344RABF4")
-	viper.SetDefault("oauth.secret", "98UYO6FVB865")
-	viper.SetDefault("oauth.login", "/static/h5/login.html")
-	viper.SetDefault("oauth.auth", "/static/h5/auth.html")
-	viper.SetDefault("db.driver", "mysql")
-	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
-	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")
-	viper.SetDefault("dir.sql", "sql")
-	viper.SetDefault("dir.sqlmap", "sqlmap")
-	viper.AutomaticEnv()
-	if err := viper.ReadInConfig(); err != nil {
-		logrus.Warn("unable to read config file")
-	}
-	if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
-		viper.SetDefault("oauth.server", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
-	}
-	if strings.TrimSpace(viper.GetString("oauth.cli")) == "" {
-		viper.SetDefault("oauth.cli", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
-	}
-	if err := viper.WriteConfig(); err != nil {
-		logrus.Warn("unable to save config file")
-	}
 	authServerURL = viper.GetString("oauth.server")
 	oa2cfg.ClientID = viper.GetString("oauth.id")
 	oa2cfg.ClientSecret = viper.GetString("oauth.secret")
