@@ -4,15 +4,9 @@
 package util
 
 import (
-	"errors"
 	"math/rand"
 	"reflect"
 )
-
-// AppAction defined
-func AppAction(v interface{}) (interface{}, error) {
-	return nil, errors.New("No implementation found")
-}
 
 // M defined
 type M map[string]interface{}
