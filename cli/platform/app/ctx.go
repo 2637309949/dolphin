@@ -1,6 +1,7 @@
 package app
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -194,6 +195,16 @@ func (q *Query) SetString(key string, init ...interface{}) {
 // Value defined
 func (q *Query) Value() map[string]interface{} {
 	return q.m
+}
+
+// Unmarshal defined
+func (q *Query) Unmarshal(v interface{}) error {
+	mbyte, e := json.Marshal(q.m)
+	if e != nil {
+		return e
+	}
+	json.Unmarshal(mbyte, v)
+	return nil
 }
 
 // Unescaped defined
