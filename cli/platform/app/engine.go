@@ -278,11 +278,11 @@ func (e *Engine) InitOAuth2() {
 		return
 	})
 	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
-		logrus.Error("Internal Error:", err.Error())
+		logrus.Error("internal error:", err.Error())
 		return
 	})
 	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
-		logrus.Error("Response Error:", re.Error.Error())
+		logrus.Error("response error:", re.Error.Error())
 	})
 }
 
@@ -295,7 +295,8 @@ func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 			ctx.Set("AuthInfo", ctx.AuthInfo)
 			ctx.Next()
 		} else {
-			ctx.Fail(oaErrors.ErrInvalidAccessToken)
+			ctx.Fail(oaErrors.ErrInvalidAccessToken, 401)
+			ctx.Abort()
 		}
 	}
 }

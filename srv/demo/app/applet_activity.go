@@ -9,6 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	"github.com/2637309949/dolphin/cli/packages/time"
 )
 
 // AppletActivityBatchAdd api implementation
@@ -55,6 +56,7 @@ func AppletActivityAdd(ctx *Context) {
 		return
 	}
 	form.ID = null.StringFromUUID()
+	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
