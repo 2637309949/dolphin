@@ -41,7 +41,7 @@ import (
 {{- if ne .Return.Failure.Type ""}}
 // @Failure 500 {object} model.Response
 {{- end}}
-// @Router /api{{.APIPrefix .Version}}/{{.APIPath $.Controller.Name}}/{{.Name}} [{{.Method}}]
+// @Router /api{{.APIPrefix .Version}}/{{.APIPath $.Controller.Name .Path}}/{{.Name}} [{{.Method}}]
 func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
 {{- if eq .Function "list"}}
 	q := ctx.TypeQuery()

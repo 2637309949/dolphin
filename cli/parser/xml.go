@@ -104,6 +104,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						api.Table = attrValue
 					case attrName == "version":
 						api.Version = attrValue
+					case attrName == "path":
+						api.Path = attrValue
 					case attrName == "auth":
 						ret, err := strconv.ParseBool(strings.TrimSpace(attrValue))
 						if err != nil {

@@ -160,11 +160,14 @@ func (c *Common) APIPrefix(v string) string {
 }
 
 // APIPath api path
-func (c *Common) APIPath(v string) string {
-	if v == "" {
-		return ""
+func (c *Common) APIPath(apiName, apiPath string) string {
+	if apiPath == "" {
+		if apiName == "" {
+			return ""
+		}
+		return strings.ReplaceAll(apiName, "_", "/")
 	}
-	return strings.ReplaceAll(v, "_", "/")
+	return apiPath
 }
 
 // ToTitle title

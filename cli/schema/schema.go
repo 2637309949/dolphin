@@ -35,6 +35,7 @@ type API struct {
 	Common
 	Auth     bool
 	Version  string
+	Path     string
 	Function string
 	Table    string
 	Method   string
