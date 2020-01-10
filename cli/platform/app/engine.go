@@ -16,7 +16,6 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/errors"
-	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/cli/packages/oauth2/models"
@@ -295,7 +294,7 @@ func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 			ctx.Set("AuthInfo", ctx.AuthInfo)
 			ctx.Next()
 		} else {
-			ctx.Fail(oaErrors.ErrInvalidAccessToken, 401)
+			ctx.Fail(util.ErrInvalidAccessToken, 401)
 			ctx.Abort()
 		}
 	}

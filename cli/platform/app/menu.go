@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -83,7 +84,7 @@ func MenuList(ctx *Context) {
 // @Router /api/menu/tree [get]
 func MenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
-	ret, err := MenuAction(q)
+	ret, err := srv.MenuAction(q)
 	if err != nil {
 		ctx.Fail(err)
 		return

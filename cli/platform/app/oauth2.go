@@ -11,8 +11,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/cli/platform/util"
+
 	"github.com/2637309949/dolphin/cli/packages/null"
-	oaErrors "github.com/2637309949/dolphin/cli/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/cli/packages/viper"
 	"github.com/2637309949/dolphin/cli/platform/model"
 	"github.com/go-session/session"
@@ -60,7 +61,7 @@ func Oauth2Login(ctx *Context) {
 		return
 	}
 	if !ext || !account.ValidPassword(password) {
-		ctx.Fail(oaErrors.ErrInvalidGrant)
+		ctx.Fail(util.ErrInvalidGrant)
 		return
 	}
 	store.Set("LoggedInUserID", account.ID.String)
@@ -82,7 +83,6 @@ func Oauth2Affirm(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-
 	var form url.Values
 	if v, ok := store.Get("ReturnUri"); ok {
 		form = v.(url.Values)
@@ -201,7 +201,7 @@ func Oauth2URL(ctx *Context) {
 func Oauth2Refresh(ctx *Context) {
 	refreshtoken, ok := ctx.engine.OAuth2.BearerAuth(ctx.Request)
 	if !ok {
-		ctx.Fail(oaErrors.ErrInvalidAccessToken)
+		ctx.Fail(util.ErrInvalidAccessToken)
 		return
 	}
 	token := oauth2.Token{}
