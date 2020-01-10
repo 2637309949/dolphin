@@ -85,7 +85,7 @@ func init() {
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")
 	viper.SetDefault("dir.sql", "sql")
-	viper.SetDefault("dir.sql.sqlmap", "sqlmap")
+	viper.SetDefault("dir.sqlmap", "sqlmap")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")

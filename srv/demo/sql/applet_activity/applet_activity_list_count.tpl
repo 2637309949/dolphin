@@ -1,6 +1,6 @@
 select
     count(*) records
 from
-	example_activity
+	example_applet_activity
 where
-	example_activity.id {{.ne}} ""
+	example_applet_activity.id {{.ne}} ""

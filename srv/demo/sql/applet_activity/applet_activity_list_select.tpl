@@ -1,7 +1,7 @@
 select
-    example_activity.id
+    example_applet_activity.id
 from
-	example_activity
+	example_applet_activity
 where
-	example_activity.id {{.ne}} ""
+	example_applet_activity.id {{.ne}} ""
 LIMIT {{.size}} OFFSET {{.offset}}
