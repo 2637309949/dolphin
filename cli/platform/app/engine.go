@@ -64,7 +64,7 @@ func (e *Engine) Migration(name string, db *xorm.Engine) error {
 // InitBusinessDB load BusinessDBSet
 func (e *Engine) InitBusinessDB() {
 	domains := []model.Domain{}
-	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null").Find(&domains); err != nil {
+	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null and sync_flag=0").Find(&domains); err != nil {
 		logrus.Fatal(err)
 	}
 	for _, domain := range domains {
@@ -169,6 +169,7 @@ func (e *Engine) InitPlatformDB() {
 		Status:     null.IntFrom(1),
 		SyncFlag:   null.IntFrom(0),
 		Domain:     null.StringFrom("localhost"),
+		ApiUrl:     null.StringFrom("http://127.0.0.1:8086"),
 		CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 		CreateTime: null.TimeFrom(time.Now()),
 		UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),

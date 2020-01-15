@@ -20,9 +20,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/fsnotify/fsnotify"
 	"github.com/2637309949/dolphin/cli/packages/xormplus/builder"
 	"github.com/2637309949/dolphin/cli/packages/xormplus/core"
+	"github.com/fsnotify/fsnotify"
 )
 
 // Engine is the major struct of xorm, it means a database manager.
@@ -1004,6 +1004,7 @@ func (engine *Engine) mapType(v reflect.Value) (*core.Table, error) {
 				if col.SQLType.Name == "" {
 					col.SQLType = core.Type2SQLType(fieldType)
 				}
+
 				engine.dialect.SqlType(col)
 				if col.Length == 0 {
 					col.Length = col.SQLType.DefaultLength
