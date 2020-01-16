@@ -91,9 +91,9 @@ func init() {
 	authServerURL = viper.GetString("oauth.server")
 	oa2cfg.ClientID = viper.GetString("oauth.id")
 	oa2cfg.ClientSecret = viper.GetString("oauth.secret")
-	oa2cfg.RedirectURL = fmt.Sprintf("%v/api/oauth2/oauth2", viper.GetString("oauth.cli"))
-	oa2cfg.Endpoint.AuthURL = authServerURL + "/api/oauth2/authorize"
-	oa2cfg.Endpoint.TokenURL = authServerURL + "/api/oauth2/token"
+	oa2cfg.RedirectURL = fmt.Sprintf("%v/api/sys/oauth2/oauth2", viper.GetString("oauth.cli"))
+	oa2cfg.Endpoint.AuthURL = authServerURL + "/api/sys/oauth2/authorize"
+	oa2cfg.Endpoint.TokenURL = authServerURL + "/api/sys/oauth2/token"
 	_ = cli.Provider(func(lc srv.Lifecycle) *Engine {
 		var engine = NewEngine()
 		lc.Append(NewLifeHook(engine))
