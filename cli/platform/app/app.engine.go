@@ -326,11 +326,14 @@ func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFu
 
 // NewEngine init Engine
 func NewEngine() *Engine {
-	gin.SetMode(gin.ReleaseMode)
 	e := &Engine{}
 	e.MSet = &MSet{m: map[string][]interface{}{}}
 	e.BusinessDBSet = map[string]*xorm.Engine{}
 	e.GRPC = grpc.NewServer()
+
+	if viper.GetString("app.mode") != "debug" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	e.Gin = gin.New()
 	e.Gin.Use(gin.Logger())
 	e.Gin.Use(util.Recovery(func(ctx *gin.Context, err interface{}) {
@@ -342,6 +345,7 @@ func NewEngine() *Engine {
 	}))
 	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
 	e.Gin.Static(viper.GetString("http.static"), path.Join(util.Getwd(), viper.GetString("http.static")))
+
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}
