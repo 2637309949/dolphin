@@ -16,11 +16,11 @@ import (
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param menu body model.Menu false "菜单信息"
+// @Param menu body model.SysMenu false "菜单信息"
 // @Failure 403 {object} model.Response
 // @Router /api/sys/menu/add [post]
 func SysMenuAdd(ctx *Context) {
-	var form model.Menu
+	var form model.SysMenu
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -39,11 +39,11 @@ func SysMenuAdd(ctx *Context) {
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param menu body model.Menu false "菜单信息"
+// @Param menu body model.SysMenu false "菜单信息"
 // @Failure 403 {object} model.Response
 // @Router /api/sys/menu/update [post]
 func SysMenuUpdate(ctx *Context) {
-	var form model.Menu
+	var form model.SysMenu
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return

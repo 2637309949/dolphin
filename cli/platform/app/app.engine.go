@@ -63,7 +63,7 @@ func (e *Engine) Migration(name string, db *xorm.Engine) error {
 
 // InitBusinessDB load BusinessDBSet
 func (e *Engine) InitBusinessDB() {
-	domains := []model.Domain{}
+	domains := []model.SysDomain{}
 	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null and sync_flag=0").Find(&domains); err != nil {
 		logrus.Fatal(err)
 	}
@@ -157,7 +157,7 @@ func (e *Engine) InitPlatformDB() {
 	e.Migration(Name, e.PlatformDB)
 
 	s := e.PlatformDB.NewSession()
-	domain := model.Domain{
+	domain := model.SysDomain{
 		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 		Name:       null.StringFrom("系统默认"),
 		FullName:   null.StringFrom("系统默认"),
@@ -175,7 +175,7 @@ func (e *Engine) InitPlatformDB() {
 		UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 		UpdateTime: null.TimeFrom(time.Now()),
 	}
-	ct, err := s.Where("id=?", domain.ID).Count(new(model.Domain))
+	ct, err := s.Where("id=?", domain.ID).Count(new(model.SysDomain))
 	if err != nil {
 		s.Rollback()
 		panic(err)
@@ -187,7 +187,7 @@ func (e *Engine) InitPlatformDB() {
 			panic(err)
 		}
 	}
-	admin := model.User{
+	admin := model.SysUser{
 		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 		Password:   null.StringFrom("123456"),
 		Name:       null.StringFrom("admin"),
@@ -200,7 +200,7 @@ func (e *Engine) InitPlatformDB() {
 		UpdateTime: null.TimeFrom(time.Now()),
 	}
 	admin.SetPassword(admin.Password.String)
-	ct, err = s.Where("id=?", admin.ID).Count(new(model.User))
+	ct, err = s.Where("id=?", admin.ID).Count(new(model.SysUser))
 	if err != nil {
 		s.Rollback()
 		panic(err)

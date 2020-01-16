@@ -24,7 +24,7 @@ import (
 // @Summary 登录信息
 // @Tags OAuth授权
 // @Accept application/json
-// @Param user body model.User false "用户信息"
+// @Param user body model.SysUser false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/sys/oauth2/login [post]
 func SysOauth2Login(ctx *Context) {
@@ -38,7 +38,7 @@ func SysOauth2Login(ctx *Context) {
 	domain := f.Get("domain")
 	username := f.Get("username")
 	password := f.Get("password")
-	account := model.User{
+	account := model.SysUser{
 		Name:   null.StringFrom(username),
 		Domain: null.StringFrom(domain),
 	}

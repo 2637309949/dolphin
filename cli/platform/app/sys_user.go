@@ -15,11 +15,11 @@ import (
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.User false "用户信息"
+// @Param user body model.SysRole false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/sys/user/add [post]
 func SysUserAdd(ctx *Context) {
-	var form model.User
+	var form model.SysRole
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -38,11 +38,11 @@ func SysUserAdd(ctx *Context) {
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.User false "用户信息"
+// @Param user body model.SysRole false "用户信息"
 // @Failure 403 {object} model.Response
 // @Router /api/sys/user/update [post]
 func SysUserUpdate(ctx *Context) {
-	var form model.User
+	var form model.SysRole
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return

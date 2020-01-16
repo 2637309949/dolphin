@@ -59,7 +59,19 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
-  model.Menu:
+  model.Response:
+    properties:
+      code:
+        description: 编码
+        type: number
+      data:
+        description: 卡类型
+        type: object
+      msg:
+        description: 消息
+        type: string
+    type: object
+  model.SysMenu:
     properties:
       code:
         description: 编码
@@ -114,19 +126,7 @@ definitions:
           iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
-  model.Response:
-    properties:
-      code:
-        description: 编码
-        type: number
-      data:
-        description: 卡类型
-        type: object
-      msg:
-        description: 消息
-        type: string
-    type: object
-  model.Role:
+  model.SysRole:
     properties:
       code:
         description: 编码
@@ -162,7 +162,7 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
-  model.User:
+  model.SysUser:
     properties:
       avatar:
         description: 头像
@@ -556,7 +556,7 @@ paths:
         in: body
         name: menu
         schema:
-          $ref: '#/definitions/model.Menu'
+          $ref: '#/definitions/model.SysMenu'
       responses:
         "403":
           description: Forbidden
@@ -635,7 +635,7 @@ paths:
         in: body
         name: menu
         schema:
-          $ref: '#/definitions/model.Menu'
+          $ref: '#/definitions/model.SysMenu'
       responses:
         "403":
           description: Forbidden
@@ -675,7 +675,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.User'
+          $ref: '#/definitions/model.SysUser'
       responses:
         "403":
           description: Forbidden
@@ -739,7 +739,7 @@ paths:
         in: body
         name: role
         schema:
-          $ref: '#/definitions/model.Role'
+          $ref: '#/definitions/model.SysRole'
       responses:
         "403":
           description: Forbidden
@@ -803,7 +803,7 @@ paths:
         in: body
         name: role
         schema:
-          $ref: '#/definitions/model.Role'
+          $ref: '#/definitions/model.SysRole'
       responses:
         "403":
           description: Forbidden
@@ -825,7 +825,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.User'
+          $ref: '#/definitions/model.SysRole'
       responses:
         "403":
           description: Forbidden
@@ -889,7 +889,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.User'
+          $ref: '#/definitions/model.SysRole'
       responses:
         "403":
           description: Forbidden

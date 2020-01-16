@@ -10,7 +10,7 @@ import (
 )
 
 // Encode structs into URL query parameters
-func (u *User) Encode() (string, error) {
+func (u *SysUser) Encode() (string, error) {
 	v, err := util.Values(u)
 	if err != nil {
 		return "", err
@@ -19,7 +19,7 @@ func (u *User) Encode() (string, error) {
 }
 
 // SetPassword Method to set salt and hash the password for a user
-func (u *User) SetPassword(password string) {
+func (u *SysUser) SetPassword(password string) {
 	b, err := util.RandomBytes(16)
 	if err != nil {
 		panic(err)
@@ -33,7 +33,7 @@ func (u *User) SetPassword(password string) {
 }
 
 // ValidPassword Method to check the entered password is correct or not
-func (u *User) ValidPassword(password string) bool {
+func (u *SysUser) ValidPassword(password string) bool {
 	dk, err := scrypt.Key([]byte(password), []byte(u.Salt.String), 512, 8, 1, 64)
 	if err != nil {
 		panic(err)
