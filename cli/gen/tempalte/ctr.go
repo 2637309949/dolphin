@@ -15,7 +15,9 @@ import (
 	"{{.PackageName}}/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
+	"github.com/2637309949/dolphin/cli/packages/time"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 )
 {{range .Controller.APIS}}
 // {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}} api implementation
@@ -80,20 +82,19 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
 	var form {{$bp.Ref $bp.Type}}
-	var err error
-	var ret []int64
-	var r int64
-	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
 	for _, f := range form {
-		r, err = s.ID(f.ID).Delete(&f)
-		ret = append(ret, r)
+		ids = append(ids, f.ID.String)
 	}
+	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", ids).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(pUtil.AdminID),
+	})
 	if err != nil {
-		s.Rollback()
 		ctx.Fail(err)
 		return
 	}
@@ -104,7 +105,10 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.ID(form.ID).Delete(&form)
+	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(pUtil.AdminID),
+	})
 	if err != nil {
 		ctx.Fail(err)
 		return

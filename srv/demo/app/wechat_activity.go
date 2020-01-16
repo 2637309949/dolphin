@@ -9,6 +9,8 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	"github.com/2637309949/dolphin/cli/packages/time"
+	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 )
 
 // WechatActivityBatchAdd api implementation
@@ -75,20 +77,19 @@ func WechatActivityAdd(ctx *Context) {
 // @Router /api/wechat/activity/batch_del [post]
 func WechatActivityBatchDel(ctx *Context) {
 	var form []model.WechatActivity
-	var err error
-	var ret []int64
-	var r int64
-	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
 	for _, f := range form {
-		r, err = s.ID(f.ID).Delete(&f)
-		ret = append(ret, r)
+		ids = append(ids, f.ID.String)
 	}
+	ret, err := ctx.DB.Table(new(model.WechatActivity)).In("id", ids).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(pUtil.AdminID),
+	})
 	if err != nil {
-		s.Rollback()
 		ctx.Fail(err)
 		return
 	}
@@ -111,7 +112,10 @@ func WechatActivityDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.ID(form.ID).Delete(&form)
+	ret, err := ctx.DB.Table(new(model.WechatActivity)).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(pUtil.AdminID),
+	})
 	if err != nil {
 		ctx.Fail(err)
 		return

@@ -8,11 +8,13 @@ import (
 	"example/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
+	"github.com/2637309949/dolphin/cli/packages/time"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 )
 
 // AppletActivityBatchAdd api implementation
-// @Summary 添加活动
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -39,7 +41,7 @@ func AppletActivityBatchAdd(ctx *Context) {
 }
 
 // AppletActivityAdd api implementation
-// @Summary 添加活动
+// @Summary 添加活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -64,7 +66,7 @@ func AppletActivityAdd(ctx *Context) {
 }
 
 // AppletActivityBatchDel api implementation
-// @Summary 删除活动
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -75,20 +77,19 @@ func AppletActivityAdd(ctx *Context) {
 // @Router /api/applet/activity/batch_del [post]
 func AppletActivityBatchDel(ctx *Context) {
 	var form []model.AppletActivity
-	var err error
-	var ret []int64
-	var r int64
-	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
 	for _, f := range form {
-		r, err = s.ID(f.ID).Delete(&f)
-		ret = append(ret, r)
+		ids = append(ids, f.ID.String)
 	}
+	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", ids).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(pUtil.AdminID),
+	})
 	if err != nil {
-		s.Rollback()
 		ctx.Fail(err)
 		return
 	}
@@ -96,7 +97,7 @@ func AppletActivityBatchDel(ctx *Context) {
 }
 
 // AppletActivityDel api implementation
-// @Summary 删除活动
+// @Summary 删除活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -111,7 +112,10 @@ func AppletActivityDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.ID(form.ID).Delete(&form)
+	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(pUtil.AdminID),
+	})
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -120,7 +124,7 @@ func AppletActivityDel(ctx *Context) {
 }
 
 // AppletActivityBatchUpdate api implementation
-// @Summary 更新活动
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -152,7 +156,7 @@ func AppletActivityBatchUpdate(ctx *Context) {
 }
 
 // AppletActivityUpdate api implementation
-// @Summary 更新活动
+// @Summary 更新活动 
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -176,7 +180,7 @@ func AppletActivityUpdate(ctx *Context) {
 }
 
 // AppletActivityList api implementation
-// @Summary 活动分页查询
+// @Summary 活动分页查询 
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -202,7 +206,7 @@ func AppletActivityList(ctx *Context) {
 }
 
 // AppletActivityOne api implementation
-// @Summary 获取活动
+// @Summary 获取活动 
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
@@ -222,7 +226,7 @@ func AppletActivityOne(ctx *Context) {
 }
 
 // AppletActivityIncrease api implementation
-// @Summary 增加次数
+// @Summary 增加次数 
 // @Tags 活动
 // @version 1.0
 // @Accept application/json
@@ -247,7 +251,7 @@ func AppletActivityIncrease(ctx *Context) {
 }
 
 // AppletActivityIncreaseV2 api implementation
-// @Summary 增加次数
+// @Summary 增加次数 
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
@@ -269,3 +273,4 @@ func AppletActivityIncreaseV2(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+
