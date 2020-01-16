@@ -70,6 +70,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	{{- else}}
 	form.ID = null.StringFromUUID()
+	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	{{- end}}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {

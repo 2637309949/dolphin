@@ -11,14 +11,27 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/util"
-	"github.com/go-session/session"
-	"golang.org/x/oauth2"
-
 	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/packages/viper"
+	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/util"
+	"github.com/go-session/cookie"
+	"github.com/go-session/session"
+	"golang.org/x/oauth2"
 )
+
+func init() {
+	var hashKey = []byte("FF51A553-72FC-478B-9AEF-93D6F506DE91")
+	session.InitManager(
+		session.SetCookieName("sid"),
+		session.SetStore(
+			cookie.NewCookieStore(
+				cookie.SetCookieName("ssid"),
+				cookie.SetHashKey(hashKey),
+			),
+		),
+	)
+}
 
 // SysOauth2Login api implementation
 // @Summary 登录信息
@@ -127,9 +140,7 @@ func SysOauth2Token(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Router /api/sys/oauth2/url [get]
 func SysOauth2URL(ctx *Context) {
-	rawRedirect := ctx.Query("redirect_uri")
-	rawState := ctx.Query("state")
-	state := "redirect_uri=" + rawRedirect + "&state=" + rawState
+	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	ret := oa2cfg.AuthCodeURL(state)
 	ctx.Success(ret)
 }
@@ -161,6 +172,8 @@ func SysOauth2Oauth2(ctx *Context) {
 	qState := urlState.Query()
 	rawRedirect := qState.Get("redirect_uri")
 	rawState := qState.Get("state")
+	ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "*", false, true)
+	ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "*", false, true)
 	if strings.TrimSpace(rawRedirect) != "" {
 		urlRedirect, err := url.Parse(rawRedirect)
 		if err != nil {

@@ -8,6 +8,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"math/rand"
 	"reflect"
 
 	"github.com/2637309949/dolphin/cli/packages/uuid"
@@ -22,6 +23,16 @@ type String struct {
 // StringFrom creates a new String that will never be blank.
 func StringFrom(s string) String {
 	return NewString(s, true)
+}
+
+// StringFromRandom creates a new random String that will never be blank.
+func StringFromRandom(n int) String {
+	var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return NewString(string(b), true)
 }
 
 // StringFromUUID creates a new String that will never be blank.
