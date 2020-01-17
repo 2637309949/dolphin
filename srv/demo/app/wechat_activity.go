@@ -57,6 +57,7 @@ func WechatActivityAdd(ctx *Context) {
 		return
 	}
 	form.ID = null.StringFromUUID()
+	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)

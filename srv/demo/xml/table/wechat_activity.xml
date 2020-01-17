@@ -1,21 +1,21 @@
 <table name="wechat_activity" desc="活动信息" packages="github.com/2637309949/dolphin/cli/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
-	<column name="title" desc="标题" type="null.String" xorm="varchar(36) notnull" />
-	<column name="content" desc="内容" type="null.String" xorm="varchar(1500) notnull" />
-	<column name="campus" desc="校区" type="null.String" xorm="varchar(2000) notnull" />
-	<column name="image" desc="图片" type="null.String" xorm="varchar(500) notnull" />
-	<column name="type" desc="类型" type="null.Int" xorm="int notnull" />
-	<column name="forward_count" desc="转发次数" type="null.Int" xorm="int notnull" />
-	<column name="like_count" desc="点赞次数" type="null.Int" xorm="int notnull" />
-	<column name="share_count" desc="分享次数" type="null.Int" xorm="int notnull" />
-	<column name="read_count" desc="阅读次数" type="null.Int" xorm="int notnull" />
-	<column name="priority" desc="优先级" type="null.Int" xorm="int notnull" />
-	<column name="is_entry" desc="是否报名 0(否) 1(是)" type="null.Int" xorm="int notnull" />
-	<column name="hidden" desc="是否隐藏 0(否) 1(是)" type="null.Int" xorm="int notnull" />
-	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
-	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
-	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="title" desc="标题" type="null.String" xorm="varchar(36)" />
+	<column name="content" desc="内容" type="null.String" xorm="varchar(1500)" />
+	<column name="campus" desc="校区" type="null.String" xorm="varchar(2000)" />
+	<column name="image" desc="图片" type="null.String" xorm="varchar(500)" />
+	<column name="type" desc="类型" type="null.Int" />
+	<column name="forward_count" desc="转发次数" type="null.Int" />
+	<column name="like_count" desc="点赞次数" type="null.Int" />
+	<column name="share_count" desc="分享次数" type="null.Int" />
+	<column name="read_count" desc="阅读次数" type="null.Int" />
+	<column name="priority" desc="优先级" type="null.Int" />
+	<column name="is_entry" desc="是否报名 0(否) 1(是)" type="null.Int" />
+	<column name="hidden" desc="是否隐藏 0(否) 1(是)" type="null.Int" />
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
 	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36)" />
 	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime" />
 </table>

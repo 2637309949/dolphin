@@ -8,13 +8,13 @@ import (
 	"example/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
-	"github.com/2637309949/dolphin/cli/packages/time"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	"github.com/2637309949/dolphin/cli/packages/time"
 	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 )
 
 // AppletActivityBatchAdd api implementation
-// @Summary 添加活动 
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -41,7 +41,7 @@ func AppletActivityBatchAdd(ctx *Context) {
 }
 
 // AppletActivityAdd api implementation
-// @Summary 添加活动 
+// @Summary 添加活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -57,6 +57,7 @@ func AppletActivityAdd(ctx *Context) {
 		return
 	}
 	form.ID = null.StringFromUUID()
+	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -66,7 +67,7 @@ func AppletActivityAdd(ctx *Context) {
 }
 
 // AppletActivityBatchDel api implementation
-// @Summary 删除活动 
+// @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -97,7 +98,7 @@ func AppletActivityBatchDel(ctx *Context) {
 }
 
 // AppletActivityDel api implementation
-// @Summary 删除活动 
+// @Summary 删除活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -124,7 +125,7 @@ func AppletActivityDel(ctx *Context) {
 }
 
 // AppletActivityBatchUpdate api implementation
-// @Summary 更新活动 
+// @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -156,7 +157,7 @@ func AppletActivityBatchUpdate(ctx *Context) {
 }
 
 // AppletActivityUpdate api implementation
-// @Summary 更新活动 
+// @Summary 更新活动
 // @Tags 活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -180,7 +181,7 @@ func AppletActivityUpdate(ctx *Context) {
 }
 
 // AppletActivityList api implementation
-// @Summary 活动分页查询 
+// @Summary 活动分页查询
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -206,7 +207,7 @@ func AppletActivityList(ctx *Context) {
 }
 
 // AppletActivityOne api implementation
-// @Summary 获取活动 
+// @Summary 获取活动
 // @Tags 活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
@@ -226,7 +227,7 @@ func AppletActivityOne(ctx *Context) {
 }
 
 // AppletActivityIncrease api implementation
-// @Summary 增加次数 
+// @Summary 增加次数
 // @Tags 活动
 // @version 1.0
 // @Accept application/json
@@ -251,7 +252,7 @@ func AppletActivityIncrease(ctx *Context) {
 }
 
 // AppletActivityIncreaseV2 api implementation
-// @Summary 增加次数 
+// @Summary 增加次数
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
@@ -273,4 +274,3 @@ func AppletActivityIncreaseV2(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

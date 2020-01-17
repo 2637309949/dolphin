@@ -508,7 +508,6 @@ func (s *Server) BearerAuth(r *http.Request) (string, bool) {
 	} else {
 		token = r.FormValue("access_token")
 	}
-
 	return token, token != ""
 }
 
