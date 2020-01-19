@@ -32,6 +32,5 @@ func (ag *AccessGenerate) Token(data *oauth2.GenerateBasic, isGenRefresh bool) (
 		refresh = base64.URLEncoding.EncodeToString(uuid.NewSHA1(uuid.Must(uuid.NewRandom()), buf.Bytes()).Bytes())
 		refresh = strings.ToUpper(strings.TrimRight(refresh, "="))
 	}
-
 	return access, refresh, nil
 }

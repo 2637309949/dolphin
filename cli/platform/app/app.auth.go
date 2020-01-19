@@ -27,8 +27,9 @@ var (
 )
 
 // define authorization model
-const (
-	OAuth2 AuthType = "oauth2"
+var (
+	OAuth2            AuthType = "oauth2"
+	TokenkeyNamespace          = "dolphin"
 )
 
 // AuthType authorization model

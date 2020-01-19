@@ -10,7 +10,6 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
 	"github.com/2637309949/dolphin/cli/packages/time"
-	pUtil "github.com/2637309949/dolphin/cli/platform/util"
 )
 
 // AppletActivityBatchAdd api implementation
@@ -31,6 +30,8 @@ func AppletActivityBatchAdd(ctx *Context) {
 	}
 	for _, f := range form {
 		f.ID = null.StringFromUUID()
+		f.CreateTime = null.TimeFromPtr(time.Now().Value())
+		f.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
@@ -58,6 +59,7 @@ func AppletActivityAdd(ctx *Context) {
 	}
 	form.ID = null.StringFromUUID()
 	form.CreateTime = null.TimeFromPtr(time.Now().Value())
+	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -88,7 +90,7 @@ func AppletActivityBatchDel(ctx *Context) {
 	}
 	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", ids).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
-		"delete_by":   null.StringFrom(pUtil.AdminID),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -115,7 +117,7 @@ func AppletActivityDel(ctx *Context) {
 	}
 	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", form.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
-		"delete_by":   null.StringFrom(pUtil.AdminID),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -145,6 +147,8 @@ func AppletActivityBatchUpdate(ctx *Context) {
 	}
 	s := ctx.DB.NewSession()
 	for _, f := range form {
+		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		r, err = s.ID(f.ID).Update(&f)
 		ret = append(ret, r)
 	}
@@ -172,6 +176,8 @@ func AppletActivityUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	ret, err := ctx.DB.ID(form.ID).Update(&form)
 	if err != nil {
 		ctx.Fail(err)

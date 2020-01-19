@@ -15,9 +15,8 @@ import (
 	"{{.PackageName}}/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
-	"github.com/2637309949/dolphin/cli/packages/time"
 	"github.com/2637309949/dolphin/cli/packages/null"
-	pUtil "github.com/2637309949/dolphin/cli/platform/util"
+	"github.com/2637309949/dolphin/cli/packages/time"
 )
 {{range .Controller.APIS}}
 // {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}} api implementation
@@ -67,10 +66,13 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- if .ISArray $bp.Type}}
 	for _, f := range form {
 		f.ID = null.StringFromUUID()
+		f.CreateTime = null.TimeFromPtr(time.Now().Value())
+		f.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	}
 	{{- else}}
 	form.ID = null.StringFromUUID()
 	form.CreateTime = null.TimeFromPtr(time.Now().Value())
+	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	{{- end}}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
@@ -93,7 +95,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", ids).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
-		"delete_by":   null.StringFrom(pUtil.AdminID),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -108,7 +110,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", form.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
-		"delete_by":   null.StringFrom(pUtil.AdminID),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -130,6 +132,8 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	s := ctx.DB.NewSession()
 	for _, f := range form {
+		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		r, err = s.ID(f.ID).Update(&f)
 		ret = append(ret, r)
 	}
@@ -145,6 +149,8 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	ret, err := ctx.DB.ID(form.ID).Update(&form)
 	if err != nil {
 		ctx.Fail(err)
