@@ -162,6 +162,39 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.SysUserTemplate:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      default:
+        description: 是否默认 1：是 0：否
+        type: number
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 模板名称
+        type: string
+      type:
+        description: 模板类型
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
 host: 127.0.0.1:8081
 info:
   contact: {}
@@ -171,6 +204,92 @@ info:
   title: dolphin
   version: "1.0"
 paths:
+  /api/sys/attachment/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加附件
+      tags:
+      - 附件
+  /api/sys/attachment/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件id
+        in: query
+        name: id
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取附件信息
+      tags:
+      - 附件
+  /api/sys/attachment/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 附件分页查询
+      tags:
+      - 附件
+  /api/sys/attachment/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新附件
+      tags:
+      - 附件
   /api/sys/menu/add:
     post:
       consumes:
@@ -354,6 +473,92 @@ paths:
       summary: 授权地址
       tags:
       - OAuth授权
+  /api/sys/org/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加组织
+      tags:
+      - 组织
+  /api/sys/org/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织id
+        in: query
+        name: id
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取组织信息
+      tags:
+      - 组织
+  /api/sys/org/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 组织分页查询
+      tags:
+      - 组织
+  /api/sys/org/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新组织
+      tags:
+      - 组织
   /api/sys/role/add:
     post:
       consumes:
@@ -504,6 +709,92 @@ paths:
       summary: 用户分页查询
       tags:
       - 用户
+  /api/sys/user/template/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.SysUserTemplate'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加用户模板
+      tags:
+      - 用户模板
+  /api/sys/user/template/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板id
+        in: query
+        name: id
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取用户模板信息
+      tags:
+      - 用户模板
+  /api/sys/user/template/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户模板分页查询
+      tags:
+      - 用户模板
+  /api/sys/user/template/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.SysUserTemplate'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新用户模板
+      tags:
+      - 用户模板
   /api/sys/user/update:
     post:
       consumes:

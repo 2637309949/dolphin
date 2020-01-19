@@ -1,0 +1,23 @@
+<sqlMap>
+    <sql id="insert_platform_sys_user_template">
+        insert into platform_sys_user_template
+		(`id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		values
+		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+    </sql>
+    <sql id="update_platform_sys_user_template">
+        update platform_sys_user_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+		where  id =?id
+    </sql>
+    <sql id="delete_platform_sys_user_template">
+        delete from platform_sys_user_template
+		where id =?id
+    </sql>
+    <sql id="selectone_platform_sys_user_template">
+        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_user_template
+		where  id =?id
+    </sql>
+    <sql id="selectall_platform_sys_user_template">
+        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_user_template
+    </sql>
+</sqlMap>

@@ -1,0 +1,23 @@
+<sqlMap>
+    <sql id="insert_platform_sys_org">
+        insert into platform_sys_org
+		(`id`,`parent`,`inheritance`,`name`,`full_name`,`leader`,`code`,`type`,`order`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		values
+		(?id,?parent,?inheritance,?name,?full_name,?leader,?code,?type,?order,?status,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+    </sql>
+    <sql id="update_platform_sys_org">
+        update platform_sys_org set `id`=?id,`parent`=?parent,`inheritance`=?inheritance,`name`=?name,`full_name`=?full_name,`leader`=?leader,`code`=?code,`type`=?type,`order`=?order,`status`=?status,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+		where  id =?id
+    </sql>
+    <sql id="delete_platform_sys_org">
+        delete from platform_sys_org
+		where id =?id
+    </sql>
+    <sql id="selectone_platform_sys_org">
+        select `id`,`parent`,`inheritance`,`name`,`full_name`,`leader`,`code`,`type`,`order`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_org
+		where  id =?id
+    </sql>
+    <sql id="selectall_platform_sys_org">
+        select `id`,`parent`,`inheritance`,`name`,`full_name`,`leader`,`code`,`type`,`order`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_org
+    </sql>
+</sqlMap>
