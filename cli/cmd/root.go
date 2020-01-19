@@ -48,6 +48,7 @@ var (
 			viper.SetDefault("dir.sqlmap", "sqlmap")
 			viper.SetDefault("dir.app", "app")
 			viper.SetDefault("dir.doc", "doc")
+			viper.SetDefault("dir.log", "log")
 			viper.SetDefault("dir.util", "util")
 			viper.SetDefault("dir.model", "model")
 			viper.SetDefault("dir.srv", "srv")

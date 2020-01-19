@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -13,7 +12,7 @@ import (
 )
 
 // SysTagAdd api implementation
-// @Summary 添加标签 
+// @Summary 添加标签
 // @Tags 标签
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -38,7 +37,7 @@ func SysTagAdd(ctx *Context) {
 }
 
 // SysTagUpdate api implementation
-// @Summary 更新标签 
+// @Summary 更新标签
 // @Tags 标签
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -62,7 +61,7 @@ func SysTagUpdate(ctx *Context) {
 }
 
 // SysTagPage api implementation
-// @Summary 标签分页查询 
+// @Summary 标签分页查询
 // @Tags 标签
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -82,7 +81,7 @@ func SysTagPage(ctx *Context) {
 }
 
 // SysTagGet api implementation
-// @Summary 获取标签信息 
+// @Summary 获取标签信息
 // @Tags 标签
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "标签id"
@@ -98,4 +97,3 @@ func SysTagGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-
