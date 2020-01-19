@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -13,7 +12,7 @@ import (
 )
 
 // SysUserTemplateAdd api implementation
-// @Summary 添加用户模板 
+// @Summary 添加用户模板
 // @Tags 用户模板
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -38,7 +37,7 @@ func SysUserTemplateAdd(ctx *Context) {
 }
 
 // SysUserTemplateUpdate api implementation
-// @Summary 更新用户模板 
+// @Summary 更新用户模板
 // @Tags 用户模板
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -62,7 +61,7 @@ func SysUserTemplateUpdate(ctx *Context) {
 }
 
 // SysUserTemplatePage api implementation
-// @Summary 用户模板分页查询 
+// @Summary 用户模板分页查询
 // @Tags 用户模板
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -82,7 +81,7 @@ func SysUserTemplatePage(ctx *Context) {
 }
 
 // SysUserTemplateGet api implementation
-// @Summary 获取用户模板信息 
+// @Summary 获取用户模板信息
 // @Tags 用户模板
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户模板id"
@@ -98,4 +97,3 @@ func SysUserTemplateGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-
