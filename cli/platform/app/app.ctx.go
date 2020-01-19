@@ -23,8 +23,8 @@ type (
 	Context struct {
 		*gin.Context
 		AuthInfo
-		engine *Engine
 		DB     *xorm.Engine
+		engine *Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value.
 	HandlerFunc func(*Context)
@@ -52,8 +52,11 @@ func (ctx *Context) InRole(role ...string) bool {
 
 // Success defined success result
 func (ctx *Context) Success(data interface{}, status ...int) {
-	sise, code := http.StatusOK, http.StatusOK
-	ctx.JSON(sise, model.Response{
+	code := 200
+	if len(status) > 0 {
+		code = status[0]
+	}
+	ctx.JSON(http.StatusOK, model.Response{
 		Code: null.IntFrom(int64(code)),
 		Data: data,
 	})
@@ -61,15 +64,15 @@ func (ctx *Context) Success(data interface{}, status ...int) {
 
 // Fail defined failt result
 func (ctx *Context) Fail(err error, status ...int) {
-	sise, code := http.StatusOK, http.StatusInternalServerError
+	code := 500
 	msg := fmt.Sprintf("%v", errors.WithStack(err))
-	if cusErr, ok := err.(model.Error); ok {
-		code = cusErr.Code
+	if mErr, ok := err.(model.Error); ok {
+		code = mErr.Code
 	}
 	if len(status) > 0 {
-		sise = status[0]
+		code = status[0]
 	}
-	ctx.JSON(sise, model.Response{
+	ctx.JSON(http.StatusOK, model.Response{
 		Code: null.IntFrom(int64(code)),
 		Msg:  null.StringFrom(msg),
 	})
