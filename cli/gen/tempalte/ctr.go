@@ -68,11 +68,15 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		f.ID = null.StringFromUUID()
 		f.CreateTime = null.TimeFromPtr(time.Now().Value())
 		f.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	}
 	{{- else}}
 	form.ID = null.StringFromUUID()
 	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	{{- end}}
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {

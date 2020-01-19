@@ -28,6 +28,8 @@ func SysOrgAdd(ctx *Context) {
 	form.ID = null.StringFromUUID()
 	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
