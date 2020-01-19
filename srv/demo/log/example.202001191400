@@ -10,3 +10,6 @@ time="2020/01/19 14:51:54" level=info msg="grpc listen on port:9081"
 2020/01/19 - 14:52:09 | 404 |      55.902µs |    172.16.10.39 | POST     /api/wechat/activity/page
 time="2020/01/19 14:53:45" level=info msg="grpc listen on port:9081"
 time="2020/01/19 14:53:45" level=info msg="http listen on port:8081"
+time="2020/01/19 14:55:45" level=info msg="http listen on port:8081"
+time="2020/01/19 14:55:45" level=info msg="grpc listen on port:9081"
+2020/01/19 - 14:55:47 | 404 |      83.247µs |    172.16.10.39 | POST     /api/wechat/activity/page

@@ -102,6 +102,66 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.SysTag:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      group_id:
+        description: 分组ID
+        type: string
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
+  model.SysTagGroup:
+    properties:
+      code:
+        description: 编码
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.SysUser:
     properties:
       avatar:
@@ -645,6 +705,178 @@ paths:
       summary: 更新角色
       tags:
       - 角色
+  /api/sys/tag/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.SysTag'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加标签
+      tags:
+      - 标签
+  /api/sys/tag/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签id
+        in: query
+        name: id
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取标签信息
+      tags:
+      - 标签
+  /api/sys/tag/group/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签组信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.SysTagGroup'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加标签组
+      tags:
+      - 标签组
+  /api/sys/tag/group/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签组id
+        in: query
+        name: id
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取标签组信息
+      tags:
+      - 标签组
+  /api/sys/tag/group/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 标签组分页查询
+      tags:
+      - 标签组
+  /api/sys/tag/group/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签组信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.SysTagGroup'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新标签组
+      tags:
+      - 标签组
+  /api/sys/tag/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 标签分页查询
+      tags:
+      - 标签
+  /api/sys/tag/update:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签信息
+        in: body
+        name: role
+        schema:
+          $ref: '#/definitions/model.SysTag'
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新标签
+      tags:
+      - 标签
   /api/sys/user/add:
     post:
       consumes:
