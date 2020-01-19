@@ -11,6 +11,7 @@ var (
 	std = New()
 )
 
+// StandardLogger return std logger
 func StandardLogger() *Logger {
 	return std
 }
@@ -18,6 +19,11 @@ func StandardLogger() *Logger {
 // SetOutput sets the standard logger output.
 func SetOutput(out io.Writer) {
 	std.SetOutput(out)
+}
+
+// GetOutput gets the standard logger output.
+func GetOutput() io.Writer {
+	return std.GetOutput()
 }
 
 // SetFormatter sets the standard logger formatter.

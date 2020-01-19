@@ -26,6 +26,7 @@ func init() {
 	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")
 	viper.SetDefault("dir.sql", "sql")
 	viper.SetDefault("dir.sqlmap", "sqlmap")
+	viper.SetDefault("dir.log", "log")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")

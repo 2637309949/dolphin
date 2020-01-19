@@ -335,6 +335,12 @@ func (logger *Logger) SetOutput(output io.Writer) {
 	logger.Out = output
 }
 
+// GetOutput sets the logger output.
+func (logger *Logger) GetOutput() io.Writer {
+	return logger.Out
+}
+
+// SetReportCaller sets the logger caller.
 func (logger *Logger) SetReportCaller(reportCaller bool) {
 	logger.mu.Lock()
 	defer logger.mu.Unlock()

@@ -60,8 +60,7 @@
         </return>
     </api>
     <api name="increase" table="applet_activity" desc="增加次数" method="post" version="1.0" auth="false">
-        <param name="id" type="string" desc="记录id" />
-        <param name="action" type="string" desc="点赞（like）,分享（share）和收藏(collect) 收藏和点赞第一次调用次数增一，调第二次减一，分享每一次都加一" />
+        <param name="applet_activity" type="$applet_activity" desc="记录id" />
         <return>
             <success type="$response" />
             <failure type="$response" />

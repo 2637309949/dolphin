@@ -334,7 +334,9 @@ func NewEngine() *Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	e.Gin = gin.New()
-	e.Gin.Use(gin.Logger())
+	e.Gin.Use(gin.LoggerWithConfig(gin.LoggerConfig{
+		Output: logrus.GetOutput(),
+	}))
 	e.Gin.Use(util.Recovery(func(ctx *gin.Context, err interface{}) {
 		code := 500
 		if err, ok := err.(model.Error); ok {
