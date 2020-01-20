@@ -18,6 +18,8 @@ import (
 // @Param Authorization header string false "认证令牌"
 // @Param menu body model.SysMenu false "菜单信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/menu/add [post]
 func SysMenuAdd(ctx *Context) {
 	var form model.SysMenu
@@ -41,6 +43,8 @@ func SysMenuAdd(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param menu body model.SysMenu false "菜单信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/menu/update [post]
 func SysMenuUpdate(ctx *Context) {
 	var form model.SysMenu
@@ -63,6 +67,8 @@ func SysMenuUpdate(ctx *Context) {
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/menu/list [get]
 func SysMenuList(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -81,6 +87,8 @@ func SysMenuList(ctx *Context) {
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/menu/tree [get]
 func SysMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -98,6 +106,8 @@ func SysMenuTree(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "菜单id"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/menu/get [get]
 func SysMenuGet(ctx *Context) {
 	var entity model.SysMenu

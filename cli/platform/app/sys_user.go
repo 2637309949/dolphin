@@ -18,6 +18,8 @@ import (
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "用户信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/user/add [post]
 func SysUserAdd(ctx *Context) {
 	var form model.SysRole
@@ -42,6 +44,8 @@ func SysUserAdd(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "用户信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/user/update [post]
 func SysUserUpdate(ctx *Context) {
 	var form model.SysRole
@@ -64,6 +68,8 @@ func SysUserUpdate(ctx *Context) {
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/user/page [get]
 func SysUserPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -83,6 +89,8 @@ func SysUserPage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户id"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/user/get [get]
 func SysUserGet(ctx *Context) {
 	var entity model.SysUser

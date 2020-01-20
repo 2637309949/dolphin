@@ -17,6 +17,8 @@ import (
 // @Param Authorization header string false "认证令牌"
 // @Param role body model.SysRole false "角色信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/role/add [post]
 func SysRoleAdd(ctx *Context) {
 	var form model.SysRole
@@ -40,6 +42,8 @@ func SysRoleAdd(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param role body model.SysRole false "角色信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/role/update [post]
 func SysRoleUpdate(ctx *Context) {
 	var form model.SysRole
@@ -62,6 +66,8 @@ func SysRoleUpdate(ctx *Context) {
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/role/page [get]
 func SysRolePage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -81,6 +87,8 @@ func SysRolePage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "角色id"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/role/get [get]
 func SysRoleGet(ctx *Context) {
 	var entity model.SysRole

@@ -18,6 +18,8 @@ import (
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "附件信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/attachment/add [post]
 func SysAttachmentAdd(ctx *Context) {
 	var form model.SysRole
@@ -43,6 +45,8 @@ func SysAttachmentAdd(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "附件信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/attachment/update [post]
 func SysAttachmentUpdate(ctx *Context) {
 	var form model.SysRole
@@ -67,6 +71,8 @@ func SysAttachmentUpdate(ctx *Context) {
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/attachment/page [get]
 func SysAttachmentPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -86,6 +92,8 @@ func SysAttachmentPage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "附件id"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/attachment/get [get]
 func SysAttachmentGet(ctx *Context) {
 	var entity model.SysAttachment

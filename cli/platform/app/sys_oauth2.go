@@ -36,6 +36,8 @@ func init() {
 // @Accept application/json
 // @Param user body model.SysUser false "用户信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/oauth2/login [post]
 func SysOauth2Login(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
@@ -72,6 +74,8 @@ func SysOauth2Login(ctx *Context) {
 // @Tags OAuth授权
 // @Accept application/json
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/oauth2/affirm [post]
 func SysOauth2Affirm(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
@@ -97,6 +101,8 @@ func SysOauth2Affirm(ctx *Context) {
 // @Summary 用户授权
 // @Tags OAuth授权
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/oauth2/authorize [get]
 func SysOauth2Authorize(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
@@ -123,6 +129,8 @@ func SysOauth2Authorize(ctx *Context) {
 // @Tags OAuth授权
 // @Accept application/json
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/oauth2/token [post]
 func SysOauth2Token(ctx *Context) {
 	err := ctx.engine.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
@@ -135,6 +143,8 @@ func SysOauth2Token(ctx *Context) {
 // @Summary 授权地址
 // @Tags OAuth授权
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/oauth2/url [get]
 func SysOauth2URL(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
@@ -146,6 +156,8 @@ func SysOauth2URL(ctx *Context) {
 // @Summary 授权回调
 // @Tags OAuth授权
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/oauth2/oauth2 [get]
 func SysOauth2Oauth2(ctx *Context) {
 	ctx.Request.ParseForm()
@@ -189,6 +201,8 @@ func SysOauth2Oauth2(ctx *Context) {
 // @Summary 刷新令牌
 // @Tags OAuth授权
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/oauth2/refresh [get]
 func SysOauth2Refresh(ctx *Context) {
 	refreshtoken, ok := ctx.engine.OAuth2.BearerAuth(ctx.Request)

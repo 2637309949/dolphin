@@ -18,6 +18,8 @@ import (
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "组织信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/org/add [post]
 func SysOrgAdd(ctx *Context) {
 	var form model.SysRole
@@ -45,6 +47,8 @@ func SysOrgAdd(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "组织信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/org/update [post]
 func SysOrgUpdate(ctx *Context) {
 	var form model.SysRole
@@ -69,6 +73,8 @@ func SysOrgUpdate(ctx *Context) {
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/org/page [get]
 func SysOrgPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -88,6 +94,8 @@ func SysOrgPage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "组织id"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/org/get [get]
 func SysOrgGet(ctx *Context) {
 	var entity model.SysOrg

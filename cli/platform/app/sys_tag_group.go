@@ -18,6 +18,8 @@ import (
 // @Param Authorization header string false "认证令牌"
 // @Param role body model.SysTagGroup false "标签组信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/tag/group/add [post]
 func SysTagGroupAdd(ctx *Context) {
 	var form model.SysTagGroup
@@ -43,6 +45,8 @@ func SysTagGroupAdd(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param role body model.SysTagGroup false "标签组信息"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/tag/group/update [post]
 func SysTagGroupUpdate(ctx *Context) {
 	var form model.SysTagGroup
@@ -67,6 +71,8 @@ func SysTagGroupUpdate(ctx *Context) {
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/tag/group/page [get]
 func SysTagGroupPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -86,6 +92,8 @@ func SysTagGroupPage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "标签组id"
 // @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
 // @Router /api/sys/tag/group/get [get]
 func SysTagGroupGet(ctx *Context) {
 	var entity model.SysTagGroup
