@@ -3,6 +3,9 @@ package app
 import (
 	"fmt"
 	"net/http"
+	gt "time"
+
+	"github.com/2637309949/dolphin/cli/packages/time"
 
 	"github.com/2637309949/dolphin/cli/packages/logrus"
 	"github.com/2637309949/dolphin/cli/packages/oauth2"
@@ -10,6 +13,11 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/viper"
 	xoauth2 "golang.org/x/oauth2"
 )
+
+// expiryDelta determines how earlier a token should be considered
+// expired than its actual expiration time. It is used to avoid late
+// expirations due to client-server time mismatches.
+const expiryDelta = 10 * gt.Second
 
 // var defined
 var (
@@ -51,7 +59,7 @@ type AuthOAuth2 struct {
 }
 
 // Auth defined
-func (auth *AuthOAuth2) parseToken(t oauth2.TokenInfo) {
+func (auth *AuthOAuth2) parseToken(t oauth2.TokenInfo) TokenInfo {
 	auth.token = &Token{
 		ClientID:        t.GetClientID(),
 		UserID:          t.GetUserID(),
@@ -67,18 +75,21 @@ func (auth *AuthOAuth2) parseToken(t oauth2.TokenInfo) {
 		Refresh:         t.GetRefresh(),
 		RefreshCreateAt: t.GetRefreshCreateAt(),
 	}
+	return auth.token
 }
 
 // Auth defined
 func (auth *AuthOAuth2) Auth(req *http.Request) bool {
-	if accessToken, ok := auth.server.BearerAuth(req); ok {
-		token, err := auth.server.Manager.LoadAccessToken(accessToken)
+	if bearer, ok := auth.server.BearerAuth(req); ok {
+		accessToken, err := auth.server.Manager.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.WithError(err).Warning("load accessToken failed.")
 		} else {
-			ok = true
-			auth.parseToken(token)
-			return true
+			return auth.
+				parseToken(accessToken).
+				GetAccessCreateAt().
+				Add(auth.GetToken().GetAccessExpiresIn()).Round(0).Add(-expiryDelta).
+				After(*time.Now().Value())
 		}
 	}
 	return false

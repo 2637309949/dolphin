@@ -28,10 +28,10 @@ func init() {
 	}
 	dir := path.Join(viper.GetString("dir.log"), viper.GetString("app.name"))
 	logf, err := logrotate.New(
-		dir+".%Y%m%d%H%M",
+		dir+".%Y%m%d%H",
 		logrotate.WithLinkName(dir),
 		logrotate.WithMaxAge(24*time.Hour),
-		logrotate.WithRotationTime(time.Hour),
+		logrotate.WithRotationTime(24*time.Hour),
 	)
 	if err != nil {
 		logrus.Printf("failed to create rotatelogs: %s", err)
