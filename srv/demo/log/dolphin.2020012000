@@ -5,3 +5,47 @@ time="2020/01/20 15:15:53" level=info msg="grpc listen on port:9081"
 time="2020/01/20 15:19:18" level=fatal msg="accept tcp [::]:9081: use of closed network connection"
 time="2020/01/20 15:19:21" level=info msg="grpc listen on port:9081"
 time="2020/01/20 15:19:21" level=info msg="http listen on port:8081"
+time="2020/01/20 16:44:20" level=info msg="http listen on port:8081"
+time="2020/01/20 16:44:20" level=info msg="grpc listen on port:9081"
+time="2020/01/20 16:44:47" level=warning msg="load accessToken failed." error="invalid access token"
+2020/01/20 - 16:44:47 | 200 |    1.108053ms |       127.0.0.1 | GET      /api/wechat/activity/list
+2020/01/20 - 16:45:00 | 404 |       6.106µs |       127.0.0.1 | GET      /?state=
+2020/01/20 - 16:45:04 | 200 |     135.805µs |       127.0.0.1 | GET      /api/sys/oauth2/url?shudfhusdgufi
+2020/01/20 - 16:45:06 | 302 |     305.274µs |       127.0.0.1 | GET      /api/sys/oauth2/authorize?client_id=Y76U9344RABF4&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Fapi%2Fsys%2Foauth2%2Foauth2&response_type=code&scope=all&state=redirect_uri%3D%26state%3D
+2020/01/20 - 16:45:06 | 200 |   17.703826ms |       127.0.0.1 | GET      /static/auth/login.html
+2020/01/20 - 16:45:14 | 404 |      94.631µs |       127.0.0.1 | POST     /api/oauth2/login
+2020/01/20 - 16:45:27 | 200 |      54.105µs |       127.0.0.1 | GET      /api/sys/oauth2/url?shudfhusdgufi
+2020/01/20 - 16:45:32 | 302 |     185.179µs |       127.0.0.1 | GET      /api/sys/oauth2/authorize?client_id=Y76U9344RABF4&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Fapi%2Fsys%2Foauth2%2Foauth2&response_type=code&scope=all&state=redirect_uri%3D%26state%3D
+2020/01/20 - 16:45:35 | 200 |     100.477µs |       127.0.0.1 | GET      /static/auth/login.html?shudfsd
+2020/01/20 - 16:45:47 | 404 |      37.887µs |       127.0.0.1 | POST     /api/oauth2/login
+2020/01/20 - 16:45:57 | 200 |     267.302µs |       127.0.0.1 | GET      /static/auth/login.html?shdufhsdf
+2020/01/20 - 16:46:04 | 304 |     194.182µs |       127.0.0.1 | GET      /static/auth/login.html?shdufhsdf
+2020/01/20 - 16:46:07 | 304 |     123.839µs |       127.0.0.1 | GET      /static/auth/login.html?shdufhsdf
+2020/01/20 - 16:46:13 | 200 |      109.27µs |       127.0.0.1 | GET      /static/auth/login.html?shd
+time="2020/01/20 16:46:56" level=fatal msg="accept tcp [::]:9081: use of closed network connection"
+time="2020/01/20 16:47:31" level=info msg="http listen on port:8081"
+time="2020/01/20 16:47:31" level=info msg="grpc listen on port:9081"
+2020/01/20 - 16:47:40 | 200 |     160.476µs |       127.0.0.1 | GET      /api/sys/oauth2/url?shudfhusdgufi
+2020/01/20 - 16:47:44 | 302 |     272.601µs |       127.0.0.1 | GET      /api/sys/oauth2/authorize?client_id=Y76U9344RABF4&redirect_uri=http%3A%2F%2F127.0.0.1%3A8081%2Fapi%2Fsys%2Foauth2%2Foauth2&response_type=code&scope=all&state=redirect_uri%3D%26state%3D
+2020/01/20 - 16:47:51 | 404 |      92.103µs |       127.0.0.1 | POST     /api/oauth2/login
+2020/01/20 - 16:47:57 | 200 |    5.713307ms |       127.0.0.1 | GET      /static/auth/login.html?shdufsdf
+2020/01/20 - 16:48:01 | 304 |     165.384µs |       127.0.0.1 | GET      /static/auth/login.html?shdufsdf
+2020/01/20 - 16:48:03 | 304 |     124.945µs |       127.0.0.1 | GET      /static/auth/login.html?shdufsdf
+2020/01/20 - 16:48:13 | 302 |   13.701766ms |       127.0.0.1 | POST     /api/sys/oauth2/login
+2020/01/20 - 16:48:13 | 200 |     273.277µs |       127.0.0.1 | GET      /static/auth/affirm.html
+2020/01/20 - 16:48:14 | 302 |    5.292954ms |       127.0.0.1 | POST     /api/sys/oauth2/affirm
+2020/01/20 - 16:48:14 | 200 |    2.839993ms |       127.0.0.1 | POST     /api/sys/oauth2/token
+2020/01/20 - 16:48:14 | 200 |    5.183913ms |       127.0.0.1 | GET      /api/sys/oauth2/oauth2?code=GOJ4PODDOR28JT1RATVXHW&state=redirect_uri%3D%26state%3D
+2020/01/20 - 16:48:14 | 404 |       3.412µs |       127.0.0.1 | GET      /?state=
+2020/01/20 - 16:48:30 | 200 |    2.571542ms |       127.0.0.1 | GET      /api/wechat/activity/list
+2020/01/20 - 16:50:01 | 404 |       1.044µs |       127.0.0.1 | GET      /api/wechat/activity/add
+2020/01/20 - 16:50:06 | 200 |    9.035217ms |       127.0.0.1 | POST     /api/wechat/activity/add
+2020/01/20 - 16:51:06 | 200 |    5.589334ms |       127.0.0.1 | POST     /api/wechat/activity/add
+2020/01/20 - 16:51:32 | 200 |    8.062591ms |       127.0.0.1 | GET      /api/wechat/activity/list
+2020/01/20 - 16:52:57 | 200 |    2.201742ms |       127.0.0.1 | GET      /api/wechat/activity/list
+2020/01/20 - 16:53:04 | 200 |    2.044255ms |       127.0.0.1 | GET      /api/wechat/activity/list
+time="2020/01/20 16:53:50" level=fatal msg="accept tcp [::]:9081: use of closed network connection"
+time="2020/01/20 16:53:54" level=info msg="grpc listen on port:9081"
+time="2020/01/20 16:53:54" level=info msg="http listen on port:8081"
+2020/01/20 - 16:53:56 | 200 |    4.700373ms |       127.0.0.1 | GET      /api/wechat/activity/list
+2020/01/20 - 16:54:34 | 200 |   11.773951ms |       127.0.0.1 | POST     /api/wechat/activity/update
