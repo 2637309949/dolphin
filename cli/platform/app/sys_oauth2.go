@@ -64,7 +64,7 @@ func SysOauth2Login(ctx *Context) {
 	store.Set("LoggedInUserID", account.ID.String)
 	store.Set("LoggedInDomain", account.Domain.String)
 	store.Save()
-	ctx.Redirect(http.StatusFound, viper.GetString("oauth.auth"))
+	ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm"))
 }
 
 // SysOauth2Affirm api implementation

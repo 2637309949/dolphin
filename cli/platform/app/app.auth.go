@@ -13,15 +13,18 @@ import (
 
 // var defined
 var (
-	authServerURL = viper.GetString("oauth.server")
-	oa2cfg        = xoauth2.Config{
+	authServerURL   = viper.GetString("oauth.server")
+	authAuthURL     = "/api/oauth2/authorize"
+	authTokenURL    = "/api/oauth2/token"
+	authRedirectURL = "/api/oauth2/oauth2"
+	oa2cfg          = xoauth2.Config{
 		ClientID:     viper.GetString("oauth.id"),
-		ClientSecret: viper.GetString("oauth.login"),
+		ClientSecret: viper.GetString("oauth.secret"),
 		Scopes:       []string{"all"},
-		RedirectURL:  fmt.Sprintf("%v/api/oauth2/oauth2", viper.GetString("oauth.cli")),
+		RedirectURL:  fmt.Sprintf("%v%v", authRedirectURL, viper.GetString("oauth.cli")),
 		Endpoint: xoauth2.Endpoint{
-			AuthURL:  authServerURL + "/api/oauth2/authorize",
-			TokenURL: authServerURL + "/api/oauth2/token",
+			AuthURL:  authServerURL + authAuthURL,
+			TokenURL: authServerURL + authTokenURL,
 		},
 	}
 )

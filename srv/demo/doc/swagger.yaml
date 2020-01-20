@@ -381,7 +381,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: example
+  title: dolphin
   version: "1.0"
 paths:
   /api/applet/activity/add:
@@ -1777,4 +1777,14 @@ paths:
       summary: 更新活动
       tags:
       - 活动
+securityDefinitions:
+  OAuth2AccessCode:
+    authorizationUrl: http://127.0.0.1:8081/api/sys/oauth2/authorize
+    flow: accessCode
+    scopes:
+      admin: Grants read and write access to administrative information
+      read: Grants read access
+      write: Grants write access
+    tokenUrl: http://127.0.0.1:8081/api/sys/oauth2/token
+    type: oauth2
 swagger: "2.0"

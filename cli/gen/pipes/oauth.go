@@ -26,14 +26,14 @@ func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, er
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplAuth,
-			FilePath: path.Join(dir, viper.GetString("http.static"), "h5", "auth"),
+			FilePath: path.Join(dir, viper.GetString("http.static"), "auth", "affirm"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".html",
 		},
 		&gen.TmplCfg{
 			Text:     tempalte.TmplLogin,
-			FilePath: path.Join(dir, viper.GetString("http.static"), "h5", "login"),
+			FilePath: path.Join(dir, viper.GetString("http.static"), "auth", "login"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".html",

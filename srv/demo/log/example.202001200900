@@ -1,0 +1,3 @@
+time="2020/01/20 09:48:47" level=fatal msg="listen tcp :9081: bind: address already in use"
+time="2020/01/20 09:48:59" level=info msg="http listen on port:8081"
+time="2020/01/20 09:48:59" level=info msg="grpc listen on port:9081"

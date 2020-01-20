@@ -180,13 +180,20 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 	if err != nil {
 		return fmt.Errorf("cannot parse source files %s: %s", mainAPIFile, err)
 	}
+	// inital
 	parser.swagger.Swagger = "2.0"
 	parser.swagger.Host = viper.GetString("host")
 	parser.swagger.Info.Title = viper.GetString("app.name")
 	parser.swagger.Info.Version = viper.GetString("app.version")
-	parser.swagger.Info.License.Name = viper.GetString("license.name")
-	parser.swagger.Info.License.URL = viper.GetString("license.url")
+	parser.swagger.Info.License.Name = viper.GetString("swag.license.name")
+	parser.swagger.Info.License.URL = viper.GetString("swag.license.url")
 	securityMap := map[string]*spec.SecurityScheme{}
+	securityMap[viper.GetString("swag.securitydefinitions.oauth2.accessCode")] = securitySchemeOAuth2AccessToken(viper.GetString("oauth.server")+viper.GetString("swag.authorizationurl"), viper.GetString("oauth.server")+viper.GetString("swag.tokenUrl"), map[string]string{
+		"read":  viper.GetString("swag.scope.read"),
+		"write": viper.GetString("swag.scope.write"),
+		"admin": viper.GetString("swag.scope.admin"),
+	})
+	// parse
 	for _, comment := range fileTree.Comments {
 		if !isGeneralAPIComment(comment) {
 			continue
@@ -299,7 +306,6 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 					return err
 				}
 				securityMap[value] = securitySchemeOAuth2AccessToken(attrMap["@authorizationurl"], attrMap["@tokenurl"], scopes)
-
 			default:
 				prefixExtension := "@x-"
 				if len(attribute) > 5 { // Prefix extension + 1 char + 1 space  + 1 char
