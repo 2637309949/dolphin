@@ -1,2 +1,7 @@
-time="2020/01/20 14:40:24" level=info msg="http listen on port:8081"
-time="2020/01/20 14:40:24" level=info msg="grpc listen on port:9081"
+time="2020/01/20 15:15:53" level=info msg="http listen on port:8081"
+time="2020/01/20 15:15:53" level=info msg="grpc listen on port:9081"
+2020/01/20 - 15:15:55 | 200 |    3.709587ms |       127.0.0.1 | GET      /api/wechat/activity/list
+2020/01/20 - 15:16:00 | 200 |    2.033004ms |       127.0.0.1 | GET      /api/wechat/activity/list
+time="2020/01/20 15:19:18" level=fatal msg="accept tcp [::]:9081: use of closed network connection"
+time="2020/01/20 15:19:21" level=info msg="grpc listen on port:9081"
+time="2020/01/20 15:19:21" level=info msg="http listen on port:8081"
