@@ -28,4 +28,10 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="logout" desc="用户退出登录" method="get">
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
 </controller>
