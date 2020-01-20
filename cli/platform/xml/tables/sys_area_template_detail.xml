@@ -1,0 +1,17 @@
+<table name="sys_area_template_detail" desc="区域信息模板明细" packages="github.com/2637309949/dolphin/cli/packages/null">
+    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+    <column name="name" desc="区域名称" type="null.String" xorm="varchar(200) notnull" />
+    <column name="temp_id" desc="区域信息模板id" type="null.String" xorm="varchar(36)" />
+    <column name="value" desc="值" type="null.String" xorm="varchar(36)" />
+    <column name="type" desc="类型 0:数值项 1:单选项 2:文字项 3:列表项" type="null.Int"/>
+    <column name="priority" desc="优先级" type="null.Int"/>
+    <column name="content" desc="内容" type="null.String" xorm="text" />
+    <column name="domain" desc="域" type="null.String" xorm="varchar(50)" />
+    
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36)" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime" />
+</table>
