@@ -1562,6 +1562,29 @@ paths:
       summary: 获取用户信息
       tags:
       - 用户
+  /api/sys/user/logout:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户退出登录
+      tags:
+      - 用户
   /api/sys/user/page:
     get:
       parameters:
