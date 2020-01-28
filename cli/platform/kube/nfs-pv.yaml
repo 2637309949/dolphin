@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-0001
+  namespace: dolphin
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: 192.168.43.137:2099
+    path: /exports/data-0002
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-0002
+  namespace: dolphin
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: 192.168.43.137:2099
+    path: /exports/data-0001

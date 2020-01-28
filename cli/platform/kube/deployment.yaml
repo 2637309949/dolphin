@@ -1,10 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name:  platform
+  name: platform
   namespace: dolphin
   labels:
-    name:  platform
+    name: platform
 spec:
   strategy:
     rollingUpdate:
@@ -14,43 +14,40 @@ spec:
   template:
     metadata:
       labels:
-        name:  platform
+        name: platform
     spec:
       containers:
-      - image:  ghost
-        name:  platform
-        resources:
-          requests:
-            cpu: "20m"
-            memory: "55M"
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 2368
-          initialDelaySeconds: 90
-          timeoutSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 2368
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
-        env:
-        - name:  ENVVARNAME
-          value:  ENVVARVALUE       
-        ports:
-        - containerPort:  2368
-          name:  2368tcp02
-          protocol: TCP
-        volumeMounts:
-        - mountPath: /var/lib/ghost/content
-          name: vol1
-          subPath: ghost
+        - image: ghost
+          imagePullPolicy: Always
+          name: platform
+          resources:
+            requests:
+              cpu: "20m"
+              memory: "55M"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 2368
+            initialDelaySeconds: 90
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 2368
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+          ports:
+            - containerPort: 2368
+              name: 2368tcp02
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/ghost/content
+              name: storage-platform
+              subPath: ghost
       volumes:
-      - name: vol1
-        persistentVolumeClaim:
-          claimName: default-nfs
+        - name: storage-platform
+          persistentVolumeClaim:
+            claimName: claim-platform
       restartPolicy: Always
-      imagePullPolicy: Always
       imagePullSecrets:
-      - name: dockerconfigjson
+        - name: dockerconfigjson
