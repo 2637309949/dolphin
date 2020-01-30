@@ -351,3 +351,6 @@ func NewEngine() *Engine {
 	}
 	return e
 }
+
+// App instance
+var App = NewEngine()

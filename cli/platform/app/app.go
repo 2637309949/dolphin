@@ -95,8 +95,7 @@ func init() {
 	oa2cfg.Endpoint.AuthURL = authServerURL + "/api/sys/oauth2/authorize"
 	oa2cfg.Endpoint.TokenURL = authServerURL + "/api/sys/oauth2/token"
 	_ = cli.Provider(func(lc srv.Lifecycle) *Engine {
-		var engine = NewEngine()
-		lc.Append(NewLifeHook(engine))
-		return engine
+		lc.Append(NewLifeHook(App))
+		return App
 	})
 }

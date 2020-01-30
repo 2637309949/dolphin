@@ -46,16 +46,16 @@ func (e *Engine) allocateContext() *Context {
 // InvokeEngine build engine
 func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
-		engine.Engine = base
-		build(engine)
+		App.Engine = base
+		build(App)
 	}
 }
 
 // InvokeContext build context
 func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
-		engine.Engine = base
-		group := engine.Group(viper.GetString("http.prefix"))
+		App.Engine = base
+		group := App.Group(viper.GetString("http.prefix"))
 		group.Handle(httpMethod, relativePath, handlers...)
 	}
 }
@@ -100,6 +100,6 @@ func NewEngine() *Engine {
 	return e
 }
 
-// Engine instance
-var engine = NewEngine()
+// App instance
+var App = NewEngine()
 `
