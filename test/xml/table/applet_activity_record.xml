@@ -1,0 +1,12 @@
+<table name="applet_activity_record" desc="活动记录" packages="github.com/2637309949/dolphin/cli/packages/null">
+	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+	<column name="activity_id" desc="活动ID" type="null.String" xorm="varchar(36)" />
+	<column name="material_id" desc="素材ID" type="null.String" xorm="varchar(36)" />
+    
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36)" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime" />
+</table>
