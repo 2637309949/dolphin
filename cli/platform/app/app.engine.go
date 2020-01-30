@@ -346,7 +346,6 @@ func NewEngine() *Engine {
 	}))
 	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
 	e.Gin.Static(viper.GetString("http.static"), path.Join(util.Getwd(), viper.GetString("http.static")))
-
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}

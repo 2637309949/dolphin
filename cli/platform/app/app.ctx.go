@@ -195,6 +195,104 @@ func (q *Query) SetString(key string, init ...interface{}) {
 	}
 }
 
+// SetArrayString defined
+func (q *Query) SetArrayString(key string, init ...[]string) {
+	v := q.ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []string{}
+		}
+	} else {
+		q.m[key] = strings.Split(v, ",")
+	}
+}
+
+// GetArrayString defined
+func (q *Query) GetArrayString(key string, init ...[]string) []string {
+	ret, _ := q.m[key].([]string)
+	return ret
+}
+
+// SetArrayInt defined
+func (q *Query) SetArrayInt(key string, init ...[]int64) {
+	v := q.ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []int64{}
+		}
+	} else {
+		q.m[key] = funk.Map(strings.Split(v, ","), func(i string) int64 {
+			it, err := strconv.ParseInt(i, 10, 64)
+			if err != nil {
+				panic(err)
+			}
+			return it
+		}).([]int64)
+	}
+}
+
+// GetArrayInt defined
+func (q *Query) GetArrayInt(key string, init ...[]int) []int64 {
+	ret, _ := q.m[key].([]int64)
+	return ret
+}
+
+// SetArrayFloat64 defined
+func (q *Query) SetArrayFloat64(key string, init ...[]float64) {
+	v := q.ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []float64{}
+		}
+	} else {
+		q.m[key] = funk.Map(strings.Split(v, ","), func(i string) float64 {
+			it, err := strconv.ParseFloat(i, 64)
+			if err != nil {
+				panic(err)
+			}
+			return it
+		}).([]float64)
+	}
+}
+
+// GetArrayFloat64 defined
+func (q *Query) GetArrayFloat64(key string, init ...[]float64) []float64 {
+	ret, _ := q.m[key].([]float64)
+	return ret
+}
+
+// SetArrayBool defined
+func (q *Query) SetArrayBool(key string, init ...[]bool) {
+	v := q.ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []bool{}
+		}
+	} else {
+		q.m[key] = funk.Map(strings.Split(v, ","), func(i string) bool {
+			it, err := strconv.ParseBool(i)
+			if err != nil {
+				panic(err)
+			}
+			return it
+		}).([]bool)
+	}
+}
+
+// GetArrayBool defined
+func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
+	ret, _ := q.m[key].([]bool)
+	return ret
+}
+
 // Value defined
 func (q *Query) Value() map[string]interface{} {
 	return q.m
