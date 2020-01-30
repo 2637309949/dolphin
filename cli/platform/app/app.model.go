@@ -6,6 +6,7 @@ type MSeti interface {
 	Get(func(string, interface{}) bool) interface{}
 	ForEach(func(string, interface{}))
 	Name(func(string) bool) []string
+	Release()
 }
 
 // MSet struct
@@ -46,4 +47,9 @@ func (s *MSet) ForEach(cb func(name string, m interface{})) {
 			cb(name, m[index])
 		}
 	}
+}
+
+// Release defined release models
+func (s *MSet) Release() {
+	s.m = nil
 }

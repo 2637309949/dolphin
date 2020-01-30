@@ -4,6 +4,33 @@ import (
 	"github.com/2637309949/dolphin/cli/packages/logrus"
 )
 
+// Example:
+// // MyPayloadTest For example usage
+// type MyPayloadTest struct {
+// 	Num int
+// }
+
+// // Do do something
+// func (p MyPayloadTest) Do() (err error) {
+// 	//Do a job sample
+// 	logrus.Info("I am working Do", p.Num)
+// 	time.Sleep(time.Second * 2)
+// 	err = nil
+// 	return
+// }
+
+// func main() {
+// 	dispatcher := NewDispatcher(10)
+// 	dispatcher.Run()
+//
+// 	for i := 1; i < 40; i++ {
+// 		job := NewJob(MyPayloadTest{i})
+// 		dispatcher.AddJob(job)
+// 	}
+//
+// 	time.Sleep(time.Second * 50)
+// }
+
 // Dispatcher -> Processing Data
 type Dispatcher struct {
 	// JobQueue A buffered channel that we can send work requests on.
@@ -44,8 +71,8 @@ func (d *Dispatcher) dispatch() {
 }
 
 // AddJob represents Generate Data
-func (d *Dispatcher) AddJob(f func() Job) {
-	d.JobQueue <- f()
+func (d *Dispatcher) AddJob(j Job) {
+	d.JobQueue <- j
 }
 
 // Payload For example usage
@@ -102,32 +129,3 @@ func (w Worker) Stop() {
 		w.quit <- true
 	}()
 }
-
-// // MyPayloadTest For example usage
-// type MyPayloadTest struct {
-// 	Num int
-// }
-
-// // Do do something
-// func (p MyPayloadTest) Do() (err error) {
-// 	//Do a job sample
-// 	logrus.Info("I am working Do", p.Num)
-// 	time.Sleep(time.Second * 2)
-// 	err = nil
-// 	return
-// }
-
-// func main() {
-// 	// Generate worker to do job
-// 	dispatcher := NewDispatcher(10)
-// 	dispatcher.Run()
-// 	// Produce job to be done
-// 	for i := 1; i < 40; i++ {
-// 		dispatcher.AddJob(func() Job {
-// 			// Pre-prepared data
-// 			job := NewJob(MyPayloadTest{i})
-// 			return job
-// 		})
-// 	}
-// 	time.Sleep(time.Second * 50)
-// }
