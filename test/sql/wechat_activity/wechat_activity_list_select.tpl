@@ -1,6 +1,5 @@
 select
-    dolphin_wechat_activity.id,
-	dolphin_wechat_activity.title
+    dolphin_wechat_activity.id
 from
 	dolphin_wechat_activity
 where

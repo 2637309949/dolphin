@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<application name="dolphin" desc="i2推手" packagename="example">
+<application name="dolphin" desc="i2推手" packagename="test">
     <controllers></controllers>
     <beans></beans>
     <tables></tables>
