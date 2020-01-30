@@ -37,10 +37,10 @@ import (
 {{- end}}
 // @Failure 403 {object} model.Response
 {{- if ne .Return.Success.Type ""}}
-// @Success 200 {object} model.Response
+// @Success 200 {object} {{.Ref .Return.Success.Type}}
 {{- end}}
 {{- if ne .Return.Failure.Type ""}}
-// @Failure 500 {object} model.Response
+// @Failure 500 {object} {{.Ref .Return.Failure.Type}}
 {{- end}}
 // @Router /api{{.APIPrefix .Version}}/{{.APIPath $.Controller.Name .Path}}/{{.Name}} [{{.Method}}]
 func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
