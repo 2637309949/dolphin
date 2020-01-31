@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -13,7 +12,7 @@ import (
 )
 
 // SysOrgAdd api implementation
-// @Summary 添加组织 
+// @Summary 添加组织
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -42,7 +41,7 @@ func SysOrgAdd(ctx *Context) {
 }
 
 // SysOrgDel api implementation
-// @Summary 删除组织 
+// @Summary 删除组织
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -69,7 +68,7 @@ func SysOrgDel(ctx *Context) {
 }
 
 // SysOrgUpdate api implementation
-// @Summary 更新组织 
+// @Summary 更新组织
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -95,7 +94,7 @@ func SysOrgUpdate(ctx *Context) {
 }
 
 // SysOrgPage api implementation
-// @Summary 组织分页查询 
+// @Summary 组织分页查询
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -117,7 +116,7 @@ func SysOrgPage(ctx *Context) {
 }
 
 // SysOrgGet api implementation
-// @Summary 获取组织信息 
+// @Summary 获取组织信息
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "组织id"
@@ -135,4 +134,3 @@ func SysOrgGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

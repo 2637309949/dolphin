@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -13,7 +12,7 @@ import (
 )
 
 // SysAttachmentAdd api implementation
-// @Summary 添加附件 
+// @Summary 添加附件
 // @Tags 附件
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -42,7 +41,7 @@ func SysAttachmentAdd(ctx *Context) {
 }
 
 // SysAttachmentDel api implementation
-// @Summary 删除附件 
+// @Summary 删除附件
 // @Tags 附件
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -69,7 +68,7 @@ func SysAttachmentDel(ctx *Context) {
 }
 
 // SysAttachmentUpdate api implementation
-// @Summary 更新附件 
+// @Summary 更新附件
 // @Tags 附件
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -95,7 +94,7 @@ func SysAttachmentUpdate(ctx *Context) {
 }
 
 // SysAttachmentPage api implementation
-// @Summary 附件分页查询 
+// @Summary 附件分页查询
 // @Tags 附件
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -117,7 +116,7 @@ func SysAttachmentPage(ctx *Context) {
 }
 
 // SysAttachmentGet api implementation
-// @Summary 获取附件信息 
+// @Summary 获取附件信息
 // @Tags 附件
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "附件id"
@@ -135,4 +134,3 @@ func SysAttachmentGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

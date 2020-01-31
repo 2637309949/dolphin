@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -13,7 +12,7 @@ import (
 )
 
 // SysRoleAdd api implementation
-// @Summary 添加角色 
+// @Summary 添加角色
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -42,7 +41,7 @@ func SysRoleAdd(ctx *Context) {
 }
 
 // SysRoleDel api implementation
-// @Summary 删除角色 
+// @Summary 删除角色
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -69,7 +68,7 @@ func SysRoleDel(ctx *Context) {
 }
 
 // SysRoleUpdate api implementation
-// @Summary 更新角色 
+// @Summary 更新角色
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -95,7 +94,7 @@ func SysRoleUpdate(ctx *Context) {
 }
 
 // SysRolePage api implementation
-// @Summary 角色分页查询 
+// @Summary 角色分页查询
 // @Tags 角色
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -117,7 +116,7 @@ func SysRolePage(ctx *Context) {
 }
 
 // SysRoleGet api implementation
-// @Summary 获取角色信息 
+// @Summary 获取角色信息
 // @Tags 角色
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "角色id"
@@ -135,4 +134,3 @@ func SysRoleGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
-	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -13,7 +12,7 @@ import (
 )
 
 // SysTagGroupAdd api implementation
-// @Summary 添加标签组 
+// @Summary 添加标签组
 // @Tags 标签组
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -42,7 +41,7 @@ func SysTagGroupAdd(ctx *Context) {
 }
 
 // SysTagGroupDel api implementation
-// @Summary 删除标签组 
+// @Summary 删除标签组
 // @Tags 标签组
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -69,7 +68,7 @@ func SysTagGroupDel(ctx *Context) {
 }
 
 // SysTagGroupUpdate api implementation
-// @Summary 更新标签组 
+// @Summary 更新标签组
 // @Tags 标签组
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -95,7 +94,7 @@ func SysTagGroupUpdate(ctx *Context) {
 }
 
 // SysTagGroupPage api implementation
-// @Summary 标签组分页查询 
+// @Summary 标签组分页查询
 // @Tags 标签组
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -117,7 +116,7 @@ func SysTagGroupPage(ctx *Context) {
 }
 
 // SysTagGroupGet api implementation
-// @Summary 获取标签组信息 
+// @Summary 获取标签组信息
 // @Tags 标签组
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "标签组id"
@@ -135,4 +134,3 @@ func SysTagGroupGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-
