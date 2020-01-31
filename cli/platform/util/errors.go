@@ -25,3 +25,8 @@ var (
 	ErrInvalidGrant            = errors.New("invalid_grant")
 	ErrUnsupportedGrantType    = errors.New("unsupported_grant_type")
 )
+
+// known errors
+var (
+	ErrInvalidDomain = errors.New("invalid_domain")
+)

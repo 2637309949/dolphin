@@ -290,9 +290,14 @@ func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	return func(ctx *Context) {
 		if ctx.Auth(ctx.Request) {
 			ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]
-			ctx.Set("DB", ctx.DB)
-			ctx.Set("AuthInfo", ctx.AuthInfo)
-			ctx.Next()
+			if ctx.DB == nil {
+				ctx.Fail(util.ErrInvalidDomain)
+				ctx.Abort()
+			} else {
+				ctx.Set("DB", ctx.DB)
+				ctx.Set("AuthInfo", ctx.AuthInfo)
+				ctx.Next()
+			}
 		} else {
 			ctx.Fail(util.ErrInvalidAccessToken, 401)
 			ctx.Abort()
