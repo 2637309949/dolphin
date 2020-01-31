@@ -1,23 +1,23 @@
 <sqlMap>
-    <sql id="insert_dolphin_applet_activity_record">
-        insert into dolphin_applet_activity_record
+    <sql id="insert_applet_activity_record">
+        insert into applet_activity_record
 		(`id`,`activity_id`,`material_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
 		(?id,?activity_id,?material_id,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
-    <sql id="update_dolphin_applet_activity_record">
-        update dolphin_applet_activity_record set `id`=?id,`activity_id`=?activity_id,`material_id`=?material_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+    <sql id="update_applet_activity_record">
+        update applet_activity_record set `id`=?id,`activity_id`=?activity_id,`material_id`=?material_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
-    <sql id="delete_dolphin_applet_activity_record">
-        delete from dolphin_applet_activity_record
+    <sql id="delete_applet_activity_record">
+        delete from applet_activity_record
 		where id =?id
     </sql>
-    <sql id="selectone_dolphin_applet_activity_record">
-        select `id`,`activity_id`,`material_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from dolphin_applet_activity_record
+    <sql id="selectone_applet_activity_record">
+        select `id`,`activity_id`,`material_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from applet_activity_record
 		where  id =?id
     </sql>
-    <sql id="selectall_dolphin_applet_activity_record">
-        select `id`,`activity_id`,`material_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from dolphin_applet_activity_record
+    <sql id="selectall_applet_activity_record">
+        select `id`,`activity_id`,`material_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from applet_activity_record
     </sql>
 </sqlMap>

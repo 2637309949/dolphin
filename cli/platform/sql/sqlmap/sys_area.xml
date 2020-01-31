@@ -1,23 +1,23 @@
 <sqlMap>
-    <sql id="insert_platform_sys_area">
-        insert into platform_sys_area
+    <sql id="insert_sys_area">
+        insert into sys_area
 		(`id`,`name`,`parent`,`inheritance`,`org_id`,`temp_id`,`temp_value`,`manager`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
 		(?id,?name,?parent,?inheritance,?org_id,?temp_id,?temp_value,?manager,?domain,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
-    <sql id="update_platform_sys_area">
-        update platform_sys_area set `id`=?id,`name`=?name,`parent`=?parent,`inheritance`=?inheritance,`org_id`=?org_id,`temp_id`=?temp_id,`temp_value`=?temp_value,`manager`=?manager,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+    <sql id="update_sys_area">
+        update sys_area set `id`=?id,`name`=?name,`parent`=?parent,`inheritance`=?inheritance,`org_id`=?org_id,`temp_id`=?temp_id,`temp_value`=?temp_value,`manager`=?manager,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
-    <sql id="delete_platform_sys_area">
-        delete from platform_sys_area
+    <sql id="delete_sys_area">
+        delete from sys_area
 		where id =?id
     </sql>
-    <sql id="selectone_platform_sys_area">
-        select `id`,`name`,`parent`,`inheritance`,`org_id`,`temp_id`,`temp_value`,`manager`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_area
+    <sql id="selectone_sys_area">
+        select `id`,`name`,`parent`,`inheritance`,`org_id`,`temp_id`,`temp_value`,`manager`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_area
 		where  id =?id
     </sql>
-    <sql id="selectall_platform_sys_area">
-        select `id`,`name`,`parent`,`inheritance`,`org_id`,`temp_id`,`temp_value`,`manager`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_area
+    <sql id="selectall_sys_area">
+        select `id`,`name`,`parent`,`inheritance`,`org_id`,`temp_id`,`temp_value`,`manager`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_area
     </sql>
 </sqlMap>

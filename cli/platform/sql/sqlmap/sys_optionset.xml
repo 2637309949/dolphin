@@ -1,23 +1,23 @@
 <sqlMap>
-    <sql id="insert_platform_sys_optionset">
-        insert into platform_sys_optionset
+    <sql id="insert_sys_optionset">
+        insert into sys_optionset
 		(`id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
 		(?id,?name,?code,?value,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
-    <sql id="update_platform_sys_optionset">
-        update platform_sys_optionset set `id`=?id,`name`=?name,`code`=?code,`value`=?value,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+    <sql id="update_sys_optionset">
+        update sys_optionset set `id`=?id,`name`=?name,`code`=?code,`value`=?value,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
-    <sql id="delete_platform_sys_optionset">
-        delete from platform_sys_optionset
+    <sql id="delete_sys_optionset">
+        delete from sys_optionset
 		where id =?id
     </sql>
-    <sql id="selectone_platform_sys_optionset">
-        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_optionset
+    <sql id="selectone_sys_optionset">
+        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_optionset
 		where  id =?id
     </sql>
-    <sql id="selectall_platform_sys_optionset">
-        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_optionset
+    <sql id="selectall_sys_optionset">
+        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_optionset
     </sql>
 </sqlMap>

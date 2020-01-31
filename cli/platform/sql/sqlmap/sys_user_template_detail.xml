@@ -1,23 +1,23 @@
 <sqlMap>
-    <sql id="insert_platform_sys_user_template_detail">
-        insert into platform_sys_user_template_detail
+    <sql id="insert_sys_user_template_detail">
+        insert into sys_user_template_detail
 		(`id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
 		(?id,?temp_id,?name,?value,?type,?content,?priority,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
-    <sql id="update_platform_sys_user_template_detail">
-        update platform_sys_user_template_detail set `id`=?id,`temp_id`=?temp_id,`name`=?name,`value`=?value,`type`=?type,`content`=?content,`priority`=?priority,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+    <sql id="update_sys_user_template_detail">
+        update sys_user_template_detail set `id`=?id,`temp_id`=?temp_id,`name`=?name,`value`=?value,`type`=?type,`content`=?content,`priority`=?priority,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
-    <sql id="delete_platform_sys_user_template_detail">
-        delete from platform_sys_user_template_detail
+    <sql id="delete_sys_user_template_detail">
+        delete from sys_user_template_detail
 		where id =?id
     </sql>
-    <sql id="selectone_platform_sys_user_template_detail">
-        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_user_template_detail
+    <sql id="selectone_sys_user_template_detail">
+        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_user_template_detail
 		where  id =?id
     </sql>
-    <sql id="selectall_platform_sys_user_template_detail">
-        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_user_template_detail
+    <sql id="selectall_sys_user_template_detail">
+        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_user_template_detail
     </sql>
 </sqlMap>

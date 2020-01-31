@@ -1,23 +1,23 @@
 <sqlMap>
-    <sql id="insert_platform_sys_user">
-        insert into platform_sys_user
+    <sql id="insert_sys_user">
+        insert into sys_user
 		(`id`,`password`,`salt`,`name`,`full_name`,`mobile`,`email`,`org_id`,`gender`,`type`,`status`,`avatar`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
 		(?id,?password,?salt,?name,?full_name,?mobile,?email,?org_id,?gender,?type,?status,?avatar,?domain,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
-    <sql id="update_platform_sys_user">
-        update platform_sys_user set `id`=?id,`password`=?password,`salt`=?salt,`name`=?name,`full_name`=?full_name,`mobile`=?mobile,`email`=?email,`org_id`=?org_id,`gender`=?gender,`type`=?type,`status`=?status,`avatar`=?avatar,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+    <sql id="update_sys_user">
+        update sys_user set `id`=?id,`password`=?password,`salt`=?salt,`name`=?name,`full_name`=?full_name,`mobile`=?mobile,`email`=?email,`org_id`=?org_id,`gender`=?gender,`type`=?type,`status`=?status,`avatar`=?avatar,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
-    <sql id="delete_platform_sys_user">
-        delete from platform_sys_user
+    <sql id="delete_sys_user">
+        delete from sys_user
 		where id =?id
     </sql>
-    <sql id="selectone_platform_sys_user">
-        select `id`,`password`,`salt`,`name`,`full_name`,`mobile`,`email`,`org_id`,`gender`,`type`,`status`,`avatar`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_user
+    <sql id="selectone_sys_user">
+        select `id`,`password`,`salt`,`name`,`full_name`,`mobile`,`email`,`org_id`,`gender`,`type`,`status`,`avatar`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_user
 		where  id =?id
     </sql>
-    <sql id="selectall_platform_sys_user">
-        select `id`,`password`,`salt`,`name`,`full_name`,`mobile`,`email`,`org_id`,`gender`,`type`,`status`,`avatar`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_user
+    <sql id="selectall_sys_user">
+        select `id`,`password`,`salt`,`name`,`full_name`,`mobile`,`email`,`org_id`,`gender`,`type`,`status`,`avatar`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_user
     </sql>
 </sqlMap>

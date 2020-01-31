@@ -1,23 +1,23 @@
 <sqlMap>
-    <sql id="insert_platform_sys_data_permission_detail">
-        insert into platform_sys_data_permission_detail
+    <sql id="insert_sys_data_permission_detail">
+        insert into sys_data_permission_detail
 		(`id`,`data_permission_id`,`role_id`,`rule`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
 		(?id,?data_permission_id,?role_id,?rule,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
-    <sql id="update_platform_sys_data_permission_detail">
-        update platform_sys_data_permission_detail set `id`=?id,`data_permission_id`=?data_permission_id,`role_id`=?role_id,`rule`=?rule,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+    <sql id="update_sys_data_permission_detail">
+        update sys_data_permission_detail set `id`=?id,`data_permission_id`=?data_permission_id,`role_id`=?role_id,`rule`=?rule,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
-    <sql id="delete_platform_sys_data_permission_detail">
-        delete from platform_sys_data_permission_detail
+    <sql id="delete_sys_data_permission_detail">
+        delete from sys_data_permission_detail
 		where id =?id
     </sql>
-    <sql id="selectone_platform_sys_data_permission_detail">
-        select `id`,`data_permission_id`,`role_id`,`rule`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_data_permission_detail
+    <sql id="selectone_sys_data_permission_detail">
+        select `id`,`data_permission_id`,`role_id`,`rule`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_data_permission_detail
 		where  id =?id
     </sql>
-    <sql id="selectall_platform_sys_data_permission_detail">
-        select `id`,`data_permission_id`,`role_id`,`rule`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from platform_sys_data_permission_detail
+    <sql id="selectall_sys_data_permission_detail">
+        select `id`,`data_permission_id`,`role_id`,`rule`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_data_permission_detail
     </sql>
 </sqlMap>

@@ -198,7 +198,7 @@ func (c *Common) ISArray(m string) bool {
 
 // TableName defined table
 func (c *Common) TableName(app string, table string) string {
-	return fmt.Sprintf("%v_%v", app, table)
+	return fmt.Sprintf("%v", table)
 }
 
 // SplitExtends extends model,bean
