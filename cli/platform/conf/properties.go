@@ -26,6 +26,7 @@ func init() {
 	viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")
 	viper.SetDefault("dir.sql", "sql")
 	viper.SetDefault("dir.sqlmap", "sqlmap")
+	viper.SetDefault("dir.script", "script")
 	viper.SetDefault("dir.log", "log")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")

@@ -37,6 +37,7 @@ var initCmd = &cobra.Command{
 		g.AddPipe(&pipes.SQL{})
 		g.AddPipe(&pipes.SQLMap{})
 		g.AddPipe(&pipes.OAuth{})
+		g.AddPipe(&pipes.Script{})
 		g.AddPipe(&pipes.Doc{})
 		if err := g.Build(wd); err != nil {
 			return err

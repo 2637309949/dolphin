@@ -46,6 +46,7 @@ var (
 			viper.SetDefault("http.static", "/static")
 			viper.SetDefault("dir.sql", "sql")
 			viper.SetDefault("dir.sqlmap", "sqlmap")
+			viper.SetDefault("dir.script", "script")
 			viper.SetDefault("dir.app", "app")
 			viper.SetDefault("dir.doc", "doc")
 			viper.SetDefault("dir.log", "log")
