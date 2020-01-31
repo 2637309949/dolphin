@@ -1,13 +1,20 @@
 <controller name="sys_menu" desc="菜单">
     <api name="add" function="add" table="sys_menu" desc="添加菜单" method="post">
-        <param name="menu" type="$sys_menu" desc="菜单信息" />
+        <param name="sys_menu" type="$sys_menu" desc="菜单信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="update" function="update" table="sys_menu" desc="更新菜单" method="post">
-        <param name="menu" type="$sys_menu" desc="菜单信息" />
+    <api name="del" function="delete" table="sys_menu" desc="删除菜单" method="delete">
+        <param name="sys_menu" type="$sys_menu" desc="菜单" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="update" function="update" table="sys_menu" desc="更新菜单" method="put">
+        <param name="sys_menu" type="$sys_menu" desc="菜单信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>

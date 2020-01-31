@@ -6,7 +6,14 @@
             <failure type="$response"/>
         </return>
     </api>
-    <api name="update" function="update" table="sys_user" desc="更新用户" method="post">
+    <api name="del" function="delete" table="sys_user" desc="删除用户" method="delete">
+        <param name="user" type="$sys_role" desc="用户信息" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="update" function="update" table="sys_user" desc="更新用户" method="put">
         <param name="user" type="$sys_role" desc="用户信息" />
         <return>
             <success type="$response"/>

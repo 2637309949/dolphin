@@ -81,7 +81,7 @@ func WechatActivityAdd(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/wechat/activity/batch_del [post]
+// @Router /api/wechat/activity/batch_del [delete]
 func WechatActivityBatchDel(ctx *Context) {
 	var form []model.WechatActivity
 	var ids []string
@@ -112,7 +112,7 @@ func WechatActivityBatchDel(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/wechat/activity/del [post]
+// @Router /api/wechat/activity/del [delete]
 func WechatActivityDel(ctx *Context) {
 	var form model.WechatActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -139,7 +139,7 @@ func WechatActivityDel(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/wechat/activity/batch_update [post]
+// @Router /api/wechat/activity/batch_update [put]
 func WechatActivityBatchUpdate(ctx *Context) {
 	var form []model.WechatActivity
 	var err error
@@ -173,7 +173,7 @@ func WechatActivityBatchUpdate(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/wechat/activity/update [post]
+// @Router /api/wechat/activity/update [put]
 func WechatActivityUpdate(ctx *Context) {
 	var form model.WechatActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {

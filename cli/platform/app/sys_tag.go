@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -12,11 +13,11 @@ import (
 )
 
 // SysTagAdd api implementation
-// @Summary 添加标签
+// @Summary 添加标签 
 // @Tags 标签
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param role body model.SysTag false "标签信息"
+// @Param sys_tag body model.SysTag false "标签信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
@@ -30,6 +31,8 @@ func SysTagAdd(ctx *Context) {
 	form.ID = null.StringFromUUID()
 	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -38,16 +41,43 @@ func SysTagAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// SysTagUpdate api implementation
-// @Summary 更新标签
+// SysTagDel api implementation
+// @Summary 删除标签 
 // @Tags 标签
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param role body model.SysTag false "标签信息"
+// @Param sys_tag body model.SysUserTemplate false "标签"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/sys/tag/update [post]
+// @Router /api/sys/tag/del [delete]
+func SysTagDel(ctx *Context) {
+	var form model.SysUserTemplate
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.Table(new(model.SysUserTemplate)).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+	})
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysTagUpdate api implementation
+// @Summary 更新标签 
+// @Tags 标签
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_tag body model.SysTag false "标签信息"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/tag/update [put]
 func SysTagUpdate(ctx *Context) {
 	var form model.SysTag
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -65,7 +95,7 @@ func SysTagUpdate(ctx *Context) {
 }
 
 // SysTagPage api implementation
-// @Summary 标签分页查询
+// @Summary 标签分页查询 
 // @Tags 标签
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -87,7 +117,7 @@ func SysTagPage(ctx *Context) {
 }
 
 // SysTagGet api implementation
-// @Summary 获取标签信息
+// @Summary 获取标签信息 
 // @Tags 标签
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "标签id"
@@ -105,3 +135,4 @@ func SysTagGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

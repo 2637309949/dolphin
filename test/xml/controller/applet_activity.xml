@@ -14,28 +14,28 @@
             <failure type="$response" />
         </return>
     </api>
-    <api name="batch_del" function="delete" table="applet_activity" desc="删除活动" method="post">
+    <api name="batch_del" function="delete" table="applet_activity" desc="删除活动" method="delete">
         <param name="activity" type="[]$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />
             <failure type="$response" />
         </return>
     </api>
-    <api name="del" function="delete" table="applet_activity" desc="删除活动" method="post">
+    <api name="del" function="delete" table="applet_activity" desc="删除活动" method="delete">
         <param name="activity" type="$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />
             <failure type="$response" />
         </return>
     </api>
-    <api name="batch_update" function="update" table="applet_activity" desc="更新活动" method="post">
+    <api name="batch_update" function="update" table="applet_activity" desc="更新活动" method="put">
         <param name="activity" type="[]$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />
             <failure type="$response" />
         </return>
     </api>
-    <api name="update" function="update" table="applet_activity" desc="更新活动" method="post">
+    <api name="update" function="update" table="applet_activity" desc="更新活动" method="put">
         <param name="activity" type="$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />

@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -12,11 +13,11 @@ import (
 )
 
 // SysUserTemplateAdd api implementation
-// @Summary 添加用户模板
+// @Summary 添加用户模板 
 // @Tags 用户模板
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param role body model.SysUserTemplate false "用户模板信息"
+// @Param sys_user_template body model.SysUserTemplate false "用户模板信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
@@ -30,6 +31,8 @@ func SysUserTemplateAdd(ctx *Context) {
 	form.ID = null.StringFromUUID()
 	form.CreateTime = null.TimeFromPtr(time.Now().Value())
 	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -38,16 +41,43 @@ func SysUserTemplateAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// SysUserTemplateUpdate api implementation
-// @Summary 更新用户模板
+// SysUserTemplateDel api implementation
+// @Summary 删除用户模板 
 // @Tags 用户模板
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param role body model.SysUserTemplate false "用户模板信息"
+// @Param sys_user_template body model.SysUserTemplate false "用户模板信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/sys/user/template/update [post]
+// @Router /api/sys/user/template/del [delete]
+func SysUserTemplateDel(ctx *Context) {
+	var form model.SysUserTemplate
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.Table(new(model.SysUserTemplate)).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+	})
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysUserTemplateUpdate api implementation
+// @Summary 更新用户模板 
+// @Tags 用户模板
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_user_template body model.SysUserTemplate false "用户模板信息"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/user/template/update [put]
 func SysUserTemplateUpdate(ctx *Context) {
 	var form model.SysUserTemplate
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -65,7 +95,7 @@ func SysUserTemplateUpdate(ctx *Context) {
 }
 
 // SysUserTemplatePage api implementation
-// @Summary 用户模板分页查询
+// @Summary 用户模板分页查询 
 // @Tags 用户模板
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -87,7 +117,7 @@ func SysUserTemplatePage(ctx *Context) {
 }
 
 // SysUserTemplateGet api implementation
-// @Summary 获取用户模板信息
+// @Summary 获取用户模板信息 
 // @Tags 用户模板
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户模板id"
@@ -105,3 +135,4 @@ func SysUserTemplateGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

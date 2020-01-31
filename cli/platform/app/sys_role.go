@@ -5,17 +5,19 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	"github.com/2637309949/dolphin/cli/packages/time"
 )
 
 // SysRoleAdd api implementation
-// @Summary 添加角色
+// @Summary 添加角色 
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param role body model.SysRole false "角色信息"
+// @Param sys_role body model.SysRole false "角色信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
@@ -27,6 +29,10 @@ func SysRoleAdd(ctx *Context) {
 		return
 	}
 	form.ID = null.StringFromUUID()
+	form.CreateTime = null.TimeFromPtr(time.Now().Value())
+	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -35,22 +41,51 @@ func SysRoleAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// SysRoleUpdate api implementation
-// @Summary 更新角色
+// SysRoleDel api implementation
+// @Summary 删除角色 
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param role body model.SysRole false "角色信息"
+// @Param sys_role body model.SysRole false "角色"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/sys/role/update [post]
+// @Router /api/sys/role/del [delete]
+func SysRoleDel(ctx *Context) {
+	var form model.SysRole
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.Table(new(model.SysRole)).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+	})
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysRoleUpdate api implementation
+// @Summary 更新角色 
+// @Tags 角色
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_role body model.SysRole false "角色信息"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/role/update [put]
 func SysRoleUpdate(ctx *Context) {
 	var form model.SysRole
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	ret, err := ctx.DB.ID(form.ID).Update(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -60,7 +95,7 @@ func SysRoleUpdate(ctx *Context) {
 }
 
 // SysRolePage api implementation
-// @Summary 角色分页查询
+// @Summary 角色分页查询 
 // @Tags 角色
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -82,7 +117,7 @@ func SysRolePage(ctx *Context) {
 }
 
 // SysRoleGet api implementation
-// @Summary 获取角色信息
+// @Summary 获取角色信息 
 // @Tags 角色
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "角色id"
@@ -100,3 +135,4 @@ func SysRoleGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

@@ -6,7 +6,14 @@
             <failure type="$response"/>
         </return>
     </api>
-    <api name="update" function="update" table="sys_attachment" desc="更新附件" method="post">
+    <api name="del" function="delete" table="sys_attachment" desc="删除附件" method="delete">
+        <param name="sys_attachment" type="$sys_attachment" desc="附件" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="update" function="update" table="sys_attachment" desc="更新附件" method="put">
         <param name="user" type="$sys_role" desc="附件信息" />
         <return>
             <success type="$response"/>

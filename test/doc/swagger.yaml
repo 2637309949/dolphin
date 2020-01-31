@@ -71,6 +71,45 @@ definitions:
         description: 消息
         type: string
     type: object
+  model.SysAttachment:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      ext:
+        description: ext
+        type: string
+      hash:
+        description: hash
+        type: string
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      size:
+        description: 大小
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      url:
+        description: url
+        type: string
+    type: object
   model.SysMenu:
     properties:
       code:
@@ -124,6 +163,57 @@ definitions:
       url:
         description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
           iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        type: string
+    type: object
+  model.SysOrg:
+    properties:
+      code:
+        description: 编码
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      delete_by:
+        description: 删除人
+        type: string
+      delete_time:
+        description: 删除时间
+        type: string
+      full_name:
+        description: 全名
+        type: string
+      id:
+        description: 主键
+        type: string
+      inheritance:
+        description: 继承关系
+        type: string
+      leader:
+        description: 领导人
+        type: string
+      name:
+        description: 名称
+        type: string
+      order:
+        description: 排序
+        type: number
+      parent:
+        description: 上级组织
+        type: string
+      status:
+        description: 状态 0：禁用 1：正常
+        type: number
+      type:
+        description: 组织类型
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
         type: string
     type: object
   model.SysRole:
@@ -447,7 +537,7 @@ paths:
       tags:
       - 活动
   /api/applet/activity/batch_del:
-    post:
+    delete:
       consumes:
       - application/json
       parameters:
@@ -479,7 +569,7 @@ paths:
       tags:
       - 活动
   /api/applet/activity/batch_update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -511,7 +601,7 @@ paths:
       tags:
       - 活动
   /api/applet/activity/del:
-    post:
+    delete:
       consumes:
       - application/json
       parameters:
@@ -607,7 +697,7 @@ paths:
       tags:
       - 活动
   /api/applet/activity/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -664,6 +754,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加附件
+      tags:
+      - 附件
+  /api/sys/attachment/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件
+        in: body
+        name: sys_attachment
+        schema:
+          $ref: '#/definitions/model.SysAttachment'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除附件
       tags:
       - 附件
   /api/sys/attachment/get:
@@ -725,7 +845,7 @@ paths:
       tags:
       - 附件
   /api/sys/attachment/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -765,7 +885,7 @@ paths:
         type: string
       - description: 菜单信息
         in: body
-        name: menu
+        name: sys_menu
         schema:
           $ref: '#/definitions/model.SysMenu'
       responses:
@@ -782,6 +902,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加菜单
+      tags:
+      - 菜单
+  /api/sys/menu/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单
+        in: body
+        name: sys_menu
+        schema:
+          $ref: '#/definitions/model.SysMenu'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除菜单
       tags:
       - 菜单
   /api/sys/menu/get:
@@ -850,23 +1000,15 @@ paths:
         name: Authorization
         type: string
       responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
         "403":
           description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Response'
       summary: 菜单树形结构
       tags:
       - 菜单
   /api/sys/menu/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -876,7 +1018,7 @@ paths:
         type: string
       - description: 菜单信息
         in: body
-        name: menu
+        name: sys_menu
         schema:
           $ref: '#/definitions/model.SysMenu'
       responses:
@@ -1046,7 +1188,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.SysRole'
+          $ref: '#/definitions/model.SysOrg'
       responses:
         "200":
           description: OK
@@ -1061,6 +1203,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加组织
+      tags:
+      - 组织
+  /api/sys/org/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织
+        in: body
+        name: sys_org
+        schema:
+          $ref: '#/definitions/model.SysOrg'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除组织
       tags:
       - 组织
   /api/sys/org/get:
@@ -1122,7 +1294,7 @@ paths:
       tags:
       - 组织
   /api/sys/org/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1162,7 +1334,7 @@ paths:
         type: string
       - description: 角色信息
         in: body
-        name: role
+        name: sys_role
         schema:
           $ref: '#/definitions/model.SysRole'
       responses:
@@ -1179,6 +1351,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加角色
+      tags:
+      - 角色
+  /api/sys/role/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色
+        in: body
+        name: sys_role
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除角色
       tags:
       - 角色
   /api/sys/role/get:
@@ -1240,7 +1442,7 @@ paths:
       tags:
       - 角色
   /api/sys/role/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1250,7 +1452,7 @@ paths:
         type: string
       - description: 角色信息
         in: body
-        name: role
+        name: sys_role
         schema:
           $ref: '#/definitions/model.SysRole'
       responses:
@@ -1280,7 +1482,7 @@ paths:
         type: string
       - description: 标签信息
         in: body
-        name: role
+        name: sys_tag
         schema:
           $ref: '#/definitions/model.SysTag'
       responses:
@@ -1297,6 +1499,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加标签
+      tags:
+      - 标签
+  /api/sys/tag/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签
+        in: body
+        name: sys_tag
+        schema:
+          $ref: '#/definitions/model.SysUserTemplate'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除标签
       tags:
       - 标签
   /api/sys/tag/get:
@@ -1337,7 +1569,7 @@ paths:
         type: string
       - description: 标签组信息
         in: body
-        name: role
+        name: sys_tag_group
         schema:
           $ref: '#/definitions/model.SysTagGroup'
       responses:
@@ -1354,6 +1586,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加标签组
+      tags:
+      - 标签组
+  /api/sys/tag/group/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签
+        in: body
+        name: sys_tag_group
+        schema:
+          $ref: '#/definitions/model.SysTagGroup'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除标签组
       tags:
       - 标签组
   /api/sys/tag/group/get:
@@ -1415,7 +1677,7 @@ paths:
       tags:
       - 标签组
   /api/sys/tag/group/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1425,7 +1687,7 @@ paths:
         type: string
       - description: 标签组信息
         in: body
-        name: role
+        name: sys_tag_group
         schema:
           $ref: '#/definitions/model.SysTagGroup'
       responses:
@@ -1476,7 +1738,7 @@ paths:
       tags:
       - 标签
   /api/sys/tag/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1486,7 +1748,7 @@ paths:
         type: string
       - description: 标签信息
         in: body
-        name: role
+        name: sys_tag
         schema:
           $ref: '#/definitions/model.SysTag'
       responses:
@@ -1533,6 +1795,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加用户
+      tags:
+      - 用户
+  /api/sys/user/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除用户
       tags:
       - 用户
   /api/sys/user/get:
@@ -1627,7 +1919,7 @@ paths:
         type: string
       - description: 用户模板信息
         in: body
-        name: role
+        name: sys_user_template
         schema:
           $ref: '#/definitions/model.SysUserTemplate'
       responses:
@@ -1644,6 +1936,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 添加用户模板
+      tags:
+      - 用户模板
+  /api/sys/user/template/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板信息
+        in: body
+        name: sys_user_template
+        schema:
+          $ref: '#/definitions/model.SysUserTemplate'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除用户模板
       tags:
       - 用户模板
   /api/sys/user/template/get:
@@ -1705,7 +2027,7 @@ paths:
       tags:
       - 用户模板
   /api/sys/user/template/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1715,7 +2037,7 @@ paths:
         type: string
       - description: 用户模板信息
         in: body
-        name: role
+        name: sys_user_template
         schema:
           $ref: '#/definitions/model.SysUserTemplate'
       responses:
@@ -1735,7 +2057,7 @@ paths:
       tags:
       - 用户模板
   /api/sys/user/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1931,7 +2253,7 @@ paths:
       tags:
       - 活动
   /api/wechat/activity/batch_del:
-    post:
+    delete:
       consumes:
       - application/json
       parameters:
@@ -1963,7 +2285,7 @@ paths:
       tags:
       - 活动
   /api/wechat/activity/batch_update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:
@@ -1995,7 +2317,7 @@ paths:
       tags:
       - 活动
   /api/wechat/activity/del:
-    post:
+    delete:
       consumes:
       - application/json
       parameters:
@@ -2091,7 +2413,7 @@ paths:
       tags:
       - 活动
   /api/wechat/activity/update:
-    post:
+    put:
       consumes:
       - application/json
       parameters:

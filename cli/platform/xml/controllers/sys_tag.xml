@@ -1,13 +1,20 @@
 <controller name="sys_tag" desc="标签">
     <api name="add" function="add" table="sys_tag" desc="添加标签" method="post">
-        <param name="role" type="$sys_tag" desc="标签信息" />
+        <param name="sys_tag" type="$sys_tag" desc="标签信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="update" function="update" table="sys_tag" desc="更新标签" method="post">
-        <param name="role" type="$sys_tag" desc="标签信息" />
+    <api name="del" function="delete" table="sys_tag" desc="删除标签" method="delete">
+        <param name="sys_tag" type="$sys_user_template" desc="标签" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="update" function="update" table="sys_tag" desc="更新标签" method="put">
+        <param name="sys_tag" type="$sys_tag" desc="标签信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>

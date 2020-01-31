@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/cli/platform/model"
+	"github.com/2637309949/dolphin/cli/platform/srv"
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
@@ -12,17 +13,17 @@ import (
 )
 
 // SysOrgAdd api implementation
-// @Summary 添加组织
+// @Summary 添加组织 
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.SysRole false "组织信息"
+// @Param user body model.SysOrg false "组织信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/sys/org/add [post]
 func SysOrgAdd(ctx *Context) {
-	var form model.SysRole
+	var form model.SysOrg
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -40,8 +41,35 @@ func SysOrgAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysOrgDel api implementation
+// @Summary 删除组织 
+// @Tags 组织
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_org body model.SysOrg false "组织"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/org/del [delete]
+func SysOrgDel(ctx *Context) {
+	var form model.SysOrg
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.Table(new(model.SysOrg)).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+	})
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysOrgUpdate api implementation
-// @Summary 更新组织
+// @Summary 更新组织 
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -49,7 +77,7 @@ func SysOrgAdd(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/sys/org/update [post]
+// @Router /api/sys/org/update [put]
 func SysOrgUpdate(ctx *Context) {
 	var form model.SysRole
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -67,7 +95,7 @@ func SysOrgUpdate(ctx *Context) {
 }
 
 // SysOrgPage api implementation
-// @Summary 组织分页查询
+// @Summary 组织分页查询 
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -89,7 +117,7 @@ func SysOrgPage(ctx *Context) {
 }
 
 // SysOrgGet api implementation
-// @Summary 获取组织信息
+// @Summary 获取组织信息 
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "组织id"
@@ -107,3 +135,4 @@ func SysOrgGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

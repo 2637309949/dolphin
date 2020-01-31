@@ -1,13 +1,20 @@
 <controller name="sys_user_template" desc="用户模板">
     <api name="add" function="add" table="sys_user_template" desc="添加用户模板" method="post">
-        <param name="role" type="$sys_user_template" desc="用户模板信息" />
+        <param name="sys_user_template" type="$sys_user_template" desc="用户模板信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="update" function="update" table="sys_user_template" desc="更新用户模板" method="post">
-        <param name="role" type="$sys_user_template" desc="用户模板信息" />
+    <api name="del" function="delete" table="sys_user_template" desc="删除用户模板" method="delete">
+        <param name="sys_user_template" type="$sys_user_template" desc="用户模板信息" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="update" function="update" table="sys_user_template" desc="更新用户模板" method="put">
+        <param name="sys_user_template" type="$sys_user_template" desc="用户模板信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>

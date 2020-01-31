@@ -9,14 +9,15 @@ import (
 
 	"github.com/2637309949/dolphin/cli/packages/gin/binding"
 	"github.com/2637309949/dolphin/cli/packages/null"
+	"github.com/2637309949/dolphin/cli/packages/time"
 )
 
 // SysMenuAdd api implementation
-// @Summary 添加菜单
+// @Summary 添加菜单 
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param menu body model.SysMenu false "菜单信息"
+// @Param sys_menu body model.SysMenu false "菜单信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
@@ -28,6 +29,10 @@ func SysMenuAdd(ctx *Context) {
 		return
 	}
 	form.ID = null.StringFromUUID()
+	form.CreateTime = null.TimeFromPtr(time.Now().Value())
+	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	ret, err := ctx.DB.Insert(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -36,22 +41,51 @@ func SysMenuAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// SysMenuUpdate api implementation
-// @Summary 更新菜单
+// SysMenuDel api implementation
+// @Summary 删除菜单 
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param menu body model.SysMenu false "菜单信息"
+// @Param sys_menu body model.SysMenu false "菜单"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/sys/menu/update [post]
+// @Router /api/sys/menu/del [delete]
+func SysMenuDel(ctx *Context) {
+	var form model.SysMenu
+	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := ctx.DB.Table(new(model.SysMenu)).In("id", form.ID.String).Update(map[string]interface{}{
+		"delete_time": null.TimeFromPtr(time.Now().Value()),
+		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+	})
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysMenuUpdate api implementation
+// @Summary 更新菜单 
+// @Tags 菜单
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_menu body model.SysMenu false "菜单信息"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/menu/update [put]
 func SysMenuUpdate(ctx *Context) {
 	var form model.SysMenu
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
+	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	ret, err := ctx.DB.ID(form.ID).Update(&form)
 	if err != nil {
 		ctx.Fail(err)
@@ -61,7 +95,7 @@ func SysMenuUpdate(ctx *Context) {
 }
 
 // SysMenuList api implementation
-// @Summary 菜单分页查询
+// @Summary 菜单分页查询 
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -83,12 +117,10 @@ func SysMenuList(ctx *Context) {
 }
 
 // SysMenuTree api implementation
-// @Summary 菜单树形结构
+// @Summary 菜单树形结构 
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
 // @Router /api/sys/menu/tree [get]
 func SysMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -101,7 +133,7 @@ func SysMenuTree(ctx *Context) {
 }
 
 // SysMenuGet api implementation
-// @Summary 获取菜单信息
+// @Summary 获取菜单信息 
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "菜单id"
@@ -119,3 +151,4 @@ func SysMenuGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
+

@@ -81,7 +81,7 @@ func AppletActivityAdd(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/applet/activity/batch_del [post]
+// @Router /api/applet/activity/batch_del [delete]
 func AppletActivityBatchDel(ctx *Context) {
 	var form []model.AppletActivity
 	var ids []string
@@ -112,7 +112,7 @@ func AppletActivityBatchDel(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/applet/activity/del [post]
+// @Router /api/applet/activity/del [delete]
 func AppletActivityDel(ctx *Context) {
 	var form model.AppletActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
@@ -139,7 +139,7 @@ func AppletActivityDel(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/applet/activity/batch_update [post]
+// @Router /api/applet/activity/batch_update [put]
 func AppletActivityBatchUpdate(ctx *Context) {
 	var form []model.AppletActivity
 	var err error
@@ -173,7 +173,7 @@ func AppletActivityBatchUpdate(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/applet/activity/update [post]
+// @Router /api/applet/activity/update [put]
 func AppletActivityUpdate(ctx *Context) {
 	var form model.AppletActivity
 	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
