@@ -3,7 +3,11 @@
 
 ### Bean
 ```xml
-<bean name="activity_info" desc="活动信息" packages="github.com/2637309949/dolphin/cli/packages/null" extends="$applet_activity">
+<bean
+    name="activity_info"
+    desc="活动信息"
+    packages="github.com/2637309949/dolphin/cli/packages/null"
+    extends="$applet_activity">
     <prop name="code" desc="编码" type="null.String" />
     <prop name="name" desc="名称" type="null.String" />
 </bean>
@@ -12,7 +16,9 @@
 ### Controler
 ```xml
 <!-- rule of controller name: ?<end>_?<module>_<ctr>_?<action> -->
-<controller name="applet_activity" desc="活动">
+<controller
+    name="applet_activity"
+    desc="活动">
     <api name="batch_add" function="add" table="applet_activity" desc="添加活动" method="post">
         <param name="activity" type="[]$applet_activity" desc="活动对象" />
         <return>
@@ -91,7 +97,10 @@
 
 ### Table
 ```xml
-<table name="applet_activity" desc="活动信息" packages="github.com/2637309949/dolphin/cli/packages/null">
+<table
+    name="applet_activity"
+    desc="活动信息"
+    packages="github.com/2637309949/dolphin/cli/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="title" desc="标题" type="null.String" xorm="varchar(36)" />
 	<column name="content" desc="内容" type="null.String" xorm="varchar(1500)" />
