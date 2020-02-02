@@ -36,23 +36,6 @@ func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e}
 }
 
-// InvokeEngine build engine
-func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
-	return func(base *pApp.Engine) {
-		App.Engine = base
-		build(App)
-	}
-}
-
-// InvokeContext build context
-func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
-	return func(base *pApp.Engine) {
-		App.Engine = base
-		group := App.Group(viper.GetString("http.prefix"))
-		group.Handle(httpMethod, relativePath, handlers...)
-	}
-}
-
 // Auth middles
 func (e *Engine) Auth(mode ...pApp.AuthType) func(*Context) {
 	return func(ctx *Context) {
@@ -82,6 +65,23 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
 		return h.HandlerFunc(rg.engine)
 	}).([]pApp.HandlerFunc)...)
+}
+
+// InvokeEngine build engine
+func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
+	return func(base *pApp.Engine) {
+		App.Engine = base
+		build(App)
+	}
+}
+
+// InvokeContext build context
+func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
+	return func(base *pApp.Engine) {
+		App.Engine = base
+		group := App.Group(viper.GetString("http.prefix"))
+		group.Handle(httpMethod, relativePath, handlers...)
+	}
 }
 
 // NewEngine init Engine
