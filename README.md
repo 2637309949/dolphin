@@ -85,13 +85,6 @@
             <failure type="$response" />
         </return>
     </api>
-    <api name="increase_v2" table="applet_activity" desc="增加次数" method="post" version="2.0" auth="false">
-        <param name="id" type="string" desc="记录id" />
-        <return>
-            <success type="$response" />
-            <failure type="$response" />
-        </return>
-    </api>
 </controller>
 ```
 
