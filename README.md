@@ -1,5 +1,26 @@
-## Dolphin
-![dolphin flash](./assets/dolphin.jpeg)
+# Dolphin, Go Web code generate Framework
+
+<img align="right" width="159px" src="./assets/dolphin.jpeg">
+
+## Contents
+
+- [Installation](#installation)
+- [Quick start](#quick-start)
+
+## Installation
+
+1. The first need [Go](https://golang.org/) installed, then you can use the below Go command to install Dolphin.
+```sh
+$ go get -u github.com/2637309949/dolphin
+```
+
+2. Import it in your code:
+
+```go
+import "github.com/2637309949/dolphin/srv/cli"
+```
+
+## Quick start
 
 ### Bean declare
 ```xml
