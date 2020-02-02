@@ -1,7 +1,7 @@
 ## Dolphin
-![dolphin flash](./assets/dolphin.webp)
+![dolphin flash](./assets/dolphin.jpeg)
 
-### Bean
+### Bean declare
 ```xml
 <bean
     name="activity_info"
@@ -13,7 +13,7 @@
 </bean>
 ```
 
-### Controler
+### Controler declare
 ```xml
 <!-- rule of controller name: ?<end>_?<module>_<ctr>_?<action> -->
 <controller
@@ -95,7 +95,7 @@
 </controller>
 ```
 
-### Table
+### Table declare
 ```xml
 <table
     name="applet_activity"
