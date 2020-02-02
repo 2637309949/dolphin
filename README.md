@@ -1,6 +1,8 @@
-# Dolphin, Go Web code generate Framework
+# Dolphin, Go code generate Framework
 
 <img align="right" width="159px" src="./assets/dolphin.jpeg">
+
+Dolphin is a code generate tools and web Framework written in Go (Golang)
 
 ## Contents
 
@@ -14,10 +16,21 @@
 $ go get -u github.com/2637309949/dolphin
 ```
 
-2. Import it in your code:
+2. Create xml profile in project root dir
 
-```go
-import "github.com/2637309949/dolphin/srv/cli"
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<application name="dolphin" desc="i2推手" packagename="test">
+    <controllers></controllers>
+    <beans></beans>
+    <tables></tables>
+</application>
+```
+
+3. Execute shell script, just a moment
+
+```sh
+go run github.com/2637309949/dolphin/cli build
 ```
 
 ## Quick start
