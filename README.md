@@ -1,5 +1,7 @@
 ## Dolphin
+<div align=center>
 ![dolphin flash](./assets/dolphin.jpeg)
+</div>
 
 ### Bean declare
 ```xml
