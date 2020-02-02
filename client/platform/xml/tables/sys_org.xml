@@ -1,0 +1,20 @@
+<table name="sys_org" desc="组织架构" packages="github.com/2637309949/dolphin/packages/null">
+    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+
+    <column name="parent" desc="上级组织" type="null.String" xorm="varchar(36)" />
+    <column name="inheritance" desc="继承关系" type="null.String" xorm="varchar(500)" />
+	<column name="name" desc="名称" type="null.String" xorm="varchar(36) notnull" />
+	<column name="full_name" desc="全名" type="null.String" xorm="varchar(36)" />
+	<column name="leader" desc="领导人" type="null.String" xorm="varchar(36)" />
+	<column name="code" desc="编码" type="null.String" xorm="varchar(36)" />
+    <column name="type" desc="组织类型" type="null.Int" xorm="notnull" />
+    <column name="order" desc="排序" type="null.Int" xorm="notnull" />
+    <column name="status" desc="状态 0：禁用 1：正常" type="null.Int" xorm="notnull" />
+
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36)" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime" />
+</table>

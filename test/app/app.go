@@ -6,10 +6,10 @@ package app
 import (
 	"sync"
 
-	"github.com/2637309949/dolphin/cli/packages/gin"
-	"github.com/2637309949/dolphin/cli/packages/go-funk"
-	"github.com/2637309949/dolphin/cli/packages/viper"
-	pApp "github.com/2637309949/dolphin/cli/platform/app"
+	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/viper"
+	pApp "github.com/2637309949/dolphin/client/platform/app"
 )
 
 type (

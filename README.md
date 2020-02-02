@@ -30,7 +30,7 @@ $ go get -u github.com/2637309949/dolphin
 3. Execute shell script, just a moment
 
 ```sh
-go run github.com/2637309949/dolphin/cli build
+go run github.com/2637309949/dolphin/client build
 ```
 
 ## Quick start
@@ -40,7 +40,7 @@ go run github.com/2637309949/dolphin/cli build
 <bean
     name="activity_info"
     desc="活动信息"
-    packages="github.com/2637309949/dolphin/cli/packages/null"
+    packages="github.com/2637309949/dolphin/packages/null"
     extends="$applet_activity">
     <prop name="code" desc="编码" type="null.String" />
     <prop name="name" desc="名称" type="null.String" />
@@ -106,7 +106,7 @@ go run github.com/2637309949/dolphin/cli build
 <table
     name="applet_activity"
     desc="活动信息"
-    packages="github.com/2637309949/dolphin/cli/packages/null">
+    packages="github.com/2637309949/dolphin/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="title" desc="标题" type="null.String" xorm="varchar(36)" />
 	<column name="content" desc="内容" type="null.String" xorm="varchar(1500)" />

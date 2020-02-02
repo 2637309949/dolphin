@@ -52,7 +52,7 @@ require (
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
 	github.com/pelletier/go-toml v1.2.0
 	github.com/pkg/errors v0.8.1
-	github.com/prometheus/client_golang v0.9.3 // indirect
+	github.com/prometheus/client_golang v1.4.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/soheilhy/cmux v0.1.4 // indirect
 	github.com/spf13/afero v1.1.2
@@ -75,7 +75,7 @@ require (
 	golang.org/x/crypto v0.0.0-20190510104115-cbcb75029529
 	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553
 	golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be
-	golang.org/x/sys v0.0.0-20200106162015-b016eb3dc98e
+	golang.org/x/sys v0.0.0-20200122134326-e047566fdf82
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
 	golang.org/x/tools v0.0.0-20191114200427-caa0b0f7d508
 	google.golang.org/genproto v0.0.0-20191230161307-f3c370f40bfb // indirect
@@ -84,5 +84,5 @@ require (
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.30.2
 	gopkg.in/ini.v1 v1.51.0
-	gopkg.in/yaml.v2 v2.2.4
+	gopkg.in/yaml.v2 v2.2.5
 )

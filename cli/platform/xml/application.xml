@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<application name="platform" desc="管理平台" packagename="github.com/2637309949/dolphin/cli/platform">
-    <controllers></controllers>
-    <beans></beans>
-    <tables></tables>
-</application>

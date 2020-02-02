@@ -7,9 +7,9 @@ import (
 	"test/model"
 	"test/srv"
 
-	"github.com/2637309949/dolphin/cli/packages/gin/binding"
-	"github.com/2637309949/dolphin/cli/packages/null"
-	"github.com/2637309949/dolphin/cli/packages/time"
+	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/time"
 )
 
 // WechatActivityBatchAdd api implementation

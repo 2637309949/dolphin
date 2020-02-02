@@ -1,4 +1,4 @@
-<table name="wechat_activity" desc="活动信息" packages="github.com/2637309949/dolphin/cli/packages/null">
+<table name="wechat_activity" desc="活动信息" packages="github.com/2637309949/dolphin/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="title" desc="标题" type="null.String" xorm="varchar(36)" />
 	<column name="content" desc="内容" type="null.String" xorm="varchar(1500)" />

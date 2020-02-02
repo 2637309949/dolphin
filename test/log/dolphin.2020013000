@@ -1,8 +1,0 @@
-time="2020/01/30 17:00:06" level=info msg="http listen on port:8081"
-time="2020/01/30 17:00:06" level=info msg="grpc listen on port:9081"
-time="2020/01/30 19:58:29" level=info msg="http listen on port:8081"
-time="2020/01/30 19:58:29" level=info msg="grpc listen on port:9081"
-time="2020/01/30 20:01:20" level=info msg="http listen on port:8081"
-time="2020/01/30 20:01:20" level=info msg="grpc listen on port:9081"
-time="2020/01/30 20:08:48" level=info msg="grpc listen on port:9081"
-time="2020/01/30 20:08:48" level=info msg="http listen on port:8081"

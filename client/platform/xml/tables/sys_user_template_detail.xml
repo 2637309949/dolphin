@@ -1,0 +1,16 @@
+<table name="sys_user_template_detail" desc="用户信息扩展模板明细" packages="github.com/2637309949/dolphin/packages/null">
+    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+    <column name="temp_id" desc="模板ID" type="null.String" xorm="varchar(36) notnull" />
+    <column name="name" desc="名称" type="null.String" xorm="varchar(200) notnull" />
+    <column name="value" desc="值" type="null.String" xorm="varchar(200) notnull" />
+    <column name="type" desc="模板类型 0:数值项 1:单选项 2:文字项 3:列表项" type="null.Int"/>
+	<column name="content" desc="名称" type="null.String" xorm="varchar(200) notnull" />
+    <column name="priority" desc="优先级" type="null.Int"/>
+
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="delete_by" desc="删除人" type="null.String" xorm="varchar(36)" />
+	<column name="delete_time" desc="删除时间" type="null.Time" xorm="datetime" />
+</table>

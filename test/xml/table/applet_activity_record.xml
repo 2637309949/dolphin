@@ -1,4 +1,4 @@
-<table name="applet_activity_record" desc="活动记录" packages="github.com/2637309949/dolphin/cli/packages/null">
+<table name="applet_activity_record" desc="活动记录" packages="github.com/2637309949/dolphin/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="activity_id" desc="活动ID" type="null.String" xorm="varchar(36)" />
 	<column name="material_id" desc="素材ID" type="null.String" xorm="varchar(36)" />
