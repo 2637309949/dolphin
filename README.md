@@ -53,13 +53,6 @@ go run github.com/2637309949/dolphin/cli build
 <controller
     name="applet_activity"
     desc="活动">
-    <api name="batch_add" function="add" table="applet_activity" desc="添加活动" method="post">
-        <param name="activity" type="[]$applet_activity" desc="活动对象" />
-        <return>
-            <success type="$response" />
-            <failure type="$response" />
-        </return>
-    </api>
     <api name="add" function="add" table="applet_activity" desc="添加活动" method="post">
         <param name="activity" type="$applet_activity" desc="活动对象" />
         <return>
@@ -67,22 +60,8 @@ go run github.com/2637309949/dolphin/cli build
             <failure type="$response" />
         </return>
     </api>
-    <api name="batch_del" function="delete" table="applet_activity" desc="删除活动" method="delete">
-        <param name="activity" type="[]$applet_activity" desc="活动对象" />
-        <return>
-            <success type="$response" />
-            <failure type="$response" />
-        </return>
-    </api>
     <api name="del" function="delete" table="applet_activity" desc="删除活动" method="delete">
         <param name="activity" type="$applet_activity" desc="活动对象" />
-        <return>
-            <success type="$response" />
-            <failure type="$response" />
-        </return>
-    </api>
-    <api name="batch_update" function="update" table="applet_activity" desc="更新活动" method="put">
-        <param name="activity" type="[]$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />
             <failure type="$response" />
