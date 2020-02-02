@@ -13,8 +13,8 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/client/platform/model"
-	"github.com/2637309949/dolphin/client/platform/util"
+	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/go-session/cookie"
 	"github.com/go-session/session"
 	"golang.org/x/oauth2"

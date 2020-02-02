@@ -14,8 +14,8 @@ import (
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/client/platform/model"
-	"github.com/2637309949/dolphin/client/platform/util"
+	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/util"
 )
 
 type (

@@ -5,5 +5,5 @@ package platform
 
 import (
 	// platform/app
-	_ "github.com/2637309949/dolphin/client/platform/app"
+	_ "github.com/2637309949/dolphin/platform/app"
 )

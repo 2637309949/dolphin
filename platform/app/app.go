@@ -12,8 +12,8 @@ import (
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 
-	// github.com/2637309949/dolphin/client/platform/conf
-	_ "github.com/2637309949/dolphin/client/platform/conf"
+	// github.com/2637309949/dolphin/platform/conf
+	_ "github.com/2637309949/dolphin/platform/conf"
 	srv "github.com/2637309949/dolphin/packages/fx"
 	"github.com/2637309949/dolphin/packages/fx/cli"
 )

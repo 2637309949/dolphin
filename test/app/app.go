@@ -9,7 +9,7 @@ import (
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/viper"
-	pApp "github.com/2637309949/dolphin/client/platform/app"
+	pApp "github.com/2637309949/dolphin/platform/app"
 )
 
 type (

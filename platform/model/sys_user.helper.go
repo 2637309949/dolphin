@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/2637309949/dolphin/client/platform/util"
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/packages/null"
 	"golang.org/x/crypto/scrypt"
 )
