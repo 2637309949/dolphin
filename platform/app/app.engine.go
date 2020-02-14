@@ -42,6 +42,24 @@ type Engine struct {
 	pool          sync.Pool
 }
 
+// HandlerFunc convert to gin.HandlerFunc
+func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
+	return gin.HandlerFunc(func(ctx *gin.Context) {
+		c := e.pool.Get().(*Context)
+		c.Context = ctx
+		for _, v := range ctx.Keys {
+			switch t := v.(type) {
+			case *xorm.Engine:
+				c.DB = t
+			case AuthInfo:
+				c.AuthInfo = t
+			}
+		}
+		h(c)
+		e.pool.Put(c)
+	})
+}
+
 func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
 }

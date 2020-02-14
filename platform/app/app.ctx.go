@@ -323,28 +323,9 @@ func (q *Query) SetTags() {
 	q.SetString("gte", q.Unescaped(">="))
 }
 
-// HandlerFunc convert to gin.HandlerFunc
-func (h HandlerFunc) HandlerFunc(e *Engine) gin.HandlerFunc {
-	return gin.HandlerFunc(func(ctx *gin.Context) {
-		c := e.pool.Get().(*Context)
-		c.Context = ctx
-		// from upper middles dataset
-		for _, v := range ctx.Keys {
-			switch t := v.(type) {
-			case *xorm.Engine:
-				c.DB = t
-			case AuthInfo:
-				c.AuthInfo = t
-			}
-		}
-		h(c)
-		e.pool.Put(c)
-	})
-}
-
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
 	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
-		return h.HandlerFunc(rg.engine)
+		return rg.engine.HandlerFunc(h)
 	}).([]gin.HandlerFunc)...)
 }
