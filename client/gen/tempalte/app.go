@@ -56,21 +56,19 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 }
 
 // HandlerFunc convert to pApp.HandlerFunc
-func (hf HandlerFunc) HandlerFunc(e *Engine) (phf pApp.HandlerFunc) {
-	phf = pApp.HandlerFunc(func(ctx *pApp.Context) {
+func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
+	return pApp.HandlerFunc(func(ctx *pApp.Context) {
 		c := e.pool.Get().(*Context)
 		c.Context = ctx
-		hf(c)
+		h(c)
 		e.pool.Put(c)
 	})
-	phf.HandlerFunc(e.Engine)
-	return
 }
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
 	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
-		return h.HandlerFunc(rg.engine)
+		return rg.engine.HandlerFunc(h)
 	}).([]pApp.HandlerFunc)...)
 }
 
