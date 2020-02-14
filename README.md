@@ -91,7 +91,7 @@ go run github.com/2637309949/dolphin/client build
             <failure type="$response" />
         </return>
     </api>
-    <api name="increase" table="applet_activity" desc="增加次数" method="post" version="1.0" auth="false">
+    <api name="increase" desc="增加次数" method="post" version="1.0" auth="false">
         <param name="applet_activity" type="$applet_activity" desc="记录id" />
         <return>
             <success type="$response" />
