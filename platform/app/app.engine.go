@@ -329,6 +329,7 @@ func (e *Engine) Run() {
 	e.InitPlatformDB()
 	e.InitBusinessDB()
 	e.InitOAuth2()
+	e.MSet.Release()
 }
 
 // InvokeEngine build engine
