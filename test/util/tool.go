@@ -3,29 +3,55 @@
 
 package util
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 // M defined
 type M map[string]interface{}
 
-var defaultLetters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+// RandType defined
+type RandType int
 
-// RandomString returns a random string with a fixed length
-func RandomString(n int, allowedChars ...[]rune) string {
-	var letters []rune
-	if len(allowedChars) == 0 {
-		letters = defaultLetters
-	} else {
-		letters = allowedChars[0]
-	}
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letters[rand.Intn(len(letters))]
-	}
-	return string(b)
-}
+// const defined
+const (
+	RandNum RandType = iota
+	RandNumUperChar
+	RandNumChar
+)
 
-// RandomInt generates a random int, based on a min and max values
-func RandomInt(min, max int) int {
-	return min + rand.Intn(max-min)
+// RandString defined
+func RandString(randLen int, randType RandType) string {
+	randUint := make([]byte, randLen)
+	rand.Seed(time.Now().UnixNano())
+	switch randType {
+	case RandNum:
+		for i := 0; i < randLen; i++ {
+			randUint[i] = uint8(48 + rand.Intn(10))
+		}
+	case RandNumUperChar:
+		for i := 0; i < randLen; i++ {
+			r := rand.Intn(36)
+			switch {
+			case r < 10:
+				randUint[i] = uint8(48 + r)
+			case r < 36:
+				randUint[i] = uint8(55 + r)
+			}
+		}
+	case RandNumChar:
+		for i := 0; i < randLen; i++ {
+			r := rand.Intn(62)
+			switch {
+			case r < 10:
+				randUint[i] = uint8(48 + r)
+			case r < 36:
+				randUint[i] = uint8(55 + r)
+			case r < 62:
+				randUint[i] = uint8(61 + r)
+			}
+		}
+	}
+	return string(randUint)
 }

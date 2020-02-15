@@ -3,8 +3,8 @@ package model
 import (
 	"fmt"
 
-	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/platform/util"
 	"golang.org/x/crypto/scrypt"
 )
 
@@ -19,11 +19,8 @@ func (u *SysUser) Encode() (string, error) {
 
 // SetPassword Method to set salt and hash the password for a user
 func (u *SysUser) SetPassword(password string) {
-	b, err := util.RandomBytes(16)
-	if err != nil {
-		panic(err)
-	}
-	u.Salt = null.StringFrom(fmt.Sprintf("%x", b))
+	b := util.RandString(16, util.RandNumChar)
+	u.Salt = null.StringFrom(b)
 	dk, err := scrypt.Key([]byte(password), []byte(u.Salt.String), 512, 8, 1, 64)
 	if err != nil {
 		panic(err)

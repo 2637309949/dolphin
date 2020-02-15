@@ -35,3 +35,5 @@ time="2020/02/15 14:14:14" level=info msg="302 |     281.262µs |       127.0.0.
 time="2020/02/15 14:21:04" level=info msg="grpc listen on port:9081"
 time="2020/02/15 14:21:04" level=info msg="http listen on port:8081"
 time="2020/02/15 14:21:09" level=info msg="304 |      255.09µs |       127.0.0.1 |\x1b[97;44m GET     \x1b[0m /static/auth/login.html"
+time="2020/02/15 14:29:41" level=info msg="http listen on port:8081"
+time="2020/02/15 14:29:41" level=info msg="grpc listen on port:9081"
