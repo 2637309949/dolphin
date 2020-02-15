@@ -23,19 +23,19 @@ import (
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/batch_add [post]
 func AppletActivityBatchAdd(ctx *Context) {
-	var form []model.AppletActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload []model.AppletActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	for _, f := range form {
-		f.ID = null.StringFromUUID()
-		f.CreateTime = null.TimeFromPtr(time.Now().Value())
-		f.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
-		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	for _, form := range payload {
+		form.ID = null.StringFromUUID()
+		form.CreateTime = null.TimeFromPtr(time.Now().Value())
+		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	}
-	ret, err := ctx.DB.Insert(&form)
+	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -54,17 +54,17 @@ func AppletActivityBatchAdd(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/add [post]
 func AppletActivityAdd(ctx *Context) {
-	var form model.AppletActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.AppletActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	form.ID = null.StringFromUUID()
-	form.CreateTime = null.TimeFromPtr(time.Now().Value())
-	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	ret, err := ctx.DB.Insert(&form)
+	payload.ID = null.StringFromUUID()
+	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
+	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -83,14 +83,14 @@ func AppletActivityAdd(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/batch_del [delete]
 func AppletActivityBatchDel(ctx *Context) {
-	var form []model.AppletActivity
+	var payload []model.AppletActivity
 	var ids []string
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	for _, f := range form {
-		ids = append(ids, f.ID.String)
+	for _, form := range payload {
+		ids = append(ids, form.ID.String)
 	}
 	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", ids).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
@@ -114,12 +114,12 @@ func AppletActivityBatchDel(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/del [delete]
 func AppletActivityDel(ctx *Context) {
-	var form model.AppletActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.AppletActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", form.ID.String).Update(map[string]interface{}{
+	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", payload.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
 		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
@@ -141,19 +141,19 @@ func AppletActivityDel(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/batch_update [put]
 func AppletActivityBatchUpdate(ctx *Context) {
-	var form []model.AppletActivity
+	var payload []model.AppletActivity
 	var err error
 	var ret []int64
 	var r int64
-	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
 	s := ctx.DB.NewSession()
-	for _, f := range form {
-		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
-		r, err = s.ID(f.ID).Update(&f)
+	for _, form := range payload {
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		r, err = s.ID(form.ID).Update(&form)
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -175,14 +175,14 @@ func AppletActivityBatchUpdate(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/applet/activity/update [put]
 func AppletActivityUpdate(ctx *Context) {
-	var form model.AppletActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.AppletActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	ret, err := ctx.DB.ID(form.ID).Update(&form)
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -247,12 +247,12 @@ func AppletActivityOne(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/v1/applet/activity/increase [post]
 func AppletActivityIncrease(ctx *Context) {
-	var form model.AppletActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.AppletActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.AppletActivityAction(form)
+	ret, err := srv.AppletActivityAction(payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -265,18 +265,18 @@ func AppletActivityIncrease(ctx *Context) {
 // @Tags 活动
 // @version 2.0
 // @Accept application/json
-// @Param id body string false "记录id"
+// @Param id body []string false "记录id"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/v2/applet/activity/increase_v2 [post]
 func AppletActivityIncreaseV2(ctx *Context) {
-	var form string
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload []string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.AppletActivityAction(form)
+	ret, err := srv.AppletActivityAction(payload)
 	if err != nil {
 		ctx.Fail(err)
 		return

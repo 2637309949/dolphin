@@ -2147,7 +2147,9 @@ paths:
         in: body
         name: id
         schema:
-          type: string
+          items:
+            type: string
+          type: array
       responses:
         "200":
           description: OK

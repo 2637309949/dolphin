@@ -23,19 +23,19 @@ import (
 // @Failure 500 {object} model.Response
 // @Router /api/wechat/activity/batch_add [post]
 func WechatActivityBatchAdd(ctx *Context) {
-	var form []model.WechatActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload []model.WechatActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	for _, f := range form {
-		f.ID = null.StringFromUUID()
-		f.CreateTime = null.TimeFromPtr(time.Now().Value())
-		f.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
-		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	for _, form := range payload {
+		form.ID = null.StringFromUUID()
+		form.CreateTime = null.TimeFromPtr(time.Now().Value())
+		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	}
-	ret, err := ctx.DB.Insert(&form)
+	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -54,17 +54,17 @@ func WechatActivityBatchAdd(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/wechat/activity/add [post]
 func WechatActivityAdd(ctx *Context) {
-	var form model.WechatActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.WechatActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	form.ID = null.StringFromUUID()
-	form.CreateTime = null.TimeFromPtr(time.Now().Value())
-	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	ret, err := ctx.DB.Insert(&form)
+	payload.ID = null.StringFromUUID()
+	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
+	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -83,14 +83,14 @@ func WechatActivityAdd(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/wechat/activity/batch_del [delete]
 func WechatActivityBatchDel(ctx *Context) {
-	var form []model.WechatActivity
+	var payload []model.WechatActivity
 	var ids []string
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	for _, f := range form {
-		ids = append(ids, f.ID.String)
+	for _, form := range payload {
+		ids = append(ids, form.ID.String)
 	}
 	ret, err := ctx.DB.Table(new(model.WechatActivity)).In("id", ids).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
@@ -114,12 +114,12 @@ func WechatActivityBatchDel(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/wechat/activity/del [delete]
 func WechatActivityDel(ctx *Context) {
-	var form model.WechatActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.WechatActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.WechatActivity)).In("id", form.ID.String).Update(map[string]interface{}{
+	ret, err := ctx.DB.Table(new(model.WechatActivity)).In("id", payload.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
 		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
@@ -141,19 +141,19 @@ func WechatActivityDel(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/wechat/activity/batch_update [put]
 func WechatActivityBatchUpdate(ctx *Context) {
-	var form []model.WechatActivity
+	var payload []model.WechatActivity
 	var err error
 	var ret []int64
 	var r int64
-	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
 	s := ctx.DB.NewSession()
-	for _, f := range form {
-		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
-		r, err = s.ID(f.ID).Update(&f)
+	for _, form := range payload {
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		r, err = s.ID(form.ID).Update(&form)
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -175,14 +175,14 @@ func WechatActivityBatchUpdate(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/wechat/activity/update [put]
 func WechatActivityUpdate(ctx *Context) {
-	var form model.WechatActivity
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.WechatActivity
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	ret, err := ctx.DB.ID(form.ID).Update(&form)
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -247,12 +247,12 @@ func WechatActivityOne(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/v1/wechat/activity/increase [post]
 func WechatActivityIncrease(ctx *Context) {
-	var form string
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.WechatActivityAction(form)
+	ret, err := srv.WechatActivityAction(payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -271,12 +271,12 @@ func WechatActivityIncrease(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/v2/wechat/activity/increase_v2 [post]
 func WechatActivityIncreaseV2(ctx *Context) {
-	var form string
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.WechatActivityAction(form)
+	ret, err := srv.WechatActivityAction(payload)
 	if err != nil {
 		ctx.Fail(err)
 		return

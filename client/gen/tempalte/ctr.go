@@ -58,27 +58,27 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ctx.Success(ret)
 {{- else if eq .Function "add"}}
 	{{- $bp := index .Params 0}}
-	var form {{$bp.Ref $bp.Type}}
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
 	{{- if .ISArray $bp.Type}}
-	for _, f := range form {
-		f.ID = null.StringFromUUID()
-		f.CreateTime = null.TimeFromPtr(time.Now().Value())
-		f.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
-		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	for _, form := range payload {
+		form.ID = null.StringFromUUID()
+		form.CreateTime = null.TimeFromPtr(time.Now().Value())
+		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	}
 	{{- else}}
-	form.ID = null.StringFromUUID()
-	form.CreateTime = null.TimeFromPtr(time.Now().Value())
-	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.ID = null.StringFromUUID()
+	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
+	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	{{- end}}
-	ret, err := ctx.DB.Insert(&form)
+	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -88,14 +88,14 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $bp := index .Params 0}}
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
-	var form {{$bp.Ref $bp.Type}}
+	var payload {{$bp.Ref $bp.Type}}
 	var ids []string
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	for _, f := range form {
-		ids = append(ids, f.ID.String)
+	for _, form := range payload {
+		ids = append(ids, form.ID.String)
 	}
 	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", ids).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
@@ -107,12 +107,12 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- else }}
-	var form {{$bp.Ref $bp.Type}}
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", form.ID.String).Update(map[string]interface{}{
+	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", payload.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
 		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
@@ -126,19 +126,19 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $bp := index .Params 0}}
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
-	var form {{$bp.Ref $bp.Type}}
+	var payload {{$bp.Ref $bp.Type}}
 	var err error
 	var ret []int64
 	var r int64
-	if err = ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
 	s := ctx.DB.NewSession()
-	for _, f := range form {
-		f.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		f.UpdateTime = null.TimeFromPtr(time.Now().Value())
-		r, err = s.ID(f.ID).Update(&f)
+	for _, form := range payload {
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		r, err = s.ID(form.ID).Update(&form)
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -148,14 +148,14 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- else }}
-	var form {{$bp.Ref $bp.Type}}
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	ret, err := ctx.DB.ID(form.ID).Update(&form)
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -188,15 +188,15 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- else}}
 	{{- if ne (len .Params) 0}}
 	{{- $bp := index .Params 0}}
-	var form {{$bp.Ref $bp.Type}}
+	var payload {{$bp.Ref $bp.Type}}
 	{{- else}}
-	var form struct{}
+	var payload struct{}
 	{{- end}}
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}Action(form)
+	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}Action(payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
