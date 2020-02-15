@@ -22,17 +22,17 @@ import (
 // @Failure 500 {object} model.Response
 // @Router /api/sys/org/add [post]
 func SysOrgAdd(ctx *Context) {
-	var form model.SysOrg
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.SysOrg
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	form.ID = null.StringFromUUID()
-	form.CreateTime = null.TimeFromPtr(time.Now().Value())
-	form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	ret, err := ctx.DB.Insert(&form)
+	payload.ID = null.StringFromUUID()
+	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
+	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -51,12 +51,12 @@ func SysOrgAdd(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/org/del [delete]
 func SysOrgDel(ctx *Context) {
-	var form model.SysOrg
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.SysOrg
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.SysOrg)).In("id", form.ID.String).Update(map[string]interface{}{
+	ret, err := ctx.DB.Table(new(model.SysOrg)).In("id", payload.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
 		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
@@ -78,14 +78,14 @@ func SysOrgDel(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/org/update [put]
 func SysOrgUpdate(ctx *Context) {
-	var form model.SysRole
-	if err := ctx.ShouldBindBodyWith(&form, binding.JSON); err != nil {
+	var payload model.SysRole
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	form.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	ret, err := ctx.DB.ID(form.ID).Update(&form)
+	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
