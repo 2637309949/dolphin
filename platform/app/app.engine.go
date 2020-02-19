@@ -70,7 +70,7 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 }
 
 // Migration models
-func (e *Engine) Migration(name string, db *xorm.Engine) error {
+func (e *Engine) migration(name string, db *xorm.Engine) error {
 	e.MSet.ForEach(func(n string, m interface{}) {
 		if n == name {
 			db.Sync2(m)
@@ -79,8 +79,7 @@ func (e *Engine) Migration(name string, db *xorm.Engine) error {
 	return nil
 }
 
-// InitBusinessDB load BusinessDBSet
-func (e *Engine) InitBusinessDB() {
+func (e *Engine) initBusinessDB() {
 	domains := []model.SysDomain{}
 	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null and sync_flag=0").Find(&domains); err != nil {
 		logrus.Fatal(err)
@@ -101,53 +100,12 @@ func (e *Engine) InitBusinessDB() {
 	})
 	for _, db := range e.BusinessDBSet {
 		for _, n := range nset {
-			e.Migration(n, db)
+			e.migration(n, db)
 		}
 	}
 }
 
-// GetBusinessDB businessDB
-func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
-	db, ok = e.BusinessDBSet[domain]
-	return
-}
-
-// AddBusinessDB adddb
-func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
-	sqlDir := viper.GetString("dir.sql")
-	sqlDir = path.Join(".", sqlDir)
-
-	db, err := xorm.NewEngine(driverName, dataSource)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
-	if viper.GetString("app.mode") == "debug" {
-		xLogger.ShowSQL(true)
-	}
-	db.SetLogger(xLogger)
-
-	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
-		logrus.Fatal(err)
-	}
-	e.BusinessDBSet[domain] = db
-}
-
-// InitPlatformDB adddb
-func (e *Engine) InitPlatformDB() {
+func (e *Engine) initPlatformDB() {
 	var err error
 	sqlDir := viper.GetString("dir.sql")
 	sqlDir = path.Join(".", sqlDir)
@@ -172,7 +130,7 @@ func (e *Engine) InitPlatformDB() {
 			logrus.Fatal(err)
 		}
 	}
-	e.Migration(Name, e.PlatformDB)
+	e.migration(Name, e.PlatformDB)
 
 	s := e.PlatformDB.NewSession()
 	domain := model.SysDomain{
@@ -235,8 +193,53 @@ func (e *Engine) InitPlatformDB() {
 	}
 }
 
+func (e *Engine) initDB() {
+	e.initPlatformDB()
+	e.initBusinessDB()
+}
+
+// GetBusinessDB businessDB
+func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
+	db, ok = e.BusinessDBSet[domain]
+	return
+}
+
+// AddBusinessDB adddb
+func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
+	sqlDir := viper.GetString("dir.sql")
+	sqlDir = path.Join(".", sqlDir)
+
+	db, err := xorm.NewEngine(driverName, dataSource)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+	if viper.GetString("app.mode") == "debug" {
+		xLogger.ShowSQL(true)
+	}
+	db.SetLogger(xLogger)
+
+	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	e.BusinessDBSet[domain] = db
+}
+
 // InitRedis redis
-func (e *Engine) InitRedis() {
+func (e *Engine) initRedis() {
 	uri, err := util.Parse(viper.GetString("rd.dataSource"))
 	if err != nil {
 		logrus.Fatal(err)
@@ -256,8 +259,7 @@ func (e *Engine) InitRedis() {
 	e.Redis = rds
 }
 
-// InitOAuth2 oauth2
-func (e *Engine) InitOAuth2() {
+func (e *Engine) initOAuth() {
 	manager := manage.NewDefaultManager()
 	clientStore := store.NewClientStore()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
@@ -325,10 +327,9 @@ func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 
 // Run booting system
 func (e *Engine) Run() {
-	e.InitRedis()
-	e.InitPlatformDB()
-	e.InitBusinessDB()
-	e.InitOAuth2()
+	e.initRedis()
+	e.initDB()
+	e.initOAuth()
 	e.MSet.Release()
 }
 
@@ -347,8 +348,7 @@ func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFu
 	}
 }
 
-// NewEngine init Engine
-func NewEngine() *Engine {
+func buildEngine() *Engine {
 	e := &Engine{}
 	e.MSet = &MSet{m: map[string][]interface{}{}}
 	e.BusinessDBSet = map[string]*xorm.Engine{}
@@ -376,5 +376,4 @@ func NewEngine() *Engine {
 	return e
 }
 
-// App instance
-var App = NewEngine()
+var App = buildEngine()

@@ -89,8 +89,7 @@ func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFu
 	}
 }
 
-// NewEngine init Engine
-func NewEngine() *Engine {
+func buildEngine() *Engine {
 	e := &Engine{}
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
@@ -99,5 +98,5 @@ func NewEngine() *Engine {
 }
 
 // App instance
-var App = NewEngine()
+var App = buildEngine()
 `
