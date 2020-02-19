@@ -333,19 +333,33 @@ func (e *Engine) Run() {
 	e.MSet.Release()
 }
 
-// InvokeEngine build engine
-func InvokeEngine(build func(*Engine)) func(*Engine) {
+// invokeEngine build engine
+func invokeEngine(build func(*Engine)) func(*Engine) {
 	return func(e *Engine) {
 		build(e)
 	}
 }
 
 // InvokeContext build context
-func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
+func invokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
 	return func(e *Engine) {
 		group := e.Group(viper.GetString("http.prefix"))
 		group.Handle(httpMethod, relativePath, handlers...)
 	}
+}
+
+func ginFormatter(param gin.LogFormatterParams) string {
+	if param.Latency > time.Minute {
+		param.Latency = param.Latency - param.Latency%time.Second
+	}
+	return fmt.Sprintf("%3d | %13v | %15s |%-7s %s%s",
+		param.StatusCode,
+		param.Latency,
+		param.ClientIP,
+		param.Method,
+		param.Path,
+		param.ErrorMessage,
+	)
 }
 
 func buildEngine() *Engine {
@@ -359,7 +373,8 @@ func buildEngine() *Engine {
 	}
 	e.Gin = gin.New()
 	e.Gin.Use(gin.LoggerWithConfig(gin.LoggerConfig{
-		Output: logrus.GetOutput(),
+		Output:    logrus.GetOutput(),
+		Formatter: ginFormatter,
 	}))
 	e.Gin.Use(Recovery(func(ctx *gin.Context, err interface{}) {
 		code := 500
@@ -376,4 +391,5 @@ func buildEngine() *Engine {
 	return e
 }
 
+// App defined application
 var App = buildEngine()
