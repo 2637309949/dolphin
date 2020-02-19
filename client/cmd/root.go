@@ -53,7 +53,6 @@ var (
 			viper.SetDefault("dir.util", "util")
 			viper.SetDefault("dir.model", "model")
 			viper.SetDefault("dir.srv", "srv")
-			viper.SetDefault("cli.plugins", "")
 			viper.SetDefault("oauth.id", "Y76U9344RABF4")
 			viper.SetDefault("oauth.secret", "98UYO6FVB865")
 			viper.SetDefault("oauth.login", "/static/auth/login.html")
