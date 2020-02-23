@@ -34,6 +34,5 @@ func (u *SysUser) ValidPassword(password string) bool {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("fmt.Sprintf(dk) = ", fmt.Sprintf("%x", dk))
 	return u.Password.String == fmt.Sprintf("%x", dk)
 }

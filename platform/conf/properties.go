@@ -46,7 +46,6 @@ func init() {
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("unable to read config file")
 	}
-
 	if err := viper.WriteConfig(); err != nil {
 		logrus.Warn("unable to save config file")
 	}
