@@ -15,7 +15,7 @@ import (
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/oauth2/errors"
+	oError "github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
@@ -135,8 +135,8 @@ func (e *Engine) initPlatformDB() {
 	s := e.PlatformDB.NewSession()
 	domain := model.SysDomain{
 		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
-		Name:       null.StringFrom("系统默认"),
-		FullName:   null.StringFrom("系统默认"),
+		Name:       null.StringFrom("default"),
+		FullName:   null.StringFrom("default"),
 		DataSource: null.StringFrom(""),
 		DriverName: null.StringFrom("mysql"),
 		DomainUrl:  null.StringFrom("localhost"),
@@ -296,11 +296,11 @@ func (e *Engine) initOAuth() {
 		store.Save()
 		return
 	})
-	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
+	e.OAuth2.SetInternalErrorHandler(func(err error) (re *oError.Response) {
 		logrus.Error("internal error:", err.Error())
 		return
 	})
-	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
+	e.OAuth2.SetResponseErrorHandler(func(re *oError.Response) {
 		logrus.Error("response error:", re.Error.Error())
 	})
 }
@@ -378,10 +378,14 @@ func buildEngine() *Engine {
 	}))
 	e.Gin.Use(Recovery(func(ctx *gin.Context, err interface{}) {
 		code := 500
+		msg := fmt.Sprintf("%v", err)
 		if err, ok := err.(model.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusInternalServerError, util.M{"code": code, "message": err})
+		ctx.JSON(http.StatusOK, model.Response{
+			Code: null.IntFrom(int64(code)),
+			Msg:  null.StringFrom(msg),
+		})
 	}))
 	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
 	e.Gin.Static(viper.GetString("http.static"), path.Join(util.Getwd(), viper.GetString("http.static")))
