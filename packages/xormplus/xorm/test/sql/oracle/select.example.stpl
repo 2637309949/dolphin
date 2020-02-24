@@ -1,7 +1,0 @@
-select id,userid,title,createdatetime,content 
-from Article where  
-{% if count>1%}
-id=?id
-{% else%}
-userid=?userid
-{% endif %}

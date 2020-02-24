@@ -131,7 +131,6 @@ func (e *Engine) initPlatformDB() {
 		}
 	}
 	e.migration(Name, e.PlatformDB)
-
 	s := e.PlatformDB.NewSession()
 	domain := model.SysDomain{
 		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
@@ -208,18 +207,15 @@ func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
 func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 	sqlDir := viper.GetString("dir.sql")
 	sqlDir = path.Join(".", sqlDir)
-
 	db, err := xorm.NewEngine(driverName, dataSource)
 	if err != nil {
 		logrus.Fatal(err)
 	}
-
 	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
 	if viper.GetString("app.mode") == "debug" {
 		xLogger.ShowSQL(true)
 	}
 	db.SetLogger(xLogger)
-
 	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
 		logrus.Fatal(err)
 	}
@@ -291,9 +287,6 @@ func (e *Engine) initOAuth() {
 		}
 		uid = userID.(string)
 		dm = domain.(string)
-		store.Delete("LoggedInUserID")
-		store.Delete("LoggedInDomain")
-		store.Save()
 		return
 	})
 	e.OAuth2.SetInternalErrorHandler(func(err error) (re *oError.Response) {

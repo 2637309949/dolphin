@@ -22,10 +22,13 @@ import (
 
 func init() {
 	var hashKey = []byte("FF51A553-72FC-478B-9AEF-93D6F506DE91")
-	session.SetStore(
-		cookie.NewCookieStore(
-			cookie.SetCookieName("cookie_store_id"),
-			cookie.SetHashKey(hashKey),
+	session.InitManager(
+		// session.SetCookieName("session_id"),
+		session.SetStore(
+			cookie.NewCookieStore(
+				cookie.SetCookieName("demo_session_id"),
+				cookie.SetHashKey(hashKey),
+			),
 		),
 	)
 }
