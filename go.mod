@@ -23,17 +23,16 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/ghodss/yaml v1.0.0
 	github.com/gin-contrib/sse v0.1.0
+	github.com/go-asn1-ber/asn1-ber v1.4.1
 	github.com/go-errors/errors v1.0.1
 	github.com/go-openapi/jsonreference v0.19.3
 	github.com/go-openapi/spec v0.19.5
 	github.com/go-playground/validator/v10 v10.0.1
-	github.com/go-session/cookie v3.0.1+incompatible
-	github.com/go-session/session v3.1.2+incompatible
 	github.com/gogo/protobuf v1.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef // indirect
 	github.com/golang/protobuf v1.3.2
 	github.com/google/btree v1.0.0 // indirect
-	github.com/gorilla/securecookie v1.1.1 // indirect
+	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect

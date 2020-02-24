@@ -13,6 +13,7 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	oError "github.com/2637309949/dolphin/packages/oauth2/errors"
@@ -27,7 +28,6 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
-	"github.com/go-session/session"
 )
 
 // Engine defined parse app engine
