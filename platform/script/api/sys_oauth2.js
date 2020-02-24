@@ -6,7 +6,7 @@ const axios = require('../axios')
 
 // Login 登录信息
 module.exports.Login = (data) => {
-	const url = '/api/sys/oauth2/login'
+	const url = '/api/sys/cas/login'
 	return axios({
 		url: url,
 		method: 'post',
@@ -16,7 +16,7 @@ module.exports.Login = (data) => {
 
 // Affirm 用户授权
 module.exports.Affirm = (data) => {
-	const url = '/api/sys/oauth2/affirm'
+	const url = '/api/sys/cas/affirm'
 	return axios({
 		url: url,
 		method: 'post',
@@ -26,7 +26,7 @@ module.exports.Affirm = (data) => {
 
 // Authorize 用户授权
 module.exports.Authorize = (data) => {
-	const url = '/api/sys/oauth2/authorize'
+	const url = '/api/sys/cas/authorize'
 	return axios({
 		url: url,
 		method: 'get',
@@ -36,7 +36,7 @@ module.exports.Authorize = (data) => {
 
 // Token 获取令牌
 module.exports.Token = (data) => {
-	const url = '/api/sys/oauth2/token'
+	const url = '/api/sys/cas/token'
 	return axios({
 		url: url,
 		method: 'post',
@@ -46,7 +46,7 @@ module.exports.Token = (data) => {
 
 // URL 授权地址
 module.exports.URL = (data) => {
-	const url = '/api/sys/oauth2/url'
+	const url = '/api/sys/cas/url'
 	return axios({
 		url: url,
 		method: 'get',
@@ -56,7 +56,7 @@ module.exports.URL = (data) => {
 
 // Oauth2 授权回调
 module.exports.Oauth2 = (data) => {
-	const url = '/api/sys/oauth2/oauth2'
+	const url = '/api/sys/cas/oauth2'
 	return axios({
 		url: url,
 		method: 'get',
@@ -66,7 +66,7 @@ module.exports.Oauth2 = (data) => {
 
 // Refresh 刷新令牌
 module.exports.Refresh = (data) => {
-	const url = '/api/sys/oauth2/refresh'
+	const url = '/api/sys/cas/refresh'
 	return axios({
 		url: url,
 		method: 'get',

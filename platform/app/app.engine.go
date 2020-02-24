@@ -165,7 +165,7 @@ func (e *Engine) initPlatformDB() {
 	}
 	admin := model.SysUser{
 		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
-		Password:   null.StringFrom("123456"),
+		Password:   null.StringFrom("admin"),
 		Name:       null.StringFrom("admin"),
 		FullName:   null.StringFrom("admin"),
 		Status:     null.IntFrom(1),
@@ -367,27 +367,13 @@ func buildEngine() *Engine {
 	e.MSet = &MSet{m: map[string][]interface{}{}}
 	e.BusinessDBSet = map[string]*xorm.Engine{}
 	e.GRPC = grpc.NewServer()
-
 	if viper.GetString("app.mode") != "debug" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	e.Gin = gin.New()
-	e.Gin.Use(gin.LoggerWithConfig(gin.LoggerConfig{
-		Output:    logrus.GetOutput(),
-		Formatter: ginFormatter,
-	}))
-	e.Gin.Use(Recovery(func(ctx *gin.Context, err interface{}) {
-		code := 500
-		msg := fmt.Sprintf("%v", err)
-		if err, ok := err.(model.Error); ok {
-			code = err.Code
-		}
-		ctx.JSON(http.StatusOK, model.Response{
-			Code: null.IntFrom(int64(code)),
-			Msg:  null.StringFrom(msg),
-		})
-	}))
-	e.Gin.Use(util.ProcessMethodOverride(e.Gin))
+	e.Gin.Use(GinLoggerWithConfig)
+	e.Gin.Use(GinRecovery)
+	e.Gin.Use(GinProcessMethodOverride(e.Gin))
 	e.Gin.Static(viper.GetString("http.static"), path.Join(util.Getwd(), viper.GetString("http.static")))
 	e.pool.New = func() interface{} {
 		return e.allocateContext()

@@ -1037,7 +1037,7 @@ paths:
       summary: 更新菜单
       tags:
       - 菜单
-  /api/sys/oauth2/affirm:
+  /api/sys/cas/affirm:
     post:
       consumes:
       - application/json
@@ -1057,7 +1057,7 @@ paths:
       summary: 用户授权
       tags:
       - OAuth授权
-  /api/sys/oauth2/authorize:
+  /api/sys/cas/authorize:
     get:
       responses:
         "200":
@@ -1075,7 +1075,7 @@ paths:
       summary: 用户授权
       tags:
       - OAuth授权
-  /api/sys/oauth2/login:
+  /api/sys/cas/login:
     post:
       consumes:
       - application/json
@@ -1101,7 +1101,7 @@ paths:
       summary: 登录信息
       tags:
       - OAuth授权
-  /api/sys/oauth2/oauth2:
+  /api/sys/cas/oauth2:
     get:
       responses:
         "200":
@@ -1119,7 +1119,7 @@ paths:
       summary: 授权回调
       tags:
       - OAuth授权
-  /api/sys/oauth2/refresh:
+  /api/sys/cas/refresh:
     get:
       responses:
         "200":
@@ -1137,7 +1137,7 @@ paths:
       summary: 刷新令牌
       tags:
       - OAuth授权
-  /api/sys/oauth2/token:
+  /api/sys/cas/token:
     post:
       consumes:
       - application/json
@@ -1157,7 +1157,7 @@ paths:
       summary: 获取令牌
       tags:
       - OAuth授权
-  /api/sys/oauth2/url:
+  /api/sys/cas/url:
     get:
       responses:
         "200":
@@ -2446,12 +2446,12 @@ paths:
       - 活动
 securityDefinitions:
   OAuth2AccessCode:
-    authorizationUrl: http://127.0.0.1:8081/api/sys/oauth2/authorize
+    authorizationUrl: http://127.0.0.1:8081/api/sys/cas/authorize
     flow: accessCode
     scopes:
       admin: Grants read and write access to administrative information
       read: Grants read access
       write: Grants write access
-    tokenUrl: http://127.0.0.1:8081/api/sys/oauth2/token
+    tokenUrl: http://127.0.0.1:8081/api/sys/cas/token
     type: oauth2
 swagger: "2.0"

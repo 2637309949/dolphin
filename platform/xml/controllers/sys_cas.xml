@@ -1,30 +1,29 @@
-<controller name="sys_oauth2" desc="OAuth授权">
-    <api name="login" table="sys_oauth2" desc="登录信息" method="post" auth="false">
+<controller name="sys_cas" desc="认证中心">
+    <api name="login" desc="登录信息" method="post" auth="false">
         <param name="user" type="$user" desc="用户信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="affirm" table="sys_oauth2" desc="用户授权" method="post" auth="false">
+    <api name="affirm" desc="用户授权" method="post" auth="false">
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="authorize" table="sys_oauth2" desc="用户授权" method="get" auth="false">
+    <api name="authorize" desc="用户授权" method="get" auth="false">
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <api name="token" table="sys_oauth2" desc="获取令牌" method="post" auth="false">
+    <api name="token" desc="获取令牌" method="post" auth="false">
         <return>
             <success type="$response"/>
             <failure type="$response"/>
         </return>
     </api>
-    <!-- <api name="test" desc="测试接口" method="get"></api> -->
     <api name="url" desc="授权地址" method="get" auth="false">
         <return>
             <success type="$response"/>
@@ -43,5 +42,4 @@
             <failure type="$response"/>
         </return>
     </api>
-    <!-- <api name="info" desc="客户端信息" method="get"></api> -->
 </controller>

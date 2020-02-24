@@ -22,9 +22,9 @@ const expiryDelta = 10 * gt.Second
 // var defined
 var (
 	authServerURL   = viper.GetString("oauth.server")
-	authAuthURL     = "/api/oauth2/authorize"
-	authTokenURL    = "/api/oauth2/token"
-	authRedirectURL = "/api/oauth2/oauth2"
+	authAuthURL     = "/api/cas/authorize"
+	authTokenURL    = "/api/cas/token"
+	authRedirectURL = "/api/cas/oauth2"
 	oa2cfg          = xoauth2.Config{
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),

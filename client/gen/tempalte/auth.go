@@ -15,7 +15,7 @@ var TmplAuth = `<!DOCTYPE html>
 <body>
   <div class="container">
     <div class="jumbotron">
-      <form action="/api/sys/oauth2/affirm" method="POST">
+      <form action="/api/sys/cas/affirm" method="POST">
         <h1>Authorize</h1>
         <p>The client would like to perform actions on your behalf.</p>
         <p>
@@ -46,7 +46,7 @@ var TmplLogin = `<!DOCTYPE html>
 <body>
     <div class="container">
         <h1>Login In</h1>
-        <form action="/api/sys/oauth2/login" method="POST">
+        <form action="/api/sys/cas/login" method="POST">
             <div class="form-group">
                 <label for="domain">Domain</label>
                 <input type="text" class="form-control" name="domain" placeholder="Please enter your domain">
