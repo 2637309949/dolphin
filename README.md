@@ -36,6 +36,9 @@ go run github.com/2637309949/dolphin/client build
 ## Quick start
 
 ### Bean declare
+
+> rule of bean name: [device_][module_]ctr_action
+
 ```xml
 <bean
     name="activity_info"
@@ -48,8 +51,10 @@ go run github.com/2637309949/dolphin/client build
 ```
 
 ### Controler declare
+
+> rule of controller name: [device_][module_]ctr_action
+
 ```xml
-<!-- rule of controller name: ?<end>_?<module>_<ctr>_?<action> -->
 <controller
     name="applet_activity"
     desc="活动">
@@ -102,6 +107,9 @@ go run github.com/2637309949/dolphin/client build
 ```
 
 ### Table declare
+
+> rule of table name: [device_][module_]table
+
 ```xml
 <table
     name="applet_activity"
