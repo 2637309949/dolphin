@@ -28,7 +28,7 @@ var (
 	oa2cfg          = xoauth2.Config{
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),
-		Scopes:       []string{"all"},
+		Scopes:       []string{"admin"},
 		RedirectURL:  fmt.Sprintf("%v%v", authRedirectURL, viper.GetString("oauth.cli")),
 		Endpoint: xoauth2.Endpoint{
 			AuthURL:  authServerURL + authAuthURL,

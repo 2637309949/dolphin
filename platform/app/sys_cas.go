@@ -5,6 +5,7 @@ package app
 
 import (
 	"context"
+	"encoding/gob"
 	"errors"
 	"net/http"
 	"net/url"
@@ -13,6 +14,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/go-session/cookie"
 	"github.com/2637309949/dolphin/packages/go-session/session"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
@@ -23,14 +25,16 @@ import (
 func init() {
 	var hashKey = []byte("FF51A553-72FC-478B-9AEF-93D6F506DE91")
 	session.InitManager(
-		// session.SetCookieName("session_id"),
+		session.SetCookieName("session_id"),
 		session.SetStore(
 			cookie.NewCookieStore(
-				cookie.SetCookieName("demo_session_id"),
+				cookie.SetCookieName("store_id"),
 				cookie.SetHashKey(hashKey),
 			),
 		),
 	)
+	// fix: store.Set("ReturnUri", r.Form)
+	gob.Register(url.Values{})
 }
 
 // SysCasLogin api implementation
@@ -45,9 +49,10 @@ func init() {
 func SysCasLogin(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
-		ctx.Fail(err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
 		return
 	}
+
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
 	domain := f.Get("domain")
@@ -59,11 +64,11 @@ func SysCasLogin(ctx *Context) {
 	}
 	ext, err := ctx.engine.PlatformDB.Where("delete_time is null").Get(&account)
 	if err != nil {
-		ctx.Fail(err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
 		return
 	}
 	if !ext || !account.ValidPassword(password) {
-		ctx.Fail(util.ErrInvalidGrant)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+util.ErrInvalidGrant.Error())
 		return
 	}
 	store.Set("LoggedInUserID", account.ID.String)
@@ -83,7 +88,8 @@ func SysCasLogin(ctx *Context) {
 func SysCasAffirm(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
-		ctx.Fail(err)
+		logrus.Error("SysCasAffirm/Start:", err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
 		return
 	}
 	var form url.Values
@@ -95,7 +101,8 @@ func SysCasAffirm(ctx *Context) {
 	store.Save()
 	err = ctx.engine.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
-		ctx.Fail(err)
+		logrus.Error("SysCasAffirm/HandleAuthorizeRequest:", err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
 		return
 	}
 }
@@ -150,6 +157,12 @@ func SysCasToken(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/cas/url [get]
 func SysCasURL(ctx *Context) {
+	store, err := session.Start(ctx, ctx.Writer, ctx.Request)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	store.Save()
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	ret := oa2cfg.AuthCodeURL(state)
 	ctx.Success(ret)
@@ -157,11 +170,11 @@ func SysCasURL(ctx *Context) {
 
 // SysCasOauth2 api implementation
 // @Summary 授权回调
-// @Tags OAuth授权
+// @Tags 认证中心
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/sys/cas/cas [get]
+// @Router /api/sys/cas/oauth2 [get]
 func SysCasOauth2(ctx *Context) {
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form

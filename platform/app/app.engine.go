@@ -257,16 +257,18 @@ func (e *Engine) initRedis() {
 
 func (e *Engine) initOAuth() {
 	manager := manage.NewDefaultManager()
-	clientStore := store.NewClientStore()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
 	manager.MapTokenStorage(store.NewRedisStoreWithCli(e.Redis, TokenkeyNamespace))
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
+
+	clientStore := store.NewClientStore()
 	clientStore.Set(viper.GetString("oauth.id"), &models.Client{
 		ID:     viper.GetString("oauth.id"),
 		Secret: viper.GetString("oauth.secret"),
 		Domain: viper.GetString("oauth.cli"),
 	})
 	manager.MapClientStorage(clientStore)
+
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
 	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
 		store, err := session.Start(nil, w, r)
@@ -287,6 +289,9 @@ func (e *Engine) initOAuth() {
 		}
 		uid = userID.(string)
 		dm = domain.(string)
+		store.Delete("LoggedInUserID")
+		store.Delete("LoggedInDomain")
+		store.Save()
 		return
 	})
 	e.OAuth2.SetInternalErrorHandler(func(err error) (re *oError.Response) {
