@@ -157,12 +157,6 @@ func SysCasToken(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/cas/url [get]
 func SysCasURL(ctx *Context) {
-	store, err := session.Start(ctx, ctx.Writer, ctx.Request)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	store.Save()
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	ret := oa2cfg.AuthCodeURL(state)
 	ctx.Success(ret)
