@@ -65,13 +65,13 @@ func (s *managerStore) Update(ctx context.Context, sid string, expired int64) (s
 		return newStore(ctx, s, sid, expired, nil), nil
 	}
 
-	res, ok := session.FromResContext(ctx)
-	if !ok {
-		return nil, nil
-	}
+	// res, ok := session.FromResContext(ctx)
+	// if !ok {
+	// 	return nil, nil
+	// }
 	cookie.Expires = time.Now().Add(time.Duration(expired) * time.Second)
 	cookie.MaxAge = int(expired)
-	http.SetCookie(res, cookie)
+	// http.SetCookie(res, cookie)
 
 	var values map[string]interface{}
 	err = s.cookie.Decode(sid, cookie.Value, &values)
@@ -141,11 +141,11 @@ func (s *managerStore) Refresh(ctx context.Context, oldsid, sid string, expired 
 	cookie.Value = encoded
 	cookie.Expires = time.Now().Add(time.Duration(expired) * time.Second)
 	cookie.MaxAge = int(expired)
-	res, ok := session.FromResContext(ctx)
-	if !ok {
-		return nil, nil
-	}
-	http.SetCookie(res, cookie)
+	// res, ok := session.FromResContext(ctx)
+	// if !ok {
+	// 	return nil, nil
+	// }
+	// http.SetCookie(res, cookie)
 
 	return newStore(ctx, s, sid, expired, values), nil
 }

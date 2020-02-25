@@ -289,8 +289,8 @@ func (e *Engine) initOAuth() {
 		}
 		uid = userID.(string)
 		dm = domain.(string)
-		store.Delete("LoggedInUserID")
-		store.Delete("LoggedInDomain")
+		// store.Delete("LoggedInUserID")
+		// store.Delete("LoggedInDomain")
 		store.Save()
 		return
 	})
