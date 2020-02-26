@@ -18,6 +18,7 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util"
 	"golang.org/x/oauth2"
 )
@@ -33,7 +34,7 @@ func init() {
 			),
 		),
 	)
-	// fix: store.Set("ReturnUri", r.Form)
+	// fix: store.Set("ReturnUri", r.Form) can not be parsed.
 	gob.Register(url.Values{})
 }
 
@@ -224,6 +225,61 @@ func SysCasRefresh(ctx *Context) {
 	token.Expiry = time.Now()
 	token.RefreshToken = refreshtoken
 	ret, err := oa2cfg.TokenSource(context.Background(), &token).Token()
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysCasCheck api implementation
+// @Summary 检验令牌
+// @Tags 认证中心
+// @Param openid query string false "openid"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/cas/check [get]
+func SysCasCheck(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetString("openid")
+	ret, err := srv.SysCasAction(q)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysCasProfile api implementation
+// @Summary 用户信息
+// @Tags 认证中心
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/cas/profile [get]
+func SysCasProfile(ctx *Context) {
+	q := ctx.TypeQuery()
+	ret, err := srv.SysCasAction(q)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysCasQrcode api implementation
+// @Summary 扫码登录(绑定第三方)
+// @Tags 认证中心
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/cas/qrcode [get]
+func SysCasQrcode(ctx *Context) {
+	q := ctx.TypeQuery()
+	ret, err := srv.SysCasAction(q)
 	if err != nil {
 		ctx.Fail(err)
 		return

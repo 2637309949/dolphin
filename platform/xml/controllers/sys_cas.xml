@@ -42,4 +42,23 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="check" desc="检验令牌" method="get" auth="false">
+        <param name="openid" type="string" desc="openid" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="profile" desc="用户信息" method="get">
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="qrcode" desc="扫码登录(绑定第三方)" method="get">
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
 </controller>

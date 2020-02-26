@@ -540,24 +540,6 @@ paths:
       summary: 用户授权
       tags:
       - OAuth授权
-  /api/sys/cas/cas:
-    get:
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 授权回调
-      tags:
-      - OAuth授权
   /api/sys/cas/login:
     post:
       consumes:
@@ -584,6 +566,24 @@ paths:
       summary: 登录信息
       tags:
       - OAuth授权
+  /api/sys/cas/oauth2:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 授权回调
+      tags:
+      - 认证中心
   /api/sys/cas/refresh:
     get:
       responses:
