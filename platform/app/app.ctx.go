@@ -293,6 +293,17 @@ func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
 	return ret
 }
 
+// SetUser defined
+func (q *Query) SetUser() {
+	q.m["uid"] = q.ctx.GetToken().GetUserID()
+}
+
+// GetUser defined
+func (q *Query) GetUser() string {
+	ret, _ := q.m["uid"].(string)
+	return ret
+}
+
 // Value defined
 func (q *Query) Value() map[string]interface{} {
 	return q.m
