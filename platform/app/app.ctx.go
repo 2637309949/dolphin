@@ -80,9 +80,7 @@ func (ctx *Context) Fail(err error, status ...int) {
 
 // TypeQuery defined failt result
 func (ctx *Context) TypeQuery() *Query {
-	q := Query{m: util.M{}, ctx: ctx}
-	q.SetTags()
-	return &q
+	return &Query{m: util.M{}, ctx: ctx}
 }
 
 // PageSearch defined
