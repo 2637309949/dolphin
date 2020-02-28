@@ -13,6 +13,8 @@ func init() {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")
 	viper.SetDefault("app.mode", "release")
+	viper.SetDefault("app.viper", false)
+	viper.SetDefault("http.hash", "FF61A573-82FC-478B-9AEF-93D6F506DE9A")
 	viper.SetDefault("http.port", "8081")
 	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("http.static", "/static")
@@ -44,9 +46,11 @@ func init() {
 	}
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
-		logrus.Warn("unable to read config file")
+		logrus.Warn("configuration file not found")
 	}
-	if err := viper.WriteConfig(); err != nil {
-		logrus.Warn("unable to save config file")
+	if viper.GetBool("app.viper") {
+		if err := viper.WriteConfig(); err != nil {
+			logrus.Warn("failed to save configuration file")
+		}
 	}
 }

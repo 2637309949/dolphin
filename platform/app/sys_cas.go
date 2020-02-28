@@ -24,7 +24,7 @@ import (
 )
 
 func init() {
-	var hashKey = []byte("FF51A553-72FC-478B-9AEF-93D6F506DE91")
+	var hashKey = []byte(viper.GetString("http.hash"))
 	session.InitManager(
 		session.SetCookieName("session_id"),
 		session.SetStore(

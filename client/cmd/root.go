@@ -73,13 +73,15 @@ var (
 			}
 			viper.AutomaticEnv()
 			if err := viper.ReadInConfig(); err != nil {
-				logrus.Warn("unable to read config file")
-			}
-			if err := viper.WriteConfig(); err != nil {
-				logrus.Warn("unable to save config file")
+				logrus.Warn("configuration file not found")
 			}
 			if strings.TrimSpace(viper.GetString("host")) == "" {
 				viper.SetDefault("host", fmt.Sprintf("127.0.0.1:%v", viper.GetString("http.port")))
+			}
+			if viper.GetBool("app.viper") {
+				if err := viper.WriteConfig(); err != nil {
+					logrus.Warn("failed to save configuration file")
+				}
 			}
 		},
 	}
