@@ -26,8 +26,12 @@ import (
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/file"
+
+	httpUtil "github.com/2637309949/dolphin/platform/util/http"
 )
 
 // Engine defined parse app engine
@@ -85,7 +89,7 @@ func (e *Engine) initBusinessDB() {
 		logrus.Fatal(err)
 	}
 	for _, domain := range domains {
-		uri, err := util.Parse(domain.DataSource.String)
+		uri, err := httpUtil.Parse(domain.DataSource.String)
 		if err != nil {
 			panic(err)
 		}
@@ -236,7 +240,7 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 
 // InitRedis redis
 func (e *Engine) initRedis() {
-	uri, err := util.Parse(viper.GetString("rd.dataSource"))
+	uri, err := httpUtil.Parse(viper.GetString("rd.dataSource"))
 	if err != nil {
 		logrus.Fatal(err)
 	}
@@ -346,20 +350,6 @@ func invokeContext(httpMethod string, relativePath string, handlers ...HandlerFu
 	}
 }
 
-func ginFormatter(param gin.LogFormatterParams) string {
-	if param.Latency > time.Minute {
-		param.Latency = param.Latency - param.Latency%time.Second
-	}
-	return fmt.Sprintf("%3d | %13v | %15s |%-7s %s%s",
-		param.StatusCode,
-		param.Latency,
-		param.ClientIP,
-		param.Method,
-		param.Path,
-		param.ErrorMessage,
-	)
-}
-
 func buildEngine() *Engine {
 	e := &Engine{}
 	e.MSet = &MSet{m: map[string][]interface{}{}}
@@ -369,10 +359,10 @@ func buildEngine() *Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	e.Gin = gin.New()
-	e.Gin.Use(GinLoggerWithConfig)
-	e.Gin.Use(GinRecovery)
-	e.Gin.Use(GinProcessMethodOverride(e.Gin))
-	e.Gin.Static(viper.GetString("http.static"), path.Join(util.Getwd(), viper.GetString("http.static")))
+	e.Gin.Use(plugin.LoggerWithConfig())
+	e.Gin.Use(plugin.Recovery())
+	e.Gin.Use(plugin.ProcessMethodOverride(e.Gin))
+	e.Gin.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}

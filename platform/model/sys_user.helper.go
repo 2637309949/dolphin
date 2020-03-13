@@ -8,15 +8,6 @@ import (
 	"golang.org/x/crypto/scrypt"
 )
 
-// Encode structs into URL query parameters
-func (u *SysUser) Encode() (string, error) {
-	v, err := util.Values(u)
-	if err != nil {
-		return "", err
-	}
-	return v.Encode(), nil
-}
-
 // SetPassword Method to set salt and hash the password for a user
 func (u *SysUser) SetPassword(password string) {
 	b := util.RandString(16, util.RandNumChar)
