@@ -40,9 +40,11 @@ type (
 	}
 )
 
-// IsAdmin defined
-func (ctx *Context) IsAdmin() bool {
-	return false
+// LoginInInfo defined
+func (ctx *Context) LoginInInfo() model.SysUser {
+	user := model.SysUser{}
+	ctx.engine.PlatformDB.ID(ctx.GetToken().GetUserID()).Get(&user)
+	return user
 }
 
 // InRole defined
