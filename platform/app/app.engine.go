@@ -293,8 +293,6 @@ func (e *Engine) initOAuth() {
 		}
 		uid = userID.(string)
 		dm = domain.(string)
-		// store.Delete("LoggedInUserID")
-		// store.Delete("LoggedInDomain")
 		store.Save()
 		return
 	})
@@ -359,10 +357,13 @@ func buildEngine() *Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	e.Gin = gin.New()
-	e.Gin.Use(plugin.LoggerWithConfig())
+	e.Gin.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
+	e.Gin.Use(plugin.Tracker(gin.LoggerConfig{
+		Output:    logrus.GetOutput(),
+		Formatter: plugin.Formatter,
+	}, Tracker(e)))
 	e.Gin.Use(plugin.Recovery())
 	e.Gin.Use(plugin.ProcessMethodOverride(e.Gin))
-	e.Gin.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}

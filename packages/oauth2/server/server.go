@@ -505,7 +505,7 @@ func (s *Server) BearerAuth(r *http.Request) (string, bool) {
 	if auth != "" && strings.HasPrefix(auth, prefix) {
 		token = auth[len(prefix):]
 	} else {
-		token = r.FormValue("access_token")
+		token = r.Header.Get("token")
 	}
 	return token, token != ""
 }

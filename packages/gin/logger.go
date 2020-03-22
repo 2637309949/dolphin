@@ -72,8 +72,8 @@ type LogFormatterParams struct {
 	Path string
 	// ErrorMessage is set if error has occurred in processing the request.
 	ErrorMessage string
-	// isTerm shows whether does gin's output descriptor refers to a terminal.
-	isTerm bool
+	// IsTerm shows whether does gin's output descriptor refers to a terminal.
+	IsTerm bool
 	// BodySize is the size of the Response Body
 	BodySize int
 	// Keys are the keys set on the request's context.
@@ -127,7 +127,7 @@ func (p *LogFormatterParams) ResetColor() string {
 
 // IsOutputColor indicates whether can colors be outputted to the log.
 func (p *LogFormatterParams) IsOutputColor() bool {
-	return consoleColorMode == forceColor || (consoleColorMode == autoColor && p.isTerm)
+	return consoleColorMode == forceColor || (consoleColorMode == autoColor && p.IsTerm)
 }
 
 // // defaultLogFormatter is the default log format function Logger middleware uses.
@@ -268,7 +268,7 @@ func LoggerWithConfig(conf LoggerConfig) HandlerFunc {
 		if _, ok := skip[path]; !ok {
 			param := LogFormatterParams{
 				Request: c.Request,
-				isTerm:  isTerm,
+				IsTerm:  isTerm,
 				Keys:    c.Keys,
 			}
 

@@ -1,6 +1,6 @@
 package slice
 
-import "github.com/2637309949/dolphin/util/snaker"
+import "github.com/2637309949/dolphin/platform/util/snaker"
 
 // StrSliceContains check string exists in array
 func StrSliceContains(ss []string, s string) bool {
