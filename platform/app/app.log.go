@@ -20,6 +20,8 @@ import (
 	"golang.org/x/sys/unix"
 )
 
+// TrackerStore store logs
+var TrackerStore func(beans *[]model.SysTracker) error
 var receiver chan *plugin.LogFormatterParams
 var bucket slice.SyncSlice
 
@@ -36,9 +38,14 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 	}
 }
 
-// collector collect logs every 10 second
-func collector() {
+func timingTracker() {
 	receiver = make(chan *plugin.LogFormatterParams, 100)
+	if TrackerStore == nil {
+		TrackerStore = func(beans *[]model.SysTracker) error {
+			_, err := App.PlatformDB.Insert(*beans)
+			return err
+		}
+	}
 	go func() {
 		for {
 			select {
@@ -67,7 +74,7 @@ func collector() {
 							UpdateBy:   null.StringFrom(util.AdminID),
 						})
 					}
-					_, err := App.PlatformDB.Insert(beans)
+					err := TrackerStore(&beans)
 					if err != nil {
 						logrus.Error(err)
 					}
@@ -110,5 +117,5 @@ func init() {
 		writer = logf
 	}
 	logrus.SetOutput(writer)
-	collector()
+	timingTracker()
 }
