@@ -36,7 +36,7 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 	}
 }
 
-// collector collect logs every 5 second
+// collector collect logs every 10 second
 func collector() {
 	receiver = make(chan *plugin.LogFormatterParams, 100)
 	go func() {
