@@ -39,7 +39,7 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 }
 
 func initTracker() {
-	receiver = make(chan *plugin.LogFormatterParams, 100)
+	receiver = make(chan *plugin.LogFormatterParams, 600)
 	TrackerStore = func(beans *[]model.SysTracker) error {
 		_, err := App.PlatformDB.Insert(*beans)
 		return err
@@ -47,7 +47,7 @@ func initTracker() {
 	go func() {
 		for {
 			select {
-			case <-time.Tick(10 * time.Second):
+			case <-time.Tick(6 * time.Second):
 				logs := bucket.Values()
 				if len(logs) > 0 {
 					beans := []model.SysTracker{}
