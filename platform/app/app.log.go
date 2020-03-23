@@ -38,13 +38,11 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 	}
 }
 
-func timingTracker() {
+func initTracker() {
 	receiver = make(chan *plugin.LogFormatterParams, 100)
-	if TrackerStore == nil {
-		TrackerStore = func(beans *[]model.SysTracker) error {
-			_, err := App.PlatformDB.Insert(*beans)
-			return err
-		}
+	TrackerStore = func(beans *[]model.SysTracker) error {
+		_, err := App.PlatformDB.Insert(*beans)
+		return err
 	}
 	go func() {
 		for {
@@ -74,9 +72,11 @@ func timingTracker() {
 							UpdateBy:   null.StringFrom(util.AdminID),
 						})
 					}
-					err := TrackerStore(&beans)
-					if err != nil {
-						logrus.Error(err)
+					if TrackerStore != nil {
+						err := TrackerStore(&beans)
+						if err != nil {
+							logrus.Error(err)
+						}
 					}
 				}
 				bucket.Clear()
@@ -117,5 +117,6 @@ func init() {
 		writer = logf
 	}
 	logrus.SetOutput(writer)
-	timingTracker()
+
+	initTracker()
 }
