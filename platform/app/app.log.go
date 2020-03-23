@@ -9,8 +9,12 @@ import (
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/logrotate"
 	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/2637309949/dolphin/packages/null"
+	doltime "github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
@@ -41,7 +45,32 @@ func collector() {
 			case <-time.Tick(10 * time.Second):
 				logs := bucket.Values()
 				if len(logs) > 0 {
-					// collect to db
+					beans := []model.SysTracker{}
+					for _, entity := range logs {
+						item := entity.(*plugin.LogFormatterParams)
+						beans = append(beans, model.SysTracker{
+							ID:         null.StringFromUUID(),
+							Token:      null.StringFrom(item.Token),
+							Domain:     null.StringFrom(item.Domain),
+							UserId:     null.StringFrom(item.UserID),
+							StatusCode: null.IntFrom(int64(item.StatusCode)),
+							Latency:    null.FloatFrom(item.Latency.Seconds()),
+							ClientIp:   null.StringFrom(item.ClientIP),
+							Method:     null.StringFrom(item.Method),
+							Path:       null.StringFrom(item.Path),
+							Header:     item.Header,
+							ReqBody:    item.ReqBody,
+							ResBody:    item.ResBody,
+							CreateTime: null.TimeFromPtr(doltime.Now().Value()),
+							CreateBy:   null.StringFrom(util.AdminID),
+							UpdateTime: null.TimeFromPtr(doltime.Now().Value()),
+							UpdateBy:   null.StringFrom(util.AdminID),
+						})
+					}
+					_, err := App.PlatformDB.Insert(beans)
+					if err != nil {
+						logrus.Error(err)
+					}
 				}
 				bucket.Clear()
 			case info := <-receiver:

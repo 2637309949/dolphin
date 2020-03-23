@@ -10,7 +10,7 @@ import (
 
 // SetPassword Method to set salt and hash the password for a user
 func (u *SysUser) SetPassword(password string) {
-	b := util.RandString(16, util.RandNumChar)
+	b := util.RandString(16)
 	u.Salt = null.StringFrom(b)
 	dk, err := scrypt.Key([]byte(password), []byte(u.Salt.String), 512, 8, 1, 64)
 	if err != nil {
