@@ -14,10 +14,15 @@ type SyncSliceItem struct {
 	Value interface{}
 }
 
+// Reset slice item to the concurrent slice
+func (cs *SyncSlice) Reset() []interface{} {
+	slice := cs.items
+	cs.Clear()
+	return slice
+}
+
 // Values an item to the concurrent slice
 func (cs *SyncSlice) Values() []interface{} {
-	cs.Lock()
-	defer cs.Unlock()
 	return cs.items
 }
 

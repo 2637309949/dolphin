@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrotate"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
@@ -23,7 +24,6 @@ import (
 // TrackerStore store logs
 var TrackerStore func(beans *[]model.SysTracker) error
 var receiver chan *plugin.LogFormatterParams
-var bucket slice.SyncSlice
 
 // Tracker defined tracker recorder
 func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
@@ -45,41 +45,39 @@ func initTracker() {
 		return err
 	}
 	go func() {
+		var bucket slice.SyncSlice
 		for {
 			select {
 			case <-time.Tick(6 * time.Second):
-				logs := bucket.Values()
-				if len(logs) > 0 {
-					beans := []model.SysTracker{}
-					for _, entity := range logs {
-						item := entity.(*plugin.LogFormatterParams)
-						beans = append(beans, model.SysTracker{
-							ID:         null.StringFromUUID(),
-							Token:      null.StringFrom(item.Token),
-							Domain:     null.StringFrom(item.Domain),
-							UserId:     null.StringFrom(item.UserID),
-							StatusCode: null.IntFrom(int64(item.StatusCode)),
-							Latency:    null.FloatFrom(item.Latency.Seconds()),
-							ClientIp:   null.StringFrom(item.ClientIP),
-							Method:     null.StringFrom(item.Method),
-							Path:       null.StringFrom(item.Path),
-							Header:     item.Header,
-							ReqBody:    item.ReqBody,
-							ResBody:    item.ResBody,
-							CreateTime: null.TimeFromPtr(doltime.Now().Value()),
-							CreateBy:   null.StringFrom(util.AdminID),
-							UpdateTime: null.TimeFromPtr(doltime.Now().Value()),
-							UpdateBy:   null.StringFrom(util.AdminID),
-						})
+				logs := bucket.Reset()
+				beans := funk.Map(logs, func(entity interface{}) model.SysTracker {
+					item := entity.(*plugin.LogFormatterParams)
+					return model.SysTracker{
+						ID:         null.StringFromUUID(),
+						AppName:    null.StringFrom(viper.GetString("app.name")),
+						Token:      null.StringFrom(item.Token),
+						Domain:     null.StringFrom(item.Domain),
+						UserId:     null.StringFrom(item.UserID),
+						StatusCode: null.IntFrom(int64(item.StatusCode)),
+						Latency:    null.FloatFrom(item.Latency.Seconds()),
+						ClientIp:   null.StringFrom(item.ClientIP),
+						Method:     null.StringFrom(item.Method),
+						Path:       null.StringFrom(item.Path),
+						Header:     item.Header,
+						ReqBody:    item.ReqBody,
+						ResBody:    item.ResBody,
+						CreateTime: null.TimeFromPtr(doltime.Now().Value()),
+						CreateBy:   null.StringFrom(util.AdminID),
+						UpdateTime: null.TimeFromPtr(doltime.Now().Value()),
+						UpdateBy:   null.StringFrom(util.AdminID),
 					}
-					if TrackerStore != nil {
-						err := TrackerStore(&beans)
-						if err != nil {
-							logrus.Error(err)
-						}
+				}).([]model.SysTracker)
+				if len(beans) > 0 {
+					err := TrackerStore(&beans)
+					if err != nil {
+						logrus.Error(err)
 					}
 				}
-				bucket.Clear()
 			case info := <-receiver:
 				bucket.Append(info)
 			}
@@ -117,6 +115,5 @@ func init() {
 		writer = logf
 	}
 	logrus.SetOutput(writer)
-
 	initTracker()
 }
