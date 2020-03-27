@@ -6,16 +6,20 @@ package cmd
 
 import (
 	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/2637309949/dolphin/packages/go-funk"
 
 	"github.com/2637309949/dolphin/client/gen"
 	"github.com/2637309949/dolphin/client/gen/pipes"
-	"github.com/2637309949/dolphin/packages/cobra"
 	"github.com/2637309949/dolphin/client/parser"
+	"github.com/2637309949/dolphin/packages/cobra"
 )
 
-var initCmd = &cobra.Command{
+var build = &cobra.Command{
 	Use:   "build",
-	Short: "build a empty project",
+	Short: "build a initialized project",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		wd, err := os.Getwd()
 		if err != nil {
@@ -46,6 +50,31 @@ var initCmd = &cobra.Command{
 	},
 }
 
+var clean = &cobra.Command{
+	Use:   "clean",
+	Short: "clear all cached files",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		wd, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		var files []string
+		if err := filepath.Walk(wd, func(path string, info os.FileInfo, err error) error {
+			if strings.HasSuffix(path, ".new") {
+				files = append(files, path)
+			}
+			return nil
+		}); err != nil {
+			return err
+		}
+		funk.ForEach(files, func(newFile string) {
+			os.Remove(newFile)
+		})
+		return nil
+	},
+}
+
 func init() {
-	rootCmd.AddCommand(initCmd)
+	rootCmd.AddCommand(build)
+	rootCmd.AddCommand(clean)
 }
