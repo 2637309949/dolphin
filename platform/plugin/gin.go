@@ -188,12 +188,12 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 
 		// Start timer
 		start := time.Now()
-		path := c.Request.URL.Path
-		raw := c.Request.URL.RawQuery
+		path := req.URL.Path
+		raw := req.URL.RawQuery
 
 		// resove header
 		hr := bytes.Buffer{}
-		req.Write(&hr)
+		req.Header.Write(&hr)
 
 		// Process request
 		c.Next()
@@ -216,7 +216,7 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 			param.Latency = param.TimeStamp.Sub(start)
 
 			param.ClientIP = c.ClientIP()
-			param.Method = c.Request.Method
+			param.Method = req.Method
 			param.StatusCode = c.Writer.Status()
 			param.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
 
