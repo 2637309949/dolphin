@@ -7,12 +7,14 @@ package parser
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 
 	"github.com/2637309949/dolphin/client/schema"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"gopkg.in/go-playground/validator.v9"
 )
 
@@ -206,6 +208,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 					switch true {
 					case attrName == "name":
 						table.Name = attrValue
+					case attrName == "bind":
+						table.Bind = attrValue
 					case attrName == "desc":
 						table.Desc = attrValue
 					case attrName == "packages":
@@ -251,13 +255,13 @@ func (parser *AppParser) parse(xmlPath string) error {
 			case token.Name.Local == "column":
 				table.Columns = append(table.Columns, column)
 			}
-			// case xml.CharData:
-			// 	content := string([]byte(token))
-			// 	if strings.TrimSpace(content) != "" {
-			// 		logrus.Warn(fmt.Sprintf("xml.CharData:%v", content))
-			// 	}
-			// default:
-			//
+		case xml.CharData:
+			content := string([]byte(token))
+			if strings.TrimSpace(content) != "" {
+				logrus.Warn(fmt.Sprintf("xml.CharData:%v", content))
+			}
+		default:
+
 		}
 	}
 	return nil

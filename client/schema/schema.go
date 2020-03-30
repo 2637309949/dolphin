@@ -74,6 +74,7 @@ type Column struct {
 // Table struct
 type Table struct {
 	Common
+	Bind     string
 	Packages string
 	Columns  []*Column
 	Extends  string

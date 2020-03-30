@@ -1,4 +1,4 @@
-<table name="sys_tracker" desc="日志跟踪" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_tracker" desc="日志跟踪" packages="github.com/2637309949/dolphin/packages/null" bind="platform">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="token" desc="令牌" type="null.String" xorm="varchar(36)" />
 	<column name="app_name" desc="应用归属" type="null.String" xorm="varchar(36)" />

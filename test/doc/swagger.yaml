@@ -465,7 +465,7 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
-host: 127.0.0.1:8081
+host: 127.0.0.1:8082
 info:
   contact: {}
   license:
@@ -874,6 +874,213 @@ paths:
       summary: 更新附件
       tags:
       - 附件
+  /api/sys/cas/affirm:
+    post:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户授权
+      tags:
+      - OAuth授权
+  /api/sys/cas/authorize:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户授权
+      tags:
+      - OAuth授权
+  /api/sys/cas/check:
+    get:
+      parameters:
+      - description: openid
+        in: query
+        name: openid
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 检验令牌
+      tags:
+      - 认证中心
+  /api/sys/cas/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysUser'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 登录信息
+      tags:
+      - OAuth授权
+  /api/sys/cas/oauth2:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 授权回调
+      tags:
+      - 认证中心
+  /api/sys/cas/profile:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户信息
+      tags:
+      - 认证中心
+  /api/sys/cas/qrcode:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 扫码登录(绑定第三方)
+      tags:
+      - 认证中心
+  /api/sys/cas/refresh:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 刷新令牌
+      tags:
+      - OAuth授权
+  /api/sys/cas/token:
+    post:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取令牌
+      tags:
+      - OAuth授权
+  /api/sys/cas/url:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 授权地址
+      tags:
+      - OAuth授权
   /api/sys/menu/add:
     post:
       consumes:
@@ -1037,144 +1244,6 @@ paths:
       summary: 更新菜单
       tags:
       - 菜单
-  /api/sys/cas/affirm:
-    post:
-      consumes:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 用户授权
-      tags:
-      - OAuth授权
-  /api/sys/cas/authorize:
-    get:
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 用户授权
-      tags:
-      - OAuth授权
-  /api/sys/cas/login:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 用户信息
-        in: body
-        name: user
-        schema:
-          $ref: '#/definitions/model.SysUser'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 登录信息
-      tags:
-      - OAuth授权
-  /api/sys/cas/oauth2:
-    get:
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 授权回调
-      tags:
-      - OAuth授权
-  /api/sys/cas/refresh:
-    get:
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 刷新令牌
-      tags:
-      - OAuth授权
-  /api/sys/cas/token:
-    post:
-      consumes:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 获取令牌
-      tags:
-      - OAuth授权
-  /api/sys/cas/url:
-    get:
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Response'
-      summary: 授权地址
-      tags:
-      - OAuth授权
   /api/sys/org/add:
     post:
       consumes:

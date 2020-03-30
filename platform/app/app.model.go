@@ -1,8 +1,10 @@
 package app
 
+import "github.com/2637309949/dolphin/packages/viper"
+
 // MSeti model template
 type MSeti interface {
-	Add(string, interface{})
+	Add(interface{}, ...string)
 	Get(func(string, interface{}) bool) interface{}
 	ForEach(func(string, interface{}))
 	Name(func(string) bool) []string
@@ -26,8 +28,12 @@ func (s *MSet) Get(cb func(string, interface{}) bool) interface{} {
 }
 
 // Add defined add models
-func (s *MSet) Add(n string, m interface{}) {
-	s.m[n] = append(s.m[n], m)
+func (s *MSet) Add(m interface{}, n ...string) {
+	if len(n) > 0 {
+		s.m[n[0]] = append(s.m[n[0]], m)
+	} else {
+		s.m[viper.GetString("app.name")] = append(s.m[viper.GetString("app.name")], m)
+	}
 }
 
 // Name defined add models
