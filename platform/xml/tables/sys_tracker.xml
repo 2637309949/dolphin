@@ -10,8 +10,8 @@
 	<column name="method" desc="请求方法" type="null.String" xorm="varchar(36)" />
 	<column name="path" desc="请求路径" type="null.String" xorm="varchar(36)" />
 	<column name="header" desc="请求头" type="[]byte" xorm="blob" />
-	<column name="req_body" desc="请求体" type="[]byte" xorm="blob" />
-	<column name="res_body" desc="返回体" type="[]byte" xorm="blob" />
+	<column name="req_body" desc="请求体" type="[]byte" xorm="mediumblob" />
+	<column name="res_body" desc="返回体" type="[]byte" xorm="mediumblob" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

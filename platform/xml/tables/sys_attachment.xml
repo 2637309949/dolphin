@@ -4,7 +4,8 @@
 	<column name="size" desc="大小" type="null.Int" />
     <column name="ext" desc="ext" type="null.String" xorm="varchar(36)" />
     <column name="hash" desc="hash" type="null.String" xorm="varchar(500)" />
-    <column name="url" desc="url" type="null.String" xorm="varchar(500)" />
+	<column name="path" desc="path" type="null.String" xorm="varchar(500)" />
+	<column name="url" desc="url" type="null.String" xorm="varchar(500)" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

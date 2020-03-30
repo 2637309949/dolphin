@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -183,7 +182,8 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 		req := c.Request.Clone(c)
 		writer := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
 		// Request byte
-		body, _ := ioutil.ReadAll(req.Body)
+		bByte := make([]byte, 1024)
+		rbn, _ := req.Body.Read(bByte)
 		c.Writer = writer
 
 		// Start timer
@@ -207,19 +207,17 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 					Keys:    c.Keys,
 				},
 				Header:  hr.Bytes(),
-				ReqBody: body,
+				ReqBody: bByte[0:rbn],
 				ResBody: writer.body.Bytes(),
 			}
 
 			// Stop timer
 			param.TimeStamp = time.Now()
 			param.Latency = param.TimeStamp.Sub(start)
-
 			param.ClientIP = c.ClientIP()
 			param.Method = req.Method
 			param.StatusCode = c.Writer.Status()
 			param.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
-
 			param.BodySize = c.Writer.Size()
 
 			if raw != "" {

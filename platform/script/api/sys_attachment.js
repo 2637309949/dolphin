@@ -14,6 +14,16 @@ module.exports.Add = (data) => {
     })
 }
 
+// Upload 上传附件
+module.exports.Upload = (data) => {
+	const url = '/api/sys/attachment/upload'
+	return axios({
+		url: url,
+		method: 'post',
+		data
+    })
+}
+
 // Del 删除附件
 module.exports.Del = (data) => {
 	const url = '/api/sys/attachment/del'

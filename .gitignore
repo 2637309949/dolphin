@@ -20,5 +20,8 @@
 # Log files
 log
 
+# upload files
+files
+
 # Dependency directories (remove the comment below to include it)
 vendor

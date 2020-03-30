@@ -4,6 +4,9 @@
 package app
 
 import (
+	"fmt"
+	"path/filepath"
+
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
@@ -38,6 +41,34 @@ func SysAttachmentAdd(ctx *Context) {
 		return
 	}
 	ctx.Success(ret)
+}
+
+// SysAttachmentUpload api implementation
+// @Summary 上传附件
+// @Tags 附件
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/attachment/upload [post]
+func SysAttachmentUpload(ctx *Context) {
+	form, err := ctx.MultipartForm()
+	if err != nil {
+		fmt.Println("err", err)
+		ctx.Fail(err)
+		return
+	}
+	files := form.File["files"]
+	for _, file := range files {
+		filename := filepath.Base(file.Filename)
+		fmt.Println(filename)
+		if err := ctx.SaveUploadedFile(file, filename); err != nil {
+			ctx.Fail(err)
+			return
+		}
+	}
+	ctx.Success("")
 }
 
 // SysAttachmentDel api implementation
