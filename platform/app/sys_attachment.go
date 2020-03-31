@@ -58,7 +58,8 @@ func SysAttachmentAdd(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/attachment/upload [post]
 func SysAttachmentUpload(ctx *Context) {
-	var attach []model.SysAttachment
+	var attachments []model.SysAttachment
+	var attachs []model.Attach
 	form, err := ctx.MultipartForm()
 	if err != nil {
 		fmt.Println("err", err)
@@ -79,26 +80,34 @@ func SysAttachmentUpload(ctx *Context) {
 			ctx.Fail(err)
 			return
 		}
-		attach = append(attach, model.SysAttachment{
+		urlPath := path.Join("files", uuid+filepath.Ext(filename))
+		item := model.SysAttachment{
 			ID:         null.StringFromUUID(),
 			Name:       null.StringFrom(filename),
 			UUID:       null.StringFrom(uuid),
 			Size:       null.IntFrom(f.Size),
 			Ext:        null.StringFrom(filepath.Ext(filename)),
 			Hash:       null.StringFrom(string(file.MustHash(filePath))),
+			URL:        null.StringFrom(urlPath),
 			Path:       null.StringFrom(filePath),
 			Type:       null.StringFrom(fileType),
 			CreateTime: null.TimeFromPtr(time.Now().Value()),
 			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFromPtr(time.Now().Value()),
 			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		}
+		attachments = append(attachments, item)
+		attachs = append(attachs, model.Attach{
+			Name: item.Name.String,
+			Hash: item.Hash.String,
+			URL:  item.URL.String,
 		})
 	}
-	if _, err = ctx.DB.Insert(attach); err != nil {
+	if _, err = ctx.DB.Insert(attachments); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(attach)
+	ctx.Success(attachs)
 }
 
 // SysAttachmentDel api implementation
