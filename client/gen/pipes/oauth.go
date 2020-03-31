@@ -7,6 +7,7 @@ package pipes
 import (
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/2637309949/dolphin/client/gen"
 	"github.com/2637309949/dolphin/client/gen/tempalte"
@@ -24,7 +25,8 @@ func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, er
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 	}
-	affirm, login := viper.GetString("oauth.affirm"), viper.GetString("oauth.login")
+
+	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")
 	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
