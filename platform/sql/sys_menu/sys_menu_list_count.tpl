@@ -1,6 +1,6 @@
 select
     count(*) records
 from
-	platform_sys_menu
+	sys_menu
 where
-	platform_sys_menu.id {{.ne}} ""
+	sys_menu.id {{.ne}} ""

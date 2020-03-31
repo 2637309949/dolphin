@@ -2,7 +2,7 @@ package tempalte
 
 // TmplSQLMap defined template
 var TmplSQLMap = `
-{{- $TableName := .Table.TableName .Name .Table.Name -}}
+{{- $TableName := .Table.Name -}}
 <sqlMap>
     <sql id="insert_{{$TableName}}">
         {{.Table.SQLInsertOne .Table $TableName}}

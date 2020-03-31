@@ -1,7 +1,7 @@
 select
-    platform_sys_menu.id
+    sys_menu.id
 from
-	platform_sys_menu
+	sys_menu
 where
-	platform_sys_menu.id {{.ne}} ""
+	sys_menu.id {{.ne}} ""
 LIMIT {{.size}} OFFSET {{.offset}}

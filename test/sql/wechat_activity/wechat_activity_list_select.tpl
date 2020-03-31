@@ -1,7 +1,7 @@
 select
-    dolphin_wechat_activity.id
+    wechat_activity.id
 from
-	dolphin_wechat_activity
+	wechat_activity
 where
-	dolphin_wechat_activity.id {{.ne}} ""
+	wechat_activity.id {{.ne}} ""
 LIMIT {{.size}} OFFSET {{.offset}}

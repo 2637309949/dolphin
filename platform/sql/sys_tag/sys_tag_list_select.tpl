@@ -1,7 +1,7 @@
 select
-    platform_sys_tag.id
+    sys_tag.id
 from
-	platform_sys_tag
+	sys_tag
 where
-	platform_sys_tag.id {{.ne}} ""
+	sys_tag.id {{.ne}} ""
 LIMIT {{.size}} OFFSET {{.offset}}

@@ -1,6 +1,6 @@
 select
     count(*) records
 from
-	platform_sys_role
+	sys_role
 where
-	platform_sys_role.id {{.ne}} ""
+	sys_role.id {{.ne}} ""
