@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/client/gen"
-	"github.com/2637309949/dolphin/client/gen/tempalte"
+	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 )
@@ -30,14 +30,14 @@ func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, er
 	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
-			Text:     tempalte.TmplAuth,
+			Text:     template.TmplAuth,
 			FilePath: path.Join(dir, affirmPath),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".html",
 		},
 		&gen.TmplCfg{
-			Text:     tempalte.TmplLogin,
+			Text:     template.TmplLogin,
 			FilePath: path.Join(dir, loginPath),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,

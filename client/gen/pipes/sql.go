@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/client/gen"
-	"github.com/2637309949/dolphin/client/gen/tempalte"
+	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 )
@@ -36,7 +36,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, "list", "count"))
 				if _, ok := tplCache[cpath]; !ok {
 					tmplCfg := &gen.TmplCfg{
-						Text:     tempalte.TmplSQLCount,
+						Text:     template.TmplSQLCount,
 						FilePath: cpath,
 						Data:     data,
 						Overlap:  gen.OverlapSkip,
@@ -48,7 +48,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, "list", "select"))
 				if _, ok := tplCache[spath]; !ok {
 					tmplCfg := &gen.TmplCfg{
-						Text:     tempalte.TmplSQLSel,
+						Text:     template.TmplSQLSel,
 						FilePath: spath,
 						Data:     data,
 						Overlap:  gen.OverlapSkip,

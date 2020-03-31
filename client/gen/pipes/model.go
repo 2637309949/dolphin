@@ -8,7 +8,7 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/client/gen"
-	"github.com/2637309949/dolphin/client/gen/tempalte"
+	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 )
@@ -27,7 +27,7 @@ func (m *Model) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 			"Table":       table,
 		}
 		tmplCfg := &gen.TmplCfg{
-			Text:     tempalte.TmplModel,
+			Text:     template.TmplModel,
 			FilePath: path.Join(dir, viper.GetString("dir.model"), table.Name+".auto"),
 			Data:     data,
 			Overlap:  gen.OverlapWrite,

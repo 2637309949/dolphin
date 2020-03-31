@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/client/gen"
-	"github.com/2637309949/dolphin/client/gen/tempalte"
+	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 )
@@ -24,7 +24,7 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 	var tmplCfgs []*gen.TmplCfg
 	tplCache := map[string]bool{}
 	tmplCfgs = append(tmplCfgs, &gen.TmplCfg{
-		Text:     tempalte.TmplAxios,
+		Text:     template.TmplAxios,
 		FilePath: path.Join(viper.GetString("dir.script"), "axios"),
 		Overlap:  gen.OverlapWrite,
 		Suffix:   ".js",
@@ -42,7 +42,7 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 				cpath := path.Join(dir, viper.GetString("dir.script"), "api", fmt.Sprintf("%v", c.Name))
 				if _, ok := tplCache[cpath]; !ok {
 					tmplCfg := &gen.TmplCfg{
-						Text:     tempalte.TmplAPI,
+						Text:     template.TmplAPI,
 						FilePath: cpath,
 						Data:     data,
 						Overlap:  gen.OverlapWrite,

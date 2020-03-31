@@ -8,7 +8,7 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/client/gen"
-	"github.com/2637309949/dolphin/client/gen/tempalte"
+	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 )
 
@@ -24,7 +24,7 @@ func (m *Main) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, erro
 	}
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
-			Text:     tempalte.TmplMain,
+			Text:     template.TmplMain,
 			FilePath: path.Join(dir, "main"),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
