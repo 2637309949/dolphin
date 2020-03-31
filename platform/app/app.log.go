@@ -30,9 +30,9 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 	return func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 		token, _ := e.OAuth2.BearerAuth(ctx.Request)
 		p.Token = token
-		tokenInfo, err := e.OAuth2.Manager.LoadAccessToken(token)
-		if err == nil {
+		if tokenInfo, err := e.OAuth2.Manager.LoadAccessToken(token); err == nil {
 			p.Domain = tokenInfo.GetDomain()
+			p.UserID = tokenInfo.GetUserID()
 		}
 		receiver <- p
 	}

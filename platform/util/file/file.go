@@ -70,8 +70,8 @@ func IsDir(filename string) bool {
 // EnsureDir create dir if not exist
 func EnsureDir(dir string) {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err = os.MkdirAll(dir, 0755)
-		if err != nil {
+		err := os.MkdirAll(dir, 0755)
+		if err != nil && !os.IsExist(err) {
 			panic(err)
 		}
 	}

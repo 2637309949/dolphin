@@ -97,9 +97,15 @@ definitions:
       name:
         description: 名称
         type: string
+      path:
+        description: path
+        type: string
       size:
         description: 大小
         type: number
+      type:
+        description: 类型
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -108,6 +114,9 @@ definitions:
         type: string
       url:
         description: url
+        type: string
+      uuid:
+        description: uuid
         type: string
     type: object
   model.SysMenu:
@@ -232,9 +241,6 @@ definitions:
         type: string
       delete_time:
         description: 删除时间
-        type: string
-      domain:
-        description: 域
         type: string
       id:
         description: 主键
@@ -872,6 +878,31 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 更新附件
+      tags:
+      - 附件
+  /api/sys/attachment/upload:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 上传附件
       tags:
       - 附件
   /api/sys/cas/affirm:
@@ -2515,12 +2546,12 @@ paths:
       - 活动
 securityDefinitions:
   OAuth2AccessCode:
-    authorizationUrl: http://127.0.0.1:8081/api/sys/cas/authorize
+    authorizationUrl: http://127.0.0.1:8082/api/sys/cas/authorize
     flow: accessCode
     scopes:
       admin: Grants read and write access to administrative information
       read: Grants read access
       write: Grants write access
-    tokenUrl: http://127.0.0.1:8081/api/sys/cas/token
+    tokenUrl: http://127.0.0.1:8082/api/sys/cas/token
     type: oauth2
 swagger: "2.0"

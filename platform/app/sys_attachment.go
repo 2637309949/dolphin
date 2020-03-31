@@ -65,12 +65,16 @@ func SysAttachmentUpload(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+	fileType := ""
 	files := form.File["files"]
-	file.EnsureDir(viper.GetString("dir.files"))
+	if params := form.Value["type"]; len(params) > 0 {
+		fileType = params[0]
+	}
+	file.EnsureDir(path.Join(viper.GetString("http.static"), "files"))
 	for _, f := range files {
 		filename := filepath.Base(f.Filename)
 		uuid := uuid.MustString()
-		filePath := path.Join(viper.GetString("dir.files"), uuid)
+		filePath := path.Join(viper.GetString("http.static"), "files", uuid+filepath.Ext(filename))
 		if err := ctx.SaveUploadedFile(f, filePath); err != nil {
 			ctx.Fail(err)
 			return
@@ -83,12 +87,16 @@ func SysAttachmentUpload(ctx *Context) {
 			Ext:        null.StringFrom(filepath.Ext(filename)),
 			Hash:       null.StringFrom(string(file.MustHash(filePath))),
 			Path:       null.StringFrom(filePath),
+			Type:       null.StringFrom(fileType),
 			CreateTime: null.TimeFromPtr(time.Now().Value()),
 			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFromPtr(time.Now().Value()),
 			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		})
-		fmt.Println("----", string(file.MustHash(filePath)))
+	}
+	if _, err = ctx.DB.Insert(attach); err != nil {
+		ctx.Fail(err)
+		return
 	}
 	ctx.Success(attach)
 }

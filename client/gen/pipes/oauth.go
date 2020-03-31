@@ -6,6 +6,7 @@ package pipes
 
 import (
 	"path"
+	"path/filepath"
 
 	"github.com/2637309949/dolphin/client/gen"
 	"github.com/2637309949/dolphin/client/gen/tempalte"
@@ -23,17 +24,19 @@ func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, er
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 	}
+	affirm, login := viper.GetString("oauth.affirm"), viper.GetString("oauth.login")
+	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
 	return []*gen.TmplCfg{
 		&gen.TmplCfg{
 			Text:     tempalte.TmplAuth,
-			FilePath: path.Join(dir, viper.GetString("http.static"), "auth", "affirm"),
+			FilePath: path.Join(dir, affirmPath),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".html",
 		},
 		&gen.TmplCfg{
 			Text:     tempalte.TmplLogin,
-			FilePath: path.Join(dir, viper.GetString("http.static"), "auth", "login"),
+			FilePath: path.Join(dir, loginPath),
 			Data:     data,
 			Overlap:  gen.OverlapSkip,
 			Suffix:   ".html",
