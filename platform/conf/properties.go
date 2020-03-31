@@ -30,6 +30,7 @@ func init() {
 	viper.SetDefault("dir.sqlmap", "sqlmap")
 	viper.SetDefault("dir.script", "script")
 	viper.SetDefault("dir.log", "log")
+	viper.SetDefault("dir.files", "files")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
 	viper.SetDefault("swag.securitydefinitions.oauth2.accessCode", "OAuth2AccessCode")
@@ -38,15 +39,15 @@ func init() {
 	viper.SetDefault("swag.scope.read", "Grants read access")
 	viper.SetDefault("swag.scope.write", "Grants write access")
 	viper.SetDefault("swag.scope.admin", "Grants read and write access to administrative information")
+	viper.AutomaticEnv()
+	if err := viper.ReadInConfig(); err != nil {
+		logrus.Warn("configuration file not found")
+	}
 	if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
 		viper.SetDefault("oauth.server", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
 	}
 	if strings.TrimSpace(viper.GetString("oauth.cli")) == "" {
 		viper.SetDefault("oauth.cli", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
-	}
-	viper.AutomaticEnv()
-	if err := viper.ReadInConfig(); err != nil {
-		logrus.Warn("configuration file not found")
 	}
 	if viper.GetBool("app.viper") {
 		if err := viper.WriteConfig(); err != nil {

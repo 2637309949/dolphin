@@ -1,6 +1,12 @@
 package file
 
-import "os"
+import (
+	"bufio"
+	"crypto/sha256"
+	"fmt"
+	"io"
+	"os"
+)
 
 const (
 	// NotExist represents that the file or directory does not exist.
@@ -69,4 +75,23 @@ func EnsureDir(dir string) {
 			panic(err)
 		}
 	}
+}
+
+// MustHash cac file hash
+func MustHash(filename string) []byte {
+	f, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	br := bufio.NewReader(f)
+
+	h := sha256.New()
+	_, err = io.Copy(h, br)
+
+	if err != nil {
+		panic(err)
+	}
+	return []byte(fmt.Sprintf("%x", h.Sum(nil)))
 }

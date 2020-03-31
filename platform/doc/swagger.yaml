@@ -43,6 +43,9 @@ definitions:
       size:
         description: 大小
         type: number
+      type:
+        description: 类型
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -51,6 +54,9 @@ definitions:
         type: string
       url:
         description: url
+        type: string
+      uuid:
+        description: uuid
         type: string
     type: object
   model.SysMenu:
@@ -175,9 +181,6 @@ definitions:
         type: string
       delete_time:
         description: 删除时间
-        type: string
-      domain:
-        description: 域
         type: string
       id:
         description: 主键

@@ -3,7 +3,6 @@
 	<column name="name" desc="名称" type="null.String" xorm="varchar(200) notnull" />
     <column name="code" desc="编码" type="null.String" xorm="varchar(36) notnull" />
 	<column name="status" desc="状态 0：禁用 1：正常" type="null.Int" xorm="notnull" />
-	<column name="domain" desc="域" type="null.String" xorm="varchar(50) notnull" />
 	
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

@@ -5,13 +5,18 @@ package app
 
 import (
 	"fmt"
+	"path"
 	"path/filepath"
+
+	"github.com/2637309949/dolphin/platform/util/file"
 
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/2637309949/dolphin/packages/uuid"
+	"github.com/2637309949/dolphin/packages/viper"
 )
 
 // SysAttachmentAdd api implementation
@@ -53,6 +58,7 @@ func SysAttachmentAdd(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/attachment/upload [post]
 func SysAttachmentUpload(ctx *Context) {
+	var attach []model.SysAttachment
 	form, err := ctx.MultipartForm()
 	if err != nil {
 		fmt.Println("err", err)
@@ -60,15 +66,31 @@ func SysAttachmentUpload(ctx *Context) {
 		return
 	}
 	files := form.File["files"]
-	for _, file := range files {
-		filename := filepath.Base(file.Filename)
-		fmt.Println(filename)
-		if err := ctx.SaveUploadedFile(file, filename); err != nil {
+	file.EnsureDir(viper.GetString("dir.files"))
+	for _, f := range files {
+		filename := filepath.Base(f.Filename)
+		uuid := uuid.MustString()
+		filePath := path.Join(viper.GetString("dir.files"), uuid)
+		if err := ctx.SaveUploadedFile(f, filePath); err != nil {
 			ctx.Fail(err)
 			return
 		}
+		attach = append(attach, model.SysAttachment{
+			ID:         null.StringFromUUID(),
+			Name:       null.StringFrom(filename),
+			UUID:       null.StringFrom(uuid),
+			Size:       null.IntFrom(f.Size),
+			Ext:        null.StringFrom(filepath.Ext(filename)),
+			Hash:       null.StringFrom(string(file.MustHash(filePath))),
+			Path:       null.StringFrom(filePath),
+			CreateTime: null.TimeFromPtr(time.Now().Value()),
+			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			UpdateTime: null.TimeFromPtr(time.Now().Value()),
+			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		})
+		fmt.Println("----", string(file.MustHash(filePath)))
 	}
-	ctx.Success("")
+	ctx.Success(attach)
 }
 
 // SysAttachmentDel api implementation

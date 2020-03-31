@@ -53,6 +53,7 @@ var (
 			viper.SetDefault("dir.util", "util")
 			viper.SetDefault("dir.model", "model")
 			viper.SetDefault("dir.srv", "srv")
+			viper.SetDefault("dir.files", "files")
 			viper.SetDefault("oauth.id", "Y76U9344RABF4")
 			viper.SetDefault("oauth.secret", "98UYO6FVB865")
 			viper.SetDefault("oauth.login", "/static/auth/login.html")
@@ -65,15 +66,15 @@ var (
 			viper.SetDefault("swag.scope.read", "Grants read access")
 			viper.SetDefault("swag.scope.write", "Grants write access")
 			viper.SetDefault("swag.scope.admin", "Grants read and write access to administrative information")
+			viper.AutomaticEnv()
+			if err := viper.ReadInConfig(); err != nil {
+				logrus.Warn("configuration file not found")
+			}
 			if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
 				viper.SetDefault("oauth.server", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
 			}
 			if strings.TrimSpace(viper.GetString("oauth.cli")) == "" {
 				viper.SetDefault("oauth.cli", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
-			}
-			viper.AutomaticEnv()
-			if err := viper.ReadInConfig(); err != nil {
-				logrus.Warn("configuration file not found")
 			}
 			if strings.TrimSpace(viper.GetString("host")) == "" {
 				viper.SetDefault("host", fmt.Sprintf("127.0.0.1:%v", viper.GetString("http.port")))

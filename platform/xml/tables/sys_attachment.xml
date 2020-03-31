@@ -1,11 +1,13 @@
 <table name="sys_attachment" desc="附件表" packages="github.com/2637309949/dolphin/packages/null">
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="name" desc="名称" type="null.String" xorm="varchar(200) notnull" />
+	<column name="uuid" desc="uuid" type="null.String" xorm="varchar(36) notnull" />
 	<column name="size" desc="大小" type="null.Int" />
+	<column name="type" desc="类型" type="null.String" xorm="varchar(36)" />
     <column name="ext" desc="ext" type="null.String" xorm="varchar(36)" />
     <column name="hash" desc="hash" type="null.String" xorm="varchar(500)" />
-	<column name="path" desc="path" type="null.String" xorm="varchar(500)" />
-	<column name="url" desc="url" type="null.String" xorm="varchar(500)" />
+	<column name="path" desc="path" type="null.String" xorm="varchar(300)" />
+	<column name="url" desc="url" type="null.String" xorm="varchar(300)" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -179,21 +180,23 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 	}
 
 	return func(c *gin.Context) {
-		req := c.Request.Clone(c)
+		// bytes buffer
+		buf, err := ioutil.ReadAll(c.Request.Body)
+		if err != nil {
+			panic(err)
+		}
+		c.Request.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(buf)))
 		writer := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
-		// Request byte
-		bByte := make([]byte, 1024)
-		rbn, _ := req.Body.Read(bByte)
 		c.Writer = writer
 
 		// Start timer
 		start := time.Now()
-		path := req.URL.Path
-		raw := req.URL.RawQuery
+		path := c.Request.URL.Path
+		raw := c.Request.URL.RawQuery
 
 		// resove header
 		hr := bytes.Buffer{}
-		req.Header.Write(&hr)
+		c.Request.Header.Write(&hr)
 
 		// Process request
 		c.Next()
@@ -207,7 +210,7 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 					Keys:    c.Keys,
 				},
 				Header:  hr.Bytes(),
-				ReqBody: bByte[0:rbn],
+				ReqBody: buf,
 				ResBody: writer.body.Bytes(),
 			}
 
@@ -215,7 +218,7 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 			param.TimeStamp = time.Now()
 			param.Latency = param.TimeStamp.Sub(start)
 			param.ClientIP = c.ClientIP()
-			param.Method = req.Method
+			param.Method = c.Request.Method
 			param.StatusCode = c.Writer.Status()
 			param.ErrorMessage = c.Errors.ByType(gin.ErrorTypePrivate).String()
 			param.BodySize = c.Writer.Size()

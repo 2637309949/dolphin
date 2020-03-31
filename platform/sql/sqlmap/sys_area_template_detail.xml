@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_area_template_detail">
         insert into sys_area_template_detail
-		(`id`,`name`,`temp_id`,`value`,`type`,`priority`,`content`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		(`id`,`name`,`temp_id`,`value`,`type`,`priority`,`content`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
-		(?id,?name,?temp_id,?value,?type,?priority,?content,?domain,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+		(?id,?name,?temp_id,?value,?type,?priority,?content,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
     <sql id="update_sys_area_template_detail">
-        update sys_area_template_detail set `id`=?id,`name`=?name,`temp_id`=?temp_id,`value`=?value,`type`=?type,`priority`=?priority,`content`=?content,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+        update sys_area_template_detail set `id`=?id,`name`=?name,`temp_id`=?temp_id,`value`=?value,`type`=?type,`priority`=?priority,`content`=?content,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
     <sql id="delete_sys_area_template_detail">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_area_template_detail">
-        select `id`,`name`,`temp_id`,`value`,`type`,`priority`,`content`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_area_template_detail
+        select `id`,`name`,`temp_id`,`value`,`type`,`priority`,`content`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_area_template_detail
 		where  id =?id
     </sql>
     <sql id="selectall_sys_area_template_detail">
-        select `id`,`name`,`temp_id`,`value`,`type`,`priority`,`content`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_area_template_detail
+        select `id`,`name`,`temp_id`,`value`,`type`,`priority`,`content`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_area_template_detail
     </sql>
 </sqlMap>

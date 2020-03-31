@@ -54,7 +54,6 @@ func SysCasLogin(ctx *Context) {
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
 		return
 	}
-
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
 	domain := f.Get("domain")
@@ -65,6 +64,7 @@ func SysCasLogin(ctx *Context) {
 		Domain: null.StringFrom(domain),
 	}
 	ext, err := ctx.engine.PlatformDB.Where("delete_time is null").Get(&account)
+
 	if err != nil {
 		logrus.Error("SysCasLogin/Where:", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())

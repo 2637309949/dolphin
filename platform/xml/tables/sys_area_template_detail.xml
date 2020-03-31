@@ -6,7 +6,6 @@
     <column name="type" desc="类型 0:数值项 1:单选项 2:文字项 3:列表项" type="null.Int"/>
     <column name="priority" desc="优先级" type="null.Int"/>
     <column name="content" desc="内容" type="null.String" xorm="text" />
-    <column name="domain" desc="域" type="null.String" xorm="varchar(50)" />
     
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

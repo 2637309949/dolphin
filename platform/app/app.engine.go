@@ -167,15 +167,15 @@ func (e *Engine) initPlatformDB() {
 		}
 	}
 	admin := model.SysUser{
-		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		ID:         null.StringFrom(util.AdminID),
 		Password:   null.StringFrom("admin"),
 		Name:       null.StringFrom("admin"),
 		FullName:   null.StringFrom("admin"),
 		Status:     null.IntFrom(1),
 		Domain:     null.StringFrom("localhost"),
-		CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		CreateBy:   null.StringFrom(util.AdminID),
 		CreateTime: null.TimeFrom(time.Now()),
-		UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		UpdateBy:   null.StringFrom(util.AdminID),
 		UpdateTime: null.TimeFrom(time.Now()),
 	}
 	admin.SetPassword(admin.Password.String)

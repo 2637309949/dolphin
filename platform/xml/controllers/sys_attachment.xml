@@ -6,7 +6,7 @@
             <failure type="$response"/>
         </return>
     </api>
-    <api name="upload" desc="上传附件" method="post" auth="false">
+    <api name="upload" desc="上传附件" method="post">
         <return>
             <success type="$response"/>
             <failure type="$response"/>

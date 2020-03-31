@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_role">
         insert into sys_role
-		(`id`,`name`,`code`,`status`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		(`id`,`name`,`code`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
 		values
-		(?id,?name,?code,?status,?domain,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+		(?id,?name,?code,?status,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
     </sql>
     <sql id="update_sys_role">
-        update sys_role set `id`=?id,`name`=?name,`code`=?code,`status`=?status,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+        update sys_role set `id`=?id,`name`=?name,`code`=?code,`status`=?status,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
 		where  id =?id
     </sql>
     <sql id="delete_sys_role">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_role">
-        select `id`,`name`,`code`,`status`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_role
+        select `id`,`name`,`code`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_role
 		where  id =?id
     </sql>
     <sql id="selectall_sys_role">
-        select `id`,`name`,`code`,`status`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_role
+        select `id`,`name`,`code`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_role
     </sql>
 </sqlMap>
