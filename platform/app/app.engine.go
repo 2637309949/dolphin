@@ -137,7 +137,7 @@ func (e *Engine) initPlatformDB() {
 	e.migration(Name, e.PlatformDB)
 	s := e.PlatformDB.NewSession()
 	domain := model.SysDomain{
-		ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		ID:         null.StringFrom(util.AdminID),
 		Name:       null.StringFrom("default"),
 		FullName:   null.StringFrom("default"),
 		DataSource: null.StringFrom(""),
@@ -149,19 +149,17 @@ func (e *Engine) initPlatformDB() {
 		SyncFlag:   null.IntFrom(0),
 		Domain:     null.StringFrom("localhost"),
 		ApiUrl:     null.StringFrom("http://127.0.0.1:8086"),
-		CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		CreateBy:   null.StringFrom(util.AdminID),
 		CreateTime: null.TimeFrom(time.Now()),
-		UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+		UpdateBy:   null.StringFrom(util.AdminID),
 		UpdateTime: null.TimeFrom(time.Now()),
 	}
-	ct, err := s.Where("id=?", domain.ID).Count(new(model.SysDomain))
-	if err != nil {
-		s.Rollback()
-		panic(err)
-	}
-	if ct == 0 {
-		_, err := e.PlatformDB.InsertOne(&domain)
+	if ct, err := s.Where("id=?", domain.ID).Count(new(model.SysDomain)); ct == 0 || err != nil {
 		if err != nil {
+			s.Rollback()
+			panic(err)
+		}
+		if _, err := e.PlatformDB.InsertOne(&domain); err != nil {
 			s.Rollback()
 			panic(err)
 		}
@@ -179,14 +177,12 @@ func (e *Engine) initPlatformDB() {
 		UpdateTime: null.TimeFrom(time.Now()),
 	}
 	admin.SetPassword(admin.Password.String)
-	ct, err = s.Where("id=?", admin.ID).Count(new(model.SysUser))
-	if err != nil {
-		s.Rollback()
-		panic(err)
-	}
-	if ct == 0 {
-		_, err := e.PlatformDB.InsertOne(&admin)
+	if ct, err := s.Where("id=?", admin.ID).Count(new(model.SysUser)); ct == 0 || err != nil {
 		if err != nil {
+			s.Rollback()
+			panic(err)
+		}
+		if _, err := e.PlatformDB.InsertOne(&admin); err != nil {
 			s.Rollback()
 			panic(err)
 		}
