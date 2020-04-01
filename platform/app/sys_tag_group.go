@@ -107,6 +107,7 @@ func SysTagGroupPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
+	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_tag_group", "page", "sys_tag_group", q.Value())
 	if err != nil {
 		ctx.Fail(err)

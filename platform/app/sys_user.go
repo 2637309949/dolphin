@@ -13,7 +13,7 @@ import (
 )
 
 // SysUserAdd api implementation
-// @Summary 添加用户 
+// @Summary 添加用户
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -33,7 +33,7 @@ func SysUserAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -42,7 +42,7 @@ func SysUserAdd(ctx *Context) {
 }
 
 // SysUserDel api implementation
-// @Summary 删除用户 
+// @Summary 删除用户
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -57,7 +57,7 @@ func SysUserDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.SysRole)).In("id", payload.ID.String).Update(map[string]interface{}{
+	ret, err := ctx.PlatformDB.Table(new(model.SysRole)).In("id", payload.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
 		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
@@ -69,7 +69,7 @@ func SysUserDel(ctx *Context) {
 }
 
 // SysUserUpdate api implementation
-// @Summary 更新用户 
+// @Summary 更新用户
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -86,7 +86,7 @@ func SysUserUpdate(ctx *Context) {
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
+	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -95,7 +95,7 @@ func SysUserUpdate(ctx *Context) {
 }
 
 // SysUserPage api implementation
-// @Summary 用户分页查询 
+// @Summary 用户分页查询
 // @Tags 用户
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -108,7 +108,8 @@ func SysUserPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
-	ret, err := ctx.PageSearch(ctx.DB, "sys_user", "page", "sys_user", q.Value())
+	q.SetTags()
+	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -117,7 +118,7 @@ func SysUserPage(ctx *Context) {
 }
 
 // SysUserGet api implementation
-// @Summary 获取用户信息 
+// @Summary 获取用户信息
 // @Tags 用户
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户id"
@@ -128,7 +129,7 @@ func SysUserPage(ctx *Context) {
 func SysUserGet(ctx *Context) {
 	var entity model.SysUser
 	id := ctx.Query("id")
-	ret, err := ctx.DB.Id(id).Get(&entity)
+	ret, err := ctx.PlatformDB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -137,7 +138,7 @@ func SysUserGet(ctx *Context) {
 }
 
 // SysUserLogout api implementation
-// @Summary 用户退出登录 
+// @Summary 用户退出登录
 // @Tags 用户
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Response
@@ -153,4 +154,3 @@ func SysUserLogout(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

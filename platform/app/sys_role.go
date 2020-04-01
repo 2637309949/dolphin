@@ -107,6 +107,7 @@ func SysRolePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
+	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())
 	if err != nil {
 		ctx.Fail(err)

@@ -20,7 +20,7 @@
             <failure type="$response"/>
         </return>
     </api>
-    <api name="page" function="list" table="sys_user_template" desc="用户模板分页查询" method="get">
+    <api name="page" function="page" table="sys_user_template" desc="用户模板分页查询" method="get">
         <param name="page" type="int" desc="页码" />
         <param name="size" type="int" desc="单页数" />
         <return>

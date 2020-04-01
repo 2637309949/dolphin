@@ -13,7 +13,7 @@ import (
 )
 
 // SysMenuAdd api implementation
-// @Summary 添加菜单 
+// @Summary 添加菜单
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -42,7 +42,7 @@ func SysMenuAdd(ctx *Context) {
 }
 
 // SysMenuDel api implementation
-// @Summary 删除菜单 
+// @Summary 删除菜单
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -69,7 +69,7 @@ func SysMenuDel(ctx *Context) {
 }
 
 // SysMenuUpdate api implementation
-// @Summary 更新菜单 
+// @Summary 更新菜单
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -95,7 +95,7 @@ func SysMenuUpdate(ctx *Context) {
 }
 
 // SysMenuList api implementation
-// @Summary 菜单分页查询 
+// @Summary 菜单分页查询
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
@@ -108,7 +108,8 @@ func SysMenuList(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
-	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "list", "sys_menu", q.Value())
+	q.SetTags()
+	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -117,7 +118,7 @@ func SysMenuList(ctx *Context) {
 }
 
 // SysMenuTree api implementation
-// @Summary 菜单树形结构 
+// @Summary 菜单树形结构
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Response
@@ -133,7 +134,7 @@ func SysMenuTree(ctx *Context) {
 }
 
 // SysMenuGet api implementation
-// @Summary 获取菜单信息 
+// @Summary 获取菜单信息
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "菜单id"
@@ -151,4 +152,3 @@ func SysMenuGet(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-

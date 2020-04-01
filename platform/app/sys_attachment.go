@@ -177,6 +177,7 @@ func SysAttachmentPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
+	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_attachment", "page", "sys_attachment", q.Value())
 	if err != nil {
 		ctx.Fail(err)

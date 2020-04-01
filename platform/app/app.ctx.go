@@ -21,10 +21,11 @@ import (
 type (
 	// Context defined http handle hook context
 	Context struct {
-		*gin.Context
 		AuthInfo
-		DB     *xorm.Engine
-		engine *Engine
+		*gin.Context
+		DB         *xorm.Engine
+		PlatformDB *xorm.Engine
+		engine     *Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value.
 	HandlerFunc func(*Context)

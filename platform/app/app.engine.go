@@ -66,7 +66,7 @@ func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 }
 
 func (e *Engine) allocateContext() *Context {
-	return &Context{engine: e, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
+	return &Context{PlatformDB: e.PlatformDB, engine: e, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
 }
 
 // Group handlers
@@ -151,7 +151,7 @@ func (e *Engine) initPlatformDB() {
 		logrus.Fatal(err)
 	}
 	for k, v := range sql.SQLTPL {
-		if filepath.Ext(k) != "" {
+		if filepath.Ext(k) == "" {
 			e.PlatformDB.AddSql(k, v)
 		} else {
 			e.PlatformDB.AddSqlTemplate(k, v)
@@ -258,7 +258,7 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 	}
 
 	for k, v := range sql.SQLTPL {
-		if filepath.Ext(k) != "" {
+		if filepath.Ext(k) == "" {
 			db.AddSql(k, v)
 		} else {
 			db.AddSqlTemplate(k, v)

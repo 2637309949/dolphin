@@ -44,12 +44,13 @@ import (
 {{- end}}
 // @Router /api{{.APIPrefix .Version}}/{{.APIPath $.Controller.Name .Path}}/{{.Name}} [{{.Method}}]
 func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
-{{- if eq .Function "list"}}
+{{- if eq .Function "page"}}
 	q := ctx.TypeQuery()
 	{{- range .Params}}
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
+	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		ctx.Fail(err)

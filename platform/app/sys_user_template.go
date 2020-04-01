@@ -107,6 +107,7 @@ func SysUserTemplatePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page")
 	q.SetInt("size")
+	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_user_template", "page", "sys_user_template", q.Value())
 	if err != nil {
 		ctx.Fail(err)
