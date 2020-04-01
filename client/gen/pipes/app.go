@@ -18,6 +18,11 @@ import (
 type App struct {
 }
 
+// Name defined pipe name
+func (app *App) Name() string {
+	return "auto"
+}
+
 // Build func
 func (app *App) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	data := map[string]interface{}{

@@ -16,6 +16,11 @@ import (
 type Main struct {
 }
 
+// Name defined pipe name
+func (m *Main) Name() string {
+	return "main"
+}
+
 // Build func
 func (m *Main) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	data := map[string]interface{}{

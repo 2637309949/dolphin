@@ -19,6 +19,11 @@ import (
 type Script struct {
 }
 
+// Name defined pipe name
+func (app *Script) Name() string {
+	return "script"
+}
+
 // Build func
 func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg

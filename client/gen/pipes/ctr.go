@@ -17,6 +17,11 @@ import (
 type Ctr struct {
 }
 
+// Name defined pipe name
+func (ctr *Ctr) Name() string {
+	return "ctr"
+}
+
 // Build func
 func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg

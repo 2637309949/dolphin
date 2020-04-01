@@ -17,6 +17,11 @@ import (
 type SQLMap struct {
 }
 
+// Name defined pipe name
+func (app *SQLMap) Name() string {
+	return "sqlmap"
+}
+
 // Build func
 func (app *SQLMap) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg

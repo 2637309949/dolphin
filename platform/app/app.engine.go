@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"path/filepath"
 	"strconv"
 	"sync"
 	"time"
@@ -134,6 +135,29 @@ func (e *Engine) initPlatformDB() {
 			logrus.Fatal(err)
 		}
 	}
+	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.PlatformDB.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	for k, v := range sql.SQLTPL {
+		if filepath.Ext(k) != "" {
+			e.PlatformDB.AddSql(k, v)
+		} else {
+			e.PlatformDB.AddSqlTemplate(k, v)
+		}
+	}
+
 	e.migration(Name, e.PlatformDB)
 	s := e.PlatformDB.NewSession()
 	domain := model.SysDomain{
@@ -216,6 +240,7 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 		xLogger.ShowSQL(true)
 	}
 	db.SetLogger(xLogger)
+
 	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
 		logrus.Fatal(err)
 	}
@@ -230,6 +255,14 @@ func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
 	}
 	if err = db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
 		logrus.Fatal(err)
+	}
+
+	for k, v := range sql.SQLTPL {
+		if filepath.Ext(k) != "" {
+			db.AddSql(k, v)
+		} else {
+			db.AddSqlTemplate(k, v)
+		}
 	}
 	e.BusinessDBSet[domain] = db
 }

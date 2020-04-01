@@ -17,6 +17,11 @@ import (
 type Srv struct {
 }
 
+// Name defined pipe name
+func (app *Srv) Name() string {
+	return "srv"
+}
+
 // Build func
 func (app *Srv) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg

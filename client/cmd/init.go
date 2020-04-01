@@ -43,6 +43,12 @@ var build = &cobra.Command{
 		g.AddPipe(&pipes.OAuth{})
 		g.AddPipe(&pipes.Script{})
 		g.AddPipe(&pipes.Doc{})
+		for _, v := range args {
+			tpl := &pipes.SQLTPL{}
+			if v == tpl.Name() {
+				g.AddPipe(&pipes.SQLTPL{})
+			}
+		}
 		if err := g.Build(wd); err != nil {
 			return err
 		}

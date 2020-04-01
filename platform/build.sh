@@ -1,1 +1,1 @@
-go run github.com/2637309949/dolphin/client build
+go run github.com/2637309949/dolphin/client build sqltpl

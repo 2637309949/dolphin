@@ -18,6 +18,11 @@ import (
 type Doc struct {
 }
 
+// Name defined pipe name
+func (m *Doc) Name() string {
+	return "doc"
+}
+
 // Build func
 func (m *Doc) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	return []*gen.TmplCfg{}, swag.New().Build(&swag.Config{

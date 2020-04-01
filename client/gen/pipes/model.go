@@ -17,6 +17,11 @@ import (
 type Model struct {
 }
 
+// Name defined pipe name
+func (m *Model) Name() string {
+	return "model"
+}
+
 // Build func
 func (m *Model) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg

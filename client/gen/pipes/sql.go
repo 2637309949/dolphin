@@ -19,6 +19,11 @@ import (
 type SQL struct {
 }
 
+// Name defined pipe name
+func (app *SQL) Name() string {
+	return "sql"
+}
+
 // Build func
 func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg

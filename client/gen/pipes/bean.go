@@ -17,6 +17,11 @@ import (
 type Bean struct {
 }
 
+// Name defined pipe name
+func (m *Bean) Name() string {
+	return "bean"
+}
+
 // Build func
 func (m *Bean) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	var tmplCfgs []*gen.TmplCfg

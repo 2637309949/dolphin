@@ -19,6 +19,11 @@ import (
 type OAuth struct {
 }
 
+// Name defined pipe name
+func (oa *OAuth) Name() string {
+	return "oAuth"
+}
+
 // Build func
 func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
 	data := map[string]interface{}{
