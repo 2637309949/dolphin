@@ -2,7 +2,6 @@ package app
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 	"os"
 	"path"
@@ -89,6 +88,7 @@ func (e *Engine) initBusinessDB() {
 	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null and sync_flag=0").Find(&domains); err != nil {
 		logrus.Fatal(err)
 	}
+
 	for _, domain := range domains {
 		uri, err := httpUtil.Parse(domain.DataSource.String)
 		if err != nil {
@@ -98,8 +98,20 @@ func (e *Engine) initBusinessDB() {
 		if err != nil {
 			panic(err)
 		}
-		e.AddBusinessDB(domain.Domain.String, domain.DriverName.String, domain.DataSource.String)
+		db, err := xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+		if viper.GetString("app.mode") == "debug" {
+			xLogger.ShowSQL(true)
+		}
+		db.SetLogger(xLogger)
+		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
+		e.RegisterSQLMap(db, sql.SQLTPL)
+		e.AddBusinessDB(domain.Domain.String, db)
 	}
+
 	nset := e.MSet.Name(func(n string) bool {
 		return n != Name
 	})
@@ -126,38 +138,8 @@ func (e *Engine) initPlatformDB() {
 		xLogger.ShowSQL(true)
 	}
 	e.PlatformDB.SetLogger(xLogger)
-	e.PlatformDB.SqlTemplate = &xorm.HTMLTemplate{
-		Template: make(map[string]*template.Template, 100),
-		Funcs:    make(map[string]xorm.FuncMap, 20),
-	}
-	for k, v := range sql.SQLTPL {
-		if err = e.PlatformDB.AddSqlTemplate(k, v); err != nil {
-			logrus.Fatal(err)
-		}
-	}
-	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
-		logrus.Fatal(err)
-	}
-	for k, v := range sql.SQLTPL {
-		if filepath.Ext(k) == "" {
-			e.PlatformDB.AddSql(k, v)
-		} else {
-			e.PlatformDB.AddSqlTemplate(k, v)
-		}
-	}
-
+	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
+	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
 	e.migration(Name, e.PlatformDB)
 	s := e.PlatformDB.NewSession()
 	domain := model.SysDomain{
@@ -227,43 +209,39 @@ func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
 	return
 }
 
-// AddBusinessDB adddb
-func (e *Engine) AddBusinessDB(domain, driverName, dataSource string) {
-	sqlDir := viper.GetString("dir.sql")
-	sqlDir = path.Join(".", sqlDir)
-	db, err := xorm.NewEngine(driverName, dataSource)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
-	if viper.GetString("app.mode") == "debug" {
-		xLogger.ShowSQL(true)
-	}
-	db.SetLogger(xLogger)
-
-	if err = os.MkdirAll(sqlDir, os.ModePerm); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
-		logrus.Fatal(err)
-	}
-
-	for k, v := range sql.SQLTPL {
+// RegisterSQLMap defined sql
+func (e *Engine) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) {
+	for k, v := range sqlMap {
 		if filepath.Ext(k) == "" {
 			db.AddSql(k, v)
 		} else {
 			db.AddSqlTemplate(k, v)
 		}
 	}
+}
+
+// RegisterSQLDir defined sql
+func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) {
+	if err := os.MkdirAll(sqlDir, os.ModePerm); err != nil {
+		logrus.Fatal(err)
+	}
+	if err := db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err := db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err := db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
+		logrus.Fatal(err)
+	}
+	if err := db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
+		logrus.Fatal(err)
+	}
+
+}
+
+// AddBusinessDB adddb
+func (e *Engine) AddBusinessDB(domain string, db *xorm.Engine) {
 	e.BusinessDBSet[domain] = db
 }
 
