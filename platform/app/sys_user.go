@@ -106,8 +106,8 @@ func SysUserUpdate(ctx *Context) {
 // @Router /api/sys/user/page [get]
 func SysUserPage(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetInt("page")
-	q.SetInt("size")
+	q.SetInt("page", 1)
+	q.SetInt("size", 15)
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
 	if err != nil {

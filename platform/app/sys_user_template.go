@@ -105,8 +105,8 @@ func SysUserTemplateUpdate(ctx *Context) {
 // @Router /api/sys/user/template/page [get]
 func SysUserTemplatePage(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetInt("page")
-	q.SetInt("size")
+	q.SetInt("page", 1)
+	q.SetInt("size", 15)
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_user_template", "page", "sys_user_template", q.Value())
 	if err != nil {

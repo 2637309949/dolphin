@@ -105,8 +105,8 @@ func SysOrgUpdate(ctx *Context) {
 // @Router /api/sys/org/page [get]
 func SysOrgPage(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetInt("page")
-	q.SetInt("size")
+	q.SetInt("page", 1)
+	q.SetInt("size", 15)
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_org", "page", "sys_org", q.Value())
 	if err != nil {

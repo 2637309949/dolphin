@@ -105,8 +105,8 @@ func SysTagGroupUpdate(ctx *Context) {
 // @Router /api/sys/tag/group/page [get]
 func SysTagGroupPage(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetInt("page")
-	q.SetInt("size")
+	q.SetInt("page", 1)
+	q.SetInt("size", 15)
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_tag_group", "page", "sys_tag_group", q.Value())
 	if err != nil {

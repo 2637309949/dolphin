@@ -106,8 +106,8 @@ func SysMenuUpdate(ctx *Context) {
 // @Router /api/sys/menu/list [get]
 func SysMenuList(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetInt("page")
-	q.SetInt("size")
+	q.SetInt("page", 1)
+	q.SetInt("size", 15)
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
