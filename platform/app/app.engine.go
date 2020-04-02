@@ -345,15 +345,15 @@ func (e *Engine) Run() {
 	e.MSet.Release()
 }
 
-// invokeEngine build engine
-func invokeEngine(build func(*Engine)) func(*Engine) {
+// InvokeEngine build engine
+func InvokeEngine(build func(*Engine)) func(*Engine) {
 	return func(e *Engine) {
 		build(e)
 	}
 }
 
 // InvokeContext build context
-func invokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
+func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
 	return func(e *Engine) {
 		group := e.Group(viper.GetString("http.prefix"))
 		group.Handle(httpMethod, relativePath, handlers...)

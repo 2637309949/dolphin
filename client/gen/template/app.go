@@ -72,16 +72,16 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	}).([]pApp.HandlerFunc)...)
 }
 
-// invokeEngine build engine
-func invokeEngine(build func(*Engine)) func(*pApp.Engine) {
+// InvokeEngine build engine
+func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
 		App.Engine = base
 		build(App)
 	}
 }
 
-// invokeContext build context
-func invokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
+// InvokeContext build context
+func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
 		App.Engine = base
 		group := App.Group(viper.GetString("http.prefix"))
