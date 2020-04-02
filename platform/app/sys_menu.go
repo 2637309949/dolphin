@@ -4,6 +4,9 @@
 package app
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
@@ -32,6 +35,22 @@ func SysMenuAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+
+	if !payload.Parent.IsZero() {
+		parent := model.SysMenu{}
+		ext, err := ctx.DB.SqlMapClient("selectone_sys_menu", &map[string]string{"id": payload.Parent.String}).Get(&parent)
+		if err != nil || !ext {
+			ctx.Fail(err)
+			return
+		} else if !ext {
+			ctx.Fail(errors.New("the record does not exist"))
+			return
+		}
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s%s", payload.ID.String, parent.Inheritance.String))
+	} else {
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s|", payload.ID.String))
+	}
+
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)

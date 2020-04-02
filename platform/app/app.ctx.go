@@ -173,7 +173,6 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 	treeNodeList := list.New()
 	originNodeList := list.New()
 
-	fmt.Println("-----", result)
 	// 区分root节点和子节点数组
 	for _, params := range paramsArr {
 		value, parent, text := "", "", ""
