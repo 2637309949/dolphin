@@ -241,11 +241,11 @@ func (e *Engine) initOAuth() {
 	manager.MapTokenStorage(store.NewRedisStoreWithCli(e.Redis, TokenkeyNamespace))
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 
-	cs := store.NewClientStore()
-	cs.Set(viper.GetString("oauth.id"), &models.Client{
-		ID:     viper.GetString("oauth.id"),
-		Secret: viper.GetString("oauth.secret"),
-		Domain: viper.GetString("oauth.cli"),
+	cs := NewClientStore()
+	cs.Set(&models.Client{
+		ID:     DefaultClient.Client.String,
+		Secret: DefaultClient.Secret.String,
+		Domain: DefaultClient.Domain.String,
 	})
 	manager.MapClientStorage(cs)
 

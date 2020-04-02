@@ -26,6 +26,7 @@ var DefaultDomain = model.SysDomain{
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
+	DelFlag:    null.IntFrom(0),
 }
 
 // DefaultAdmin default admin
@@ -40,6 +41,7 @@ var DefaultAdmin = model.SysUser{
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 	UpdateTime: null.TimeFrom(time.Now()),
+	DelFlag:    null.IntFrom(0),
 }
 
 // DefaultClient default client
@@ -53,4 +55,5 @@ var DefaultClient = model.SysClient{
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
+	DelFlag:    null.IntFrom(0),
 }

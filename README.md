@@ -132,6 +132,6 @@ go run github.com/2637309949/dolphin/client build
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
-    <column name="del_flag" desc="删除标记" type="null.Int" xorm="default(0)" />
+    <column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
 </table>
 ```

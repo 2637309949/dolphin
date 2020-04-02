@@ -71,6 +71,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.DelFlag = null.IntFrom(0)
 	}
 	{{- else}}
 	payload.ID = null.StringFromUUID()
@@ -78,6 +79,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.DelFlag = null.IntFrom(0)
 	{{- end}}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
