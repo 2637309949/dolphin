@@ -142,6 +142,9 @@ definitions:
       delete_time:
         description: 删除时间
         type: string
+      hidden:
+        description: 是否隐藏
+        type: number
       icon:
         description: 菜单图标
         type: string
