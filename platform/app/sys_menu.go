@@ -35,7 +35,7 @@ func SysMenuAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-
+	payload.DelFlag = null.IntFrom(0)
 	if !payload.Parent.IsZero() {
 		parent := model.SysMenu{}
 		ext, err := ctx.DB.SqlMapClient("selectone_sys_menu", &map[string]string{"id": payload.Parent.String}).Get(&parent)

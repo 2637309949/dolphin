@@ -33,6 +33,7 @@ func SysUserAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)

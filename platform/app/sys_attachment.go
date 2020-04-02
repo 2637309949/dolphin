@@ -40,6 +40,7 @@ func SysAttachmentAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
@@ -95,6 +96,7 @@ func SysAttachmentUpload(ctx *Context) {
 			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFromPtr(time.Now().Value()),
 			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			DelFlag:    null.IntFrom(1),
 		}
 		attachments = append(attachments, item)
 		attachs = append(attachs, model.Attach{

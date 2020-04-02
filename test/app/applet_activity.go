@@ -34,6 +34,7 @@ func AppletActivityBatchAdd(ctx *Context) {
 		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.DelFlag = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -64,6 +65,7 @@ func AppletActivityAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
