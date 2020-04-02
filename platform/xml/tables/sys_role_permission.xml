@@ -1,8 +1,8 @@
-<table name="sys_role_menu" desc="角色与菜单对应" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_role_permission" desc="权限关联" packages="github.com/2637309949/dolphin/packages/null">
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
-	<column name="role_id" desc="用户ID" type="null.String" xorm="varchar(36) notnull" />
-    <column name="menu_id" desc="菜单ID" type="null.String" xorm="varchar(36) notnull" />
-
+	<column name="role_id" desc="角色" type="null.String" xorm="varchar(36) notnull" />
+    <column name="permission_id" desc="权限" type="null.String" xorm="varchar(36) notnull" />
+    
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />

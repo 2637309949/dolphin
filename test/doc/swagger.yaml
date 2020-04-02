@@ -65,9 +65,12 @@ definitions:
         description: 编码
         type: number
       data:
-        description: 卡类型
+        description: 返回数据
         type: object
       msg:
+        description: 消息
+        type: string
+      stack:
         description: 消息
         type: string
     type: object

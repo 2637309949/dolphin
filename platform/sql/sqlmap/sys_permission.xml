@@ -1,0 +1,23 @@
+<sqlMap>
+    <sql id="insert_sys_permission">
+        insert into sys_permission
+		(`id`,`name`,`code`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		values
+		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+    </sql>
+    <sql id="update_sys_permission">
+        update sys_permission set `id`=?id,`name`=?name,`code`=?code,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+		where  id =?id
+    </sql>
+    <sql id="delete_sys_permission">
+        delete from sys_permission
+		where id =?id
+    </sql>
+    <sql id="selectone_sys_permission">
+        select `id`,`name`,`code`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_permission
+		where  id =?id
+    </sql>
+    <sql id="selectall_sys_permission">
+        select `id`,`name`,`code`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_permission
+    </sql>
+</sqlMap>

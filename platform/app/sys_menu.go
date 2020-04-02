@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
@@ -125,7 +124,9 @@ func SysMenuList(ctx *Context) {
 // @Router /api/sys/menu/tree [get]
 func SysMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
-	ret, err := srv.SysMenuAction(q)
+	q.SetString("name")
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return

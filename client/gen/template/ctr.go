@@ -98,7 +98,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	for _, form := range payload {
 		ids = append(ids, form.ID.String)
 	}
-	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", ids).Update(map[string]interface{}{
+	ret, err := ctx.DB.Table(new({{$bp.ORef $bp.Type}})).In("id", ids).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
 		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})
@@ -113,7 +113,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new({{$bp.SRef $bp.Type}})).In("id", payload.ID.String).Update(map[string]interface{}{
+	ret, err := ctx.DB.Table(new({{$bp.ORef $bp.Type}})).In("id", payload.ID.String).Update(map[string]interface{}{
 		"delete_time": null.TimeFromPtr(time.Now().Value()),
 		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 	})

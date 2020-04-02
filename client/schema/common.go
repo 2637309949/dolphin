@@ -177,9 +177,11 @@ func (c *Common) ToTitle(title string) string {
 
 // Ref defined model name
 func (c *Common) Ref(m string) string {
-	if strings.HasPrefix(m, "$") || strings.HasPrefix(m, "[]$") {
+	if strings.HasPrefix(m, "$") || strings.HasPrefix(m, "[]$") || strings.HasPrefix(m, "[]*$") {
 		if strings.HasPrefix(m, "[]$") {
-			return fmt.Sprintf("[]model.%v", c.ToUpperCase(strings.ReplaceAll(m, "[]", "")))
+			return fmt.Sprintf("[]model.%v", c.ToUpperCase(strings.ReplaceAll(m, "[]$", "")))
+		} else if strings.HasPrefix(m, "[]*$") {
+			return fmt.Sprintf("[]*model.%v", c.ToUpperCase(strings.ReplaceAll(m, "[]*$", "")))
 		}
 		return fmt.Sprintf("model.%v", c.ToUpperCase(m))
 	}
@@ -188,6 +190,19 @@ func (c *Common) Ref(m string) string {
 
 // SRef defined model name
 func (c *Common) SRef(m string) string {
+	if strings.HasPrefix(m, "$") || strings.HasPrefix(m, "[]$") || strings.HasPrefix(m, "[]*$") {
+		if strings.HasPrefix(m, "[]$") {
+			return fmt.Sprintf("[]%v", c.ToUpperCase(strings.ReplaceAll(m, "[]$", "")))
+		} else if strings.HasPrefix(m, "[]*$") {
+			return fmt.Sprintf("[]*%v", c.ToUpperCase(strings.ReplaceAll(m, "[]*$", "")))
+		}
+		return fmt.Sprintf("%v", c.ToUpperCase(m))
+	}
+	return m
+}
+
+// ORef defined model name
+func (c *Common) ORef(m string) string {
 	return strings.ReplaceAll(c.Ref(m), "[]", "")
 }
 

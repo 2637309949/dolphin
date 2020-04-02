@@ -1,6 +1,7 @@
 package app
 
 import (
+	"container/list"
 	"encoding/json"
 	"fmt"
 	"html/template"
@@ -137,6 +138,96 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	ret["totalrecords"] = records
 	ret["totalpages"] = totalpages
 	return &ret, nil
+}
+
+func toString(v interface{}, defaultValue string) interface{} {
+	if v == nil {
+		return defaultValue
+	}
+	switch t := v.(type) {
+	case int:
+		return t
+	case string:
+		return t
+	default:
+		return t
+	}
+}
+
+// TreeSearch defined
+func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
+	stplkey := fmt.Sprintf("%s_%s.tpl", controller, api)
+	result, err := db.SqlTemplateClient(stplkey, &q).Query().List()
+	if err != nil {
+		return nil, err
+	}
+
+	root := ""
+	rootArr := []*model.TreeNode{}
+	paramsArr := result
+	valueFiled := "id"
+	parentField := "parent"
+	textFiled := "name"
+	parentValue := root
+
+	treeNodeList := list.New()
+	originNodeList := list.New()
+
+	fmt.Println("-----", result)
+	// 区分root节点和子节点数组
+	for _, params := range paramsArr {
+		value, parent, text := "", "", ""
+		if params[valueFiled] != nil {
+			value = fmt.Sprintf("%v", params[valueFiled])
+		}
+		if params[parentField] != nil {
+			parent = fmt.Sprintf("%v", params[parentField])
+		}
+		if params[textFiled] != nil {
+			text = fmt.Sprintf("%v", params[textFiled])
+		}
+		//json,_ := xorm.JSONString(params, true)
+		// 如果根节点root为空，则从parent为空中获取root节点数组
+		// 如果root不为空且treeSrcs中包含id为root的，则获取id等于的节点为root节点数组(相当于显示root节点的树)
+		// 如果root不为空且treeSrcs中不包含id为root的，则获取parent等于的节点为root节点数组(相当于不显示root节点的树)
+		if (parentValue == "" && parent == "") || value == parentValue || parent == parentValue {
+			node := &model.TreeNode{
+				ID:     value,
+				Text:   text,
+				Parent: parent,
+				Tag:    params,
+			}
+			treeNodeList.PushBack(node)
+			rootArr = append(rootArr, node)
+		} else {
+			originNodeList.PushBack(&model.TreeNode{
+				ID:     value,
+				Text:   text,
+				Parent: parent,
+				Tag:    params,
+			})
+		}
+	}
+
+	// 把子节点根据parent分配到对应的父节点上
+	for ele := treeNodeList.Front(); ele != nil; ele = ele.Next() {
+		treeNode := ele.Value.(*model.TreeNode)
+		originEle := originNodeList.Front()
+		if originEle == nil {
+			break
+		}
+		for originEle != nil {
+			originNextEle := originEle.Next()
+			originNode := originEle.Value.(*model.TreeNode)
+			if originNode.Parent == treeNode.ID {
+				treeNodeList.InsertAfter(originNode, ele)
+				treeNode.Nodes = append(treeNode.Nodes, originNode)
+				originNodeList.Remove(originEle)
+			}
+			originEle = originNextEle
+		}
+	}
+	return rootArr, nil
 }
 
 // GetInt defined
