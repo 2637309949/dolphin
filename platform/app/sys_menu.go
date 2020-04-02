@@ -104,6 +104,22 @@ func SysMenuUpdate(ctx *Context) {
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+
+	if !payload.Parent.IsZero() {
+		parent := model.SysMenu{}
+		ext, err := ctx.DB.SqlMapClient("selectone_sys_menu", &map[string]string{"id": payload.Parent.String}).Get(&parent)
+		if err != nil || !ext {
+			ctx.Fail(err)
+			return
+		} else if !ext {
+			ctx.Fail(errors.New("the record does not exist"))
+			return
+		}
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s%s", payload.ID.String, parent.Inheritance.String))
+	} else {
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s|", payload.ID.String))
+	}
+
 	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
