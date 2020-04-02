@@ -59,7 +59,7 @@ func (ctx *Context) InRole(role ...string) bool {
 
 // InAdmin defined
 func (ctx *Context) InAdmin() bool {
-	exit, _ := ctx.DB.Sql(fmt.Sprintf(`select id from sys_role_user where role_id = "%v"`, util.AdminID)).Exist()
+	exit, _ := ctx.DB.Sql(fmt.Sprintf(`select id from sys_role_user where role_id = "%v"`, DefaultAdmin.ID.String)).Exist()
 	return exit
 }
 

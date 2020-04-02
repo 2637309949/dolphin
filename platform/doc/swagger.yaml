@@ -22,12 +22,9 @@ definitions:
       create_time:
         description: 创建时间
         type: string
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       ext:
         description: ext
         type: string
@@ -76,12 +73,9 @@ definitions:
       create_time:
         description: 创建时间
         type: string
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       hidden:
         description: 是否隐藏
         type: number
@@ -131,12 +125,9 @@ definitions:
       create_time:
         description: 创建时间
         type: string
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       full_name:
         description: 全名
         type: string
@@ -182,12 +173,9 @@ definitions:
       create_time:
         description: 创建时间
         type: string
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       id:
         description: 主键
         type: string
@@ -212,12 +200,9 @@ definitions:
       create_time:
         description: 创建时间
         type: string
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       group_id:
         description: 分组ID
         type: string
@@ -245,12 +230,9 @@ definitions:
       create_time:
         description: 创建时间
         type: string
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       id:
         description: 主键
         type: string
@@ -275,12 +257,9 @@ definitions:
       create_time:
         description: 创建时间
         type: string
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       domain:
         description: 域
         type: string
@@ -335,12 +314,9 @@ definitions:
       default:
         description: 是否默认 1：是 0：否
         type: number
-      delete_by:
-        description: 删除人
-        type: string
-      delete_time:
-        description: 删除时间
-        type: string
+      del_flag:
+        description: 删除标记
+        type: number
       id:
         description: 主键
         type: string

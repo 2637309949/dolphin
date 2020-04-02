@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_user_template">
         insert into sys_user_template
-		(`id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		(`id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
 		values
-		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?del_flag)
     </sql>
     <sql id="update_sys_user_template">
-        update sys_user_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+        update sys_user_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
 		where  id =?id
     </sql>
     <sql id="delete_sys_user_template">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_user_template">
-        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_user_template
+        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_user_template
 		where  id =?id
     </sql>
     <sql id="selectall_sys_user_template">
-        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_user_template
+        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_user_template
     </sql>
 </sqlMap>

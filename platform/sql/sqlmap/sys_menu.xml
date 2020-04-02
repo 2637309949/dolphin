@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_menu">
         insert into sys_menu
-		(`id`,`name`,`code`,`parent`,`inheritance`,`url`,`component`,`perms`,`type`,`icon`,`order_num`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		(`id`,`name`,`code`,`parent`,`inheritance`,`url`,`component`,`perms`,`type`,`icon`,`order_num`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
 		values
-		(?id,?name,?code,?parent,?inheritance,?url,?component,?perms,?type,?icon,?order_num,?hidden,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+		(?id,?name,?code,?parent,?inheritance,?url,?component,?perms,?type,?icon,?order_num,?hidden,?create_by,?create_time,?update_by,?update_time,?del_flag)
     </sql>
     <sql id="update_sys_menu">
-        update sys_menu set `id`=?id,`name`=?name,`code`=?code,`parent`=?parent,`inheritance`=?inheritance,`url`=?url,`component`=?component,`perms`=?perms,`type`=?type,`icon`=?icon,`order_num`=?order_num,`hidden`=?hidden,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+        update sys_menu set `id`=?id,`name`=?name,`code`=?code,`parent`=?parent,`inheritance`=?inheritance,`url`=?url,`component`=?component,`perms`=?perms,`type`=?type,`icon`=?icon,`order_num`=?order_num,`hidden`=?hidden,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
 		where  id =?id
     </sql>
     <sql id="delete_sys_menu">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_menu">
-        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`component`,`perms`,`type`,`icon`,`order_num`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_menu
+        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`component`,`perms`,`type`,`icon`,`order_num`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_menu
 		where  id =?id
     </sql>
     <sql id="selectall_sys_menu">
-        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`component`,`perms`,`type`,`icon`,`order_num`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_menu
+        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`component`,`perms`,`type`,`icon`,`order_num`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_menu
     </sql>
 </sqlMap>

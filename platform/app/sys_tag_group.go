@@ -57,8 +57,9 @@ func SysTagGroupDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.Table(new(model.SysTagGroup)).In("id", payload.ID.String).Update(map[string]interface{}{
-		"delete_time": null.TimeFromPtr(time.Now().Value()),
-		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+		"update_time": null.TimeFromPtr(time.Now().Value()),
+		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+		"del_flag":    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)

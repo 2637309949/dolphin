@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_table_col_user">
         insert into sys_table_col_user
-		(`id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		(`id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
 		values
-		(?id,?code,?value,?user_id,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+		(?id,?code,?value,?user_id,?create_by,?create_time,?update_by,?update_time,?del_flag)
     </sql>
     <sql id="update_sys_table_col_user">
-        update sys_table_col_user set `id`=?id,`code`=?code,`value`=?value,`user_id`=?user_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+        update sys_table_col_user set `id`=?id,`code`=?code,`value`=?value,`user_id`=?user_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
 		where  id =?id
     </sql>
     <sql id="delete_sys_table_col_user">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_table_col_user">
-        select `id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_table_col_user
+        select `id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_table_col_user
 		where  id =?id
     </sql>
     <sql id="selectall_sys_table_col_user">
-        select `id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_table_col_user
+        select `id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_table_col_user
     </sql>
 </sqlMap>

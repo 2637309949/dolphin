@@ -84,7 +84,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 
 func (e *Engine) initBusinessDB() {
 	domains := []model.SysDomain{}
-	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and delete_time is null and sync_flag=0").Find(&domains); err != nil {
+	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and sync_flag=0").Find(&domains); err != nil {
 		logrus.Fatal(err)
 	}
 

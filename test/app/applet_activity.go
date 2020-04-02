@@ -93,8 +93,9 @@ func AppletActivityBatchDel(ctx *Context) {
 		ids = append(ids, form.ID.String)
 	}
 	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", ids).Update(map[string]interface{}{
-		"delete_time": null.TimeFromPtr(time.Now().Value()),
-		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+		"update_time": null.TimeFromPtr(time.Now().Value()),
+		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+		"del_flag":    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -120,8 +121,9 @@ func AppletActivityDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.Table(new(model.AppletActivity)).In("id", payload.ID.String).Update(map[string]interface{}{
-		"delete_time": null.TimeFromPtr(time.Now().Value()),
-		"delete_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+		"update_time": null.TimeFromPtr(time.Now().Value()),
+		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
+		"del_flag":    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -208,6 +210,7 @@ func AppletActivityList(ctx *Context) {
 	q.SetInt("size", 20)
 	q.SetString("title", "nn")
 	q.SetInt("hidden")
+	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "applet_activity", "list", "applet_activity", q.Value())
 	if err != nil {
 		ctx.Fail(err)

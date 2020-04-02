@@ -1,14 +1,18 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	gt "time"
+
+	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/time"
 
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
+	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/viper"
 	xoauth2 "golang.org/x/oauth2"
@@ -98,4 +102,45 @@ func (auth *AuthOAuth2) Auth(req *http.Request) bool {
 // GetToken defined
 func (auth *AuthOAuth2) GetToken() TokenInfo {
 	return auth.token
+}
+
+// NewClientStore create client store
+func NewClientStore() *ClientStore {
+	return &ClientStore{}
+}
+
+// ClientStore client information store
+type ClientStore struct {
+}
+
+// GetByID according to the ID for the client information
+func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
+	cli := model.SysClient{}
+	ext, err := App.PlatformDB.Where("client=?", id).Get(&cli)
+	if err != nil {
+		return nil, err
+	}
+	if !ext {
+		return nil, errors.New("the record does not exist")
+	}
+	return &models.Client{
+		ID:     cli.Client.String,
+		Secret: cli.Secret.String,
+		Domain: cli.Domain.String,
+	}, nil
+}
+
+// Set set client information
+func (cs *ClientStore) Set(id string, cli oauth2.ClientInfo) error {
+	client := model.SysClient{}
+	cnt, err := App.PlatformDB.Where("client=? and del_flag=0", cli.GetID()).Count(new(model.SysClient))
+	if err != nil {
+		return err
+	}
+	if cnt == 0 {
+		if _, err := App.PlatformDB.Insert(&client); err != nil {
+			return err
+		}
+	}
+	return nil
 }

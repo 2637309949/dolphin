@@ -15,7 +15,6 @@ import (
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
-	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
@@ -67,9 +66,9 @@ func initTracker() {
 						ReqBody:    item.ReqBody,
 						ResBody:    item.ResBody,
 						CreateTime: null.TimeFromPtr(doltime.Now().Value()),
-						CreateBy:   null.StringFrom(util.AdminID),
+						CreateBy:   DefaultAdmin.ID,
 						UpdateTime: null.TimeFromPtr(doltime.Now().Value()),
-						UpdateBy:   null.StringFrom(util.AdminID),
+						UpdateBy:   DefaultAdmin.ID,
 					}
 				}).([]model.SysTracker)
 				if len(beans) > 0 {

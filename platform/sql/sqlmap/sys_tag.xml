@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_tag">
         insert into sys_tag
-		(`id`,`name`,`group_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time`)
+		(`id`,`name`,`group_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
 		values
-		(?id,?name,?group_id,?create_by,?create_time,?update_by,?update_time,?delete_by,?delete_time)
+		(?id,?name,?group_id,?create_by,?create_time,?update_by,?update_time,?del_flag)
     </sql>
     <sql id="update_sys_tag">
-        update sys_tag set `id`=?id,`name`=?name,`group_id`=?group_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`delete_by`=?delete_by,`delete_time`=?delete_time
+        update sys_tag set `id`=?id,`name`=?name,`group_id`=?group_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
 		where  id =?id
     </sql>
     <sql id="delete_sys_tag">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_tag">
-        select `id`,`name`,`group_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_tag
+        select `id`,`name`,`group_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_tag
 		where  id =?id
     </sql>
     <sql id="selectall_sys_tag">
-        select `id`,`name`,`group_id`,`create_by`,`create_time`,`update_by`,`update_time`,`delete_by`,`delete_time` from sys_tag
+        select `id`,`name`,`group_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_tag
     </sql>
 </sqlMap>
