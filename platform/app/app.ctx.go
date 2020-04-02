@@ -44,13 +44,22 @@ type (
 // LoginInInfo defined
 func (ctx *Context) LoginInInfo() model.SysUser {
 	user := model.SysUser{}
-	ctx.engine.PlatformDB.ID(ctx.GetToken().GetUserID()).Get(&user)
+	ctx.PlatformDB.ID(ctx.GetToken().GetUserID()).Get(&user)
 	return user
 }
 
 // InRole defined
 func (ctx *Context) InRole(role ...string) bool {
-	return false
+	exit, _ := ctx.DB.Sql(fmt.Sprintf(`select id from sys_role_user where role_id in (select id from sys_role where code in (%v))`, strings.Join(funk.Map(role, func(r string) string {
+		return fmt.Sprintf(`"%v"`, r)
+	}).([]string), ","))).Exist()
+	return exit
+}
+
+// InAdmin defined
+func (ctx *Context) InAdmin() bool {
+	exit, _ := ctx.DB.Sql(fmt.Sprintf(`select id from sys_role_user where role_id = "%v"`, util.AdminID)).Exist()
+	return exit
 }
 
 // Success defined success result
@@ -68,7 +77,8 @@ func (ctx *Context) Success(data interface{}, status ...int) {
 // Fail defined failt result
 func (ctx *Context) Fail(err error, status ...int) {
 	code := 500
-	msg := fmt.Sprintf("%v", errors.WithStack(err))
+	msg := err.Error()
+	stack := fmt.Sprintf("%v", errors.WithStack(err))
 	if mErr, ok := err.(model.Error); ok {
 		code = mErr.Code
 	}
@@ -76,8 +86,9 @@ func (ctx *Context) Fail(err error, status ...int) {
 		code = status[0]
 	}
 	ctx.JSON(http.StatusOK, model.Response{
-		Code: null.IntFrom(int64(code)),
-		Msg:  null.StringFrom(msg),
+		Code:  null.IntFrom(int64(code)),
+		Msg:   null.StringFrom(msg),
+		Stack: null.StringFrom(stack),
 	})
 }
 

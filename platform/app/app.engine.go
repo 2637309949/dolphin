@@ -8,14 +8,12 @@ import (
 	"path/filepath"
 	"strconv"
 	"sync"
-	"time"
 
 	"google.golang.org/grpc"
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/null"
 	oError "github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
@@ -74,13 +72,14 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 }
 
 // Migration models
-func (e *Engine) migration(name string, db *xorm.Engine) error {
+func (e *Engine) migration(name string, db *xorm.Engine) {
 	e.MSet.ForEach(func(n string, m interface{}) {
 		if n == name {
-			db.Sync2(m)
+			if err := db.Sync2(m); err != nil {
+				panic(err)
+			}
 		}
 	})
-	return nil
 }
 
 func (e *Engine) initBusinessDB() {
@@ -94,8 +93,7 @@ func (e *Engine) initBusinessDB() {
 		if err != nil {
 			panic(err)
 		}
-		_, err = e.PlatformDB.Sql(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %v DEFAULT CHARACTER SET utf8mb4", uri.DbName)).Execute()
-		if err != nil {
+		if _, err = e.PlatformDB.Sql(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %v DEFAULT CHARACTER SET utf8mb4", uri.DbName)).Execute(); err != nil {
 			panic(err)
 		}
 		db, err := xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)
@@ -126,8 +124,7 @@ func (e *Engine) initPlatformDB() {
 	var err error
 	sqlDir := viper.GetString("dir.sql")
 	sqlDir = path.Join(".", sqlDir)
-	e.PlatformDB, err = xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
-	if err != nil {
+	if e.PlatformDB, err = xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource")); err != nil {
 		logrus.Fatal(err)
 	}
 	if err = e.PlatformDB.Ping(); err != nil {
@@ -142,53 +139,23 @@ func (e *Engine) initPlatformDB() {
 	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
 	e.migration(Name, e.PlatformDB)
 	s := e.PlatformDB.NewSession()
-	domain := model.SysDomain{
-		ID:         null.StringFrom(util.AdminID),
-		Name:       null.StringFrom("default"),
-		FullName:   null.StringFrom("default"),
-		DataSource: null.StringFrom(""),
-		DriverName: null.StringFrom("mysql"),
-		DomainUrl:  null.StringFrom("localhost"),
-		LoginUrl:   null.StringFrom("localhost"),
-		Type:       null.IntFrom(0),
-		Status:     null.IntFrom(1),
-		SyncFlag:   null.IntFrom(0),
-		Domain:     null.StringFrom("localhost"),
-		ApiUrl:     null.StringFrom("http://127.0.0.1:8086"),
-		CreateBy:   null.StringFrom(util.AdminID),
-		CreateTime: null.TimeFrom(time.Now()),
-		UpdateBy:   null.StringFrom(util.AdminID),
-		UpdateTime: null.TimeFrom(time.Now()),
-	}
-	if ct, err := s.Where("id=?", domain.ID).Count(new(model.SysDomain)); ct == 0 || err != nil {
+	if ct, err := s.Where("id=?", DefaultDomain.ID).Count(new(model.SysDomain)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)
 		}
-		if _, err := e.PlatformDB.InsertOne(&domain); err != nil {
+		if _, err := e.PlatformDB.InsertOne(&DefaultDomain); err != nil {
 			s.Rollback()
 			panic(err)
 		}
 	}
-	admin := model.SysUser{
-		ID:         null.StringFrom(util.AdminID),
-		Password:   null.StringFrom("admin"),
-		Name:       null.StringFrom("admin"),
-		FullName:   null.StringFrom("admin"),
-		Status:     null.IntFrom(1),
-		Domain:     null.StringFrom("localhost"),
-		CreateBy:   null.StringFrom(util.AdminID),
-		CreateTime: null.TimeFrom(time.Now()),
-		UpdateBy:   null.StringFrom(util.AdminID),
-		UpdateTime: null.TimeFrom(time.Now()),
-	}
-	admin.SetPassword(admin.Password.String)
-	if ct, err := s.Where("id=?", admin.ID).Count(new(model.SysUser)); ct == 0 || err != nil {
+	DefaultAdmin.SetPassword(DefaultAdmin.Password.String)
+	if ct, err := s.Where("id=?", DefaultAdmin.ID).Count(new(model.SysUser)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)
 		}
-		if _, err := e.PlatformDB.InsertOne(&admin); err != nil {
+		if _, err := e.PlatformDB.InsertOne(&DefaultAdmin); err != nil {
 			s.Rollback()
 			panic(err)
 		}
@@ -211,11 +178,11 @@ func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
 
 // RegisterSQLMap defined sql
 func (e *Engine) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) {
-	for k, v := range sqlMap {
-		if filepath.Ext(k) == "" {
-			db.AddSql(k, v)
+	for key, value := range sqlMap {
+		if filepath.Ext(key) == "" {
+			db.AddSql(key, value)
 		} else {
-			db.AddSqlTemplate(k, v)
+			db.AddSqlTemplate(key, value)
 		}
 	}
 }
@@ -237,11 +204,13 @@ func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) {
 	if err := db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
 		logrus.Fatal(err)
 	}
-
 }
 
 // AddBusinessDB adddb
 func (e *Engine) AddBusinessDB(domain string, db *xorm.Engine) {
+	if e.BusinessDBSet[domain] != nil {
+		panic(fmt.Errorf("domain %v has exited", domain))
+	}
 	e.BusinessDBSet[domain] = db
 }
 
@@ -249,11 +218,11 @@ func (e *Engine) AddBusinessDB(domain string, db *xorm.Engine) {
 func (e *Engine) initRedis() {
 	uri, err := httpUtil.Parse(viper.GetString("rd.dataSource"))
 	if err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
 	db, err := strconv.Atoi(uri.DbName)
 	if err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
 	rds := redis.NewClient(&redis.Options{
 		Addr:     uri.Laddr,
@@ -261,7 +230,7 @@ func (e *Engine) initRedis() {
 		DB:       db,
 	})
 	if _, err := rds.Ping().Result(); err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
 	e.Redis = rds
 }
@@ -272,13 +241,13 @@ func (e *Engine) initOAuth() {
 	manager.MapTokenStorage(store.NewRedisStoreWithCli(e.Redis, TokenkeyNamespace))
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 
-	clientStore := store.NewClientStore()
-	clientStore.Set(viper.GetString("oauth.id"), &models.Client{
+	cs := store.NewClientStore()
+	cs.Set(viper.GetString("oauth.id"), &models.Client{
 		ID:     viper.GetString("oauth.id"),
 		Secret: viper.GetString("oauth.secret"),
 		Domain: viper.GetString("oauth.cli"),
 	})
-	manager.MapClientStorage(clientStore)
+	manager.MapClientStorage(cs)
 
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
 	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
