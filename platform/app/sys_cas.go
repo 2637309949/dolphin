@@ -63,7 +63,7 @@ func SysCasLogin(ctx *Context) {
 		Name:   null.StringFrom(username),
 		Domain: null.StringFrom(domain),
 	}
-	ext, err := ctx.engine.PlatformDB.Where("delete_time is null").Get(&account)
+	ext, err := ctx.engine.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
 
 	if err != nil {
 		logrus.Error("SysCasLogin/Where:", err)

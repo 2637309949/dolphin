@@ -21,7 +21,7 @@ type {{.Table.ToUpperCase .Table.Name}} struct {
 }
 
 // TableName table name of defined {{.Table.ToUpperCase .Table.Name}}
-func (m {{.Table.ToUpperCase .Table.Name}}) TableName() string {
+func (m *{{.Table.ToUpperCase .Table.Name}}) TableName() string {
 	return "{{.Table.Name}}"
 }
 `

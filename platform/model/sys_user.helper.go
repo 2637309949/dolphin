@@ -2,28 +2,63 @@ package model
 
 import (
 	"fmt"
+	"time"
+
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/util"
 	"golang.org/x/crypto/scrypt"
 )
 
+// DefaultAdmin default admin
+var DefaultAdmin = SysUser{
+	ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	Password:   null.StringFrom("admin"),
+	Name:       null.StringFrom("admin"),
+	FullName:   null.StringFrom("admin"),
+	Status:     null.IntFrom(1),
+	Domain:     null.StringFrom("localhost"),
+	CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	CreateTime: null.TimeFrom(time.Now()),
+	UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	UpdateTime: null.TimeFrom(time.Now()),
+	DelFlag:    null.IntFrom(0),
+}
+
 // SetPassword Method to set salt and hash the password for a user
-func (u *SysUser) SetPassword(password string) {
-	b := util.RandString(16)
-	u.Salt = null.StringFrom(b)
-	dk, err := scrypt.Key([]byte(password), []byte(u.Salt.String), 512, 8, 1, 64)
+func (m *SysUser) SetPassword(password string) {
+	b := util.RandString(16, util.RandNumChar)
+	m.Salt = null.StringFrom(b)
+	dk, err := scrypt.Key([]byte(password), []byte(m.Salt.String), 512, 8, 1, 64)
 	if err != nil {
 		panic(err)
 	}
-	u.Password = null.StringFrom(fmt.Sprintf("%x", dk))
+	m.Password = null.StringFrom(fmt.Sprintf("%x", dk))
 }
 
 // ValidPassword Method to check the entered password is correct or not
-func (u *SysUser) ValidPassword(password string) bool {
-	dk, err := scrypt.Key([]byte(password), []byte(u.Salt.String), 512, 8, 1, 64)
+func (m *SysUser) ValidPassword(password string) bool {
+	dk, err := scrypt.Key([]byte(password), []byte(m.Salt.String), 512, 8, 1, 64)
 	if err != nil {
 		panic(err)
 	}
-	return u.Password.String == fmt.Sprintf("%x", dk)
+	return m.Password.String == fmt.Sprintf("%x", dk)
+}
+
+// InitSysData defined inital system data
+func (m *SysUser) InitSysData(s *xorm.Session) {
+	if ct, err := s.Where("id=?", DefaultAdmin.ID.String).Count(new(SysUser)); ct == 0 || err != nil {
+		if err != nil {
+			s.Rollback()
+			panic(err)
+		}
+		if _, err := s.InsertOne(&DefaultAdmin); err != nil {
+			s.Rollback()
+			panic(err)
+		}
+	}
+	if err := s.Commit(); err != nil {
+		panic(err)
+	}
 }

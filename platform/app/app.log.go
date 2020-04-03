@@ -66,9 +66,10 @@ func initTracker() {
 						ReqBody:    item.ReqBody,
 						ResBody:    item.ResBody,
 						CreateTime: null.TimeFromPtr(doltime.Now().Value()),
-						CreateBy:   DefaultAdmin.ID,
+						CreateBy:   model.DefaultAdmin.ID,
 						UpdateTime: null.TimeFromPtr(doltime.Now().Value()),
-						UpdateBy:   DefaultAdmin.ID,
+						UpdateBy:   model.DefaultAdmin.ID,
+						DelFlag:    null.IntFrom(0),
 					}
 				}).([]model.SysTracker)
 				if len(beans) > 0 {

@@ -51,15 +51,18 @@ func (ctx *Context) LoginInInfo() model.SysUser {
 
 // InRole defined
 func (ctx *Context) InRole(role ...string) bool {
-	exit, _ := ctx.DB.Sql(fmt.Sprintf(`select id from sys_role_user where role_id in (select id from sys_role where code in (%v))`, strings.Join(funk.Map(role, func(r string) string {
+	var cnt int
+	ctx.DB.Sql(fmt.Sprintf(`
+		select count(distinct(role_id)) from sys_role_user where role_id in (select id from sys_role where code in (%v)) and user_id = "%v"
+	`, strings.Join(funk.Map(role, func(r string) string {
 		return fmt.Sprintf(`"%v"`, r)
-	}).([]string), ","))).Exist()
-	return exit
+	}).([]string), ","), ctx.GetToken().GetUserID())).Get(&cnt)
+	return cnt == len(role)
 }
 
 // InAdmin defined
 func (ctx *Context) InAdmin() bool {
-	exit, _ := ctx.DB.Sql(fmt.Sprintf(`select id from sys_role_user where role_id = "%v"`, DefaultAdmin.ID.String)).Exist()
+	exit, _ := ctx.DB.Where(`role_id = ? and user_id = ?`, model.DefaultRole.ID.String, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
 	return exit
 }
 

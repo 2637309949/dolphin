@@ -17,7 +17,6 @@ import (
 	oError "github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
-	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
 	"github.com/2637309949/dolphin/packages/redis"
@@ -107,6 +106,11 @@ func (e *Engine) initBusinessDB() {
 		db.SetLogger(xLogger)
 		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
 		e.RegisterSQLMap(db, sql.SQLTPL)
+
+		// initialize data
+		(new(model.SysRole)).InitSysData(db.NewSession())
+		(new(model.SysRoleUser)).InitSysData(db.NewSession())
+
 		e.AddBusinessDB(domain.Domain.String, db)
 	}
 
@@ -138,31 +142,11 @@ func (e *Engine) initPlatformDB() {
 	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
 	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
 	e.migration(Name, e.PlatformDB)
-	s := e.PlatformDB.NewSession()
-	if ct, err := s.Where("id=?", DefaultDomain.ID).Count(new(model.SysDomain)); ct == 0 || err != nil {
-		if err != nil {
-			s.Rollback()
-			panic(err)
-		}
-		if _, err := e.PlatformDB.InsertOne(&DefaultDomain); err != nil {
-			s.Rollback()
-			panic(err)
-		}
-	}
-	DefaultAdmin.SetPassword(DefaultAdmin.Password.String)
-	if ct, err := s.Where("id=?", DefaultAdmin.ID).Count(new(model.SysUser)); ct == 0 || err != nil {
-		if err != nil {
-			s.Rollback()
-			panic(err)
-		}
-		if _, err := e.PlatformDB.InsertOne(&DefaultAdmin); err != nil {
-			s.Rollback()
-			panic(err)
-		}
-	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+
+	// initialize data
+	(new(model.SysDomain)).InitSysData(e.PlatformDB.NewSession())
+	(new(model.SysClient)).InitSysData(e.PlatformDB.NewSession())
+	(new(model.SysUser)).InitSysData(e.PlatformDB.NewSession())
 }
 
 func (e *Engine) initDB() {
@@ -240,14 +224,7 @@ func (e *Engine) initOAuth() {
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
 	manager.MapTokenStorage(store.NewRedisStoreWithCli(e.Redis, TokenkeyNamespace))
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
-
-	cs := NewClientStore()
-	cs.Set(&models.Client{
-		ID:     DefaultClient.Client.String,
-		Secret: DefaultClient.Secret.String,
-		Domain: DefaultClient.Domain.String,
-	})
-	manager.MapClientStorage(cs)
+	manager.MapClientStorage(NewClientStore())
 
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
 	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {

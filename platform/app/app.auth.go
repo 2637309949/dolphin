@@ -8,7 +8,6 @@ import (
 
 	"github.com/2637309949/dolphin/platform/model"
 
-	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -129,29 +128,4 @@ func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 		Secret: cli.Secret.String,
 		Domain: cli.Domain.String,
 	}, nil
-}
-
-// Set set client information
-func (cs *ClientStore) Set(cli oauth2.ClientInfo) error {
-	client := model.SysClient{
-		ID:         null.StringFromUUID(),
-		Client:     null.StringFrom(cli.GetID()),
-		Secret:     null.StringFrom(cli.GetSecret()),
-		Domain:     null.StringFrom(cli.GetDomain()),
-		CreateTime: DefaultAdmin.CreateTime,
-		CreateBy:   DefaultAdmin.ID,
-		UpdateTime: DefaultAdmin.UpdateTime,
-		UpdateBy:   DefaultAdmin.UpdateBy,
-		DelFlag:    null.IntFrom(0),
-	}
-	cnt, err := App.PlatformDB.Where("client=? and del_flag=0", cli.GetID()).Count(new(model.SysClient))
-	if err != nil {
-		return err
-	}
-	if cnt == 0 {
-		if _, err := App.PlatformDB.Insert(&client); err != nil {
-			return err
-		}
-	}
-	return nil
 }
