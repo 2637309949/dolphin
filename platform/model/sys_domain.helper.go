@@ -4,7 +4,10 @@
 package model
 
 import (
+	"strings"
 	"time"
+
+	"github.com/2637309949/dolphin/packages/viper"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -16,13 +19,13 @@ var DefaultDomain = SysDomain{
 	Name:       null.StringFrom("default"),
 	FullName:   null.StringFrom("default"),
 	Theme:      null.StringFrom("default"),
-	DataSource: null.StringFrom(""),
+	DataSource: null.StringFrom(strings.Replace(viper.GetString("db.dataSource"), "?", "_localhost?", 1)),
 	DriverName: null.StringFrom("mysql"),
-	DomainUrl:  null.StringFrom("localhost"),
 	LoginUrl:   null.StringFrom("localhost"),
 	Type:       null.IntFrom(0),
 	Status:     null.IntFrom(1),
 	SyncFlag:   null.IntFrom(0),
+	AuthMode:   null.IntFrom(1),
 	Domain:     null.StringFrom("localhost"),
 	ApiUrl:     null.StringFrom("http://localhost:8086"),
 	CreateBy:   DefaultAdmin.ID,
@@ -39,6 +42,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			s.Rollback()
 			panic(err)
 		}
+		DefaultDomain.DataSource = null.StringFrom(strings.Replace(viper.GetString("db.dataSource"), "?", "localhost?", 1))
 		if _, err := s.InsertOne(&DefaultDomain); err != nil {
 			s.Rollback()
 			panic(err)

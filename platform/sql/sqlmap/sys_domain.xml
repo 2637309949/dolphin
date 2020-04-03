@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_domain">
         insert into sys_domain
-		(`id`,`name`,`full_name`,`contact_name`,`contact_email`,`contact_mobile`,`data_source`,`driver_name`,`domain_url`,`login_url`,`api_url`,`theme`,`type`,`status`,`sync_flag`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
+		(`id`,`name`,`full_name`,`contact_name`,`contact_email`,`contact_mobile`,`data_source`,`driver_name`,`login_url`,`api_url`,`static_url`,`theme`,`type`,`status`,`auth_mode`,`sync_flag`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
 		values
-		(?id,?name,?full_name,?contact_name,?contact_email,?contact_mobile,?data_source,?driver_name,?domain_url,?login_url,?api_url,?theme,?type,?status,?sync_flag,?domain,?create_by,?create_time,?update_by,?update_time,?del_flag)
+		(?id,?name,?full_name,?contact_name,?contact_email,?contact_mobile,?data_source,?driver_name,?login_url,?api_url,?static_url,?theme,?type,?status,?auth_mode,?sync_flag,?domain,?create_by,?create_time,?update_by,?update_time,?del_flag)
     </sql>
     <sql id="update_sys_domain">
-        update sys_domain set `id`=?id,`name`=?name,`full_name`=?full_name,`contact_name`=?contact_name,`contact_email`=?contact_email,`contact_mobile`=?contact_mobile,`data_source`=?data_source,`driver_name`=?driver_name,`domain_url`=?domain_url,`login_url`=?login_url,`api_url`=?api_url,`theme`=?theme,`type`=?type,`status`=?status,`sync_flag`=?sync_flag,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
+        update sys_domain set `id`=?id,`name`=?name,`full_name`=?full_name,`contact_name`=?contact_name,`contact_email`=?contact_email,`contact_mobile`=?contact_mobile,`data_source`=?data_source,`driver_name`=?driver_name,`login_url`=?login_url,`api_url`=?api_url,`static_url`=?static_url,`theme`=?theme,`type`=?type,`status`=?status,`auth_mode`=?auth_mode,`sync_flag`=?sync_flag,`domain`=?domain,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
 		where  id =?id
     </sql>
     <sql id="delete_sys_domain">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_domain">
-        select `id`,`name`,`full_name`,`contact_name`,`contact_email`,`contact_mobile`,`data_source`,`driver_name`,`domain_url`,`login_url`,`api_url`,`theme`,`type`,`status`,`sync_flag`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_domain
+        select `id`,`name`,`full_name`,`contact_name`,`contact_email`,`contact_mobile`,`data_source`,`driver_name`,`login_url`,`api_url`,`static_url`,`theme`,`type`,`status`,`auth_mode`,`sync_flag`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_domain
 		where  id =?id
     </sql>
     <sql id="selectall_sys_domain">
-        select `id`,`name`,`full_name`,`contact_name`,`contact_email`,`contact_mobile`,`data_source`,`driver_name`,`domain_url`,`login_url`,`api_url`,`theme`,`type`,`status`,`sync_flag`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_domain
+        select `id`,`name`,`full_name`,`contact_name`,`contact_email`,`contact_mobile`,`data_source`,`driver_name`,`login_url`,`api_url`,`static_url`,`theme`,`type`,`status`,`auth_mode`,`sync_flag`,`domain`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_domain
     </sql>
 </sqlMap>

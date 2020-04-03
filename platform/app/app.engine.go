@@ -83,7 +83,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 
 func (e *Engine) initBusinessDB() {
 	domains := []model.SysDomain{}
-	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and sync_flag=0").Find(&domains); err != nil {
+	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and del_flag = 0").Find(&domains); err != nil {
 		logrus.Fatal(err)
 	}
 
@@ -112,8 +112,15 @@ func (e *Engine) initBusinessDB() {
 		e.RegisterSQLMap(db, sql.SQLTPL)
 
 		// migration db
-		for _, n := range nset {
-			e.migration(n, db)
+		if domain.SyncFlag.Int64 == 0 {
+			for _, n := range nset {
+				e.migration(n, db)
+			}
+		}
+		domain.SyncFlag.SetValid(1)
+		_, err = e.PlatformDB.Cols("sync_flag").Update(&domain)
+		if err != nil {
+			logrus.Fatal(err)
 		}
 
 		// initialize data
@@ -121,6 +128,7 @@ func (e *Engine) initBusinessDB() {
 		(new(model.SysRoleUser)).InitSysData(db.NewSession())
 		(new(model.SysMenu)).InitSysData(db.NewSession())
 
+		fmt.Println("----------------------", domain.Domain.String)
 		e.AddBusinessDB(domain.Domain.String, db)
 	}
 }
@@ -263,6 +271,7 @@ func (e *Engine) initOAuth() {
 func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	return func(ctx *Context) {
 		if ctx.Auth(ctx.Request) {
+			fmt.Println("-----------", ctx.GetToken().GetDomain())
 			ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]
 			if ctx.DB == nil {
 				ctx.Fail(util.ErrInvalidDomain)

@@ -139,6 +139,9 @@ definitions:
       api_url:
         description: 请求地址
         type: string
+      auth_mode:
+        description: 认证模式 0：集成登录 1：单点登录
+        type: number
       contact_email:
         description: 负责人邮箱
         type: string
@@ -163,9 +166,6 @@ definitions:
       domain:
         description: 域
         type: string
-      domain_url:
-        description: 网址
-        type: string
       driver_name:
         description: 驱动名称
         type: string
@@ -180,6 +180,9 @@ definitions:
         type: string
       name:
         description: 名字
+        type: string
+      static_url:
+        description: 静态地址
         type: string
       status:
         description: 状态 0：禁用 1：正常
