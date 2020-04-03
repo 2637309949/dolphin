@@ -44,6 +44,16 @@ module.exports.Page = (data) => {
     })
 }
 
+// Tree 菜单树形结构
+module.exports.Tree = (data) => {
+	const url = '/api/sys/app/fun/tree'
+	return axios({
+		url: url,
+		method: 'get',
+		data
+    })
+}
+
 // Get 获取APP功能信息
 module.exports.Get = (data) => {
 	const url = '/api/sys/app/fun/get'

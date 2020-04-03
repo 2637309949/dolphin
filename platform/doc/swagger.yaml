@@ -743,6 +743,21 @@ paths:
       summary: APP功能分页查询
       tags:
       - APP功能
+  /api/sys/app/fun/tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 菜单树形结构
+      tags:
+      - APP功能
   /api/sys/app/fun/update:
     put:
       consumes:

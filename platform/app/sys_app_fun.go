@@ -118,6 +118,24 @@ func SysAppFunPage(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysAppFunTree api implementation
+// @Summary 菜单树形结构
+// @Tags APP功能
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Router /api/sys/app/fun/tree [get]
+func SysAppFunTree(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetString("name")
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "sys_app_fun", "tree", "sys_app_fun", q.Value())
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysAppFunGet api implementation
 // @Summary 获取APP功能信息
 // @Tags APP功能

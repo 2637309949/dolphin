@@ -28,6 +28,7 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="tree" table="sys_menu" desc="菜单树形结构" method="get"></api>
     <api name="get" desc="获取APP功能信息" function="one" table="sys_app_fun" method="get">
         <param name="id" type="string" desc="APP功能id" />
         <return>
