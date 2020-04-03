@@ -30,7 +30,7 @@ func (m *SysRole) GenCode(rewrite ...bool) {
 
 // InitSysData defined inital system data
 func (m *SysRole) InitSysData(s *xorm.Session) {
-	if ct, err := s.Where("id=?", DefaultRole.ID).Count(new(SysRole)); ct == 0 || err != nil {
+	if ct, err := s.Where("id=?", DefaultRole.ID.String).Count(new(SysRole)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)

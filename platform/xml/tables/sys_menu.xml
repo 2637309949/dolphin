@@ -5,8 +5,8 @@
     <column name="parent" desc="父菜单ID，一级菜单为null" type="null.String" xorm="varchar(36)" />
     <column name="inheritance" desc="继承关系" type="null.String" xorm="varchar(500)" />
     <column name="url" desc="菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)" type="null.String" xorm="varchar(200) notnull" />
-    <column name="component" desc="菜单组件" type="null.String" xorm="varchar(100) notnull" />
-    <column name="perms" desc="授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)" type="null.String" xorm="varchar(500) notnull" />
+    <column name="component" desc="菜单组件" type="null.String" xorm="varchar(100)" />
+    <column name="perms" desc="授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)" type="null.String" xorm="varchar(500)" />
     <column name="type" desc="类型 0：目录 1：菜单 2：按钮" type="null.Int" xorm="notnull" />
     <column name="icon" desc="菜单图标" type="null.String" xorm="varchar(50)" />
     <column name="order_num" desc="排序" type="null.Int" xorm="notnull" />

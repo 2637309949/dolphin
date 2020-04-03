@@ -87,6 +87,10 @@ func (e *Engine) initBusinessDB() {
 		logrus.Fatal(err)
 	}
 
+	nset := e.MSet.Name(func(n string) bool {
+		return n != Name
+	})
+
 	for _, domain := range domains {
 		uri, err := httpUtil.Parse(domain.DataSource.String)
 		if err != nil {
@@ -107,20 +111,17 @@ func (e *Engine) initBusinessDB() {
 		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
 		e.RegisterSQLMap(db, sql.SQLTPL)
 
-		// initialize data
-		(new(model.SysRole)).InitSysData(db.NewSession())
-		(new(model.SysRoleUser)).InitSysData(db.NewSession())
-
-		e.AddBusinessDB(domain.Domain.String, db)
-	}
-
-	nset := e.MSet.Name(func(n string) bool {
-		return n != Name
-	})
-	for _, db := range e.BusinessDBSet {
+		// migration db
 		for _, n := range nset {
 			e.migration(n, db)
 		}
+
+		// initialize data
+		(new(model.SysRole)).InitSysData(db.NewSession())
+		(new(model.SysRoleUser)).InitSysData(db.NewSession())
+		(new(model.SysMenu)).InitSysData(db.NewSession())
+
+		e.AddBusinessDB(domain.Domain.String, db)
 	}
 }
 
