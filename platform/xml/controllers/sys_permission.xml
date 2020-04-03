@@ -1,0 +1,38 @@
+<controller name="sys_permission" desc="权限">
+    <api name="add" function="add" table="sys_permission" desc="添加权限" method="post">
+        <param name="user" type="$sys_permission" desc="权限信息" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="del" function="delete" table="sys_permission" desc="删除权限" method="delete">
+        <param name="sys_permission" type="$sys_permission" desc="权限" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="update" function="update" table="sys_permission" desc="更新权限" method="put">
+        <param name="user" type="$sys_role" desc="权限信息" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="page" function="page" table="sys_permission" desc="权限分页查询" method="get">
+        <param name="page" type="int" desc="页码" value="1"/>
+        <param name="size" type="int" desc="单页数" value="15" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+    <api name="get" desc="获取权限信息" function="one" table="sys_permission" method="get">
+        <param name="id" type="string" desc="权限id" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+</controller>
