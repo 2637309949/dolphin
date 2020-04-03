@@ -128,7 +128,6 @@ func (e *Engine) initBusinessDB() {
 		(new(model.SysRoleUser)).InitSysData(db.NewSession())
 		(new(model.SysMenu)).InitSysData(db.NewSession())
 
-		fmt.Println("----------------------", domain.Domain.String)
 		e.AddBusinessDB(domain.Domain.String, db)
 	}
 }
@@ -271,7 +270,6 @@ func (e *Engine) initOAuth() {
 func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	return func(ctx *Context) {
 		if ctx.Auth(ctx.Request) {
-			fmt.Println("-----------", ctx.GetToken().GetDomain())
 			ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]
 			if ctx.DB == nil {
 				ctx.Fail(util.ErrInvalidDomain)
