@@ -33,7 +33,7 @@ func SysDomainAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -57,7 +57,7 @@ func SysDomainDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.SysDomain)).In("id", payload.ID.String).Update(map[string]interface{}{
+	ret, err := ctx.PlatformDB.Table(new(model.SysDomain)).In("id", payload.ID.String).Update(map[string]interface{}{
 		"update_time": null.TimeFromPtr(time.Now().Value()),
 		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
 		"del_flag":    null.IntFrom(1),
@@ -87,7 +87,7 @@ func SysDomainUpdate(ctx *Context) {
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
+	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -110,7 +110,7 @@ func SysDomainPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_domain", "page", "sys_domain", q.Value())
+	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_domain", "page", "sys_domain", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -130,7 +130,7 @@ func SysDomainPage(ctx *Context) {
 func SysDomainGet(ctx *Context) {
 	var entity model.SysDomain
 	id := ctx.Query("id")
-	ret, err := ctx.DB.Id(id).Get(&entity)
+	ret, err := ctx.PlatformDB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

@@ -22,7 +22,7 @@ func SysTrackerPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_tracker", "page", "sys_tracker", q.Value())
+	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_tracker", "page", "sys_tracker", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -42,7 +42,7 @@ func SysTrackerPage(ctx *Context) {
 func SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker
 	id := ctx.Query("id")
-	ret, err := ctx.DB.Id(id).Get(&entity)
+	ret, err := ctx.PlatformDB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
