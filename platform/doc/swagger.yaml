@@ -1244,6 +1244,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: '类型(0: 微信 1：叮叮)'
+        in: query
+        name: type
+        type: integer
       responses:
         "200":
           description: OK
@@ -1612,6 +1616,24 @@ paths:
       summary: 更新数据权限
       tags:
       - 数据权限
+  /api/sys/dingtalk/oauth2:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 授权回调
+      tags:
+      - 钉钉
   /api/sys/domain/add:
     post:
       consumes:
@@ -3188,6 +3210,24 @@ paths:
       summary: 更新用户
       tags:
       - 用户
+  /api/sys/wechat/oauth2:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 授权回调
+      tags:
+      - 微信
 securityDefinitions:
   OAuth2AccessCode:
     authorizationUrl: http://127.0.0.1:8081/api/sys/cas/authorize

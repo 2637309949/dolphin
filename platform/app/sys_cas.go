@@ -7,6 +7,7 @@ import (
 	"context"
 	"encoding/gob"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -284,16 +285,24 @@ func SysCasProfile(ctx *Context) {
 // @Summary 扫码登录(绑定第三方)
 // @Tags 认证中心
 // @Param Authorization header string false "认证令牌"
+// @Param type query int false "类型(0: 微信 1：叮叮)"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/sys/cas/qrcode [get]
 func SysCasQrcode(ctx *Context) {
 	q := ctx.TypeQuery()
-	ret, err := srv.SysCasAction(q)
-	if err != nil {
-		ctx.Fail(err)
+	q.SetInt("type", 0)
+	if q.GetInt("type") == 0 {
+		wcQrURL := "https://open.weixin.qq.com/connect/qrconnect?appid=%v&redirect_uri=%v&response_type=code&scope=snsapi_login&state=%v#wechat_redirect"
+		wcQrURL = fmt.Sprintf(wcQrURL, viper.GetString("wc.appid"), "http://127.0.0.1:8082/api/sys/wechat/oauth2", "")
+		ctx.Redirect(302, wcQrURL)
+	} else if q.GetInt("type") == 1 {
+		dtQrURL := "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=%v&redirect_uri=%v&response_type=code&scope=snsapi_login&state=%v"
+		dtQrURL = fmt.Sprintf(dtQrURL, viper.GetString("wc.appid"), "http://127.0.0.1:8082/api/sys/wechat/oauth2", "")
+		ctx.Redirect(302, dtQrURL)
+	} else {
+		ctx.Fail(fmt.Errorf("not found type %v", q.GetInt("type")))
 		return
 	}
-	ctx.Success(ret)
 }
