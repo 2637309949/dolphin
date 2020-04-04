@@ -74,39 +74,28 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 func (e *Engine) migration(name string, db *xorm.Engine) {
 	e.MSet.ForEach(func(n string, m interface{}) {
 		if n == name {
-			if err := db.Sync2(m); err != nil {
-				panic(err)
-			}
+			util.Ensure(db.Sync2(m))
 		}
 	})
 }
 
 func (e *Engine) initBusinessDB() {
 	domains := []model.SysDomain{}
-	if err := e.PlatformDB.Where("data_source <> '' and domain <> '' and del_flag = 0").Find(&domains); err != nil {
-		logrus.Fatal(err)
-	}
-
+	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and del_flag = 0").Find(&domains))
 	nset := e.MSet.Name(func(n string) bool {
 		return n != Name
 	})
 
 	for _, domain := range domains {
-		uri, err := httpUtil.Parse(domain.DataSource.String)
-		if err != nil {
-			panic(err)
-		}
-		if _, err = e.PlatformDB.Sql(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %v DEFAULT CHARACTER SET utf8mb4", uri.DbName)).Execute(); err != nil {
-			panic(err)
-		}
-		db, err := xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)
-		if err != nil {
-			logrus.Fatal(err)
-		}
+		uri := util.EnsureLeft(httpUtil.Parse(domain.DataSource.String)).(*httpUtil.URI)
+		util.EnsureLeft(e.PlatformDB.Sql(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %v DEFAULT CHARACTER SET utf8mb4", uri.DbName)).Execute())
+		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)
 		xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+
 		if viper.GetString("app.mode") == "debug" {
 			xLogger.ShowSQL(true)
 		}
+
 		db.SetLogger(xLogger)
 		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
 		e.RegisterSQLMap(db, sql.SQLTPL)
@@ -118,10 +107,7 @@ func (e *Engine) initBusinessDB() {
 			}
 		}
 		domain.SyncFlag.SetValid(1)
-		_, err = e.PlatformDB.Cols("sync_flag").Update(&domain)
-		if err != nil {
-			logrus.Fatal(err)
-		}
+		util.EnsureLeft(e.PlatformDB.Cols("sync_flag").Update(&domain))
 
 		// initialize data
 		(new(model.SysRole)).InitSysData(db.NewSession())
@@ -133,16 +119,10 @@ func (e *Engine) initBusinessDB() {
 }
 
 func (e *Engine) initPlatformDB() {
-	var err error
-	sqlDir := viper.GetString("dir.sql")
-	sqlDir = path.Join(".", sqlDir)
-	if e.PlatformDB, err = xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err = e.PlatformDB.Ping(); err != nil {
-		logrus.Fatal(err)
-	}
+	e.PlatformDB = util.EnsureLeft(xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))).(*xorm.Engine)
+	util.Ensure(e.PlatformDB.Ping())
 	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+
 	if viper.GetString("app.mode") == "debug" {
 		xLogger.ShowSQL(true)
 	}
@@ -181,21 +161,11 @@ func (e *Engine) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) {
 
 // RegisterSQLDir defined sql
 func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) {
-	if err := os.MkdirAll(sqlDir, os.ModePerm); err != nil {
-		logrus.Fatal(err)
-	}
-	if err := db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err := db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err := db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")); err != nil {
-		logrus.Fatal(err)
-	}
-	if err := db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")); err != nil {
-		logrus.Fatal(err)
-	}
+	util.Ensure(os.MkdirAll(sqlDir, os.ModePerm))
+	util.Ensure(db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml")))
+	util.Ensure(db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl")))
+	util.Ensure(db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet")))
+	util.Ensure(db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")))
 }
 
 // AddBusinessDB adddb
@@ -208,23 +178,13 @@ func (e *Engine) AddBusinessDB(domain string, db *xorm.Engine) {
 
 // InitRedis redis
 func (e *Engine) initRedis() {
-	uri, err := httpUtil.Parse(viper.GetString("rd.dataSource"))
-	if err != nil {
-		panic(err)
-	}
-	db, err := strconv.Atoi(uri.DbName)
-	if err != nil {
-		panic(err)
-	}
-	rds := redis.NewClient(&redis.Options{
+	uri := util.EnsureLeft(httpUtil.Parse(viper.GetString("rd.dataSource"))).(*httpUtil.URI)
+	e.Redis = redis.NewClient(&redis.Options{
 		Addr:     uri.Laddr,
 		Password: uri.Passwd,
-		DB:       db,
+		DB:       util.EnsureLeft(strconv.Atoi(uri.DbName)).(int),
 	})
-	if _, err := rds.Ping().Result(); err != nil {
-		panic(err)
-	}
-	e.Redis = rds
+	util.EnsureLeft(e.Redis.Ping().Result())
 }
 
 func (e *Engine) initOAuth() {

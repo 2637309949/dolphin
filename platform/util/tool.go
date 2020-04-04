@@ -60,3 +60,26 @@ func RandString(randLen int, randType RandType) string {
 func RandInt(min, max int) int {
 	return min + rand.Intn(max-min)
 }
+
+// EnsureLeft defined return left
+func EnsureLeft(left interface{}, err error) interface{} {
+	if err != nil {
+		panic(err)
+	}
+	return left
+}
+
+// EnsureRight defined return right
+func EnsureRight(err error, right interface{}) interface{} {
+	if err != nil {
+		panic(err)
+	}
+	return right
+}
+
+// Ensure defined
+func Ensure(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
