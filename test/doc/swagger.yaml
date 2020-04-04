@@ -71,6 +71,103 @@ definitions:
         description: 消息
         type: string
     type: object
+  model.SysAppFun:
+    properties:
+      code:
+        description: 编码
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      hidden:
+        description: 是否隐藏
+        type: number
+      icon:
+        description: 菜单图标
+        type: string
+      id:
+        description: 主键
+        type: string
+      image:
+        description: 图片
+        type: string
+      inheritance:
+        description: 继承关系
+        type: string
+      name:
+        description: 名称
+        type: string
+      order_num:
+        description: 排序
+        type: number
+      parent:
+        description: 父菜单ID，一级菜单为null
+        type: string
+      perms:
+        description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        type: string
+      type:
+        description: 类型 0：目录 1：菜单 2：按钮
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      url:
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        type: string
+    type: object
+  model.SysArea:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      inheritance:
+        description: 继承关系
+        type: string
+      manager:
+        description: 负责人
+        type: string
+      name:
+        description: 区域名称
+        type: string
+      org_id:
+        description: 组织ID
+        type: string
+      parent:
+        description: 父节点
+        type: string
+      temp_id:
+        description: 模板ID
+        type: string
+      temp_value:
+        description: 模板内容
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.SysAttachment:
     properties:
       create_by:
@@ -114,6 +211,135 @@ definitions:
         type: string
       uuid:
         description: uuid
+        type: string
+    type: object
+  model.SysClient:
+    properties:
+      client:
+        description: 应用
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      domain:
+        description: 域名
+        type: string
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      secret:
+        description: 密钥
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
+  model.SysDataPermission:
+    properties:
+      code:
+        description: 编码
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
+  model.SysDomain:
+    properties:
+      api_url:
+        description: 请求地址
+        type: string
+      auth_mode:
+        description: 认证模式 0：集成登录 1：单点登录
+        type: number
+      contact_email:
+        description: 负责人邮箱
+        type: string
+      contact_mobile:
+        description: 负责人电话
+        type: string
+      contact_name:
+        description: 负责人
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      data_source:
+        description: 数据库链接串
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      domain:
+        description: 域
+        type: string
+      driver_name:
+        description: 驱动名称
+        type: string
+      full_name:
+        description: 全名
+        type: string
+      id:
+        description: 主键
+        type: string
+      login_url:
+        description: 登录地址
+        type: string
+      name:
+        description: 名字
+        type: string
+      static_url:
+        description: 静态地址
+        type: string
+      status:
+        description: 状态 0：禁用 1：正常
+        type: number
+      sync_flag:
+        description: 是否同步了数据库标志
+        type: number
+      theme:
+        description: 样式
+        type: string
+      type:
+        description: 域类型
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
         type: string
     type: object
   model.SysMenu:
@@ -171,6 +397,36 @@ definitions:
           iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
+  model.SysOptionset:
+    properties:
+      code:
+        description: 编码
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      value:
+        description: 值
+        type: string
+    type: object
   model.SysOrg:
     properties:
       code:
@@ -212,6 +468,33 @@ definitions:
       type:
         description: 组织类型
         type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
+  model.SysPermission:
+    properties:
+      code:
+        description: 编码
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -708,6 +991,317 @@ paths:
       summary: 更新活动
       tags:
       - 活动
+  /api/sys/app/fun/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: APP功能信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysAppFun'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加APP功能
+      tags:
+      - APP功能
+  /api/sys/app/fun/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: APP功能
+        in: body
+        name: sys_app_fun
+        schema:
+          $ref: '#/definitions/model.SysAppFun'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除APP功能
+      tags:
+      - APP功能
+  /api/sys/app/fun/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: APP功能id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取APP功能信息
+      tags:
+      - APP功能
+  /api/sys/app/fun/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: APP功能分页查询
+      tags:
+      - APP功能
+  /api/sys/app/fun/tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 菜单树形结构
+      tags:
+      - APP功能
+  /api/sys/app/fun/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: APP功能信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新APP功能
+      tags:
+      - APP功能
+  /api/sys/area/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysArea'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加区域
+      tags:
+      - 区域
+  /api/sys/area/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域
+        in: body
+        name: sys_area
+        schema:
+          $ref: '#/definitions/model.SysArea'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除区域
+      tags:
+      - 区域
+  /api/sys/area/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取区域信息
+      tags:
+      - 区域
+  /api/sys/area/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 区域分页查询
+      tags:
+      - 区域
+  /api/sys/area/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新区域
+      tags:
+      - 区域
   /api/sys/attachment/add:
     post:
       consumes:
@@ -1016,6 +1610,10 @@ paths:
         in: header
         name: Authorization
         type: string
+      - description: '类型(0: 微信 1：叮叮)'
+        in: query
+        name: type
+        type: integer
       responses:
         "200":
           description: OK
@@ -1088,6 +1686,468 @@ paths:
       summary: 授权地址
       tags:
       - OAuth授权
+  /api/sys/client/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysClient'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加客户端
+      tags:
+      - 客户端
+  /api/sys/client/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端
+        in: body
+        name: sys_client
+        schema:
+          $ref: '#/definitions/model.SysClient'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除客户端
+      tags:
+      - 客户端
+  /api/sys/client/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取客户端信息
+      tags:
+      - 客户端
+  /api/sys/client/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 客户端分页查询
+      tags:
+      - 客户端
+  /api/sys/client/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新客户端
+      tags:
+      - 客户端
+  /api/sys/data/permission/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysDataPermission'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加数据权限
+      tags:
+      - 数据权限
+  /api/sys/data/permission/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限
+        in: body
+        name: sys_data_permission
+        schema:
+          $ref: '#/definitions/model.SysDataPermission'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除数据权限
+      tags:
+      - 数据权限
+  /api/sys/data/permission/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取数据权限信息
+      tags:
+      - 数据权限
+  /api/sys/data/permission/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 数据权限分页查询
+      tags:
+      - 数据权限
+  /api/sys/data/permission/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新数据权限
+      tags:
+      - 数据权限
+  /api/sys/dingtalk/oauth2:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 授权回调
+      tags:
+      - 钉钉
+  /api/sys/domain/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysDomain'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加域
+      tags:
+      - 域
+  /api/sys/domain/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域
+        in: body
+        name: sys_domain
+        schema:
+          $ref: '#/definitions/model.SysDomain'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除域
+      tags:
+      - 域
+  /api/sys/domain/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取域信息
+      tags:
+      - 域
+  /api/sys/domain/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 域分页查询
+      tags:
+      - 域
+  /api/sys/domain/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新域
+      tags:
+      - 域
   /api/sys/menu/add:
     post:
       consumes:
@@ -1251,6 +2311,154 @@ paths:
       summary: 更新菜单
       tags:
       - 菜单
+  /api/sys/optionset/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysOptionset'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加字典
+      tags:
+      - 字典
+  /api/sys/optionset/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典
+        in: body
+        name: sys_optionset
+        schema:
+          $ref: '#/definitions/model.SysOptionset'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除字典
+      tags:
+      - 字典
+  /api/sys/optionset/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取字典信息
+      tags:
+      - 字典
+  /api/sys/optionset/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 字典分页查询
+      tags:
+      - 字典
+  /api/sys/optionset/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新字典
+      tags:
+      - 字典
   /api/sys/org/add:
     post:
       consumes:
@@ -1399,6 +2607,154 @@ paths:
       summary: 更新组织
       tags:
       - 组织
+  /api/sys/permission/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysPermission'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加权限
+      tags:
+      - 权限
+  /api/sys/permission/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限
+        in: body
+        name: sys_permission
+        schema:
+          $ref: '#/definitions/model.SysPermission'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除权限
+      tags:
+      - 权限
+  /api/sys/permission/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取权限信息
+      tags:
+      - 权限
+  /api/sys/permission/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 权限分页查询
+      tags:
+      - 权限
+  /api/sys/permission/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新权限
+      tags:
+      - 权限
   /api/sys/role/add:
     post:
       consumes:
@@ -1843,6 +3199,64 @@ paths:
       summary: 更新标签
       tags:
       - 标签
+  /api/sys/tracker/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 日志id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 获取日志信息
+      tags:
+      - 日志
+  /api/sys/tracker/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 日志分页查询
+      tags:
+      - 日志
   /api/sys/user/add:
     post:
       consumes:
@@ -2162,6 +3576,24 @@ paths:
       summary: 更新用户
       tags:
       - 用户
+  /api/sys/wechat/oauth2:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 授权回调
+      tags:
+      - 微信
   /api/v1/applet/activity/increase:
     post:
       consumes:

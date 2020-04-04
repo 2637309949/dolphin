@@ -6,7 +6,7 @@ import "github.com/2637309949/dolphin/packages/viper"
 type MSeti interface {
 	Add(interface{}, ...string)
 	Get(func(string, interface{}) bool) interface{}
-	ForEach(func(string, interface{}))
+	ForEach(func(string, interface{}), ...string)
 	Name(func(string) bool) []string
 	Release()
 }
@@ -47,10 +47,14 @@ func (s *MSet) Name(cb func(string) bool) (m []string) {
 }
 
 // ForEach defined foreach models
-func (s *MSet) ForEach(cb func(name string, m interface{})) {
+func (s *MSet) ForEach(cb func(name string, m interface{}), names ...string) {
 	for name, m := range s.m {
 		for index := 0; index < len(m); index++ {
-			cb(name, m[index])
+			if len(names) > 0 && names[0] == name {
+				cb(name, m[index])
+			} else if len(names) == 0 {
+				cb(name, m[index])
+			}
 		}
 	}
 }

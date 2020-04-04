@@ -53,6 +53,7 @@ func (m *SysUser) InitSysData(s *xorm.Session) {
 			s.Rollback()
 			panic(err)
 		}
+		DefaultAdmin.SetPassword(DefaultAdmin.Password.String)
 		if _, err := s.InsertOne(&DefaultAdmin); err != nil {
 			s.Rollback()
 			panic(err)

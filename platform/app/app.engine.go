@@ -9,12 +9,15 @@ import (
 	"strconv"
 	"sync"
 
+	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/null"
+
 	"google.golang.org/grpc"
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
-	oError "github.com/2637309949/dolphin/packages/oauth2/errors"
+	"github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
@@ -31,16 +34,30 @@ import (
 	httpUtil "github.com/2637309949/dolphin/platform/util/http"
 )
 
-// Engine defined parse app engine
-type Engine struct {
-	MSet          MSeti
-	Gin           *gin.Engine
-	GRPC          *grpc.Server
-	OAuth2        *server.Server
-	Redis         *redis.Client
-	PlatformDB    *xorm.Engine
-	BusinessDBSet map[string]*xorm.Engine
-	pool          sync.Pool
+type (
+	// Engine defined parse app engine
+	Engine struct {
+		MSet          MSeti
+		Handler       Handler
+		Gin           *gin.Engine
+		GRPC          *grpc.Server
+		OAuth2        *server.Server
+		Redis         *redis.Client
+		PlatformDB    *xorm.Engine
+		BusinessDBSet map[string]*xorm.Engine
+		pool          sync.Pool
+	}
+	// Handler defined hooks
+	Handler interface {
+		OnHandler(name string, h func(ctx *Context)) func(*Context)
+	}
+	// IHander defined handler
+	IHander struct{}
+)
+
+// OnHandler defined event
+func (i *IHander) OnHandler(name string, h func(ctx *Context)) func(*Context) {
+	return h
 }
 
 // HandlerFunc convert to gin.HandlerFunc
@@ -73,73 +90,70 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 // Migration models
 func (e *Engine) migration(name string, db *xorm.Engine) {
 	e.MSet.ForEach(func(n string, m interface{}) {
-		if n == name {
-			util.Ensure(db.Sync2(m))
-		}
-	})
-}
-
-func (e *Engine) initBusinessDB() {
-	domains := []model.SysDomain{}
-	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and del_flag = 0").Find(&domains))
-	nset := e.MSet.Name(func(n string) bool {
-		return n != Name
-	})
-
-	for _, domain := range domains {
-		uri := util.EnsureLeft(httpUtil.Parse(domain.DataSource.String)).(*httpUtil.URI)
-		util.EnsureLeft(e.PlatformDB.Sql(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %v DEFAULT CHARACTER SET utf8mb4", uri.DbName)).Execute())
-		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)
-		xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
-
-		if viper.GetString("app.mode") == "debug" {
-			xLogger.ShowSQL(true)
-		}
-
-		db.SetLogger(xLogger)
-		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
-		e.RegisterSQLMap(db, sql.SQLTPL)
-
-		// migration db
-		if domain.SyncFlag.Int64 == 0 {
-			for _, n := range nset {
-				e.migration(n, db)
-			}
-		}
-		domain.SyncFlag.SetValid(1)
-		util.EnsureLeft(e.PlatformDB.Cols("sync_flag").Update(&domain))
-
-		// initialize data
-		(new(model.SysRole)).InitSysData(db.NewSession())
-		(new(model.SysRoleUser)).InitSysData(db.NewSession())
-		(new(model.SysMenu)).InitSysData(db.NewSession())
-
-		e.AddBusinessDB(domain.Domain.String, db)
-	}
-}
-
-func (e *Engine) initPlatformDB() {
-	e.PlatformDB = util.EnsureLeft(xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))).(*xorm.Engine)
-	util.Ensure(e.PlatformDB.Ping())
-	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
-
-	if viper.GetString("app.mode") == "debug" {
-		xLogger.ShowSQL(true)
-	}
-	e.PlatformDB.SetLogger(xLogger)
-	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
-	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
-	e.migration(Name, e.PlatformDB)
-
-	// initialize data
-	(new(model.SysDomain)).InitSysData(e.PlatformDB.NewSession())
-	(new(model.SysClient)).InitSysData(e.PlatformDB.NewSession())
-	(new(model.SysUser)).InitSysData(e.PlatformDB.NewSession())
+		util.Ensure(db.Sync2(m))
+	}, name)
 }
 
 func (e *Engine) initDB() {
-	e.initPlatformDB()
-	e.initBusinessDB()
+	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
+	xLogger.ShowSQL(viper.GetString("app.mode") == "debug")
+
+	// initPlatformDB
+	e.PlatformDB = util.EnsureLeft(xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))).(*xorm.Engine)
+	util.Ensure(e.PlatformDB.Ping())
+	e.PlatformDB.SetLogger(xLogger)
+	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
+	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
+	(new(model.SysDomain)).Ensure(e.PlatformDB)
+	(new(model.SysDomain)).InitSysData(e.PlatformDB.NewSession())
+
+	// initBusinessDB
+	domains := []model.SysDomain{}
+	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and del_flag = 0").Find(&domains))
+	funk.ForEach(domains, func(domain model.SysDomain) {
+		uri := util.EnsureLeft(httpUtil.Parse(domain.DataSource.String)).(*httpUtil.URI)
+		util.EnsureLeft(e.PlatformDB.Sql(fmt.Sprintf("create database if not exists %v default character set utf8mb4", uri.DbName)).Execute())
+		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)
+		db.SetLogger(xLogger)
+
+		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
+		e.RegisterSQLMap(db, sql.SQLTPL)
+		e.AddBusinessDB(domain.Domain.String, db)
+	})
+
+	// migration db
+	zmap := map[string]*xorm.Engine{}
+	if util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Count(new(model.SysDomain))).(int64) > 0 {
+		defer func() {
+			util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
+			e.MSet.Release()
+		}()
+		nset := e.MSet.Name(func(n string) bool {
+			return n != Name
+		})
+		for _, v := range e.BusinessDBSet {
+			zmap[v.DataSourceName()] = v
+		}
+		// migration PlatformDB
+		e.migration(Name, e.PlatformDB)
+		// migration BusinessDBSet
+		funk.ForEach(nset, func(n string) {
+			for _, v := range zmap {
+				e.migration(n, v)
+			}
+		})
+	}
+
+	// initialize PlatformDB data
+	(new(model.SysClient)).InitSysData(e.PlatformDB.NewSession())
+	(new(model.SysUser)).InitSysData(e.PlatformDB.NewSession())
+
+	// initialize BusinessDBSet data
+	for _, v := range zmap {
+		(new(model.SysRole)).InitSysData(v.NewSession())
+		(new(model.SysRoleUser)).InitSysData(v.NewSession())
+		(new(model.SysMenu)).InitSysData(v.NewSession())
+	}
 }
 
 // GetBusinessDB businessDB
@@ -217,11 +231,11 @@ func (e *Engine) initOAuth() {
 		store.Save()
 		return
 	})
-	e.OAuth2.SetInternalErrorHandler(func(err error) (re *oError.Response) {
+	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
 		logrus.Error("internal error:", err.Error())
 		return
 	})
-	e.OAuth2.SetResponseErrorHandler(func(re *oError.Response) {
+	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
 		logrus.Error("response error:", re.Error.Error())
 	})
 }
@@ -229,26 +243,25 @@ func (e *Engine) initOAuth() {
 // Auth middles
 func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	return func(ctx *Context) {
-		if ctx.Auth(ctx.Request) {
-			ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]
-			if ctx.DB == nil {
-				ctx.Fail(util.ErrInvalidDomain)
-				ctx.Abort()
-			} else {
-				ctx.Set("DB", ctx.DB)
-				ctx.Set("AuthInfo", ctx.AuthInfo)
-				ctx.Next()
-			}
-		} else {
+		if !ctx.Auth(ctx.Request) {
 			ctx.Fail(util.ErrInvalidAccessToken, 401)
 			ctx.Abort()
+			return
 		}
+		if ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]; ctx.DB == nil {
+			ctx.Fail(util.ErrInvalidDomain)
+			ctx.Abort()
+			return
+		}
+		ctx.Set("DB", ctx.DB)
+		ctx.Set("AuthInfo", ctx.AuthInfo)
+		ctx.Next()
 	}
 }
 
 // RegisterHandler register handler
 func (e *Engine) RegisterHandler(name string, h func(ctx *Context)) func(ctx *Context) {
-	return h
+	return e.Handler.OnHandler(name, h)
 }
 
 // Run booting system
@@ -256,7 +269,6 @@ func (e *Engine) Run() {
 	e.initRedis()
 	e.initDB()
 	e.initOAuth()
-	e.MSet.Release()
 }
 
 // InvokeEngine build engine
@@ -269,14 +281,14 @@ func InvokeEngine(build func(*Engine)) func(*Engine) {
 // InvokeContext build context
 func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
 	return func(e *Engine) {
-		group := e.Group(viper.GetString("http.prefix"))
-		group.Handle(httpMethod, relativePath, handlers...)
+		e.Group(viper.GetString("http.prefix")).Handle(httpMethod, relativePath, handlers...)
 	}
 }
 
 func buildEngine() *Engine {
 	e := &Engine{}
 	e.MSet = &MSet{m: map[string][]interface{}{}}
+	e.Handler = &IHander{}
 	e.BusinessDBSet = map[string]*xorm.Engine{}
 	e.GRPC = grpc.NewServer()
 	if viper.GetString("app.mode") != "debug" {

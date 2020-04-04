@@ -16,7 +16,8 @@ type (
 	// Engine defined parse app engine
 	Engine struct {
 		*pApp.Engine
-		pool sync.Pool
+		Handler Handler
+		pool    sync.Pool
 	}
 	// Context defined http handle hook context
 	Context struct {
@@ -30,7 +31,18 @@ type (
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value.
 	HandlerFunc func(*Context)
+	// Handler defined hooks
+	Handler interface {
+		OnHandler(name string, h func(ctx *Context)) func(*Context)
+	}
+	// IHander defined handler
+	IHander struct{}
 )
+
+// OnHandler defined event
+func (i *IHander) OnHandler(name string, h func(ctx *Context)) func(*Context) {
+	return h
+}
 
 func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e}
@@ -66,14 +78,13 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 }
 
 // RegisterHandler register handler
-func (e *Engine) RegisterHandler(name string, h func(ctx *Context)) func(ctx *Context) {
-	return h
+func (e *Engine) RegisterHandler(name string, h func(ctx *Context)) func(*Context) {
+	return e.Handler.OnHandler(name, h)
 }
 
 // InvokeEngine build engine
 func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
-	return func(base *pApp.Engine) {
-		App.Engine = base
+	return func(*pApp.Engine) {
 		build(App)
 	}
 }
@@ -81,14 +92,13 @@ func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 // InvokeContext build context
 func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
-		App.Engine = base
 		group := App.Group(viper.GetString("http.prefix"))
 		group.Handle(httpMethod, relativePath, handlers...)
 	}
 }
 
 func buildEngine() *Engine {
-	e := &Engine{}
+	e := &Engine{Engine: pApp.App, Handler: &IHander{}}
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}
