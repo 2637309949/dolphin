@@ -11,7 +11,7 @@ definitions:
         description: 消息
         type: string
       stack:
-        description: 消息
+        description: 堆栈
         type: string
     type: object
   model.SysAppFun:
