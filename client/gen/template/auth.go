@@ -5,21 +5,170 @@ var TmplAuth = `<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
   <title>Auth</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-  <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="zh-CN" />
+  <meta name="Author" content="网页作者" />
+  <meta name="Copyright" content="网站版权" />
+  <meta name="keywords" content="网站关键字" />
+  <meta name="description" content="网站描述" />
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    html {
+      overflow-y: scroll;
+    }
+
+    body {
+      margin: 0;
+      font: 12px"\5B8B\4F53", sans-serif;
+      background: #e9faff;
+    }
+
+    div,
+    dl,
+    dt,
+    dd,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    pre,
+    form,
+    fieldset,
+    input,
+    textarea,
+    blockquote,
+    p {
+      padding: 0;
+      margin: 0;
+    }
+
+    table,
+    td,
+    tr,
+    th {
+      font-size: 12px;
+    }
+
+    li {
+      list-style-type: none;
+    }
+
+    img {
+      vertical-align: top;
+      border: 0;
+    }
+
+    ol,
+    ul {
+      list-style: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 12px;
+      font-weight: normal;
+    }
+
+    address,
+    cite,
+    code,
+    em,
+    th {
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+    .container {
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+    }
+    .auth-box{
+            width: 500px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            padding-right: 55px;
+            padding-left: 55px;
+            padding-bottom: 50px;
+            padding-top: 65px;
+        }
+        .auth-box-title, .auth-box-subtitle {
+            display: block;
+            font-family: OpenSans-Regular;
+            color: #555555;
+            line-height: 1.2;
+            text-align: center;
+            padding-bottom: 28px;
+        }
+        .auth-box-title {
+          font-size: 30px;
+        }
+        .auth-box-subtitle {
+          font-size: 25px;
+        }
+        .btn-primary{
+          display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            width: 100%;
+            height: 60px;
+            background-color: #4272d7;
+            font-family: OpenSans-Regular;
+            font-size: 14px;
+            color: #fff;
+            line-height: 1.2;
+            text-transform: uppercase;
+            -webkit-transition: all 0.4s;
+            -o-transition: all 0.4s;
+            -moz-transition: all 0.4s;
+            transition: all 0.4s;
+            outline: none !important;
+            border: none;
+        }
+  </style>
 </head>
 
 <body>
   <div class="container">
-    <div class="jumbotron">
+    <div class="auth-box">
       <form action="/api/sys/cas/affirm" method="POST">
-        <h1>Authorize</h1>
-        <p>The client would like to perform actions on your behalf.</p>
+        <span class="auth-box-title">Authorize</span>
+        <span class="auth-box-subtitle">The client would like to perform actions on your behalf.</span>
         <p>
-          <button type="submit" class="btn btn-primary btn-lg" style="width:200px;">
+          <button type="submit" class="btn btn-primary btn-lg">
             Allow
           </button>
         </p>
@@ -36,31 +185,207 @@ var TmplLogin = `<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta name="Author" content="网页作者" />
+    <meta name="Copyright" content="网站版权" />
+    <meta name="keywords" content="网站关键字" />
+    <meta name="description" content="网站描述" />
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            margin: 0;
+            font: 12px"\5B8B\4F53", sans-serif;
+            background: #e9faff;
+        }
+
+        div,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        pre,
+        form,
+        fieldset,
+        input,
+        textarea,
+        blockquote,
+        p {
+            padding: 0;
+            margin: 0;
+        }
+
+        table,
+        td,
+        tr,
+        th {
+            font-size: 12px;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        img {
+            vertical-align: top;
+            border: 0;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        address,
+        cite,
+        code,
+        em,
+        th {
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .login-box {
+            width: 500px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            padding-right: 55px;
+            padding-left: 55px;
+            padding-bottom: 50px;
+            padding-top: 65px;
+        }
+
+        .form-group {
+            position: relative;
+            width: 100%;
+            position: relative;
+            background-color: #fff;
+            border: 1px solid #e6e6e6;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            background: transparent;
+            font-family: OpenSans-Regular;
+            font-size: 15px;
+            color: #666666;
+            line-height: 1.2;
+            height: 50px;
+            padding: 0 20px 0 20px;
+            outline: none;
+            border: none;
+        }
+
+        .btn-success {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            width: 100%;
+            height: 60px;
+            background-color: #4272d7;
+            font-family: OpenSans-Regular;
+            font-size: 14px;
+            color: #fff;
+            line-height: 1.2;
+            text-transform: uppercase;
+            -webkit-transition: all 0.4s;
+            -o-transition: all 0.4s;
+            -moz-transition: all 0.4s;
+            transition: all 0.4s;
+            outline: none !important;
+            border: none;
+        }
+
+        .form-group-submit {
+            margin-top: 20px;
+        }
+
+        .login-box-title {
+            display: block;
+            font-family: OpenSans-Regular;
+            font-size: 30px;
+            color: #555555;
+            line-height: 1.2;
+            text-align: center;
+            padding-bottom: 28px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Login In</h1>
-        <form action="/api/sys/cas/login" method="POST">
-            <div class="form-group">
-                <label for="domain">Domain</label>
-                <input type="text" class="form-control" name="domain" placeholder="Please enter your domain">
-            </div>
-            <div class="form-group">
-                <label for="username">User Name</label>
-                <input type="text" class="form-control" name="username" placeholder="Please enter your user name">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" placeholder="Please enter your password">
-            </div>
-            <button type="submit" class="btn btn-success">Login</button>
-        </form>
+        <div class="login-box">
+            <span class="login-box-title">Account Login</span>
+            <form action="/api/sys/cas/login" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="domain" placeholder="Please enter your domain">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="Please enter your user name">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password"
+                        placeholder="Please enter your password">
+                </div>
+                <div class="form-group form-group-submit">
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 
