@@ -16,10 +16,8 @@ func (m *SysDataPermission) ParseRule(roleRules []SysDataPermissionDetail) inter
 			}
 		}
 	}
-
 	if len(roleRules) > 1 {
 		roleRule = "(" + roleRule + ")"
 	}
-
 	return template.HTML(roleRule)
 }
