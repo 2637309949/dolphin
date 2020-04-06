@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
 
@@ -12,8 +13,9 @@ var DefaultClient = SysClient{
 	ID:         null.StringFrom("5ba2b110-9dad-11d1-80b4-00c04fd431c4"),
 	Client:     null.StringFrom("Y76U9344RABF4"),
 	Name:       null.StringFrom("default"),
+	AppName:    null.StringFrom(viper.GetString("app.name")),
 	Secret:     null.StringFrom("98UYO6FVB865"),
-	Domain:     null.StringFrom("http://127.0.0.1:8082"),
+	Domain:     null.StringFrom("127.0.0.1"),
 	CreateBy:   DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   DefaultAdmin.ID,

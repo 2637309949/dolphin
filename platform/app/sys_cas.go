@@ -201,8 +201,8 @@ func SysCasOauth2(ctx *Context) {
 	qState := urlState.Query()
 	rawRedirect := qState.Get("redirect_uri")
 	rawState := qState.Get("state")
-	ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "*", false, true)
-	ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "*", false, true)
+	ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "", false, true)
+	ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "", false, true)
 	if strings.TrimSpace(rawRedirect) != "" {
 		urlRedirect, err := url.Parse(rawRedirect)
 		if err != nil {

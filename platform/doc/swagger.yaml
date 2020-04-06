@@ -158,6 +158,9 @@ definitions:
     type: object
   model.SysClient:
     properties:
+      app_name:
+        description: 应用归属
+        type: string
       client:
         description: 应用
         type: string
@@ -171,7 +174,7 @@ definitions:
         description: 删除标记
         type: number
       domain:
-        description: 域名
+        description: 域
         type: string
       id:
         description: 主键
@@ -220,6 +223,9 @@ definitions:
     properties:
       api_url:
         description: 请求地址
+        type: string
+      app_name:
+        description: 应用归属
         type: string
       auth_mode:
         description: 认证模式 0：集成登录 1：单点登录

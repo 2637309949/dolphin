@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"sync"
 
@@ -109,7 +110,7 @@ func (e *Engine) initDB() {
 
 	// initBusinessDB
 	domains := []model.SysDomain{}
-	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and del_flag = 0").Find(&domains))
+	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and del_flag = 0", viper.GetString("app.name")).Find(&domains))
 	funk.ForEach(domains, func(domain model.SysDomain) {
 		uri := util.EnsureLeft(httpUtil.Parse(domain.DataSource.String)).(*httpUtil.URI)
 		util.EnsureLeft(e.PlatformDB.Sql(fmt.Sprintf("create database if not exists %v default character set utf8mb4", uri.DbName)).Execute())
@@ -125,7 +126,7 @@ func (e *Engine) initDB() {
 	zmap := map[string]*xorm.Engine{}
 	if util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Count(new(model.SysDomain))).(int64) > 0 {
 		defer func() {
-			util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
+			util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
 			e.MSet.Release()
 		}()
 		nset := e.MSet.Name(func(n string) bool {
@@ -207,6 +208,15 @@ func (e *Engine) initOAuth() {
 	manager.MapTokenStorage(store.NewRedisStoreWithCli(e.Redis, TokenkeyNamespace))
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 	manager.MapClientStorage(NewClientStore())
+	manager.SetValidateURIHandler(func(baseURI string, redirectURI string) error {
+		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+		base := reg.FindAllStringSubmatch(baseURI, -1)
+		redirect := reg.FindAllStringSubmatch(redirectURI, -1)
+		if base[0][2] != redirect[0][2] {
+			return errors.ErrInvalidRedirectURI
+		}
+		return nil
+	})
 
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
 	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
