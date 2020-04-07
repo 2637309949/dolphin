@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 	"time"
 
@@ -182,6 +183,7 @@ func SysCasOauth2(ctx *Context) {
 	f := ctx.Request.Form
 	state := f.Get("state")
 	code := f.Get("code")
+
 	if code == "" {
 		logrus.Error("SysCasOauth2/code:", errors.New("Code not found"))
 		ctx.Fail(errors.New("Code not found"))
@@ -193,14 +195,12 @@ func SysCasOauth2(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	urlState, err := url.Parse(state)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	qState := urlState.Query()
-	rawRedirect := qState.Get("redirect_uri")
-	rawState := qState.Get("state")
+
+	reg := regexp.MustCompile("redirect_uri=([^&]*)?&state=([^&]*)?$")
+	groups := reg.FindAllStringSubmatch(state, -1)
+	rawRedirect := groups[0][1]
+	rawState := groups[0][2]
+
 	ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "", false, true)
 	ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "", false, true)
 	if strings.TrimSpace(rawRedirect) != "" {
