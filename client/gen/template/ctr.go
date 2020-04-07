@@ -15,6 +15,7 @@ import (
 	"{{.PackageName}}/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 )
@@ -65,14 +66,14 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	{{- if .ISArray $bp.Type}}
-	for _, form := range payload {
+	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
 		form.ID = null.StringFromUUID()
 		form.CreateTime = null.TimeFromPtr(time.Now().Value())
 		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.DelFlag = null.IntFrom(0)
-	}
+	})
 	{{- else}}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
@@ -97,14 +98,15 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	for _, form := range payload {
+	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
 		ids = append(ids, form.ID.String)
-	}
-	ret, err := ctx.DB.Table(new({{$bp.ORef $bp.Type}})).In("id", ids).Update(map[string]interface{}{
-		"update_time": null.TimeFromPtr(time.Now().Value()),
-		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
-		"del_flag":    null.IntFrom(1),
 	})
+	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
+		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -116,10 +118,10 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new({{$bp.ORef $bp.Type}})).In("id", payload.ID.String).Update(map[string]interface{}{
-		"update_time": null.TimeFromPtr(time.Now().Value()),
-		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
-		"del_flag":    null.IntFrom(1),
+	ret, err := ctx.DB.In("id", payload.ID.String).Update(&{{$bp.ORef $bp.Type}}{
+		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -140,12 +142,12 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	s := ctx.DB.NewSession()
-	for _, form := range payload {
+	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		r, err = s.ID(form.ID).Update(&form)
 		ret = append(ret, r)
-	}
+	})
 	if err != nil {
 		s.Rollback()
 		ctx.Fail(err)

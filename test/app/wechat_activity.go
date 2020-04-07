@@ -8,6 +8,7 @@ import (
 	"test/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 )
@@ -28,14 +29,14 @@ func WechatActivityBatchAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	for _, form := range payload {
+	funk.ForEach(payload, func(form model.WechatActivity) {
 		form.ID = null.StringFromUUID()
 		form.CreateTime = null.TimeFromPtr(time.Now().Value())
 		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.DelFlag = null.IntFrom(0)
-	}
+	})
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
@@ -91,14 +92,15 @@ func WechatActivityBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	for _, form := range payload {
+	funk.ForEach(payload, func(form model.WechatActivity) {
 		ids = append(ids, form.ID.String)
-	}
-	ret, err := ctx.DB.Table(new(model.WechatActivity)).In("id", ids).Update(map[string]interface{}{
-		"update_time": null.TimeFromPtr(time.Now().Value()),
-		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
-		"del_flag":    null.IntFrom(1),
 	})
+	ret, err := ctx.DB.In("id", ids).Update(&model.WechatActivity{
+		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -122,10 +124,10 @@ func WechatActivityDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.WechatActivity)).In("id", payload.ID.String).Update(map[string]interface{}{
-		"update_time": null.TimeFromPtr(time.Now().Value()),
-		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
-		"del_flag":    null.IntFrom(1),
+	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.WechatActivity{
+		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -154,12 +156,12 @@ func WechatActivityBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
-	for _, form := range payload {
+	funk.ForEach(payload, func(form model.WechatActivity) {
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
 		r, err = s.ID(form.ID).Update(&form)
 		ret = append(ret, r)
-	}
+	})
 	if err != nil {
 		s.Rollback()
 		ctx.Fail(err)

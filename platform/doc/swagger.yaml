@@ -1310,6 +1310,15 @@ paths:
       - OAuth授权
   /api/sys/cas/url:
     get:
+      parameters:
+      - description: 定向URL
+        in: query
+        name: redirect_uri
+        type: string
+      - description: 状态
+        in: query
+        name: state
+        type: string
       responses:
         "200":
           description: OK
@@ -1325,7 +1334,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 授权地址
       tags:
-      - OAuth授权
+      - 认证中心
   /api/sys/client/add:
     post:
       consumes:

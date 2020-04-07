@@ -58,10 +58,10 @@ func SysUserDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.Table(new(model.SysRole)).In("id", payload.ID.String).Update(map[string]interface{}{
-		"update_time": null.TimeFromPtr(time.Now().Value()),
-		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
-		"del_flag":    null.IntFrom(1),
+	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysRole{
+		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)

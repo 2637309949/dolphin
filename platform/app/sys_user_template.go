@@ -57,10 +57,10 @@ func SysUserTemplateDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.SysUserTemplate)).In("id", payload.ID.String).Update(map[string]interface{}{
-		"update_time": null.TimeFromPtr(time.Now().Value()),
-		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
-		"del_flag":    null.IntFrom(1),
+	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysUserTemplate{
+		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)

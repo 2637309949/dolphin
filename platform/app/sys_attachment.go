@@ -8,9 +8,8 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/2637309949/dolphin/platform/util/file"
-
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/util/file"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
@@ -128,10 +127,10 @@ func SysAttachmentDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.Table(new(model.SysAttachment)).In("id", payload.ID.String).Update(map[string]interface{}{
-		"update_time": null.TimeFromPtr(time.Now().Value()),
-		"update_by":   null.StringFrom(ctx.GetToken().GetUserID()),
-		"del_flag":    null.IntFrom(1),
+	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysAttachment{
+		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
