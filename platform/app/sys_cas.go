@@ -160,15 +160,16 @@ func SysCasToken(ctx *Context) {
 
 // SysCasURL api implementation
 // @Summary 授权地址
-// @Tags OAuth授权
+// @Tags 认证中心
+// @Param redirect_uri query string false "定向URL"
+// @Param state query string false "状态"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/sys/cas/url [get]
 func SysCasURL(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
-	ret := oa2cfg.AuthCodeURL(state)
-	ctx.Success(ret)
+	ctx.Redirect(302, oa2cfg.AuthCodeURL(state))
 }
 
 // SysCasOauth2 api implementation

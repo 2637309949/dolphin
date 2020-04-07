@@ -25,6 +25,8 @@
         </return>
     </api>
     <api name="url" desc="授权地址" method="get" auth="false">
+        <param name="redirect_uri" type="string" desc="定向URL" />
+        <param name="state" type="string" desc="状态" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>
