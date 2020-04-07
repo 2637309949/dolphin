@@ -60,7 +60,7 @@ definitions:
     properties:
       code:
         description: 编码
-        type: number
+        type: integer
       data:
         description: 返回数据
         type: object

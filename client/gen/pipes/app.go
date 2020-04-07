@@ -20,7 +20,7 @@ type App struct {
 
 // Name defined pipe name
 func (app *App) Name() string {
-	return "auto"
+	return "app"
 }
 
 // Build func

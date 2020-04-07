@@ -12,7 +12,6 @@ import (
 	"github.com/2637309949/dolphin/packages/go-funk"
 
 	"github.com/2637309949/dolphin/client/gen"
-	"github.com/2637309949/dolphin/client/gen/pipes"
 	"github.com/2637309949/dolphin/client/parser"
 	"github.com/2637309949/dolphin/packages/cobra"
 )
@@ -29,26 +28,12 @@ var build = &cobra.Command{
 		if err := p.Walk(wd); err != nil {
 			return err
 		}
+
+		args = append(args, "main", "app", "ctr", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
 		g := gen.New(p.Application)
-		g.AddPipe(&pipes.Main{})
-		g.AddPipe(&pipes.App{})
-		g.AddPipe(&pipes.Ctr{})
-		g.AddPipe(&pipes.Srv{})
-		g.AddPipe(&pipes.Model{})
-		g.AddPipe(&pipes.Bean{})
-		g.AddPipe(&pipes.Auto{})
-		g.AddPipe(&pipes.Tool{})
-		g.AddPipe(&pipes.SQL{})
-		g.AddPipe(&pipes.SQLMap{})
-		g.AddPipe(&pipes.OAuth{})
-		g.AddPipe(&pipes.Script{})
-		g.AddPipe(&pipes.Doc{})
-		for _, v := range args {
-			tpl := &pipes.SQLTPL{}
-			if v == tpl.Name() {
-				g.AddPipe(&pipes.SQLTPL{})
-			}
-		}
+		funk.ForEach(args, func(name string) {
+			g.AddPipe(GetPipeByName(name))
+		})
 		if err := g.Build(wd); err != nil {
 			return err
 		}

@@ -21,7 +21,7 @@ type OAuth struct {
 
 // Name defined pipe name
 func (oa *OAuth) Name() string {
-	return "oAuth"
+	return "oauth"
 }
 
 // Build func
