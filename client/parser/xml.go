@@ -192,6 +192,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						prop.Desc = attrValue
 					case attrName == "type":
 						prop.Type = attrValue
+					case attrName == "json":
+						prop.JSON = attrValue
 					}
 				}
 			case token.Name.Local == "table":

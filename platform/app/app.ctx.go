@@ -9,11 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/pkg/errors"
-
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
@@ -73,7 +70,7 @@ func (ctx *Context) Success(data interface{}, status ...int) {
 		code = status[0]
 	}
 	ctx.JSON(http.StatusOK, model.Response{
-		Code: null.IntFrom(int64(code)),
+		Code: code,
 		Data: data,
 	})
 }
@@ -82,7 +79,6 @@ func (ctx *Context) Success(data interface{}, status ...int) {
 func (ctx *Context) Fail(err error, status ...int) {
 	code := 500
 	msg := err.Error()
-	stack := fmt.Sprintf("%v", errors.WithStack(err))
 	if mErr, ok := err.(model.Error); ok {
 		code = mErr.Code
 	}
@@ -90,9 +86,8 @@ func (ctx *Context) Fail(err error, status ...int) {
 		code = status[0]
 	}
 	ctx.JSON(http.StatusOK, model.Response{
-		Code:  null.IntFrom(int64(code)),
-		Msg:   null.StringFrom(msg),
-		Stack: null.StringFrom(stack),
+		Code: code,
+		Msg:  msg,
 	})
 }
 

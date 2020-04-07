@@ -14,7 +14,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/go-errors/errors"
 	"github.com/mattn/go-isatty"
@@ -79,8 +78,8 @@ func Recovery() gin.HandlerFunc {
 			code = err.Code
 		}
 		ctx.JSON(http.StatusOK, model.Response{
-			Code: null.IntFrom(int64(code)),
-			Msg:  null.StringFrom(msg),
+			Code: code,
+			Msg:  msg,
 		})
 	}, gin.DefaultErrorWriter)
 }

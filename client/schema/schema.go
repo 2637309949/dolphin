@@ -54,6 +54,7 @@ type Controller struct {
 type Prop struct {
 	Common
 	Type string
+	JSON string
 }
 
 // Bean struct
