@@ -121,19 +121,26 @@ func SysCasAffirm(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/cas/authorize [get]
 func SysCasAuthorize(ctx *Context) {
+	var form url.Values
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Error("SysCasAuthorize/Start:", err)
 		ctx.Fail(err)
 		return
 	}
-	var form url.Values
+
+	ctx.Request.ParseForm()
+	// ensure state, like state change
 	if v, ok := store.Get("ReturnUri"); ok {
 		form = v.(url.Values)
+		for k, v := range ctx.Request.Form {
+			form.Set(k, v[0])
+		}
+		ctx.Request.Form = form
 	}
-	ctx.Request.Form = form
 	store.Delete("ReturnUri")
 	store.Save()
+
 	err = ctx.engine.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Error("SysCasAuthorize/HandleAuthorizeRequest:", err)
