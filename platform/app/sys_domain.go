@@ -9,6 +9,7 @@ import (
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/2637309949/dolphin/packages/viper"
 )
 
 // SysDomainAdd api implementation
@@ -33,6 +34,7 @@ func SysDomainAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
+	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
@@ -109,6 +111,7 @@ func SysDomainPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetString("app_name", viper.GetString("app.name"))
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_domain", "page", "sys_domain", q.Value())
 	if err != nil {

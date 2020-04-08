@@ -4,6 +4,7 @@
 package app
 
 import (
+	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 )
 
@@ -21,6 +22,7 @@ func SysTrackerPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetString("app_name", viper.GetString("app.name"))
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_tracker", "page", "sys_tracker", q.Value())
 	if err != nil {

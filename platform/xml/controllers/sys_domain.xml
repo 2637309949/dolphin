@@ -23,6 +23,7 @@
     <api name="page" function="page" table="sys_domain" desc="域分页查询" method="get">
         <param name="page" type="int" desc="页码" value="1"/>
         <param name="size" type="int" desc="单页数" value="15" />
+        <param name="app_name" type="string" desc="所属应用"/>
         <return>
             <success type="$response"/>
             <failure type="$response"/>
