@@ -235,6 +235,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						column.Xorm = attrValue
 					case attrName == "type":
 						column.Type = attrValue
+					case attrName == "json":
+						column.JSON = attrValue
 					}
 				}
 			}

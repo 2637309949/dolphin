@@ -138,20 +138,6 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	return &ret, nil
 }
 
-func toString(v interface{}, defaultValue string) interface{} {
-	if v == nil {
-		return defaultValue
-	}
-	switch t := v.(type) {
-	case int:
-		return t
-	case string:
-		return t
-	default:
-		return t
-	}
-}
-
 // TreeSearch defined
 func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
 	stplkey := fmt.Sprintf("%s_%s.tpl", controller, api)

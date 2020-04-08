@@ -3282,7 +3282,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.SysRole'
+          $ref: '#/definitions/model.SysUser'
       responses:
         "200":
           description: OK
@@ -3312,7 +3312,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.SysRole'
+          $ref: '#/definitions/model.SysUser'
       responses:
         "200":
           description: OK
@@ -3571,7 +3571,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.SysRole'
+          $ref: '#/definitions/model.SysUser'
       responses:
         "200":
           description: OK

@@ -69,6 +69,7 @@ type Column struct {
 	Common
 	Type string
 	Xorm string
+	JSON string
 }
 
 // Table struct
