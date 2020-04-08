@@ -9,13 +9,13 @@ import (
 	"net"
 	"net/http"
 
+	srv "github.com/2637309949/dolphin/packages/fx"
+	"github.com/2637309949/dolphin/packages/fx/cli"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 
 	// github.com/2637309949/dolphin/platform/conf
 	_ "github.com/2637309949/dolphin/platform/conf"
-	srv "github.com/2637309949/dolphin/packages/fx"
-	"github.com/2637309949/dolphin/packages/fx/cli"
 )
 
 // HTTPServer defined http.Server
@@ -88,12 +88,12 @@ func NewLifeHook(e *Engine) srv.Hook {
 }
 
 func init() {
-	authServerURL = viper.GetString("oauth.server")
-	oa2cfg.ClientID = viper.GetString("oauth.id")
-	oa2cfg.ClientSecret = viper.GetString("oauth.secret")
-	oa2cfg.RedirectURL = fmt.Sprintf("%v/api/sys/cas/oauth2", viper.GetString("oauth.cli"))
-	oa2cfg.Endpoint.AuthURL = authServerURL + "/api/sys/cas/authorize"
-	oa2cfg.Endpoint.TokenURL = authServerURL + "/api/sys/cas/token"
+	AuthServerURL = viper.GetString("oauth.server")
+	OA2Cfg.ClientID = viper.GetString("oauth.id")
+	OA2Cfg.ClientSecret = viper.GetString("oauth.secret")
+	OA2Cfg.RedirectURL = fmt.Sprintf("%v/api/sys/cas/oauth2", viper.GetString("oauth.cli"))
+	OA2Cfg.Endpoint.AuthURL = AuthServerURL + "/api/sys/cas/authorize"
+	OA2Cfg.Endpoint.TokenURL = AuthServerURL + "/api/sys/cas/token"
 	_ = cli.Provider(func(lc srv.Lifecycle) *Engine {
 		lc.Append(NewLifeHook(App))
 		return App

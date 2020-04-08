@@ -18,7 +18,7 @@ var DefaultAdmin = SysUser{
 	Name:       null.StringFrom("admin"),
 	FullName:   null.StringFrom("admin"),
 	Status:     null.IntFrom(1),
-	Domain:     null.StringFrom("localhost"),
+	Domain:     null.StringFrom("127.0.0.1"),
 	CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),

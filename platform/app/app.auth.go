@@ -25,18 +25,18 @@ const expiryDelta = 10 * gt.Second
 
 // var defined
 var (
-	authServerURL   = viper.GetString("oauth.server")
-	authAuthURL     = "/api/cas/authorize"
-	authTokenURL    = "/api/cas/token"
-	authRedirectURL = "/api/cas/oauth2"
-	oa2cfg          = xoauth2.Config{
+	AuthServerURL   = viper.GetString("oauth.server")
+	AuthAuthURL     = "/api/cas/authorize"
+	AuthTokenURL    = "/api/cas/token"
+	AuthRedirectURL = "/api/cas/oauth2"
+	OA2Cfg          = xoauth2.Config{
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),
 		Scopes:       []string{"admin"},
-		RedirectURL:  fmt.Sprintf("%v%v", authRedirectURL, viper.GetString("oauth.cli")),
+		RedirectURL:  fmt.Sprintf("%v%v", AuthRedirectURL, viper.GetString("oauth.cli")),
 		Endpoint: xoauth2.Endpoint{
-			AuthURL:  authServerURL + authAuthURL,
-			TokenURL: authServerURL + authTokenURL,
+			AuthURL:  AuthServerURL + AuthAuthURL,
+			TokenURL: AuthServerURL + AuthTokenURL,
 		},
 	}
 )

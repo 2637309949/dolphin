@@ -181,7 +181,7 @@ func SysCasToken(ctx *Context) {
 // @Router /api/sys/cas/url [get]
 func SysCasURL(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
-	ctx.Redirect(302, oa2cfg.AuthCodeURL(state))
+	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
 }
 
 // SysCasOauth2 api implementation
@@ -202,7 +202,7 @@ func SysCasOauth2(ctx *Context) {
 		ctx.Fail(errors.New("Code not found"))
 		return
 	}
-	ret, err := oa2cfg.Exchange(context.Background(), code)
+	ret, err := OA2Cfg.Exchange(context.Background(), code)
 	if err != nil {
 		logrus.Error("SysCasOauth2/Exchange:", errors.New("Code not found"))
 		ctx.Fail(err)
@@ -248,7 +248,7 @@ func SysCasRefresh(ctx *Context) {
 	token := xoauth2.Token{}
 	token.Expiry = time.Now()
 	token.RefreshToken = refreshtoken
-	ret, err := oa2cfg.TokenSource(context.Background(), &token).Token()
+	ret, err := OA2Cfg.TokenSource(context.Background(), &token).Token()
 	if err != nil {
 		logrus.Error("SysCasRefresh/TokenSource:", err)
 		ctx.Fail(err)
