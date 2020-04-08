@@ -17,13 +17,13 @@ import (
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.SysRole false "用户信息"
+// @Param user body model.SysUser false "用户信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/sys/user/add [post]
 func SysUserAdd(ctx *Context) {
-	var payload model.SysRole
+	var payload model.SysUser
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
@@ -34,6 +34,7 @@ func SysUserAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
+	payload.SetPassword("123456")
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
 		ctx.Fail(err)
@@ -47,18 +48,18 @@ func SysUserAdd(ctx *Context) {
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.SysRole false "用户信息"
+// @Param user body model.SysUser false "用户信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/sys/user/del [delete]
 func SysUserDel(ctx *Context) {
-	var payload model.SysRole
+	var payload model.SysUser
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysRole{
+	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysUser{
 		UpdateTime: null.TimeFromPtr(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
@@ -75,19 +76,22 @@ func SysUserDel(ctx *Context) {
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.SysRole false "用户信息"
+// @Param user body model.SysUser false "用户信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/sys/user/update [put]
 func SysUserUpdate(ctx *Context) {
-	var payload model.SysRole
+	var payload model.SysUser
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+
+	payload.Password.Valid = false
+	payload.Salt.Valid = false
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
@@ -131,12 +135,14 @@ func SysUserPage(ctx *Context) {
 func SysUserGet(ctx *Context) {
 	var entity model.SysUser
 	id := ctx.Query("id")
-	ret, err := ctx.PlatformDB.Id(id).Get(&entity)
+	_, err := ctx.PlatformDB.Id(id).Get(&entity)
+	entity.Password.Valid = false
+	entity.Salt.Valid = false
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success(entity)
 }
 
 // SysUserLogout api implementation

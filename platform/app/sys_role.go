@@ -130,10 +130,10 @@ func SysRolePage(ctx *Context) {
 func SysRoleGet(ctx *Context) {
 	var entity model.SysRole
 	id := ctx.Query("id")
-	ret, err := ctx.DB.Id(id).Get(&entity)
+	_, err := ctx.DB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success(entity)
 }

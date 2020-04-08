@@ -42,10 +42,10 @@ func SysTrackerPage(ctx *Context) {
 func SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker
 	id := ctx.Query("id")
-	ret, err := ctx.PlatformDB.Id(id).Get(&entity)
+	_, err := ctx.PlatformDB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success(entity)
 }

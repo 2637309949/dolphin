@@ -235,12 +235,12 @@ func AppletActivityList(ctx *Context) {
 func AppletActivityOne(ctx *Context) {
 	var entity model.AppletActivity
 	id := ctx.Query("id")
-	ret, err := ctx.DB.Id(id).Get(&entity)
+	_, err := ctx.DB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success(entity)
 }
 
 // AppletActivityIncrease api implementation

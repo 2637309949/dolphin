@@ -173,12 +173,12 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $bp := index .Params 0}}
 	var entity model.{{.ToUpperCase .Table}}
 	id := ctx.Query("{{$bp.Name}}")
-	ret, err := ctx.DB.Id(id).Get(&entity)
+	_, err := ctx.DB.Id(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success(entity)
 {{- else}}
 	{{- if eq .Method "get"}}
 	q := ctx.TypeQuery()
