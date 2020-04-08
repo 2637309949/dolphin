@@ -118,6 +118,24 @@ func SysOrgPage(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysOrgTree api implementation
+// @Summary 菜单树形结构
+// @Tags 组织
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Router /api/sys/org/tree [get]
+func SysOrgTree(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetString("name")
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "sys_org", "tree", "sys_org", q.Value())
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysOrgGet api implementation
 // @Summary 获取组织信息
 // @Tags 组织
