@@ -15,7 +15,7 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/viper"
-	xoauth2 "golang.org/x/oauth2"
+	xoauth2 "github.com/2637309949/dolphin/packages/xoauth2"
 )
 
 // expiryDelta determines how earlier a token should be considered
