@@ -46,8 +46,7 @@ type API struct {
 // Controller struct
 type Controller struct {
 	Common
-	SkipLogin bool
-	APIS      []*API
+	APIS []*API
 }
 
 // Prop struct
