@@ -65,6 +65,11 @@ func SysCasLogin(ctx *Context) {
 		Name:   null.StringFrom(username),
 		Domain: null.StringFrom(domain),
 	}
+	if account.Domain.String == "" {
+		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
+		account.Domain = null.StringFrom(base[0][2])
+	}
 	ext, err := ctx.engine.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
 
 	if err != nil {
