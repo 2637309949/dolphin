@@ -48,6 +48,7 @@ func init() {
 	viper.SetDefault("swag.scope.write", "Grants write access")
 	viper.SetDefault("swag.scope.admin", "Grants read and write access to administrative information")
 	viper.AutomaticEnv()
+
 	if err := viper.ReadInConfig(); err != nil {
 		logrus.Warn("configuration file not found")
 	}
