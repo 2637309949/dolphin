@@ -561,6 +561,9 @@ definitions:
       id:
         description: 主键
         type: string
+      intro:
+        description: 简介
+        type: string
       mobile:
         description: 电话
         type: string

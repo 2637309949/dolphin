@@ -14,6 +14,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/go-funk"
+
 	"github.com/2637309949/dolphin/packages/go-session/cookie"
 	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -291,11 +293,20 @@ func SysCasCheck(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/cas/profile [get]
 func SysCasProfile(ctx *Context) {
+	user := ctx.LoginInInfo()
+	roles := []model.SysRole{}
+	err := ctx.DB.Sql("select name from sys_role left join sys_role_user on sys_role.id = sys_role_user.role_id and sys_role_user.user_id = ?", user.ID.String).Find(&roles)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	rolesArr := funk.Map(roles, func(role model.SysRole) string {
+		return role.Name.String
+	}).([]string)
 	ctx.Success(map[string]interface{}{
-		"roles":        []string{"admin"},
-		"introduction": "I am a super administrator",
-		"avatar":       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-		"name":         "Super Admin",
+		"roles":  rolesArr,
+		"avatar": user.Avatar.String,
+		"name":   user.Name.String,
 	})
 }
 

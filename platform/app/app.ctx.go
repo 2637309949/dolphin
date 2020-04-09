@@ -222,7 +222,7 @@ func (q *Query) GetInt(key string, init ...interface{}) int64 {
 }
 
 // SetInt defined
-func (q *Query) SetInt(key string, init ...interface{}) {
+func (q *Query) SetInt(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -237,6 +237,13 @@ func (q *Query) SetInt(key string, init ...interface{}) {
 		}
 		q.m[key] = i
 	}
+	return func() {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = 0
+		}
+	}
 }
 
 // GetBool defined
@@ -246,7 +253,7 @@ func (q *Query) GetBool(key string, init ...interface{}) bool {
 }
 
 // SetBool defined
-func (q *Query) SetBool(key string, init ...interface{}) {
+func (q *Query) SetBool(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -261,6 +268,13 @@ func (q *Query) SetBool(key string, init ...interface{}) {
 		}
 		q.m[key] = i
 	}
+	return func() {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = false
+		}
+	}
 }
 
 // GetString defined
@@ -270,7 +284,7 @@ func (q *Query) GetString(key string, init ...interface{}) string {
 }
 
 // SetString defined
-func (q *Query) SetString(key string, init ...interface{}) {
+func (q *Query) SetString(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -281,10 +295,17 @@ func (q *Query) SetString(key string, init ...interface{}) {
 	} else {
 		q.m[key] = v
 	}
+	return func() {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = ""
+		}
+	}
 }
 
 // SetArrayString defined
-func (q *Query) SetArrayString(key string, init ...[]string) {
+func (q *Query) SetArrayString(key string, init ...[]string) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -295,6 +316,13 @@ func (q *Query) SetArrayString(key string, init ...[]string) {
 	} else {
 		q.m[key] = strings.Split(v, ",")
 	}
+	return func() {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []string{}
+		}
+	}
 }
 
 // GetArrayString defined
@@ -304,7 +332,7 @@ func (q *Query) GetArrayString(key string, init ...[]string) []string {
 }
 
 // SetArrayInt defined
-func (q *Query) SetArrayInt(key string, init ...[]int64) {
+func (q *Query) SetArrayInt(key string, init ...[]int64) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -321,6 +349,13 @@ func (q *Query) SetArrayInt(key string, init ...[]int64) {
 			return it
 		}).([]int64)
 	}
+	return func() {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []int64{}
+		}
+	}
 }
 
 // GetArrayInt defined
@@ -330,7 +365,7 @@ func (q *Query) GetArrayInt(key string, init ...[]int) []int64 {
 }
 
 // SetArrayFloat64 defined
-func (q *Query) SetArrayFloat64(key string, init ...[]float64) {
+func (q *Query) SetArrayFloat64(key string, init ...[]float64) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -347,6 +382,13 @@ func (q *Query) SetArrayFloat64(key string, init ...[]float64) {
 			return it
 		}).([]float64)
 	}
+	return func() {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []float64{}
+		}
+	}
 }
 
 // GetArrayFloat64 defined
@@ -356,7 +398,7 @@ func (q *Query) GetArrayFloat64(key string, init ...[]float64) []float64 {
 }
 
 // SetArrayBool defined
-func (q *Query) SetArrayBool(key string, init ...[]bool) {
+func (q *Query) SetArrayBool(key string, init ...[]bool) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		if len(init) > 0 {
@@ -372,6 +414,13 @@ func (q *Query) SetArrayBool(key string, init ...[]bool) {
 			}
 			return it
 		}).([]bool)
+	}
+	return func() {
+		if len(init) > 0 {
+			q.m[key] = init[0]
+		} else {
+			q.m[key] = []bool{}
+		}
 	}
 }
 

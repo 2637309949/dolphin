@@ -4,6 +4,7 @@
 	<column name="salt" desc="盐噪点" type="null.String" xorm="varchar(36) notnull" />
 	<column name="name" desc="名字" type="null.String" xorm="varchar(36) notnull" />
 	<column name="full_name" desc="全名" type="null.String" xorm="varchar(36)" />
+	<column name="intro" desc="简介" type="null.String" xorm="text" />
 	<column name="mobile" desc="电话" type="null.String" xorm="varchar(50)" />
 	<column name="email" desc="邮箱" type="null.String" xorm="varchar(50)" />
 	<column name="org_id" desc="组织ID" type="null.String" xorm="varchar(36)" />

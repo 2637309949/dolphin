@@ -7,6 +7,7 @@ package pipes
 import (
 	"fmt"
 	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/2637309949/dolphin/client/gen"
@@ -30,7 +31,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 	tplCache := map[string]bool{}
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
-			if strings.TrimSpace(api.Table) != "" {
+			if strings.TrimSpace(api.Table) != "" && api.Function == "page" {
 				data := map[string]interface{}{
 					"PackageName": node.PackageName,
 					"Name":        node.Name,
@@ -38,8 +39,8 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 					"Application": node,
 					"Api":         api,
 				}
-				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, "page", "count"))
-				if _, ok := tplCache[cpath]; !ok {
+				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, api.Name, "count"))
+				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
 					tmplCfg := &gen.TmplCfg{
 						Text:     template.TmplSQLCount,
 						FilePath: cpath,
@@ -48,10 +49,10 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 						Suffix:   ".tpl",
 					}
 					tmplCfgs = append(tmplCfgs, tmplCfg)
-					tplCache[cpath] = true
+					tplCache[filepath.Base(cpath)] = true
 				}
-				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, "page", "select"))
-				if _, ok := tplCache[spath]; !ok {
+				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, api.Name, "select"))
+				if _, ok := tplCache[filepath.Base(spath)]; !ok {
 					tmplCfg := &gen.TmplCfg{
 						Text:     template.TmplSQLSel,
 						FilePath: spath,
@@ -60,7 +61,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 						Suffix:   ".tpl",
 					}
 					tmplCfgs = append(tmplCfgs, tmplCfg)
-					tplCache[spath] = true
+					tplCache[filepath.Base(spath)] = true
 				}
 			}
 		}

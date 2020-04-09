@@ -7,6 +7,8 @@ from
 	{{.Api.Table}}
 where
 	{{.Api.Table}}.id {{.Application.Unescaped "{{.ne}}"}} ""
+	and
+	{{.Api.Table}}.del_flag {{.Application.Unescaped "{{.ne}}"}} 0
 LIMIT {{.Application.Unescaped "{{.size}}"}} OFFSET {{.Application.Unescaped "{{.offset}}"}}
 `
 
@@ -17,4 +19,6 @@ from
 	{{.Api.Table}}
 where
 	{{.Api.Table}}.id {{.Application.Unescaped "{{.ne}}"}} ""
+	and
+	{{.Api.Table}}.del_flag {{.Application.Unescaped "{{.ne}}"}} 0
 `

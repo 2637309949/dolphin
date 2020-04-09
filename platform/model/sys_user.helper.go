@@ -17,6 +17,7 @@ var DefaultAdmin = SysUser{
 	Password:   null.StringFrom("admin"),
 	Name:       null.StringFrom("admin"),
 	FullName:   null.StringFrom("admin"),
+	Avatar:     null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg"),
 	Status:     null.IntFrom(1),
 	Domain:     null.StringFrom("127.0.0.1"),
 	CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),

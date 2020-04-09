@@ -143,8 +143,9 @@ func SysMenuList(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetBool("isAdmin", ctx.InAdmin())()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "list", "sys_menu", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
