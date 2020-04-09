@@ -34,9 +34,19 @@ module.exports.Update = (data) => {
     })
 }
 
-// List 菜单分页查询
-module.exports.List = (data) => {
-	const url = '/api/sys/menu/list'
+// Sidebar 系统菜单
+module.exports.Sidebar = (data) => {
+	const url = '/api/sys/menu/sidebar'
+	return axios({
+		url: url,
+		method: 'get',
+		data
+    })
+}
+
+// Page 菜单分页查询
+module.exports.Page = (data) => {
+	const url = '/api/sys/menu/page'
 	return axios({
 		url: url,
 		method: 'get',

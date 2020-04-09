@@ -1915,7 +1915,7 @@ paths:
       summary: 获取菜单信息
       tags:
       - 菜单
-  /api/sys/menu/list:
+  /api/sys/menu/page:
     get:
       parameters:
       - description: 认证令牌
@@ -1944,6 +1944,21 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 菜单分页查询
+      tags:
+      - 菜单
+  /api/sys/menu/sidebar:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 系统菜单
       tags:
       - 菜单
   /api/sys/menu/tree:

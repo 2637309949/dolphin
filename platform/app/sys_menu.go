@@ -129,7 +129,25 @@ func SysMenuUpdate(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// SysMenuList api implementation
+// SysMenuSidebar api implementation
+// @Summary 系统菜单
+// @Tags 菜单
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Router /api/sys/menu/sidebar [get]
+func SysMenuSidebar(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetBool("isAdmin", ctx.InAdmin())()
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysMenuPage api implementation
 // @Summary 菜单分页查询
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
@@ -138,14 +156,13 @@ func SysMenuUpdate(ctx *Context) {
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
-// @Router /api/sys/menu/list [get]
-func SysMenuList(ctx *Context) {
+// @Router /api/sys/menu/page [get]
+func SysMenuPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
-	q.SetBool("isAdmin", ctx.InAdmin())()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "list", "sys_menu", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return
