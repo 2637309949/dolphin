@@ -11,6 +11,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
@@ -23,6 +24,7 @@ type (
 		*gin.Context
 		DB         *xorm.Engine
 		PlatformDB *xorm.Engine
+		OAuth2     *server.Server
 		engine     *Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value.

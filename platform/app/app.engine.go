@@ -80,7 +80,7 @@ func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 }
 
 func (e *Engine) allocateContext() *Context {
-	return &Context{PlatformDB: e.PlatformDB, engine: e, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
+	return &Context{PlatformDB: e.PlatformDB, engine: e, OAuth2: e.OAuth2, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
 }
 
 // Group handlers
@@ -305,6 +305,7 @@ func buildEngine() *Engine {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	e.Gin = gin.New()
+	e.Gin.Use(plugin.CORS())
 	e.Gin.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	e.Gin.Use(plugin.Tracker(gin.LoggerConfig{
 		Output:    logrus.GetOutput(),

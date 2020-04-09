@@ -44,7 +44,7 @@ var (
 // define authorization model
 var (
 	OAuth2            AuthType = "oauth2"
-	TokenkeyNamespace          = "dolphin:token"
+	TokenkeyNamespace          = "dolphin:token:"
 )
 
 // AuthType authorization model

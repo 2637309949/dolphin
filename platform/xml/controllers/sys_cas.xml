@@ -6,6 +6,14 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="logout" desc="注销信息" method="get" auth="false">
+        <param name="redirect_uri" type="string" desc="定向URL" />
+        <param name="state" type="string" desc="状态" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
     <api name="affirm" desc="用户授权" method="post" auth="false">
         <return>
             <success type="$response"/>

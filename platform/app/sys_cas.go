@@ -88,6 +88,22 @@ func SysCasLogin(ctx *Context) {
 	ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm"))
 }
 
+// SysCasLogout api implementation
+// @Summary 注销信息
+// @Tags 认证中心
+// @Param Authorization header string false "认证令牌"
+// @Param redirect_uri query string false "定向URL"
+// @Param state query string false "状态"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/cas/logout [get]
+func SysCasLogout(ctx *Context) {
+	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
+	session.Destroy(nil, ctx.Writer, ctx.Request)
+	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
+}
+
 // SysCasAffirm api implementation
 // @Summary 用户授权
 // @Tags OAuth授权
@@ -133,7 +149,6 @@ func SysCasAuthorize(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-
 	ctx.Request.ParseForm()
 	// ensure state, like state change
 	if v, ok := store.Get("ReturnUri"); ok {
@@ -145,7 +160,6 @@ func SysCasAuthorize(ctx *Context) {
 	}
 	store.Delete("ReturnUri")
 	store.Save()
-
 	err = ctx.engine.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Error("SysCasAuthorize/HandleAuthorizeRequest:", err)
@@ -196,6 +210,7 @@ func SysCasOauth2(ctx *Context) {
 	f := ctx.Request.Form
 	state := f.Get("state")
 	code := f.Get("code")
+	state, _ = url.QueryUnescape(state)
 
 	if code == "" {
 		logrus.Error("SysCasOauth2/code:", errors.New("Code not found"))
@@ -208,27 +223,18 @@ func SysCasOauth2(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-
 	reg := regexp.MustCompile("redirect_uri=([^&]*)?&state=([^&]*)?$")
 	groups := reg.FindAllStringSubmatch(state, -1)
 	rawRedirect := groups[0][1]
 	rawState := groups[0][2]
 
-	ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "", false, true)
-	ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "", false, true)
+	ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "", false, false)
+	ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "", false, false)
 	if strings.TrimSpace(rawRedirect) != "" {
-		urlRedirect, err := url.Parse(rawRedirect)
-		if err != nil {
-			logrus.Error("SysCasOauth2/Parse:", err)
-			ctx.Fail(err)
-			return
-		}
-		redirect := urlRedirect.Path
-		ctx.Redirect(http.StatusFound, redirect+"?state="+rawState)
-	} else {
-		ctx.Redirect(http.StatusFound, "/?state="+rawState)
+		ctx.Redirect(http.StatusFound, rawRedirect+"?state="+rawState)
+		return
 	}
-	ctx.Success(ret)
+	ctx.Redirect(http.StatusFound, "/?state="+rawState)
 }
 
 // SysCasRefresh api implementation
@@ -285,13 +291,12 @@ func SysCasCheck(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/cas/profile [get]
 func SysCasProfile(ctx *Context) {
-	q := ctx.TypeQuery()
-	ret, err := srv.SysCasAction(q)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
+	ctx.Success(map[string]interface{}{
+		"roles":        []string{"admin"},
+		"introduction": "I am a super administrator",
+		"avatar":       "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+		"name":         "Super Admin",
+	})
 }
 
 // SysCasQrcode api implementation
