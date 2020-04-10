@@ -618,6 +618,9 @@ definitions:
       id:
         description: 主键
         type: string
+      intro:
+        description: 简介
+        type: string
       mobile:
         description: 电话
         type: string
@@ -1565,6 +1568,37 @@ paths:
       summary: 登录信息
       tags:
       - OAuth授权
+  /api/sys/cas/logout:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 定向URL
+        in: query
+        name: redirect_uri
+        type: string
+      - description: 状态
+        in: query
+        name: state
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 注销信息
+      tags:
+      - 认证中心
   /api/sys/cas/oauth2:
     get:
       responses:
@@ -2247,7 +2281,7 @@ paths:
       summary: 获取菜单信息
       tags:
       - 菜单
-  /api/sys/menu/list:
+  /api/sys/menu/page:
     get:
       parameters:
       - description: 认证令牌
@@ -2276,6 +2310,21 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 菜单分页查询
+      tags:
+      - 菜单
+  /api/sys/menu/sidebar:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 系统菜单
       tags:
       - 菜单
   /api/sys/menu/tree:
@@ -2587,6 +2636,21 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 组织分页查询
+      tags:
+      - 组织
+  /api/sys/org/tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 菜单树形结构
       tags:
       - 组织
   /api/sys/org/update:

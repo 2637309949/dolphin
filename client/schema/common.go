@@ -9,6 +9,7 @@ import (
 	"html/template"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/2637309949/dolphin/packages/go-funk"
 )
@@ -144,6 +145,22 @@ func (c *Common) ToUpperCase(name string) string {
 		}
 	}
 	return newName
+}
+
+// LcFirst first word
+func (c *Common) LcFirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToLower(v)) + str[i+1:]
+	}
+	return ""
+}
+
+// UcFirst first word
+func (c *Common) UcFirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToUpper(v)) + str[i+1:]
+	}
+	return ""
 }
 
 // APIPrefix version path

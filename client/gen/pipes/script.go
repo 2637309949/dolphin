@@ -34,6 +34,18 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 		Overlap:  gen.OverlapWrite,
 		Suffix:   ".js",
 	})
+	tmplCfgs = append(tmplCfgs, &gen.TmplCfg{
+		Text: template.TmplAPI,
+		Data: map[string]interface{}{
+			"PackageName": node.PackageName,
+			"Name":        node.Name,
+			"Controllers": node.Controllers,
+			"Application": node,
+		},
+		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index"),
+		Overlap:  gen.OverlapWrite,
+		Suffix:   ".js",
+	})
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
 			if strings.TrimSpace(api.Table) != "" {
@@ -44,10 +56,10 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 					"Application": node,
 					"Api":         api,
 				}
-				cpath := path.Join(dir, viper.GetString("dir.script"), "api", fmt.Sprintf("%v", c.Name))
+				cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v", c.Name))
 				if _, ok := tplCache[cpath]; !ok {
 					tmplCfg := &gen.TmplCfg{
-						Text:     template.TmplAPI,
+						Text:     template.TmplAPIS,
 						FilePath: cpath,
 						Data:     data,
 						Overlap:  gen.OverlapWrite,
