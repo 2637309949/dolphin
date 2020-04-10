@@ -153,7 +153,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 	paramsArr := result
 	valueFiled := "id"
 	parentField := "parent"
-	textFiled := "name"
+	nameFiled := "name"
 	parentValue := root
 
 	treeNodeList := list.New()
@@ -161,15 +161,15 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 
 	// 区分root节点和子节点数组
 	for _, params := range paramsArr {
-		value, parent, text := "", "", ""
+		value, parent, name := "", "", ""
 		if params[valueFiled] != nil {
 			value = fmt.Sprintf("%v", params[valueFiled])
 		}
 		if params[parentField] != nil {
 			parent = fmt.Sprintf("%v", params[parentField])
 		}
-		if params[textFiled] != nil {
-			text = fmt.Sprintf("%v", params[textFiled])
+		if params[nameFiled] != nil {
+			name = fmt.Sprintf("%v", params[nameFiled])
 		}
 		//json,_ := xorm.JSONString(params, true)
 		// 如果根节点root为空，则从parent为空中获取root节点数组
@@ -178,7 +178,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 		if (parentValue == "" && parent == "") || value == parentValue || parent == parentValue {
 			node := &model.TreeNode{
 				ID:     value,
-				Text:   text,
+				Name:   name,
 				Parent: parent,
 				Tag:    params,
 			}
@@ -187,7 +187,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 		} else {
 			originNodeList.PushBack(&model.TreeNode{
 				ID:     value,
-				Text:   text,
+				Name:   name,
 				Parent: parent,
 				Tag:    params,
 			})

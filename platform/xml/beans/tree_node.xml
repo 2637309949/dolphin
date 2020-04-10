@@ -1,6 +1,6 @@
 <bean name="tree_node" desc="树形结构">
     <prop name="id" desc="标识" type="string" />
-    <prop name="text" desc="标题" type="string" />
+    <prop name="name" desc="标题" type="string" />
     <prop name="parent" desc="上级" type="string" />
     <prop name="nodes" desc="集合" type="[]*$tree_node" />
     <prop name="tag" desc="内容" type="interface{}" />

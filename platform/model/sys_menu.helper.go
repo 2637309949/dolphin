@@ -34,7 +34,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			Type:     null.IntFrom(0),
 			Icon:     null.StringFrom("menu_system_white"),
 			OrderNum: null.IntFrom(1),
-			Hidden:   null.IntFrom(1),
+			Hidden:   null.IntFrom(0),
 
 			CreateBy:   DefaultAdmin.ID,
 			CreateTime: null.TimeFrom(time.Now()),

@@ -17,4 +17,6 @@ where
 	sys_menu.id {{.ne}} ""
 	and
     sys_menu.del_flag = 0
+	and
+	sys_menu.hidden = 0
 	order by order_num

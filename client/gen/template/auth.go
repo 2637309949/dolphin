@@ -25,7 +25,7 @@ var TmplAuth = `<!DOCTYPE html>
     body {
       margin: 0;
       font: 12px"\5B8B\4F53", sans-serif;
-      background: #e9faff;
+      background: #f0f2f5;
     }
 
     div,
@@ -205,7 +205,7 @@ var TmplLogin = `<!DOCTYPE html>
         body {
             margin: 0;
             font: 12px"\5B8B\4F53", sans-serif;
-            background: #e9faff;
+            background: #f0f2f5;
         }
 
         div,
