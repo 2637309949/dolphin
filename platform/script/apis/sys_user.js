@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加用户
-module.exports.Add = (data) => {
+// add 添加用户
+module.exports.add = (data) => {
   const url = '/api/sys/user/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Del 删除用户
-module.exports.Del = (data) => {
+// del 删除用户
+module.exports.del = (data) => {
   const url = '/api/sys/user/del'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新用户
-module.exports.Update = (data) => {
+// update 更新用户
+module.exports.update = (data) => {
   const url = '/api/sys/user/update'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Page 用户分页查询
-module.exports.Page = (data) => {
+// page 用户分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/user/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -44,8 +44,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Get 获取用户信息
-module.exports.Get = (data) => {
+// get 获取用户信息
+module.exports.get = (data) => {
   let url = '/api/sys/user/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -56,8 +56,8 @@ module.exports.Get = (data) => {
   })
 }
 
-// Logout 用户退出登录
-module.exports.Logout = (data) => {
+// logout 用户退出登录
+module.exports.logout = (data) => {
   let url = '/api/sys/user/logout?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加字典
-module.exports.Add = (data) => {
+// add 添加字典
+module.exports.add = (data) => {
   const url = '/api/sys/optionset/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Del 删除字典
-module.exports.Del = (data) => {
+// del 删除字典
+module.exports.del = (data) => {
   const url = '/api/sys/optionset/del'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新字典
-module.exports.Update = (data) => {
+// update 更新字典
+module.exports.update = (data) => {
   const url = '/api/sys/optionset/update'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Page 字典分页查询
-module.exports.Page = (data) => {
+// page 字典分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/optionset/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -44,8 +44,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Get 获取字典信息
-module.exports.Get = (data) => {
+// get 获取字典信息
+module.exports.get = (data) => {
   let url = '/api/sys/optionset/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

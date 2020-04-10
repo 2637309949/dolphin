@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加菜单
-module.exports.Add = (data) => {
+// add 添加菜单
+module.exports.add = (data) => {
   const url = '/api/sys/menu/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Del 删除菜单
-module.exports.Del = (data) => {
+// del 删除菜单
+module.exports.del = (data) => {
   const url = '/api/sys/menu/del'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新菜单
-module.exports.Update = (data) => {
+// update 更新菜单
+module.exports.update = (data) => {
   const url = '/api/sys/menu/update'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Sidebar 系统菜单
-module.exports.Sidebar = (data) => {
+// sidebar 系统菜单
+module.exports.sidebar = (data) => {
   let url = '/api/sys/menu/sidebar?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -44,8 +44,8 @@ module.exports.Sidebar = (data) => {
   })
 }
 
-// Page 菜单分页查询
-module.exports.Page = (data) => {
+// page 菜单分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/menu/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -56,8 +56,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Tree 菜单树形结构
-module.exports.Tree = (data) => {
+// tree 菜单树形结构
+module.exports.tree = (data) => {
   let url = '/api/sys/menu/tree?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -68,8 +68,8 @@ module.exports.Tree = (data) => {
   })
 }
 
-// Get 获取菜单信息
-module.exports.Get = (data) => {
+// get 获取菜单信息
+module.exports.get = (data) => {
   let url = '/api/sys/menu/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

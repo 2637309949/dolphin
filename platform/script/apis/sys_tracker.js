@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Page 日志分页查询
-module.exports.Page = (data) => {
+// page 日志分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/tracker/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -14,8 +14,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Get 获取日志信息
-module.exports.Get = (data) => {
+// get 获取日志信息
+module.exports.get = (data) => {
   let url = '/api/sys/tracker/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

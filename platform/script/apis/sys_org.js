@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加组织
-module.exports.Add = (data) => {
+// add 添加组织
+module.exports.add = (data) => {
   const url = '/api/sys/org/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Del 删除组织
-module.exports.Del = (data) => {
+// del 删除组织
+module.exports.del = (data) => {
   const url = '/api/sys/org/del'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新组织
-module.exports.Update = (data) => {
+// update 更新组织
+module.exports.update = (data) => {
   const url = '/api/sys/org/update'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Page 组织分页查询
-module.exports.Page = (data) => {
+// page 组织分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/org/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -44,8 +44,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Tree 菜单树形结构
-module.exports.Tree = (data) => {
+// tree 菜单树形结构
+module.exports.tree = (data) => {
   let url = '/api/sys/org/tree?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -56,8 +56,8 @@ module.exports.Tree = (data) => {
   })
 }
 
-// Get 获取组织信息
-module.exports.Get = (data) => {
+// get 获取组织信息
+module.exports.get = (data) => {
   let url = '/api/sys/org/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

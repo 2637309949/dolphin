@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加附件
-module.exports.Add = (data) => {
+// add 添加附件
+module.exports.add = (data) => {
   const url = '/api/sys/attachment/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Upload 上传附件
-module.exports.Upload = (data) => {
+// upload 上传附件
+module.exports.upload = (data) => {
   const url = '/api/sys/attachment/upload'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Upload = (data) => {
   })
 }
 
-// Del 删除附件
-module.exports.Del = (data) => {
+// del 删除附件
+module.exports.del = (data) => {
   const url = '/api/sys/attachment/del'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新附件
-module.exports.Update = (data) => {
+// update 更新附件
+module.exports.update = (data) => {
   const url = '/api/sys/attachment/update'
   return axios({
     url: url,
@@ -42,8 +42,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Page 附件分页查询
-module.exports.Page = (data) => {
+// page 附件分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/attachment/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -54,8 +54,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Get 获取附件信息
-module.exports.Get = (data) => {
+// get 获取附件信息
+module.exports.get = (data) => {
   let url = '/api/sys/attachment/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加APP功能
-module.exports.Add = (data) => {
+// add 添加APP功能
+module.exports.add = (data) => {
   const url = '/api/sys/app/fun/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Del 删除APP功能
-module.exports.Del = (data) => {
+// del 删除APP功能
+module.exports.del = (data) => {
   const url = '/api/sys/app/fun/del'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新APP功能
-module.exports.Update = (data) => {
+// update 更新APP功能
+module.exports.update = (data) => {
   const url = '/api/sys/app/fun/update'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Page APP功能分页查询
-module.exports.Page = (data) => {
+// page APP功能分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/app/fun/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -44,8 +44,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Tree 菜单树形结构
-module.exports.Tree = (data) => {
+// tree 菜单树形结构
+module.exports.tree = (data) => {
   let url = '/api/sys/app/fun/tree?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -56,8 +56,8 @@ module.exports.Tree = (data) => {
   })
 }
 
-// Get 获取APP功能信息
-module.exports.Get = (data) => {
+// get 获取APP功能信息
+module.exports.get = (data) => {
   let url = '/api/sys/app/fun/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加数据权限
-module.exports.Add = (data) => {
+// add 添加数据权限
+module.exports.add = (data) => {
   const url = '/api/sys/data/permission/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Del 删除数据权限
-module.exports.Del = (data) => {
+// del 删除数据权限
+module.exports.del = (data) => {
   const url = '/api/sys/data/permission/del'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新数据权限
-module.exports.Update = (data) => {
+// update 更新数据权限
+module.exports.update = (data) => {
   const url = '/api/sys/data/permission/update'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Page 数据权限分页查询
-module.exports.Page = (data) => {
+// page 数据权限分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/data/permission/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -44,8 +44,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Get 获取数据权限信息
-module.exports.Get = (data) => {
+// get 获取数据权限信息
+module.exports.get = (data) => {
   let url = '/api/sys/data/permission/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'

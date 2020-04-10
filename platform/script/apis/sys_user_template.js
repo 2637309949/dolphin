@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// Add 添加用户模板
-module.exports.Add = (data) => {
+// add 添加用户模板
+module.exports.add = (data) => {
   const url = '/api/sys/user/template/add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// Del 删除用户模板
-module.exports.Del = (data) => {
+// del 删除用户模板
+module.exports.del = (data) => {
   const url = '/api/sys/user/template/del'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// Update 更新用户模板
-module.exports.Update = (data) => {
+// update 更新用户模板
+module.exports.update = (data) => {
   const url = '/api/sys/user/template/update'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.Update = (data) => {
   })
 }
 
-// Page 用户模板分页查询
-module.exports.Page = (data) => {
+// page 用户模板分页查询
+module.exports.page = (data) => {
   let url = '/api/sys/user/template/page?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
@@ -44,8 +44,8 @@ module.exports.Page = (data) => {
   })
 }
 
-// Get 获取用户模板信息
-module.exports.Get = (data) => {
+// get 获取用户模板信息
+module.exports.get = (data) => {
   let url = '/api/sys/user/template/get?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
