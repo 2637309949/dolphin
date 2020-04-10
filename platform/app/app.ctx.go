@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/2637309949/dolphin/packages/excelize"
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
@@ -213,6 +214,34 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 		}
 	}
 	return rootArr, nil
+}
+
+// ParseExcel defined
+func (ctx *Context) ParseExcel(filename, sheetname string) ([]map[string]string, error) {
+	excelFile, err := excelize.OpenFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	rows, err := excelFile.GetRows(sheetname)
+	if err != nil {
+		return nil, err
+	}
+	data := []map[string]string{}
+	iTitle := map[int]string{}
+	for ri, row := range rows {
+		if ri == 0 {
+			for ci, cell := range row {
+				iTitle[ci] = cell
+			}
+			continue
+		}
+		r := map[string]string{}
+		for ic, iv := range row {
+			r[iTitle[ic]] = iv
+		}
+		data = append(data, r)
+	}
+	return data, nil
 }
 
 // GetInt defined
