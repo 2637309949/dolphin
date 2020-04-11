@@ -12,11 +12,11 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 	items := []*SysMenu{
 		&SysMenu{
 			ID:       null.StringFrom("1729b295-d0f9-4754-9e6d-64c5ada23971"),
-			Name:     null.StringFrom("Home"),
-			Code:     null.StringFrom("1R56D38U2K"),
-			URL:      null.StringFrom("home"),
+			Name:     null.StringFrom("Dashboard"),
+			Code:     null.StringFrom("Dashboard"),
+			URL:      null.StringFrom("dashboard"),
 			Type:     null.IntFrom(0),
-			Icon:     null.StringFrom("menu_home_white"),
+			Icon:     null.StringFrom("dashboard"),
 			OrderNum: null.IntFrom(0),
 			Hidden:   null.IntFrom(0),
 
@@ -29,10 +29,10 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 		&SysMenu{
 			ID:       null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			Name:     null.StringFrom("Setting"),
-			Code:     null.StringFrom("2J56B38U2m"),
+			Code:     null.StringFrom("Setting"),
 			URL:      null.StringFrom("setting"),
 			Type:     null.IntFrom(0),
-			Icon:     null.StringFrom("menu_system_white"),
+			Icon:     null.StringFrom("setting"),
 			OrderNum: null.IntFrom(1),
 			Hidden:   null.IntFrom(0),
 
@@ -45,7 +45,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 		&SysMenu{
 			ID:          null.StringFrom("1da0a707-54c2-4289-97a3-5cdbdcf899e8"),
 			Name:        null.StringFrom("Role"),
-			Code:        null.StringFrom("1J76B38U3m"),
+			Code:        null.StringFrom("Role"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("role"),
 			Type:        null.IntFrom(0),
@@ -62,7 +62,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 		&SysMenu{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32221"),
 			Name:        null.StringFrom("User"),
-			Code:        null.StringFrom("4mK6o38L3m"),
+			Code:        null.StringFrom("User"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("user"),
 			Type:        null.IntFrom(0),
@@ -79,7 +79,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 		&SysMenu{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32218"),
 			Name:        null.StringFrom("OptionSet"),
-			Code:        null.StringFrom("7kK9ol8L3m"),
+			Code:        null.StringFrom("OptionSet"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("optionset"),
 			Type:        null.IntFrom(0),
@@ -96,7 +96,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 		&SysMenu{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32237"),
 			Name:        null.StringFrom("Menu"),
-			Code:        null.StringFrom("8lK07l8Hn9"),
+			Code:        null.StringFrom("Menu"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("menu"),
 			Type:        null.IntFrom(0),
@@ -113,7 +113,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 		&SysMenu{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32220"),
 			Name:        null.StringFrom("Tracker"),
-			Code:        null.StringFrom("0uM6kl8Hn0"),
+			Code:        null.StringFrom("Tracker"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("tracker"),
 			Type:        null.IntFrom(0),
