@@ -264,7 +264,7 @@ func (q *Query) SetInt(key string, init ...interface{}) func() {
 		if err != nil {
 			panic(err)
 		}
-		q.m[key] = i
+		q.m[key] = int(i)
 	}
 	return func() {
 		if len(init) > 0 {

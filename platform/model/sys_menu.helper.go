@@ -11,6 +11,23 @@ import (
 func (m *SysMenu) InitSysData(s *xorm.Session) {
 	items := []*SysMenu{
 		&SysMenu{
+			ID:        null.StringFrom("7b8bf57f-76f6-49d9-8529-7690cf385219"),
+			Name:      null.StringFrom("Application"),
+			Code:      null.StringFrom("Application"),
+			URL:       null.StringFrom("application"),
+			Component: null.StringFrom("application/index"),
+			Type:      null.IntFrom(0),
+			Icon:      null.StringFrom("application"),
+			OrderNum:  null.IntFrom(0),
+			Hidden:    null.IntFrom(0),
+
+			CreateBy:   DefaultAdmin.ID,
+			CreateTime: null.TimeFrom(time.Now()),
+			UpdateBy:   DefaultAdmin.ID,
+			UpdateTime: null.TimeFrom(time.Now()),
+			DelFlag:    null.IntFrom(0),
+		},
+		&SysMenu{
 			ID:       null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			Name:     null.StringFrom("Setting"),
 			Code:     null.StringFrom("Setting"),
@@ -88,7 +105,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			Code:        null.StringFrom("Menu"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("menu"),
-			Component:   null.StringFrom("guide/index"),
+			Component:   null.StringFrom("menu/index"),
 			Type:        null.IntFrom(0),
 			Icon:        null.StringFrom("menu"),
 			OrderNum:    null.IntFrom(3),

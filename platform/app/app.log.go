@@ -40,7 +40,9 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 func initTracker() {
 	receiver = make(chan *plugin.LogFormatterParams, 600)
 	TrackerStore = func(beans *[]model.SysTracker) error {
+		App.PlatformDB.ShowSQL(false)
 		_, err := App.PlatformDB.Insert(*beans)
+		App.PlatformDB.ShowSQL(viper.GetString("app.mode") == "debug")
 		return err
 	}
 	go func() {
