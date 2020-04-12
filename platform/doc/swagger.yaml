@@ -293,6 +293,9 @@ definitions:
       code:
         description: 编码
         type: string
+      component:
+        description: 菜单组件
+        type: string
       create_by:
         description: 创建人
         type: string
