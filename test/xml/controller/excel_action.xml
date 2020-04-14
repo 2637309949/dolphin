@@ -1,0 +1,9 @@
+<!-- rule of controller name: ?<end>_?<module>_<ctr>_?<action> -->
+<controller name="excel_action" desc="Excel操作">
+    <api name="parse" desc="解析excel" method="post" auth="false">
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
+</controller>

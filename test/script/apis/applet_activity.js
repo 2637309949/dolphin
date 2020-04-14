@@ -2,8 +2,8 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// BatchAdd 添加活动
-module.exports.BatchAdd = (data) => {
+// batchAdd 添加活动
+module.exports.batchAdd = (data) => {
   const url = '/api/applet/activity/batch_add'
   return axios({
     url: url,
@@ -12,8 +12,8 @@ module.exports.BatchAdd = (data) => {
   })
 }
 
-// Add 添加活动
-module.exports.Add = (data) => {
+// add 添加活动
+module.exports.add = (data) => {
   const url = '/api/applet/activity/add'
   return axios({
     url: url,
@@ -22,8 +22,8 @@ module.exports.Add = (data) => {
   })
 }
 
-// BatchDel 删除活动
-module.exports.BatchDel = (data) => {
+// batchDel 删除活动
+module.exports.batchDel = (data) => {
   const url = '/api/applet/activity/batch_del'
   return axios({
     url: url,
@@ -32,8 +32,8 @@ module.exports.BatchDel = (data) => {
   })
 }
 
-// Del 删除活动
-module.exports.Del = (data) => {
+// del 删除活动
+module.exports.del = (data) => {
   const url = '/api/applet/activity/del'
   return axios({
     url: url,
@@ -42,8 +42,8 @@ module.exports.Del = (data) => {
   })
 }
 
-// BatchUpdate 更新活动
-module.exports.BatchUpdate = (data) => {
+// batchUpdate 更新活动
+module.exports.batchUpdate = (data) => {
   const url = '/api/applet/activity/batch_update'
   return axios({
     url: url,
@@ -52,8 +52,8 @@ module.exports.BatchUpdate = (data) => {
   })
 }
 
-// Update 更新活动
-module.exports.Update = (data) => {
+// update 更新活动
+module.exports.update = (data) => {
   const url = '/api/applet/activity/update'
   return axios({
     url: url,
@@ -62,32 +62,32 @@ module.exports.Update = (data) => {
   })
 }
 
-// List 活动分页查询
-module.exports.List = (data) => {
+// list 活动分页查询
+module.exports.list = (data) => {
   let url = '/api/applet/activity/list?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
   }
   return axios({
     url: url,
-    method: 'get',
+    method: 'get'
   })
 }
 
-// One 获取活动
-module.exports.One = (data) => {
+// one 获取活动
+module.exports.one = (data) => {
   let url = '/api/applet/activity/one?'
   for (var key in data) {
     url += key + '=' + data[key] + '&'
   }
   return axios({
     url: url,
-    method: 'get',
+    method: 'get'
   })
 }
 
-// Increase 增加次数
-module.exports.Increase = (data) => {
+// increase 增加次数
+module.exports.increase = (data) => {
   const url = '/api/v1/applet/activity/increase'
   return axios({
     url: url,
@@ -96,8 +96,8 @@ module.exports.Increase = (data) => {
   })
 }
 
-// IncreaseV2 增加次数
-module.exports.IncreaseV2 = (data) => {
+// increaseV2 增加次数
+module.exports.increaseV2 = (data) => {
   const url = '/api/v2/applet/activity/increase_v2'
   return axios({
     url: url,

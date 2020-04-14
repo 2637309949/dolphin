@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -216,16 +217,30 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 	return rootArr, nil
 }
 
+// Msi defined
+type Msi map[string]interface{}
+
 // ParseExcel defined
-func (ctx *Context) ParseExcel(filename, sheetname string) ([]map[string]string, error) {
-	excelFile, err := excelize.OpenFile(filename)
+// []Msi{
+// 	Msi{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150},
+// }
+func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]Msi) ([]map[string]string, error) {
+	eFile, err := excelize.OpenReader(file)
 	if err != nil {
 		return nil, err
 	}
-	rows, err := excelFile.GetRows(sheetname)
+	sheetName := ""
+	switch sn := sheet.(type) {
+	case int:
+		sheetName = eFile.GetSheetName(sn)
+	case string:
+		sheetName = sn
+	}
+	rows, err := eFile.GetRows(sheetName)
 	if err != nil {
 		return nil, err
 	}
+
 	data := []map[string]string{}
 	iTitle := map[int]string{}
 	for ri, row := range rows {
@@ -240,6 +255,23 @@ func (ctx *Context) ParseExcel(filename, sheetname string) ([]map[string]string,
 			r[iTitle[ic]] = iv
 		}
 		data = append(data, r)
+	}
+
+	if len(header) > 0 {
+		nd := []map[string]string{}
+		h := header[0]
+		for _, dv := range data {
+			ndItem := map[string]string{}
+			for dk, dvv := range dv {
+				for _, v := range h {
+					if v["label"] == dk {
+						ndItem[fmt.Sprintf("%v", v["prop"])] = dvv
+					}
+				}
+			}
+			nd = append(nd, ndItem)
+		}
+		return nd, nil
 	}
 	return data, nil
 }
