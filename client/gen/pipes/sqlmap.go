@@ -7,7 +7,7 @@ package pipes
 import (
 	"path"
 
-	"github.com/2637309949/dolphin/client/gen"
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -23,8 +23,8 @@ func (app *SQLMap) Name() string {
 }
 
 // Build func
-func (app *SQLMap) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
-	var tmplCfgs []*gen.TmplCfg
+func (app *SQLMap) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+	var tmplCfgs []*pipe.TmplCfg
 	for _, t := range node.Tables {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
@@ -32,11 +32,11 @@ func (app *SQLMap) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 			"Application": node,
 			"Table":       t,
 		}
-		tmplCfg := &gen.TmplCfg{
+		tmplCfg := &pipe.TmplCfg{
 			Text:     template.TmplSQLMap,
 			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sqlmap"), t.Name),
 			Data:     data,
-			Overlap:  gen.OverlapWrite,
+			Overlap:  pipe.OverlapWrite,
 			Suffix:   ".xml",
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)

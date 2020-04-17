@@ -15,7 +15,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/2637309949/dolphin/client/gen"
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -47,8 +47,8 @@ func (app *SQLTPL) Name() string {
 }
 
 // Build func
-func (app *SQLTPL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
-	var tmplCfgs []*gen.TmplCfg
+func (app *SQLTPL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+	var tmplCfgs []*pipe.TmplCfg
 	var files []struct {
 		Name    string
 		Content ht.HTML
@@ -104,11 +104,11 @@ func (app *SQLTPL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 		"Application": node,
 		"Files":       files,
 	}
-	tmplCfg := &gen.TmplCfg{
+	tmplCfg := &pipe.TmplCfg{
 		Text:     template.TPLSQL,
 		FilePath: path.Join(dir, viper.GetString("dir.sql"), "sql"),
 		Data:     data,
-		Overlap:  gen.OverlapWrite,
+		Overlap:  pipe.OverlapWrite,
 		Suffix:   ".auto.go",
 	}
 	tmplCfgs = append(tmplCfgs, tmplCfg)

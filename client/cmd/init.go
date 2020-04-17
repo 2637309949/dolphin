@@ -9,11 +9,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
-
 	"github.com/2637309949/dolphin/client/gen"
+
 	"github.com/2637309949/dolphin/client/parser"
 	"github.com/2637309949/dolphin/packages/cobra"
+	"github.com/2637309949/dolphin/packages/go-funk"
 )
 
 var build = &cobra.Command{
@@ -32,7 +32,7 @@ var build = &cobra.Command{
 		args = append(args, "main", "app", "ctr", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
 		g := gen.New(p.Application)
 		funk.ForEach(args, func(name string) {
-			g.AddPipe(GetPipeByName(name))
+			g.AddPipe(gen.GetPipeByName(name))
 		})
 		if err := g.Build(wd); err != nil {
 			return err

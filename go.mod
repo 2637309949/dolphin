@@ -29,6 +29,7 @@ require (
 	github.com/go-openapi/jsonreference v0.19.3
 	github.com/go-openapi/spec v0.19.5
 	github.com/go-playground/validator/v10 v10.0.1
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gogo/protobuf v1.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef // indirect
 	github.com/golang/protobuf v1.3.2

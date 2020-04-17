@@ -9,7 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/viper"
 
-	"github.com/2637309949/dolphin/client/gen"
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/schema"
 	swag "github.com/2637309949/dolphin/packages/swag/gen"
 )
@@ -24,8 +24,8 @@ func (m *Doc) Name() string {
 }
 
 // Build func
-func (m *Doc) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
-	return []*gen.TmplCfg{}, swag.New().Build(&swag.Config{
+func (m *Doc) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+	return []*pipe.TmplCfg{}, swag.New().Build(&swag.Config{
 		SearchDir:          dir,
 		MainAPIFile:        "main.go",
 		PropNamingStrategy: "camelcase",

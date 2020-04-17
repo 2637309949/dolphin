@@ -10,6 +10,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+//go:generate go run github.com/2637309949/dolphin/client build
 func main() {
 	cli.Run()
 }

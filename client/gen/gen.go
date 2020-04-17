@@ -10,39 +10,48 @@ import (
 	"os"
 	"path"
 
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/2637309949/dolphin/client/gen/pipes"
 
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/schema"
+	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
-type (
-	// Overlap int
-	Overlap int
-	// TmplCfg struct
-	TmplCfg struct {
-		Text     string
-		FilePath string
-		Data     interface{}
-		Suffix   string
-		Overlap  Overlap
-	}
-	// Pipe interface
-	Pipe interface {
-		Build(string, *schema.Application) ([]*TmplCfg, error)
-	}
-	// Gen struct
-	Gen struct {
-		App   *schema.Application
-		Pipes []Pipe
-	}
-)
+var lines = []pipe.Pipe{
+	&pipes.Main{},
+	&pipes.App{},
+	&pipes.Ctr{},
+	&pipes.Srv{},
+	&pipes.Model{},
+	&pipes.Bean{},
+	&pipes.Auto{},
+	&pipes.Tool{},
+	&pipes.SQL{},
+	&pipes.SQLMap{},
+	&pipes.OAuth{},
+	&pipes.Script{},
+	&pipes.Doc{},
+	&pipes.SQLTPL{},
+}
 
-// OverlapSkip Overlap
-const (
-	OverlapSkip Overlap = iota + 1
-	OverlapWrite
-	OverlapInc
-)
+// AddPipe defined addPipe
+func AddPipe(p pipe.Pipe) {
+	lines = append(lines, p)
+}
+
+// GetPipeByName defined getbyname
+func GetPipeByName(nm string) pipe.Pipe {
+	return funk.Find(lines, func(pipe pipe.Pipe) bool {
+		return pipe.Name() == nm
+	}).(pipe.Pipe)
+}
+
+// Gen struct
+type Gen struct {
+	App   *schema.Application
+	Pipes []pipe.Pipe
+}
 
 // New defined gen
 func New(app *schema.Application) *Gen {
@@ -50,7 +59,7 @@ func New(app *schema.Application) *Gen {
 }
 
 // AddPipe add pipe
-func (g *Gen) AddPipe(pipes ...Pipe) {
+func (g *Gen) AddPipe(pipes ...pipe.Pipe) {
 	g.Pipes = append(g.Pipes, pipes...)
 }
 
@@ -71,7 +80,7 @@ func (g *Gen) Build(dir string) error {
 	return nil
 }
 
-func (g *Gen) buildTmpl(tmpcfg *TmplCfg) error {
+func (g *Gen) buildTmpl(tmpcfg *pipe.TmplCfg) error {
 	var suffix string
 	var tmpl *template.Template
 	var err error
@@ -83,12 +92,12 @@ func (g *Gen) buildTmpl(tmpcfg *TmplCfg) error {
 	}
 	tmpcfg.FilePath = tmpcfg.FilePath + suffix
 	if _, err = os.Stat(tmpcfg.FilePath); err == nil {
-		if tmpcfg.Overlap == OverlapInc {
+		if tmpcfg.Overlap == pipe.OverlapInc {
 			tmpcfg.FilePath = tmpcfg.FilePath + ".new"
 			logrus.Info(fmt.Sprintf("%s inc generate", tmpcfg.FilePath))
-		} else if tmpcfg.Overlap == OverlapWrite {
+		} else if tmpcfg.Overlap == pipe.OverlapWrite {
 			logrus.Warn(fmt.Sprintf("%s over generate", tmpcfg.FilePath))
-		} else if tmpcfg.Overlap == OverlapSkip {
+		} else if tmpcfg.Overlap == pipe.OverlapSkip {
 			logrus.Info(fmt.Sprintf("%s skip generate", tmpcfg.FilePath))
 			return nil
 		}

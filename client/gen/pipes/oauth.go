@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/2637309949/dolphin/client/gen"
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -25,7 +25,7 @@ func (oa *OAuth) Name() string {
 }
 
 // Build func
-func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
+func (oa *OAuth) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
@@ -33,19 +33,19 @@ func (oa *OAuth) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, er
 
 	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")
 	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
-	return []*gen.TmplCfg{
-		&gen.TmplCfg{
+	return []*pipe.TmplCfg{
+		&pipe.TmplCfg{
 			Text:     template.TmplAuth,
 			FilePath: path.Join(dir, affirmPath),
 			Data:     data,
-			Overlap:  gen.OverlapSkip,
+			Overlap:  pipe.OverlapSkip,
 			Suffix:   ".html",
 		},
-		&gen.TmplCfg{
+		&pipe.TmplCfg{
 			Text:     template.TmplLogin,
 			FilePath: path.Join(dir, loginPath),
 			Data:     data,
-			Overlap:  gen.OverlapSkip,
+			Overlap:  pipe.OverlapSkip,
 			Suffix:   ".html",
 		},
 	}, nil

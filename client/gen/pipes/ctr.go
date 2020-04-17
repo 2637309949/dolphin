@@ -7,7 +7,7 @@ package pipes
 import (
 	"path"
 
-	"github.com/2637309949/dolphin/client/gen"
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -23,19 +23,19 @@ func (ctr *Ctr) Name() string {
 }
 
 // Build func
-func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
-	var tmplCfgs []*gen.TmplCfg
+func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+	var tmplCfgs []*pipe.TmplCfg
 	for _, c := range node.Controllers {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
 			"Controller":  c,
 		}
-		tmplCfg := &gen.TmplCfg{
+		tmplCfg := &pipe.TmplCfg{
 			Text:     template.TmplCtr,
 			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name),
 			Data:     data,
-			Overlap:  gen.OverlapInc,
+			Overlap:  pipe.OverlapInc,
 			Suffix:   ".go",
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)

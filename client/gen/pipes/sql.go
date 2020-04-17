@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/2637309949/dolphin/client/gen"
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -26,8 +26,8 @@ func (app *SQL) Name() string {
 }
 
 // Build func
-func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
-	var tmplCfgs []*gen.TmplCfg
+func (app *SQL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
@@ -41,11 +41,11 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 				}
 				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, api.Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
-					tmplCfg := &gen.TmplCfg{
+					tmplCfg := &pipe.TmplCfg{
 						Text:     template.TmplSQLCount,
 						FilePath: cpath,
 						Data:     data,
-						Overlap:  gen.OverlapSkip,
+						Overlap:  pipe.OverlapSkip,
 						Suffix:   ".tpl",
 					}
 					tmplCfgs = append(tmplCfgs, tmplCfg)
@@ -53,11 +53,11 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, err
 				}
 				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, api.Name, "select"))
 				if _, ok := tplCache[filepath.Base(spath)]; !ok {
-					tmplCfg := &gen.TmplCfg{
+					tmplCfg := &pipe.TmplCfg{
 						Text:     template.TmplSQLSel,
 						FilePath: spath,
 						Data:     data,
-						Overlap:  gen.OverlapSkip,
+						Overlap:  pipe.OverlapSkip,
 						Suffix:   ".tpl",
 					}
 					tmplCfgs = append(tmplCfgs, tmplCfg)

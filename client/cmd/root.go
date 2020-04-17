@@ -18,9 +18,9 @@ import (
 var (
 	timeFormat = "2006/01/02 15:04:05"
 	rootCmd    = &cobra.Command{
-		Use:   "Dolphin",
-		Short: "Dol",
-		Long:  `Dolphin, a cli tools for generate golang code`,
+		Use:   "dolphin",
+		Short: "dol",
+		Long:  `dolphin, a cli tools for generate golang code`,
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			if !terminal.IsTerminal(unix.Stdout) {
 				logrus.SetFormatter(&logrus.JSONFormatter{
@@ -46,6 +46,7 @@ var (
 			viper.SetDefault("http.port", "8081")
 			viper.SetDefault("http.prefix", "/api")
 			viper.SetDefault("http.static", "static")
+			viper.SetDefault("http.temp", "temp")
 			viper.SetDefault("grpc.port", "9081")
 			viper.SetDefault("oauth.id", "Y76U9344RABF4")
 			viper.SetDefault("oauth.secret", "98UYO6FVB865")

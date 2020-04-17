@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"path"
 	"strconv"
 	"strings"
 
@@ -14,6 +15,8 @@ import (
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
+	"github.com/2637309949/dolphin/packages/uuid"
+	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
@@ -221,9 +224,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 type Msi map[string]interface{}
 
 // ParseExcel defined
-// []Msi{
-// 	Msi{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150},
-// }
+// []Msi{ Msi{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}}
 func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]Msi) ([]map[string]string, error) {
 	eFile, err := excelize.OpenReader(file)
 	if err != nil {
@@ -274,6 +275,19 @@ func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]Ms
 		return nd, nil
 	}
 	return data, nil
+}
+
+// BuildExcel defined
+func (ctx *Context) BuildExcel(data []Msi, header ...[]Msi) (string, error) {
+	f := excelize.NewFile()
+	uuid := uuid.MustString()
+	index := f.NewSheet("Sheet1")
+	filePath := path.Join(viper.GetString("http.static"), "files", uuid, ".xlsx")
+	f.SetActiveSheet(index)
+	if err := f.SaveAs(filePath); err != nil {
+		println(err.Error())
+	}
+	return uuid, nil
 }
 
 // GetInt defined

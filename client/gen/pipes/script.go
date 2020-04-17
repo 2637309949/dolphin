@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"path"
 
-	"github.com/2637309949/dolphin/client/gen"
+	"github.com/2637309949/dolphin/client/gen/pipe"
 	"github.com/2637309949/dolphin/client/gen/template"
 	"github.com/2637309949/dolphin/client/schema"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -24,16 +24,16 @@ func (app *Script) Name() string {
 }
 
 // Build func
-func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, error) {
-	var tmplCfgs []*gen.TmplCfg
+func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
-	tmplCfgs = append(tmplCfgs, &gen.TmplCfg{
+	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text:     template.TmplAxios,
 		FilePath: path.Join(viper.GetString("dir.script"), "axios"),
-		Overlap:  gen.OverlapWrite,
+		Overlap:  pipe.OverlapWrite,
 		Suffix:   ".js",
 	})
-	tmplCfgs = append(tmplCfgs, &gen.TmplCfg{
+	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text: template.TmplAPI,
 		Data: map[string]interface{}{
 			"PackageName": node.PackageName,
@@ -42,7 +42,7 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 			"Application": node,
 		},
 		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index"),
-		Overlap:  gen.OverlapWrite,
+		Overlap:  pipe.OverlapWrite,
 		Suffix:   ".js",
 	})
 	for _, c := range node.Controllers {
@@ -56,11 +56,11 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*gen.TmplCfg, 
 			}
 			cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v", c.Name))
 			if _, ok := tplCache[cpath]; !ok {
-				tmplCfg := &gen.TmplCfg{
+				tmplCfg := &pipe.TmplCfg{
 					Text:     template.TmplAPIS,
 					FilePath: cpath,
 					Data:     data,
-					Overlap:  gen.OverlapWrite,
+					Overlap:  pipe.OverlapWrite,
 					Suffix:   ".js",
 				}
 				tmplCfgs = append(tmplCfgs, tmplCfg)
