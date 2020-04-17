@@ -56,9 +56,9 @@ func (e *Engine) allocateContext() *Context {
 }
 
 // Auth middles
-func (e *Engine) Auth(mode ...pApp.AuthType) func(*Context) {
+func (e *Engine) Auth() func(*Context) {
 	return func(ctx *Context) {
-		e.Engine.Auth(mode...)(ctx.Context)
+		e.Engine.Auth()(ctx.Context)
 	}
 }
 

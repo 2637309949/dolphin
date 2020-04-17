@@ -251,7 +251,7 @@ func (e *Engine) initOAuth() {
 }
 
 // Auth middles
-func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
+func (e *Engine) Auth() func(ctx *Context) {
 	return func(ctx *Context) {
 		if !ctx.Auth(ctx.Request) {
 			ctx.Fail(util.ErrInvalidAccessToken, 401)
