@@ -269,11 +269,6 @@ func (e *Engine) Auth(mode ...AuthType) func(ctx *Context) {
 	}
 }
 
-// RegisterHandler register handler
-func (e *Engine) RegisterHandler(name string, h func(ctx *Context)) func(ctx *Context) {
-	return e.Handler.OnHandler(name, h)
-}
-
 // Run booting system
 func (e *Engine) Run() {
 	e.initRedis()

@@ -40,6 +40,6 @@ func init() {
 	// BuildDomain.js
 	cli.Invoke(InvokeEngine(func(engine *Engine) {
 		group := engine.Group("/")
-		group.Handle("GET", "/domain.js", engine.RegisterHandler("DomainJs", DomainJs))
+		group.Handle("GET", "/domain.js", DomainJs)
 	}))
 }
