@@ -12,6 +12,7 @@ type (
 		Data     interface{}
 		Suffix   string
 		Overlap  Overlap
+		GOFmt    bool
 	}
 	// Pipe interface
 	Pipe interface {

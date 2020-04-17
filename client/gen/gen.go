@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"html/template"
 	"os"
+	"os/exec"
 	"path"
 
 	"github.com/2637309949/dolphin/client/gen/pipes"
@@ -112,6 +113,12 @@ func (g *Gen) buildTmpl(tmpcfg *pipe.TmplCfg) error {
 	}
 	if err = tmpl.Execute(w, tmpcfg.Data); err != nil {
 		return err
+	}
+	if tmpcfg.GOFmt {
+		cmd := exec.Command("gofmt", "-s", "-w", tmpcfg.FilePath)
+		if err := cmd.Run(); err != nil {
+			logrus.Fatal(err)
+		}
 	}
 	return nil
 }
