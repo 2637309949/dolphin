@@ -54,7 +54,7 @@ var (
 			viper.SetDefault("oauth.affirm", "/static/web/affirm.html")
 			viper.SetDefault("db.driver", "mysql")
 			viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
-			viper.SetDefault("rd.dataSource", ":@127.0.0.1:6379/0")
+			viper.SetDefault("rd.dataSource", ":@localhost:6379/0")
 			viper.SetDefault("dir.app", "app")
 			viper.SetDefault("dir.doc", "doc")
 			viper.SetDefault("dir.sql", "sql")
@@ -77,13 +77,13 @@ var (
 				logrus.Warn("configuration file not found")
 			}
 			if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
-				viper.SetDefault("oauth.server", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
+				viper.SetDefault("oauth.server", fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
 			}
 			if strings.TrimSpace(viper.GetString("oauth.cli")) == "" {
-				viper.SetDefault("oauth.cli", fmt.Sprintf("http://127.0.0.1:%v", viper.GetString("http.port")))
+				viper.SetDefault("oauth.cli", fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
 			}
 			if strings.TrimSpace(viper.GetString("host")) == "" {
-				viper.SetDefault("host", fmt.Sprintf("127.0.0.1:%v", viper.GetString("http.port")))
+				viper.SetDefault("host", fmt.Sprintf("localhost:%v", viper.GetString("http.port")))
 			}
 			if viper.GetBool("app.viper") {
 				if err := viper.WriteConfig(); err != nil {

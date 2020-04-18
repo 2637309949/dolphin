@@ -51,7 +51,7 @@ type UniversalOptions struct {
 
 func (o *UniversalOptions) cluster() *ClusterOptions {
 	if len(o.Addrs) == 0 {
-		o.Addrs = []string{"127.0.0.1:6379"}
+		o.Addrs = []string{"localhost:6379"}
 	}
 
 	return &ClusterOptions{
@@ -86,7 +86,7 @@ func (o *UniversalOptions) cluster() *ClusterOptions {
 
 func (o *UniversalOptions) failover() *FailoverOptions {
 	if len(o.Addrs) == 0 {
-		o.Addrs = []string{"127.0.0.1:26379"}
+		o.Addrs = []string{"localhost:26379"}
 	}
 
 	return &FailoverOptions{
@@ -119,7 +119,7 @@ func (o *UniversalOptions) failover() *FailoverOptions {
 }
 
 func (o *UniversalOptions) simple() *Options {
-	addr := "127.0.0.1:6379"
+	addr := "localhost:6379"
 	if len(o.Addrs) > 0 {
 		addr = o.Addrs[0]
 	}

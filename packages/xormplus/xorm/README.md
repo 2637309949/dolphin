@@ -482,7 +482,7 @@ func ShowTimestamp(now time.Time) string {
 }
 
 func main() {
-	engine, err := xorm.NewEngine("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "", "127.0.0.1", "3306", "mysql"))
+	engine, err := xorm.NewEngine("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", "root", "", "localhost", "3306", "mysql"))
 	if err != nil {
 		panic(err)
 	}

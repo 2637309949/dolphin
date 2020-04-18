@@ -324,11 +324,11 @@ func SysCasQrcode(ctx *Context) {
 	q.SetInt("type", 0)
 	if q.GetInt("type") == 0 {
 		wcQrURL := "https://open.weixin.qq.com/connect/qrconnect?appid=%v&redirect_uri=%v&response_type=code&scope=snsapi_login&state=%v#wechat_redirect"
-		wcQrURL = fmt.Sprintf(wcQrURL, viper.GetString("wc.appid"), "http://127.0.0.1:8082/api/sys/wechat/oauth2", "")
+		wcQrURL = fmt.Sprintf(wcQrURL, viper.GetString("wc.appid"), "http://localhost:8082/api/sys/wechat/oauth2", "")
 		ctx.Redirect(302, wcQrURL)
 	} else if q.GetInt("type") == 1 {
 		dtQrURL := "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?appid=%v&redirect_uri=%v&response_type=code&scope=snsapi_login&state=%v"
-		dtQrURL = fmt.Sprintf(dtQrURL, viper.GetString("wc.appid"), "http://127.0.0.1:8082/api/sys/wechat/oauth2", "")
+		dtQrURL = fmt.Sprintf(dtQrURL, viper.GetString("wc.appid"), "http://localhost:8082/api/sys/wechat/oauth2", "")
 		ctx.Redirect(302, dtQrURL)
 	} else {
 		ctx.Fail(fmt.Errorf("not found type %v", q.GetInt("type")))

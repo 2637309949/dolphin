@@ -736,7 +736,7 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
-host: 127.0.0.1:8082
+host: localhost:8082
 info:
   contact: {}
   license:
@@ -4055,12 +4055,12 @@ paths:
       - 活动
 securityDefinitions:
   OAuth2AccessCode:
-    authorizationUrl: http://127.0.0.1:8082/api/sys/cas/authorize
+    authorizationUrl: http://localhost:8082/api/sys/cas/authorize
     flow: accessCode
     scopes:
       admin: Grants read and write access to administrative information
       read: Grants read access
       write: Grants write access
-    tokenUrl: http://127.0.0.1:8082/api/sys/cas/token
+    tokenUrl: http://localhost:8082/api/sys/cas/token
     type: oauth2
 swagger: "2.0"
