@@ -13,14 +13,12 @@ import (
 // @Summary 解析excel
 // @Tags Excel操作
 // @Accept application/json
-// @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
 // @Router /api/excel/action/parse [post]
 func ExcelActionParse(ctx *Context) {
 	var payload struct{}
-	// file, _, _ := ctx.Request.FormFile("file")
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
