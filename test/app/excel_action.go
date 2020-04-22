@@ -4,6 +4,7 @@
 package app
 
 import (
+	"fmt"
 	"test/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
@@ -24,6 +25,9 @@ func ExcelActionParse(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+	file, _, _ := ctx.Request.FormFile("file")
+	data, _ := ctx.ParseExcel(file, 1, []pApp.Msi{pApp.Msi{"prop": "name", "label": "名字", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}})
+	fmt.Println(data)
 	ret, err := srv.ExcelActionAction(payload)
 	if err != nil {
 		ctx.Fail(err)
