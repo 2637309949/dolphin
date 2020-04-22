@@ -14,6 +14,7 @@ import (
 	"github.com/2637309949/dolphin/packages/excelize"
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/uuid"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -282,10 +283,49 @@ func (ctx *Context) BuildExcel(data []Msi, header ...[]Msi) (string, error) {
 	f := excelize.NewFile()
 	uuid := uuid.MustString()
 	index := f.NewSheet("Sheet1")
-	filePath := path.Join(viper.GetString("http.static"), "files", uuid, ".xlsx")
+	filePath := path.Join(viper.GetString("http.static"), "files", fmt.Sprintf("%v.xlsx", uuid))
 	f.SetActiveSheet(index)
+
+	titles := []interface{}{}
+	for i, datav := range data {
+		cells := []interface{}{}
+		// key as title
+		if len(header) == 0 {
+			if len(titles) == 0 {
+				for k := range datav {
+					if len(header) == 0 {
+						titles = append(titles, k)
+					}
+				}
+				f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+1), &titles)
+			}
+			for _, k := range titles {
+				cells = append(cells, datav[fmt.Sprintf("%v", k)])
+			}
+			f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+2), &cells)
+			cells = []interface{}{}
+		} else {
+			// key from header
+			if len(titles) == 0 {
+				for _, v := range header[0] {
+					titles = append(titles, v["label"])
+				}
+				f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+1), &titles)
+			}
+			for _, k := range titles {
+				for _, v1 := range header[0] {
+					// replace title
+					if v1["label"] == k {
+						cells = append(cells, datav[fmt.Sprintf("%v", v1["prop"])])
+					}
+				}
+			}
+			f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+2), &cells)
+			cells = []interface{}{}
+		}
+	}
 	if err := f.SaveAs(filePath); err != nil {
-		println(err.Error())
+		logrus.Error(err.Error())
 	}
 	return uuid, nil
 }

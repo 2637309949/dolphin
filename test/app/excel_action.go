@@ -7,6 +7,7 @@ import (
 	"test/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	pApp "github.com/2637309949/dolphin/platform/app"
 )
 
 // ExcelActionParse api implementation
@@ -24,6 +25,24 @@ func ExcelActionParse(ctx *Context) {
 		return
 	}
 	ret, err := srv.ExcelActionAction(payload)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// ExcelActionBuild api implementation
+// @Summary 生成excel
+// @Tags Excel操作
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/excel/action/build [get]
+func ExcelActionBuild(ctx *Context) {
+	q := ctx.TypeQuery()
+	ctx.BuildExcel([]pApp.Msi{pApp.Msi{"name": "张三"}}, []pApp.Msi{pApp.Msi{"prop": "name", "label": "名字", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}})
+	ret, err := srv.ExcelActionAction(q)
 	if err != nil {
 		ctx.Fail(err)
 		return

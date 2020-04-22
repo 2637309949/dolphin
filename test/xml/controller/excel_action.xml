@@ -6,4 +6,10 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="build" desc="生成excel" method="get" auth="false">
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
 </controller>
