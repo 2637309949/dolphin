@@ -25,8 +25,9 @@ var Name = "{{.Name}}"
 {{- $ctr := .}}
 // {{.ToUpperCase .Name}} defined
 type {{.ToUpperCase .Name}} struct {
-	{{- range .APIS}}
-	{{.ToUpperCase .Name}} func(ctx *Context)
+	{{- $APIS := .APIS}}
+	{{- range $index, $api := .APIS}}
+	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} func(ctx *Context){{- else}},{{- end}}
 	{{- end}}
 }
 

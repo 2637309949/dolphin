@@ -77,6 +77,11 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	}).([]pApp.HandlerFunc)...)
 }
 
+// RegisterHandler register handler
+func (e *Engine) RegisterHandler(name string, h func(ctx *Context)) func(*Context) {
+	return e.Handler.OnHandler(name, h)
+}
+
 // InvokeEngine build engine
 func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(*pApp.Engine) {

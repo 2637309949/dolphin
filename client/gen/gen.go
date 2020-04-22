@@ -10,6 +10,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"reflect"
 
 	"github.com/2637309949/dolphin/client/gen/pipes"
 
@@ -87,6 +88,11 @@ func (g *Gen) buildTmpl(tmpcfg *pipe.TmplCfg) error {
 	var err error
 
 	tmpl = template.New("buildTmpl")
+	tmpl.Funcs(template.FuncMap{
+		"last": func(x int, a interface{}) bool {
+			return x == reflect.ValueOf(a).Len()-1
+		},
+	})
 	suffix = tmpcfg.Suffix
 	if tmpl, err = tmpl.Parse(tmpcfg.Text); err != nil {
 		return err
