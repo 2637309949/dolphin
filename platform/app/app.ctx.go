@@ -297,6 +297,7 @@ func (ctx *Context) BuildExcel(data []Msi, header ...[]Msi) (string, error) {
 						titles = append(titles, k)
 					}
 				}
+				// replace title
 				f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+1), &titles)
 			}
 			for _, k := range titles {
@@ -313,8 +314,8 @@ func (ctx *Context) BuildExcel(data []Msi, header ...[]Msi) (string, error) {
 				f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+1), &titles)
 			}
 			for _, k := range titles {
+				// replace title
 				for _, v1 := range header[0] {
-					// replace title
 					if v1["label"] == k {
 						cells = append(cells, datav[fmt.Sprintf("%v", v1["prop"])])
 					}
