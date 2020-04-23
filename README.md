@@ -30,7 +30,7 @@ $ go get -u github.com/2637309949/dolphin
 3. Execute shell script, just a moment
 
 ```sh
-go run github.com/2637309949/dolphin/client build
+go get -u github.com/2637309949/dolphin/cmd/dolphin
 ```
 
 ## Quick start
