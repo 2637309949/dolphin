@@ -1,9 +1,4 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
-github.com/2637309949/dolphin/packages/go-session/cookie v3.0.1+incompatible h1:KKV/pi7wMGQjVh9iEyuvf4oB5IHjsUCT2LfyFlkVo0I=
-github.com/2637309949/dolphin/packages/go-session/cookie v3.0.1+incompatible/go.mod h1:g/sA6aCT9Pm64b2gnvx0XQxe1wJ0psvENyYNtZfWPNk=
-github.com/2637309949/dolphin/packages/go-session/session v3.1.2+incompatible/go.mod h1:8B3iivBQjrz/JtC68Np2T1yBBLxTan3mn/3OM0CyRt0=
-github.com/2637309949/dolphin/packages/xoauth2 v0.0.0-20180821212333-d2e6202438be h1:vEDujvNQGv4jgYKudGeI/+DAX4Jffq6hpD55MmoEvKs=
-github.com/2637309949/dolphin/packages/xoauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Chronokeeper/anyxml v0.0.0-20160530174208-54457d8e98c6/go.mod h1:YzuYAe2hrrwKXkM9kqjbkTLlkbA+/xw2MA46f1+ENxc=
 github.com/CloudyKit/fastprinter v0.0.0-20170127035650-74b38d55f37a/go.mod h1:EFZQ978U7x8IRnstaskI3IysnWY5Ao3QgZUKOXlsAdw=
@@ -62,7 +57,6 @@ github.com/go-playground/locales v0.13.0/go.mod h1:taPMhCMXrRLJO55olJkUXHZBHCxTM
 github.com/go-playground/universal-translator v0.17.0/go.mod h1:UkSxE5sNxxRwHyU+Scu5vgOQjsIJAF8j9muTVoKLVtA=
 github.com/go-playground/validator/v10 v10.0.1 h1:QgDDZpXlR/L3atIL2PbFt0TpazbtN7N6PxTGcgcyEUg=
 github.com/go-playground/validator/v10 v10.0.1/go.mod h1:uOYAAleCW8F/7oMFd6aG0GOhaH6EGOAJShg8Id5JGkI=
-github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
 github.com/go-sql-driver/mysql v1.5.0 h1:ozyZYNQW3x3HtqT1jira07DN2PArx2v7/mN66gGcHOs=
 github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
