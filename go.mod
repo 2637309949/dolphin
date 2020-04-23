@@ -1,4 +1,4 @@
-module github.com/2637309949/dolphin
+module dolphin
 
 go 1.13
 
