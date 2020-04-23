@@ -5,4 +5,4 @@ from
 where
 	applet_activity.id {{.ne}} ""
 	and
-	applet_activity.del_flag {{.ne}} 0
+	applet_activity.del_flag {{.ne}} 1

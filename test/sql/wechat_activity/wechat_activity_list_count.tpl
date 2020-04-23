@@ -5,4 +5,4 @@ from
 where
 	wechat_activity.id {{.ne}} ""
 	and
-	wechat_activity.del_flag {{.ne}} 0
+	wechat_activity.del_flag {{.ne}} 1
