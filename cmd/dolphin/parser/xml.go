@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/client/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"gopkg.in/go-playground/validator.v9"
 )
 

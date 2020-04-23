@@ -7,35 +7,35 @@ package pipes
 import (
 	"path"
 
-	"github.com/2637309949/dolphin/client/gen/pipe"
-	"github.com/2637309949/dolphin/client/gen/template"
-	"github.com/2637309949/dolphin/client/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 )
 
-// Srv struct
-type Srv struct {
+// Model struct
+type Model struct {
 }
 
 // Name defined pipe name
-func (app *Srv) Name() string {
-	return "srv"
+func (m *Model) Name() string {
+	return "model"
 }
 
 // Build func
-func (app *Srv) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Model) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
-	for _, c := range node.Controllers {
+	for _, table := range node.Tables {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
-			"Controller":  c,
+			"Table":       table,
 		}
 		tmplCfg := &pipe.TmplCfg{
-			Text:     template.TmplSrv,
-			FilePath: path.Join(dir, viper.GetString("dir.srv"), c.Name),
+			Text:     template.TmplModel,
+			FilePath: path.Join(dir, viper.GetString("dir.model"), table.Name+".auto"),
 			Data:     data,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  pipe.OverlapWrite,
 			Suffix:   ".go",
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)

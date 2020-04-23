@@ -1,6 +1,6 @@
 package pipe
 
-import "github.com/2637309949/dolphin/client/schema"
+import "github.com/2637309949/dolphin/cmd/dolphin/schema"
 
 type (
 	// Overlap int

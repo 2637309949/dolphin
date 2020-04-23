@@ -7,36 +7,37 @@ package pipes
 import (
 	"path"
 
-	"github.com/2637309949/dolphin/client/gen/pipe"
-	"github.com/2637309949/dolphin/client/gen/template"
-	"github.com/2637309949/dolphin/client/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 )
 
-// Bean struct
-type Bean struct {
+// Ctr struct
+type Ctr struct {
 }
 
 // Name defined pipe name
-func (m *Bean) Name() string {
-	return "bean"
+func (ctr *Ctr) Name() string {
+	return "ctr"
 }
 
 // Build func
-func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
-	for _, bean := range node.Beans {
+	for _, c := range node.Controllers {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
-			"Bean":        bean,
+			"Controller":  c,
 		}
 		tmplCfg := &pipe.TmplCfg{
-			Text:     template.TmplBean,
-			FilePath: path.Join(dir, viper.GetString("dir.model"), bean.Name+".auto"),
+			Text:     template.TmplCtr,
+			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name),
 			Data:     data,
-			Overlap:  pipe.OverlapWrite,
+			Overlap:  pipe.OverlapInc,
 			Suffix:   ".go",
+			GOFmt:    true,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 	}
