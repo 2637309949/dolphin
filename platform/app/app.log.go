@@ -67,9 +67,9 @@ func initTracker() {
 						Header:     item.Header,
 						ReqBody:    item.ReqBody,
 						ResBody:    item.ResBody,
-						CreateTime: null.TimeFromPtr(doltime.Now().Value()),
+						CreateTime: null.TimeFrom(doltime.Now().Value()),
 						CreateBy:   model.DefaultAdmin.ID,
-						UpdateTime: null.TimeFromPtr(doltime.Now().Value()),
+						UpdateTime: null.TimeFrom(doltime.Now().Value()),
 						UpdateBy:   model.DefaultAdmin.ID,
 						DelFlag:    null.IntFrom(0),
 					}

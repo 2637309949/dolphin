@@ -29,9 +29,9 @@ func SysUserAdd(ctx *Context) {
 		return
 	}
 	payload.ID = null.StringFromUUID()
-	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
+	payload.CreateTime = null.TimeFrom(time.Now().Value())
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
 	payload.SetPassword("123456")
@@ -60,7 +60,7 @@ func SysUserDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysUser{
-		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
 	})
@@ -88,7 +88,7 @@ func SysUserUpdate(ctx *Context) {
 		return
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 
 	payload.Password.Valid = false
 	payload.Salt.Valid = false

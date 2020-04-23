@@ -68,17 +68,17 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- if .ISArray $bp.Type}}
 	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
 		form.ID = null.StringFromUUID()
-		form.CreateTime = null.TimeFromPtr(time.Now().Value())
+		form.CreateTime = null.TimeFrom(time.Now().Value())
 		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		form.UpdateTime = null.TimeFrom(time.Now().Value())
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.DelFlag = null.IntFrom(0)
 	})
 	{{- else}}
 	payload.ID = null.StringFromUUID()
-	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
+	payload.CreateTime = null.TimeFrom(time.Now().Value())
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
 	{{- end}}
@@ -102,7 +102,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ids = append(ids, form.ID.String)
 	})
 	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
-		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
 	})
@@ -119,7 +119,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&{{$bp.ORef $bp.Type}}{
-		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
 	})
@@ -144,7 +144,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	s := ctx.DB.NewSession()
 	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.UpdateTime = null.TimeFromPtr(time.Now().Value())
+		form.UpdateTime = null.TimeFrom(time.Now().Value())
 		r, err = s.ID(form.ID).Update(&form)
 		ret = append(ret, r)
 	})
@@ -161,7 +161,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)

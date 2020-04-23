@@ -16,11 +16,16 @@ func Now() Time {
 }
 
 // Value returns t as a Unix time
-func (t Time) Value() *gt.Time {
-	return &t.Time
+func (t Time) Value() gt.Time {
+	return t.Time
 }
 
 // UnixMilli returns t as a Unix time
 func (t Time) UnixMilli() int64 {
 	return t.UnixNano() / int64(time.Millisecond)
+}
+
+// StartOfWeek defined
+func (t Time) StartOfWeek() gt.Time {
+	return t.AddDate(0, 0, int(time.Monday-t.Weekday()))
 }

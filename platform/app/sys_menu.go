@@ -31,9 +31,9 @@ func SysMenuAdd(ctx *Context) {
 		return
 	}
 	payload.ID = null.StringFromUUID()
-	payload.CreateTime = null.TimeFromPtr(time.Now().Value())
+	payload.CreateTime = null.TimeFrom(time.Now().Value())
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
 	if !payload.Parent.IsZero() {
@@ -76,7 +76,7 @@ func SysMenuDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysMenu{
-		UpdateTime: null.TimeFromPtr(time.Now().Value()),
+		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
 	})
@@ -104,7 +104,7 @@ func SysMenuUpdate(ctx *Context) {
 		return
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFromPtr(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 
 	if !payload.Parent.IsZero() {
 		parent := model.SysMenu{}

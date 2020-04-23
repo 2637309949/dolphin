@@ -93,7 +93,7 @@ func (auth *AuthOAuth2) Auth(req *http.Request) bool {
 				parseToken(accessToken).
 				GetAccessCreateAt().
 				Add(auth.GetToken().GetAccessExpiresIn()).Round(0).Add(-expiryDelta).
-				After(*time.Now().Value())
+				After(time.Now().Value())
 		}
 	}
 	return false
