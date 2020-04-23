@@ -58,6 +58,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			}
 		}
 	}
+
 	if err := s.Commit(); err != nil {
 		panic(err)
 	}

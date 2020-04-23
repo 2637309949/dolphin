@@ -154,6 +154,7 @@ func (e *Engine) initDB() {
 		(new(model.SysRole)).InitSysData(v.NewSession())
 		(new(model.SysRoleUser)).InitSysData(v.NewSession())
 		(new(model.SysMenu)).InitSysData(v.NewSession())
+		(new(model.SysOptionset)).InitSysData(v.NewSession())
 	}
 }
 
