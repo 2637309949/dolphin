@@ -35,6 +35,7 @@ func (tool *Tool) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, 
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 			Suffix:   ".go",
+			GOFmt:    true,
 		},
 	}, nil
 }

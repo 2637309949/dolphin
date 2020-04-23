@@ -37,6 +37,7 @@ func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, err
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,
 			Suffix:   ".go",
+			GOFmt:    true,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 	}

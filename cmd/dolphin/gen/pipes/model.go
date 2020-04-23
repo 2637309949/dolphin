@@ -37,6 +37,7 @@ func (m *Model) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,
 			Suffix:   ".go",
+			GOFmt:    true,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 	}
