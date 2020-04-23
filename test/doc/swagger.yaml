@@ -997,6 +997,24 @@ paths:
       summary: 更新活动
       tags:
       - 活动
+  /api/excel/action/build:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 生成excel
+      tags:
+      - Excel操作
   /api/excel/action/parse:
     post:
       consumes:
