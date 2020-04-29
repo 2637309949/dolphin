@@ -4,24 +4,21 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	gt "time"
-
-	"github.com/2637309949/dolphin/platform/model"
-
-	"github.com/2637309949/dolphin/packages/time"
+	"time"
 
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/viper"
-	xoauth2 "github.com/2637309949/dolphin/packages/xoauth2"
+	"github.com/2637309949/dolphin/packages/xoauth2"
+	"github.com/2637309949/dolphin/platform/model"
 )
 
-// expiryDelta determines how earlier a token should be considered
+// TokenExpiryDelta determines how earlier a token should be considered
 // expired than its actual expiration time. It is used to avoid late
 // expirations due to client-server time mismatches.
-const expiryDelta = 10 * gt.Second
+const TokenExpiryDelta = 10 * time.Second
 
 // var defined
 var (
@@ -82,13 +79,13 @@ func (auth *AuthOAuth2) Auth(req *http.Request) bool {
 		accessToken, err := auth.server.Manager.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.WithError(err).Warning("load accessToken failed.")
-		} else {
-			return auth.
-				parseToken(accessToken).
-				GetAccessCreateAt().
-				Add(auth.GetToken().GetAccessExpiresIn()).Round(0).Add(-expiryDelta).
-				After(time.Now().Value())
+			return false
 		}
+		return auth.
+			parseToken(accessToken).
+			GetAccessCreateAt().
+			Add(auth.GetToken().GetAccessExpiresIn()).Round(0).Add(-TokenExpiryDelta).
+			After(time.Now())
 	}
 	return false
 }
@@ -111,11 +108,11 @@ type ClientStore struct {
 func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 	cli := model.SysClient{}
 	ext, err := App.PlatformDB.Where("client=?", id).Get(&cli)
-	if err != nil {
+	if err != nil || !ext {
+		if !ext {
+			err = errors.New("the record does not exist")
+		}
 		return nil, err
-	}
-	if !ext {
-		return nil, errors.New("the record does not exist")
 	}
 	return &models.Client{
 		ID:     cli.Client.String,
