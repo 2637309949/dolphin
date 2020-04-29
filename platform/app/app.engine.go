@@ -39,7 +39,6 @@ type (
 	// Engine defined parse app engine
 	Engine struct {
 		MSet          MSeti
-		Handler       Handler
 		Gin           *gin.Engine
 		GRPC          *grpc.Server
 		OAuth2        *server.Server
@@ -48,18 +47,7 @@ type (
 		BusinessDBSet map[string]*xorm.Engine
 		pool          sync.Pool
 	}
-	// Handler defined hooks
-	Handler interface {
-		OnHandler(name string, h func(ctx *Context)) func(*Context)
-	}
-	// IHander defined handler
-	IHander struct{}
 )
-
-// OnHandler defined event
-func (i *IHander) OnHandler(name string, h func(ctx *Context)) func(*Context) {
-	return h
-}
 
 // HandlerFunc convert to gin.HandlerFunc
 func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
@@ -294,7 +282,6 @@ func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFu
 func buildEngine() *Engine {
 	e := &Engine{}
 	e.MSet = &MSet{m: map[string][]interface{}{}}
-	e.Handler = &IHander{}
 	e.BusinessDBSet = map[string]*xorm.Engine{}
 	e.GRPC = grpc.NewServer()
 	if viper.GetString("app.mode") != "debug" {

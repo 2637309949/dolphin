@@ -16,8 +16,7 @@ type (
 	// Engine defined parse app engine
 	Engine struct {
 		*pApp.Engine
-		Handler Handler
-		pool    sync.Pool
+		pool sync.Pool
 	}
 	// Context defined http handle hook context
 	Context struct {
@@ -31,18 +30,7 @@ type (
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value.
 	HandlerFunc func(*Context)
-	// Handler defined hooks
-	Handler interface {
-		OnHandler(name string, h func(ctx *Context)) func(*Context)
-	}
-	// IHander defined handler
-	IHander struct{}
 )
-
-// OnHandler defined event
-func (i *IHander) OnHandler(name string, h func(ctx *Context)) func(*Context) {
-	return h
-}
 
 func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e}
@@ -77,11 +65,6 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	}).([]pApp.HandlerFunc)...)
 }
 
-// RegisterHandler register handler
-func (e *Engine) RegisterHandler(name string, h func(ctx *Context)) func(*Context) {
-	return e.Handler.OnHandler(name, h)
-}
-
 // InvokeEngine build engine
 func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(*pApp.Engine) {
@@ -98,7 +81,7 @@ func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFu
 }
 
 func buildEngine() *Engine {
-	e := &Engine{Engine: pApp.App, Handler: &IHander{}}
+	e := &Engine{Engine: pApp.App}
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}
