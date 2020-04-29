@@ -41,14 +41,8 @@ var (
 	}
 )
 
-// define authorization model
-var (
-	OAuth2            AuthType = "oauth2"
-	TokenkeyNamespace          = "dolphin:token:"
-)
-
-// AuthType authorization model
-type AuthType string
+// TokenkeyNamespace define
+var TokenkeyNamespace = "dolphin:token:"
 
 // AuthInfo defined
 type AuthInfo interface {
