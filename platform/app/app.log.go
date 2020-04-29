@@ -11,7 +11,6 @@ import (
 	"github.com/2637309949/dolphin/packages/logrotate"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
-	doltime "github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
@@ -67,9 +66,9 @@ func initTracker() {
 						Header:     item.Header,
 						ReqBody:    item.ReqBody,
 						ResBody:    item.ResBody,
-						CreateTime: null.TimeFrom(doltime.Now().Value()),
+						CreateTime: null.TimeFrom(time.Now()),
 						CreateBy:   model.DefaultAdmin.ID,
-						UpdateTime: null.TimeFrom(doltime.Now().Value()),
+						UpdateTime: null.TimeFrom(time.Now()),
 						UpdateBy:   model.DefaultAdmin.ID,
 						DelFlag:    null.IntFrom(0),
 					}
