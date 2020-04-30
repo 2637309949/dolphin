@@ -222,10 +222,10 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 }
 
 // GetOptions defined
-func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]int32, error) {
+func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error) {
 	type Options struct {
 		Value interface{} `json:"value"`
-		Text  interface{} `json:"text"`
+		Text  string      `json:"text"`
 	}
 	var optionset []model.SysOptionset
 	err := db.Where("del_flag = 0").In("code", keys).Find(&optionset)
@@ -233,18 +233,17 @@ func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[
 		return nil, err
 	}
 
-	optionMap := make(map[string]map[string]int32)
+	optionMap := make(map[string]map[string]interface{})
 	for _, v := range optionset {
 		var options []Options
 		if err = json.Unmarshal([]byte(v.Value.String), &options); err != nil {
 			return nil, err
 		}
 		if optionMap[v.Code.String] == nil {
-			optionMap[v.Code.String] = map[string]int32{}
+			optionMap[v.Code.String] = map[string]interface{}{}
 		}
 		for _, item := range options {
-			value, _ := strconv.Atoi(fmt.Sprintf("%v", item.Value))
-			optionMap[v.Code.String][fmt.Sprintf("%v", item.Text)] = int32(value)
+			optionMap[v.Code.String][item.Text] = item.Value
 		}
 	}
 	return optionMap, nil

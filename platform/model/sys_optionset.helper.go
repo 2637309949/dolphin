@@ -1,13 +1,27 @@
 package model
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
 
-// InitSysData defined inital system data
+// Values defined
+func (m *SysOptionset) Values() []struct {
+	Text  string      `json:"text"`
+	Value interface{} `json:"value"`
+} {
+	kv := []struct {
+		Text  string      `json:"text"`
+		Value interface{} `json:"value"`
+	}{}
+	json.Unmarshal([]byte(m.Value.String), &kv)
+	return kv
+}
+
+// InitSysData defined
 func (m *SysOptionset) InitSysData(s *xorm.Session) {
 	options := []SysOptionset{
 		SysOptionset{
