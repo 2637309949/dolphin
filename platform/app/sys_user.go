@@ -4,12 +4,18 @@
 package app
 
 import (
+	"errors"
+	"regexp"
+
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/2637309949/dolphin/packages/viper"
 )
 
 // SysUserAdd api implementation
@@ -157,17 +163,43 @@ func SysUserGet(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/user/login [post]
 func SysUserLogin(ctx *Context) {
-	var payload string
+	var payload, account model.SysUser
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysUserAction(payload)
-	if err != nil {
+	if payload.Domain.String == "" {
+		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
+		payload.Domain = null.StringFrom(base[0][2])
+	}
+	account.Domain = payload.Domain
+	account.Name = payload.Name
+	ext, err := ctx.engine.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
+	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
+		if err == nil {
+			err = errors.New("Account doesn't exist or password error")
+		}
+		logrus.Error("SysUserLogin/ValidPassword:", err)
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	tgr := &oauth2.TokenGenerateRequest{
+		UserID:       account.ID.String,
+		ClientID:     viper.GetString("oauth.id"),
+		ClientSecret: viper.GetString("oauth.secret"),
+		Request:      ctx.Request,
+	}
+	token, err := ctx.engine.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, tgr)
+	if err != nil {
+		logrus.Error("SysUserLogin/GenerateAccessToken:", err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(map[string]interface{}{
+		"access_token":  token.GetAccess(),
+		"refresh_token": token.GetRefresh(),
+	})
 }
 
 // SysUserLogout api implementation

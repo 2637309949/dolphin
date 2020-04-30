@@ -82,6 +82,7 @@ func SysCasLogin(ctx *Context) {
 		return
 	}
 	if !ext || !account.ValidPassword(password) {
+		err = errors.New("Account doesn't exist or password error")
 		logrus.Error("SysCasLogin/ValidPassword:", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+util.ErrInvalidGrant.Error())
 		return
