@@ -82,8 +82,7 @@ func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 // InvokeContext build context
 func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
-		group := App.Group(viper.GetString("http.prefix"))
-		group.Handle(httpMethod, relativePath, handlers...)
+		App.Group(viper.GetString("http.prefix")).Handle(httpMethod, relativePath, handlers...)
 	}
 }
 

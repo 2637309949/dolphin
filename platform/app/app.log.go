@@ -21,7 +21,7 @@ import (
 
 // TrackerStore store logs
 var TrackerStore func(beans *[]model.SysTracker) error
-var receiver chan *plugin.LogFormatterParams
+var logChannel chan *plugin.LogFormatterParams
 
 // Tracker defined tracker recorder
 func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
@@ -32,12 +32,12 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 			p.Domain = tokenInfo.GetDomain()
 			p.UserID = tokenInfo.GetUserID()
 		}
-		receiver <- p
+		logChannel <- p
 	}
 }
 
 func initTracker() {
-	receiver = make(chan *plugin.LogFormatterParams, 600)
+	logChannel = make(chan *plugin.LogFormatterParams, 600)
 	TrackerStore = func(beans *[]model.SysTracker) error {
 		App.PlatformDB.ShowSQL(false)
 		_, err := App.PlatformDB.Insert(*beans)
@@ -79,7 +79,7 @@ func initTracker() {
 						logrus.Error(err)
 					}
 				}
-			case info := <-receiver:
+			case info := <-logChannel:
 				bucket.Append(info)
 			}
 		}
