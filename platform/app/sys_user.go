@@ -185,6 +185,7 @@ func SysUserLogin(ctx *Context) {
 	}
 	tgr := &oauth2.TokenGenerateRequest{
 		UserID:       account.ID.String,
+		Domain:       account.Domain.String,
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),
 		Request:      ctx.Request,

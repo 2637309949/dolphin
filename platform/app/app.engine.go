@@ -97,8 +97,10 @@ func (e *Engine) initDB() {
 	e.PlatformDB.SetLogger(xLogger)
 	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
 	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
-	(new(model.SysDomain)).Ensure(e.PlatformDB)
-	(new(model.SysDomain)).InitSysData(e.PlatformDB.NewSession())
+	{
+		(new(model.SysDomain)).Ensure(e.PlatformDB)
+		(new(model.SysDomain)).InitSysData(e.PlatformDB.NewSession())
+	}
 
 	// initBusinessDB
 	domains := []model.SysDomain{}
@@ -138,15 +140,19 @@ func (e *Engine) initDB() {
 	}
 
 	// initialize PlatformDB data
-	(new(model.SysClient)).InitSysData(e.PlatformDB.NewSession())
-	(new(model.SysUser)).InitSysData(e.PlatformDB.NewSession())
+	{
+		(new(model.SysClient)).InitSysData(e.PlatformDB.NewSession())
+		(new(model.SysUser)).InitSysData(e.PlatformDB.NewSession())
+	}
 
 	// initialize BusinessDBSet data
 	for _, v := range zmap {
-		(new(model.SysRole)).InitSysData(v.NewSession())
-		(new(model.SysRoleUser)).InitSysData(v.NewSession())
-		(new(model.SysMenu)).InitSysData(v.NewSession())
-		(new(model.SysOptionset)).InitSysData(v.NewSession())
+		{
+			(new(model.SysRole)).InitSysData(v.NewSession())
+			(new(model.SysRoleUser)).InitSysData(v.NewSession())
+			(new(model.SysMenu)).InitSysData(v.NewSession())
+			(new(model.SysOptionset)).InitSysData(v.NewSession())
+		}
 	}
 }
 
