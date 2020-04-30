@@ -56,7 +56,7 @@ func init() {
 func SysCasLogin(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
-		logrus.Error("SysCasLogin/Start:", err)
+		logrus.Errorf("SysCasLogin/Start:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
 		return
 	}
@@ -77,13 +77,13 @@ func SysCasLogin(ctx *Context) {
 	ext, err := ctx.engine.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
 
 	if err != nil {
-		logrus.Error("SysCasLogin/Where:", err)
+		logrus.Errorf("SysCasLogin/Where:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
 		return
 	}
 	if !ext || !account.ValidPassword(password) {
 		err = errors.New("Account doesn't exist or password error")
-		logrus.Error("SysCasLogin/ValidPassword:", err)
+		logrus.Errorf("SysCasLogin/ValidPassword:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+util.ErrInvalidGrant.Error())
 		return
 	}
@@ -120,7 +120,7 @@ func SysCasLogout(ctx *Context) {
 func SysCasAffirm(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
-		logrus.Error("SysCasAffirm/Start:", err)
+		logrus.Errorf("SysCasAffirm/Start:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
 		return
 	}
@@ -133,7 +133,7 @@ func SysCasAffirm(ctx *Context) {
 	store.Save()
 	err = ctx.engine.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
-		logrus.Error("SysCasAffirm/HandleAuthorizeRequest:", err)
+		logrus.Errorf("SysCasAffirm/HandleAuthorizeRequest:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
 		return
 	}
@@ -150,7 +150,7 @@ func SysCasAuthorize(ctx *Context) {
 	var form url.Values
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
 	if err != nil {
-		logrus.Error("SysCasAuthorize/Start:", err)
+		logrus.Errorf("SysCasAuthorize/Start:%v", err)
 		ctx.Fail(err)
 		return
 	}
@@ -167,7 +167,7 @@ func SysCasAuthorize(ctx *Context) {
 	store.Save()
 	err = ctx.engine.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
-		logrus.Error("SysCasAuthorize/HandleAuthorizeRequest:", err)
+		logrus.Errorf("SysCasAuthorize/HandleAuthorizeRequest:%v", err)
 		ctx.Fail(err)
 		return
 	}
@@ -184,7 +184,7 @@ func SysCasAuthorize(ctx *Context) {
 func SysCasToken(ctx *Context) {
 	err := ctx.engine.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
 	if err != nil {
-		logrus.Error("SysCasToken/HandleTokenRequest:", err)
+		logrus.Errorf("SysCasToken/HandleTokenRequest:%v", err)
 		ctx.Fail(err)
 	}
 }
@@ -218,13 +218,13 @@ func SysCasOauth2(ctx *Context) {
 	state, _ = url.QueryUnescape(state)
 
 	if code == "" {
-		logrus.Error("SysCasOauth2/code:", errors.New("Code not found"))
+		logrus.Errorf("SysCasOauth2/code:%v", errors.New("Code not found"))
 		ctx.Fail(errors.New("Code not found"))
 		return
 	}
 	ret, err := OA2Cfg.Exchange(context.Background(), code)
 	if err != nil {
-		logrus.Error("SysCasOauth2/Exchange:", errors.New("Code not found"))
+		logrus.Errorf("SysCasOauth2/Exchange:%v", errors.New("Code not found"))
 		ctx.Fail(err)
 		return
 	}
@@ -252,7 +252,7 @@ func SysCasOauth2(ctx *Context) {
 func SysCasRefresh(ctx *Context) {
 	refreshtoken, ok := ctx.engine.OAuth2.BearerAuth(ctx.Request)
 	if !ok {
-		logrus.Error("SysCasRefresh/BearerAuth:", ok)
+		logrus.Errorf("SysCasRefresh/BearerAuth:%v", ok)
 		ctx.Fail(util.ErrInvalidAccessToken)
 		return
 	}
@@ -261,7 +261,7 @@ func SysCasRefresh(ctx *Context) {
 	token.RefreshToken = refreshtoken
 	ret, err := OA2Cfg.TokenSource(context.Background(), &token).Token()
 	if err != nil {
-		logrus.Error("SysCasRefresh/TokenSource:", err)
+		logrus.Errorf("SysCasRefresh/TokenSource:%v", err)
 		ctx.Fail(err)
 		return
 	}

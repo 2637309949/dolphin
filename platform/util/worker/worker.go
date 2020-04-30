@@ -114,7 +114,7 @@ func (w Worker) Start() {
 			select {
 			case job := <-w.JobChannel:
 				if err := job.Payload.Do(); err != nil {
-					logrus.Error("Error do payload function", err.Error())
+					logrus.Errorf("Error do payload function:%v", err.Error())
 				}
 			case <-w.quit:
 				return

@@ -355,7 +355,7 @@ func (ctx *Context) BuildExcel(data []Msi, header ...[]Msi) (string, error) {
 		}
 	}
 	if err := f.SaveAs(filePath); err != nil {
-		logrus.Error(err.Error())
+		logrus.Error(err)
 	}
 	return uuid, nil
 }

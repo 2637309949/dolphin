@@ -210,11 +210,11 @@ func (e *Engine) initOAuth() {
 		return
 	})
 	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
-		logrus.Error("internal error:", err.Error())
+		logrus.Errorf("internal error:%v", err.Error())
 		return
 	})
 	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
-		logrus.Error("response error:", re.Error.Error())
+		logrus.Errorf("response error:%v", re.Error.Error())
 	})
 }
 

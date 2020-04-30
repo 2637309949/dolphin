@@ -179,7 +179,7 @@ func SysUserLogin(ctx *Context) {
 		if err == nil {
 			err = errors.New("Account doesn't exist or password error")
 		}
-		logrus.Error("SysUserLogin/ValidPassword:", err)
+		logrus.Errorf("SysUserLogin/ValidPassword:%v", err)
 		ctx.Fail(err)
 		return
 	}
@@ -191,7 +191,7 @@ func SysUserLogin(ctx *Context) {
 	}
 	token, err := ctx.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, tgr)
 	if err != nil {
-		logrus.Error("SysUserLogin/GenerateAccessToken:", err)
+		logrus.Errorf("SysUserLogin/GenerateAccessToken:%v", err)
 		ctx.Fail(err)
 		return
 	}
