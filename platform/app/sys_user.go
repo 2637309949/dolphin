@@ -8,7 +8,6 @@ import (
 	"regexp"
 
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -175,7 +174,7 @@ func SysUserLogin(ctx *Context) {
 	}
 	account.Domain = payload.Domain
 	account.Name = payload.Name
-	ext, err := ctx.engine.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
+	ext, err := ctx.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
 	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
 		if err == nil {
 			err = errors.New("Account doesn't exist or password error")
@@ -190,7 +189,7 @@ func SysUserLogin(ctx *Context) {
 		ClientSecret: viper.GetString("oauth.secret"),
 		Request:      ctx.Request,
 	}
-	token, err := ctx.engine.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, tgr)
+	token, err := ctx.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, tgr)
 	if err != nil {
 		logrus.Error("SysUserLogin/GenerateAccessToken:", err)
 		ctx.Fail(err)
@@ -211,11 +210,10 @@ func SysUserLogin(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/user/logout [get]
 func SysUserLogout(ctx *Context) {
-	q := ctx.TypeQuery()
-	ret, err := srv.SysUserAction(q)
+	err := ctx.OAuth2.Manager.RemoveAccessToken(ctx.GetToken().GetAccess())
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success("successful")
 }
