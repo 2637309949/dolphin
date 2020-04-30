@@ -35,6 +35,15 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="login" desc="用户认证" method="post" auth="false">
+        <param name="username" type="string" desc="用户名称" />
+        <param name="password" type="string" desc="用户密码" />
+        <param name="domain" type="string" desc="用户域" />
+        <return>
+            <success type="$response"/>
+            <failure type="$response"/>
+        </return>
+    </api>
     <api name="logout" desc="用户退出登录" method="get">
         <return>
             <success type="$response"/>

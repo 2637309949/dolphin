@@ -1181,11 +1181,21 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 用户信息
+      - description: 用户名称
         in: body
-        name: user
+        name: string
         schema:
-          $ref: '#/definitions/model.SysUser'
+          $ref: '#/definitions/username'
+      - description: 用户密码
+        in: body
+        name: string
+        schema:
+          $ref: '#/definitions/password'
+      - description: 用户域
+        in: body
+        name: string
+        schema:
+          $ref: '#/definitions/domain'
       responses:
         "200":
           description: OK
@@ -1199,9 +1209,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Response'
-      summary: 登录信息
+      summary: 用户认证
       tags:
-      - OAuth授权
+      - 认证中心
   /api/sys/cas/logout:
     get:
       parameters:
@@ -3052,6 +3062,42 @@ paths:
           schema:
             $ref: '#/definitions/model.Response'
       summary: 获取用户信息
+      tags:
+      - 用户
+  /api/sys/user/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户名称
+        in: body
+        name: string
+        schema:
+          $ref: '#/definitions/username'
+      - description: 用户密码
+        in: body
+        name: string
+        schema:
+          $ref: '#/definitions/password'
+      - description: 用户域
+        in: body
+        name: string
+        schema:
+          $ref: '#/definitions/domain'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 用户认证
       tags:
       - 用户
   /api/sys/user/logout:

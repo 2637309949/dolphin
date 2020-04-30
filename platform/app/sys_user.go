@@ -145,6 +145,31 @@ func SysUserGet(ctx *Context) {
 	ctx.Success(entity)
 }
 
+// SysUserLogin api implementation
+// @Summary 用户认证
+// @Tags 用户
+// @Accept application/json
+// @Param username body string false "用户名称"
+// @Param password body string false "用户密码"
+// @Param domain body string false "用户域"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/user/login [post]
+func SysUserLogin(ctx *Context) {
+	var payload string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := srv.SysUserAction(payload)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysUserLogout api implementation
 // @Summary 用户退出登录
 // @Tags 用户

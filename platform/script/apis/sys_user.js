@@ -56,6 +56,16 @@ module.exports.get = (data) => {
   })
 }
 
+// login 用户认证
+module.exports.login = (data) => {
+  const url = '/api/sys/user/login'
+  return axios({
+    url: url,
+    method: 'post',
+    data
+  })
+}
+
 // logout 用户退出登录
 module.exports.logout = (data) => {
   let url = '/api/sys/user/logout?'

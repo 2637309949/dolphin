@@ -2,7 +2,7 @@
 // source: auto.go
 const axios = require('@/utils/request')
 
-// login 登录信息
+// login 用户认证
 module.exports.login = (data) => {
   const url = '/api/sys/cas/login'
   return axios({

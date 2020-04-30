@@ -43,10 +43,12 @@ func init() {
 }
 
 // SysCasLogin api implementation
-// @Summary 登录信息
-// @Tags OAuth授权
+// @Summary 用户认证
+// @Tags 认证中心
 // @Accept application/json
-// @Param user body model.SysUser false "用户信息"
+// @Param string body username false "用户名称"
+// @Param string body password false "用户密码"
+// @Param string body domain false "用户域"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response
