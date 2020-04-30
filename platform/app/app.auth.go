@@ -78,7 +78,7 @@ func (auth *AuthOAuth2) Auth(req *http.Request) bool {
 	if bearer, ok := auth.server.BearerAuth(req); ok {
 		accessToken, err := auth.server.Manager.LoadAccessToken(bearer)
 		if err != nil {
-			logrus.WithError(err).Warning("load accessToken failed.")
+			logrus.Error(err)
 			return false
 		}
 		return auth.
