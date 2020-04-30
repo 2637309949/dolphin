@@ -7,12 +7,12 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
-	"strconv"
 	"sync"
+
+	"github.com/2637309949/dolphin/packages/oauth2"
 
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/null"
-
 	"google.golang.org/grpc"
 
 	"github.com/2637309949/dolphin/packages/gin"
@@ -22,8 +22,6 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/packages/oauth2/store"
-	"github.com/2637309949/dolphin/packages/redis"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
@@ -36,16 +34,22 @@ import (
 )
 
 type (
+	// Manager Engine management interface
+	Manager interface {
+		GetMSet() MSeti
+		GetBusinessDBSet() map[string]*xorm.Engine
+		GetBusinessDB(string) *xorm.Engine
+		AddBusinessDB(string, *xorm.Engine)
+		GetTokenStore() oauth2.TokenStore
+	}
 	// Engine defined parse app engine
 	Engine struct {
-		MSet          MSeti
-		Gin           *gin.Engine
-		GRPC          *grpc.Server
-		OAuth2        *server.Server
-		Redis         *redis.Client
-		PlatformDB    *xorm.Engine
-		BusinessDBSet map[string]*xorm.Engine
-		pool          sync.Pool
+		Manager    Manager
+		Gin        *gin.Engine
+		GRPC       *grpc.Server
+		OAuth2     *server.Server
+		PlatformDB *xorm.Engine
+		pool       sync.Pool
 	}
 )
 
@@ -78,7 +82,7 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 
 // Migration models
 func (e *Engine) migration(name string, db *xorm.Engine) {
-	e.MSet.ForEach(func(n string, m interface{}) {
+	e.Manager.GetMSet().ForEach(func(n string, m interface{}) {
 		util.Ensure(db.Sync2(m))
 	}, name)
 }
@@ -107,7 +111,7 @@ func (e *Engine) initDB() {
 
 		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
 		e.RegisterSQLMap(db, sql.SQLTPL)
-		e.AddBusinessDB(domain.Domain.String, db)
+		e.Manager.AddBusinessDB(domain.Domain.String, db)
 	})
 
 	// migration db
@@ -115,12 +119,12 @@ func (e *Engine) initDB() {
 	if util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Count(new(model.SysDomain))).(int64) > 0 {
 		defer func() {
 			util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
-			e.MSet.Release()
+			e.Manager.GetMSet().Release()
 		}()
-		nset := e.MSet.Name(func(n string) bool {
+		nset := e.Manager.GetMSet().Name(func(n string) bool {
 			return n != Name
 		})
-		for _, v := range e.BusinessDBSet {
+		for _, v := range e.Manager.GetBusinessDBSet() {
 			zmap[v.DataSourceName()] = v
 		}
 		// migration PlatformDB
@@ -146,12 +150,6 @@ func (e *Engine) initDB() {
 	}
 }
 
-// GetBusinessDB businessDB
-func (e *Engine) GetBusinessDB(domain string) (db *xorm.Engine, ok bool) {
-	db, ok = e.BusinessDBSet[domain]
-	return
-}
-
 // RegisterSQLMap defined sql
 func (e *Engine) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) {
 	for key, value := range sqlMap {
@@ -172,29 +170,10 @@ func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) {
 	util.Ensure(db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")))
 }
 
-// AddBusinessDB adddb
-func (e *Engine) AddBusinessDB(domain string, db *xorm.Engine) {
-	if e.BusinessDBSet[domain] != nil {
-		panic(fmt.Errorf("domain %v has exited", domain))
-	}
-	e.BusinessDBSet[domain] = db
-}
-
-// InitRedis redis
-func (e *Engine) initRedis() {
-	uri := util.EnsureLeft(httpUtil.Parse(viper.GetString("rd.dataSource"))).(*httpUtil.URI)
-	e.Redis = redis.NewClient(&redis.Options{
-		Addr:     uri.Laddr,
-		Password: uri.Passwd,
-		DB:       util.EnsureLeft(strconv.Atoi(uri.DbName)).(int),
-	})
-	util.EnsureLeft(e.Redis.Ping().Result())
-}
-
 func (e *Engine) initOAuth() {
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.MapTokenStorage(store.NewRedisStoreWithCli(e.Redis, TokenkeyNamespace))
+	manager.MapTokenStorage(e.Manager.GetTokenStore())
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 	manager.MapClientStorage(NewClientStore())
 	manager.SetValidateURIHandler(func(baseURI string, redirectURI string) error {
@@ -247,7 +226,7 @@ func (e *Engine) Auth() func(ctx *Context) {
 			ctx.Abort()
 			return
 		}
-		if ctx.DB = e.BusinessDBSet[ctx.GetToken().GetDomain()]; ctx.DB == nil {
+		if ctx.DB = e.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
 			ctx.Fail(util.ErrInvalidDomain)
 			ctx.Abort()
 			return
@@ -260,7 +239,6 @@ func (e *Engine) Auth() func(ctx *Context) {
 
 // Run booting system
 func (e *Engine) Run() {
-	e.initRedis()
 	e.initDB()
 	e.initOAuth()
 }
@@ -281,8 +259,7 @@ func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFu
 
 func buildEngine() *Engine {
 	e := &Engine{}
-	e.MSet = &MSet{m: map[string][]interface{}{}}
-	e.BusinessDBSet = map[string]*xorm.Engine{}
+	e.Manager = NewDefaultManager()
 	e.GRPC = grpc.NewServer()
 	if viper.GetString("app.mode") != "debug" {
 		gin.SetMode(gin.ReleaseMode)
