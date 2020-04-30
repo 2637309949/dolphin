@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/2637309949/dolphin/packages/logrus"
+
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
 	"github.com/2637309949/dolphin/packages/redis"
@@ -52,6 +54,7 @@ func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
 		if _, err := redis.Ping().Result(); err == nil {
 			return store.NewRedisStoreWithCli(redis, TokenkeyNamespace)
 		}
+		logrus.Warnf("GetTokenStore:%v connect failed", viper.GetString("rd.dataSource"))
 	}
 	memo, _ := store.NewMemoryTokenStore()
 	return memo
