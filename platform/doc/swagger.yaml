@@ -3071,19 +3071,19 @@ paths:
       parameters:
       - description: 用户名称
         in: body
-        name: string
+        name: username
         schema:
-          $ref: '#/definitions/username'
+          type: string
       - description: 用户密码
         in: body
-        name: string
+        name: password
         schema:
-          $ref: '#/definitions/password'
+          type: string
       - description: 用户域
         in: body
-        name: string
+        name: domain
         schema:
-          $ref: '#/definitions/domain'
+          type: string
       responses:
         "200":
           description: OK
