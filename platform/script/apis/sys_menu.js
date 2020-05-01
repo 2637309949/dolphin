@@ -22,6 +22,16 @@ module.exports.del = (data) => {
   })
 }
 
+// batchDel 删除菜单
+module.exports.batchDel = (data) => {
+  const url = '/api/sys/menu/batch_del'
+  return axios({
+    url: url,
+    method: 'delete',
+    data
+  })
+}
+
 // update 更新菜单
 module.exports.update = (data) => {
   const url = '/api/sys/menu/update'

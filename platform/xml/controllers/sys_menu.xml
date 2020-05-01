@@ -13,6 +13,13 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="batch_del" function="delete" table="sys_menu" desc="删除菜单" method="delete">
+        <param name="sys_menu" type="[]$sys_menu" desc="菜单" />
+        <return>
+            <success type="$response" />
+            <failure type="$response" />
+        </return>
+    </api>
     <api name="update" function="update" table="sys_menu" desc="更新菜单" method="put">
         <param name="sys_menu" type="$sys_menu" desc="菜单信息" />
         <return>

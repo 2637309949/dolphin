@@ -10,6 +10,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 )
@@ -76,6 +77,38 @@ func SysMenuDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysMenu{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysMenuBatchDel api implementation
+// @Summary 删除菜单
+// @Tags 菜单
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_menu body []model.SysMenu false "菜单"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/menu/batch_del [delete]
+func SysMenuBatchDel(ctx *Context) {
+	var payload []model.SysMenu
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	funk.ForEach(payload, func(form model.SysMenu) {
+		ids = append(ids, form.ID.String)
+	})
+	ret, err := ctx.DB.In("id", ids).Update(&model.SysMenu{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
@@ -161,6 +194,8 @@ func SysMenuPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetString("name")
+	q.SetString("code")
 	q.SetString("sort", "order_num")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())

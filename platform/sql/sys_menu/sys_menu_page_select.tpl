@@ -13,6 +13,12 @@ from
 	sys_menu
 where
 	sys_menu.id {{.ne}} ""
+{{if ne .name ""}}
+    and sys_menu.name like "%{{.name}}%"
+{{end}}
+{{if ne .code ""}}
+    and sys_menu.code like "%{{.code}}%"
+{{end}}
 	and
 	sys_menu.del_flag {{.ne}} 1
 order by {{.sort}}
