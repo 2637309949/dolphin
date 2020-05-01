@@ -11,8 +11,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/null"
-
 	"github.com/2637309949/dolphin/packages/xormplus/builder"
 	"github.com/2637309949/dolphin/packages/xormplus/core"
 )
@@ -412,7 +410,7 @@ func (statement *Statement) buildUpdates(bean interface{},
 					continue
 				}
 				val = engine.formatColTime(col, t)
-			} else if zeroType, ok := fieldValue.Interface().(null.ZeroType); ok && zeroType.IsZero() {
+			} else if zeroType, ok := fieldValue.Interface().(ZeroType); ok && zeroType.IsZero() {
 				// fix null package
 				continue
 			} else if nulType, ok := fieldValue.Interface().(driver.Valuer); ok {
