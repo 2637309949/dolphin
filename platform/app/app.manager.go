@@ -18,11 +18,12 @@ import (
 // DefaultManager defined
 type DefaultManager struct {
 	BusinessDBSet map[string]*xorm.Engine
+	MSet          MSeti
 }
 
 // GetMSet defined
-func (*DefaultManager) GetMSet() MSeti {
-	return &MSet{m: map[string][]interface{}{}}
+func (d *DefaultManager) GetMSet() MSeti {
+	return d.MSet
 }
 
 // GetBusinessDB defined
@@ -64,5 +65,6 @@ func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
 func NewDefaultManager() Manager {
 	mg := &DefaultManager{}
 	mg.BusinessDBSet = map[string]*xorm.Engine{}
+	mg.MSet = &MSet{m: map[string][]interface{}{}}
 	return mg
 }

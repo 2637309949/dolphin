@@ -1,6 +1,8 @@
 package app
 
-import "github.com/2637309949/dolphin/packages/viper"
+import (
+	"github.com/2637309949/dolphin/packages/viper"
+)
 
 // MSeti model template
 type MSeti interface {
