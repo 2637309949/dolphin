@@ -1,0 +1,70 @@
+package model
+
+import (
+	"time"
+
+	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+)
+
+// InitSysData defined
+func (m *SysOrg) InitSysData(s *xorm.Session) {
+	orgs := []SysOrg{
+		SysOrg{
+			ID:          null.StringFrom("b6a7bt50-7dad-31d1-81b5-10c34fd460e3"),
+			Inheritance: null.StringFrom("|b6a7bt50-7dad-31d1-81b5-10c34fd460e3"),
+			Name:        null.StringFrom("广州总部"),
+			Code:        null.StringFrom("DOL_GZ"),
+			Order:       null.IntFrom(0),
+			Status:      null.IntFrom(1),
+			CreateBy:    DefaultAdmin.ID,
+			CreateTime:  null.TimeFrom(time.Now()),
+			UpdateBy:    DefaultAdmin.ID,
+			UpdateTime:  null.TimeFrom(time.Now()),
+			DelFlag:     null.IntFrom(0),
+		},
+		SysOrg{
+			ID:          null.StringFrom("c637bt50-7dad-31d1-81b5-10c34fd460e1"),
+			Parent:      null.StringFrom("b6a7bt50-7dad-31d1-81b5-10c34fd460e3"),
+			Inheritance: null.StringFrom("|b6a7bt50-7dad-31d1-81b5-10c34fd460e3|c637bt50-7dad-31d1-81b5-10c34fd460e1"),
+			Name:        null.StringFrom("行政部"),
+			Code:        null.StringFrom("DOL_GZ_XZ"),
+			Order:       null.IntFrom(0),
+			Status:      null.IntFrom(1),
+			CreateBy:    DefaultAdmin.ID,
+			CreateTime:  null.TimeFrom(time.Now()),
+			UpdateBy:    DefaultAdmin.ID,
+			UpdateTime:  null.TimeFrom(time.Now()),
+			DelFlag:     null.IntFrom(0),
+		},
+		SysOrg{
+			ID:          null.StringFrom("5637bt50-7dad-31d1-81b5-10c34fd460e1"),
+			Parent:      null.StringFrom("b6a7bt50-7dad-31d1-81b5-10c34fd460e3"),
+			Inheritance: null.StringFrom("|b6a7bt50-7dad-31d1-81b5-10c34fd460e3|5637bt50-7dad-31d1-81b5-10c34fd460e1"),
+			Name:        null.StringFrom("技术部"),
+			Code:        null.StringFrom("DOL_GZ_JS"),
+			Order:       null.IntFrom(1),
+			Status:      null.IntFrom(1),
+			CreateBy:    DefaultAdmin.ID,
+			CreateTime:  null.TimeFrom(time.Now()),
+			UpdateBy:    DefaultAdmin.ID,
+			UpdateTime:  null.TimeFrom(time.Now()),
+			DelFlag:     null.IntFrom(0),
+		},
+	}
+	for _, org := range orgs {
+		if ct, err := s.Where("id=?", org.ID.String).Count(new(SysOrg)); ct == 0 || err != nil {
+			if err != nil {
+				s.Rollback()
+				panic(err)
+			}
+			if _, err := s.InsertOne(&org); err != nil {
+				s.Rollback()
+				panic(err)
+			}
+		}
+	}
+	if err := s.Commit(); err != nil {
+		panic(err)
+	}
+}

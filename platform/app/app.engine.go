@@ -120,8 +120,10 @@ func (e *Engine) initDB() {
 	zmap := map[string]*xorm.Engine{}
 	if util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Count(new(model.SysDomain))).(int64) > 0 {
 		defer func() {
-			util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
-			e.Manager.GetMSet().Release()
+			if err := recover(); err == nil {
+				util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
+				e.Manager.GetMSet().Release()
+			}
 		}()
 		nset := e.Manager.GetMSet().Name(func(n string) bool {
 			return n != Name
@@ -149,6 +151,7 @@ func (e *Engine) initDB() {
 	for _, v := range zmap {
 		{
 			(new(model.SysRole)).InitSysData(v.NewSession())
+			(new(model.SysOrg)).InitSysData(v.NewSession())
 			(new(model.SysRoleUser)).InitSysData(v.NewSession())
 			(new(model.SysMenu)).InitSysData(v.NewSession())
 			(new(model.SysOptionset)).InitSysData(v.NewSession())

@@ -7,7 +7,7 @@
 	<column name="full_name" desc="全名" type="null.String" xorm="varchar(36)" />
 	<column name="leader" desc="领导人" type="null.String" xorm="varchar(36)" />
 	<column name="code" desc="编码" type="null.String" xorm="varchar(36)" />
-    <column name="type" desc="组织类型" type="null.Int" xorm="notnull" />
+    <column name="type" desc="组织类型" type="null.Int"/>
     <column name="order" desc="排序" type="null.Int" xorm="notnull" />
     <column name="status" desc="状态 0：禁用 1：正常" type="null.Int" xorm="notnull" />
 
