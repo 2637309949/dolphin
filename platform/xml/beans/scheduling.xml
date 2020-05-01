@@ -1,0 +1,4 @@
+<bean name="scheduling" desc="调度">
+    <prop name="code" desc="编码" type="int" />
+    <prop name="name" desc="名称" type="string" />
+</bean>

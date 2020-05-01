@@ -11,6 +11,15 @@ definitions:
         description: 消息
         type: string
     type: object
+  model.Scheduling:
+    properties:
+      code:
+        description: 编码
+        type: integer
+      name:
+        description: 名称
+        type: string
+    type: object
   model.SysAppFun:
     properties:
       code:
@@ -2687,6 +2696,153 @@ paths:
       summary: 更新角色
       tags:
       - 角色
+  /api/sys/scheduling/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/model.Scheduling'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加调度
+      tags:
+      - 调度
+  /api/sys/scheduling/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/model.Scheduling'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除调度
+      tags:
+      - 调度
+  /api/sys/scheduling/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      tags:
+      - 调度
+  /api/sys/scheduling/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 调度分页查询
+      tags:
+      - 调度
+  /api/sys/scheduling/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/model.Scheduling'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新调度
+      tags:
+      - 调度
   /api/sys/tag/add:
     post:
       consumes:

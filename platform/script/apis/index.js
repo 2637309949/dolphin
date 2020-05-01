@@ -26,6 +26,8 @@ module.exports.sysOrg = require('./sys_org')
 module.exports.sysPermission = require('./sys_permission')
 // sysRole 角色
 module.exports.sysRole = require('./sys_role')
+// sysScheduling 调度
+module.exports.sysScheduling = require('./sys_scheduling')
 // sysTag 标签
 module.exports.sysTag = require('./sys_tag')
 // sysTagGroup 标签组
