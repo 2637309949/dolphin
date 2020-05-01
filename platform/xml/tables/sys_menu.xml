@@ -9,7 +9,7 @@
     <column name="perms" desc="授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)" type="null.String" xorm="varchar(500)" />
     <column name="type" desc="类型 0：目录 1：菜单 2：按钮" type="null.Int" xorm="notnull" />
     <column name="icon" desc="菜单图标" type="null.String" xorm="varchar(50)" />
-    <column name="order_num" desc="排序" type="null.Int" xorm="notnull" />
+    <column name="order" desc="排序" type="null.Int" xorm="notnull" />
     <column name="hidden" desc="是否隐藏" type="null.Int" xorm="notnull" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />

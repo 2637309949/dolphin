@@ -22,6 +22,16 @@ module.exports.del = (data) => {
   })
 }
 
+// batchDel 删除组织
+module.exports.batchDel = (data) => {
+  const url = '/api/sys/org/batch_del'
+  return axios({
+    url: url,
+    method: 'delete',
+    data
+  })
+}
+
 // update 更新组织
 module.exports.update = (data) => {
   const url = '/api/sys/org/update'

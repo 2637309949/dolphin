@@ -13,6 +13,13 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="batch_del" function="delete" table="sys_org" desc="删除组织" method="delete">
+        <param name="sys_org" type="[]$sys_org" desc="组织" />
+        <return>
+            <success type="$response" />
+            <failure type="$response" />
+        </return>
+    </api>
     <api name="update" function="update" table="sys_org" desc="更新组织" method="put">
         <param name="user" type="$sys_role" desc="组织信息" />
         <return>

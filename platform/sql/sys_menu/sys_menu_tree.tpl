@@ -5,7 +5,7 @@ select
     sys_menu.hidden,
     sys_menu.icon,
     sys_menu.name,
-    sys_menu.order_num,
+    sys_menu.order,
     sys_menu.url
 from
 	sys_menu
@@ -16,4 +16,4 @@ where
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by order_num
+order by `order`

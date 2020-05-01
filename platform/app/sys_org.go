@@ -7,6 +7,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 )
@@ -69,6 +70,38 @@ func SysOrgDel(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysOrgBatchDel api implementation
+// @Summary 删除组织
+// @Tags 组织
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_org body []model.SysOrg false "组织"
+// @Failure 403 {object} model.Response
+// @Success 200 {object} model.Response
+// @Failure 500 {object} model.Response
+// @Router /api/sys/org/batch_del [delete]
+func SysOrgBatchDel(ctx *Context) {
+	var payload []model.SysOrg
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	funk.ForEach(payload, func(form model.SysOrg) {
+		ids = append(ids, form.ID.String)
+	})
+	ret, err := ctx.DB.In("id", ids).Update(&model.SysOrg{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysOrgUpdate api implementation
 // @Summary 更新组织
 // @Tags 组织
@@ -109,6 +142,9 @@ func SysOrgPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetString("name")
+	q.SetString("code")
+	q.SetString("sort", "`order`")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_org", "page", "sys_org", q.Value())
 	if err != nil {

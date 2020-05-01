@@ -196,7 +196,7 @@ func SysMenuPage(ctx *Context) {
 	q.SetInt("size", 15)
 	q.SetString("name")
 	q.SetString("code")
-	q.SetString("sort", "order_num")
+	q.SetString("sort", "`order`")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {

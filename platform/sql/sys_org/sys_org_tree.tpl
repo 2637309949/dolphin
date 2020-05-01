@@ -9,4 +9,9 @@ from
 	sys_org
 where
 	sys_org.id {{.ne}} ""
-LIMIT {{.size}} OFFSET {{.offset}}
+    and del_flag = 0
+{{if ne .name ""}}
+    and sys_org.name = "{{.name}}"
+{{end}}
+
+order by `order`

@@ -1,5 +1,5 @@
 select
-    distinct sys_menu.id, sys_menu.parent, sys_menu.code, sys_menu.component, sys_menu.hidden, sys_menu.icon, sys_menu.name, sys_menu.order_num, sys_menu.url
+    distinct sys_menu.id, sys_menu.parent, sys_menu.code, sys_menu.component, sys_menu.hidden, sys_menu.icon, sys_menu.name, sys_menu.order, sys_menu.url
 from
 	sys_menu
 {{if ne .isAdmin true}}
@@ -19,4 +19,4 @@ where
     sys_menu.del_flag = 0
 	and
 	sys_menu.hidden = 0
-	order by order_num
+	order by `order`
