@@ -1,5 +1,9 @@
 select
-    sys_optionset.id
+    sys_optionset.id,
+	sys_optionset.name,
+	sys_optionset.code,
+	sys_optionset.value,
+	sys_optionset.remark
 from
 	sys_optionset
 where
