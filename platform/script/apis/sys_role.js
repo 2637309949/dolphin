@@ -44,6 +44,30 @@ module.exports.page = (data) => {
   })
 }
 
+// roleMenuTree 角色菜单树形结构
+module.exports.roleMenuTree = (data) => {
+  let url = '/api/sys/role/role_menu_tree?'
+  for (var key in data) {
+    url += key + '=' + data[key] + '&'
+  }
+  return axios({
+    url: url,
+    method: 'get'
+  })
+}
+
+// roleAppFunTree 角色App功能树形结构
+module.exports.roleAppFunTree = (data) => {
+  let url = '/api/sys/role/role_app_fun_tree?'
+  for (var key in data) {
+    url += key + '=' + data[key] + '&'
+  }
+  return axios({
+    url: url,
+    method: 'get'
+  })
+}
+
 // get 获取角色信息
 module.exports.get = (data) => {
   let url = '/api/sys/role/get?'

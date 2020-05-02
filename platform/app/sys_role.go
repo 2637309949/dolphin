@@ -118,6 +118,46 @@ func SysRolePage(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysRoleRoleMenuTree api implementation
+// @Summary 角色菜单树形结构
+// @Tags 角色
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Router /api/sys/role/role_menu_tree [get]
+func SysRoleRoleMenuTree(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetString("name")
+	q.SetString("role_id")
+	q.SetBool("is_admin", q.GetString("role_id") == model.AdminRole.ID.String)
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "menu_tree", "sys_org", q.Value())
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysRoleRoleAppFunTree api implementation
+// @Summary 角色App功能树形结构
+// @Tags 角色
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Response
+// @Router /api/sys/role/role_app_fun_tree [get]
+func SysRoleRoleAppFunTree(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetString("name")
+	q.SetString("role_id")
+	q.SetBool("is_admin", q.GetString("role_id") == model.AdminRole.ID.String)
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "app_fun_tree", "sys_org", q.Value())
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysRoleGet api implementation
 // @Summary 获取角色信息
 // @Tags 角色

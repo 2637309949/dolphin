@@ -28,6 +28,8 @@
             <failure type="$response"/>
         </return>
     </api>
+    <api name="role_menu_tree" desc="角色菜单树形结构" method="get"></api>
+    <api name="role_app_fun_tree" desc="角色App功能树形结构" method="get"></api>
     <api name="get" desc="获取角色信息" function="one" table="sys_role" method="get">
         <param name="id" type="string" desc="角色id" />
         <return>

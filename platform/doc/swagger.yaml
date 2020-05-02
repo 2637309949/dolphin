@@ -2717,6 +2717,36 @@ paths:
       summary: 角色分页查询
       tags:
       - 角色
+  /api/sys/role/role_app_fun_tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 角色App功能树形结构
+      tags:
+      - 角色
+  /api/sys/role/role_menu_tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 角色菜单树形结构
+      tags:
+      - 角色
   /api/sys/role/update:
     put:
       consumes:

@@ -67,7 +67,7 @@ func (ctx *Context) InRole(role ...string) bool {
 
 // InAdmin defined
 func (ctx *Context) InAdmin() bool {
-	exit, _ := ctx.DB.Where(`role_id = ? and user_id = ?`, model.DefaultRole.ID.String, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
+	exit, _ := ctx.DB.Where(`role_id = ? and user_id = ?`, model.AdminRole.ID.String, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
 	return exit
 }
 
@@ -187,6 +187,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 				Name:   name,
 				Parent: parent,
 				Tag:    params,
+				Nodes:  make([]*model.TreeNode, 0),
 			}
 			treeNodeList.PushBack(node)
 			rootArr = append(rootArr, node)
@@ -196,6 +197,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 				Name:   name,
 				Parent: parent,
 				Tag:    params,
+				Nodes:  make([]*model.TreeNode, 0),
 			})
 		}
 	}

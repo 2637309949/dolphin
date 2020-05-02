@@ -10,11 +10,11 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
 
-// DefaultRoleUser default admin
-var DefaultRoleUser = SysRoleUser{
+// AdminRoleUser default admin
+var AdminRoleUser = SysRoleUser{
 	ID:         null.StringFrom("03eda436-2772-48da-86d8-97b2bd80e391"),
 	UserId:     DefaultAdmin.ID,
-	RoleId:     DefaultRole.ID,
+	RoleId:     AdminRole.ID,
 	CreateBy:   DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   DefaultAdmin.ID,
@@ -24,12 +24,12 @@ var DefaultRoleUser = SysRoleUser{
 
 // InitSysData defined inital system data
 func (m *SysRoleUser) InitSysData(s *xorm.Session) {
-	if ct, err := s.Where("id=?", DefaultRoleUser.ID).Count(new(SysRoleUser)); ct == 0 || err != nil {
+	if ct, err := s.Where("id=?", AdminRoleUser.ID).Count(new(SysRoleUser)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)
 		}
-		if _, err := s.InsertOne(&DefaultRoleUser); err != nil {
+		if _, err := s.InsertOne(&AdminRoleUser); err != nil {
 			s.Rollback()
 			panic(err)
 		}
