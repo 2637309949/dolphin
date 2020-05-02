@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_area_template">
         insert into sys_area_template
-		(`id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
+		(`id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
 		values
-		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?del_flag)
+		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
     </sql>
     <sql id="update_sys_area_template">
-        update sys_area_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
+        update sys_area_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_area_template">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_area_template">
-        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_area_template
+        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_area_template
 		where  id =?id
     </sql>
     <sql id="selectall_sys_area_template">
-        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_area_template
+        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_area_template
     </sql>
 </sqlMap>

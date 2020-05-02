@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_user_binding">
         insert into sys_user_binding
-		(`id`,`user_id`,`open_id`,`union_id`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
+		(`id`,`user_id`,`open_id`,`union_id`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
 		values
-		(?id,?user_id,?open_id,?union_id,?type,?create_by,?create_time,?update_by,?update_time,?del_flag)
+		(?id,?user_id,?open_id,?union_id,?type,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
     </sql>
     <sql id="update_sys_user_binding">
-        update sys_user_binding set `id`=?id,`user_id`=?user_id,`open_id`=?open_id,`union_id`=?union_id,`type`=?type,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
+        update sys_user_binding set `id`=?id,`user_id`=?user_id,`open_id`=?open_id,`union_id`=?union_id,`type`=?type,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_user_binding">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_user_binding">
-        select `id`,`user_id`,`open_id`,`union_id`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_user_binding
+        select `id`,`user_id`,`open_id`,`union_id`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_user_binding
 		where  id =?id
     </sql>
     <sql id="selectall_sys_user_binding">
-        select `id`,`user_id`,`open_id`,`union_id`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_user_binding
+        select `id`,`user_id`,`open_id`,`union_id`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_user_binding
     </sql>
 </sqlMap>

@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_sys_user_template_detail">
         insert into sys_user_template_detail
-		(`id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
+		(`id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
 		values
-		(?id,?temp_id,?name,?value,?type,?content,?priority,?create_by,?create_time,?update_by,?update_time,?del_flag)
+		(?id,?temp_id,?name,?value,?type,?content,?priority,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
     </sql>
     <sql id="update_sys_user_template_detail">
-        update sys_user_template_detail set `id`=?id,`temp_id`=?temp_id,`name`=?name,`value`=?value,`type`=?type,`content`=?content,`priority`=?priority,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
+        update sys_user_template_detail set `id`=?id,`temp_id`=?temp_id,`name`=?name,`value`=?value,`type`=?type,`content`=?content,`priority`=?priority,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_user_template_detail">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_sys_user_template_detail">
-        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_user_template_detail
+        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_user_template_detail
 		where  id =?id
     </sql>
     <sql id="selectall_sys_user_template_detail">
-        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from sys_user_template_detail
+        select `id`,`temp_id`,`name`,`value`,`type`,`content`,`priority`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_user_template_detail
     </sql>
 </sqlMap>

@@ -61,6 +61,9 @@ definitions:
       perms:
         description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
         type: string
+      remark:
+        description: 备注
+        type: string
       type:
         description: 类型 0：目录 1：菜单 2：按钮
         type: number
@@ -104,6 +107,9 @@ definitions:
       parent:
         description: 父节点
         type: string
+      remark:
+        description: 备注
+        type: string
       temp_id:
         description: 模板ID
         type: string
@@ -142,6 +148,9 @@ definitions:
         type: string
       path:
         description: path
+        type: string
+      remark:
+        description: 备注
         type: string
       size:
         description: 大小
@@ -188,6 +197,9 @@ definitions:
       name:
         description: 名称
         type: string
+      remark:
+        description: 备注
+        type: string
       secret:
         description: 密钥
         type: string
@@ -217,6 +229,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       update_by:
         description: 最后更新人
@@ -274,6 +289,9 @@ definitions:
         type: string
       name:
         description: 名字
+        type: string
+      remark:
+        description: 备注
         type: string
       static_url:
         description: 静态地址
@@ -338,6 +356,9 @@ definitions:
       perms:
         description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
         type: string
+      remark:
+        description: 备注
+        type: string
       type:
         description: 类型 0：目录 1：菜单 2：按钮
         type: number
@@ -371,6 +392,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       update_by:
         description: 最后更新人
@@ -417,6 +441,9 @@ definitions:
       parent:
         description: 上级组织
         type: string
+      remark:
+        description: 备注
+        type: string
       status:
         description: 状态 0：禁用 1：正常
         type: number
@@ -450,6 +477,9 @@ definitions:
       name:
         description: 名称
         type: string
+      remark:
+        description: 备注
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -459,6 +489,12 @@ definitions:
     type: object
   model.SysRole:
     properties:
+      admin_index:
+        description: 角色进入后台首页组件
+        type: string
+      app_index:
+        description: 角色app首页url
+        type: string
       code:
         description: 编码
         type: string
@@ -476,6 +512,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       status:
         description: 状态 0：禁用 1：正常
@@ -507,6 +546,9 @@ definitions:
       name:
         description: 名称
         type: string
+      remark:
+        description: 备注
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -533,6 +575,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       update_by:
         description: 最后更新人
@@ -585,6 +630,9 @@ definitions:
       password:
         description: 密码
         type: string
+      remark:
+        description: 备注
+        type: string
       salt:
         description: 盐噪点
         type: string
@@ -620,6 +668,9 @@ definitions:
         type: string
       name:
         description: 模板名称
+        type: string
+      remark:
+        description: 备注
         type: string
       type:
         description: 模板类型

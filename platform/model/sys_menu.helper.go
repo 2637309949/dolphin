@@ -87,7 +87,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			Code:        null.StringFrom("Role"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("role"),
-			Component:   null.StringFrom("guide/index"),
+			Component:   null.StringFrom("role/index"),
 			Type:        null.IntFrom(1),
 			Icon:        null.StringFrom("role"),
 			Order:       null.IntFrom(2),
