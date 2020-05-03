@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"path"
+	"reflect"
 	"strconv"
 	"strings"
 
@@ -24,6 +25,10 @@ import (
 )
 
 type (
+	// ZeroType defined
+	ZeroType interface {
+		IsZero() bool
+	}
 	// Context defined http handle hook context
 	Context struct {
 		AuthInfo
@@ -249,6 +254,28 @@ func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[
 		}
 	}
 	return optionMap, nil
+}
+
+// OmitInValid omit invalid fileds
+func (ctx *Context) OmitInValid(source interface{}) (target interface{}) {
+	sv := []reflect.StructField{}
+	t := reflect.TypeOf(source)
+	v := reflect.ValueOf(source)
+	for i := 0; i < v.NumField(); i++ {
+		if v.Field(i).CanInterface() {
+			if zeroType, ok := v.Field(i).Interface().(ZeroType); !ok || !zeroType.IsZero() {
+				sv = append(sv, reflect.StructField{
+					Name: strings.Title(t.Field(i).Name),
+					Type: t.Field(i).Type,
+					Tag:  t.Field(i).Tag,
+				})
+			}
+		}
+	}
+	target = reflect.New(reflect.StructOf(sv)).Interface()
+	sbt, _ := json.Marshal(source)
+	json.Unmarshal(sbt, &target)
+	return
 }
 
 // Msi defined
