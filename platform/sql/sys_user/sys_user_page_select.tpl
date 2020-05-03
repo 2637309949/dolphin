@@ -3,7 +3,8 @@ select
 	sys_user.name,
 	sys_user.full_name,
 	sys_user.email,
-	sys_user.mobile
+	sys_user.mobile,
+	sys_user.status
 from
 	sys_user
 where

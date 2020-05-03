@@ -606,9 +606,6 @@ definitions:
       email:
         description: 邮箱
         type: string
-      full_name:
-        description: 全名
-        type: string
       gender:
         description: 性别(0：女,1：男)
         type: number
@@ -623,6 +620,9 @@ definitions:
         type: string
       name:
         description: 名字
+        type: string
+      nickname:
+        description: 全名
         type: string
       org_id:
         description: 组织ID

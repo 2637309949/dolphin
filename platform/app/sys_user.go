@@ -6,6 +6,7 @@ package app
 import (
 	"errors"
 	"fmt"
+	"html/template"
 	"regexp"
 	"strings"
 
@@ -129,32 +130,38 @@ func SysUserPage(ctx *Context) {
 	}
 	// combile from srv sql
 	uids := []string{}
+	uorgs := []string{}
 	for _, v := range ret.Data {
-		uids = append(uids, fmt.Sprintf("'%v'", v["id"]))
+		if v["id"] != nil {
+			uids = append(uids, fmt.Sprintf("'%v'", v["id"]))
+		}
+		if v["org_id"] != nil {
+			uorgs = append(uorgs, fmt.Sprintf("'%v'", v["org_id"]))
+		}
 	}
 	ustrs := strings.Join(uids, ",")
-	roles, err := ctx.DB.QueryResult(fmt.Sprintf(`select
-	sys_role_user.user_id,
-		IFNULL(GROUP_CONCAT(sys_role.name), '') role_name,
-		IFNULL(GROUP_CONCAT(sys_role.id), '') user_role
-	from
-		sys_role_user
-	left join
-		sys_role
-	on sys_role.id = sys_role_user.role_id
-	where sys_role_user.user_id in (%v)
-	GROUP BY sys_role_user.user_id
-	`, ustrs)).List()
+	ostrs := strings.Join(uorgs, ",")
+	roles, err := ctx.DB.SqlTemplateClient("sys_user_role.tpl", &map[string]interface{}{"uids": template.HTML(ustrs)}).QueryResult().List()
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-
+	orgs, err := ctx.DB.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"oids": template.HTML(ostrs)}).QueryResult().List()
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
 	for i := range ret.Data {
 		for _, v := range roles {
 			if v["user_id"].NullString().String == fmt.Sprintf("%v", ret.Data[i]["id"]) {
 				ret.Data[i]["role_name"] = v["role_name"].NullString().String
 				ret.Data[i]["user_role"] = v["user_role"].NullString().String
+			}
+		}
+		for _, v := range orgs {
+			if v["id"].NullString().String == fmt.Sprintf("%v", ret.Data[i]["org_id"]) {
+				ret.Data[i]["org_id"] = v["id"].NullString().String
+				ret.Data[i]["org_name"] = v["name"].NullString().String
 			}
 		}
 	}
@@ -166,6 +173,8 @@ func SysUserPage(ctx *Context) {
 		Email    null.String `json:"email" xml:"email"`
 		RoleName null.String `json:"role_name" xml:"role_name"`
 		UserRole null.String `json:"user_role" xml:"user_role"`
+		OrgName  null.String `json:"org_name" xml:"org_name"`
+		OrgID    null.String `json:"org_id" xml:"org_id"`
 	}{}))
 }
 
