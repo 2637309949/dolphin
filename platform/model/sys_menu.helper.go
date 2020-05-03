@@ -49,7 +49,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			Code:        null.StringFrom("User"),
 			Parent:      null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			URL:         null.StringFrom("user"),
-			Component:   null.StringFrom("guide/index"),
+			Component:   null.StringFrom("user/index"),
 			Type:        null.IntFrom(1),
 			Icon:        null.StringFrom("user"),
 			Order:       null.IntFrom(0),

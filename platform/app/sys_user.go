@@ -125,7 +125,13 @@ func SysUserPage(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success(ret.With(&[]struct {
+		ID       null.String `json:"id" xml:"id"`
+		Name     null.String `json:"name" xml:"name"`
+		FullName null.String `json:"full_name" xml:"full_name"`
+		Mobile   null.String `json:"mobile" xml:"mobile"`
+		Email    null.String `json:"email" xml:"email"`
+	}{}))
 }
 
 // SysUserGet api implementation

@@ -110,7 +110,7 @@ func (ctx *Context) TypeQuery() *Query {
 }
 
 // PageSearch defined
-func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
+func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (*model.PagingEntity, error) {
 	page := q["page"].(int)
 	size := q["size"].(int)
 	q["offset"] = (page - 1) * size
@@ -124,13 +124,9 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	if err != nil {
 		return nil, err
 	}
+	var ret model.PagingEntity
 	if result == nil {
-		ret := util.M{}
-		ret["page"] = page
-		ret["size"] = size
-		ret["data"] = []interface{}{}
-		ret["totalrecords"] = 0
-		ret["totalpages"] = 0
+		ret.Data = []interface{}{}
 		return &ret, nil
 	}
 	records := cresult[0]["records"].(int64)
@@ -142,12 +138,11 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	} else {
 		totalpages = records/int64(size) + 1
 	}
-	ret := util.M{}
-	ret["page"] = page
-	ret["size"] = size
-	ret["data"] = result
-	ret["totalrecords"] = records
-	ret["totalpages"] = totalpages
+	ret.Page = page
+	ret.Size = size
+	ret.Data = result
+	ret.TotalRecords = int(records)
+	ret.TotalPages = int(totalpages)
 	return &ret, nil
 }
 

@@ -1,0 +1,7 @@
+<bean name="paging_entity" desc="分页结果">
+    <prop name="page" desc="页码" type="int" />
+    <prop name="size" desc="页数" type="int" />
+    <prop name="data" desc="数据" type="interface{}" json="data,omitempty" />
+    <prop name="total_pages" desc="总页数" type="int" json="totalpages" />
+    <prop name="total_records" desc="总条目" type="int" json="totalrecords" />
+</bean>
