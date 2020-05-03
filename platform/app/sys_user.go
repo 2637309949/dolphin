@@ -5,7 +5,9 @@ package app
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/2637309949/dolphin/platform/model"
 
@@ -125,12 +127,45 @@ func SysUserPage(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+	// combile from srv sql
+	uids := []string{}
+	for _, v := range ret.Data {
+		uids = append(uids, fmt.Sprintf("'%v'", v["id"]))
+	}
+	ustrs := strings.Join(uids, ",")
+	roles, err := ctx.DB.QueryResult(fmt.Sprintf(`select
+	sys_role_user.user_id,
+		IFNULL(GROUP_CONCAT(sys_role.name), '') role_name,
+		IFNULL(GROUP_CONCAT(sys_role.id), '') user_role
+	from
+		sys_role_user
+	left join
+		sys_role
+	on sys_role.id = sys_role_user.role_id
+	where sys_role_user.user_id in (%v)
+	GROUP BY sys_role_user.user_id
+	`, ustrs)).List()
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+
+	for i := range ret.Data {
+		for _, v := range roles {
+			if v["user_id"].NullString().String == fmt.Sprintf("%v", ret.Data[i]["id"]) {
+				ret.Data[i]["role_name"] = v["role_name"].NullString().String
+				ret.Data[i]["user_role"] = v["user_role"].NullString().String
+			}
+		}
+	}
 	ctx.Success(ret.With(&[]struct {
 		ID       null.String `json:"id" xml:"id"`
 		Name     null.String `json:"name" xml:"name"`
 		FullName null.String `json:"full_name" xml:"full_name"`
 		Mobile   null.String `json:"mobile" xml:"mobile"`
 		Email    null.String `json:"email" xml:"email"`
+		RoleName null.String `json:"role_name" xml:"role_name"`
+		UserRole null.String `json:"user_role" xml:"user_role"`
 	}{}))
 }
 

@@ -20,6 +20,14 @@ func (m *PagingEntity) With(s interface{}) interface{} {
 	if err := json.Unmarshal(mbt, s); err != nil {
 		logrus.Error(err)
 	}
-	m.Data = s
+
+	// unmarshal back
+	mbt, err = json.Marshal(s)
+	if err != nil {
+		logrus.Error(err)
+	}
+	if err := json.Unmarshal(mbt, &m.Data); err != nil {
+		logrus.Error(err)
+	}
 	return m
 }

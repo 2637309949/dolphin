@@ -126,7 +126,7 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	}
 	var ret model.PagingEntity
 	if result == nil {
-		ret.Data = []interface{}{}
+		ret.Data = []map[string]interface{}{}
 		return &ret, nil
 	}
 	records := cresult[0]["records"].(int64)
