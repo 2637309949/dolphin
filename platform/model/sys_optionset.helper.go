@@ -68,6 +68,17 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
+		SysOptionset{
+			ID:         null.StringFrom("a1b7b150-6dad-12d1-81b5-10c34fd460e5"),
+			Name:       null.StringFrom("菜单类型"),
+			Code:       null.StringFrom("sys_menu_type"),
+			Value:      null.StringFrom(`[{"text":"Dir","value":0},{"text":"Menu","value":1},{"text":"Button","value":2}]`),
+			CreateBy:   DefaultAdmin.ID,
+			CreateTime: null.TimeFrom(time.Now()),
+			UpdateBy:   DefaultAdmin.ID,
+			UpdateTime: null.TimeFrom(time.Now()),
+			DelFlag:    null.IntFrom(0),
+		},
 	}
 	for _, option := range options {
 		if ct, err := s.Where("id=?", option.ID.String).Count(new(SysOptionset)); ct == 0 || err != nil {
