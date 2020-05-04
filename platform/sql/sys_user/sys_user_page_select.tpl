@@ -1,7 +1,7 @@
 select
     sys_user.id,
 	sys_user.name,
-	sys_user.full_name,
+	sys_user.nickname,
 	sys_user.email,
 	sys_user.mobile,
 	sys_user.status

@@ -4,6 +4,8 @@
 package app
 
 import (
+	"fmt"
+
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
@@ -130,10 +132,18 @@ func SysOptionsetPage(ctx *Context) {
 func SysOptionsetGet(ctx *Context) {
 	var entity model.SysOptionset
 	id := ctx.Query("id")
-	_, err := ctx.DB.Id(id).Get(&entity)
+	code := ctx.Query("code")
+	sql := "select id, name, code, value from sys_optionset where del_flag=0"
+	if id != "" {
+		sql += fmt.Sprintf(" and id='%v'", id)
+	}
+	if code != "" {
+		sql += fmt.Sprintf(" and code='%v'", code)
+	}
+	_, err := ctx.DB.Sql(sql).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(entity)
+	ctx.Success(ctx.OmitInValid(entity))
 }

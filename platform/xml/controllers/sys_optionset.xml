@@ -30,6 +30,7 @@
     </api>
     <api name="get" desc="获取字典信息" function="one" table="sys_optionset" method="get">
         <param name="id" type="string" desc="字典id" />
+        <param name="code" type="string" desc="字典code" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>

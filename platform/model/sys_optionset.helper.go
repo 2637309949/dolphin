@@ -57,6 +57,17 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
+		SysOptionset{
+			ID:         null.StringFrom("b4a7bt50-7dad-12d1-81b5-10c34fd460e4"),
+			Name:       null.StringFrom("帐号启用状态"),
+			Code:       null.StringFrom("sys_user_status"),
+			Value:      null.StringFrom(`[{"text":"禁用","value":0},{"text":"正常","value":1}]`),
+			CreateBy:   DefaultAdmin.ID,
+			CreateTime: null.TimeFrom(time.Now()),
+			UpdateBy:   DefaultAdmin.ID,
+			UpdateTime: null.TimeFrom(time.Now()),
+			DelFlag:    null.IntFrom(0),
+		},
 	}
 	for _, option := range options {
 		if ct, err := s.Where("id=?", option.ID.String).Count(new(SysOptionset)); ct == 0 || err != nil {

@@ -168,7 +168,7 @@ func SysUserPage(ctx *Context) {
 	ctx.Success(ret.With(&[]struct {
 		ID       null.String `json:"id" xml:"id"`
 		Name     null.String `json:"name" xml:"name"`
-		FullName null.String `json:"full_name" xml:"full_name"`
+		NickName null.String `json:"nickname" xml:"nickname"`
 		Mobile   null.String `json:"mobile" xml:"mobile"`
 		Email    null.String `json:"email" xml:"email"`
 		RoleName null.String `json:"role_name" xml:"role_name"`
