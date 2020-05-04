@@ -115,10 +115,7 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	size := q["size"].(int)
 	q["offset"] = (page - 1) * size
 	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
-	fmt.Println("----sqlTagName", sqlTagName)
-
 	result, err := db.SqlTemplateClient(sqlTagName, &q).Query().List()
-	fmt.Println("----result", result)
 	if err != nil {
 		return nil, err
 	}
