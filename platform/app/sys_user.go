@@ -122,7 +122,25 @@ func SysUserPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
 	q.SetString("org_id")
+	q.SetString("cn_org_id")
 	q.SetTags()
+
+	if q.GetString("cn_org_id") != "" {
+		idst := struct {
+			IDS string `xorm:"ids"`
+		}{}
+		_, err := ctx.DB.Sql(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, del_flag from sys_org where del_flag=0 and inheritance like "%v" group by del_flag`, "%"+q.GetString("cn_org_id")+"%")).Get(&idst)
+		if err != nil {
+			ctx.Fail(err)
+			return
+		}
+		ids := []string{}
+		for _, v := range strings.Split(idst.IDS, ",") {
+			ids = append(ids, fmt.Sprintf("'%v'", v))
+		}
+		q.SetString("cn_org_id", template.HTML(strings.Join(ids, ",")))()
+	}
+
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
 	if err != nil {
 		ctx.Fail(err)

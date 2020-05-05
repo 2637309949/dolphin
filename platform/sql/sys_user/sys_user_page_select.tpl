@@ -14,4 +14,7 @@ where
 {{if ne .org_id ""}}
 	and sys_user.org_id = "{{.org_id}}"
 {{end}}
+{{if ne .cn_org_id ""}}
+	and sys_user.org_id in ({{.cn_org_id}})
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}

@@ -7,5 +7,11 @@ from
 left join
     sys_role
 on sys_role.id = sys_role_user.role_id
-where sys_role_user.user_id in ({{.uids}})
+where sys_role_user.del_flag=0
+{{if ne .uids ""}}
+    and sys_role_user.user_id in ({{.uids}})
+{{end}}
 GROUP BY sys_role_user.user_id
+{{if eq .uids ""}}
+    limit 0 offset 0
+{{end}}
