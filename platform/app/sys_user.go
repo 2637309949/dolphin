@@ -134,6 +134,7 @@ func SysUserPage(ctx *Context) {
 			ctx.Fail(err)
 			return
 		}
+		// if id type...
 		ids := []string{}
 		for _, v := range strings.Split(idst.IDS, ",") {
 			ids = append(ids, fmt.Sprintf("'%v'", v))
@@ -146,6 +147,7 @@ func SysUserPage(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
 	// combile from srv sql
 	uids := []string{}
 	uorgs := []string{}
