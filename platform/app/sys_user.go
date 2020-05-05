@@ -97,7 +97,6 @@ func SysUserUpdate(ctx *Context) {
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
@@ -122,6 +121,7 @@ func SysUserPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetString("org_id")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
 	if err != nil {
