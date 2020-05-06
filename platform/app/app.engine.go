@@ -277,7 +277,7 @@ func buildEngine() *Engine {
 	e.Gin.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	e.Gin.Use(plugin.Tracker(Tracker(e)))
 	e.Gin.Use(plugin.Recovery())
-	e.Gin.Use(plugin.ProcessMethodOverride(e.Gin))
+	e.Gin.Use(plugin.Override(e.Gin.HandleContext))
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}
