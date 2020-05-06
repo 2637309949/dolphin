@@ -270,16 +270,12 @@ func buildEngine() *Engine {
 	e := &Engine{}
 	e.Manager = NewDefaultManager()
 	e.GRPC = grpc.NewServer()
-	if viper.GetString("app.mode") != "debug" {
-		gin.SetMode(gin.ReleaseMode)
-	}
+	gin.SetMode(viper.GetString("app.mode"))
+
 	e.Gin = gin.New()
 	e.Gin.Use(plugin.CORS())
 	e.Gin.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
-	e.Gin.Use(plugin.Tracker(gin.LoggerConfig{
-		Output:    logrus.GetOutput(),
-		Formatter: plugin.Formatter,
-	}, Tracker(e)))
+	e.Gin.Use(plugin.Tracker(Tracker(e)))
 	e.Gin.Use(plugin.Recovery())
 	e.Gin.Use(plugin.ProcessMethodOverride(e.Gin))
 	e.pool.New = func() interface{} {
