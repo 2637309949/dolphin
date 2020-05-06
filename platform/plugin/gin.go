@@ -139,20 +139,16 @@ func (w bodyLogWriter) WriteString(s string) (int, error) {
 }
 
 // Tracker instance a Logger middleware with config.
-func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFunc {
-	formatter := conf.Formatter
-	if formatter == nil {
-		formatter = defaultLogFormatter
-	}
-
-	out := conf.Output
-	if out == nil {
-		out = gin.DefaultWriter
-	}
-
-	notlogged := conf.SkipPaths
-
+func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFunc {
+	notlogged := []string{}
 	isTerm := true
+	out := logrus.GetOutput()
+	formatter := Formatter
+	recv := func(*gin.Context, *LogFormatterParams) {}
+
+	if len(receiver) > 0 {
+		recv = receiver[0]
+	}
 
 	if w, ok := out.(*os.File); !ok || os.Getenv("TERM") == "dumb" ||
 		(!isatty.IsTerminal(w.Fd()) && !isatty.IsCygwinTerminal(w.Fd())) {
@@ -222,9 +218,7 @@ func Tracker(conf gin.LoggerConfig, cb ...func(*gin.Context, *LogFormatterParams
 			logrus.Info(formatter(param.LogFormatterParams))
 
 			// LogFormatterParams defined recorder
-			if len(cb) > 0 {
-				cb[0](c, &param)
-			}
+			recv(c, &param)
 		}
 	}
 }
