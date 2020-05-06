@@ -2,11 +2,9 @@ package app
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 	"path"
 	"path/filepath"
-	"regexp"
 	"sync"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
@@ -16,7 +14,6 @@ import (
 	"google.golang.org/grpc"
 
 	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
@@ -110,7 +107,6 @@ func (e *Engine) initDB() {
 		util.EnsureLeft(e.PlatformDB.Sql(fmt.Sprintf("create database if not exists %v default character set utf8mb4", uri.DbName)).Execute())
 		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)
 		db.SetLogger(xLogger)
-
 		e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
 		e.RegisterSQLMap(db, sql.SQLTPL)
 		e.Manager.AddBusinessDB(domain.Domain.String, db)
@@ -185,39 +181,9 @@ func (e *Engine) initOAuth() {
 	manager.MapTokenStorage(e.Manager.GetTokenStore())
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 	manager.MapClientStorage(NewClientStore())
-	manager.SetValidateURIHandler(func(baseURI string, redirectURI string) error {
-		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
-		base := reg.FindAllStringSubmatch(baseURI, -1)
-		redirect := reg.FindAllStringSubmatch(redirectURI, -1)
-		if base[0][2] != redirect[0][2] {
-			return errors.ErrInvalidRedirectURI
-		}
-		return nil
-	})
-
+	manager.SetValidateURIHandler(ValidateURIHandler)
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
-	e.OAuth2.SetUserAuthorizationHandler(func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
-		store, err := session.Start(nil, w, r)
-		if err != nil {
-			return
-		}
-		userID, uok := store.Get("LoggedInUserID")
-		domain, dok := store.Get("LoggedInDomain")
-		if !uok || !dok {
-			if r.Form == nil {
-				r.ParseForm()
-			}
-			store.Set("ReturnUri", r.Form)
-			store.Save()
-			w.Header().Set("Location", viper.GetString("oauth.login"))
-			w.WriteHeader(http.StatusFound)
-			return
-		}
-		uid = userID.(string)
-		dm = domain.(string)
-		store.Save()
-		return
-	})
+	e.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
 	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
 		logrus.Errorf("internal error:%v", err.Error())
 		return

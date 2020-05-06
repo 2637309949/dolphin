@@ -4,10 +4,13 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"regexp"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
+	oErrors "github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -119,4 +122,39 @@ func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 		Secret: cli.Secret.String,
 		Domain: cli.Domain.String,
 	}, nil
+}
+
+// UserAuthorizationHandler defined
+var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
+	store, err := session.Start(nil, w, r)
+	if err != nil {
+		return
+	}
+	userID, uok := store.Get("LoggedInUserID")
+	domain, dok := store.Get("LoggedInDomain")
+	if !uok || !dok {
+		if r.Form == nil {
+			r.ParseForm()
+		}
+		store.Set("ReturnUri", r.Form)
+		store.Save()
+		w.Header().Set("Location", viper.GetString("oauth.login"))
+		w.WriteHeader(http.StatusFound)
+		return
+	}
+	uid = userID.(string)
+	dm = domain.(string)
+	store.Save()
+	return
+}
+
+// ValidateURIHandler defined
+var ValidateURIHandler = func(baseURI string, redirectURI string) error {
+	reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+	base := reg.FindAllStringSubmatch(baseURI, -1)
+	redirect := reg.FindAllStringSubmatch(redirectURI, -1)
+	if base[0][2] != redirect[0][2] {
+		return oErrors.ErrInvalidRedirectURI
+	}
+	return nil
 }
