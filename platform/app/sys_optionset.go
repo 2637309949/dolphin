@@ -145,5 +145,5 @@ func SysOptionsetGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ctx.OmitInValid(entity))
+	ctx.Success(entity.OmitByZero())
 }

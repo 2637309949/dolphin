@@ -20,6 +20,26 @@ type {{.Table.ToUpperCase .Table.Name}} struct {
 	{{- end}}
 }
 
+// OmitByZero defined
+func (m *{{.Table.ToUpperCase .Table.Name}}) OmitByZero() interface{} {
+	t, v, sv := reflect.TypeOf(*m), reflect.ValueOf(*m), []reflect.StructField{}
+	for i := 0; i < v.NumField(); i++ {
+		if v.Field(i).CanInterface() {
+			if zeroType, ok := v.Field(i).Interface().(xorm.ZeroType); !ok || !zeroType.IsZero() {
+				sv = append(sv, reflect.StructField{
+					Name: strings.Title(t.Field(i).Name),
+					Type: t.Field(i).Type,
+					Tag:  t.Field(i).Tag,
+				})
+			}
+		}
+	}
+	target := reflect.New(reflect.StructOf(sv)).Interface()
+	sbt, _ := json.Marshal(m)
+	json.Unmarshal(sbt, &target)
+	return target
+}
+
 // TableName table name of defined {{.Table.ToUpperCase .Table.Name}}
 func (m *{{.Table.ToUpperCase .Table.Name}}) TableName() string {
 	return "{{.Table.Name}}"
