@@ -5,7 +5,7 @@ go 1.13
 replace github.com/2637309949/dolphin => ../
 
 require (
-	github.com/2637309949/dolphin v0.0.0-20200501124524-5c08b077b3a8
+	github.com/2637309949/dolphin v0.0.0-20200507063526-5bfe8aab3f98
 	github.com/CloudyKit/fastprinter v0.0.0-20200109182630-33d98a066a53 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/go-openapi/spec v0.19.7 // indirect
@@ -20,9 +20,9 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/crypto v0.0.0-20200429183012-4b2356b1ed79 // indirect
-	golang.org/x/net v0.0.0-20200501053045-e0ff5e5a1de5 // indirect
-	golang.org/x/sys v0.0.0-20200501052902-10377860bb8e // indirect
-	golang.org/x/tools v0.0.0-20200501065659-ab2804fb9c9d // indirect
+	golang.org/x/net v0.0.0-20200506145744-7e3656a0809f // indirect
+	golang.org/x/sys v0.0.0-20200501145240-bc7a7d42d5c3 // indirect
+	golang.org/x/tools v0.0.0-20200507050207-a1532b81a28f // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/ini.v1 v1.55.0 // indirect
 )
