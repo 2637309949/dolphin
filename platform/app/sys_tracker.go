@@ -50,5 +50,5 @@ func SysTrackerGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(entity.OmitByZero())
+	ctx.Success(ctx.OmitByZero(entity))
 }

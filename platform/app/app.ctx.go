@@ -251,8 +251,8 @@ func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[
 	return optionMap, nil
 }
 
-// OmitInValid omit invalid fileds
-func (ctx *Context) OmitInValid(source interface{}) (target interface{}) {
+// OmitByZero omit invalid fileds
+func (ctx *Context) OmitByZero(source interface{}) (target interface{}) {
 	sv := []reflect.StructField{}
 	t := reflect.TypeOf(source)
 	v := reflect.ValueOf(source)
