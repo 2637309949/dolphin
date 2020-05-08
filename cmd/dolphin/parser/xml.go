@@ -325,7 +325,6 @@ func (parser *AppParser) Walk(xmlPath string) error {
 			github.com/go-sql-driver/mysql v1.5.0
 			google.golang.org/grpc v1.26.0
 		)`))
-		files = append(files, path.Join(xmlPath, "xml", "application.xml"))
 	}
 	for _, v := range files {
 		if err := parser.parse(v); err != nil {
