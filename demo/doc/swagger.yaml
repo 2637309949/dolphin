@@ -40,6 +40,9 @@ definitions:
       read_count:
         description: 阅读次数
         type: number
+      remark:
+        description: 备注
+        type: string
       share_count:
         description: 分享次数
         type: number
@@ -66,6 +69,15 @@ definitions:
         type: object
       msg:
         description: 消息
+        type: string
+    type: object
+  model.Scheduling:
+    properties:
+      code:
+        description: 编码
+        type: integer
+      name:
+        description: 名称
         type: string
     type: object
   model.SysAppFun:
@@ -100,7 +112,7 @@ definitions:
       name:
         description: 名称
         type: string
-      order_num:
+      order:
         description: 排序
         type: number
       parent:
@@ -108,6 +120,9 @@ definitions:
         type: string
       perms:
         description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        type: string
+      remark:
+        description: 备注
         type: string
       type:
         description: 类型 0：目录 1：菜单 2：按钮
@@ -152,6 +167,9 @@ definitions:
       parent:
         description: 父节点
         type: string
+      remark:
+        description: 备注
+        type: string
       temp_id:
         description: 模板ID
         type: string
@@ -190,6 +208,9 @@ definitions:
         type: string
       path:
         description: path
+        type: string
+      remark:
+        description: 备注
         type: string
       size:
         description: 大小
@@ -236,6 +257,9 @@ definitions:
       name:
         description: 名称
         type: string
+      remark:
+        description: 备注
+        type: string
       secret:
         description: 密钥
         type: string
@@ -265,6 +289,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       update_by:
         description: 最后更新人
@@ -323,6 +350,9 @@ definitions:
       name:
         description: 名字
         type: string
+      remark:
+        description: 备注
+        type: string
       static_url:
         description: 静态地址
         type: string
@@ -377,7 +407,7 @@ definitions:
       name:
         description: 名称
         type: string
-      order_num:
+      order:
         description: 排序
         type: number
       parent:
@@ -385,6 +415,9 @@ definitions:
         type: string
       perms:
         description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        type: string
+      remark:
+        description: 备注
         type: string
       type:
         description: 类型 0：目录 1：菜单 2：按钮
@@ -419,6 +452,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       update_by:
         description: 最后更新人
@@ -465,6 +501,9 @@ definitions:
       parent:
         description: 上级组织
         type: string
+      remark:
+        description: 备注
+        type: string
       status:
         description: 状态 0：禁用 1：正常
         type: number
@@ -498,6 +537,9 @@ definitions:
       name:
         description: 名称
         type: string
+      remark:
+        description: 备注
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -507,6 +549,12 @@ definitions:
     type: object
   model.SysRole:
     properties:
+      admin_index:
+        description: 角色进入后台首页组件
+        type: string
+      app_index:
+        description: 角色app首页url
+        type: string
       code:
         description: 编码
         type: string
@@ -524,6 +572,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       status:
         description: 状态 0：禁用 1：正常
@@ -555,6 +606,9 @@ definitions:
       name:
         description: 名称
         type: string
+      remark:
+        description: 备注
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -581,6 +635,9 @@ definitions:
         type: string
       name:
         description: 名称
+        type: string
+      remark:
+        description: 备注
         type: string
       update_by:
         description: 最后更新人
@@ -609,9 +666,6 @@ definitions:
       email:
         description: 邮箱
         type: string
-      full_name:
-        description: 全名
-        type: string
       gender:
         description: 性别(0：女,1：男)
         type: number
@@ -627,11 +681,17 @@ definitions:
       name:
         description: 名字
         type: string
+      nickname:
+        description: 全名
+        type: string
       org_id:
         description: 组织ID
         type: string
       password:
         description: 密码
+        type: string
+      remark:
+        description: 备注
         type: string
       salt:
         description: 盐噪点
@@ -668,6 +728,9 @@ definitions:
         type: string
       name:
         description: 模板名称
+        type: string
+      remark:
+        description: 备注
         type: string
       type:
         description: 模板类型
@@ -720,6 +783,9 @@ definitions:
       read_count:
         description: 阅读次数
         type: number
+      remark:
+        description: 备注
+        type: string
       share_count:
         description: 分享次数
         type: number
@@ -2630,6 +2696,38 @@ paths:
       summary: 添加组织
       tags:
       - 组织
+  /api/sys/org/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织
+        in: body
+        name: sys_org
+        schema:
+          items:
+            $ref: '#/definitions/model.SysOrg'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除组织
+      tags:
+      - 组织
   /api/sys/org/del:
     delete:
       consumes:
@@ -3029,6 +3127,36 @@ paths:
       summary: 角色分页查询
       tags:
       - 角色
+  /api/sys/role/role_app_fun_tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 角色App功能树形结构
+      tags:
+      - 角色
+  /api/sys/role/role_menu_tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 角色菜单树形结构
+      tags:
+      - 角色
   /api/sys/role/update:
     put:
       consumes:
@@ -3059,6 +3187,153 @@ paths:
       summary: 更新角色
       tags:
       - 角色
+  /api/sys/scheduling/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/model.Scheduling'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 添加调度
+      tags:
+      - 调度
+  /api/sys/scheduling/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/model.Scheduling'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 删除调度
+      tags:
+      - 调度
+  /api/sys/scheduling/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      tags:
+      - 调度
+  /api/sys/scheduling/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 调度分页查询
+      tags:
+      - 调度
+  /api/sys/scheduling/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/model.Scheduling'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Response'
+      summary: 更新调度
+      tags:
+      - 调度
   /api/sys/tag/add:
     post:
       consumes:

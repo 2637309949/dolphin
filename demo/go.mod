@@ -1,4 +1,4 @@
-module test
+module demo
 
 go 1.13
 

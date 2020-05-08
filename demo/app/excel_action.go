@@ -4,8 +4,8 @@
 package app
 
 import (
+	"demo/srv"
 	"fmt"
-	"test/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	pApp "github.com/2637309949/dolphin/platform/app"

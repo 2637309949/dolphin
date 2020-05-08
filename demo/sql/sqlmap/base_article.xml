@@ -1,0 +1,23 @@
+<sqlMap>
+    <sql id="insert_base_article">
+        insert into base_article
+		(`id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		values
+		(?id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    </sql>
+    <sql id="update_base_article">
+        update base_article set `id`=?id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+		where  id =?id
+    </sql>
+    <sql id="delete_base_article">
+        delete from base_article
+		where id =?id
+    </sql>
+    <sql id="selectone_base_article">
+        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from base_article
+		where  id =?id
+    </sql>
+    <sql id="selectall_base_article">
+        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from base_article
+    </sql>
+</sqlMap>

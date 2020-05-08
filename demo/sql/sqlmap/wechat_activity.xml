@@ -1,12 +1,12 @@
 <sqlMap>
     <sql id="insert_wechat_activity">
         insert into wechat_activity
-		(`id`,`title`,`content`,`campus`,`image`,`type`,`forward_count`,`like_count`,`share_count`,`read_count`,`priority`,`is_entry`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`)
+		(`id`,`title`,`content`,`campus`,`image`,`type`,`forward_count`,`like_count`,`share_count`,`read_count`,`priority`,`is_entry`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
 		values
-		(?id,?title,?content,?campus,?image,?type,?forward_count,?like_count,?share_count,?read_count,?priority,?is_entry,?hidden,?create_by,?create_time,?update_by,?update_time,?del_flag)
+		(?id,?title,?content,?campus,?image,?type,?forward_count,?like_count,?share_count,?read_count,?priority,?is_entry,?hidden,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
     </sql>
     <sql id="update_wechat_activity">
-        update wechat_activity set `id`=?id,`title`=?title,`content`=?content,`campus`=?campus,`image`=?image,`type`=?type,`forward_count`=?forward_count,`like_count`=?like_count,`share_count`=?share_count,`read_count`=?read_count,`priority`=?priority,`is_entry`=?is_entry,`hidden`=?hidden,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag
+        update wechat_activity set `id`=?id,`title`=?title,`content`=?content,`campus`=?campus,`image`=?image,`type`=?type,`forward_count`=?forward_count,`like_count`=?like_count,`share_count`=?share_count,`read_count`=?read_count,`priority`=?priority,`is_entry`=?is_entry,`hidden`=?hidden,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_wechat_activity">
@@ -14,10 +14,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_wechat_activity">
-        select `id`,`title`,`content`,`campus`,`image`,`type`,`forward_count`,`like_count`,`share_count`,`read_count`,`priority`,`is_entry`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from wechat_activity
+        select `id`,`title`,`content`,`campus`,`image`,`type`,`forward_count`,`like_count`,`share_count`,`read_count`,`priority`,`is_entry`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from wechat_activity
 		where  id =?id
     </sql>
     <sql id="selectall_wechat_activity">
-        select `id`,`title`,`content`,`campus`,`image`,`type`,`forward_count`,`like_count`,`share_count`,`read_count`,`priority`,`is_entry`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag` from wechat_activity
+        select `id`,`title`,`content`,`campus`,`image`,`type`,`forward_count`,`like_count`,`share_count`,`read_count`,`priority`,`is_entry`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from wechat_activity
     </sql>
 </sqlMap>

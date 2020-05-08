@@ -4,7 +4,7 @@
 package main
 
 import (
-	_ "test/app"
+	_ "demo/app"
 
 	"github.com/2637309949/dolphin/packages/fx/cli"
 	_ "github.com/go-sql-driver/mysql"
