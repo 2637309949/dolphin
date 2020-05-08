@@ -301,6 +301,7 @@ func (parser *AppParser) Walk(xmlPath string) error {
 	}
 	parser.Application = &schema.Application{}
 	if len(files) == 0 {
+		// xml defined
 		if err := os.MkdirAll(path.Join(xmlPath, "xml"), os.ModePerm); err != nil {
 			return err
 		}
@@ -309,6 +310,21 @@ func (parser *AppParser) Walk(xmlPath string) error {
 			return err
 		}
 		w.Write([]byte(template.TmplXML))
+		files = append(files, path.Join(xmlPath, "xml", "application.xml"))
+		// go mod defined
+		w, err = os.OpenFile(path.Join(xmlPath, "go.mod"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+		if err != nil {
+			return err
+		}
+		w.Write([]byte(`module example
+		
+		go 1.13
+
+		require (
+			github.com/2637309949/dolphin v0.0.0-20200508073022-98a4629a6b39
+			github.com/go-sql-driver/mysql v1.5.0
+			google.golang.org/grpc v1.26.0
+		)`))
 		files = append(files, path.Join(xmlPath, "xml", "application.xml"))
 	}
 	for _, v := range files {
