@@ -13,6 +13,8 @@ package app
 import (
 	"sync"
 
+	"google.golang.org/grpc"
+	
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/viper"
