@@ -20,7 +20,7 @@ var TmplXML = `<?xml version="1.0" encoding="utf-8" ?>
                 </return>
             </api>
             <api name="update" function="update" table="base_article" desc="更新文章" method="put">
-                <param name="user" type="$sys_role" desc="文章信息" />
+                <param name="user" type="$base_article" desc="文章信息" />
                 <return>
                     <success type="$response"/>
                     <failure type="$response"/>
