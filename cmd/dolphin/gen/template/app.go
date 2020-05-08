@@ -79,7 +79,14 @@ func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	}
 }
 
-// InvokeContext build context
+// InvokeRPC build rpc
+func InvokeRPC(build func(*grpc.Server)) func(*pApp.Engine) {
+	return func(e *pApp.Engine) {
+		build(e.GRPC)
+	}
+}
+
+// InvokeContext build ctx
 func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
 	return func(base *pApp.Engine) {
 		App.Group(viper.GetString("http.prefix")).Handle(httpMethod, relativePath, handlers...)

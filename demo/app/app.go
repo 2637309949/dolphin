@@ -10,6 +10,7 @@ import (
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/viper"
 	pApp "github.com/2637309949/dolphin/platform/app"
+	"google.golang.org/grpc"
 )
 
 type (
@@ -69,6 +70,13 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
 	return func(*pApp.Engine) {
 		build(App)
+	}
+}
+
+// InvokeRPC build engine
+func InvokeRPC(build func(*grpc.Server)) func(*pApp.Engine) {
+	return func(e *pApp.Engine) {
+		build(e.GRPC)
 	}
 }
 

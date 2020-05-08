@@ -240,7 +240,7 @@ func WechatActivityOne(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(entity)
+	ctx.Success(ctx.OmitByZero(entity))
 }
 
 // WechatActivityIncrease api implementation

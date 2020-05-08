@@ -225,6 +225,13 @@ func InvokeEngine(build func(*Engine)) func(*Engine) {
 	}
 }
 
+// InvokeRPC build engine
+func InvokeRPC(build func(*grpc.Server)) func(*Engine) {
+	return func(e *Engine) {
+		build(e.GRPC)
+	}
+}
+
 // InvokeContext build context
 func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
 	return func(e *Engine) {
