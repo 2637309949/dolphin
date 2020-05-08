@@ -1,4 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
+package template
+
+// TmplXML defined template
+var TmplXML = `<?xml version="1.0" encoding="utf-8" ?>
 <application name="example" desc="dolphin template" packagename="example">
     <controllers>
         <controller name="base_article" desc="文章接口定义">
@@ -54,3 +57,4 @@
         </table>
     </tables>
 </application>
+`

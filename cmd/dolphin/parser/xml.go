@@ -8,10 +8,12 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
 
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"gopkg.in/go-playground/validator.v9"
 )
@@ -298,6 +300,17 @@ func (parser *AppParser) Walk(xmlPath string) error {
 		return err
 	}
 	parser.Application = &schema.Application{}
+	if len(files) == 0 {
+		if err := os.MkdirAll(path.Join(xmlPath, "xml"), os.ModePerm); err != nil {
+			return err
+		}
+		w, err := os.OpenFile(path.Join(xmlPath, "xml", "application.xml"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+		if err != nil {
+			return err
+		}
+		w.Write([]byte(template.TmplXML))
+		files = append(files, path.Join(xmlPath, "xml", "application.xml"))
+	}
 	for _, v := range files {
 		if err := parser.parse(v); err != nil {
 			return err
