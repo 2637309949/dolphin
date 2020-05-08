@@ -100,7 +100,7 @@ var (
 
 	build = &cobra.Command{
 		Use:   "build",
-		Short: "build a initialized project",
+		Short: "initialize or update project",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -124,7 +124,7 @@ var (
 	}
 	clean = &cobra.Command{
 		Use:   "clean",
-		Short: "clear all cached files",
+		Short: "remove all auto files",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
