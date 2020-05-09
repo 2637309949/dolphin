@@ -182,23 +182,16 @@ var (
 				if err != nil {
 					return err
 				}
-				w.Write([]byte(fmt.Sprintf(`module %v
-
-go 1.13
-
-require (
-	github.com/2637309949/dolphin v0.0.0-20200508090105-0cf30842c8cd
-	github.com/go-sql-driver/mysql v1.5.0
-	google.golang.org/grpc v1.26.0
-)`, path.Base(wd))))
+				modFile := "module %v\n\ngo 1.13\n\nrequire (\n\tgithub.com/2637309949/dolphin v0.0.0-20200508090105-0cf30842c8cd\n\tgithub.com/go-sql-driver/mysql v1.5.0\n\tgoogle.golang.org/grpc v1.26.0\n)"
+				w.Write([]byte(fmt.Sprintf(modFile, path.Base(wd))))
 
 				// properties defined
 				w, err = os.OpenFile(path.Join(wd, "app.properties"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 				if err != nil {
 					return err
 				}
-				w.Write([]byte(fmt.Sprintf(`app.name = %v
-app.mode = debug`, path.Base(wd))))
+				pptmpl := "app.name = %v\napp.mode = debug"
+				w.Write([]byte(fmt.Sprintf(pptmpl, path.Base(wd))))
 			}
 			return nil
 		},
