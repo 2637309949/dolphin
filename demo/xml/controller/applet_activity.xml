@@ -42,7 +42,7 @@
             <failure type="$response" />
         </return>
     </api>
-    <api name="list" function="page" table="applet_activity" desc="活动分页查询" method="get">
+    <api name="list" function="page" table="applet_activity" desc="活动分页查询" method="get" roles="admin,xd">
         <param name="page" type="int" desc="页码" value="1" />
         <param name="size" type="int" desc="单页数" value="20" />
         <param name="title" type="string" desc="标题筛选" value="nn" />

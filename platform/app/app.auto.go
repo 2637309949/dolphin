@@ -625,9 +625,9 @@ func NewSysUser() *SysUser {
 // SysUserRoutes defined
 func SysUserRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/user/add", engine.Auth(), SysUserInstance.Add)
-	group.Handle("DELETE", "/sys/user/del", engine.Auth(), SysUserInstance.Del)
-	group.Handle("PUT", "/sys/user/update", engine.Auth(), SysUserInstance.Update)
+	group.Handle("POST", "/sys/user/add", engine.Auth(), engine.Roles("admin"), SysUserInstance.Add)
+	group.Handle("DELETE", "/sys/user/del", engine.Auth(), engine.Roles("admin"), SysUserInstance.Del)
+	group.Handle("PUT", "/sys/user/update", engine.Auth(), engine.Roles("admin"), SysUserInstance.Update)
 	group.Handle("GET", "/sys/user/page", engine.Auth(), SysUserInstance.Page)
 	group.Handle("GET", "/sys/user/get", engine.Auth(), SysUserInstance.Get)
 	group.Handle("POST", "/sys/user/login", SysUserInstance.Login)

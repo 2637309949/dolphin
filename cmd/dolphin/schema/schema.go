@@ -33,6 +33,7 @@ type Param struct {
 // API struct
 type API struct {
 	Common
+	Roles    []string
 	Auth     bool
 	Version  string
 	Path     string

@@ -52,6 +52,13 @@ func (e *Engine) Auth() func(*Context) {
 	}
 }
 
+// Roles middles
+func (e *Engine) Roles(roles ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		e.Engine.Roles(roles...)
+	}
+}
+
 // Group handlers
 func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
 	return &RouterGroup{engine: e, RouterGroup: e.Engine.Group(relativePath, handlers...)}

@@ -212,6 +212,18 @@ func (e *Engine) Auth() func(ctx *Context) {
 	}
 }
 
+// Roles middles
+func (e *Engine) Roles(roles ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		if !ctx.InRole(roles...) {
+			ctx.Fail(util.ErrAccessDenied, 403)
+			ctx.Abort()
+			return
+		}
+		ctx.Next()
+	}
+}
+
 // Run booting system
 func (e *Engine) Run() {
 	e.initDB()

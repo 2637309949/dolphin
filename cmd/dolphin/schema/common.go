@@ -28,9 +28,7 @@ func (c *Common) Import(pkg string) template.HTML {
 		for i, v := range packages {
 			packages[i] = fmt.Sprintf(`    "%v"`, v)
 		}
-		tmpl := `import (
-%s
-)`
+		tmpl := "import (\n%s\n)"
 		return c.Unescaped(fmt.Sprintf(tmpl, strings.Join(packages, "\n")))
 	}
 	return c.Unescaped("")
@@ -161,6 +159,15 @@ func (c *Common) UcFirst(str string) string {
 		return string(unicode.ToUpper(v)) + str[i+1:]
 	}
 	return ""
+}
+
+// FormatString defined
+func (c *Common) FormatString(args []string, segm string) template.HTML {
+	strs := []string{}
+	for _, v := range args {
+		strs = append(strs, fmt.Sprintf(`"%v"`, v))
+	}
+	return template.HTML(strings.Join(strs, segm))
 }
 
 // APIPrefix version path
