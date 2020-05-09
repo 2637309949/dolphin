@@ -223,10 +223,8 @@ func SysUserGet(ctx *Context) {
 // SysUserLogin api implementation
 // @Summary 用户认证
 // @Tags 用户
-// @Accept multipart/form-data
-// @Param username formData string false "用户名称"
-// @Param password formData string false "用户密码"
-// @Param domain formData string false "用户域"
+// @Accept application/json
+// @Param payload body model.Login false "用户信息"
 // @Failure 403 {object} model.Response
 // @Success 200 {object} model.Response
 // @Failure 500 {object} model.Response

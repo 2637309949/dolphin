@@ -36,9 +36,7 @@
         </return>
     </api>
     <api name="login" desc="用户认证" method="post" auth="false">
-        <param name="username" type="string" desc="用户名称" />
-        <param name="password" type="string" desc="用户密码" />
-        <param name="domain" type="string" desc="用户域" />
+        <param name="payload" type="$login" desc="用户信息" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>

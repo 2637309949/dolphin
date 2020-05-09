@@ -1,4 +1,16 @@
 definitions:
+  model.Login:
+    properties:
+      domain:
+        description: 域
+        type: string
+      name:
+        description: 名字
+        type: string
+      password:
+        description: 密码
+        type: string
+    type: object
   model.Response:
     properties:
       code:
@@ -3365,20 +3377,13 @@ paths:
   /api/sys/user/login:
     post:
       consumes:
-      - multipart/form-data
+      - application/json
       parameters:
-      - description: 用户名称
-        in: formData
-        name: username
-        type: string
-      - description: 用户密码
-        in: formData
-        name: password
-        type: string
-      - description: 用户域
-        in: formData
-        name: domain
-        type: string
+      - description: 用户信息
+        in: body
+        name: payload
+        schema:
+          $ref: '#/definitions/model.Login'
       responses:
         "200":
           description: OK
