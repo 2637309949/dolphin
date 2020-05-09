@@ -1239,23 +1239,20 @@ paths:
   /api/sys/cas/login:
     post:
       consumes:
-      - application/json
+      - multipart/form-data
       parameters:
       - description: 用户名称
-        in: body
-        name: string
-        schema:
-          $ref: '#/definitions/username'
+        in: formData
+        name: username
+        type: string
       - description: 用户密码
-        in: body
-        name: string
-        schema:
-          $ref: '#/definitions/password'
+        in: formData
+        name: password
+        type: string
       - description: 用户域
-        in: body
-        name: string
-        schema:
-          $ref: '#/definitions/domain'
+        in: formData
+        name: domain
+        type: string
       responses:
         "200":
           description: OK
@@ -3368,23 +3365,20 @@ paths:
   /api/sys/user/login:
     post:
       consumes:
-      - application/json
+      - multipart/form-data
       parameters:
       - description: 用户名称
-        in: body
+        in: formData
         name: username
-        schema:
-          type: string
+        type: string
       - description: 用户密码
-        in: body
+        in: formData
         name: password
-        schema:
-          type: string
+        type: string
       - description: 用户域
-        in: body
+        in: formData
         name: domain
-        schema:
-          type: string
+        type: string
       responses:
         "200":
           description: OK

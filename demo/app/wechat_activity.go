@@ -15,7 +15,7 @@ import (
 
 // WechatActivityBatchAdd api implementation
 // @Summary 添加活动
-// @Tags 活动
+// @Tags 微信活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.WechatActivity false "活动对象"
@@ -47,7 +47,7 @@ func WechatActivityBatchAdd(ctx *Context) {
 
 // WechatActivityAdd api implementation
 // @Summary 添加活动
-// @Tags 活动
+// @Tags 微信活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.WechatActivity false "活动对象"
@@ -77,7 +77,7 @@ func WechatActivityAdd(ctx *Context) {
 
 // WechatActivityBatchDel api implementation
 // @Summary 删除活动
-// @Tags 活动
+// @Tags 微信活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.WechatActivity false "活动对象"
@@ -110,7 +110,7 @@ func WechatActivityBatchDel(ctx *Context) {
 
 // WechatActivityDel api implementation
 // @Summary 删除活动
-// @Tags 活动
+// @Tags 微信活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.WechatActivity false "活动对象"
@@ -138,7 +138,7 @@ func WechatActivityDel(ctx *Context) {
 
 // WechatActivityBatchUpdate api implementation
 // @Summary 更新活动
-// @Tags 活动
+// @Tags 微信活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.WechatActivity false "活动对象"
@@ -172,7 +172,7 @@ func WechatActivityBatchUpdate(ctx *Context) {
 
 // WechatActivityUpdate api implementation
 // @Summary 更新活动
-// @Tags 活动
+// @Tags 微信活动
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.WechatActivity false "活动对象"
@@ -198,7 +198,7 @@ func WechatActivityUpdate(ctx *Context) {
 
 // WechatActivityList api implementation
 // @Summary 活动分页查询
-// @Tags 活动
+// @Tags 微信活动
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
@@ -225,7 +225,7 @@ func WechatActivityList(ctx *Context) {
 
 // WechatActivityOne api implementation
 // @Summary 获取活动
-// @Tags 活动
+// @Tags 微信活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
 // @Failure 403 {object} model.Response
@@ -240,12 +240,12 @@ func WechatActivityOne(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ctx.OmitByZero(entity))
+	ctx.Success(entity)
 }
 
 // WechatActivityIncrease api implementation
 // @Summary 增加次数
-// @Tags 活动
+// @Tags 微信活动
 // @version 1.0
 // @Accept application/json
 // @Param id body string false "记录id"
@@ -269,7 +269,7 @@ func WechatActivityIncrease(ctx *Context) {
 
 // WechatActivityIncreaseV2 api implementation
 // @Summary 增加次数
-// @Tags 活动
+// @Tags 微信活动
 // @version 2.0
 // @Accept application/json
 // @Param id body string false "记录id"

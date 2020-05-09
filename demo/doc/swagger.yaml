@@ -840,7 +840,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 添加活动
       tags:
-      - 活动
+      - 小程序活动
   /api/applet/activity/batch_add:
     post:
       consumes:
@@ -872,7 +872,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 添加活动
       tags:
-      - 活动
+      - 小程序活动
   /api/applet/activity/batch_del:
     delete:
       consumes:
@@ -904,7 +904,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 删除活动
       tags:
-      - 活动
+      - 小程序活动
   /api/applet/activity/batch_update:
     put:
       consumes:
@@ -936,7 +936,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 更新活动
       tags:
-      - 活动
+      - 小程序活动
   /api/applet/activity/del:
     delete:
       consumes:
@@ -966,7 +966,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 删除活动
       tags:
-      - 活动
+      - 小程序活动
   /api/applet/activity/list:
     get:
       parameters:
@@ -1005,7 +1005,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 活动分页查询
       tags:
-      - 活动
+      - 小程序活动
   /api/applet/activity/one:
     get:
       parameters:
@@ -1032,7 +1032,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 获取活动
       tags:
-      - 活动
+      - 小程序活动
   /api/applet/activity/update:
     put:
       consumes:
@@ -1062,7 +1062,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 更新活动
       tags:
-      - 活动
+      - 小程序活动
   /api/excel/action/build:
     get:
       responses:
@@ -1649,23 +1649,20 @@ paths:
   /api/sys/cas/login:
     post:
       consumes:
-      - application/json
+      - multipart/form-data
       parameters:
       - description: 用户名称
-        in: body
-        name: string
-        schema:
-          $ref: '#/definitions/username'
+        in: formData
+        name: username
+        type: string
       - description: 用户密码
-        in: body
-        name: string
-        schema:
-          $ref: '#/definitions/password'
+        in: formData
+        name: password
+        type: string
       - description: 用户域
-        in: body
-        name: string
-        schema:
-          $ref: '#/definitions/domain'
+        in: formData
+        name: domain
+        type: string
       responses:
         "200":
           description: OK
@@ -3778,23 +3775,20 @@ paths:
   /api/sys/user/login:
     post:
       consumes:
-      - application/json
+      - multipart/form-data
       parameters:
       - description: 用户名称
-        in: body
+        in: formData
         name: username
-        schema:
-          type: string
+        type: string
       - description: 用户密码
-        in: body
+        in: formData
         name: password
-        schema:
-          type: string
+        type: string
       - description: 用户域
-        in: body
+        in: formData
         name: domain
-        schema:
-          type: string
+        type: string
       responses:
         "200":
           description: OK
@@ -4086,7 +4080,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 增加次数
       tags:
-      - 活动
+      - 小程序活动
   /api/v1/wechat/activity/increase:
     post:
       consumes:
@@ -4112,7 +4106,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 增加次数
       tags:
-      - 活动
+      - 微信活动
   /api/v2/applet/activity/increase_v2:
     post:
       consumes:
@@ -4140,7 +4134,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 增加次数
       tags:
-      - 活动
+      - 小程序活动
   /api/v2/wechat/activity/increase_v2:
     post:
       consumes:
@@ -4166,7 +4160,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 增加次数
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/add:
     post:
       consumes:
@@ -4196,7 +4190,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 添加活动
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/batch_add:
     post:
       consumes:
@@ -4228,7 +4222,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 添加活动
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/batch_del:
     delete:
       consumes:
@@ -4260,7 +4254,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 删除活动
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/batch_update:
     put:
       consumes:
@@ -4292,7 +4286,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 更新活动
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/del:
     delete:
       consumes:
@@ -4322,7 +4316,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 删除活动
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/list:
     get:
       parameters:
@@ -4361,7 +4355,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 活动分页查询
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/one:
     get:
       parameters:
@@ -4388,7 +4382,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 获取活动
       tags:
-      - 活动
+      - 微信活动
   /api/wechat/activity/update:
     put:
       consumes:
@@ -4418,7 +4412,7 @@ paths:
             $ref: '#/definitions/model.Response'
       summary: 更新活动
       tags:
-      - 活动
+      - 微信活动
 securityDefinitions:
   OAuth2AccessCode:
     authorizationUrl: http://localhost:8082/api/sys/cas/authorize

@@ -27,14 +27,14 @@ import (
 // @version {{.Version}}
 {{- end}}
 {{- if ne .Method "get"}}
-// @Accept application/json
+// @Accept {{if gt (len .Params) 1}}multipart/form-data{{else}}application/json{{end}}
 {{- end}}
 {{- $api := .}}
 {{- if .Auth}}
 // @Param Authorization header string false "认证令牌"
 {{- end}}
 {{- range .Params}}
-// @Param {{.Name}} {{- if eq $api.Method "get"}} query {{- else }} body {{- end}} {{.Ref .Type}} false "{{.Desc}}"
+// @Param {{.Name}} {{if eq $api.Method "get"}} query {{else }} {{- if ne (len $api.Params) 1 }}formData{{- else}}body{{- end}}{{- end}} {{.Ref .Type}} false "{{.Desc}}"
 {{- end}}
 // @Failure 403 {object} model.Response
 {{- if ne .Return.Success.Type ""}}

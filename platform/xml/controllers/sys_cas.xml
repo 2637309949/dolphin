@@ -1,8 +1,8 @@
 <controller name="sys_cas" desc="认证中心">
     <api name="login" desc="用户认证" method="post" auth="false">
-        <param name="string" type="username" desc="用户名称" />
-        <param name="string" type="password" desc="用户密码" />
-        <param name="string" type="domain" desc="用户域" />
+        <param name="username" type="string" desc="用户名称" />
+        <param name="password" type="string" desc="用户密码" />
+        <param name="domain" type="string" desc="用户域" />
         <return>
             <success type="$response"/>
             <failure type="$response"/>

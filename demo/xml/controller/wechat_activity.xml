@@ -1,5 +1,5 @@
 <!-- rule of controller name: ?<end>_?<module>_<ctr>_?<action> -->
-<controller name="wechat_activity" desc="活动">
+<controller name="wechat_activity" desc="微信活动">
     <api name="batch_add" function="add" table="wechat_activity" desc="添加活动" method="post">
         <param name="activity" type="[]$wechat_activity" desc="活动对象"/>
         <return>
