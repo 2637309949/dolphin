@@ -16,21 +16,10 @@ Dolphin is a code generate tools and web Framework written in Go (Golang)
 $ go get -u github.com/2637309949/dolphin/cmd/dolphin
 ```
 
-2. Create xml profile in project root dir
-
-```xml
-<?xml version="1.0" encoding="utf-8" ?>
-<application name="dolphin" desc="i2推手" packagename="test">
-    <controllers></controllers>
-    <beans></beans>
-    <tables></tables>
-</application>
-```
-
-3. Execute shell script, just a moment
+2. Create project dir and run dolphin
 
 ```sh
-go generate
+$ mkdir example && cd example && dolphin init && dolphin build
 ```
 
 ## Quick start
