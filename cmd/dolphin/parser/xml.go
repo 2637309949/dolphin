@@ -8,12 +8,10 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"os"
-	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"gopkg.in/go-playground/validator.v9"
 )
@@ -300,32 +298,6 @@ func (parser *AppParser) Walk(xmlPath string) error {
 		return err
 	}
 	parser.Application = &schema.Application{}
-	if len(files) == 0 {
-		// xml defined
-		if err := os.MkdirAll(path.Join(xmlPath, "xml"), os.ModePerm); err != nil {
-			return err
-		}
-		w, err := os.OpenFile(path.Join(xmlPath, "xml", "application.xml"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
-		if err != nil {
-			return err
-		}
-		w.Write([]byte(template.TmplXML))
-		files = append(files, path.Join(xmlPath, "xml", "application.xml"))
-		// go mod defined
-		w, err = os.OpenFile(path.Join(xmlPath, "go.mod"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
-		if err != nil {
-			return err
-		}
-		w.Write([]byte(`module example
-
-		go 1.13
-
-		require (
-			github.com/2637309949/dolphin v0.0.0-20200508090105-0cf30842c8cd
-			github.com/go-sql-driver/mysql v1.5.0
-			google.golang.org/grpc v1.26.0
-		)`))
-	}
 	for _, v := range files {
 		if err := parser.parse(v); err != nil {
 			return err

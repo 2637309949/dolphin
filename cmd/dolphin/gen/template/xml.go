@@ -2,7 +2,7 @@ package template
 
 // TmplXML defined template
 var TmplXML = `<?xml version="1.0" encoding="utf-8" ?>
-<application name="example" desc="dolphin template" packagename="example">
+<application name="%v" desc="dolphin template" packagename="%v">
     <controllers>
         <controller name="base_article" desc="文章接口定义">
             <api name="add" function="add" table="base_article" desc="添加文章" method="post">

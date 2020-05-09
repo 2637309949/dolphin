@@ -7,8 +7,11 @@ package main
 import (
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
@@ -100,7 +103,7 @@ var (
 
 	build = &cobra.Command{
 		Use:   "build",
-		Short: "initialize or update project",
+		Short: "Build project from xml",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -124,7 +127,7 @@ var (
 	}
 	clean = &cobra.Command{
 		Use:   "clean",
-		Short: "remove all auto files",
+		Short: "Remove cache files",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -145,9 +148,65 @@ var (
 			return nil
 		},
 	}
+	setup = &cobra.Command{
+		Use:   "init",
+		Short: "Initialize project",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			wd, err := os.Getwd()
+			if err != nil {
+				return err
+			}
+			var files []string
+			if err := filepath.Walk(wd, func(path string, info os.FileInfo, err error) error {
+				if strings.HasSuffix(path, ".xml") {
+					files = append(files, path)
+				}
+				return nil
+			}); err != nil {
+				return err
+			}
+			if len(files) == 0 {
+				// xml defined
+				if err := os.MkdirAll(path.Join(wd, "xml"), os.ModePerm); err != nil {
+					return err
+				}
+				w, err := os.OpenFile(path.Join(wd, "xml", "application.xml"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+				if err != nil {
+					return err
+				}
+				w.Write([]byte(fmt.Sprintf(template.TmplXML, path.Base(wd), path.Base(wd))))
+				files = append(files, path.Join(wd, "xml", "application.xml"))
+
+				// go mod defined
+				w, err = os.OpenFile(path.Join(wd, "go.mod"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+				if err != nil {
+					return err
+				}
+				w.Write([]byte(fmt.Sprintf(`module %v
+
+go 1.13
+
+require (
+	github.com/2637309949/dolphin v0.0.0-20200508090105-0cf30842c8cd
+	github.com/go-sql-driver/mysql v1.5.0
+	google.golang.org/grpc v1.26.0
+)`, path.Base(wd))))
+
+				// properties defined
+				w, err = os.OpenFile(path.Join(wd, "app.properties"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+				if err != nil {
+					return err
+				}
+				w.Write([]byte(fmt.Sprintf(`app.name = %v
+app.mode = debug`, path.Base(wd))))
+			}
+			return nil
+		},
+	}
 )
 
 func main() {
+	rootCmd.AddCommand(setup)
 	rootCmd.AddCommand(build)
 	rootCmd.AddCommand(clean)
 	if err := rootCmd.Execute(); err != nil {
