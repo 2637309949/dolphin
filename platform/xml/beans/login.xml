@@ -1,0 +1,5 @@
+<bean name="login" desc="登录表单" packages="github.com/2637309949/dolphin/packages/null">
+	<prop name="name" desc="名字" type="null.String" />
+	<prop name="password" desc="密码" type="null.String" />
+	<prop name="domain" desc="域" type="null.String" />
+</bean>

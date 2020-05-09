@@ -232,7 +232,7 @@ func SysUserGet(ctx *Context) {
 // @Failure 500 {object} model.Response
 // @Router /api/sys/user/login [post]
 func SysUserLogin(ctx *Context) {
-	var payload, account model.SysUser
+	var payload, account = model.Login{}, model.SysUser{}
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		ctx.Fail(err)
 		return
