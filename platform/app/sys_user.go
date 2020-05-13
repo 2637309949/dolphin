@@ -185,7 +185,7 @@ func SysUserPage(ctx *Context) {
 			}
 		}
 	}
-	ctx.Success(ret.With(&[]struct {
+	ctx.Success(ret.With(new([]struct {
 		ID       null.String `json:"id" xml:"id"`
 		Name     null.String `json:"name" xml:"name"`
 		NickName null.String `json:"nickname" xml:"nickname"`
@@ -195,7 +195,7 @@ func SysUserPage(ctx *Context) {
 		UserRole null.String `json:"user_role" xml:"user_role"`
 		OrgName  null.String `json:"org_name" xml:"org_name"`
 		OrgID    null.String `json:"org_id" xml:"org_id"`
-	}{}))
+	})))
 }
 
 // SysUserGet api implementation
