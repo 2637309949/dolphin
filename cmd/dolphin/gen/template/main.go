@@ -13,12 +13,12 @@ package main
 import (
 	_ "{{.PackageName}}/app"
 
-	"github.com/2637309949/dolphin/packages/fx/cli"
+	"github.com/2637309949/dolphin/packages/fx"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 //go:generate dolphin build
 func main() {
-	cli.Run()
+	fx.Run()
 }
 `

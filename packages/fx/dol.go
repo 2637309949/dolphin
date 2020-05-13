@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package srv
+package fx
 
 import (
 	"context"
@@ -20,10 +20,20 @@ type Dol struct {
 }
 
 // Use defined use plugin
+func Use(opts ...Option) {
+	d.Use(opts...)
+}
+
+// Use defined use plugin
 func (d *Dol) Use(opts ...Option) {
 	for _, opt := range opts {
 		opt.apply(d)
 	}
+}
+
+// Done with os.Signal
+func Done() <-chan os.Signal {
+	return d.Done()
 }
 
 // Done with os.Signal
@@ -34,6 +44,11 @@ func (d *Dol) Done() <-chan os.Signal {
 }
 
 // Start with Context
+func Start(ctx context.Context) error {
+	return d.Start(ctx)
+}
+
+// Start with Context
 func (d *Dol) Start(ctx context.Context) error {
 	d.fx.build()
 	// lifecycle start
@@ -41,9 +56,19 @@ func (d *Dol) Start(ctx context.Context) error {
 }
 
 // Stop with Context
+func Stop(ctx context.Context) error {
+	return d.Stop(ctx)
+}
+
+// Stop with Context
 func (d *Dol) Stop(ctx context.Context) error {
 	// lifecycle stop
 	return withTimeout(ctx, d.fx.lifecycle.Stop)
+}
+
+// Run defined run application
+func Run() error {
+	return d.Run()
 }
 
 // Run defined run application
@@ -70,4 +95,10 @@ func New() *Dol {
 	dol.fx = NewFX()
 	dol.fx.provide(func() Lifecycle { return dol.fx.lifecycle })
 	return dol
+}
+
+var d *Dol
+
+func init() {
+	d = New()
 }

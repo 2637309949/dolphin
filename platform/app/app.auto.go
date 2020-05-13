@@ -6,7 +6,7 @@ package app
 import (
 	"github.com/2637309949/dolphin/platform/model"
 
-	"github.com/2637309949/dolphin/packages/fx/cli"
+	"github.com/2637309949/dolphin/packages/fx"
 	"github.com/2637309949/dolphin/packages/viper"
 )
 
@@ -693,7 +693,7 @@ var SysWechatInstance = NewSysWechat()
 
 func init() {
 	// Sync models
-	cli.Invoke(InvokeEngine(func(e *Engine) {
+	fx.Invoke(InvokeEngine(func(e *Engine) {
 		e.Manager.GetMSet().Add(new(model.SysAppFun))
 		e.Manager.GetMSet().Add(new(model.SysArea))
 		e.Manager.GetMSet().Add(new(model.SysAreaTemplate))
@@ -723,7 +723,7 @@ func init() {
 		e.Manager.GetMSet().Add(new(model.SysUserTemplateDetail))
 	}))
 	// Async Ctr
-	cli.Invoke(InvokeEngine(func(engine *Engine) {
+	fx.Invoke(InvokeEngine(func(engine *Engine) {
 		SysAppFunRoutes(engine)
 		SysAreaRoutes(engine)
 		SysAttachmentRoutes(engine)
@@ -746,7 +746,7 @@ func init() {
 		SysWechatRoutes(engine)
 	}))
 	// Booting system
-	cli.Invoke(InvokeEngine(func(e *Engine) {
+	fx.Invoke(InvokeEngine(func(e *Engine) {
 		if viper.GetString("app.name") == Name {
 			e.Run()
 		}

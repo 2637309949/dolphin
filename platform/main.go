@@ -6,11 +6,11 @@ package main
 import (
 	_ "github.com/2637309949/dolphin/platform/app"
 
-	"github.com/2637309949/dolphin/packages/fx/cli"
+	"github.com/2637309949/dolphin/packages/fx"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 //go:generate dolphin build sqltpl
 func main() {
-	cli.Run()
+	fx.Run()
 }

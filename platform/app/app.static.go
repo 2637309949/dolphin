@@ -9,12 +9,12 @@ import (
 
 	"github.com/2637309949/dolphin/platform/model"
 
-	"github.com/2637309949/dolphin/packages/fx/cli"
+	"github.com/2637309949/dolphin/packages/fx"
 )
 
 func init() {
 	// BuildDomain.js
-	cli.Invoke(InvokeEngine(func(engine *Engine) {
+	fx.Invoke(InvokeEngine(func(engine *Engine) {
 		engine.Group("/").Handle("GET", "/domain.js", func(ctx *Context) {
 			reg := regexp.MustCompile("^([^:?]+)(:.*)?$")
 			groups := reg.FindAllStringSubmatch(ctx.Request.Host, -1)

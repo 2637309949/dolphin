@@ -14,7 +14,7 @@ import (
 	"{{.PackageName}}/model"
 
 	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/packages/fx/cli"
+	"github.com/2637309949/dolphin/packages/fx"
 )
 
 // Name project
@@ -55,19 +55,19 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 
 func init() {
 	// Sync models
-	cli.Invoke(InvokeEngine(func(e *Engine) {
+	fx.Invoke(InvokeEngine(func(e *Engine) {
 		{{- range .Tables}}
 		e.Manager.GetMSet().Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
 		{{- end}}
 	}))
 	// Async Ctr
-	cli.Invoke(InvokeEngine(func(engine *Engine) {
+	fx.Invoke(InvokeEngine(func(engine *Engine) {
 		{{- range .Controllers}}
 		{{.ToUpperCase .Name}}Routes(engine)
 		{{- end}}
 	}))
 	// Booting system
-	cli.Invoke(InvokeEngine(func(e *Engine) {
+	fx.Invoke(InvokeEngine(func(e *Engine) {
 		if viper.GetString("app.name") == Name {
 			e.Run()
 		}
