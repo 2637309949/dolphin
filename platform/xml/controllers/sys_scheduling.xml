@@ -28,7 +28,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" table="scheduling" method="get">
+    <api name="get" desc="获取调度信息" table="scheduling" method="get">
         <param name="id" type="string" desc="调度id" />
         <return>
             <success type="$success"/>

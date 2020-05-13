@@ -44,7 +44,7 @@ module.exports.page = (data) => {
   })
 }
 
-// get 
+// get 获取调度信息
 module.exports.get = (data) => {
   let url = '/api/sys/scheduling/get?'
   for (var key in data) {
