@@ -22,7 +22,7 @@ type {{.Bean.ToUpperCase .Bean.Name}} struct {
 	{{- end}}
 	{{- range .Bean.Props}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.SRef .Type}} ` + "`" + `json:"{{- if ne .JSON ""}}{{.JSON}}{{- else}}{{.Name}}{{- end}}" xml:"{{.Name}}"` + "`" + `
+	{{.ToUpperCase .Name}} {{.SRef .Type}} ` + "`" + `json:"{{- if ne .JSON ""}}{{.JSON}}{{- else}}{{.Name}}{{- end}}" xml:"{{.Name}}"{{- if ne .Example ""}} example:"{{.Example}}"{{- end}}` + "`" + `
 	{{- end}}
 }
 `

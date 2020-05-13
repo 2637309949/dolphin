@@ -53,8 +53,9 @@ type Controller struct {
 // Prop struct
 type Prop struct {
 	Common
-	Type string
-	JSON string
+	Type    string
+	JSON    string
+	Example string
 }
 
 // Bean struct
@@ -68,9 +69,10 @@ type Bean struct {
 // Column struct
 type Column struct {
 	Common
-	Type string
-	Xorm string
-	JSON string
+	Type    string
+	Xorm    string
+	JSON    string
+	Example string
 }
 
 // Table struct

@@ -1,4 +1,15 @@
 definitions:
+  model.Fail:
+    properties:
+      code:
+        description: 错误编码
+        example: 500
+        type: integer
+      msg:
+        description: 错误信息
+        example: status bad request
+        type: string
+    type: object
   model.Login:
     properties:
       domain:
@@ -11,18 +22,6 @@ definitions:
         description: 密码
         type: string
     type: object
-  model.Response:
-    properties:
-      code:
-        description: 编码
-        type: integer
-      data:
-        description: 返回数据
-        type: object
-      msg:
-        description: 消息
-        type: string
-    type: object
   model.Scheduling:
     properties:
       code:
@@ -31,6 +30,16 @@ definitions:
       name:
         description: 名称
         type: string
+    type: object
+  model.Success:
+    properties:
+      code:
+        description: 编码
+        example: 200
+        type: integer
+      data:
+        description: 返回数据
+        type: object
     type: object
   model.SysAppFun:
     properties:
@@ -86,7 +95,8 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysArea:
@@ -380,7 +390,8 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysOptionset:
@@ -719,15 +730,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加APP功能
       tags:
       - APP功能
@@ -749,15 +760,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除APP功能
       tags:
       - APP功能
@@ -776,15 +787,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取APP功能信息
       tags:
       - APP功能
@@ -807,15 +818,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: APP功能分页查询
       tags:
       - APP功能
@@ -830,7 +841,7 @@ paths:
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 菜单树形结构
       tags:
       - APP功能
@@ -852,15 +863,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新APP功能
       tags:
       - APP功能
@@ -882,15 +893,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加区域
       tags:
       - 区域
@@ -912,15 +923,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除区域
       tags:
       - 区域
@@ -939,15 +950,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取区域信息
       tags:
       - 区域
@@ -970,15 +981,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 区域分页查询
       tags:
       - 区域
@@ -1000,15 +1011,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新区域
       tags:
       - 区域
@@ -1030,15 +1041,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加附件
       tags:
       - 附件
@@ -1060,15 +1071,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除附件
       tags:
       - 附件
@@ -1087,15 +1098,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取附件信息
       tags:
       - 附件
@@ -1118,15 +1129,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 附件分页查询
       tags:
       - 附件
@@ -1148,15 +1159,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新附件
       tags:
       - 附件
@@ -1173,15 +1184,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 上传附件
       tags:
       - 附件
@@ -1193,15 +1204,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户授权
       tags:
       - OAuth授权
@@ -1211,15 +1222,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户授权
       tags:
       - OAuth授权
@@ -1234,15 +1245,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 检验令牌
       tags:
       - 认证中心
@@ -1267,15 +1278,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户认证
       tags:
       - 认证中心
@@ -1298,15 +1309,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 注销信息
       tags:
       - 认证中心
@@ -1316,15 +1327,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 授权回调
       tags:
       - 认证中心
@@ -1339,15 +1350,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户信息
       tags:
       - 认证中心
@@ -1366,15 +1377,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 扫码登录(绑定第三方)
       tags:
       - 认证中心
@@ -1384,15 +1395,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 刷新令牌
       tags:
       - OAuth授权
@@ -1404,15 +1415,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取令牌
       tags:
       - OAuth授权
@@ -1431,15 +1442,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 授权地址
       tags:
       - 认证中心
@@ -1461,15 +1472,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加客户端
       tags:
       - 客户端
@@ -1491,15 +1502,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除客户端
       tags:
       - 客户端
@@ -1518,15 +1529,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取客户端信息
       tags:
       - 客户端
@@ -1549,15 +1560,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 客户端分页查询
       tags:
       - 客户端
@@ -1579,15 +1590,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新客户端
       tags:
       - 客户端
@@ -1609,15 +1620,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加数据权限
       tags:
       - 数据权限
@@ -1639,15 +1650,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除数据权限
       tags:
       - 数据权限
@@ -1666,15 +1677,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取数据权限信息
       tags:
       - 数据权限
@@ -1697,15 +1708,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 数据权限分页查询
       tags:
       - 数据权限
@@ -1727,15 +1738,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新数据权限
       tags:
       - 数据权限
@@ -1745,15 +1756,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 授权回调
       tags:
       - 钉钉
@@ -1775,15 +1786,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加域
       tags:
       - 域
@@ -1805,15 +1816,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除域
       tags:
       - 域
@@ -1832,15 +1843,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取域信息
       tags:
       - 域
@@ -1863,15 +1874,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 域分页查询
       tags:
       - 域
@@ -1893,15 +1904,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新域
       tags:
       - 域
@@ -1923,15 +1934,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加菜单
       tags:
       - 菜单
@@ -1955,15 +1966,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除菜单
       tags:
       - 菜单
@@ -1985,15 +1996,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除菜单
       tags:
       - 菜单
@@ -2012,15 +2023,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取菜单信息
       tags:
       - 菜单
@@ -2043,15 +2054,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 菜单分页查询
       tags:
       - 菜单
@@ -2066,7 +2077,7 @@ paths:
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 系统菜单
       tags:
       - 菜单
@@ -2081,7 +2092,7 @@ paths:
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 菜单树形结构
       tags:
       - 菜单
@@ -2103,15 +2114,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新菜单
       tags:
       - 菜单
@@ -2133,15 +2144,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加字典
       tags:
       - 字典
@@ -2163,15 +2174,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除字典
       tags:
       - 字典
@@ -2190,15 +2201,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取字典信息
       tags:
       - 字典
@@ -2221,15 +2232,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 字典分页查询
       tags:
       - 字典
@@ -2251,15 +2262,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新字典
       tags:
       - 字典
@@ -2281,15 +2292,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加组织
       tags:
       - 组织
@@ -2313,15 +2324,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除组织
       tags:
       - 组织
@@ -2343,15 +2354,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除组织
       tags:
       - 组织
@@ -2370,15 +2381,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取组织信息
       tags:
       - 组织
@@ -2401,15 +2412,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 组织分页查询
       tags:
       - 组织
@@ -2424,7 +2435,7 @@ paths:
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 菜单树形结构
       tags:
       - 组织
@@ -2446,15 +2457,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新组织
       tags:
       - 组织
@@ -2476,15 +2487,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加权限
       tags:
       - 权限
@@ -2506,15 +2517,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除权限
       tags:
       - 权限
@@ -2533,15 +2544,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取权限信息
       tags:
       - 权限
@@ -2564,15 +2575,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 权限分页查询
       tags:
       - 权限
@@ -2594,15 +2605,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新权限
       tags:
       - 权限
@@ -2624,15 +2635,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加角色
       tags:
       - 角色
@@ -2654,15 +2665,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除角色
       tags:
       - 角色
@@ -2681,15 +2692,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取角色信息
       tags:
       - 角色
@@ -2712,15 +2723,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 角色分页查询
       tags:
       - 角色
@@ -2735,7 +2746,7 @@ paths:
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 角色App功能树形结构
       tags:
       - 角色
@@ -2750,7 +2761,7 @@ paths:
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 角色菜单树形结构
       tags:
       - 角色
@@ -2772,15 +2783,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新角色
       tags:
       - 角色
@@ -2802,15 +2813,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加调度
       tags:
       - 调度
@@ -2832,15 +2843,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除调度
       tags:
       - 调度
@@ -2859,15 +2870,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       tags:
       - 调度
   /api/sys/scheduling/page:
@@ -2889,15 +2900,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 调度分页查询
       tags:
       - 调度
@@ -2919,15 +2930,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新调度
       tags:
       - 调度
@@ -2949,15 +2960,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加标签
       tags:
       - 标签
@@ -2979,15 +2990,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除标签
       tags:
       - 标签
@@ -3006,15 +3017,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取标签信息
       tags:
       - 标签
@@ -3036,15 +3047,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加标签组
       tags:
       - 标签组
@@ -3066,15 +3077,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除标签组
       tags:
       - 标签组
@@ -3093,15 +3104,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取标签组信息
       tags:
       - 标签组
@@ -3124,15 +3135,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 标签组分页查询
       tags:
       - 标签组
@@ -3154,15 +3165,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新标签组
       tags:
       - 标签组
@@ -3185,15 +3196,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 标签分页查询
       tags:
       - 标签
@@ -3215,15 +3226,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新标签
       tags:
       - 标签
@@ -3242,15 +3253,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取日志信息
       tags:
       - 日志
@@ -3273,15 +3284,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 日志分页查询
       tags:
       - 日志
@@ -3303,15 +3314,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加用户
       tags:
       - 用户
@@ -3333,15 +3344,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除用户
       tags:
       - 用户
@@ -3360,15 +3371,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取用户信息
       tags:
       - 用户
@@ -3386,15 +3397,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户认证
       tags:
       - 用户
@@ -3409,15 +3420,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户退出登录
       tags:
       - 用户
@@ -3440,15 +3451,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户分页查询
       tags:
       - 用户
@@ -3470,15 +3481,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 添加用户模板
       tags:
       - 用户模板
@@ -3500,15 +3511,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 删除用户模板
       tags:
       - 用户模板
@@ -3527,15 +3538,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 获取用户模板信息
       tags:
       - 用户模板
@@ -3558,15 +3569,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 用户模板分页查询
       tags:
       - 用户模板
@@ -3588,15 +3599,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新用户模板
       tags:
       - 用户模板
@@ -3618,15 +3629,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 更新用户
       tags:
       - 用户
@@ -3636,15 +3647,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Success'
         "403":
           description: Forbidden
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.Response'
+            $ref: '#/definitions/model.Fail'
       summary: 授权回调
       tags:
       - 微信

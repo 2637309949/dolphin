@@ -6,7 +6,7 @@ package model
 // Success defined 成功返回
 type Success struct {
 	// 编码
-	Code int `json:"code" xml:"code"`
+	Code int `json:"code" xml:"code" example:"200"`
 	// 返回数据
 	Data interface{} `json:"data,omitempty" xml:"data"`
 }

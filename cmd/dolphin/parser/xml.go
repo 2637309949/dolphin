@@ -196,6 +196,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						prop.Type = attrValue
 					case attrName == "json":
 						prop.JSON = attrValue
+					case attrName == "example":
+						prop.Example = attrValue
 					}
 				}
 			case token.Name.Local == "table":
@@ -239,6 +241,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						column.Type = attrValue
 					case attrName == "json":
 						column.JSON = attrValue
+					case attrName == "example":
+						column.Example = attrValue
 					}
 				}
 			}

@@ -1,4 +1,4 @@
 <bean name="success" desc="成功返回">
-    <prop name="code" desc="编码" type="int" />
+    <prop name="code" desc="编码" type="int" example="200"/>
     <prop name="data" desc="返回数据" type="interface{}" json="data,omitempty"/>
 </bean>

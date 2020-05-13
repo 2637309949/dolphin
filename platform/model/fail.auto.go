@@ -6,7 +6,7 @@ package model
 // Fail defined 失败返回
 type Fail struct {
 	// 错误编码
-	Code int `json:"code" xml:"code"`
+	Code int `json:"code" xml:"code" example:"500"`
 	// 错误信息
-	Msg string `json:"msg,omitempty" xml:"msg"`
+	Msg string `json:"msg,omitempty" xml:"msg" example:"status bad request"`
 }

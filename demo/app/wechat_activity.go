@@ -100,7 +100,6 @@ func WechatActivityBatchDel(ctx *Context) {
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
 	})
-
 	if err != nil {
 		ctx.Fail(err)
 		return
