@@ -81,6 +81,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						controller.Name = attrValue
 					case attrName == "desc":
 						controller.Desc = attrValue
+					case attrName == "prefix":
+						controller.Prefix = attrValue
 					}
 				}
 			case token.Name.Local == "api":

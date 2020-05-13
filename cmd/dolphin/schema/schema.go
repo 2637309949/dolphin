@@ -47,7 +47,8 @@ type API struct {
 // Controller struct
 type Controller struct {
 	Common
-	APIS []*API
+	APIS   []*API
+	Prefix string
 }
 
 // Prop struct
