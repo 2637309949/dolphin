@@ -110,7 +110,7 @@ func (ctx *Context) TypeQuery() *Query {
 }
 
 // PageSearch defined
-func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (*model.PagingEntity, error) {
+func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (*model.PageList, error) {
 	page := q["page"].(int)
 	size := q["size"].(int)
 	q["offset"] = (page - 1) * size
@@ -124,7 +124,7 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	if err != nil {
 		return nil, err
 	}
-	var ret model.PagingEntity
+	var ret model.PageList
 	if result == nil || len(result) == 0 {
 		ret.Data = []map[string]interface{}{}
 		return &ret, nil

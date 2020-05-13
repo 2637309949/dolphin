@@ -9,7 +9,7 @@ import (
 )
 
 // With defined
-func (m *PagingEntity) With(s interface{}) interface{} {
+func (m *PageList) With(s interface{}) interface{} {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		panic(errors.New("not ptr found"))
 	}

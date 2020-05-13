@@ -3,8 +3,8 @@
 
 package model
 
-// PagingEntity defined 分页结果
-type PagingEntity struct {
+// PageList defined 分页结果
+type PageList struct {
 	// 页码
 	Page int `json:"page" xml:"page"`
 	// 页数
