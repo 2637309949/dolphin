@@ -820,7 +820,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: dolphin
+  title: demo
   version: "1.0"
 paths:
   /api/applet/activity/add:

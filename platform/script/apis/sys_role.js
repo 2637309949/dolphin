@@ -36,7 +36,7 @@ module.exports.update = (data) => {
 module.exports.page = (data) => {
   let url = '/api/sys/role/page?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -48,7 +48,7 @@ module.exports.page = (data) => {
 module.exports.roleMenuTree = (data) => {
   let url = '/api/sys/role/role_menu_tree?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -60,7 +60,7 @@ module.exports.roleMenuTree = (data) => {
 module.exports.roleAppFunTree = (data) => {
   let url = '/api/sys/role/role_app_fun_tree?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -72,7 +72,7 @@ module.exports.roleAppFunTree = (data) => {
 module.exports.get = (data) => {
   let url = '/api/sys/role/get?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,

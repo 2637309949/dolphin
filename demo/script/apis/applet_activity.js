@@ -66,7 +66,7 @@ module.exports.update = (data) => {
 module.exports.list = (data) => {
   let url = '/api/applet/activity/list?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -78,7 +78,7 @@ module.exports.list = (data) => {
 module.exports.one = (data) => {
   let url = '/api/applet/activity/one?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,

@@ -201,6 +201,10 @@ func (e *Engine) Auth() func(ctx *Context) {
 			ctx.Abort()
 			return
 		}
+
+		fmt.Println("----------GetBusinessDBSet", e.Manager.GetBusinessDBSet())
+		fmt.Println("----------GetDomain", ctx.GetToken().GetDomain())
+
 		if ctx.DB = e.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
 			ctx.Fail(util.ErrInvalidDomain)
 			ctx.Abort()

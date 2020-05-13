@@ -16,7 +16,7 @@ module.exports.parse = (data) => {
 module.exports.build = (data) => {
   let url = '/api/excel/action/build?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,

@@ -29,7 +29,7 @@ module.exports.{{.LcFirst $tn}} = (data) => {
   {{- if eq .Method "get"}}
   let url = '/api{{.APIPrefix .Version}}/{{.APIPath $.Controller.Name .Path}}/{{.Name}}?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,

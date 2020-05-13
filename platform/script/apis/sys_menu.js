@@ -46,7 +46,7 @@ module.exports.update = (data) => {
 module.exports.sidebar = (data) => {
   let url = '/api/sys/menu/sidebar?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -58,7 +58,7 @@ module.exports.sidebar = (data) => {
 module.exports.page = (data) => {
   let url = '/api/sys/menu/page?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -70,7 +70,7 @@ module.exports.page = (data) => {
 module.exports.tree = (data) => {
   let url = '/api/sys/menu/tree?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -82,7 +82,7 @@ module.exports.tree = (data) => {
 module.exports.get = (data) => {
   let url = '/api/sys/menu/get?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,

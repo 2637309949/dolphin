@@ -16,7 +16,7 @@ module.exports.login = (data) => {
 module.exports.logout = (data) => {
   let url = '/api/sys/cas/logout?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -38,7 +38,7 @@ module.exports.affirm = (data) => {
 module.exports.authorize = (data) => {
   let url = '/api/sys/cas/authorize?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -60,7 +60,7 @@ module.exports.token = (data) => {
 module.exports.uRL = (data) => {
   let url = '/api/sys/cas/url?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -72,7 +72,7 @@ module.exports.uRL = (data) => {
 module.exports.oauth2 = (data) => {
   let url = '/api/sys/cas/oauth2?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -84,7 +84,7 @@ module.exports.oauth2 = (data) => {
 module.exports.refresh = (data) => {
   let url = '/api/sys/cas/refresh?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -96,7 +96,7 @@ module.exports.refresh = (data) => {
 module.exports.check = (data) => {
   let url = '/api/sys/cas/check?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -108,7 +108,7 @@ module.exports.check = (data) => {
 module.exports.profile = (data) => {
   let url = '/api/sys/cas/profile?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -120,7 +120,7 @@ module.exports.profile = (data) => {
 module.exports.qrcode = (data) => {
   let url = '/api/sys/cas/qrcode?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,

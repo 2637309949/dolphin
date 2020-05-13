@@ -6,7 +6,7 @@ const axios = require('@/utils/request').default
 module.exports.oauth2 = (data) => {
   let url = '/api/sys/wechat/oauth2?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,

@@ -36,7 +36,7 @@ module.exports.update = (data) => {
 module.exports.page = (data) => {
   let url = '/api/sys/domain/page?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
@@ -48,7 +48,7 @@ module.exports.page = (data) => {
 module.exports.get = (data) => {
   let url = '/api/sys/domain/get?'
   for (var key in data) {
-    url += key + '=' + data[key] + '&'
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
