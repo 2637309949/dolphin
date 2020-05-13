@@ -18,9 +18,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysClient false "客户端信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/client/add [post]
 func SysClientAdd(ctx *Context) {
 	var payload model.SysClient
@@ -49,9 +49,9 @@ func SysClientAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_client body model.SysClient false "客户端"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/client/del [delete]
 func SysClientDel(ctx *Context) {
 	var payload model.SysClient
@@ -77,9 +77,9 @@ func SysClientDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "客户端信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/client/update [put]
 func SysClientUpdate(ctx *Context) {
 	var payload model.SysRole
@@ -103,9 +103,9 @@ func SysClientUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/client/page [get]
 func SysClientPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -126,9 +126,9 @@ func SysClientPage(ctx *Context) {
 // @Tags 客户端
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "客户端id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/client/get [get]
 func SysClientGet(ctx *Context) {
 	var entity model.SysClient

@@ -17,9 +17,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysArea false "区域信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/area/add [post]
 func SysAreaAdd(ctx *Context) {
 	var payload model.SysArea
@@ -47,9 +47,9 @@ func SysAreaAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_area body model.SysArea false "区域"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/area/del [delete]
 func SysAreaDel(ctx *Context) {
 	var payload model.SysArea
@@ -75,9 +75,9 @@ func SysAreaDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "区域信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/area/update [put]
 func SysAreaUpdate(ctx *Context) {
 	var payload model.SysRole
@@ -101,9 +101,9 @@ func SysAreaUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/area/page [get]
 func SysAreaPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -123,9 +123,9 @@ func SysAreaPage(ctx *Context) {
 // @Tags 区域
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "区域id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/area/get [get]
 func SysAreaGet(ctx *Context) {
 	var entity model.SysArea

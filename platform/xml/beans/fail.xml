@@ -1,0 +1,4 @@
+<bean name="fail" desc="失败返回">
+    <prop name="code" desc="错误编码" type="int" />
+    <prop name="msg" desc="错误信息" type="string" json="msg,omitempty"/>
+</bean>

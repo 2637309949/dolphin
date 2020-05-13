@@ -2,22 +2,22 @@
     <api name="add" function="add" table="sys_client" desc="添加客户端" method="post">
         <param name="user" type="$sys_client" desc="客户端信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="del" function="delete" table="sys_client" desc="删除客户端" method="delete">
         <param name="sys_client" type="$sys_client" desc="客户端" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="update" function="update" table="sys_client" desc="更新客户端" method="put">
         <param name="user" type="$sys_role" desc="客户端信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="page" function="page" table="sys_client" desc="客户端分页查询" method="get">
@@ -25,15 +25,15 @@
         <param name="size" type="int" desc="单页数" value="15" />
         <param name="app_name" type="string" desc="所属应用"/>
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="get" desc="获取客户端信息" function="one" table="sys_client" method="get">
         <param name="id" type="string" desc="客户端id" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

@@ -19,9 +19,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.WechatActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/batch_add [post]
 func WechatActivityBatchAdd(ctx *Context) {
 	var payload []model.WechatActivity
@@ -51,9 +51,9 @@ func WechatActivityBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.WechatActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/add [post]
 func WechatActivityAdd(ctx *Context) {
 	var payload model.WechatActivity
@@ -81,9 +81,9 @@ func WechatActivityAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.WechatActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/batch_del [delete]
 func WechatActivityBatchDel(ctx *Context) {
 	var payload []model.WechatActivity
@@ -114,9 +114,9 @@ func WechatActivityBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.WechatActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/del [delete]
 func WechatActivityDel(ctx *Context) {
 	var payload model.WechatActivity
@@ -142,9 +142,9 @@ func WechatActivityDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.WechatActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/batch_update [put]
 func WechatActivityBatchUpdate(ctx *Context) {
 	var payload []model.WechatActivity
@@ -176,9 +176,9 @@ func WechatActivityBatchUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.WechatActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/update [put]
 func WechatActivityUpdate(ctx *Context) {
 	var payload model.WechatActivity
@@ -204,9 +204,9 @@ func WechatActivityUpdate(ctx *Context) {
 // @Param size query int false "单页数"
 // @Param title query string false "标题筛选"
 // @Param hidden query int false "是否隐藏筛选"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/list [get]
 func WechatActivityList(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -228,9 +228,9 @@ func WechatActivityList(ctx *Context) {
 // @Tags 微信活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/wechat/activity/one [get]
 func WechatActivityOne(ctx *Context) {
 	var entity model.WechatActivity
@@ -249,9 +249,9 @@ func WechatActivityOne(ctx *Context) {
 // @version 1.0
 // @Accept application/json
 // @Param id body string false "记录id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/v1/wechat/activity/increase [post]
 func WechatActivityIncrease(ctx *Context) {
 	var payload string
@@ -273,9 +273,9 @@ func WechatActivityIncrease(ctx *Context) {
 // @version 2.0
 // @Accept application/json
 // @Param id body string false "记录id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/v2/wechat/activity/increase_v2 [post]
 func WechatActivityIncreaseV2(ctx *Context) {
 	var payload string

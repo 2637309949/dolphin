@@ -4,15 +4,15 @@
         <param name="size" type="int" desc="单页数" value="15" />
         <param name="app_name" type="string" desc="所属应用"/>
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="get" desc="获取日志信息" function="one" table="sys_tracker" method="get">
         <param name="id" type="string" desc="日志id" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

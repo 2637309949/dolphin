@@ -18,9 +18,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysDomain false "域信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/add [post]
 func SysDomainAdd(ctx *Context) {
 	var payload model.SysDomain
@@ -49,9 +49,9 @@ func SysDomainAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_domain body model.SysDomain false "域"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/del [delete]
 func SysDomainDel(ctx *Context) {
 	var payload model.SysDomain
@@ -77,9 +77,9 @@ func SysDomainDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "域信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/update [put]
 func SysDomainUpdate(ctx *Context) {
 	var payload model.SysRole
@@ -103,9 +103,9 @@ func SysDomainUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/page [get]
 func SysDomainPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -126,9 +126,9 @@ func SysDomainPage(ctx *Context) {
 // @Tags 域
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "域id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/get [get]
 func SysDomainGet(ctx *Context) {
 	var entity model.SysDomain

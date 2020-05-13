@@ -3,12 +3,10 @@
 
 package model
 
-// Response defined 请求返回
-type Response struct {
-	// 编码
+// Fail defined 失败返回
+type Fail struct {
+	// 错误编码
 	Code int `json:"code" xml:"code"`
-	// 返回数据
-	Data interface{} `json:"data,omitempty" xml:"data"`
-	// 消息
+	// 错误信息
 	Msg string `json:"msg,omitempty" xml:"msg"`
 }

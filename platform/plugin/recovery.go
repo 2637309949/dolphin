@@ -35,7 +35,7 @@ func Recovery() gin.HandlerFunc {
 		if err, ok := err.(model.Error); ok {
 			code = err.Code
 		}
-		ctx.JSON(http.StatusOK, model.Response{
+		ctx.JSON(http.StatusOK, model.Fail{
 			Code: code,
 			Msg:  msg,
 		})

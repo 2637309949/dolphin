@@ -10,9 +10,9 @@ import (
 // SysDingtalkOauth2 api implementation
 // @Summary 授权回调
 // @Tags 钉钉
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/dingtalk/oauth2 [get]
 func SysDingtalkOauth2(ctx *Context) {
 	q := ctx.TypeQuery()

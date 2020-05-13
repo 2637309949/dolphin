@@ -17,9 +17,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysPermission false "权限信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/add [post]
 func SysPermissionAdd(ctx *Context) {
 	var payload model.SysPermission
@@ -47,9 +47,9 @@ func SysPermissionAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_permission body model.SysPermission false "权限"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/del [delete]
 func SysPermissionDel(ctx *Context) {
 	var payload model.SysPermission
@@ -75,9 +75,9 @@ func SysPermissionDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "权限信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/update [put]
 func SysPermissionUpdate(ctx *Context) {
 	var payload model.SysRole
@@ -101,9 +101,9 @@ func SysPermissionUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/page [get]
 func SysPermissionPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -123,9 +123,9 @@ func SysPermissionPage(ctx *Context) {
 // @Tags 权限
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "权限id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/get [get]
 func SysPermissionGet(ctx *Context) {
 	var entity model.SysPermission

@@ -26,9 +26,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysUser false "用户信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/add [post]
 func SysUserAdd(ctx *Context) {
 	var payload model.SysUser
@@ -57,9 +57,9 @@ func SysUserAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysUser false "用户信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/del [delete]
 func SysUserDel(ctx *Context) {
 	var payload model.SysUser
@@ -85,9 +85,9 @@ func SysUserDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysUser false "用户信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/update [put]
 func SysUserUpdate(ctx *Context) {
 	var payload model.SysUser
@@ -113,9 +113,9 @@ func SysUserUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/page [get]
 func SysUserPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -203,9 +203,9 @@ func SysUserPage(ctx *Context) {
 // @Tags 用户
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/get [get]
 func SysUserGet(ctx *Context) {
 	var entity model.SysUser
@@ -225,9 +225,9 @@ func SysUserGet(ctx *Context) {
 // @Tags 用户
 // @Accept application/json
 // @Param payload body model.Login false "用户信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/login [post]
 func SysUserLogin(ctx *Context) {
 	var payload, account = model.Login{}, model.SysUser{}
@@ -274,9 +274,9 @@ func SysUserLogin(ctx *Context) {
 // @Summary 用户退出登录
 // @Tags 用户
 // @Param Authorization header string false "认证令牌"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/logout [get]
 func SysUserLogout(ctx *Context) {
 	err := ctx.OAuth2.Manager.RemoveAccessToken(ctx.GetToken().GetAccess())

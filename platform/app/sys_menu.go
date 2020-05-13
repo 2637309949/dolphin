@@ -21,9 +21,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body model.SysMenu false "菜单信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/add [post]
 func SysMenuAdd(ctx *Context) {
 	var payload model.SysMenu
@@ -66,9 +66,9 @@ func SysMenuAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body model.SysMenu false "菜单"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/del [delete]
 func SysMenuDel(ctx *Context) {
 	var payload model.SysMenu
@@ -94,9 +94,9 @@ func SysMenuDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body []model.SysMenu false "菜单"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/batch_del [delete]
 func SysMenuBatchDel(ctx *Context) {
 	var payload []model.SysMenu
@@ -126,9 +126,9 @@ func SysMenuBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body model.SysMenu false "菜单信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/update [put]
 func SysMenuUpdate(ctx *Context) {
 	var payload model.SysMenu
@@ -166,7 +166,7 @@ func SysMenuUpdate(ctx *Context) {
 // @Summary 系统菜单
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
-// @Failure 403 {object} model.Response
+// @Failure 403 {object} model.Fail
 // @Router /api/sys/menu/sidebar [get]
 func SysMenuSidebar(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -186,9 +186,9 @@ func SysMenuSidebar(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/page [get]
 func SysMenuPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -210,7 +210,7 @@ func SysMenuPage(ctx *Context) {
 // @Summary 菜单树形结构
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
-// @Failure 403 {object} model.Response
+// @Failure 403 {object} model.Fail
 // @Router /api/sys/menu/tree [get]
 func SysMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -229,9 +229,9 @@ func SysMenuTree(ctx *Context) {
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "菜单id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/get [get]
 func SysMenuGet(ctx *Context) {
 	var entity model.SysMenu

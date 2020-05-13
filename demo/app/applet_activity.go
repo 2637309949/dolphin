@@ -19,9 +19,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.AppletActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/batch_add [post]
 func AppletActivityBatchAdd(ctx *Context) {
 	var payload []model.AppletActivity
@@ -51,9 +51,9 @@ func AppletActivityBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.AppletActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/add [post]
 func AppletActivityAdd(ctx *Context) {
 	var payload model.AppletActivity
@@ -81,9 +81,9 @@ func AppletActivityAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.AppletActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/batch_del [delete]
 func AppletActivityBatchDel(ctx *Context) {
 	var payload []model.AppletActivity
@@ -114,9 +114,9 @@ func AppletActivityBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.AppletActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/del [delete]
 func AppletActivityDel(ctx *Context) {
 	var payload model.AppletActivity
@@ -142,9 +142,9 @@ func AppletActivityDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body []model.AppletActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/batch_update [put]
 func AppletActivityBatchUpdate(ctx *Context) {
 	var payload []model.AppletActivity
@@ -176,9 +176,9 @@ func AppletActivityBatchUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param activity body model.AppletActivity false "活动对象"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/update [put]
 func AppletActivityUpdate(ctx *Context) {
 	var payload model.AppletActivity
@@ -204,9 +204,9 @@ func AppletActivityUpdate(ctx *Context) {
 // @Param size query int false "单页数"
 // @Param title query string false "标题筛选"
 // @Param hidden query int false "是否隐藏筛选"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/list [get]
 func AppletActivityList(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -228,9 +228,9 @@ func AppletActivityList(ctx *Context) {
 // @Tags 小程序活动
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "活动id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/applet/activity/one [get]
 func AppletActivityOne(ctx *Context) {
 	var entity model.AppletActivity
@@ -249,9 +249,9 @@ func AppletActivityOne(ctx *Context) {
 // @version 1.0
 // @Accept application/json
 // @Param applet_activity body model.AppletActivity false "记录id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/v1/applet/activity/increase [post]
 func AppletActivityIncrease(ctx *Context) {
 	var payload model.AppletActivity
@@ -273,9 +273,9 @@ func AppletActivityIncrease(ctx *Context) {
 // @version 2.0
 // @Accept application/json
 // @Param id body []string false "记录id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/v2/applet/activity/increase_v2 [post]
 func AppletActivityIncreaseV2(ctx *Context) {
 	var payload []string

@@ -2,15 +2,15 @@
     <api name="add" function="add" table="sys_menu" desc="添加菜单" method="post">
         <param name="sys_menu" type="$sys_menu" desc="菜单信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="del" function="delete" table="sys_menu" desc="删除菜单" method="delete">
         <param name="sys_menu" type="$sys_menu" desc="菜单" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="batch_del" function="delete" table="sys_menu" desc="删除菜单" method="delete">
@@ -23,8 +23,8 @@
     <api name="update" function="update" table="sys_menu" desc="更新菜单" method="put">
         <param name="sys_menu" type="$sys_menu" desc="菜单信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="sidebar" desc="系统菜单" method="get"></api>
@@ -32,16 +32,16 @@
         <param name="page" type="int" desc="页码" value="1"/>
         <param name="size" type="int" desc="单页数" value="15" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="tree" desc="菜单树形结构" method="get"></api>
     <api name="get" desc="获取菜单信息" function="one" table="sys_menu" method="get">
         <param name="id" type="string" desc="菜单id" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

@@ -18,9 +18,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysOrg false "组织信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/org/add [post]
 func SysOrgAdd(ctx *Context) {
 	var payload model.SysOrg
@@ -48,9 +48,9 @@ func SysOrgAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_org body model.SysOrg false "组织"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/org/del [delete]
 func SysOrgDel(ctx *Context) {
 	var payload model.SysOrg
@@ -76,9 +76,9 @@ func SysOrgDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_org body []model.SysOrg false "组织"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/org/batch_del [delete]
 func SysOrgBatchDel(ctx *Context) {
 	var payload []model.SysOrg
@@ -108,9 +108,9 @@ func SysOrgBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "组织信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/org/update [put]
 func SysOrgUpdate(ctx *Context) {
 	var payload model.SysRole
@@ -134,9 +134,9 @@ func SysOrgUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/org/page [get]
 func SysOrgPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -158,7 +158,7 @@ func SysOrgPage(ctx *Context) {
 // @Summary 菜单树形结构
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
-// @Failure 403 {object} model.Response
+// @Failure 403 {object} model.Fail
 // @Router /api/sys/org/tree [get]
 func SysOrgTree(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -177,9 +177,9 @@ func SysOrgTree(ctx *Context) {
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "组织id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/org/get [get]
 func SysOrgGet(ctx *Context) {
 	var entity model.SysOrg

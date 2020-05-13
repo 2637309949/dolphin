@@ -14,9 +14,9 @@ import (
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/tracker/page [get]
 func SysTrackerPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -38,9 +38,9 @@ func SysTrackerPage(ctx *Context) {
 // @Tags 日志
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "日志id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/tracker/get [get]
 func SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker

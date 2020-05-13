@@ -82,7 +82,7 @@ func (ctx *Context) Success(data interface{}, status ...int) {
 	if len(status) > 0 {
 		code = status[0]
 	}
-	ctx.JSON(http.StatusOK, model.Response{
+	ctx.JSON(http.StatusOK, model.Success{
 		Code: code,
 		Data: data,
 	})
@@ -98,7 +98,7 @@ func (ctx *Context) Fail(err error, status ...int) {
 	if len(status) > 0 {
 		code = status[0]
 	}
-	ctx.JSON(http.StatusOK, model.Response{
+	ctx.JSON(http.StatusOK, model.Fail{
 		Code: code,
 		Msg:  msg,
 	})

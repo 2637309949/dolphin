@@ -17,9 +17,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysAppFun false "APP功能信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/add [post]
 func SysAppFunAdd(ctx *Context) {
 	var payload model.SysAppFun
@@ -47,9 +47,9 @@ func SysAppFunAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_app_fun body model.SysAppFun false "APP功能"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/del [delete]
 func SysAppFunDel(ctx *Context) {
 	var payload model.SysAppFun
@@ -75,9 +75,9 @@ func SysAppFunDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "APP功能信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/update [put]
 func SysAppFunUpdate(ctx *Context) {
 	var payload model.SysRole
@@ -101,9 +101,9 @@ func SysAppFunUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/page [get]
 func SysAppFunPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -122,7 +122,7 @@ func SysAppFunPage(ctx *Context) {
 // @Summary 菜单树形结构
 // @Tags APP功能
 // @Param Authorization header string false "认证令牌"
-// @Failure 403 {object} model.Response
+// @Failure 403 {object} model.Fail
 // @Router /api/sys/app/fun/tree [get]
 func SysAppFunTree(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -141,9 +141,9 @@ func SysAppFunTree(ctx *Context) {
 // @Tags APP功能
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "APP功能id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/get [get]
 func SysAppFunGet(ctx *Context) {
 	var entity model.SysAppFun

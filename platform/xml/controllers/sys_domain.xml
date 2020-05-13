@@ -2,22 +2,22 @@
     <api name="add" function="add" table="sys_domain" desc="添加域" method="post">
         <param name="user" type="$sys_domain" desc="域信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="del" function="delete" table="sys_domain" desc="删除域" method="delete">
         <param name="sys_domain" type="$sys_domain" desc="域" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="update" function="update" table="sys_domain" desc="更新域" method="put">
         <param name="user" type="$sys_role" desc="域信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="page" function="page" table="sys_domain" desc="域分页查询" method="get">
@@ -25,15 +25,15 @@
         <param name="size" type="int" desc="单页数" value="15" />
         <param name="app_name" type="string" desc="所属应用"/>
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="get" desc="获取域信息" function="one" table="sys_domain" method="get">
         <param name="id" type="string" desc="域id" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

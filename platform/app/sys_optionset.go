@@ -19,9 +19,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysOptionset false "字典信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/add [post]
 func SysOptionsetAdd(ctx *Context) {
 	var payload model.SysOptionset
@@ -49,9 +49,9 @@ func SysOptionsetAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_optionset body model.SysOptionset false "字典"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/del [delete]
 func SysOptionsetDel(ctx *Context) {
 	var payload model.SysOptionset
@@ -77,9 +77,9 @@ func SysOptionsetDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysRole false "字典信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/update [put]
 func SysOptionsetUpdate(ctx *Context) {
 	var payload model.SysRole
@@ -103,9 +103,9 @@ func SysOptionsetUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/page [get]
 func SysOptionsetPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -125,9 +125,9 @@ func SysOptionsetPage(ctx *Context) {
 // @Tags 字典
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "字典id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/get [get]
 func SysOptionsetGet(ctx *Context) {
 	var entity model.SysOptionset

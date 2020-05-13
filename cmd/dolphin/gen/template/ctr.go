@@ -36,7 +36,7 @@ import (
 {{- range .Params}}
 // @Param {{.Name}} {{if eq $api.Method "get"}} query {{else }} {{- if ne (len $api.Params) 1 }}formData{{- else}}body{{- end}}{{- end}} {{.Ref .Type}} false "{{.Desc}}"
 {{- end}}
-// @Failure 403 {object} model.Response
+// @Failure 403 {object} model.Fail
 {{- if ne .Return.Success.Type ""}}
 // @Success 200 {object} {{.Ref .Return.Success.Type}}
 {{- end}}

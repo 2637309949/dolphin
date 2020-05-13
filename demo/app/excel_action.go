@@ -15,9 +15,9 @@ import (
 // @Summary 解析excel
 // @Tags Excel操作
 // @Accept application/json
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/excel/action/parse [post]
 func ExcelActionParse(ctx *Context) {
 	var payload struct{}
@@ -39,9 +39,9 @@ func ExcelActionParse(ctx *Context) {
 // ExcelActionBuild api implementation
 // @Summary 生成excel
 // @Tags Excel操作
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/excel/action/build [get]
 func ExcelActionBuild(ctx *Context) {
 	q := ctx.TypeQuery()

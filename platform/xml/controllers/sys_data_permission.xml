@@ -2,37 +2,37 @@
     <api name="add" function="add" table="sys_data_permission" desc="添加数据权限" method="post">
         <param name="user" type="$sys_data_permission" desc="数据权限信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="del" function="delete" table="sys_data_permission" desc="删除数据权限" method="delete">
         <param name="sys_data_permission" type="$sys_data_permission" desc="数据权限" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="update" function="update" table="sys_data_permission" desc="更新数据权限" method="put">
         <param name="user" type="$sys_role" desc="数据权限信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="page" function="page" table="sys_data_permission" desc="数据权限分页查询" method="get">
         <param name="page" type="int" desc="页码" value="1"/>
         <param name="size" type="int" desc="单页数" value="15" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="get" desc="获取数据权限信息" function="one" table="sys_data_permission" method="get">
         <param name="id" type="string" desc="数据权限id" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

@@ -49,9 +49,9 @@ func init() {
 // @Param username formData string false "用户名称"
 // @Param password formData string false "用户密码"
 // @Param domain formData string false "用户域"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/login [post]
 func SysCasLogin(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
@@ -99,9 +99,9 @@ func SysCasLogin(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param redirect_uri query string false "定向URL"
 // @Param state query string false "状态"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/logout [get]
 func SysCasLogout(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
@@ -113,9 +113,9 @@ func SysCasLogout(ctx *Context) {
 // @Summary 用户授权
 // @Tags OAuth授权
 // @Accept application/json
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/affirm [post]
 func SysCasAffirm(ctx *Context) {
 	store, err := session.Start(nil, ctx.Writer, ctx.Request)
@@ -142,9 +142,9 @@ func SysCasAffirm(ctx *Context) {
 // SysCasAuthorize api implementation
 // @Summary 用户授权
 // @Tags OAuth授权
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/authorize [get]
 func SysCasAuthorize(ctx *Context) {
 	var form url.Values
@@ -177,9 +177,9 @@ func SysCasAuthorize(ctx *Context) {
 // @Summary 获取令牌
 // @Tags OAuth授权
 // @Accept application/json
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/token [post]
 func SysCasToken(ctx *Context) {
 	err := ctx.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
@@ -194,9 +194,9 @@ func SysCasToken(ctx *Context) {
 // @Tags 认证中心
 // @Param redirect_uri query string false "定向URL"
 // @Param state query string false "状态"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/url [get]
 func SysCasURL(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
@@ -206,9 +206,9 @@ func SysCasURL(ctx *Context) {
 // SysCasOauth2 api implementation
 // @Summary 授权回调
 // @Tags 认证中心
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/oauth2 [get]
 func SysCasOauth2(ctx *Context) {
 	ctx.Request.ParseForm()
@@ -245,9 +245,9 @@ func SysCasOauth2(ctx *Context) {
 // SysCasRefresh api implementation
 // @Summary 刷新令牌
 // @Tags OAuth授权
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/refresh [get]
 func SysCasRefresh(ctx *Context) {
 	refreshtoken, ok := ctx.OAuth2.BearerAuth(ctx.Request)
@@ -272,9 +272,9 @@ func SysCasRefresh(ctx *Context) {
 // @Summary 检验令牌
 // @Tags 认证中心
 // @Param openid query string false "openid"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/check [get]
 func SysCasCheck(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -291,9 +291,9 @@ func SysCasCheck(ctx *Context) {
 // @Summary 用户信息
 // @Tags 认证中心
 // @Param Authorization header string false "认证令牌"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/profile [get]
 func SysCasProfile(ctx *Context) {
 	user := ctx.LoginInInfo()
@@ -318,9 +318,9 @@ func SysCasProfile(ctx *Context) {
 // @Tags 认证中心
 // @Param Authorization header string false "认证令牌"
 // @Param type query int false "类型(0: 微信 1：叮叮)"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/qrcode [get]
 func SysCasQrcode(ctx *Context) {
 	q := ctx.TypeQuery()

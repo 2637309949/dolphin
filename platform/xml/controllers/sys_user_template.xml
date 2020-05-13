@@ -2,37 +2,37 @@
     <api name="add" function="add" table="sys_user_template" desc="添加用户模板" method="post">
         <param name="sys_user_template" type="$sys_user_template" desc="用户模板信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="del" function="delete" table="sys_user_template" desc="删除用户模板" method="delete">
         <param name="sys_user_template" type="$sys_user_template" desc="用户模板信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="update" function="update" table="sys_user_template" desc="更新用户模板" method="put">
         <param name="sys_user_template" type="$sys_user_template" desc="用户模板信息" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="page" function="page" table="sys_user_template" desc="用户模板分页查询" method="get">
         <param name="page" type="int" desc="页码" value="1"/>
         <param name="size" type="int" desc="单页数" value="15" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="get" desc="获取用户模板信息" function="one" table="sys_user_template" method="get">
         <param name="id" type="string" desc="用户模板id" />
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

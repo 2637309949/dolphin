@@ -1,8 +1,8 @@
 <controller name="sys_wechat" desc="微信">
     <api name="oauth2" desc="授权回调" method="get" auth="false">
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

@@ -2,14 +2,14 @@
 <controller name="excel_action" desc="Excel操作">
     <api name="parse" desc="解析excel" method="post" auth="false">
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
     <api name="build" desc="生成excel" method="get" auth="false">
         <return>
-            <success type="$response"/>
-            <failure type="$response"/>
+            <success type="$success"/>
+            <failure type="$fail"/>
         </return>
     </api>
 </controller>

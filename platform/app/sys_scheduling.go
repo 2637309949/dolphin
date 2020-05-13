@@ -16,9 +16,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param scheduling body model.Scheduling false "调度信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/add [post]
 func SysSchedulingAdd(ctx *Context) {
 	var payload model.Scheduling
@@ -40,9 +40,9 @@ func SysSchedulingAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param scheduling body model.Scheduling false "调度"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/del [delete]
 func SysSchedulingDel(ctx *Context) {
 	var payload model.Scheduling
@@ -64,9 +64,9 @@ func SysSchedulingDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param scheduling body model.Scheduling false "调度信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/update [put]
 func SysSchedulingUpdate(ctx *Context) {
 	var payload model.Scheduling
@@ -88,9 +88,9 @@ func SysSchedulingUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/page [get]
 func SysSchedulingPage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -109,9 +109,9 @@ func SysSchedulingPage(ctx *Context) {
 // @Tags 调度
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "调度id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/get [get]
 func SysSchedulingGet(ctx *Context) {
 	q := ctx.TypeQuery()

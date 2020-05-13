@@ -17,9 +17,9 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body model.SysUserTemplate false "用户模板信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/add [post]
 func SysUserTemplateAdd(ctx *Context) {
 	var payload model.SysUserTemplate
@@ -47,9 +47,9 @@ func SysUserTemplateAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body model.SysUserTemplate false "用户模板信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/del [delete]
 func SysUserTemplateDel(ctx *Context) {
 	var payload model.SysUserTemplate
@@ -75,9 +75,9 @@ func SysUserTemplateDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body model.SysUserTemplate false "用户模板信息"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/update [put]
 func SysUserTemplateUpdate(ctx *Context) {
 	var payload model.SysUserTemplate
@@ -101,9 +101,9 @@ func SysUserTemplateUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/page [get]
 func SysUserTemplatePage(ctx *Context) {
 	q := ctx.TypeQuery()
@@ -123,9 +123,9 @@ func SysUserTemplatePage(ctx *Context) {
 // @Tags 用户模板
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户模板id"
-// @Failure 403 {object} model.Response
-// @Success 200 {object} model.Response
-// @Failure 500 {object} model.Response
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/get [get]
 func SysUserTemplateGet(ctx *Context) {
 	var entity model.SysUserTemplate
