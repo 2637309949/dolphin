@@ -45,7 +45,7 @@ import (
 {{- end}}
 // @Router /api{{.APIPrefix .Version}}/{{.APIPath $.Controller.Name .Path}}/{{.Name}} [{{.Method}}]
 func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
-{{- if eq .Function "page"}}
+{{- if eq .Func "page"}}
 	q := ctx.TypeQuery()
 	{{- range .Params}}
 	{{- $tv := .ToTypeValue .Type .Value}}
@@ -58,7 +58,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	ctx.Success(ret)
-{{- else if eq .Function "add"}}
+{{- else if eq .Func "add"}}
 	{{- $bp := index .Params 0}}
 	var payload {{$bp.Ref $bp.Type}}
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
@@ -88,7 +88,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	ctx.Success(ret)
-{{- else if eq .Function "delete"}}
+{{- else if eq .Func "delete"}}
 	{{- $bp := index .Params 0}}
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
@@ -129,7 +129,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- end}}
-{{- else if eq .Function "update"}}
+{{- else if eq .Func "update"}}
 	{{- $bp := index .Params 0}}
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
@@ -169,7 +169,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- end}}
-{{- else if eq .Function "one"}}
+{{- else if eq .Func "one"}}
 	{{- $bp := index .Params 0}}
 	var entity model.{{.ToUpperCase .Table}}
 	id := ctx.Query("{{$bp.Name}}")

@@ -31,7 +31,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 	tplCache := map[string]bool{}
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
-			if strings.TrimSpace(api.Table) != "" && api.Function == "page" {
+			if strings.TrimSpace(api.Table) != "" && api.Func == "page" {
 				data := map[string]interface{}{
 					"PackageName": node.PackageName,
 					"Name":        node.Name,

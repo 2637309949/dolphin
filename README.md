@@ -47,28 +47,28 @@ $ mkdir example && cd example && dolphin init && dolphin build
 <controller
     name="applet_activity"
     desc="活动">
-    <api name="add" function="add" table="applet_activity" desc="添加活动" method="post">
+    <api name="add" func="add" table="applet_activity" desc="添加活动" method="post">
         <param name="activity" type="$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />
             <failure type="$response" />
         </return>
     </api>
-    <api name="del" function="delete" table="applet_activity" desc="删除活动" method="delete">
+    <api name="del" func="delete" table="applet_activity" desc="删除活动" method="delete">
         <param name="activity" type="$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />
             <failure type="$response" />
         </return>
     </api>
-    <api name="update" function="update" table="applet_activity" desc="更新活动" method="put">
+    <api name="update" func="update" table="applet_activity" desc="更新活动" method="put">
         <param name="activity" type="$applet_activity" desc="活动对象" />
         <return>
             <success type="$response" />
             <failure type="$response" />
         </return>
     </api>
-    <api name="list" function="list" table="applet_activity" desc="活动分页查询" method="get">
+    <api name="list" func="list" table="applet_activity" desc="活动分页查询" method="get">
         <param name="page" type="int" desc="页码" value="1" />
         <param name="size" type="int" desc="单页数" value="20" />
         <param name="title" type="string" desc="标题筛选" value="nn" />
@@ -78,7 +78,7 @@ $ mkdir example && cd example && dolphin init && dolphin build
             <failure type="$response" />
         </return>
     </api>
-    <api name="one" function="one" table="applet_activity" desc="获取活动" method="get">
+    <api name="one" func="one" table="applet_activity" desc="获取活动" method="get">
         <param name="id" type="string" desc="活动id" />
         <return>
             <success type="$response" />

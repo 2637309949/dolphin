@@ -100,8 +100,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 						api.Desc = attrValue
 					case attrName == "method":
 						api.Method = attrValue
-					case attrName == "function":
-						api.Function = attrValue
+					case attrName == "func":
+						api.Func = attrValue
 					case attrName == "table":
 						api.Table = attrValue
 					case attrName == "version":

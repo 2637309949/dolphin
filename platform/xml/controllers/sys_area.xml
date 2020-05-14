@@ -1,26 +1,26 @@
 <controller name="sys_area" desc="区域">
-    <api name="add" function="add" table="sys_area" desc="添加区域" method="post">
+    <api name="add" func="add" table="sys_area" desc="添加区域" method="post">
         <param name="user" type="$sys_area" desc="区域信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="del" function="delete" table="sys_area" desc="删除区域" method="delete">
+    <api name="del" func="delete" table="sys_area" desc="删除区域" method="delete">
         <param name="sys_area" type="$sys_area" desc="区域" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="update" function="update" table="sys_area" desc="更新区域" method="put">
+    <api name="update" func="update" table="sys_area" desc="更新区域" method="put">
         <param name="user" type="$sys_role" desc="区域信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="page" function="page" table="sys_area" desc="区域分页查询" method="get">
+    <api name="page" func="page" table="sys_area" desc="区域分页查询" method="get">
         <param name="page" type="int" desc="页码" value="1"/>
         <param name="size" type="int" desc="单页数" value="15" />
         <return>
@@ -28,7 +28,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" desc="获取区域信息" function="one" table="sys_area" method="get">
+    <api name="get" desc="获取区域信息" func="one" table="sys_area" method="get">
         <param name="id" type="string" desc="区域id" />
         <return>
             <success type="$success"/>

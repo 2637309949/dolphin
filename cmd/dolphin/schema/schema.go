@@ -33,15 +33,15 @@ type Param struct {
 // API struct
 type API struct {
 	Common
-	Roles    []string
-	Auth     bool
-	Version  string
-	Path     string
-	Function string
-	Table    string
-	Method   string
-	Params   []*Param
-	Return   *Return
+	Roles   []string
+	Auth    bool
+	Version string
+	Path    string
+	Func    string
+	Table   string
+	Method  string
+	Params  []*Param
+	Return  *Return
 }
 
 // Controller struct
