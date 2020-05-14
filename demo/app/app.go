@@ -103,4 +103,8 @@ func buildEngine() *Engine {
 }
 
 // App instance
-var App = buildEngine()
+var App *Engine
+
+func init() {
+	App = buildEngine()
+}

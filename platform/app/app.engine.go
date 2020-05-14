@@ -26,8 +26,7 @@ import (
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/file"
-
-	httpUtil "github.com/2637309949/dolphin/platform/util/http"
+	"github.com/2637309949/dolphin/platform/util/http"
 )
 
 type (
@@ -103,7 +102,7 @@ func (e *Engine) initDB() {
 	domains := []model.SysDomain{}
 	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and del_flag = 0", viper.GetString("app.name")).Find(&domains))
 	funk.ForEach(domains, func(domain model.SysDomain) {
-		uri := util.EnsureLeft(httpUtil.Parse(domain.DataSource.String)).(*httpUtil.URI)
+		uri := util.EnsureLeft(http.Parse(domain.DataSource.String)).(*http.URI)
 		util.EnsureLeft(e.PlatformDB.Sql(fmt.Sprintf("create database if not exists %v default character set utf8mb4", uri.DbName)).Execute())
 		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)
 		db.SetLogger(xLogger)
@@ -202,9 +201,6 @@ func (e *Engine) Auth() func(ctx *Context) {
 			return
 		}
 
-		fmt.Println("----------GetBusinessDBSet", e.Manager.GetBusinessDBSet())
-		fmt.Println("----------GetDomain", ctx.GetToken().GetDomain())
-
 		if ctx.DB = e.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
 			ctx.Fail(util.ErrInvalidDomain)
 			ctx.Abort()
@@ -274,4 +270,8 @@ func buildEngine() *Engine {
 }
 
 // App defined application
-var App = buildEngine()
+var App *Engine
+
+func init() {
+	App = buildEngine()
+}

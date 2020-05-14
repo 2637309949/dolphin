@@ -10,7 +10,6 @@ import (
 	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
-	oErrors "github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -154,7 +153,7 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 	base := reg.FindAllStringSubmatch(baseURI, -1)
 	redirect := reg.FindAllStringSubmatch(redirectURI, -1)
 	if base[0][2] != redirect[0][2] {
-		return oErrors.ErrInvalidRedirectURI
+		return errors.New("invalid redirect uri")
 	}
 	return nil
 }

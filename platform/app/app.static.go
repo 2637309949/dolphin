@@ -19,7 +19,7 @@ func init() {
 			reg := regexp.MustCompile("^([^:?]+)(:.*)?$")
 			groups := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
 			domain := model.SysDomain{}
-			ext, err := App.PlatformDB.Where("domain=? and del_flag=0 and status=1", groups[0][1]).Get(&domain)
+			ext, err := engine.PlatformDB.Where("domain=? and del_flag=0 and status=1", groups[0][1]).Get(&domain)
 			if err != nil || !ext {
 				ctx.Data(200, "application/javascript", []byte(fmt.Sprintf("window.Domain={}")))
 				return
