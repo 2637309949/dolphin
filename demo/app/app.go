@@ -35,18 +35,6 @@ func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e}
 }
 
-// Auth middles
-func Auth(ctx *Context) {
-	pApp.Auth(ctx.Context)
-}
-
-// Roles middles
-func Roles(roles ...string) func(ctx *Context) {
-	return func(ctx *Context) {
-		pApp.Roles(roles...)
-	}
-}
-
 // Group handlers
 func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
 	return &RouterGroup{engine: e, RouterGroup: e.Engine.Group(relativePath, handlers...)}
@@ -67,6 +55,18 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
 		return rg.engine.HandlerFunc(h)
 	}).([]pApp.HandlerFunc)...)
+}
+
+// Auth middles
+func Auth(ctx *Context) {
+	pApp.Auth(ctx.Context)
+}
+
+// Roles middles
+func Roles(roles ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		pApp.Roles(roles...)
+	}
 }
 
 func buildEngine() *Engine {
