@@ -197,38 +197,6 @@ func (e *Engine) authorize() {
 	})
 }
 
-// Auth middles
-func (e *Engine) Auth() func(ctx *Context) {
-	return func(ctx *Context) {
-		if !ctx.Auth(ctx.Request) {
-			ctx.Fail(util.ErrInvalidAccessToken, 401)
-			ctx.Abort()
-			return
-		}
-
-		if ctx.DB = e.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
-			ctx.Fail(util.ErrInvalidDomain)
-			ctx.Abort()
-			return
-		}
-		ctx.Set("DB", ctx.DB)
-		ctx.Set("AuthInfo", ctx.AuthInfo)
-		ctx.Next()
-	}
-}
-
-// Roles middles
-func (e *Engine) Roles(roles ...string) func(ctx *Context) {
-	return func(ctx *Context) {
-		if !ctx.InRole(roles...) {
-			ctx.Fail(util.ErrAccessDenied, 403)
-			ctx.Abort()
-			return
-		}
-		ctx.Next()
-	}
-}
-
 // Done returns a channel of signals to block on after starting the
 func (e *Engine) done() <-chan os.Signal {
 	c := make(chan os.Signal, 1)
