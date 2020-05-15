@@ -69,6 +69,8 @@ func Roles(roles ...string) func(ctx *Context) {
 	}
 }
 
+// buildEngine defined init engine you can custom engine
+// if you need
 func buildEngine() *Engine {
 	e := &Engine{Engine: pApp.App}
 	e.pool.New = func() interface{} {
