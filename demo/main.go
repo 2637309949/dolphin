@@ -4,13 +4,12 @@
 package main
 
 import (
-	_ "demo/app"
+	"demo/app"
 
-	"github.com/2637309949/dolphin/packages/fx"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 //go:generate dolphin build
 func main() {
-	fx.Run()
+	app.App.Run()
 }

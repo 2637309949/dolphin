@@ -1,11 +1,15 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"os"
+	"os/signal"
 	"path"
 	"path/filepath"
 	"sync"
+	"syscall"
+	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 
@@ -41,6 +45,7 @@ type (
 	// Engine defined parse app engine
 	Engine struct {
 		Manager    Manager
+		lifecycle  Lifecycle
 		Gin        *gin.Engine
 		GRPC       *grpc.Server
 		OAuth2     *server.Server
@@ -83,7 +88,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	}, name)
 }
 
-func (e *Engine) initDB() {
+func (e *Engine) database() {
 	xLogger := xorm.NewSimpleLogger(logrus.StandardLogger().Out)
 	xLogger.ShowSQL(viper.GetString("app.mode") == "debug")
 
@@ -174,7 +179,7 @@ func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) {
 	util.Ensure(db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")))
 }
 
-func (e *Engine) initOAuth() {
+func (e *Engine) authorize() {
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
 	manager.MapTokenStorage(e.Manager.GetTokenStore())
@@ -224,36 +229,37 @@ func (e *Engine) Roles(roles ...string) func(ctx *Context) {
 	}
 }
 
+// Done returns a channel of signals to block on after starting the
+func (e *Engine) done() <-chan os.Signal {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
+	return c
+}
+
 // Run booting system
 func (e *Engine) Run() {
-	e.initDB()
-	e.initOAuth()
-}
+	e.database()
+	e.authorize()
 
-// InvokeEngine build engine
-func InvokeEngine(build func(*Engine)) func(*Engine) {
-	return func(e *Engine) {
-		build(e)
+	signal := e.done()
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+
+	if err := e.lifecycle.Start(ctx); err != nil {
+		logrus.Fatalf("ERROR\t\tFailed to start: %v", err)
 	}
-}
-
-// InvokeRPC build engine
-func InvokeRPC(build func(*grpc.Server)) func(*Engine) {
-	return func(e *Engine) {
-		build(e.GRPC)
-	}
-}
-
-// InvokeContext build context
-func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*Engine) {
-	return func(e *Engine) {
-		e.Group(viper.GetString("http.prefix")).Handle(httpMethod, relativePath, handlers...)
+	<-signal
+	ctx, cancel = context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	if err := e.lifecycle.Stop(ctx); err != nil {
+		logrus.Fatalf("ERROR\t\tFailed to stop cleanly: %v", err)
 	}
 }
 
 func buildEngine() *Engine {
 	e := &Engine{}
 	e.Manager = NewDefaultManager()
+	e.lifecycle = &lifecycleWrapper{}
 	e.GRPC = grpc.NewServer()
 	gin.SetMode(viper.GetString("app.mode"))
 
@@ -266,12 +272,9 @@ func buildEngine() *Engine {
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}
+	e.lifecycle.Append(NewLifeHook(e))
 	return e
 }
 
 // App defined application
-var App *Engine
-
-func init() {
-	App = buildEngine()
-}
+var App = buildEngine()

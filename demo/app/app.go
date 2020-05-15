@@ -8,9 +8,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/viper"
 	pApp "github.com/2637309949/dolphin/platform/app"
-	"google.golang.org/grpc"
 )
 
 type (
@@ -73,27 +71,6 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 	}).([]pApp.HandlerFunc)...)
 }
 
-// InvokeEngine build engine
-func InvokeEngine(build func(*Engine)) func(*pApp.Engine) {
-	return func(*pApp.Engine) {
-		build(App)
-	}
-}
-
-// InvokeRPC build engine
-func InvokeRPC(build func(*grpc.Server)) func(*pApp.Engine) {
-	return func(e *pApp.Engine) {
-		build(e.GRPC)
-	}
-}
-
-// InvokeContext build context
-func InvokeContext(httpMethod string, relativePath string, handlers ...HandlerFunc) func(*pApp.Engine) {
-	return func(base *pApp.Engine) {
-		App.Group(viper.GetString("http.prefix")).Handle(httpMethod, relativePath, handlers...)
-	}
-}
-
 func buildEngine() *Engine {
 	e := &Engine{Engine: pApp.App}
 	e.pool.New = func() interface{} {
@@ -103,8 +80,4 @@ func buildEngine() *Engine {
 }
 
 // App instance
-var App *Engine
-
-func init() {
-	App = buildEngine()
-}
+var App = buildEngine()

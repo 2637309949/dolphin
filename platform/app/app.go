@@ -9,7 +9,6 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/2637309949/dolphin/packages/fx"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 
@@ -77,10 +76,10 @@ func OnStop(e *Engine) func(ctx context.Context) error {
 }
 
 // NewLifeHook create lifecycle hook
-func NewLifeHook(e *Engine) fx.Hook {
+func NewLifeHook(e *Engine) Hook {
 	InitServer()
 	InitRPCListener()
-	return fx.Hook{
+	return Hook{
 		OnStart: OnStart(e),
 		OnStop:  OnStop(e),
 	}
@@ -93,8 +92,4 @@ func init() {
 	OA2Cfg.RedirectURL = fmt.Sprintf("%v/api/sys/cas/oauth2", viper.GetString("oauth.cli"))
 	OA2Cfg.Endpoint.AuthURL = AuthServerURL + "/api/sys/cas/authorize"
 	OA2Cfg.Endpoint.TokenURL = AuthServerURL + "/api/sys/cas/token"
-	_ = fx.Provider(func(lc fx.Lifecycle) *Engine {
-		lc.Append(NewLifeHook(App))
-		return App
-	})
 }
