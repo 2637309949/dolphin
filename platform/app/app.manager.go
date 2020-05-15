@@ -5,14 +5,13 @@ import (
 	"strconv"
 
 	"github.com/2637309949/dolphin/packages/logrus"
-
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
 	"github.com/2637309949/dolphin/packages/redis"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/util"
-	httpUtil "github.com/2637309949/dolphin/platform/util/http"
+	"github.com/2637309949/dolphin/platform/util/http"
 )
 
 // DefaultManager defined
@@ -46,7 +45,7 @@ func (d *DefaultManager) AddBusinessDB(domain string, db *xorm.Engine) {
 
 // GetTokenStore defined
 func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
-	if uri := util.EnsureLeft(httpUtil.Parse(viper.GetString("rd.dataSource"))).(*httpUtil.URI); uri.Laddr != "" {
+	if uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI); uri.Laddr != "" {
 		redis := redis.NewClient(&redis.Options{
 			Addr:     uri.Laddr,
 			Password: uri.Passwd,
