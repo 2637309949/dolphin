@@ -18,6 +18,8 @@ module.exports.sysDingtalk = require('./sys_dingtalk')
 module.exports.sysDomain = require('./sys_domain')
 // sysMenu 菜单
 module.exports.sysMenu = require('./sys_menu')
+// sysNotification 站内消息
+module.exports.sysNotification = require('./sys_notification')
 // sysOptionset 字典
 module.exports.sysOptionset = require('./sys_optionset')
 // sysOrg 组织

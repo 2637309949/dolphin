@@ -330,6 +330,39 @@ func SysMenuRoutes(engine *Engine) {
 // SysMenuInstance defined
 var SysMenuInstance = NewSysMenu()
 
+// SysNotification defined
+type SysNotification struct {
+	Add,
+	Del,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysNotification defined
+func NewSysNotification() *SysNotification {
+	ctr := &SysNotification{}
+	ctr.Add = SysNotificationAdd
+	ctr.Del = SysNotificationDel
+	ctr.Update = SysNotificationUpdate
+	ctr.Page = SysNotificationPage
+	ctr.Get = SysNotificationGet
+	return ctr
+}
+
+// SysNotificationRoutes defined
+func SysNotificationRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/notification/add", Auth, SysNotificationInstance.Add)
+	group.Handle("DELETE", "/sys/notification/del", Auth, SysNotificationInstance.Del)
+	group.Handle("PUT", "/sys/notification/update", Auth, SysNotificationInstance.Update)
+	group.Handle("GET", "/sys/notification/page", Auth, SysNotificationInstance.Page)
+	group.Handle("GET", "/sys/notification/get", Auth, SysNotificationInstance.Get)
+}
+
+// SysNotificationInstance defined
+var SysNotificationInstance = NewSysNotification()
+
 // SysOptionset defined
 type SysOptionset struct {
 	Add,
@@ -702,6 +735,7 @@ func init() {
 	App.Manager.MSet().Add(new(model.SysDataPermissionDetail))
 	App.Manager.MSet().Add(new(model.SysDomain), "platform")
 	App.Manager.MSet().Add(new(model.SysMenu))
+	App.Manager.MSet().Add(new(model.SysNotification))
 	App.Manager.MSet().Add(new(model.SysOptionset))
 	App.Manager.MSet().Add(new(model.SysOrg))
 	App.Manager.MSet().Add(new(model.SysPermission))
@@ -729,6 +763,7 @@ func init() {
 	SysDingtalkRoutes(App)
 	SysDomainRoutes(App)
 	SysMenuRoutes(App)
+	SysNotificationRoutes(App)
 	SysOptionsetRoutes(App)
 	SysOrgRoutes(App)
 	SysPermissionRoutes(App)

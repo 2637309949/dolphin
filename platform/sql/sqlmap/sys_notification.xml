@@ -1,0 +1,23 @@
+<sqlMap>
+    <sql id="insert_sys_notification">
+        insert into sys_notification
+		(`id`,`recipient_id`,`sender_id`,`unread`,`type`,`parameters`,`reference_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		values
+		(?id,?recipient_id,?sender_id,?unread,?type,?parameters,?reference_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    </sql>
+    <sql id="update_sys_notification">
+        update sys_notification set `id`=?id,`recipient_id`=?recipient_id,`sender_id`=?sender_id,`unread`=?unread,`type`=?type,`parameters`=?parameters,`reference_id`=?reference_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+		where  id =?id
+    </sql>
+    <sql id="delete_sys_notification">
+        delete from sys_notification
+		where id =?id
+    </sql>
+    <sql id="selectone_sys_notification">
+        select `id`,`recipient_id`,`sender_id`,`unread`,`type`,`parameters`,`reference_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_notification
+		where  id =?id
+    </sql>
+    <sql id="selectall_sys_notification">
+        select `id`,`recipient_id`,`sender_id`,`unread`,`type`,`parameters`,`reference_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_notification
+    </sql>
+</sqlMap>

@@ -394,6 +394,48 @@ definitions:
           iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
+  model.SysNotification:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      parameters:
+        description: 额外数据
+        type: string
+      recipient_id:
+        description: 接受者
+        type: string
+      reference_id:
+        description: 对象引用
+        type: string
+      remark:
+        description: 备注
+        type: string
+      sender_id:
+        description: 发送者
+        type: string
+      type:
+        description: 消息类型
+        type: number
+      unread:
+        description: 是否已读
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.SysOptionset:
     properties:
       code:
@@ -2126,6 +2168,154 @@ paths:
       summary: 更新菜单
       tags:
       - 菜单
+  /api/sys/notification/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息信息
+        in: body
+        name: notification
+        schema:
+          $ref: '#/definitions/model.SysNotification'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加站内消息
+      tags:
+      - 站内消息
+  /api/sys/notification/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息
+        in: body
+        name: sys_notification
+        schema:
+          $ref: '#/definitions/model.SysNotification'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除站内消息
+      tags:
+      - 站内消息
+  /api/sys/notification/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取站内消息信息
+      tags:
+      - 站内消息
+  /api/sys/notification/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 站内消息分页查询
+      tags:
+      - 站内消息
+  /api/sys/notification/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息信息
+        in: body
+        name: notification
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新站内消息
+      tags:
+      - 站内消息
   /api/sys/optionset/add:
     post:
       consumes:
