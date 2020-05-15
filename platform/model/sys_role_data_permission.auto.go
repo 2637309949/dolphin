@@ -7,14 +7,14 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 )
 
-// SysRoleAppFun defined 角色对应APP功能
-type SysRoleAppFun struct {
+// SysRoleDataPermission defined 角色对应数据权限
+type SysRoleDataPermission struct {
 	// 主键
 	ID null.String `xorm:"varchar(36) notnull unique pk 'id'" json:"id" xml:"id"`
 	// 角色ID
 	RoleId null.String `xorm:"varchar(36) notnull 'role_id'" json:"role_id" xml:"role_id"`
-	// APP功能ID
-	AppFunId null.String `xorm:"varchar(36) notnull 'app_fun_id'" json:"app_fun_id" xml:"app_fun_id"`
+	// 数据权限ID
+	DataPermissionId null.String `xorm:"varchar(36) notnull 'data_permission_id'" json:"data_permission_id" xml:"data_permission_id"`
 	// 创建人
 	CreateBy null.String `xorm:"varchar(36) notnull 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间
@@ -29,7 +29,7 @@ type SysRoleAppFun struct {
 	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" xml:"remark"`
 }
 
-// TableName table name of defined SysRoleAppFun
-func (m *SysRoleAppFun) TableName() string {
-	return "sys_role_app_fun"
+// TableName table name of defined SysRoleDataPermission
+func (m *SysRoleDataPermission) TableName() string {
+	return "sys_role_data_permission"
 }

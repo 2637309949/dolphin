@@ -1,7 +1,7 @@
-<table name="sys_role_app_fun" desc="角色对应APP功能" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_role_data_permission" desc="角色对应数据权限" packages="github.com/2637309949/dolphin/packages/null">
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="role_id" desc="角色ID" type="null.String" xorm="varchar(36) notnull" />
-    <column name="app_fun_id" desc="APP功能ID" type="null.String" xorm="varchar(36) notnull" />
+    <column name="data_permission_id" desc="数据权限ID" type="null.String" xorm="varchar(36) notnull" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
