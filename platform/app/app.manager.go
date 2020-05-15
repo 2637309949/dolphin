@@ -18,6 +18,15 @@ import (
 	"github.com/2637309949/dolphin/platform/util/http"
 )
 
+// Manager Engine management interface
+type Manager interface {
+	MSet() MSeti
+	GetBusinessDBSet() map[string]*xorm.Engine
+	GetBusinessDB(string) *xorm.Engine
+	AddBusinessDB(string, *xorm.Engine)
+	GetTokenStore() oauth2.TokenStore
+}
+
 // DefaultManager defined
 type DefaultManager struct {
 	BusinessDBSet map[string]*xorm.Engine

@@ -15,8 +15,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/oauth2"
-
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/null"
 	"google.golang.org/grpc"
@@ -37,26 +35,16 @@ import (
 	"github.com/2637309949/dolphin/platform/util/http"
 )
 
-type (
-	// Manager Engine management interface
-	Manager interface {
-		MSet() MSeti
-		GetBusinessDBSet() map[string]*xorm.Engine
-		GetBusinessDB(string) *xorm.Engine
-		AddBusinessDB(string, *xorm.Engine)
-		GetTokenStore() oauth2.TokenStore
-	}
-	// Engine defined parse app engine
-	Engine struct {
-		Manager    Manager
-		lifecycle  Lifecycle
-		Gin        *gin.Engine
-		GRPC       *grpc.Server
-		OAuth2     *server.Server
-		PlatformDB *xorm.Engine
-		pool       sync.Pool
-	}
-)
+// Engine defined parse app engine
+type Engine struct {
+	Manager    Manager
+	lifecycle  Lifecycle
+	Gin        *gin.Engine
+	GRPC       *grpc.Server
+	OAuth2     *server.Server
+	PlatformDB *xorm.Engine
+	pool       sync.Pool
+}
 
 // HandlerFunc convert to gin.HandlerFunc
 func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
