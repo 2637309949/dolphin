@@ -36,16 +36,14 @@ func (e *Engine) allocateContext() *Context {
 }
 
 // Auth middles
-func (e *Engine) Auth() func(*Context) {
-	return func(ctx *Context) {
-		e.Engine.Auth()(ctx.Context)
-	}
+func Auth(ctx *Context) {
+	pApp.Auth(ctx.Context)
 }
 
 // Roles middles
-func (e *Engine) Roles(roles ...string) func(ctx *Context) {
+func Roles(roles ...string) func(ctx *Context) {
 	return func(ctx *Context) {
-		e.Engine.Roles(roles...)
+		pApp.Roles(roles...)
 	}
 }
 

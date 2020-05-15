@@ -7,6 +7,8 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/2637309949/dolphin/platform/util"
+
 	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
@@ -156,4 +158,33 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 		return errors.New("invalid redirect uri")
 	}
 	return nil
+}
+
+// Auth middles
+func Auth(ctx *Context) {
+	if !ctx.Auth(ctx.Request) {
+		ctx.Fail(util.ErrInvalidAccessToken, 401)
+		ctx.Abort()
+		return
+	}
+	if ctx.DB = ctx.engine.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
+		ctx.Fail(util.ErrInvalidDomain)
+		ctx.Abort()
+		return
+	}
+	ctx.Set("DB", ctx.DB)
+	ctx.Set("AuthInfo", ctx.AuthInfo)
+	ctx.Next()
+}
+
+// Roles middles
+func Roles(roles ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		if !ctx.InRole(roles...) {
+			ctx.Fail(util.ErrAccessDenied, 403)
+			ctx.Abort()
+			return
+		}
+		ctx.Next()
+	}
 }
