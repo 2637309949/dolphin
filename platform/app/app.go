@@ -9,6 +9,8 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/2637309949/dolphin/platform/util"
+
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 
@@ -19,26 +21,8 @@ import (
 // HTTPServer defined http.Server
 var HTTPServer *http.Server
 
-// InitServer defined HTTPServer
-func InitServer() {
-	if HTTPServer == nil {
-		HTTPServer = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
-	}
-}
-
 // RPCListener defined net
 var RPCListener net.Listener
-
-// InitRPCListener defined RPCListener
-func InitRPCListener() {
-	if RPCListener == nil {
-		grpc, err := net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		RPCListener = grpc
-	}
-}
 
 // OnStart defined OnStart
 func OnStart(e *Engine) func(context.Context) error {
@@ -77,8 +61,6 @@ func OnStop(e *Engine) func(ctx context.Context) error {
 
 // NewLifeHook create lifecycle hook
 func NewLifeHook(e *Engine) Hook {
-	InitServer()
-	InitRPCListener()
 	return Hook{
 		OnStart: OnStart(e),
 		OnStop:  OnStop(e),
@@ -92,4 +74,6 @@ func init() {
 	OA2Cfg.RedirectURL = fmt.Sprintf("%v/api/sys/cas/oauth2", viper.GetString("oauth.cli"))
 	OA2Cfg.Endpoint.AuthURL = AuthServerURL + "/api/sys/cas/authorize"
 	OA2Cfg.Endpoint.TokenURL = AuthServerURL + "/api/sys/cas/token"
+	HTTPServer = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
+	RPCListener = util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
 }
