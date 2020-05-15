@@ -53,9 +53,10 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{end}}
 
 func init() {
+	mseti := App.Manager.MSet()
 	// Sync models
 	{{- range .Tables}}
-	App.Manager.MSet().Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
+	mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
 	{{- end}}
 	// Async Ctr
 	{{- range .Controllers}}
