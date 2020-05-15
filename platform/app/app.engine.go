@@ -32,7 +32,7 @@ import (
 type (
 	// Manager Engine management interface
 	Manager interface {
-		GetMSet() MSeti
+		MSet() MSeti
 		GetBusinessDBSet() map[string]*xorm.Engine
 		GetBusinessDB(string) *xorm.Engine
 		AddBusinessDB(string, *xorm.Engine)
@@ -78,7 +78,7 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 
 // Migration models
 func (e *Engine) migration(name string, db *xorm.Engine) {
-	e.Manager.GetMSet().ForEach(func(n string, m interface{}) {
+	e.Manager.MSet().ForEach(func(n string, m interface{}) {
 		util.Ensure(db.Sync2(m))
 	}, name)
 }
@@ -117,10 +117,10 @@ func (e *Engine) initDB() {
 		defer func() {
 			if err := recover(); err == nil {
 				util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
-				e.Manager.GetMSet().Release()
+				e.Manager.MSet().Release()
 			}
 		}()
-		nset := e.Manager.GetMSet().Name(func(n string) bool {
+		nset := e.Manager.MSet().Name(func(n string) bool {
 			return n != Name
 		})
 		for _, v := range e.Manager.GetBusinessDBSet() {

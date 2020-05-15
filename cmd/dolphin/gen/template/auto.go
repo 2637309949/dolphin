@@ -57,7 +57,7 @@ func init() {
 	// Sync models
 	fx.Invoke(InvokeEngine(func(e *Engine) {
 		{{- range .Tables}}
-		e.Manager.GetMSet().Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
+		e.Manager.MSet().Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
 		{{- end}}
 	}))
 	// Async Ctr
