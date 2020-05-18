@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package pipes
+package modules
 
 import (
 	"path"
@@ -13,31 +13,31 @@ import (
 	"github.com/2637309949/dolphin/packages/viper"
 )
 
-// SQLMap struct
-type SQLMap struct {
+// Ctr struct
+type Ctr struct {
 }
 
 // Name defined pipe name
-func (app *SQLMap) Name() string {
-	return "sqlmap"
+func (ctr *Ctr) Name() string {
+	return "ctr"
 }
 
 // Build func
-func (app *SQLMap) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
-	for _, t := range node.Tables {
+	for _, c := range node.Controllers {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
-			"Application": node,
-			"Table":       t,
+			"Controller":  c,
 		}
 		tmplCfg := &pipe.TmplCfg{
-			Text:     template.TmplSQLMap,
-			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sqlmap"), t.Name),
+			Text:     template.TmplCtr,
+			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name),
 			Data:     data,
-			Overlap:  pipe.OverlapWrite,
-			Suffix:   ".xml",
+			Overlap:  pipe.OverlapInc,
+			Suffix:   ".go",
+			GOFmt:    true,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 	}

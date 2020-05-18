@@ -12,28 +12,28 @@ import (
 	"path"
 	"reflect"
 
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/modules"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipes"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 var lines = []pipe.Pipe{
-	&pipes.Main{},
-	&pipes.App{},
-	&pipes.Ctr{},
-	&pipes.Srv{},
-	&pipes.Model{},
-	&pipes.Bean{},
-	&pipes.Auto{},
-	&pipes.Tool{},
-	&pipes.SQL{},
-	&pipes.SQLMap{},
-	&pipes.OAuth{},
-	&pipes.Script{},
-	&pipes.Doc{},
-	&pipes.SQLTPL{},
+	&modules.Main{},
+	&modules.App{},
+	&modules.Ctr{},
+	&modules.Srv{},
+	&modules.Model{},
+	&modules.Bean{},
+	&modules.Auto{},
+	&modules.Tool{},
+	&modules.SQL{},
+	&modules.SQLMap{},
+	&modules.OAuth{},
+	&modules.Script{},
+	&modules.Doc{},
+	&modules.SQLTPL{},
 }
 
 // AddPipe defined addPipe
@@ -60,8 +60,8 @@ func New(app *schema.Application) *Gen {
 }
 
 // AddPipe add pipe
-func (g *Gen) AddPipe(pipes ...pipe.Pipe) {
-	g.Pipes = append(g.Pipes, pipes...)
+func (g *Gen) AddPipe(modules ...pipe.Pipe) {
+	g.Pipes = append(g.Pipes, modules...)
 }
 
 // Build build code from xml

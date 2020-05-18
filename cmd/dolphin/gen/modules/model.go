@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package pipes
+package modules
 
 import (
 	"path"
@@ -13,27 +13,27 @@ import (
 	"github.com/2637309949/dolphin/packages/viper"
 )
 
-// Bean struct
-type Bean struct {
+// Model struct
+type Model struct {
 }
 
 // Name defined pipe name
-func (m *Bean) Name() string {
-	return "bean"
+func (m *Model) Name() string {
+	return "model"
 }
 
 // Build func
-func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Model) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
-	for _, bean := range node.Beans {
+	for _, table := range node.Tables {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
-			"Bean":        bean,
+			"Table":       table,
 		}
 		tmplCfg := &pipe.TmplCfg{
-			Text:     template.TmplBean,
-			FilePath: path.Join(dir, viper.GetString("dir.model"), bean.Name+".auto"),
+			Text:     template.TmplModel,
+			FilePath: path.Join(dir, viper.GetString("dir.model"), table.Name+".auto"),
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,
 			Suffix:   ".go",
