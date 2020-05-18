@@ -199,7 +199,7 @@ func (statement *Statement) BuildUpdates(tableValue reflect.Value,
 				}
 				val = dialects.FormatColumnTime(statement.dialect, statement.defaultTimeZone, col, t)
 			} else if zeroType, ok := fieldValue.Interface().(ZeroType); ok && zeroType.IsZero() {
-				// fix null package
+				// skip zero
 				continue
 			} else if nulType, ok := fieldValue.Interface().(driver.Valuer); ok {
 				val, _ = nulType.Value()
