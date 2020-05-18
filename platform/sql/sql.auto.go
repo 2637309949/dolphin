@@ -692,6 +692,11 @@ where
 	sys_attachment.del_flag {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
+	SQLTPL["sys_cas_role.tpl"] = `select
+    name
+from sys_role
+left join sys_role_user
+on sys_role.id = sys_role_user.role_id and sys_role_user.user_id = "{{.user_id}}"`
 	SQLTPL["sys_client_page_count.tpl"] = `select
     count(*) records
 from

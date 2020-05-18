@@ -1255,7 +1255,7 @@ paths:
             $ref: '#/definitions/model.Fail'
       summary: 用户授权
       tags:
-      - OAuth授权
+      - 认证中心
   /api/sys/cas/authorize:
     get:
       responses:
@@ -1273,7 +1273,7 @@ paths:
             $ref: '#/definitions/model.Fail'
       summary: 用户授权
       tags:
-      - OAuth授权
+      - 认证中心
   /api/sys/cas/check:
     get:
       parameters:
@@ -1446,7 +1446,7 @@ paths:
             $ref: '#/definitions/model.Fail'
       summary: 刷新令牌
       tags:
-      - OAuth授权
+      - 认证中心
   /api/sys/cas/token:
     post:
       consumes:
@@ -1466,7 +1466,7 @@ paths:
             $ref: '#/definitions/model.Fail'
       summary: 获取令牌
       tags:
-      - OAuth授权
+      - 认证中心
   /api/sys/cas/url:
     get:
       parameters:

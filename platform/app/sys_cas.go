@@ -298,7 +298,9 @@ func SysCasCheck(ctx *Context) {
 func SysCasProfile(ctx *Context) {
 	user := ctx.LoginInInfo()
 	roles := []model.SysRole{}
-	err := ctx.DB.SQL("select name from sys_role left join sys_role_user on sys_role.id = sys_role_user.role_id and sys_role_user.user_id = ?", user.ID.String).Find(&roles)
+	err := ctx.DB.SqlTemplateClient("sys_cas_role.tpl", &map[string]interface{}{
+		"user_id": user.ID.String,
+	}).Find(&roles)
 	if err != nil {
 		ctx.Fail(err)
 		return

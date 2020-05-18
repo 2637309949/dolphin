@@ -660,7 +660,7 @@ func SysUserRoutes(engine *Engine) {
 	group.Handle("POST", "/sys/user/add", Auth, Roles("X8e6D3y60K"), SysUserInstance.Add)
 	group.Handle("DELETE", "/sys/user/del", Auth, Roles("X8e6D3y60K"), SysUserInstance.Del)
 	group.Handle("PUT", "/sys/user/update", Auth, Roles("X8e6D3y60K"), SysUserInstance.Update)
-	group.Handle("GET", "/sys/user/page", Auth, Roles("X8e6D3y60K"), SysUserInstance.Page)
+	group.Handle("GET", "/sys/user/page", Auth, SysUserInstance.Page)
 	group.Handle("GET", "/sys/user/get", Auth, SysUserInstance.Get)
 	group.Handle("POST", "/sys/user/login", SysUserInstance.Login)
 	group.Handle("GET", "/sys/user/logout", Auth, SysUserInstance.Logout)
