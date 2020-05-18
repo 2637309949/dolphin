@@ -10,14 +10,14 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/2637309949/dolphin/platform/model"
-
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/srv"
 )
 
 // SysUserAdd api implementation
@@ -126,18 +126,10 @@ func SysUserPage(ctx *Context) {
 	q.SetTags()
 
 	if q.GetString("cn_org_id") != "" {
-		idst := struct {
-			IDS string `xorm:"ids"`
-		}{}
-		_, err := ctx.DB.SQL(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, del_flag from sys_org where del_flag=0 and inheritance like "%v" group by del_flag`, "%"+q.GetString("cn_org_id")+"%")).Get(&idst)
+		ids, err := srv.SysUserGetOrgsFromInheritance(ctx.DB, q.GetString("cn_org_id"))
 		if err != nil {
 			ctx.Fail(err)
 			return
-		}
-		// if id type...
-		ids := []string{}
-		for _, v := range strings.Split(idst.IDS, ",") {
-			ids = append(ids, fmt.Sprintf("'%v'", v))
 		}
 		q.SetString("cn_org_id", template.HTML(strings.Join(ids, ",")))()
 	}
@@ -159,18 +151,19 @@ func SysUserPage(ctx *Context) {
 			uorgs = append(uorgs, fmt.Sprintf("'%v'", v["org_id"]))
 		}
 	}
-	ustrs := strings.Join(uids, ",")
-	ostrs := strings.Join(uorgs, ",")
-	roles, err := ctx.DB.SqlTemplateClient("sys_user_role.tpl", &map[string]interface{}{"uids": template.HTML(ustrs)}).QueryResult().List()
+
+	roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	orgs, err := ctx.DB.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"oids": template.HTML(ostrs)}).QueryResult().List()
+
+	orgs, err := srv.SysUserGetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
+
 	for i := range ret.Data {
 		for _, v := range roles {
 			if v["user_id"].NullString().String == fmt.Sprintf("%v", ret.Data[i]["id"]) {
@@ -185,6 +178,7 @@ func SysUserPage(ctx *Context) {
 			}
 		}
 	}
+
 	ctx.Success(ret.With(new([]struct {
 		ID       null.String `json:"id" xml:"id"`
 		Name     null.String `json:"name" xml:"name"`

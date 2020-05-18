@@ -5,9 +5,49 @@ package srv
 
 import (
 	"errors"
+	"fmt"
+	"html/template"
+	"strings"
+
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
 
 // SysUserAction defined srv
 func SysUserAction(v interface{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
+}
+
+// SysUserGetOrgsFromInheritance defined srv
+func SysUserGetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error) {
+	idst := struct {
+		IDS string `xorm:"ids"`
+	}{}
+	_, err := db.SQL(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, del_flag from sys_org where del_flag=0 and inheritance like "%v" group by del_flag`, "%"+cn+"%")).Get(&idst)
+	if err != nil {
+		return nil, err
+	}
+	// if id type...
+	ids := []string{}
+	for _, v := range strings.Split(idst.IDS, ",") {
+		ids = append(ids, fmt.Sprintf("'%v'", v))
+	}
+	return ids, nil
+}
+
+// SysUserGetUserRolesByUID defined
+func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) (xorm.Result, error) {
+	roles, err := db.SqlTemplateClient("sys_user_role.tpl", &map[string]interface{}{"uids": template.HTML(ids)}).QueryResult().List()
+	if err != nil {
+		return nil, err
+	}
+	return roles, err
+}
+
+// SysUserGetUserOrgsByUID defined
+func SysUserGetUserOrgsByUID(db *xorm.Engine, ids string) (xorm.Result, error) {
+	orgs, err := db.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"oids": template.HTML(ids)}).QueryResult().List()
+	if err != nil {
+		return nil, err
+	}
+	return orgs, err
 }

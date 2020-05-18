@@ -67,7 +67,7 @@ func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
 		if _, err := redis.Ping().Result(); err == nil {
 			return store.NewRedisStoreWithCli(redis, TokenkeyNamespace)
 		}
-		logrus.Warnf("GetTokenStore:%v connect failed", viper.GetString("rd.dataSource"))
+		logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
 	}
 	memo, _ := store.NewMemoryTokenStore()
 	return memo
