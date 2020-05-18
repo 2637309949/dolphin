@@ -173,7 +173,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $bp := index .Params 0}}
 	var entity model.{{.ToUpperCase .Table}}
 	id := ctx.Query("{{$bp.Name}}")
-	_, err := ctx.DB.Id(id).Get(&entity)
+	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

@@ -62,6 +62,7 @@ require (
 	github.com/spf13/pflag v1.0.3
 	github.com/stretchr/testify v1.4.0
 	github.com/subosito/gotenv v1.2.0
+	github.com/syndtr/goleveldb v1.0.0
 	github.com/tealeg/xlsx v1.0.5 // indirect
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/tidwall/buntdb v1.1.2

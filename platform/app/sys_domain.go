@@ -133,7 +133,7 @@ func SysDomainPage(ctx *Context) {
 func SysDomainGet(ctx *Context) {
 	var entity model.SysDomain
 	id := ctx.Query("id")
-	_, err := ctx.PlatformDB.Id(id).Get(&entity)
+	_, err := ctx.PlatformDB.ID(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

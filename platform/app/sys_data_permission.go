@@ -130,7 +130,7 @@ func SysDataPermissionPage(ctx *Context) {
 func SysDataPermissionGet(ctx *Context) {
 	var entity model.SysDataPermission
 	id := ctx.Query("id")
-	_, err := ctx.DB.Id(id).Get(&entity)
+	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

@@ -9,53 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/xormplus/core"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
 )
 
-type incrParam struct {
-	colName string
-	arg     interface{}
-}
-
-type decrParam struct {
-	colName string
-	arg     interface{}
-}
-
-type exprParam struct {
-	colName string
-	expr    string
-}
-
-type columnMap []string
-
-func (m columnMap) contain(colName string) bool {
-	if len(m) == 0 {
-		return false
-	}
-
-	n := len(colName)
-	for _, mk := range m {
-		if len(mk) != n {
-			continue
-		}
-		if strings.EqualFold(mk, colName) {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (m *columnMap) add(colName string) bool {
-	if m.contain(colName) {
-		return false
-	}
-	*m = append(*m, colName)
-	return true
-}
-
-func setColumnInt(bean interface{}, col *core.Column, t int64) {
+func setColumnInt(bean interface{}, col *schemas.Column, t int64) {
 	v, err := col.ValueOf(bean)
 	if err != nil {
 		return
@@ -70,7 +27,7 @@ func setColumnInt(bean interface{}, col *core.Column, t int64) {
 	}
 }
 
-func setColumnTime(bean interface{}, col *core.Column, t time.Time) {
+func setColumnTime(bean interface{}, col *schemas.Column, t time.Time) {
 	v, err := col.ValueOf(bean)
 	if err != nil {
 		return
@@ -87,7 +44,7 @@ func setColumnTime(bean interface{}, col *core.Column, t time.Time) {
 	}
 }
 
-func getFlagForColumn(m map[string]bool, col *core.Column) (val bool, has bool) {
+func getFlagForColumn(m map[string]bool, col *schemas.Column) (val bool, has bool) {
 	if len(m) == 0 {
 		return false, false
 	}
@@ -120,19 +77,19 @@ func col2NewCols(columns ...string) []string {
 }
 
 // Incr provides a query string like "count = count + 1"
-func (session *Session) Incr(column string, args ...interface{}) *Session {
-	session.statement.Incr(column, args...)
+func (session *Session) Incr(column string, arg ...interface{}) *Session {
+	session.statement.Incr(column, arg...)
 	return session
 }
 
 // Decr provides a query string like "count = count - 1"
-func (session *Session) Decr(column string, args ...interface{}) *Session {
-	session.statement.Decr(column, args...)
+func (session *Session) Decr(column string, arg ...interface{}) *Session {
+	session.statement.Decr(column, arg...)
 	return session
 }
 
 // SetExpr provides a query string like "column = {expression}"
-func (session *Session) SetExpr(column string, expression string) *Session {
+func (session *Session) SetExpr(column string, expression interface{}) *Session {
 	session.statement.SetExpr(column, expression)
 	return session
 }

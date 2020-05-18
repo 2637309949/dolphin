@@ -129,7 +129,7 @@ func SysUserPage(ctx *Context) {
 		idst := struct {
 			IDS string `xorm:"ids"`
 		}{}
-		_, err := ctx.DB.Sql(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, del_flag from sys_org where del_flag=0 and inheritance like "%v" group by del_flag`, "%"+q.GetString("cn_org_id")+"%")).Get(&idst)
+		_, err := ctx.DB.SQL(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, del_flag from sys_org where del_flag=0 and inheritance like "%v" group by del_flag`, "%"+q.GetString("cn_org_id")+"%")).Get(&idst)
 		if err != nil {
 			ctx.Fail(err)
 			return
@@ -210,7 +210,7 @@ func SysUserPage(ctx *Context) {
 func SysUserGet(ctx *Context) {
 	var entity model.SysUser
 	id := ctx.Query("id")
-	_, err := ctx.PlatformDB.Id(id).Get(&entity)
+	_, err := ctx.PlatformDB.ID(id).Get(&entity)
 	entity.Password.Valid = false
 	entity.Salt.Valid = false
 	if err != nil {

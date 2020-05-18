@@ -140,7 +140,7 @@ func SysOptionsetGet(ctx *Context) {
 	if code != "" {
 		sql += fmt.Sprintf(" and code='%v'", code)
 	}
-	_, err := ctx.DB.Sql(sql).Get(&entity)
+	_, err := ctx.DB.SQL(sql).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

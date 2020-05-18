@@ -45,7 +45,7 @@ func SysTrackerPage(ctx *Context) {
 func SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker
 	id := ctx.Query("id")
-	_, err := ctx.PlatformDB.Id(id).Cols("id", "header", "req_body", "res_body").Get(&entity)
+	_, err := ctx.PlatformDB.ID(id).Cols("id", "header", "req_body", "res_body").Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return

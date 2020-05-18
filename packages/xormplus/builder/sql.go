@@ -21,7 +21,7 @@ func condToSQL(cond Cond) (string, []interface{}, error) {
 	if err := cond.WriteTo(w); err != nil {
 		return "", nil, err
 	}
-	return w.writer.String(), w.args, nil
+	return w.String(), w.args, nil
 }
 
 func condToBoundSQL(cond Cond) (string, error) {
@@ -33,7 +33,7 @@ func condToBoundSQL(cond Cond) (string, error) {
 	if err := cond.WriteTo(w); err != nil {
 		return "", err
 	}
-	return ConvertToBoundSQL(w.writer.String(), w.args)
+	return ConvertToBoundSQL(w.String(), w.args)
 }
 
 // ToSQL convert a builder or conditions to SQL and args
@@ -77,6 +77,7 @@ func noSQLQuoteNeeded(a interface{}) bool {
 	}
 
 	t := reflect.TypeOf(a)
+
 	switch t.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return true
@@ -95,7 +96,7 @@ func noSQLQuoteNeeded(a interface{}) bool {
 
 // ConvertToBoundSQL will convert SQL and args to a bound SQL
 func ConvertToBoundSQL(sql string, args []interface{}) (string, error) {
-	buf := StringBuilder{}
+	buf := strings.Builder{}
 	var i, j, start int
 	for ; i < len(sql); i++ {
 		if sql[i] == '?' {
@@ -135,57 +136,16 @@ func ConvertToBoundSQL(sql string, args []interface{}) (string, error) {
 	return buf.String(), nil
 }
 
-// ConvertToBoundSQL will convert SQL and args to a bound SQL
-func ConvertExprToBoundSQL(sql string, args []interface{}) (string,[]interface{}, error) {
-	buf := StringBuilder{}
-	var i, j, start int
-	var sqlArgs []interface{}
-	for ; i < len(sql); i++ {
-		if sql[i] == '?' {
-			_, err := buf.WriteString(sql[start:i])
-			if err != nil {
-				return "",sqlArgs, err
-			}
-			start = i + 1
-
-			if len(args) == j {
-				return "",sqlArgs, ErrNeedMoreArguments
-			}
-
-			arg := args[j]
-			if exprArg, ok := arg.(expr);ok{
-				arg = exprArg.sql
-				_, err = fmt.Fprint(&buf, arg)
-				if err != nil {
-					return "",sqlArgs, err
-				}
-				for i,_:=range exprArg.args{
-					sqlArgs = append(sqlArgs, exprArg.args[i])
-				}
-			}else{
-				_, err = fmt.Fprint(&buf, "?")
-				if err != nil {
-					return "",sqlArgs, err
-				}
-				sqlArgs = append(sqlArgs, arg)
-			}
-
-			j = j + 1
-		}
-	}
-	_, err := buf.WriteString(sql[start:])
-	if err != nil {
-		return "",sqlArgs, err
-	}
-	return buf.String(), sqlArgs,nil
-}
-
-// ConvertPlaceholder replaces ? to $1, $2 ... or :1, :2 ... according prefix
+// ConvertPlaceholder replaces the place holder ? to $1, $2 ... or :1, :2 ... according prefix
 func ConvertPlaceholder(sql, prefix string) (string, error) {
-	buf := StringBuilder{}
+	buf := strings.Builder{}
 	var i, j, start int
+	var ready = true
 	for ; i < len(sql); i++ {
-		if sql[i] == '?' {
+		if sql[i] == '\'' && i > 0 && sql[i-1] != '\\' {
+			ready = !ready
+		}
+		if ready && sql[i] == '?' {
 			if _, err := buf.WriteString(sql[start:i]); err != nil {
 				return "", err
 			}

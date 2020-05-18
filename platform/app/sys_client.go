@@ -133,7 +133,7 @@ func SysClientPage(ctx *Context) {
 func SysClientGet(ctx *Context) {
 	var entity model.SysClient
 	id := ctx.Query("id")
-	_, err := ctx.PlatformDB.Id(id).Get(&entity)
+	_, err := ctx.PlatformDB.ID(id).Get(&entity)
 	if err != nil {
 		ctx.Fail(err)
 		return
