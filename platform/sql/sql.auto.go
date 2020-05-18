@@ -216,6 +216,27 @@ func init() {
 	SQLTPL["selectall_sys_menu"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_menu
     `
+	SQLTPL["insert_sys_notification"] = `
+        insert into sys_notification
+		(` + "`id`" + `,` + "`recipient_id`" + `,` + "`sender_id`" + `,` + "`unread`" + `,` + "`type`" + `,` + "`parameters`" + `,` + "`reference_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?recipient_id,?sender_id,?unread,?type,?parameters,?reference_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_notification"] = `
+        update sys_notification set ` + "`id`" + `=?id,` + "`recipient_id`" + `=?recipient_id,` + "`sender_id`" + `=?sender_id,` + "`unread`" + `=?unread,` + "`type`" + `=?type,` + "`parameters`" + `=?parameters,` + "`reference_id`" + `=?reference_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_notification"] = `
+        delete from sys_notification
+		where id =?id
+    `
+	SQLTPL["selectone_sys_notification"] = `
+        select ` + "`id`" + `,` + "`recipient_id`" + `,` + "`sender_id`" + `,` + "`unread`" + `,` + "`type`" + `,` + "`parameters`" + `,` + "`reference_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_notification
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_notification"] = `
+        select ` + "`id`" + `,` + "`recipient_id`" + `,` + "`sender_id`" + `,` + "`unread`" + `,` + "`type`" + `,` + "`parameters`" + `,` + "`reference_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_notification
+    `
 	SQLTPL["insert_sys_optionset"] = `
         insert into sys_optionset
 		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
@@ -320,6 +341,27 @@ func init() {
     `
 	SQLTPL["selectall_sys_role_app_fun"] = `
         select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_app_fun
+    `
+	SQLTPL["insert_sys_role_data_permission"] = `
+        insert into sys_role_data_permission
+		(` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?role_id,?data_permission_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_role_data_permission"] = `
+        update sys_role_data_permission set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`data_permission_id`" + `=?data_permission_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_role_data_permission"] = `
+        delete from sys_role_data_permission
+		where id =?id
+    `
+	SQLTPL["selectone_sys_role_data_permission"] = `
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_data_permission
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_role_data_permission"] = `
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_data_permission
     `
 	SQLTPL["insert_sys_role_menu"] = `
         insert into sys_role_menu
@@ -794,6 +836,25 @@ where
 
 order by `+"`order`"+`
 `
+	SQLTPL["sys_notification_page_count.tpl"] = `select
+    count(*) records
+from
+	sys_notification
+where
+	sys_notification.id {{.ne}} ""
+	and
+	sys_notification.del_flag {{.ne}} 1
+`
+	SQLTPL["sys_notification_page_select.tpl"] = `select
+    sys_notification.id
+from
+	sys_notification
+where
+	sys_notification.id {{.ne}} ""
+	and
+	sys_notification.del_flag {{.ne}} 1
+LIMIT {{.size}} OFFSET {{.offset}}
+`
 	SQLTPL["sys_optionset_page_count.tpl"] = `select
     count(*) records
 from
@@ -903,6 +964,11 @@ where
 
 order by `+"`order`"+`
 `
+	SQLTPL["sys_role_in_role_cnt.tpl"] = `select
+    count(distinct(role_id))
+from sys_role_user
+where
+role_id in (select id from sys_role where code in ({{.roles}})) and user_id = "{{.user_id}}"`
 	SQLTPL["sys_role_menu_tree.tpl"] = `select
     distinct
     sys_menu.id,

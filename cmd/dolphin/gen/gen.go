@@ -121,7 +121,7 @@ func (g *Gen) buildTmpl(tmpcfg *pipe.TmplCfg) error {
 	}
 	if tmpcfg.GOFmt {
 		cmd := exec.Command("gofmt", "-s", "-w", tmpcfg.FilePath)
-		if err := cmd.Run(); err != nil {
+		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
 			logrus.Fatal(err)
 		}
 	}

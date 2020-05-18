@@ -1,19 +1,19 @@
 <controller name="sys_user" desc="用户">
-    <api name="add" func="add" table="sys_user" desc="添加用户" method="post" roles="admin">
+    <api name="add" func="add" table="sys_user" desc="添加用户" method="post" roles="X8e6D3y60K">
         <param name="user" type="$sys_user" desc="用户信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="del" func="delete" table="sys_user" desc="删除用户" method="delete" roles="admin">
+    <api name="del" func="delete" table="sys_user" desc="删除用户" method="delete" roles="X8e6D3y60K">
         <param name="user" type="$sys_user" desc="用户信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="update" func="update" table="sys_user" desc="更新用户" method="put" roles="admin">
+    <api name="update" func="update" table="sys_user" desc="更新用户" method="put" roles="X8e6D3y60K">
         <param name="user" type="$sys_user" desc="用户信息" />
         <return>
             <success type="$success"/>

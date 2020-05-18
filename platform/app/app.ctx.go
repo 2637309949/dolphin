@@ -66,11 +66,15 @@ func (ctx *Context) LoginInInfo() model.SysUser {
 // InRole defined
 func (ctx *Context) InRole(role ...string) bool {
 	var cnt int
-	ctx.DB.Sql(fmt.Sprintf(`
-		select count(distinct(role_id)) from sys_role_user where role_id in (select id from sys_role where code in (%v)) and user_id = "%v"
-	`, strings.Join(funk.Map(role, func(r string) string {
-		return fmt.Sprintf(`"%v"`, r)
-	}).([]string), ","), ctx.GetToken().GetUserID())).Get(&cnt)
+	if _, err := ctx.DB.SqlTemplateClient("sys_role_in_role_cnt.tpl", &map[string]interface{}{
+		"user_id": ctx.GetToken().GetUserID(),
+		"roles": template.HTML(strings.Join(funk.Map(role, func(r string) string {
+			return fmt.Sprintf(`"%v"`, r)
+		}).([]string), ",")),
+	}).Get(&cnt); err != nil {
+		logrus.Error(err)
+		return false
+	}
 	return cnt == len(role)
 }
 
