@@ -22,6 +22,18 @@ module.exports.upload = (data) => {
   })
 }
 
+// export 附件导出
+module.exports.export = (data) => {
+  let url = '/api/sys/attachment/export?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
+  return axios({
+    url: url,
+    method: 'get'
+  })
+}
+
 // del 删除附件
 module.exports.del = (data) => {
   const url = '/api/sys/attachment/del'

@@ -4,6 +4,7 @@
 package app
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -179,6 +180,19 @@ func SysUserPage(ctx *Context) {
 		}
 	}
 
+	if ctx.QueryBool("__export__") {
+		cstr := ctx.QueryString("__columns__", "[]")
+		columns := []map[string]interface{}{}
+		json.Unmarshal([]byte(cstr), &columns)
+		excelInfo, err := ctx.BuildExcel(ret.Data, columns)
+		if err != nil {
+			ctx.Fail(err)
+			return
+		}
+		excelInfo.FileName = ctx.QueryString("__name__", "userinfo.xlsx")
+		ctx.Success(excelInfo)
+		return
+	}
 	ctx.Success(ret.With(new([]struct {
 		ID       null.String `json:"id" xml:"id"`
 		Name     null.String `json:"name" xml:"name"`

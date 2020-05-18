@@ -28,7 +28,7 @@ type SysTracker struct {
 	// 请求方法
 	Method null.String `xorm:"varchar(36) 'method'" json:"method" xml:"method"`
 	// 请求路径
-	Path null.String `xorm:"varchar(256) 'path'" json:"path" xml:"path"`
+	Path null.String `xorm:"varchar(512) 'path'" json:"path" xml:"path"`
 	// 请求头
 	Header []byte `xorm:"blob 'header'" json:"header" xml:"header"`
 	// 请求体

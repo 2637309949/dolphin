@@ -8,14 +8,14 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/util/file"
-
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/packages/uuid"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/util/encode"
+	"github.com/2637309949/dolphin/platform/util/file"
 )
 
 // SysAttachmentAdd api implementation
@@ -109,6 +109,25 @@ func SysAttachmentUpload(ctx *Context) {
 		return
 	}
 	ctx.Success(attachs)
+}
+
+// SysAttachmentExport api implementation
+// @Summary 附件导出
+// @Tags 附件
+// @Param Authorization header string false "认证令牌"
+// @Param file_name  query  string false "附件名称"
+// @Param file_id  query  string false "附件ID"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/attachment/export [get]
+func SysAttachmentExport(ctx *Context) {
+	filePath := path.Join(viper.GetString("http.static"), "files", ctx.QueryString("file_id"))
+	ctx.Header("Content-Description", "File Transfer")
+	ctx.Header("Content-Transfer-Encoding", "binary")
+	ctx.Header("Content-Disposition", "attachment; filename="+encode.URIComponent(ctx.QueryString("file_name")))
+	ctx.Header("Content-Type", "application/octet-stream")
+	ctx.File(filePath)
 }
 
 // SysAttachmentDel api implementation

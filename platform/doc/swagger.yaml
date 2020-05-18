@@ -1123,6 +1123,37 @@ paths:
       summary: 删除附件
       tags:
       - 附件
+  /api/sys/attachment/export:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件名称
+        in: query
+        name: file_name
+        type: string
+      - description: 附件ID
+        in: query
+        name: file_id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 附件导出
+      tags:
+      - 附件
   /api/sys/attachment/get:
     get:
       parameters:

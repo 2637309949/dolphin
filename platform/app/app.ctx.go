@@ -281,12 +281,54 @@ func (ctx *Context) OmitByZero(source interface{}) (target interface{}) {
 	return
 }
 
-// Msi defined
-type Msi map[string]interface{}
+// QueryInt defined
+func (ctx *Context) QueryInt(key string, init ...int) int {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			return init[0]
+		}
+		return 0
+	} else {
+		i, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			panic(err)
+		}
+		return int(i)
+	}
+}
+
+// QueryBool defined
+func (ctx *Context) QueryBool(key string, init ...bool) bool {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			return init[0]
+		}
+		return false
+	} else {
+		i, err := strconv.ParseBool(v)
+		if err != nil {
+			panic(err)
+		}
+		return i
+	}
+}
+
+// QueryString defined
+func (ctx *Context) QueryString(key string, init ...string) string {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			return init[0]
+		}
+	}
+	return v
+}
 
 // ParseExcel defined
 // []Msi{ Msi{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}}
-func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]Msi) ([]map[string]string, error) {
+func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]map[string]interface{}) ([]map[string]string, error) {
 	eFile, err := excelize.OpenReader(file)
 	if err != nil {
 		return nil, err
@@ -339,7 +381,7 @@ func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]Ms
 }
 
 // BuildExcel defined
-func (ctx *Context) BuildExcel(data []Msi, header ...[]Msi) (string, error) {
+func (ctx *Context) BuildExcel(data []map[string]interface{}, header ...[]map[string]interface{}) (model.ExportInfo, error) {
 	f := excelize.NewFile()
 	uuid := uuid.MustString()
 	index := f.NewSheet("Sheet1")
@@ -385,10 +427,8 @@ func (ctx *Context) BuildExcel(data []Msi, header ...[]Msi) (string, error) {
 			cells = []interface{}{}
 		}
 	}
-	if err := f.SaveAs(filePath); err != nil {
-		logrus.Error(err)
-	}
-	return uuid, nil
+	err := f.SaveAs(filePath)
+	return model.ExportInfo{FileId: fmt.Sprintf("%v.xlsx", uuid)}, err
 }
 
 // GetInt defined

@@ -12,6 +12,14 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="export" desc="附件导出" method="get" auth="false">
+        <param name="file_name" type="string" desc="附件名称" />
+        <param name="file_id" type="string" desc="附件ID" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="del" func="delete" table="sys_attachment" desc="删除附件" method="delete">
         <param name="sys_attachment" type="$sys_attachment" desc="附件" />
         <return>

@@ -85,6 +85,7 @@ var SysAreaInstance = NewSysArea()
 type SysAttachment struct {
 	Add,
 	Upload,
+	Export,
 	Del,
 	Update,
 	Page,
@@ -96,6 +97,7 @@ func NewSysAttachment() *SysAttachment {
 	ctr := &SysAttachment{}
 	ctr.Add = SysAttachmentAdd
 	ctr.Upload = SysAttachmentUpload
+	ctr.Export = SysAttachmentExport
 	ctr.Del = SysAttachmentDel
 	ctr.Update = SysAttachmentUpdate
 	ctr.Page = SysAttachmentPage
@@ -108,6 +110,7 @@ func SysAttachmentRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/attachment/add", Auth, SysAttachmentInstance.Add)
 	group.Handle("POST", "/sys/attachment/upload", Auth, SysAttachmentInstance.Upload)
+	group.Handle("GET", "/sys/attachment/export", SysAttachmentInstance.Export)
 	group.Handle("DELETE", "/sys/attachment/del", Auth, SysAttachmentInstance.Del)
 	group.Handle("PUT", "/sys/attachment/update", Auth, SysAttachmentInstance.Update)
 	group.Handle("GET", "/sys/attachment/page", Auth, SysAttachmentInstance.Page)
