@@ -111,7 +111,7 @@ func SysCasLogout(ctx *Context) {
 
 // SysCasAffirm api implementation
 // @Summary 用户授权
-// @Tags OAuth授权
+// @Tags 认证中心
 // @Accept application/json
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
@@ -141,7 +141,7 @@ func SysCasAffirm(ctx *Context) {
 
 // SysCasAuthorize api implementation
 // @Summary 用户授权
-// @Tags OAuth授权
+// @Tags 认证中心
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
@@ -175,7 +175,7 @@ func SysCasAuthorize(ctx *Context) {
 
 // SysCasToken api implementation
 // @Summary 获取令牌
-// @Tags OAuth授权
+// @Tags 认证中心
 // @Accept application/json
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
@@ -244,7 +244,7 @@ func SysCasOauth2(ctx *Context) {
 
 // SysCasRefresh api implementation
 // @Summary 刷新令牌
-// @Tags OAuth授权
+// @Tags 认证中心
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
