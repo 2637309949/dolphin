@@ -11,9 +11,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-
 	"github.com/2637309949/dolphin/cmd/dolphin/gen"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/packages/cobra"
 	"github.com/2637309949/dolphin/packages/go-funk"
@@ -192,6 +191,8 @@ var (
 				}
 				pptmpl := "app.name = %v\napp.mode = debug"
 				w.Write([]byte(fmt.Sprintf(pptmpl, path.Base(wd))))
+			} else {
+				logrus.Warn("It is not allowed to initialize a non-empty project")
 			}
 			return nil
 		},
