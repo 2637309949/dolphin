@@ -2,7 +2,5 @@
 // source: auto.go
 // appletActivity 小程序活动
 module.exports.appletActivity = require('./applet_activity')
-// excelAction Excel操作
-module.exports.excelAction = require('./excel_action')
 // wechatActivity 微信活动
 module.exports.wechatActivity = require('./wechat_activity')

@@ -1124,26 +1124,6 @@ paths:
       summary: 更新活动
       tags:
       - 小程序活动
-  /api/excel/action/parse:
-    post:
-      consumes:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 解析excel
-      tags:
-      - Excel操作
   /api/sys/app/fun/add:
     post:
       consumes:
