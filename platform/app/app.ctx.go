@@ -9,13 +9,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"io"
 	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/excelize"
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -325,56 +323,14 @@ func (ctx *Context) QueryString(key string, init ...string) string {
 
 // ParseExcel defined
 // []Msi{ Msi{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}}
-func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]map[string]interface{}) ([]map[string]string, error) {
-	eFile, err := excelize.OpenReader(file)
-	if err != nil {
-		return nil, err
+func (ctx *Context) ParseExcel(cfg ExcelConfig) ([]map[string]string, error) {
+	if ctx.QueryString("__columns__") != "" {
+		cstr := ctx.QueryString("__columns__")
+		columns := []map[string]interface{}{}
+		json.Unmarshal([]byte(cstr), &columns)
+		cfg.Header = columns
 	}
-	sheetName := ""
-	switch sn := sheet.(type) {
-	case int:
-		sheetName = eFile.GetSheetName(sn)
-	case string:
-		sheetName = sn
-	}
-	rows, err := eFile.GetRows(sheetName)
-	if err != nil {
-		return nil, err
-	}
-
-	data := []map[string]string{}
-	iTitle := map[int]string{}
-	for ri, row := range rows {
-		if ri == 0 {
-			for ci, cell := range row {
-				iTitle[ci] = cell
-			}
-			continue
-		}
-		r := map[string]string{}
-		for ic, iv := range row {
-			r[iTitle[ic]] = iv
-		}
-		data = append(data, r)
-	}
-
-	if len(header) > 0 {
-		nd := []map[string]string{}
-		h := header[0]
-		for _, dv := range data {
-			ndItem := map[string]string{}
-			for dk, dvv := range dv {
-				for _, v := range h {
-					if v["label"] == dk {
-						ndItem[fmt.Sprintf("%v", v["prop"])] = dvv
-					}
-				}
-			}
-			nd = append(nd, ndItem)
-		}
-		return nd, nil
-	}
-	return data, nil
+	return ParseExcel(cfg)
 }
 
 // SuccessWithExcel defined

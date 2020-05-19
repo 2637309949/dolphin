@@ -192,7 +192,7 @@ func SysUserPage(ctx *Context) {
 	}))
 
 	if ctx.QueryBool("__export__") {
-		cfg := NewExcelConfig(ret.Data)
+		cfg := NewBuildExcelConfig(ret.Data)
 		cfg.Format = OptionsetsFormat(ctx.DB)
 		ctx.SuccessWithExcel(cfg)
 		return

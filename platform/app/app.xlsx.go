@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"io"
 	"path"
 
 	"github.com/2637309949/dolphin/packages/excelize"
@@ -13,13 +14,15 @@ import (
 
 // ExcelConfig defined
 type ExcelConfig struct {
-	FileName  string
-	SheetName string
-	Rows      []map[string]interface{}
-	Header    []map[string]interface{}
-	TmplPath  string
-	Format    func(interface{}) func(interface{}) interface{}
-	Handler   func(map[string]interface{}) map[string]interface{}
+	FileReader io.Reader
+	SheetIndex interface{}
+	FileName   string
+	SheetName  string
+	Rows       []map[string]interface{}
+	Header     []map[string]interface{}
+	TmplPath   string
+	Format     func(interface{}) func(interface{}) interface{}
+	Handler    func(map[string]interface{}) map[string]interface{}
 }
 
 // DefaultFormat defined
@@ -54,8 +57,8 @@ func DefaultHandler(source map[string]interface{}) map[string]interface{} {
 	return source
 }
 
-// NewExcelConfig defined
-func NewExcelConfig(rows []map[string]interface{}, header ...[]map[string]interface{}) ExcelConfig {
+// NewBuildExcelConfig defined
+func NewBuildExcelConfig(rows []map[string]interface{}, header ...[]map[string]interface{}) ExcelConfig {
 	ecg := ExcelConfig{
 		SheetName: "Sheet1",
 		Rows:      rows,
@@ -63,6 +66,20 @@ func NewExcelConfig(rows []map[string]interface{}, header ...[]map[string]interf
 		Handler:   DefaultHandler,
 		TmplPath:  path.Join(viper.GetString("http.static"), "files"),
 	}
+	if len(header) > 0 {
+		ecg.Header = header[0]
+	}
+	return ecg
+}
+
+// NewParseExcelConfig defined
+func NewParseExcelConfig(file io.Reader, sheet interface{}, header ...[]map[string]interface{}) ExcelConfig {
+	ecg := ExcelConfig{
+		Format:  DefaultFormat,
+		Handler: DefaultHandler,
+	}
+	ecg.FileReader = file
+	ecg.SheetIndex = sheet
 	if len(header) > 0 {
 		ecg.Header = header[0]
 	}
@@ -125,4 +142,57 @@ func BuildExcel(cfg ExcelConfig) (model.ExportInfo, error) {
 	}
 	err := f.SaveAs(filePath)
 	return model.ExportInfo{FileId: uuid, FilePath: filePath}, err
+}
+
+// ParseExcel defined
+func ParseExcel(cfg ExcelConfig) ([]map[string]string, error) {
+	eFile, err := excelize.OpenReader(cfg.FileReader)
+	if err != nil {
+		return nil, err
+	}
+	sheetName := ""
+	switch sn := cfg.SheetIndex.(type) {
+	case int:
+		sheetName = eFile.GetSheetName(sn)
+	case string:
+		sheetName = sn
+	}
+	rows, err := eFile.GetRows(sheetName)
+	if err != nil {
+		return nil, err
+	}
+
+	data := []map[string]string{}
+	iTitle := map[int]string{}
+	for ri, row := range rows {
+		if ri == 0 {
+			for ci, cell := range row {
+				iTitle[ci] = cell
+			}
+			continue
+		}
+		r := map[string]string{}
+		for ic, iv := range row {
+			r[iTitle[ic]] = iv
+		}
+		data = append(data, r)
+	}
+
+	if len(cfg.Header) > 0 {
+		nd := []map[string]string{}
+		h := cfg.Header
+		for _, dv := range data {
+			ndItem := map[string]string{}
+			for dk, dvv := range dv {
+				for _, v := range h {
+					if v["label"] == dk {
+						ndItem[fmt.Sprintf("%v", v["prop"])] = dvv
+					}
+				}
+			}
+			nd = append(nd, ndItem)
+		}
+		return nd, nil
+	}
+	return data, nil
 }
