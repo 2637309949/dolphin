@@ -284,13 +284,12 @@ func (ctx *Context) QueryInt(key string, init ...int) int {
 			return init[0]
 		}
 		return 0
-	} else {
-		i, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
-			panic(err)
-		}
-		return int(i)
 	}
+	i, err := strconv.ParseInt(v, 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	return int(i)
 }
 
 // QueryBool defined
@@ -301,13 +300,12 @@ func (ctx *Context) QueryBool(key string, init ...bool) bool {
 			return init[0]
 		}
 		return false
-	} else {
-		i, err := strconv.ParseBool(v)
-		if err != nil {
-			panic(err)
-		}
-		return i
 	}
+	i, err := strconv.ParseBool(v)
+	if err != nil {
+		panic(err)
+	}
+	return i
 }
 
 // QueryString defined
