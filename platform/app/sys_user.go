@@ -4,7 +4,6 @@
 package app
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
@@ -180,20 +179,7 @@ func SysUserPage(ctx *Context) {
 		}
 	}
 
-	if ctx.QueryBool("__export__") {
-		cstr := ctx.QueryString("__columns__", "[]")
-		columns := []map[string]interface{}{}
-		json.Unmarshal([]byte(cstr), &columns)
-		excelInfo, err := ctx.BuildExcel(ret.Data, columns)
-		if err != nil {
-			ctx.Fail(err)
-			return
-		}
-		excelInfo.FileName = ctx.QueryString("__name__", "userinfo.xlsx")
-		ctx.Success(excelInfo)
-		return
-	}
-	ctx.Success(ret.With(new([]struct {
+	ret = ret.With(new([]struct {
 		ID       null.String `json:"id" xml:"id"`
 		Name     null.String `json:"name" xml:"name"`
 		NickName null.String `json:"nickname" xml:"nickname"`
@@ -203,7 +189,15 @@ func SysUserPage(ctx *Context) {
 		UserRole null.String `json:"user_role" xml:"user_role"`
 		OrgName  null.String `json:"org_name" xml:"org_name"`
 		OrgID    null.String `json:"org_id" xml:"org_id"`
-	})))
+	}))
+
+	if ctx.QueryBool("__export__") {
+		cfg := NewExcelConfig(ret.Data)
+		cfg.Format = OptionsetsFormat(ctx.DB)
+		ctx.SuccessWithExcel(cfg)
+		return
+	}
+	ctx.Success(ret)
 }
 
 // SysUserGet api implementation

@@ -9,7 +9,7 @@ import (
 )
 
 // With defined
-func (m *PageList) With(s interface{}) interface{} {
+func (m *PageList) With(s interface{}) *PageList {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		panic(errors.New("not ptr found"))
 	}

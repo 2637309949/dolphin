@@ -5,8 +5,10 @@ package model
 
 // ExportInfo defined 导出信息
 type ExportInfo struct {
-	// 文件名称
-	FileName string `json:"file_name" xml:"file_name"`
 	// 文件ID
 	FileId string `json:"file_id" xml:"file_id"`
+	// 文件名称
+	FileName string `json:"file_name" xml:"file_name"`
+	// 文件路径
+	FilePath string `json:"file_path" xml:"file_path"`
 }

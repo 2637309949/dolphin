@@ -34,21 +34,3 @@ func ExcelActionParse(ctx *Context) {
 	}
 	ctx.Success(ret)
 }
-
-// ExcelActionBuild api implementation
-// @Summary 生成excel
-// @Tags Excel操作
-// @Failure 403 {object} model.Fail
-// @Success 200 {object} model.Success
-// @Failure 500 {object} model.Fail
-// @Router /api/excel/action/build [get]
-func ExcelActionBuild(ctx *Context) {
-	q := ctx.TypeQuery()
-	ctx.BuildExcel([]map[string]interface{}{map[string]interface{}{"name": "张三"}}, []map[string]interface{}{map[string]interface{}{"prop": "name", "label": "名字", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}})
-	ret, err := srv.ExcelActionAction(q)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
-}

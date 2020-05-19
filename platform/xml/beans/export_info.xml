@@ -1,4 +1,5 @@
 <bean name="export_info" desc="导出信息">
-    <prop name="file_name" desc="文件名称" type="string" />
     <prop name="file_id" desc="文件ID" type="string" />
+    <prop name="file_name" desc="文件名称" type="string" />
+    <prop name="file_path" desc="文件路径" type="string" />
 </bean>

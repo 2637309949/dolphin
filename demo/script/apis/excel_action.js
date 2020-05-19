@@ -12,15 +12,3 @@ module.exports.parse = (data) => {
   })
 }
 
-// build 生成excel
-module.exports.build = (data) => {
-  let url = '/api/excel/action/build?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
-  return axios({
-    url: url,
-    method: 'get'
-  })
-}
-

@@ -11,7 +11,6 @@ import (
 	"html/template"
 	"io"
 	"net/http"
-	"path"
 	"reflect"
 	"strconv"
 	"strings"
@@ -21,8 +20,6 @@ import (
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/packages/uuid"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
@@ -380,55 +377,24 @@ func (ctx *Context) ParseExcel(file io.Reader, sheet interface{}, header ...[]ma
 	return data, nil
 }
 
-// BuildExcel defined
-func (ctx *Context) BuildExcel(data []map[string]interface{}, header ...[]map[string]interface{}) (model.ExportInfo, error) {
-	f := excelize.NewFile()
-	uuid := uuid.MustString()
-	index := f.NewSheet("Sheet1")
-	filePath := path.Join(viper.GetString("http.static"), "files", fmt.Sprintf("%v.xlsx", uuid))
-	f.SetActiveSheet(index)
-
-	titles := []interface{}{}
-	for i, datav := range data {
-		cells := []interface{}{}
-		// key as title
-		if len(header) == 0 {
-			if len(titles) == 0 {
-				for k := range datav {
-					if len(header) == 0 {
-						titles = append(titles, k)
-					}
-				}
-				// replace title
-				f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+1), &titles)
-			}
-			for _, k := range titles {
-				cells = append(cells, datav[fmt.Sprintf("%v", k)])
-			}
-			f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+2), &cells)
-			cells = []interface{}{}
-		} else {
-			// key from header
-			if len(titles) == 0 {
-				for _, v := range header[0] {
-					titles = append(titles, v["label"])
-				}
-				f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+1), &titles)
-			}
-			for _, k := range titles {
-				// replace title
-				for _, v1 := range header[0] {
-					if v1["label"] == k {
-						cells = append(cells, datav[fmt.Sprintf("%v", v1["prop"])])
-					}
-				}
-			}
-			f.SetSheetRow("Sheet1", fmt.Sprintf("A%v", i+2), &cells)
-			cells = []interface{}{}
-		}
+// SuccessWithExcel defined
+func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
+	if ctx.QueryString("__columns__") != "" {
+		cstr := ctx.QueryString("__columns__")
+		columns := []map[string]interface{}{}
+		json.Unmarshal([]byte(cstr), &columns)
+		cfg.Header = columns
 	}
-	err := f.SaveAs(filePath)
-	return model.ExportInfo{FileId: fmt.Sprintf("%v.xlsx", uuid)}, err
+	excelInfo, err := BuildExcel(cfg)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	if ctx.QueryString("__name__") != "" {
+		cfg.FileName = ctx.QueryString("__name__")
+	}
+	excelInfo.FileName = cfg.FileName
+	ctx.Success(excelInfo)
 }
 
 // GetInt defined
