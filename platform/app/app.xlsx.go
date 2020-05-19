@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"path"
+	"time"
 
 	"github.com/2637309949/dolphin/packages/excelize"
 	"github.com/2637309949/dolphin/packages/uuid"
@@ -125,12 +126,16 @@ func BuildExcel(cfg ExcelConfig) (model.ExportInfo, error) {
 				// replace title
 				for _, v1 := range cfg.Header {
 					if v1["label"] == k {
-						value := v1["prop"]
+						value := datav[fmt.Sprintf("%v", v1["prop"])]
 						if v1["formatter"] != nil {
 							if formats[v1["formatter"]] == nil {
 								formats[v1["formatter"]] = cfg.Format(v1["formatter"])
 							}
-							value = formats[v1["formatter"]](datav[fmt.Sprintf("%v", value)])
+							value = formats[v1["formatter"]](value)
+						}
+						switch vt := value.(type) {
+						case time.Time:
+							value = vt.Format("2006-01-02 15:04:05")
 						}
 						cells = append(cells, value)
 					}
