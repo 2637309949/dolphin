@@ -22,6 +22,12 @@ $ mkdir example && cd example && dolphin init && dolphin build && go run main
 ```
 - Generates the code base on XML configuration
 
+- Generates doc base on XML configuration
+
+- Generates SQL base on XML configuration
+
+- Handles the serialization null problem
+
 - Multi-tenant support
 
 - Login / Logout, or single sign on
