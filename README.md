@@ -36,7 +36,7 @@ $ mkdir example && cd example && dolphin init && dolphin build && go run main
 
 - Quick excel reporting or parsing
 
-- Log trace record
+- Support routing caching
 
 - Log trace record
 ```
