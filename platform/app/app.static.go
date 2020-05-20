@@ -31,17 +31,23 @@ func StaticRoutes(engine *Engine) {
 	engine.Group("/").Handle("GET", "/domain.js", Domain)
 }
 
+// DomainFormat defined
+func DomainFormat(ct string) []byte {
+	return []byte(fmt.Sprintf("window.Domain=%v", ct))
+}
+
 // Domain defined
 func Domain(ctx *Context) {
 	reg := regexp.MustCompile("^([^:?]+)(:.*)?$")
+	contentType := "application/javascript"
 	groups := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
 	domain := model.SysDomain{}
 	ext, err := App.PlatformDB.Where("domain=? and del_flag=0 and status=1", groups[0][1]).Get(&domain)
 	if err != nil || !ext {
-		ctx.Data(200, "application/javascript", []byte(fmt.Sprintf("window.Domain={}")))
+		ctx.Data(200, contentType, DomainFormat("{}"))
 		return
 	}
-	ctx.Data(200, "application/javascript", []byte(fmt.Sprintf("window.Domain=%v", string(util.EnsureLeft(json.Marshal(model.Domain{
+	ctx.Data(200, contentType, DomainFormat(string(util.EnsureLeft(json.Marshal(model.Domain{
 		Name:          domain.Name,
 		FullName:      domain.FullName,
 		ContactName:   domain.ContactName,
@@ -52,7 +58,7 @@ func Domain(ctx *Context) {
 		StaticUrl:     domain.StaticUrl,
 		Theme:         domain.Theme,
 		AuthMode:      domain.AuthMode,
-	})).([]byte)))))
+	})).([]byte))))
 }
 
 // DomainInstance defined
