@@ -5,6 +5,7 @@ package app
 
 import (
 	"sync"
+	"time"
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
@@ -65,7 +66,14 @@ func Auth(ctx *Context) {
 // Roles middles
 func Roles(roles ...string) func(ctx *Context) {
 	return func(ctx *Context) {
-		pApp.Roles(roles...)
+		pApp.Roles(roles...)(ctx.Context)
+	}
+}
+
+// Cache middles
+func Cache(time time.Duration) func(ctx *Context) {
+	return func(ctx *Context) {
+		pApp.Cache(time)(ctx.Context)
 	}
 }
 

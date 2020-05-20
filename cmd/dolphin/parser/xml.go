@@ -110,6 +110,9 @@ func (parser *AppParser) parse(xmlPath string) error {
 						api.Path = attrValue
 					case attrName == "roles":
 						api.Roles = strings.Split(attrValue, ",")
+					case attrName == "cache":
+						sed, _ := strconv.ParseUint(attrValue, 10, 64)
+						api.Cache = sed
 					case attrName == "auth":
 						ret, err := strconv.ParseBool(strings.TrimSpace(attrValue))
 						if err != nil {

@@ -7,7 +7,11 @@ package app
 import (
 	"fmt"
 	"strconv"
+	"time"
 
+	"github.com/2637309949/dolphin/packages/cache"
+
+	"github.com/2637309949/dolphin/packages/cache/persistence"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
@@ -73,8 +77,18 @@ func NewDefaultManager() Manager {
 	return mg
 }
 
+// Cache middles
+func Cache(time time.Duration) func(ctx *Context) {
+	return func(ctx *Context) {
+		cache.CachePage(CacheStore, time)(ctx.Context)
+	}
+}
+
 // RedisClient defined
 var RedisClient *redis.Client
+
+// CacheStore defined
+var CacheStore persistence.CacheStore
 
 func init() {
 	if uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI); uri.Laddr != "" {
@@ -88,4 +102,5 @@ func init() {
 			RedisClient = nil
 		}
 	}
+	CacheStore = persistence.NewInMemoryStore(60 * time.Second)
 }

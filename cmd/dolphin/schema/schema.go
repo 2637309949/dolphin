@@ -40,6 +40,7 @@ type API struct {
 	Func    string
 	Table   string
 	Method  string
+	Cache   uint64
 	Params  []*Param
 	Return  *Return
 }
