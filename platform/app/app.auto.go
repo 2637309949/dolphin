@@ -4,9 +4,8 @@
 package app
 
 import (
-	"github.com/2637309949/dolphin/platform/model"
-
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/2637309949/dolphin/platform/model"
 )
 
 // Name project
