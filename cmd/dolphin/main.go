@@ -181,7 +181,7 @@ var (
 				if err != nil {
 					return err
 				}
-				modFile := "module %v\n\ngo 1.13\n\nrequire (\n\tgithub.com/2637309949/dolphin v0.0.0-20200519082039-3cc592b5e351\n\tgithub.com/go-sql-driver/mysql v1.5.0\n\tgoogle.golang.org/grpc v1.26.0\n)"
+				modFile := "module %v\n\ngo 1.13\n\nrequire (\n\tgithub.com/2637309949/dolphin v0.0.0-20200520073936-cf035379f415\n\tgithub.com/go-sql-driver/mysql v1.5.0\n\tgoogle.golang.org/grpc v1.26.0\n)"
 				w.Write([]byte(fmt.Sprintf(modFile, path.Base(wd))))
 
 				// properties defined
