@@ -12,6 +12,7 @@ require (
 	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6 // indirect
 	github.com/bndr/gotabulate v1.1.2 // indirect
+	github.com/bradfitz/gomemcache v0.0.0-20180710155616-bc664df96737
 	github.com/clbanning/mxj v1.8.4 // indirect
 	github.com/coreos/bbolt v1.3.2 // indirect
 	github.com/coreos/etcd v3.3.10+incompatible // indirect
@@ -48,12 +49,14 @@ require (
 	github.com/lestrrat-go/strftime v1.0.1
 	github.com/magiconair/properties v1.8.1
 	github.com/mattn/go-isatty v0.0.11
+	github.com/memcachier/mc v2.0.1+incompatible
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
 	github.com/pelletier/go-toml v1.2.0
 	github.com/pkg/errors v0.8.1
 	github.com/prometheus/client_golang v1.4.0 // indirect
+	github.com/robfig/go-cache v0.0.0-20130306151617-9fc39e0dbf62
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/soheilhy/cmux v0.1.4 // indirect
 	github.com/spf13/afero v1.1.2

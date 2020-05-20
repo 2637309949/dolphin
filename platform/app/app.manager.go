@@ -58,16 +58,8 @@ func (d *DefaultManager) AddBusinessDB(domain string, db *xorm.Engine) {
 
 // GetTokenStore defined
 func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
-	if uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI); uri.Laddr != "" {
-		redis := redis.NewClient(&redis.Options{
-			Addr:     uri.Laddr,
-			Password: uri.Passwd,
-			DB:       util.EnsureLeft(strconv.Atoi(uri.DbName)).(int),
-		})
-		if _, err := redis.Ping().Result(); err == nil {
-			return store.NewRedisStoreWithCli(redis, TokenkeyNamespace)
-		}
-		logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
+	if RedisClient != nil {
+		return store.NewRedisStoreWithCli(RedisClient, TokenkeyNamespace)
 	}
 	memo, _ := store.NewMemoryTokenStore()
 	return memo
@@ -79,4 +71,21 @@ func NewDefaultManager() Manager {
 	mg.BusinessDBSet = map[string]*xorm.Engine{}
 	mg.MSeti = &MSet{m: map[string][]interface{}{}}
 	return mg
+}
+
+// RedisClient defined
+var RedisClient *redis.Client
+
+func init() {
+	if uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI); uri.Laddr != "" {
+		RedisClient := redis.NewClient(&redis.Options{
+			Addr:     uri.Laddr,
+			Password: uri.Passwd,
+			DB:       util.EnsureLeft(strconv.Atoi(uri.DbName)).(int),
+		})
+		if _, err := RedisClient.Ping().Result(); err != nil {
+			logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
+			RedisClient = nil
+		}
+	}
 }
