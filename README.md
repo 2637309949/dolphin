@@ -47,14 +47,14 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 
 ## XML Label
 
-### <application/>
+### application
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <application name="demo" desc="template" packagename="demo"/>
 ```
 
-### <bean/>
+### bean
 
 ```xml
 <bean name="activity_info" desc="desc" packages="xxx" extends="$applet_activity">
@@ -63,14 +63,14 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 </bean>
 ```
 
-### <controller/>
+### controller
 
 ```xml
 <controller name="activity" desc="微信活动">
 </controller>
 ```
 
-### <api/>
+### api
 
 ```xml
 <api name="list" func="page" table="table" desc="desc" method="get" roles="X3ed" cache="60">
@@ -83,7 +83,7 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 </api>
 ```
 
-### <table/>
+### table
 
 ```xml
 <table name="activity" desc="活动" packages="xx">
