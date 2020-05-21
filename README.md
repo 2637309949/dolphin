@@ -48,6 +48,7 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 ## XML Label
 
 ### application
+> application label contain app infomation, such as name, package
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -64,6 +65,7 @@ application
 
 
 ### bean
+> bean, you can declare object in bean, just like spring bean
 
 ```xml
 <bean name="activity_info" desc="desc" packages="xxx" extends="$applet_activity">
@@ -89,6 +91,7 @@ bean
 | type |    bean type  |
 
 ### controller
+> controller, a collect api, you can declare api prefix
 
 ```xml
 <controller name="activity" desc="微信活动">
@@ -104,6 +107,7 @@ controller
 
 
 ### api
+> api, api func in controller. we has some built-in func such as 'add', 'delete', 'update', 'page', 'get'
 
 ```xml
 <api name="list" func="page" table="table" desc="desc" method="get" roles="X3ed" cache="60">
