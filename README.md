@@ -82,6 +82,34 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
     </return>
 </api>
 ```
+api
+
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  api name |
+| desc |    api desc   |
+| func | built-in func, 'add', 'delete', 'update', 'page', 'get' |
+| table |    table name if you use built-in func   |
+| method |    http method   |
+| roles |    roles middles   |
+| cache |    cache middles   |
+
+param
+
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  param name |
+| desc |    param desc  |
+| type | param type |
+| value | default value |
+
+return
+
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| success |  success tag |
+| failure |    success tag  |
+
 
 ### table
 
@@ -94,17 +122,17 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 
 table
 
-| 标签   |      含义      |
+| LabelName   |      LabelMeaning      |
 |----------|:-------------:|
-| name |  表名 |
-| desc |    表注释   |
-| packages | 引用包名，用","分开 |
+| name |  table name |
+| desc |    table desc   |
+| packages | table packages，use "," to split |
 
 column
 
-| 标签   |      含义      |
+| LabelName   |      LabelMeaning      |
 |----------|:-------------:|
-| name |  字段名 |
-| desc |    字段注释   |
-| type | 字段类型 |
-| xorm | xorm注释 |
+| name |  column name |
+| desc |    column desc  |
+| type | column type |
+| xorm | xorm tag |
