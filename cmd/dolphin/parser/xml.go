@@ -9,6 +9,7 @@ import (
 	"encoding/xml"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -111,7 +112,15 @@ func (parser *AppParser) parse(xmlPath string) error {
 					case attrName == "roles":
 						api.Roles = strings.Split(attrValue, ",")
 					case attrName == "cache":
-						sed, _ := strconv.ParseUint(attrValue, 10, 64)
+						reg := regexp.MustCompile("^([0-9]*)([smh])?$")
+						base := reg.FindAllStringSubmatch(attrValue, -1)
+						sed, _ := strconv.ParseUint(base[0][1], 10, 64)
+						switch base[0][2] {
+						case "m":
+							sed = sed * 60
+						case "h":
+							sed = sed * 60 * 60
+						}
 						api.Cache = sed
 					case attrName == "auth":
 						ret, err := strconv.ParseBool(strings.TrimSpace(attrValue))
