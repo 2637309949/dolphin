@@ -91,3 +91,20 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 	<column name="title" desc="标题" type="xx.String" xorm="varchar(36)" />
 </table>
 ```
+
+table
+
+| 标签   |      含义      |
+|----------|:-------------:|
+| name |  表名 |
+| desc |    表注释   |
+| packages | 引用包名，用","分开 |
+
+column
+
+| 标签   |      含义      |
+|----------|:-------------:|
+| name |  字段名 |
+| desc |    字段注释   |
+| type | 字段类型 |
+| xorm | xorm注释 |
