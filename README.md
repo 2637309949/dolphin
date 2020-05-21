@@ -54,6 +54,15 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 <application name="demo" desc="template" packagename="demo"/>
 ```
 
+application
+
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  application name |
+| desc |    application desc  |
+| packagename |    application packagename  |
+
+
 ### bean
 
 ```xml
@@ -63,12 +72,36 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 </bean>
 ```
 
+bean
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  bean name |
+| desc |    bean desc  |
+| packagename |    bean packagename  |
+| extends |    bean extends  |
+
+
+bean
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  bean name |
+| desc |    bean desc  |
+| type |    bean type  |
+
 ### controller
 
 ```xml
 <controller name="activity" desc="微信活动">
 </controller>
 ```
+
+controller
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  controller name |
+| desc |    controller desc  |
+| prefix |    controller desc  |
+
 
 ### api
 
@@ -83,7 +116,6 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 </api>
 ```
 api
-
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
 | name |  api name |
@@ -95,7 +127,6 @@ api
 | cache |    cache middles   |
 
 param
-
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
 | name |  param name |
@@ -121,7 +152,6 @@ return
 ```
 
 table
-
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
 | name |  table name |
@@ -129,7 +159,6 @@ table
 | packages | table packages，use "," to split |
 
 column
-
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
 | name |  column name |
