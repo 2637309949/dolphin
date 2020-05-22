@@ -147,6 +147,7 @@ return
 
 
 ### table
+> table, as you khnow, you can defined any table structure as you need
 
 ```xml
 <table name="activity" desc="活动" packages="xx">
