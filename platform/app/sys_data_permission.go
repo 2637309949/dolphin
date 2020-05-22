@@ -86,7 +86,7 @@ func SysDataPermissionUpdate(ctx *Context) {
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
+	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return

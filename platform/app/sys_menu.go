@@ -153,7 +153,7 @@ func SysMenuUpdate(ctx *Context) {
 		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s|", payload.ID.String))
 	}
 
-	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
+	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return

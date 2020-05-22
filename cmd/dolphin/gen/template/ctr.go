@@ -145,7 +145,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		r, err = s.ID(form.ID).Update(&form)
+		r, err = s.ID(form.ID.String).Update(&form)
 		ret = append(ret, r)
 	})
 	if err != nil {
@@ -162,7 +162,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID).Update(&payload)
+	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
 		ctx.Fail(err)
 		return
