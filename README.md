@@ -83,12 +83,12 @@ bean
 | extends |    bean extends  |
 
 
-bean
+prop
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
-| name |  bean name |
-| desc |    bean desc  |
-| type |    bean type  |
+| name |  prop name |
+| desc |    prop desc  |
+| type |    prop type  |
 
 ### controller
 > controller, a collect api, you can declare api prefix
