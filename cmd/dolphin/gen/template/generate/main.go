@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/shurcooL/vfsgen"
+	"github.com/2637309949/dolphin/packages/vfsgen"
 )
 
 // Assets contains project assets.
