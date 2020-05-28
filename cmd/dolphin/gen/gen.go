@@ -113,14 +113,13 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 	if err != nil {
 		return err
 	}
-
 	if err = tpl.Execute(w, cfg.Data); err != nil {
 		return err
 	}
-	if cfg.GOFmt {
-		cmd := exec.Command("gofmt", "-s", "-w", cfg.FilePath)
+	if cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" {
+		cmd := exec.Command("goimports", "-w", cfg.FilePath)
 		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
-			logrus.Fatal(err)
+			logrus.Error(err)
 		}
 	}
 	return nil
