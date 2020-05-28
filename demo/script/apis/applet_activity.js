@@ -105,4 +105,3 @@ module.exports.increaseV2 = (data) => {
     data
   })
 }
-

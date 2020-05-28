@@ -46,14 +46,47 @@ func {{.ToUpperCase .Name}}Routes(engine *Engine) {
 var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{end}}
 
-func init() {
-	mseti := App.Manager.MSet()
+
+// Executor defined
+type Executor []func() error
+
+// Add defined
+func (act *Executor) Add(i func() error) *Executor {
+	*act = append(*act, i)
+	return act
+}
+
+// Execute defined
+func (act *Executor) Execute() error {
+	for _, v := range *act {
+		if err := v(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// ExecutorInstance defined
+var ExecutorInstance = &Executor{
 	// Sync models
-	{{- range .Tables}}
-	mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
-	{{- end}}
+	func() error {
+		mseti := App.Manager.MSet()
+		{{- range .Tables}}
+		mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
+		{{- end}}
+		return nil
+	},
 	// Async Ctr
-	{{- range .Controllers}}
-	{{.ToUpperCase .Name}}Routes(App)
-	{{- end}}
+	func() error {
+		{{- range .Controllers}}
+		{{.ToUpperCase .Name}}Routes(App)
+		{{- end}}
+		return nil
+	},
+}
+
+func init() {
+	if err := ExecutorInstance.Execute(); err != nil {
+		logrus.Fatal(err)
+	}
 }
