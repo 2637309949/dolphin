@@ -4,8 +4,10 @@
 package app
 
 import (
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
+
+	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/2637309949/dolphin/packages/viper"
 )
 
 // Name project
@@ -725,9 +727,28 @@ func SysWechatRoutes(engine *Engine) {
 // SysWechatInstance defined
 var SysWechatInstance = NewSysWechat()
 
-func init() {
+// Executor defined
+type Executor []func() error
+
+// Add defined
+func (act *Executor) Add(i func() error) *Executor {
+	*act = append(*act, i)
+	return act
+}
+
+// Execute defined
+func (act *Executor) Execute() error {
+	for _, v := range *act {
+		if err := v(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// Sync models
+func SyncModels() error {
 	mseti := App.Manager.MSet()
-	// Sync models
 	mseti.Add(new(model.SysAppFun))
 	mseti.Add(new(model.SysArea))
 	mseti.Add(new(model.SysAreaTemplate))
@@ -757,7 +778,11 @@ func init() {
 	mseti.Add(new(model.SysUserTag))
 	mseti.Add(new(model.SysUserTemplate))
 	mseti.Add(new(model.SysUserTemplateDetail))
-	// Async Ctr
+	return nil
+}
+
+// Async Ctr
+func SyncCtr() error {
 	SysAppFunRoutes(App)
 	SysAreaRoutes(App)
 	SysAttachmentRoutes(App)
@@ -779,4 +804,17 @@ func init() {
 	SysUserRoutes(App)
 	SysUserTemplateRoutes(App)
 	SysWechatRoutes(App)
+	return nil
+}
+
+// ExecutorInstance defined
+var ExecutorInstance = &Executor{
+	SyncModels,
+	SyncCtr,
+}
+
+func init() {
+	if err := ExecutorInstance.Execute(); err != nil {
+		logrus.Fatal(err)
+	}
 }

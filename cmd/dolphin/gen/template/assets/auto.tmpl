@@ -66,23 +66,27 @@ func (act *Executor) Execute() error {
 	return nil
 }
 
+// Sync models
+func SyncModels() error {
+	mseti := App.Manager.MSet()
+	{{- range .Tables}}
+	mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
+	{{- end}}
+	return nil
+}
+
+// Async Ctr
+func SyncCtr() error {
+	{{- range .Controllers}}
+	{{.ToUpperCase .Name}}Routes(App)
+	{{- end}}
+	return nil
+}
+
 // ExecutorInstance defined
 var ExecutorInstance = &Executor{
-	// Sync models
-	func() error {
-		mseti := App.Manager.MSet()
-		{{- range .Tables}}
-		mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
-		{{- end}}
-		return nil
-	},
-	// Async Ctr
-	func() error {
-		{{- range .Controllers}}
-		{{.ToUpperCase .Name}}Routes(App)
-		{{- end}}
-		return nil
-	},
+	SyncModels,
+	SyncCtr,
 }
 
 func init() {
