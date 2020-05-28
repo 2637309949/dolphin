@@ -33,10 +33,9 @@ func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, err
 		}
 		tmplCfg := &pipe.TmplCfg{
 			Text:     template.TmplBean,
-			FilePath: path.Join(dir, viper.GetString("dir.model"), bean.Name+".auto"),
+			FilePath: path.Join(dir, viper.GetString("dir.model"), bean.Name+".auto.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,
-			Suffix:   ".go",
 			GOFmt:    true,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)

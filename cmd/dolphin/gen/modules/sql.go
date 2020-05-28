@@ -39,26 +39,24 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 					"Application": node,
 					"Api":         api,
 				}
-				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, api.Name, "count"))
+				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v.tpl", c.Name, api.Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
 					tmplCfg := &pipe.TmplCfg{
 						Text:     template.TmplSQLCount,
 						FilePath: cpath,
 						Data:     data,
 						Overlap:  pipe.OverlapSkip,
-						Suffix:   ".tpl",
 					}
 					tmplCfgs = append(tmplCfgs, tmplCfg)
 					tplCache[filepath.Base(cpath)] = true
 				}
-				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v", c.Name, api.Name, "select"))
+				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v.tpl", c.Name, api.Name, "select"))
 				if _, ok := tplCache[filepath.Base(spath)]; !ok {
 					tmplCfg := &pipe.TmplCfg{
 						Text:     template.TmplSQLSel,
 						FilePath: spath,
 						Data:     data,
 						Overlap:  pipe.OverlapSkip,
-						Suffix:   ".tpl",
 					}
 					tmplCfgs = append(tmplCfgs, tmplCfg)
 					tplCache[filepath.Base(spath)] = true

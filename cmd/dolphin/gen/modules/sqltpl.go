@@ -106,10 +106,9 @@ func (app *SQLTPL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 	}
 	tmplCfg := &pipe.TmplCfg{
 		Text:     template.TPLSQL,
-		FilePath: path.Join(dir, viper.GetString("dir.sql"), "sql"),
+		FilePath: path.Join(dir, viper.GetString("dir.sql"), "sql.auto.go"),
 		Data:     data,
 		Overlap:  pipe.OverlapWrite,
-		Suffix:   ".auto.go",
 	}
 	tmplCfgs = append(tmplCfgs, tmplCfg)
 	return tmplCfgs, nil

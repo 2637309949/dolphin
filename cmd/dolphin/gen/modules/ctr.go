@@ -33,10 +33,9 @@ func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 		}
 		tmplCfg := &pipe.TmplCfg{
 			Text:     template.TmplCtr,
-			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name),
+			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name+".go"),
 			Data:     data,
 			Overlap:  pipe.OverlapInc,
-			Suffix:   ".go",
 			GOFmt:    true,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)

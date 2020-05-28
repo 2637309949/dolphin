@@ -31,10 +31,9 @@ func (tool *Tool) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, 
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
 			Text:     template.TmplTool,
-			FilePath: path.Join(dir, viper.GetString("dir.util"), "tool"),
+			FilePath: path.Join(dir, viper.GetString("dir.util"), "tool.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
-			Suffix:   ".go",
 			GOFmt:    true,
 		},
 	}, nil

@@ -30,10 +30,9 @@ func (m *Main) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, err
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
 			Text:     template.TmplMain,
-			FilePath: path.Join(dir, "main"),
+			FilePath: path.Join(dir, "main.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
-			Suffix:   ".go",
 			GOFmt:    true,
 		},
 	}, nil

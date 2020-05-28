@@ -29,9 +29,8 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 	tplCache := map[string]bool{}
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text:     template.TmplAxios,
-		FilePath: path.Join(viper.GetString("dir.script"), "axios"),
+		FilePath: path.Join(viper.GetString("dir.script"), "axios.js"),
 		Overlap:  pipe.OverlapWrite,
-		Suffix:   ".js",
 	})
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text: template.TmplAPI,
@@ -41,9 +40,8 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 			"Controllers": node.Controllers,
 			"Application": node,
 		},
-		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index"),
+		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index.js"),
 		Overlap:  pipe.OverlapWrite,
-		Suffix:   ".js",
 	})
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
@@ -54,14 +52,13 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 				"Application": node,
 				"Api":         api,
 			}
-			cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v", c.Name))
+			cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v.js", c.Name))
 			if _, ok := tplCache[cpath]; !ok {
 				tmplCfg := &pipe.TmplCfg{
 					Text:     template.TmplAPIS,
 					FilePath: cpath,
 					Data:     data,
 					Overlap:  pipe.OverlapWrite,
-					Suffix:   ".js",
 				}
 				tmplCfgs = append(tmplCfgs, tmplCfg)
 				tplCache[cpath] = true

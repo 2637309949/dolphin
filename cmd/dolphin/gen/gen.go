@@ -34,6 +34,7 @@ var lines = []pipe.Pipe{
 	&modules.Script{},
 	&modules.Doc{},
 	&modules.SQLTPL{},
+	&modules.Boilerplate{},
 }
 
 // AddPipe defined addPipe
@@ -60,19 +61,19 @@ func New(app *schema.Application) *Gen {
 }
 
 // AddPipe add pipe
-func (g *Gen) AddPipe(modules ...pipe.Pipe) {
-	g.Pipes = append(g.Pipes, modules...)
+func (gen *Gen) AddPipe(modules ...pipe.Pipe) {
+	gen.Pipes = append(gen.Pipes, modules...)
 }
 
-// Build build code from xml
-func (g *Gen) Build(dir string) error {
-	for _, pipe := range g.Pipes {
-		tmpcfgs, err := pipe.Build(dir, g.App)
+// BuildWithDir defined
+func (gen *Gen) BuildWithDir(dir string) error {
+	for _, pipe := range gen.Pipes {
+		cfgs, err := pipe.Build(dir, gen.App)
 		if err != nil {
 			return err
 		}
-		for _, tmpcfg := range tmpcfgs {
-			err = g.buildTmpl(tmpcfg)
+		for _, cfg := range cfgs {
+			err = gen.BuildWithCfg(cfg)
 			if err != nil {
 				return err
 			}
@@ -81,49 +82,53 @@ func (g *Gen) Build(dir string) error {
 	return nil
 }
 
-func (g *Gen) buildTmpl(tmpcfg *pipe.TmplCfg) error {
-	var suffix string
-	var tmpl *template.Template
+// BuildWithCfg defined
+func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 	var err error
+	var tpl *template.Template
 
-	tmpl = template.New("buildTmpl")
-	tmpl.Funcs(template.FuncMap{
+	tpl = template.New("template")
+	tpl.Funcs(template.FuncMap{
 		"last": func(x int, a interface{}) bool {
 			return x == reflect.ValueOf(a).Len()-1
 		},
 	})
-	suffix = tmpcfg.Suffix
-	if tmpl, err = tmpl.Parse(tmpcfg.Text); err != nil {
+	if tpl, err = tpl.Parse(cfg.Text); err != nil {
 		return err
 	}
-	tmpcfg.FilePath = tmpcfg.FilePath + suffix
-	if _, err = os.Stat(tmpcfg.FilePath); err == nil {
-		if tmpcfg.Overlap == pipe.OverlapInc {
-			tmpcfg.FilePath = tmpcfg.FilePath + ".new"
-			logrus.Info(fmt.Sprintf("%s inc generate", tmpcfg.FilePath))
-		} else if tmpcfg.Overlap == pipe.OverlapWrite {
-			logrus.Warn(fmt.Sprintf("%s over generate", tmpcfg.FilePath))
-		} else if tmpcfg.Overlap == pipe.OverlapSkip {
-			logrus.Info(fmt.Sprintf("%s skip generate", tmpcfg.FilePath))
+
+	if _, err = os.Stat(cfg.FilePath); err == nil {
+		if cfg.Overlap == pipe.OverlapInc {
+			cfg.FilePath = cfg.FilePath + ".new"
+			logrus.Info(fmt.Sprintf("%s inc generate", cfg.FilePath))
+		} else if cfg.Overlap == pipe.OverlapWrite {
+			logrus.Warn(fmt.Sprintf("%s over generate", cfg.FilePath))
+		} else if cfg.Overlap == pipe.OverlapSkip {
+			logrus.Info(fmt.Sprintf("%s skip generate", cfg.FilePath))
 			return nil
 		}
 	}
 
-	if err = os.MkdirAll(path.Dir(tmpcfg.FilePath), os.ModePerm); err != nil {
-		return err
-	}
-	w, err := os.OpenFile(tmpcfg.FilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+	w, err := OpenFile(cfg.FilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return err
 	}
-	if err = tmpl.Execute(w, tmpcfg.Data); err != nil {
+	if err = tpl.Execute(w, cfg.Data); err != nil {
 		return err
 	}
-	if tmpcfg.GOFmt {
-		cmd := exec.Command("gofmt", "-s", "-w", tmpcfg.FilePath)
+	if cfg.GOFmt {
+		cmd := exec.Command("gofmt", "-s", "-w", cfg.FilePath)
 		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
 			logrus.Fatal(err)
 		}
 	}
 	return nil
+}
+
+// OpenFile defiend
+func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
+	if err := os.MkdirAll(path.Dir(name), os.ModePerm); err != nil {
+		return nil, err
+	}
+	return os.OpenFile(name, flag, perm)
 }

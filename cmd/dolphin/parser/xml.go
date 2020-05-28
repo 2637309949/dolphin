@@ -25,7 +25,22 @@ type AppParser struct {
 
 // New defined AppParser
 func New() *AppParser {
-	return &AppParser{}
+	parser := AppParser{}
+	parser.Application = &schema.Application{}
+	return &parser
+}
+
+// NewTpl defined AppParser
+func NewTpl(name string, pkg string) *AppParser {
+	parser := AppParser{}
+	parser.Application = &schema.Application{
+		Common: schema.Common{
+			Name: name,
+			Desc: "dolphin boilerplate",
+		},
+		PackageName: pkg,
+	}
+	return &parser
 }
 
 // Parse defined parse xml to Application
@@ -124,7 +139,6 @@ func (parser *AppParser) Walk(xmlPath string) error {
 	}); err != nil {
 		return err
 	}
-	parser.Application = &schema.Application{}
 	for _, v := range files {
 		if err := parser.parse(v); err != nil {
 			return err

@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen"
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/packages/cobra"
 	"github.com/2637309949/dolphin/packages/go-funk"
@@ -112,21 +111,19 @@ var (
 			if err := p.Walk(wd); err != nil {
 				return err
 			}
-
-			args = append(args, "main", "app", "ctr", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
+			pipes := append(args, "main", "app", "ctr", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
 			g := gen.New(p.Application)
-			funk.ForEach(args, func(name string) {
+			funk.ForEach(pipes, func(name string) {
 				g.AddPipe(gen.GetPipeByName(name))
 			})
-			if err := g.Build(wd); err != nil {
-				return err
-			}
-			return nil
+			err = g.BuildWithDir(wd)
+			return err
 		},
 	}
+
 	clean = &cobra.Command{
 		Use:   "clean",
-		Short: "Remove cache files",
+		Short: "Removing intermediate files",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -147,9 +144,10 @@ var (
 			return nil
 		},
 	}
+
 	setup = &cobra.Command{
 		Use:   "init",
-		Short: "Initialize project",
+		Short: "Initialize a empty project",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -165,32 +163,13 @@ var (
 				return err
 			}
 			if len(files) == 0 {
-				// xml defined
-				if err := os.MkdirAll(path.Join(wd, "xml"), os.ModePerm); err != nil {
+				p := parser.NewTpl(path.Base(wd), path.Base(wd))
+				if err := p.Walk(wd); err != nil {
 					return err
 				}
-				w, err := os.OpenFile(path.Join(wd, "xml", "application.xml"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
-				if err != nil {
-					return err
-				}
-				w.Write([]byte(fmt.Sprintf(template.TmplXML, path.Base(wd), path.Base(wd))))
-				files = append(files, path.Join(wd, "xml", "application.xml"))
-
-				// go mod defined
-				w, err = os.OpenFile(path.Join(wd, "go.mod"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
-				if err != nil {
-					return err
-				}
-				modFile := "module %v\n\ngo 1.13\n\nrequire (\n\tgithub.com/2637309949/dolphin v0.0.0-20200520073936-cf035379f415\n\tgithub.com/go-sql-driver/mysql v1.5.0\n\tgoogle.golang.org/grpc v1.26.0\n)"
-				w.Write([]byte(fmt.Sprintf(modFile, path.Base(wd))))
-
-				// properties defined
-				w, err = os.OpenFile(path.Join(wd, "app.properties"), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
-				if err != nil {
-					return err
-				}
-				pptmpl := "app.name = %v\napp.mode = debug"
-				w.Write([]byte(fmt.Sprintf(pptmpl, path.Base(wd))))
+				g := gen.New(p.Application)
+				g.AddPipe(gen.GetPipeByName("boilerplate"))
+				err = g.BuildWithDir(wd)
 			} else {
 				logrus.Warn("It is not allowed to initialize a non-empty project")
 			}

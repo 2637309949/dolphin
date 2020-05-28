@@ -33,10 +33,9 @@ func (auto *Auto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, 
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
 			Text:     template.TmplAuto,
-			FilePath: path.Join(dir, viper.GetString("dir.app"), "app"),
+			FilePath: path.Join(dir, viper.GetString("dir.app"), "app.auto.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,
-			Suffix:   ".auto.go",
 			GOFmt:    true,
 		},
 	}, nil

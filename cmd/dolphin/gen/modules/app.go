@@ -32,10 +32,9 @@ func (app *App) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
 			Text:     template.TmplGin,
-			FilePath: path.Join(dir, viper.GetString("dir.app"), "app"),
+			FilePath: path.Join(dir, viper.GetString("dir.app"), "app.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
-			Suffix:   ".go",
 		},
 	}, nil
 }

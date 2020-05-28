@@ -10,7 +10,6 @@ type (
 		Text     string
 		FilePath string
 		Data     interface{}
-		Suffix   string
 		Overlap  Overlap
 		GOFmt    bool
 	}

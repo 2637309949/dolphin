@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
+	"strings"
 )
 
 const (
@@ -94,4 +96,9 @@ func MustHash(filename string) []byte {
 		panic(err)
 	}
 	return []byte(fmt.Sprintf("%x", h.Sum(nil)))
+}
+
+// RemoveExt defined
+func RemoveExt(filePath string) string {
+	return filePath[0:strings.Index(filePath, path.Ext(filePath))]
 }
