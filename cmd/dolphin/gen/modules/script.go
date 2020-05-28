@@ -12,6 +12,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // Script struct
@@ -27,13 +28,16 @@ func (app *Script) Name() string {
 func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
+	axiosByte, _ := vfsutil.ReadFile(template.Assets, "axios.tmpl")
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
-		Text:     template.TmplAxios,
+		Text:     string(axiosByte),
 		FilePath: path.Join(viper.GetString("dir.script"), "axios.js"),
 		Overlap:  pipe.OverlapWrite,
 	})
+
+	apiByte, _ := vfsutil.ReadFile(template.Assets, "api.tmpl")
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
-		Text: template.TmplAPI,
+		Text: string(apiByte),
 		Data: map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
@@ -43,6 +47,8 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index.js"),
 		Overlap:  pipe.OverlapWrite,
 	})
+
+	apisByte, _ := vfsutil.ReadFile(template.Assets, "apis.tmpl")
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
 			data := map[string]interface{}{
@@ -55,7 +61,7 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 			cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v.js", c.Name))
 			if _, ok := tplCache[cpath]; !ok {
 				tmplCfg := &pipe.TmplCfg{
-					Text:     template.TmplAPIS,
+					Text:     string(apisByte),
 					FilePath: cpath,
 					Data:     data,
 					Overlap:  pipe.OverlapWrite,

@@ -77,4 +77,3 @@ module.exports.get = (data) => {
     method: 'get'
   })
 }
-

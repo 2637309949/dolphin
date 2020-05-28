@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/template/assets"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/shurcooL/httpfs/vfsutil"
 )
@@ -41,7 +41,7 @@ func (m *Boilerplate) Build(dir string, node *schema.Application) ([]*pipe.TmplC
 		if fi.IsDir() {
 			return nil
 		}
-		b, err := vfsutil.ReadFile(assets.Assets, p)
+		b, err := vfsutil.ReadFile(template.Assets, p)
 		if err != nil {
 			return err
 		}
@@ -55,7 +55,7 @@ func (m *Boilerplate) Build(dir string, node *schema.Application) ([]*pipe.TmplC
 		})
 		return nil
 	}
-	if err := vfsutil.Walk(assets.Assets, "/boilerplate", walkFn); err != nil {
+	if err := vfsutil.Walk(template.Assets, "/boilerplate", walkFn); err != nil {
 		return nil, err
 	}
 	return cfgs, nil

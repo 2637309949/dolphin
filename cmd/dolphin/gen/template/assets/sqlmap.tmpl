@@ -1,7 +1,3 @@
-package template
-
-// TmplSQLMap defined template
-var TmplSQLMap = `
 {{- $TableName := .Table.Name -}}
 <sqlMap>
     <sql id="insert_{{$TableName}}">
@@ -21,4 +17,3 @@ var TmplSQLMap = `
         {{.Table.SQLSelectAll .Table $TableName}}
     </sql>
 </sqlMap>
-`

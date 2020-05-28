@@ -14,7 +14,7 @@
         </return>
     </api>
     <api name="update" func="update" table="article" desc="Update article" method="put">
-        <param name="user" type="$sys_role" desc="Article info" />
+        <param name="user" type="$article" desc="Article info" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

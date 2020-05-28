@@ -10,6 +10,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // Main struct
@@ -27,9 +28,10 @@ func (m *Main) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, err
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 	}
+	mainByte, _ := vfsutil.ReadFile(template.Assets, "main.tmpl")
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
-			Text:     template.TmplMain,
+			Text:     string(mainByte),
 			FilePath: path.Join(dir, "main.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,

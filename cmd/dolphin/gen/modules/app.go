@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // App struct
@@ -29,9 +30,11 @@ func (app *App) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 		"Name":        node.Name,
 		"Application": node,
 	}
+
+	appByte, _ := vfsutil.ReadFile(template.Assets, "app.tmpl")
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
-			Text:     template.TmplGin,
+			Text:     string(appByte),
 			FilePath: path.Join(dir, viper.GetString("dir.app"), "app.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,

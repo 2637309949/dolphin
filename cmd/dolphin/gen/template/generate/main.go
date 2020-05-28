@@ -12,8 +12,8 @@ var Assets http.FileSystem = http.Dir("../assets")
 
 func main() {
 	err := vfsgen.Generate(Assets, vfsgen.Options{
-		Filename:     "../assets/assets.go",
-		PackageName:  "assets",
+		Filename:     "../assets.go",
+		PackageName:  "template",
 		BuildTags:    "!dev",
 		VariableName: "Assets",
 	})

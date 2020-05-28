@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // Srv struct
@@ -25,6 +26,7 @@ func (app *Srv) Name() string {
 // Build func
 func (app *Srv) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
+	srvByte, _ := vfsutil.ReadFile(template.Assets, "srv.tmpl")
 	for _, c := range node.Controllers {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
@@ -32,7 +34,7 @@ func (app *Srv) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 			"Controller":  c,
 		}
 		tmplCfg := &pipe.TmplCfg{
-			Text:     template.TmplSrv,
+			Text:     string(srvByte),
 			FilePath: path.Join(dir, viper.GetString("dir.srv"), c.Name+".go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,

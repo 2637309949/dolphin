@@ -20,6 +20,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // HasSuffix defined suffix of string
@@ -53,6 +54,7 @@ func (app *SQLTPL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 		Name    string
 		Content ht.HTML
 	}
+	sqlByte, _ := vfsutil.ReadFile(template.Assets, "sql.tmpl")
 	if err := filepath.Walk(path.Join(dir, viper.GetString("dir.sql")), func(path string, info os.FileInfo, err error) error {
 		if HasSuffix(path, ".xml") {
 			ct, _ := ioutil.ReadFile(path)
@@ -105,7 +107,7 @@ func (app *SQLTPL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 		"Files":       files,
 	}
 	tmplCfg := &pipe.TmplCfg{
-		Text:     template.TPLSQL,
+		Text:     string(sqlByte),
 		FilePath: path.Join(dir, viper.GetString("dir.sql"), "sql.auto.go"),
 		Data:     data,
 		Overlap:  pipe.OverlapWrite,

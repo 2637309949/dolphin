@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // SQLMap struct
@@ -25,6 +26,7 @@ func (app *SQLMap) Name() string {
 // Build func
 func (app *SQLMap) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
+	sqlmapByte, _ := vfsutil.ReadFile(template.Assets, "sqlmap.tmpl")
 	for _, t := range node.Tables {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
@@ -33,7 +35,7 @@ func (app *SQLMap) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 			"Table":       t,
 		}
 		tmplCfg := &pipe.TmplCfg{
-			Text:     template.TmplSQLMap,
+			Text:     string(sqlmapByte),
 			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sqlmap"), t.Name+".xml"),
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,

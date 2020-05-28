@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // Tool struct
@@ -28,9 +29,10 @@ func (tool *Tool) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, 
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 	}
+	toolByte, _ := vfsutil.ReadFile(template.Assets, "tool.tmpl")
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
-			Text:     template.TmplTool,
+			Text:     string(toolByte),
 			FilePath: path.Join(dir, viper.GetString("dir.util"), "tool.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,

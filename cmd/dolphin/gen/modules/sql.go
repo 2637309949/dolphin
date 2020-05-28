@@ -14,6 +14,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // SQL struct
@@ -29,6 +30,8 @@ func (app *SQL) Name() string {
 func (app *SQL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
+	countByte, _ := vfsutil.ReadFile(template.Assets, "count.tmpl")
+	selectByte, _ := vfsutil.ReadFile(template.Assets, "select.tmpl")
 	for _, c := range node.Controllers {
 		for _, api := range c.APIS {
 			if strings.TrimSpace(api.Table) != "" && api.Func == "page" {
@@ -42,7 +45,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v.tpl", c.Name, api.Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
 					tmplCfg := &pipe.TmplCfg{
-						Text:     template.TmplSQLCount,
+						Text:     string(countByte),
 						FilePath: cpath,
 						Data:     data,
 						Overlap:  pipe.OverlapSkip,
@@ -53,7 +56,7 @@ func (app *SQL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v.tpl", c.Name, api.Name, "select"))
 				if _, ok := tplCache[filepath.Base(spath)]; !ok {
 					tmplCfg := &pipe.TmplCfg{
-						Text:     template.TmplSQLSel,
+						Text:     string(selectByte),
 						FilePath: spath,
 						Data:     data,
 						Overlap:  pipe.OverlapSkip,

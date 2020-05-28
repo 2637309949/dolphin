@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/template/assets"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -35,8 +35,8 @@ func (oa *OAuth) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, e
 	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")
 	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
 
-	affirmByte, _ := vfsutil.ReadFile(assets.Assets, "static/web/affirm.html")
-	loginByte, _ := vfsutil.ReadFile(assets.Assets, "static/web/login.html")
+	affirmByte, _ := vfsutil.ReadFile(template.Assets, "static/web/affirm.html")
+	loginByte, _ := vfsutil.ReadFile(template.Assets, "static/web/login.html")
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
 			Text:     string(affirmByte),

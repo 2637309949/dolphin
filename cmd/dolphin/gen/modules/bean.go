@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/shurcooL/httpfs/vfsutil"
 )
 
 // Bean struct
@@ -25,6 +26,7 @@ func (m *Bean) Name() string {
 // Build func
 func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
+	beanByte, _ := vfsutil.ReadFile(template.Assets, "bean.tmpl")
 	for _, bean := range node.Beans {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
@@ -32,7 +34,7 @@ func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, err
 			"Bean":        bean,
 		}
 		tmplCfg := &pipe.TmplCfg{
-			Text:     template.TmplBean,
+			Text:     string(beanByte),
 			FilePath: path.Join(dir, viper.GetString("dir.model"), bean.Name+".auto.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,

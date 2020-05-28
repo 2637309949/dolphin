@@ -127,4 +127,3 @@ module.exports.qrcode = (data) => {
     method: 'get'
   })
 }
-

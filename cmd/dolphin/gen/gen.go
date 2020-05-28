@@ -113,6 +113,7 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 	if err != nil {
 		return err
 	}
+
 	if err = tpl.Execute(w, cfg.Data); err != nil {
 		return err
 	}
