@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/cache"
-
 	"github.com/2637309949/dolphin/packages/cache/persistence"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
