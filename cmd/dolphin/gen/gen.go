@@ -15,6 +15,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/modules"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 )
@@ -114,7 +115,7 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 		}
 	}
 
-	w, err := OpenFile(cfg.FilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+	w, err := utils.OpenFile(cfg.FilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return err
 	}
@@ -128,12 +129,4 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 		}
 	}
 	return nil
-}
-
-// OpenFile defiend
-func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
-	if err := os.MkdirAll(path.Dir(name), os.ModePerm); err != nil {
-		return nil, err
-	}
-	return os.OpenFile(name, flag, perm)
 }

@@ -2,6 +2,7 @@ package utils
 
 import (
 	"os"
+	"path"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -84,4 +85,12 @@ func SetLevel(cmd *cobra.Command) {
 	if verbose, _ := cmd.Flags().GetBool("verbose"); verbose {
 		logrus.SetLevel(logrus.DebugLevel)
 	}
+}
+
+// OpenFile defiend
+func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
+	if err := os.MkdirAll(path.Dir(name), os.ModePerm); err != nil {
+		return nil, err
+	}
+	return os.OpenFile(name, flag, perm)
 }
