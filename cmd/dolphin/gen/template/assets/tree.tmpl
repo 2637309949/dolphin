@@ -1,0 +1,8 @@
+select
+    {{.Api.Table}}.id
+from
+	{{.Api.Table}}
+where
+	{{.Api.Table}}.id {{.Application.Unescaped "{{.ne}}"}} ""
+	and
+	{{.Api.Table}}.del_flag {{.Application.Unescaped "{{.ne}}"}} 1

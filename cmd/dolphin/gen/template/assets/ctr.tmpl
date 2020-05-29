@@ -51,6 +51,19 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	ctx.Success(ret)
+{{- else if eq .Func "tree"}}
+	q := ctx.TypeQuery()
+	{{- range .Params}}
+	{{- $tv := .ToTypeValue .Type .Value}}
+	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
+	{{- end}}
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
 {{- else if eq .Func "add"}}
 	{{- $bp := index .Params 0}}
 	var payload {{$bp.Ref $bp.Type}}
