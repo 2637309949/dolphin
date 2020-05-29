@@ -42,11 +42,16 @@ func AddPipe(p pipe.Pipe) {
 	lines = append(lines, p)
 }
 
-// GetPipeByName defined getbyname
-func GetPipeByName(nm string) pipe.Pipe {
-	return funk.Find(lines, func(pipe pipe.Pipe) bool {
-		return pipe.Name() == nm
-	}).(pipe.Pipe)
+// GetPipesByName defined getbyname
+func GetPipesByName(nm ...string) []pipe.Pipe {
+	return funk.Filter(lines, func(pipe pipe.Pipe) bool {
+		for _, v := range nm {
+			if pipe.Name() == v {
+				return true
+			}
+		}
+		return false
+	}).([]pipe.Pipe)
 }
 
 // Gen struct
