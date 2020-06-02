@@ -65,7 +65,7 @@ application
 
 
 ### bean
-> bean, you can declare object in bean, just like spring bean
+> bean, you can declare object in bean, just like spring bean. all bean and model will be placed in the model directory, so you needs another name if the conflict
 
 ```xml
 <bean name="activity_info" desc="desc" packages="xxx" extends="$applet_activity">
