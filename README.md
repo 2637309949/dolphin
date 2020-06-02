@@ -107,7 +107,7 @@ controller
 
 
 ### api
-> api, api func in controller. we has some built-in func such as 'add', 'delete', 'update', 'page', 'get'
+> api, api func in controller. we has some built-in func such as 'add', 'delete', 'update', 'page', 'get', 'tree', or you can refined if you need.
 
 ```xml
 <api name="list" func="page" table="table" desc="desc" method="get" roles="X3ed" cache="60">
