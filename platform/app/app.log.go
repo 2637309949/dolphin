@@ -18,6 +18,7 @@ import (
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
@@ -92,16 +93,8 @@ func initTracker() {
 
 func init() {
 	var writer io.Writer
-	if !terminal.IsTerminal(unix.Stdout) {
-		logrus.SetFormatter(&logrus.JSONFormatter{
-			TimestampFormat: "2006/01/02 15:04:05",
-		})
-	} else {
-		logrus.SetFormatter(&logrus.TextFormatter{
-			FullTimestamp:   true,
-			TimestampFormat: "2006/01/02 15:04:05",
-			ForceColors:     true,
-		})
+	util.SetFormatter(terminal.IsTerminal(unix.Stdout))
+	if terminal.IsTerminal(unix.Stdout) {
 		writer = os.Stdout
 	}
 	dir := path.Join(viper.GetString("dir.log"), viper.GetString("app.name"))

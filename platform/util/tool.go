@@ -6,6 +6,8 @@ package util
 import (
 	"math/rand"
 	"time"
+
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // M defined
@@ -81,5 +83,19 @@ func EnsureRight(err error, right interface{}) interface{} {
 func Ensure(err error) {
 	if err != nil {
 		panic(err)
+	}
+}
+
+// SetFormatter defined
+func SetFormatter(isTerminal bool) {
+	if !isTerminal {
+		logrus.SetFormatter(&logrus.JSONFormatter{
+			TimestampFormat: "2006/01/02 15:04:05",
+		})
+	} else {
+		logrus.SetFormatter(&logrus.TextFormatter{
+			FullTimestamp:   true,
+			TimestampFormat: "2006/01/02 15:04:05",
+		})
 	}
 }

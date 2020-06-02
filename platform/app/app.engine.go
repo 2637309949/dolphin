@@ -30,7 +30,6 @@ import (
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
-	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"google.golang.org/grpc"
 )
@@ -181,11 +180,11 @@ func (e *Engine) authorize() {
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
 	e.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
 	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
-		logrus.Errorf("internal error:%v", err.Error())
+		logrus.Error(err)
 		return
 	})
 	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
-		logrus.Errorf("response error:%v", re.Error.Error())
+		logrus.Error(re.Error)
 	})
 }
 
@@ -196,24 +195,28 @@ func (e *Engine) done() <-chan os.Signal {
 	return c
 }
 
-// Run booting system
-func (e *Engine) Run() {
-	e.database()
-	e.authorize()
-
+// lifeCycle start liftcycle hooks
+func (e *Engine) lifeCycle() {
 	signal := e.done()
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	if err := e.lifecycle.Start(ctx); err != nil {
-		logrus.Fatalf("ERROR\t\tFailed to start: %v", err)
+		logrus.Fatal(err)
 	}
 	<-signal
 	ctx, cancel = context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	if err := e.lifecycle.Stop(ctx); err != nil {
-		logrus.Fatalf("ERROR\t\tFailed to stop cleanly: %v", err)
+		logrus.Fatal(err)
 	}
+}
+
+// Run booting system
+func (e *Engine) Run() {
+	e.database()
+	e.authorize()
+	e.lifeCycle()
 }
 
 func buildEngine() *Engine {
@@ -221,14 +224,8 @@ func buildEngine() *Engine {
 	e.Manager = NewDefaultManager()
 	e.lifecycle = &lifecycleWrapper{}
 	e.GRPC = grpc.NewServer()
-	gin.SetMode(viper.GetString("app.mode"))
-
-	e.Gin = gin.New()
-	e.Gin.Use(plugin.CORS())
-	e.Gin.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
+	e.Gin = NewGin()
 	e.Gin.Use(plugin.Tracker(Tracker(e)))
-	e.Gin.Use(plugin.Recovery())
-	e.Gin.Use(plugin.Override(e.Gin.HandleContext))
 	e.pool.New = func() interface{} {
 		return e.allocateContext()
 	}
