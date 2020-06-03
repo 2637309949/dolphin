@@ -18,7 +18,6 @@ type (
 		*pApp.Engine
 		pool sync.Pool
 	}
-
 	// Context defined http handle hook context
 	Context struct {
 		*pApp.Context
