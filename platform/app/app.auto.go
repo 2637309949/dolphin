@@ -746,7 +746,7 @@ func (act *Executor) Execute() error {
 	return nil
 }
 
-// Sync models
+// SyncModels defined
 func SyncModels() error {
 	mseti := App.Manager.MSet()
 	mseti.Add(new(model.SysAppFun))
@@ -781,7 +781,7 @@ func SyncModels() error {
 	return nil
 }
 
-// Async Ctr
+// SyncCtr defined
 func SyncCtr() error {
 	SysAppFunRoutes(App)
 	SysAreaRoutes(App)

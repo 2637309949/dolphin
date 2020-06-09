@@ -151,8 +151,8 @@ controller
 #### Page Example
 ```xml
 <api name="page" func="page" table="sys_client" desc="客户端分页查询" method="get">
-    <param name="page" type="int" desc="页码" value="1"/>
-    <param name="size" type="int" desc="单页数" value="15" />
+    <param name="page" type="int" value="1" desc="页码"/>
+    <param name="size" type="int"  value="15" desc="单页数"/>
     <param name="app_name" type="string" desc="所属应用"/>
     <return>
         <success type="$success"/>

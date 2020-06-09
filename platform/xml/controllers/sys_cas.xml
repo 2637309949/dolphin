@@ -1,5 +1,5 @@
 <controller name="sys_cas" desc="认证中心">
-    <api name="login" desc="用户认证" method="post" auth="false">
+    <api name="login" method="post" auth="false" desc="用户认证">
         <param name="username" type="string" desc="用户名称" />
         <param name="password" type="string" desc="用户密码" />
         <param name="domain" type="string" desc="用户域" />
@@ -8,7 +8,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="logout" desc="注销信息" method="get" auth="false">
+    <api name="logout" method="get" auth="false" desc="注销信息">
         <param name="redirect_uri" type="string" desc="定向URL" />
         <param name="state" type="string" desc="状态" />
         <return>
@@ -16,25 +16,25 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="affirm" desc="用户授权" method="post" auth="false">
+    <api name="affirm" method="post" auth="false" desc="用户授权">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="authorize" desc="用户授权" method="get" auth="false">
+    <api name="authorize" method="get" auth="false" desc="用户授权">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="token" desc="获取令牌" method="post" auth="false">
+    <api name="token" method="post" auth="false" desc="获取令牌">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="url" desc="授权地址" method="get" auth="false">
+    <api name="url" method="get" auth="false" desc="授权地址">
         <param name="redirect_uri" type="string" desc="定向URL" />
         <param name="state" type="string" desc="状态" />
         <return>
@@ -42,33 +42,33 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="oauth2" desc="授权回调" method="get" auth="false">
+    <api name="oauth2" method="get" auth="false" desc="授权回调">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="refresh" desc="刷新令牌" method="get" auth="false">
+    <api name="refresh" method="get" auth="false" desc="刷新令牌">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="check" desc="检验令牌" method="get" auth="false">
+    <api name="check" method="get" auth="false" desc="检验令牌">
         <param name="openid" type="string" desc="openid" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="profile" desc="用户信息" method="get">
+    <api name="profile" method="get" desc="用户信息">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="qrcode" desc="扫码登录(绑定第三方)" method="get" auth="false">
-        <param name="type" type="int" desc="类型(0: 微信 1：叮叮)" value="0"/>
+    <api name="qrcode" method="get" auth="false" desc="扫码登录(绑定第三方)">
+        <param name="type" type="int" value="0" desc="类型(0: 微信 1：叮叮)"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

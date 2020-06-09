@@ -1,48 +1,48 @@
 <controller name="sys_user" desc="用户">
-    <api name="add" func="add" table="sys_user" desc="添加用户" method="post" roles="X8e6D3y60K">
+    <api name="add" func="add" table="sys_user" method="post" roles="X8e6D3y60K" desc="添加用户">
         <param name="user" type="$sys_user" desc="用户信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="del" func="delete" table="sys_user" desc="删除用户" method="delete" roles="X8e6D3y60K">
+    <api name="del" func="delete" table="sys_user" method="delete" roles="X8e6D3y60K" desc="删除用户">
         <param name="user" type="$sys_user" desc="用户信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="update" func="update" table="sys_user" desc="更新用户" method="put" roles="X8e6D3y60K">
+    <api name="update" func="update" table="sys_user" method="put" roles="X8e6D3y60K" desc="更新用户">
         <param name="user" type="$sys_user" desc="用户信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="page" func="page" table="sys_user" desc="用户分页查询" method="get">
-        <param name="page" type="int" desc="页码" value="1"/>
-        <param name="size" type="int" desc="单页数" value="15" />
+    <api name="page" func="page" table="sys_user" method="get" desc="用户分页查询">
+        <param name="page" type="int" value="1" desc="页码"/>
+        <param name="size" type="int" value="15" desc="单页数"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" desc="获取用户信息" func="one" table="sys_user" method="get">
+    <api name="get" func="one" table="sys_user" method="get" desc="获取用户信息">
         <param name="id" type="string" desc="用户id" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="login" desc="用户认证" method="post" auth="false">
+    <api name="login" method="post" auth="false" desc="用户认证">
         <param name="payload" type="$login" desc="用户信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="logout" desc="用户退出登录" method="get">
+    <api name="logout" method="get" desc="用户退出登录">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
