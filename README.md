@@ -100,8 +100,7 @@ prop
 Example: 
 
 ```xml
-<controller name="activity" desc="微信活动">
-</controller>
+<controller name="activity" desc="微信活动" />
 ```
 
 controller
