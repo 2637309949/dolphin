@@ -1,0 +1,23 @@
+<sqlMap>
+    <sql id="insert_article">
+        insert into article
+		(`id`,`unanswered_count`,`best_answerers_count`,`is_super_topic_vote`,`excerpt`,`is_vote`,`is_black`,`questions_count`,`category`,`name`,`introduction`,`url`,`followers_count`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		values
+		(?id,?unanswered_count,?best_answerers_count,?is_super_topic_vote,?excerpt,?is_vote,?is_black,?questions_count,?category,?name,?introduction,?url,?followers_count,?type,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    </sql>
+    <sql id="update_article">
+        update article set `id`=?id,`unanswered_count`=?unanswered_count,`best_answerers_count`=?best_answerers_count,`is_super_topic_vote`=?is_super_topic_vote,`excerpt`=?excerpt,`is_vote`=?is_vote,`is_black`=?is_black,`questions_count`=?questions_count,`category`=?category,`name`=?name,`introduction`=?introduction,`url`=?url,`followers_count`=?followers_count,`type`=?type,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+		where  id =?id
+    </sql>
+    <sql id="delete_article">
+        delete from article
+		where id =?id
+    </sql>
+    <sql id="selectone_article">
+        select `id`,`unanswered_count`,`best_answerers_count`,`is_super_topic_vote`,`excerpt`,`is_vote`,`is_black`,`questions_count`,`category`,`name`,`introduction`,`url`,`followers_count`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from article
+		where  id =?id
+    </sql>
+    <sql id="selectall_article">
+        select `id`,`unanswered_count`,`best_answerers_count`,`is_super_topic_vote`,`excerpt`,`is_vote`,`is_black`,`questions_count`,`category`,`name`,`introduction`,`url`,`followers_count`,`type`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from article
+    </sql>
+</sqlMap>

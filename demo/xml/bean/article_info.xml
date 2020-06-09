@@ -1,0 +1,3 @@
+<bean name="article_info" desc="文章信息" packages="github.com/2637309949/dolphin/packages/null" extends="$article">
+    <prop name="url" desc="地址" type="null.String" />
+</bean>

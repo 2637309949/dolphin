@@ -1,11 +1,11 @@
 definitions:
-  model.AppletActivity:
+  model.Article:
     properties:
-      campus:
-        description: 校区
-        type: string
-      content:
-        description: 内容
+      best_answerers_count:
+        description: 最佳答复数目
+        type: number
+      category:
+        description: 分类
         type: string
       create_by:
         description: 创建人
@@ -16,47 +16,50 @@ definitions:
       del_flag:
         description: 删除标记
         type: number
-      forward_count:
-        description: 转发次数
-        type: number
-      hidden:
-        description: 是否隐藏 0(否) 1(是)
+      excerpt:
+        description: 摘录
+        type: string
+      followers_count:
+        description: 粉丝数
         type: number
       id:
         description: 主键
         type: string
-      image:
-        description: 图片
+      introduction:
+        description: 简介
         type: string
-      is_entry:
-        description: 是否报名 0(否) 1(是)
+      is_black:
+        description: 是否拉黑
         type: number
-      like_count:
-        description: 点赞次数
+      is_super_topic_vote:
+        description: 是否超级话题投票
         type: number
-      priority:
-        description: 优先级
+      is_vote:
+        description: 是否投票
         type: number
-      read_count:
-        description: 阅读次数
+      name:
+        description: 标题
+        type: string
+      questions_count:
+        description: 提问数目
         type: number
       remark:
         description: 备注
         type: string
-      share_count:
-        description: 分享次数
-        type: number
-      title:
-        description: 标题
-        type: string
       type:
-        description: 类型
+        description: 类别
+        type: string
+      unanswered_count:
+        description: 未答复数目
         type: number
       update_by:
         description: 最后更新人
         type: string
       update_time:
         description: 最后更新时间
+        type: string
+      url:
+        description: 地址
         type: string
     type: object
   model.Fail:
@@ -155,8 +158,7 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
-          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysArea:
@@ -450,8 +452,7 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
-          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysNotification:
@@ -805,66 +806,6 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
-  model.WechatActivity:
-    properties:
-      campus:
-        description: 校区
-        type: string
-      content:
-        description: 内容
-        type: string
-      create_by:
-        description: 创建人
-        type: string
-      create_time:
-        description: 创建时间
-        type: string
-      del_flag:
-        description: 删除标记
-        type: number
-      forward_count:
-        description: 转发次数
-        type: number
-      hidden:
-        description: 是否隐藏 0(否) 1(是)
-        type: number
-      id:
-        description: 主键
-        type: string
-      image:
-        description: 图片
-        type: string
-      is_entry:
-        description: 是否报名 0(否) 1(是)
-        type: number
-      like_count:
-        description: 点赞次数
-        type: number
-      priority:
-        description: 优先级
-        type: number
-      read_count:
-        description: 阅读次数
-        type: number
-      remark:
-        description: 备注
-        type: string
-      share_count:
-        description: 分享次数
-        type: number
-      title:
-        description: 标题
-        type: string
-      type:
-        description: 类型
-        type: number
-      update_by:
-        description: 最后更新人
-        type: string
-      update_time:
-        description: 最后更新时间
-        type: string
-    type: object
 host: localhost:8082
 info:
   contact: {}
@@ -874,7 +815,7 @@ info:
   title: demo
   version: "1.0"
 paths:
-  /api/applet/activity/add:
+  /api/article/add:
     post:
       consumes:
       - application/json
@@ -883,11 +824,11 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: 活动对象
+      - description: 文章信息
         in: body
-        name: activity
+        name: article
         schema:
-          $ref: '#/definitions/model.AppletActivity'
+          $ref: '#/definitions/model.Article'
       responses:
         "200":
           description: OK
@@ -901,42 +842,10 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: 添加活动
+      summary: 添加文章
       tags:
-      - 小程序活动
-  /api/applet/activity/batch_add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.AppletActivity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 添加活动
-      tags:
-      - 小程序活动
-  /api/applet/activity/batch_del:
+      - 文章
+  /api/article/del:
     delete:
       consumes:
       - application/json
@@ -945,13 +854,11 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: 活动对象
+      - description: 文章
         in: body
-        name: activity
+        name: article
         schema:
-          items:
-            $ref: '#/definitions/model.AppletActivity'
-          type: array
+          $ref: '#/definitions/model.Article'
       responses:
         "200":
           description: OK
@@ -965,118 +872,17 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: 删除活动
+      summary: 删除文章
       tags:
-      - 小程序活动
-  /api/applet/activity/batch_update:
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.AppletActivity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 更新活动
-      tags:
-      - 小程序活动
-  /api/applet/activity/del:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          $ref: '#/definitions/model.AppletActivity'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 删除活动
-      tags:
-      - 小程序活动
-  /api/applet/activity/list:
+      - 文章
+  /api/article/get:
     get:
       parameters:
       - description: 认证令牌
         in: header
         name: Authorization
         type: string
-      - description: 页码
-        in: query
-        name: page
-        type: integer
-      - description: 单页数
-        in: query
-        name: size
-        type: integer
-      - description: 标题筛选
-        in: query
-        name: title
-        type: string
-      - description: 是否隐藏筛选
-        in: query
-        name: hidden
-        type: integer
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 活动分页查询
-      tags:
-      - 小程序活动
-  /api/applet/activity/one:
-    get:
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动id
+      - description: 文章id
         in: query
         name: id
         type: string
@@ -1093,23 +899,24 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: 获取活动
+      summary: 获取文章信息
       tags:
-      - 小程序活动
-  /api/applet/activity/update:
-    put:
-      consumes:
-      - application/json
+      - 文章
+  /api/article/page:
+    get:
       parameters:
       - description: 认证令牌
         in: header
         name: Authorization
         type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          $ref: '#/definitions/model.AppletActivity'
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
       responses:
         "200":
           description: OK
@@ -1123,9 +930,39 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: 更新活动
+      summary: 文章分页查询
       tags:
-      - 小程序活动
+      - 文章
+  /api/article/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章信息
+        in: body
+        name: article
+        schema:
+          $ref: '#/definitions/model.Article'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新文章
+      tags:
+      - 文章
   /api/sys/app/fun/add:
     post:
       consumes:
@@ -4252,364 +4089,6 @@ paths:
       summary: 授权回调
       tags:
       - 微信
-  /api/v1/applet/activity/increase:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 记录id
-        in: body
-        name: applet_activity
-        schema:
-          $ref: '#/definitions/model.AppletActivity'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 增加次数
-      tags:
-      - 小程序活动
-  /api/v1/wechat/activity/increase:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 记录id
-        in: body
-        name: id
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 增加次数
-      tags:
-      - 微信活动
-  /api/v2/applet/activity/increase_v2:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 记录id
-        in: body
-        name: id
-        schema:
-          items:
-            type: string
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 增加次数
-      tags:
-      - 小程序活动
-  /api/v2/wechat/activity/increase_v2:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 记录id
-        in: body
-        name: id
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 增加次数
-      tags:
-      - 微信活动
-  /api/wechat/activity/add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          $ref: '#/definitions/model.WechatActivity'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 添加活动
-      tags:
-      - 微信活动
-  /api/wechat/activity/batch_add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.WechatActivity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 添加活动
-      tags:
-      - 微信活动
-  /api/wechat/activity/batch_del:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.WechatActivity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 删除活动
-      tags:
-      - 微信活动
-  /api/wechat/activity/batch_update:
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          items:
-            $ref: '#/definitions/model.WechatActivity'
-          type: array
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 更新活动
-      tags:
-      - 微信活动
-  /api/wechat/activity/del:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          $ref: '#/definitions/model.WechatActivity'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 删除活动
-      tags:
-      - 微信活动
-  /api/wechat/activity/list:
-    get:
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 页码
-        in: query
-        name: page
-        type: integer
-      - description: 单页数
-        in: query
-        name: size
-        type: integer
-      - description: 标题筛选
-        in: query
-        name: title
-        type: string
-      - description: 是否隐藏筛选
-        in: query
-        name: hidden
-        type: integer
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 活动分页查询
-      tags:
-      - 微信活动
-  /api/wechat/activity/one:
-    get:
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动id
-        in: query
-        name: id
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 获取活动
-      tags:
-      - 微信活动
-  /api/wechat/activity/update:
-    put:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: 活动对象
-        in: body
-        name: activity
-        schema:
-          $ref: '#/definitions/model.WechatActivity'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 更新活动
-      tags:
-      - 微信活动
 securityDefinitions:
   OAuth2AccessCode:
     authorizationUrl: http://localhost:8082/api/sys/cas/authorize
