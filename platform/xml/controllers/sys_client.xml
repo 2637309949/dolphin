@@ -29,7 +29,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" desc="获取客户端信息" func="one" table="sys_client" method="get">
+    <api name="get" func="one" table="sys_client" desc="获取客户端信息" method="get">
         <param name="id" type="string" desc="客户端id" />
         <return>
             <success type="$success"/>

@@ -115,18 +115,63 @@ controller
 ### api
 > api, api func in controller. we has some built-in func such as 'add', 'delete', 'update', 'page', 'get', 'tree', or you can refined if you need.
 
-Example: 
-
+#### Add Example
 ```xml
-<api name="list" func="page" table="table" desc="desc" method="get" roles="X3ed" cache="60">
-    <param name="page" type="int" desc="页码" value="1" />
-    <param name="size" type="int" desc="单页数" value="20" />
+<api name="add" func="add" table="sys_client" desc="添加客户端" method="post">
+    <param name="user" type="$sys_client" desc="客户端信息" />
     <return>
-        <success type="$response" />
-        <failure type="$response" />
+        <success type="$success"/>
+        <failure type="$fail"/>
     </return>
 </api>
 ```
+
+#### Delete Example
+```xml
+<api name="del" func="delete" table="sys_client" desc="删除客户端" method="delete">
+    <param name="sys_client" type="$sys_client" desc="客户端" />
+    <return>
+        <success type="$success"/>
+        <failure type="$fail"/>
+    </return>
+</api>
+```
+
+#### Update Example
+```xml
+<api name="update" func="update" table="sys_client" desc="更新客户端" method="put">
+    <param name="user" type="$sys_role" desc="客户端信息" />
+    <return>
+        <success type="$success"/>
+        <failure type="$fail"/>
+    </return>
+</api>
+```
+
+#### Page Example
+```xml
+<api name="page" func="page" table="sys_client" desc="客户端分页查询" method="get">
+    <param name="page" type="int" desc="页码" value="1"/>
+    <param name="size" type="int" desc="单页数" value="15" />
+    <param name="app_name" type="string" desc="所属应用"/>
+    <return>
+        <success type="$success"/>
+        <failure type="$fail"/>
+    </return>
+</api>
+```
+
+#### One Example
+```xml
+<api name="get" func="one" table="sys_client" desc="获取客户端信息" method="get">
+    <param name="id" type="string" desc="客户端id" />
+    <return>
+        <success type="$success"/>
+        <failure type="$fail"/>
+    </return>
+</api>
+```
+
 api
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
