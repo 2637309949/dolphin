@@ -50,6 +50,8 @@ You can find a number of ready-to-run examples at [dolphin examples repository.]
 ### application
 > application label contain app infomation, such as name, package
 
+Example: 
+
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <application name="demo" desc="template" packagename="demo"/>
@@ -59,13 +61,15 @@ application
 
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
-| name |  application name |
+| name |  required, application name |
 | desc |    application desc  |
-| packagename |    application packagename  |
+| packagename |    required, application packagename  |
 
 
 ### bean
 > bean, you can declare object in bean, just like spring bean. all bean and model will be placed in the model directory, so you needs another name if the conflict
+
+Example: 
 
 ```xml
 <bean name="activity_info" desc="desc" packages="xxx" extends="$applet_activity">
@@ -79,7 +83,7 @@ bean
 |----------|:-------------:|
 | name |  bean name |
 | desc |    bean desc  |
-| packagename |    bean packagename  |
+| packagename |    third party package name，use "," to split |
 | extends |    bean extends  |
 
 
@@ -92,6 +96,8 @@ prop
 
 ### controller
 > controller, a collect api, you can declare api prefix
+
+Example: 
 
 ```xml
 <controller name="activity" desc="微信活动">
@@ -108,6 +114,8 @@ controller
 
 ### api
 > api, api func in controller. we has some built-in func such as 'add', 'delete', 'update', 'page', 'get', 'tree', or you can refined if you need.
+
+Example: 
 
 ```xml
 <api name="list" func="page" table="table" desc="desc" method="get" roles="X3ed" cache="60">
@@ -149,6 +157,8 @@ return
 ### table
 > table, as you khnow, you can defined any table structure as you need
 
+Example: 
+
 ```xml
 <table name="activity" desc="活动" packages="xx">
 	<column name="id" desc="主键" type="string" xorm="varchar(36) notnull unique pk" />
@@ -161,7 +171,7 @@ table
 |----------|:-------------:|
 | name |  table name |
 | desc |    table desc   |
-| packages | table packages，use "," to split |
+| packages | third party package name，use "," to split |
 
 column
 | LabelName   |      LabelMeaning      |
@@ -169,4 +179,4 @@ column
 | name |  column name |
 | desc |    column desc  |
 | type | column type |
-| xorm | xorm tag |
+| xorm | xorm tag, please refer to XORM for details |
