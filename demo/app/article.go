@@ -5,6 +5,7 @@ package app
 
 import (
 	"demo/model"
+	"demo/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
@@ -144,4 +145,28 @@ func ArticleGet(ctx *Context) {
 		return
 	}
 	ctx.Success(entity)
+}
+
+// ArticlePayment api implementation
+// @Summary 文章分页查询
+// @Tags 文章
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param article body model.ArticleInfo false "文章"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/article/payment [post]
+func ArticlePayment(ctx *Context) {
+	var payload model.ArticleInfo
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ret, err := srv.ArticleAction(payload)
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
 }

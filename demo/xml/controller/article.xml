@@ -35,4 +35,11 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="payment" method="post" desc="文章分页查询">
+        <param name="article" type="$article_info" desc="文章"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
 </controller>

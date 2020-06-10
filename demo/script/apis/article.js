@@ -55,3 +55,13 @@ module.exports.get = (data) => {
     method: 'get'
   })
 }
+
+// payment 文章分页查询
+module.exports.payment = (data) => {
+  const url = '/api/article/payment'
+  return axios({
+    url: url,
+    method: 'post',
+    data
+  })
+}
