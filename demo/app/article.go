@@ -148,7 +148,7 @@ func ArticleGet(ctx *Context) {
 }
 
 // ArticlePayment api implementation
-// @Summary 文章分页查询
+// @Summary 文章付费
 // @Tags 文章
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
