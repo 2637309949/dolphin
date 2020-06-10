@@ -340,6 +340,17 @@ func SysClientGet(ctx *Context) {
 }
 ```
 
+#### Other Example
+```xml
+<api name="payment" method="post" desc="文章付费">
+	<param name="article" type="$article_info" desc="文章"/>
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
+
 Generate code:
 
 ```go
@@ -368,16 +379,6 @@ func ArticlePayment(ctx *Context) {
 }
 ```
 
-#### Other Example
-```xml
-<api name="payment" method="post" desc="文章付费">
-	<param name="article" type="$article_info" desc="文章"/>
-	<return>
-		<success type="$success"/>
-		<failure type="$fail"/>
-	</return>
-</api>
-```
 api
 | LabelName   |      LabelMeaning      |
 |----------|:-------------:|
