@@ -409,7 +409,7 @@ return
 
 
 ### table
-> table, as you khnow, you can defined any table structure as you need
+> table, as you khnow, you can defined any table structure as you need. and you should use `null` type if you wan to accept form data that avoid null value problems in golang.
 
 Example: 
 
