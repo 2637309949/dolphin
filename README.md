@@ -416,19 +416,8 @@ Example:
 ```xml
 <table name="article" desc="文章" packages="github.com/2637309949/dolphin/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
-	<column name="unanswered_count" desc="未答复数目" type="null.Int" />
-	<column name="best_answerers_count" desc="最佳答复数目" type="null.Int" />
-	<column name="is_super_topic_vote" desc="是否超级话题投票" type="null.Int" />
-	<column name="excerpt" desc="摘录" type="null.String" xorm="varchar(512)" />
-	<column name="is_vote" desc="是否投票" type="null.Int" />
-	<column name="is_black" desc="是否拉黑" type="null.Int" />
-	<column name="questions_count" desc="提问数目" type="null.Int" />
-	<column name="category" desc="分类" type="null.String" xorm="varchar(36)" />
-	<column name="name" desc="标题" type="null.String" xorm="varchar(108)" />
-	<column name="introduction" desc="简介" type="null.String" xorm="varchar(512)" />
-	<column name="url" desc="地址" type="null.String" xorm="varchar(512)" />
-	<column name="followers_count" desc="粉丝数" type="null.Int" />
 	<column name="type" desc="类别" type="null.String" xorm="varchar(36)" />
+
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
@@ -454,32 +443,9 @@ import (
 type Article struct {
 	// 主键
 	ID null.String `xorm:"varchar(36) notnull unique pk 'id'" json:"id" xml:"id"`
-	// 未答复数目
-	UnansweredCount null.Int `xorm:" 'unanswered_count'" json:"unanswered_count" xml:"unanswered_count"`
-	// 最佳答复数目
-	BestAnswerersCount null.Int `xorm:" 'best_answerers_count'" json:"best_answerers_count" xml:"best_answerers_count"`
-	// 是否超级话题投票
-	IsSuperTopicVote null.Int `xorm:" 'is_super_topic_vote'" json:"is_super_topic_vote" xml:"is_super_topic_vote"`
-	// 摘录
-	Excerpt null.String `xorm:"varchar(512) 'excerpt'" json:"excerpt" xml:"excerpt"`
-	// 是否投票
-	IsVote null.Int `xorm:" 'is_vote'" json:"is_vote" xml:"is_vote"`
-	// 是否拉黑
-	IsBlack null.Int `xorm:" 'is_black'" json:"is_black" xml:"is_black"`
-	// 提问数目
-	QuestionsCount null.Int `xorm:" 'questions_count'" json:"questions_count" xml:"questions_count"`
-	// 分类
-	Category null.String `xorm:"varchar(36) 'category'" json:"category" xml:"category"`
-	// 标题
-	Name null.String `xorm:"varchar(108) 'name'" json:"name" xml:"name"`
-	// 简介
-	Introduction null.String `xorm:"varchar(512) 'introduction'" json:"introduction" xml:"introduction"`
-	// 地址
-	URL null.String `xorm:"varchar(512) 'url'" json:"url" xml:"url"`
-	// 粉丝数
-	FollowersCount null.Int `xorm:" 'followers_count'" json:"followers_count" xml:"followers_count"`
 	// 类别
 	Type null.String `xorm:"varchar(36) 'type'" json:"type" xml:"type"`
+	
 	// 创建人
 	CreateBy null.String `xorm:"varchar(36) 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间
