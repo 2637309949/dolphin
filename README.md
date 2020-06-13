@@ -17,6 +17,12 @@ $ go get -u github.com/2637309949/dolphin/cmd/dolphin
 $ mkdir example && cd example && dolphin init && dolphin build && go run main
 ```
 
+Output:
+```sh
+time="2020/06/13 11:55:58" level=info msg="grpc listen on port:9081"
+time="2020/06/13 11:55:58" level=info msg="http listen on port:8082"
+```
+
 ## Features
 
 ```
