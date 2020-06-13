@@ -38,6 +38,8 @@ $ mkdir example && cd example && dolphin init && dolphin build && go run main
 
 - Support routing caching
 
+- Data permission control
+
 - Log trace record
 ```
 
