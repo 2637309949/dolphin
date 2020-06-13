@@ -38,7 +38,7 @@ func (app *SQLMap) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 			Text:     string(sqlmapByte),
 			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sqlmap"), t.Name+".xml"),
 			Data:     data,
-			Overlap:  pipe.OverlapWrite,
+			Overlap:  pipe.OverlapSkip,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 	}

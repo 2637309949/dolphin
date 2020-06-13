@@ -110,6 +110,7 @@ func SysOptionsetPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetRule("sys_optionset_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_optionset", "page", "sys_optionset", q.Value())
 	if err != nil {

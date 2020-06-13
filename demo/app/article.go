@@ -10,7 +10,6 @@ import (
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
-	pApp "github.com/2637309949/dolphin/platform/app"
 )
 
 // ArticleAdd api implementation
@@ -111,17 +110,11 @@ func ArticlePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetRule("article_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "article", "page", "article", q.Value())
 	if err != nil {
 		ctx.Fail(err)
-		return
-	}
-
-	if ctx.QueryBool("__export__") {
-		cfg := pApp.NewBuildExcelConfig(ret.Data)
-		cfg.Format = pApp.OptionsetsFormat(ctx.DB)
-		ctx.SuccessWithExcel(cfg)
 		return
 	}
 	ctx.Success(ret)

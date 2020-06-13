@@ -123,8 +123,8 @@ func SysUserPage(ctx *Context) {
 	q.SetInt("size", 15)
 	q.SetString("org_id")
 	q.SetString("cn_org_id")
+	q.SetRule("sys_user_page")
 	q.SetTags()
-
 	if q.GetString("cn_org_id") != "" {
 		ids, err := srv.SysUserGetOrgsFromInheritance(ctx.DB, q.GetString("cn_org_id"))
 		if err != nil {
@@ -133,7 +133,6 @@ func SysUserPage(ctx *Context) {
 		}
 		q.SetString("cn_org_id", template.HTML(strings.Join(ids, ",")))()
 	}
-
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
 	if err != nil {
 		ctx.Fail(err)

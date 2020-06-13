@@ -65,6 +65,72 @@ definitions:
         description: 地址
         type: string
     type: object
+  model.ArticleInfo:
+    properties:
+      best_answerers_count:
+        description: 最佳答复数目
+        type: number
+      category:
+        description: 分类
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      excerpt:
+        description: 摘录
+        type: string
+      followers_count:
+        description: 粉丝数
+        type: number
+      id:
+        description: 主键
+        type: string
+      introduction:
+        description: 简介
+        type: string
+      is_black:
+        description: 是否拉黑
+        type: number
+      is_super_topic_vote:
+        description: 是否超级话题投票
+        type: number
+      is_vote:
+        description: 是否投票
+        type: number
+      name:
+        description: 标题
+        type: string
+      questions_count:
+        description: 提问数目
+        type: number
+      remark:
+        description: 备注
+        type: string
+      reward:
+        description: 打赏
+        type: number
+      type:
+        description: 类别
+        type: string
+      unanswered_count:
+        description: 未答复数目
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      url:
+        description: 地址
+        type: string
+    type: object
   model.Fail:
     properties:
       code:
@@ -161,7 +227,8 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysArea:
@@ -455,7 +522,8 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysNotification:
@@ -934,6 +1002,36 @@ paths:
           schema:
             $ref: '#/definitions/model.Fail'
       summary: 文章分页查询
+      tags:
+      - 文章
+  /api/article/payment:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章
+        in: body
+        name: article
+        schema:
+          $ref: '#/definitions/model.ArticleInfo'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 文章付费
       tags:
       - 文章
   /api/article/update:

@@ -12,6 +12,9 @@ from
 where
 	sys_menu.id {{.ne}} ""
     and del_flag = 0
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}

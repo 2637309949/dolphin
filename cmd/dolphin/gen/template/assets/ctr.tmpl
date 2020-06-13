@@ -44,6 +44,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
+	{{- if $api.Auth}}
+	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
+	{{- end}}
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
@@ -56,6 +59,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- range .Params}}
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
+	{{- end}}
+	{{- if $api.Auth}}
+	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
 	{{- end}}
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())

@@ -24,6 +24,7 @@ func SysTrackerPage(ctx *Context) {
 	q.SetInt("size", 15)
 	q.SetString("app_name", viper.GetString("app.name"))
 	q.SetString("domain", ctx.GetToken().GetDomain())
+	q.SetRule("sys_tracker_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_tracker", "page", "sys_tracker", q.Value())
 	if err != nil {

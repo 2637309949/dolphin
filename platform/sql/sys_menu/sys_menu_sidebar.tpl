@@ -17,6 +17,9 @@ where
 	sys_menu.id {{.ne}} ""
 	and
     sys_menu.del_flag = 0
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 	and
 	sys_menu.hidden = 0
 	order by `order`

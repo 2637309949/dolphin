@@ -108,6 +108,7 @@ func SysAppFunPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetRule("sys_app_fun_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_app_fun", "page", "sys_app_fun", q.Value())
 	if err != nil {
@@ -126,6 +127,7 @@ func SysAppFunPage(ctx *Context) {
 func SysAppFunTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
+	q.SetRule("sys_app_fun_tree")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_app_fun", "tree", "sys_app_fun", q.Value())
 	if err != nil {

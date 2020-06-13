@@ -566,6 +566,24 @@ func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
 	return ret
 }
 
+// SetRule defined
+func (q *Query) SetRule(rules ...string) {
+	rule := q.ctx.Query("rule_code")
+	if len(rules) > 0 {
+		rule = rules[0]
+	}
+	var roleRule interface{}
+	var roleRules []model.SysDataPermissionDetail
+	userID := q.ctx.GetToken().GetUserID()
+	err := q.ctx.DB.SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
+	if err != nil {
+		roleRule = ""
+	} else {
+		roleRule = ParseRule(roleRules)
+	}
+	q.m["role_rule"] = roleRule
+}
+
 // SetUser defined
 func (q *Query) SetUser() {
 	q.m["uid"] = q.ctx.GetToken().GetUserID()
@@ -605,6 +623,26 @@ func (q *Query) SetTags() {
 	q.SetString("lte", q.Unescaped("<="))
 	q.SetString("gt", q.Unescaped(">"))
 	q.SetString("gte", q.Unescaped(">="))
+}
+
+// ParseRule defined
+func ParseRule(roleRules []model.SysDataPermissionDetail) interface{} {
+	roleRule := ""
+	for i, rule := range roleRules {
+		if i == 0 {
+			roleRule = rule.Rule.String
+		} else if i > 0 {
+			if roleRule != "" {
+				roleRule = roleRule + " or " + rule.Rule.String
+			} else {
+				roleRule = rule.Rule.String
+			}
+		}
+	}
+	if len(roleRules) > 1 {
+		roleRule = "(" + roleRule + ")"
+	}
+	return template.HTML(roleRule)
 }
 
 // Handle overwrite RouterGroup.Handle

@@ -45,7 +45,7 @@ func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) (xorm.Result, error) 
 
 // SysUserGetUserOrgsByUID defined
 func SysUserGetUserOrgsByUID(db *xorm.Engine, ids string) (xorm.Result, error) {
-	orgs, err := db.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"oids": template.HTML(ids)}).QueryResult().List()
+	orgs, err := db.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"ne": template.HTML("<>"), "oids": template.HTML(ids)}).QueryResult().List()
 	if err != nil {
 		return nil, err
 	}

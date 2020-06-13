@@ -170,6 +170,7 @@ func SysMenuUpdate(ctx *Context) {
 func SysMenuSidebar(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetBool("isAdmin", ctx.InAdmin())()
+	q.SetRule("sys_menu_sidebar")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
 	if err != nil {
@@ -196,6 +197,7 @@ func SysMenuPage(ctx *Context) {
 	q.SetString("name")
 	q.SetString("code")
 	q.SetString("sort", "`order`")
+	q.SetRule("sys_menu_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
@@ -221,6 +223,7 @@ func SysMenuPage(ctx *Context) {
 func SysMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
+	q.SetRule("sys_menu_tree")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
 	if err != nil {

@@ -145,6 +145,7 @@ func SysOrgPage(ctx *Context) {
 	q.SetString("name")
 	q.SetString("code")
 	q.SetString("sort", "`order`")
+	q.SetRule("sys_org_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_org", "page", "sys_org", q.Value())
 	if err != nil {
@@ -170,6 +171,7 @@ func SysOrgPage(ctx *Context) {
 func SysOrgTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
+	q.SetRule("sys_org_tree")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_org", "tree", "sys_org", q.Value())
 	if err != nil {

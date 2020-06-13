@@ -111,6 +111,7 @@ func SysDomainPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
 	q.SetString("app_name", viper.GetString("app.name"))
+	q.SetRule("sys_domain_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_domain", "page", "sys_domain", q.Value())
 	if err != nil {

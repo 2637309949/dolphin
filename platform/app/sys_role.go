@@ -109,6 +109,7 @@ func SysRolePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetRule("sys_role_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())
 	if err != nil {
@@ -136,6 +137,7 @@ func SysRoleRoleMenuTree(ctx *Context) {
 	q.SetString("name")
 	q.SetString("role_id")
 	q.SetBool("is_admin", q.GetString("role_id") == model.AdminRole.ID.String)
+	q.SetRule("sys_role_menu_tree")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "menu_tree", "sys_org", q.Value())
 	if err != nil {
@@ -156,6 +158,7 @@ func SysRoleRoleAppFunTree(ctx *Context) {
 	q.SetString("name")
 	q.SetString("role_id")
 	q.SetBool("is_admin", q.GetString("role_id") == model.AdminRole.ID.String)
+	q.SetRule("sys_role_app_fun_tree")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "app_fun_tree", "sys_org", q.Value())
 	if err != nil {

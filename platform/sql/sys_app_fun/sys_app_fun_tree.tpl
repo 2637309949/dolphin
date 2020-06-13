@@ -12,8 +12,11 @@ from
 where
 	sys_app_fun.id {{.ne}} ""
     and del_flag = 0
-{{if ne .name ""}}
-    and sys_app_fun.name = "{{.name}}"
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
 {{end}}
+    {{if ne .name ""}}
+    and sys_app_fun.name = "{{.name}}"
+    {{end}}
 
 order by `order`

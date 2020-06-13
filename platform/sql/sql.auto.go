@@ -405,6 +405,18 @@ func init() {
 	SQLTPL["selectall_sys_role_permission"] = `
         select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_permission
     `
+	SQLTPL["get_user_rule_by_code"] = `
+        select
+            sys_data_permission_detail.*
+        from
+            ` + "`sys_data_permission`" + `, ` + "`sys_data_permission_detail`" + `,` + "`sys_role_user`" + `
+        where
+            sys_data_permission.id = sys_data_permission_detail.data_permission_id
+            and sys_role_user.role_id = sys_data_permission_detail.role_id
+            and sys_data_permission_detail.del_flag = 0
+            and sys_data_permission.code = ?
+            and sys_role_user.user_id = ?
+    `
 	SQLTPL["insert_sys_role_user"] = `
         insert into sys_role_user
 		(` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
@@ -623,7 +635,9 @@ where
 	sys_app_fun.id {{.ne}} ""
 	and
 	sys_app_fun.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_app_fun_page_select.tpl"] = `select
     sys_app_fun.id
 from
@@ -632,6 +646,9 @@ where
 	sys_app_fun.id {{.ne}} ""
 	and
 	sys_app_fun.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_app_fun_tree.tpl"] = `select
@@ -648,11 +665,14 @@ from
 where
 	sys_app_fun.id {{.ne}} ""
     and del_flag = 0
-{{if ne .name ""}}
-    and sys_app_fun.name = "{{.name}}"
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
 {{end}}
+    {{if ne .name ""}}
+    and sys_app_fun.name = "{{.name}}"
+    {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_area_page_count.tpl"] = `select
     count(*) records
@@ -662,7 +682,9 @@ where
 	sys_area.id {{.ne}} ""
 	and
 	sys_area.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_area_page_select.tpl"] = `select
     sys_area.id
 from
@@ -671,6 +693,9 @@ where
 	sys_area.id {{.ne}} ""
 	and
 	sys_area.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_attachment_page_count.tpl"] = `select
@@ -681,6 +706,9 @@ where
 	sys_attachment.id {{.ne}} ""
 	and
 	sys_attachment.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 `
 	SQLTPL["sys_attachment_page_select.tpl"] = `select
     sys_attachment.id
@@ -690,6 +718,9 @@ where
 	sys_attachment.id {{.ne}} ""
 	and
 	sys_attachment.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_cas_role.tpl"] = `select
@@ -705,7 +736,9 @@ where
 	sys_client.id {{.ne}} ""
 	and
 	sys_client.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_client_page_select.tpl"] = `select
     sys_client.id
 from
@@ -714,6 +747,9 @@ where
 	sys_client.id {{.ne}} ""
 	and
 	sys_client.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_data_permission_page_count.tpl"] = `select
@@ -724,7 +760,9 @@ where
 	sys_data_permission.id {{.ne}} ""
 	and
 	sys_data_permission.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_data_permission_page_select.tpl"] = `select
     sys_data_permission.id
 from
@@ -733,12 +771,15 @@ where
 	sys_data_permission.id {{.ne}} ""
 	and
 	sys_data_permission.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_data_permission_rule.tpl"] = `select
     sys_data_permission_detail.*
 from
-    `+"`sys_data_permission`"+`, `+"`sys_data_permission_detail`"+`,`+"`sys_user_role`"+`
+    ` + "`sys_data_permission`" + `, ` + "`sys_data_permission_detail`" + `,` + "`sys_user_role`" + `
 where
     sys_data_permission.id = sys_data_permission_detail.data_permission_id
     and sys_user_role.role_id = sys_data_permission_detail.role_id
@@ -753,7 +794,9 @@ where
 	sys_domain.id {{.ne}} ""
 	and
 	sys_domain.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_domain_page_select.tpl"] = `select
     sys_domain.id
 from
@@ -762,6 +805,9 @@ where
 	sys_domain.id {{.ne}} ""
 	and
 	sys_domain.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_menu_page_count.tpl"] = `select
@@ -772,7 +818,9 @@ where
 	sys_menu.id {{.ne}} ""
 	and
 	sys_menu.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_menu_page_select.tpl"] = `select
     sys_menu.id,
     sys_menu.parent,
@@ -796,6 +844,9 @@ where
 {{end}}
 	and
 	sys_menu.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 order by {{.sort}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -818,9 +869,12 @@ where
 	sys_menu.id {{.ne}} ""
 	and
     sys_menu.del_flag = 0
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 	and
 	sys_menu.hidden = 0
-	order by `+"`order`"+``
+	order by ` + "`order`" + ``
 	SQLTPL["sys_menu_tree.tpl"] = `select
     sys_menu.id,
     sys_menu.parent,
@@ -835,11 +889,14 @@ from
 where
 	sys_menu.id {{.ne}} ""
     and del_flag = 0
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_notification_page_count.tpl"] = `select
     count(*) records
@@ -849,7 +906,9 @@ where
 	sys_notification.id {{.ne}} ""
 	and
 	sys_notification.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_notification_page_select.tpl"] = `select
     sys_notification.id
 from
@@ -858,6 +917,9 @@ where
 	sys_notification.id {{.ne}} ""
 	and
 	sys_notification.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_optionset_page_count.tpl"] = `select
@@ -868,7 +930,9 @@ where
 	sys_optionset.id {{.ne}} ""
 	and
 	sys_optionset.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_optionset_page_select.tpl"] = `select
     sys_optionset.id,
 	sys_optionset.name,
@@ -881,6 +945,9 @@ where
 	sys_optionset.id {{.ne}} ""
 	and
 	sys_optionset.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_org_page_count.tpl"] = `select
@@ -891,7 +958,9 @@ where
 	sys_org.id {{.ne}} ""
 	and
 	sys_org.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_org_page_select.tpl"] = `select
     sys_org.id,
     sys_org.parent,
@@ -905,6 +974,9 @@ where
 	sys_org.id {{.ne}} ""
 	and
 	sys_org.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_org_tree.tpl"] = `select
@@ -919,11 +991,14 @@ from
 where
 	sys_org.id {{.ne}} ""
     and del_flag = 0
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 {{if ne .name ""}}
     and sys_org.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_permission_page_count.tpl"] = `select
     count(*) records
@@ -933,7 +1008,9 @@ where
 	sys_permission.id {{.ne}} ""
 	and
 	sys_permission.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_permission_page_select.tpl"] = `select
     sys_permission.id
 from
@@ -942,6 +1019,9 @@ where
 	sys_permission.id {{.ne}} ""
 	and
 	sys_permission.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_role_app_fun_tree.tpl"] = `select
@@ -963,11 +1043,14 @@ where
     and sys_role_app_fun.role_id = "{{.role_id}}"
 {{end}}
     and sys_app_fun.del_flag = 0
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 {{if ne .name ""}}
     and sys_app_fun.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_role_in_role_cnt.tpl"] = `select
     count(distinct(role_id))
@@ -993,11 +1076,14 @@ where
     and sys_role_menu.role_id = "{{.role_id}}"
 {{end}}
     and sys_menu.del_flag = 0
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_role_page_count.tpl"] = `select
     count(*) records
@@ -1007,7 +1093,9 @@ where
 	sys_role.id {{.ne}} ""
 	and
 	sys_role.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_role_page_select.tpl"] = `select
     sys_role.id,
 	sys_role.name,
@@ -1019,6 +1107,9 @@ where
 	sys_role.id {{.ne}} ""
 	and
 	sys_role.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_tag_page_count.tpl"] = `select
@@ -1029,7 +1120,9 @@ where
 	sys_tag.id {{.ne}} ""
 	and
 	sys_tag.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_tag_page_select.tpl"] = `select
     sys_tag.id
 from
@@ -1038,6 +1131,9 @@ where
 	sys_tag.id {{.ne}} ""
 	and
 	sys_tag.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_tag_group_page_count.tpl"] = `select
@@ -1048,7 +1144,9 @@ where
 	sys_tag_group.id {{.ne}} ""
 	and
 	sys_tag_group.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_tag_group_page_select.tpl"] = `select
     sys_tag_group.id
 from
@@ -1057,6 +1155,9 @@ where
 	sys_tag_group.id {{.ne}} ""
 	and
 	sys_tag_group.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_tracker_page_count.tpl"] = `select
@@ -1067,7 +1168,9 @@ where
 	sys_tracker.id {{.ne}} ""
 	and
 	sys_tracker.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_tracker_page_select.tpl"] = `select
     sys_tracker.id,
 	sys_tracker.user_id,
@@ -1086,6 +1189,9 @@ where
 	and sys_tracker.domain = "{{.domain}}"
 	and sys_tracker.app_name = "{{.app_name}}"
 	and sys_tracker.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_user_org.tpl"] = `select
@@ -1093,7 +1199,7 @@ sys_org.name name,
 sys_org.id id
 from
     sys_org
-where del_flag=0
+where del_flag {{.ne}} 1
 {{if ne .oids ""}}
     and sys_org.id in ({{.oids}})
 {{else}}
@@ -1107,7 +1213,9 @@ where
 	sys_user.id {{.ne}} ""
 	and
 	sys_user.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_user_page_select.tpl"] = `select
     sys_user.id,
 	sys_user.name,
@@ -1121,6 +1229,9 @@ from
 where
 	sys_user.id {{.ne}} ""
 	and sys_user.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 {{if ne .org_id ""}}
 	and sys_user.org_id = "{{.org_id}}"
 {{end}}
@@ -1155,7 +1266,9 @@ where
 	sys_user_template.id {{.ne}} ""
 	and
 	sys_user_template.del_flag {{.ne}} 1
-`
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}`
 	SQLTPL["sys_user_template_page_select.tpl"] = `select
     sys_user_template.id
 from
@@ -1164,6 +1277,9 @@ where
 	sys_user_template.id {{.ne}} ""
 	and
 	sys_user_template.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
 }
