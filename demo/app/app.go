@@ -53,9 +53,13 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
-	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
-		return rg.engine.HandlerFunc(h)
-	}).([]pApp.HandlerFunc)...)
+	rh := rg.RouterGroup.Handle(
+		httpMethod,
+		relativePath,
+		funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
+			return rg.engine.HandlerFunc(h)
+		}).([]pApp.HandlerFunc)...)
+	return rh
 }
 
 // Auth middles
