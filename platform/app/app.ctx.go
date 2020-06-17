@@ -276,6 +276,21 @@ func (ctx *Context) OmitByZero(source interface{}) (target interface{}) {
 	return
 }
 
+// QueryRange defined
+func (ctx *Context) QueryRange(key string, init ...string) (string, string) {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) >= 2 {
+			return init[0], init[1]
+		}
+	}
+	values := strings.Split(v, ",")
+	if len(values) >= 2 {
+		return values[0], values[1]
+	}
+	return "", ""
+}
+
 // QueryInt defined
 func (ctx *Context) QueryInt(key string, init ...int) int {
 	v := ctx.Query(key)
@@ -436,6 +451,38 @@ func (q *Query) SetString(key string, init ...interface{}) func() {
 			q.m[key] = init[0]
 		} else {
 			q.m[key] = ""
+		}
+	}
+}
+
+// GetRange defined
+func (q *Query) GetRange(key string, init ...interface{}) (string, string) {
+	start, _ := q.m[fmt.Sprintf("%v_start", key)].(string)
+	end, _ := q.m[fmt.Sprintf("%v_end", key)].(string)
+	return start, end
+}
+
+// SetRange defined
+func (q *Query) SetRange(key string, init ...[]string) func() {
+	v := q.ctx.Query(key)
+	q.m[fmt.Sprintf("%v_start", key)] = ""
+	q.m[fmt.Sprintf("%v_end", key)] = ""
+	if strings.TrimSpace(v) == "" {
+		if len(init) >= 2 {
+			q.m[fmt.Sprintf("%v_start", key)] = init[0]
+			q.m[fmt.Sprintf("%v_end", key)] = init[1]
+		}
+	} else {
+		values := strings.Split(v, ",")
+		if len(values) >= 2 {
+			q.m[fmt.Sprintf("%v_start", key)] = values[0]
+			q.m[fmt.Sprintf("%v_end", key)] = values[1]
+		}
+	}
+	return func() {
+		if len(init) >= 2 {
+			q.m[fmt.Sprintf("%v_start", key)] = init[0]
+			q.m[fmt.Sprintf("%v_end", key)] = init[1]
 		}
 	}
 }
