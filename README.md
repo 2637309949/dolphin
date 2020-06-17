@@ -313,6 +313,41 @@ func SysClientPage(ctx *Context) {
 }
 ```
 
+#### Tree Example
+```xml
+<api name="page" func="page" table="sys_menu" desc="菜单分页查询" method="get">
+	<param name="page" type="int" value="1" desc="页码"/>
+	<param name="size" type="int"  value="15" desc="单页数"/>
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
+
+Generate code:
+
+```go
+// SysMenuTree api implementation
+// @Summary 菜单树形结构
+// @Tags 菜单
+// @Param Authorization header string false "认证令牌"
+// @Failure 403 {object} model.Fail
+// @Router /api/sys/menu/tree [get]
+func SysMenuTree(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetString("name")
+	q.SetRule("sys_menu_tree")
+	q.SetTags()
+	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
+	if err != nil {
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+```
+
 #### One Example
 ```xml
 <api name="get" func="one" table="sys_client" desc="获取客户端信息" method="get">
