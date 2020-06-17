@@ -23,7 +23,7 @@ import (
 // Note that this is not a standard OAuth flow, but rather an
 // optimization supported by a few Google services.
 // Unless you know otherwise, you should use JWTConfigFromJSON instead.
-func JWTAccessTokenSourceFromJSON(jsonKey []byte, audience string) (oauth2.TokenSource, error) {
+func JWTAccessTokenSourceFromJSON(jsonKey []byte, audience string) (xoauth2.TokenSource, error) {
 	cfg, err := JWTConfigFromJSON(jsonKey)
 	if err != nil {
 		return nil, fmt.Errorf("google: could not parse JSON key: %v", err)
@@ -42,7 +42,7 @@ func JWTAccessTokenSourceFromJSON(jsonKey []byte, audience string) (oauth2.Token
 	if err != nil {
 		return nil, err
 	}
-	return oauth2.ReuseTokenSource(tok, ts), nil
+	return xoauth2.ReuseTokenSource(tok, ts), nil
 }
 
 type jwtAccessTokenSource struct {
@@ -51,7 +51,7 @@ type jwtAccessTokenSource struct {
 	pkID            string
 }
 
-func (ts *jwtAccessTokenSource) Token() (*oauth2.Token, error) {
+func (ts *jwtAccessTokenSource) Token() (*xoauth2.Token, error) {
 	iat := time.Now()
 	exp := iat.Add(time.Hour)
 	cs := &jws.ClaimSet{
@@ -70,5 +70,5 @@ func (ts *jwtAccessTokenSource) Token() (*oauth2.Token, error) {
 	if err != nil {
 		return nil, fmt.Errorf("google: could not encode JWT: %v", err)
 	}
-	return &oauth2.Token{AccessToken: msg, TokenType: "Bearer", Expiry: exp}, nil
+	return &xoauth2.Token{AccessToken: msg, TokenType: "Bearer", Expiry: exp}, nil
 }

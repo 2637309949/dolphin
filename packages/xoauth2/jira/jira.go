@@ -52,13 +52,13 @@ type Config struct {
 	// Different than username (ex: /rest/api/2/user?username=alex)
 	Subject string
 
-	oauth2.Config
+	xoauth2.Config
 }
 
 // TokenSource returns a JWT TokenSource using the configuration
 // in c and the HTTP client from the provided context.
-func (c *Config) TokenSource(ctx context.Context) oauth2.TokenSource {
-	return oauth2.ReuseTokenSource(nil, jwtSource{ctx, c})
+func (c *Config) TokenSource(ctx context.Context) xoauth2.TokenSource {
+	return xoauth2.ReuseTokenSource(nil, jwtSource{ctx, c})
 }
 
 // Client returns an HTTP client wrapping the context's
@@ -67,7 +67,7 @@ func (c *Config) TokenSource(ctx context.Context) oauth2.TokenSource {
 //
 // The returned client and its Transport should not be modified.
 func (c *Config) Client(ctx context.Context) *http.Client {
-	return oauth2.NewClient(ctx, c.TokenSource(ctx))
+	return xoauth2.NewClient(ctx, c.TokenSource(ctx))
 }
 
 // jwtSource is a source that always does a signed JWT request for a token.
@@ -77,7 +77,7 @@ type jwtSource struct {
 	conf *Config
 }
 
-func (js jwtSource) Token() (*oauth2.Token, error) {
+func (js jwtSource) Token() (*xoauth2.Token, error) {
 	exp := time.Duration(59) * time.Second
 	claimSet := &ClaimSet{
 		Issuer:       fmt.Sprintf("urn:atlassian:connect:clientid:%s", js.conf.ClientID),
@@ -108,7 +108,7 @@ func (js jwtSource) Token() (*oauth2.Token, error) {
 	v.Set("assertion", string(assertion))
 
 	// Fetch access token from auth server
-	hc := oauth2.NewClient(js.ctx, nil)
+	hc := xoauth2.NewClient(js.ctx, nil)
 	resp, err := hc.PostForm(js.conf.Endpoint.TokenURL, v)
 	if err != nil {
 		return nil, fmt.Errorf("oauth2: cannot fetch token: %v", err)
@@ -131,7 +131,7 @@ func (js jwtSource) Token() (*oauth2.Token, error) {
 	if err := json.Unmarshal(body, &tokenRes); err != nil {
 		return nil, fmt.Errorf("oauth2: cannot fetch token: %v", err)
 	}
-	token := &oauth2.Token{
+	token := &xoauth2.Token{
 		AccessToken: tokenRes.AccessToken,
 		TokenType:   tokenRes.TokenType,
 	}

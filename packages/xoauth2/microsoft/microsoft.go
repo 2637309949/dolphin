@@ -4,27 +4,26 @@
 
 // Package microsoft provides constants for using OAuth2 to access Windows Live ID.
 package microsoft // import "github.com/2637309949/dolphin/packages/xoauth2/microsoft"
-
 import (
 	"github.com/2637309949/dolphin/packages/xoauth2"
 )
 
 // LiveConnectEndpoint is Windows's Live ID OAuth 2.0 endpoint.
-var LiveConnectEndpoint = oauth2.Endpoint{
+var LiveConnectEndpoint = xoauth2.Endpoint{
 	AuthURL:  "https://login.live.com/oauth20_authorize.srf",
 	TokenURL: "https://login.live.com/oauth20_token.srf",
 }
 
-// AzureADEndpoint returns a new oauth2.Endpoint for the given tenant at Azure Active Directory.
+// AzureADEndpoint returns a new xoauth2.Endpoint for the given tenant at Azure Active Directory.
 // If tenant is empty, it uses the tenant called `common`.
 //
 // For more information see:
 // https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-v2-protocols#endpoints
-func AzureADEndpoint(tenant string) oauth2.Endpoint {
+func AzureADEndpoint(tenant string) xoauth2.Endpoint {
 	if tenant == "" {
 		tenant = "common"
 	}
-	return oauth2.Endpoint{
+	return xoauth2.Endpoint{
 		AuthURL:  "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/authorize",
 		TokenURL: "https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/token",
 	}

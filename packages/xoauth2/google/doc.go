@@ -14,7 +14,7 @@
 //
 // OAuth2 Configs
 //
-// Two functions in this package return github.com/2637309949/dolphin/packages/xoauth2.Config values from Google credential
+// Two functions in this package return github.com/2637309949/dolphin/packages/xxoauth2.Config values from Google credential
 // data. Google supports two JSON formats for OAuth2 credentials: one is handled by ConfigFromJSON,
 // the other by JWTConfigFromJSON. The returned Config can be used to obtain a TokenSource or
 // create an http.Client.
@@ -30,11 +30,11 @@
 // will call AppEngineTokenSource or ComputeTokenSource as needed.
 //
 // DefaultClient and DefaultTokenSource are convenience methods. They first call FindDefaultCredentials,
-// then use the credentials to construct an http.Client or an oauth2.TokenSource.
+// then use the credentials to construct an http.Client or an xoauth2.TokenSource.
 //
 // Use CredentialsFromJSON to obtain credentials from either of the two JSON formats
 // described in OAuth2 Configs, above. The TokenSource in the returned value is the
-// same as the one obtained from the oauth2.Config returned from ConfigFromJSON or
+// same as the one obtained from the xoauth2.Config returned from ConfigFromJSON or
 // JWTConfigFromJSON, but the Credentials may contain additional information
 // that is useful is some circumstances.
 package google // import "github.com/2637309949/dolphin/packages/xoauth2/google"

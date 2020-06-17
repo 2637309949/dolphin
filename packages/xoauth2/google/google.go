@@ -19,14 +19,14 @@ import (
 )
 
 // Endpoint is Google's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:   "https://accounts.google.com/o/oauth2/auth",
-	TokenURL:  "https://oauth2.googleapis.com/token",
-	AuthStyle: oauth2.AuthStyleInParams,
+	TokenURL:  "https://xoauth2.googleapis.com/token",
+	AuthStyle: xoauth2.AuthStyleInParams,
 }
 
 // JWTTokenURL is Google's OAuth 2.0 token URL to use with the JWT flow.
-const JWTTokenURL = "https://oauth2.googleapis.com/token"
+const JWTTokenURL = "https://xoauth2.googleapis.com/token"
 
 // ConfigFromJSON uses a Google Developers Console client_credentials.json
 // file to construct a config.
@@ -34,7 +34,7 @@ const JWTTokenURL = "https://oauth2.googleapis.com/token"
 // https://console.developers.google.com, under "Credentials". Download the Web
 // application credentials in the JSON format and provide the contents of the
 // file as jsonKey.
-func ConfigFromJSON(jsonKey []byte, scope ...string) (*oauth2.Config, error) {
+func ConfigFromJSON(jsonKey []byte, scope ...string) (*xoauth2.Config, error) {
 	type cred struct {
 		ClientID     string   `json:"client_id"`
 		ClientSecret string   `json:"client_secret"`
@@ -61,12 +61,12 @@ func ConfigFromJSON(jsonKey []byte, scope ...string) (*oauth2.Config, error) {
 	if len(c.RedirectURIs) < 1 {
 		return nil, errors.New("oauth2/google: missing redirect URL in the client_credentials.json")
 	}
-	return &oauth2.Config{
+	return &xoauth2.Config{
 		ClientID:     c.ClientID,
 		ClientSecret: c.ClientSecret,
 		RedirectURL:  c.RedirectURIs[0],
 		Scopes:       scope,
-		Endpoint: oauth2.Endpoint{
+		Endpoint: xoauth2.Endpoint{
 			AuthURL:  c.AuthURI,
 			TokenURL: c.TokenURI,
 		},
@@ -127,19 +127,19 @@ func (f *credentialsFile) jwtConfig(scopes []string) *jwt.Config {
 	return cfg
 }
 
-func (f *credentialsFile) tokenSource(ctx context.Context, scopes []string) (oauth2.TokenSource, error) {
+func (f *credentialsFile) tokenSource(ctx context.Context, scopes []string) (xoauth2.TokenSource, error) {
 	switch f.Type {
 	case serviceAccountKey:
 		cfg := f.jwtConfig(scopes)
 		return cfg.TokenSource(ctx), nil
 	case userCredentialsKey:
-		cfg := &oauth2.Config{
+		cfg := &xoauth2.Config{
 			ClientID:     f.ClientID,
 			ClientSecret: f.ClientSecret,
 			Scopes:       scopes,
 			Endpoint:     Endpoint,
 		}
-		tok := &oauth2.Token{RefreshToken: f.RefreshToken}
+		tok := &xoauth2.Token{RefreshToken: f.RefreshToken}
 		return cfg.TokenSource(ctx, tok), nil
 	case "":
 		return nil, errors.New("missing 'type' field in credentials")
@@ -155,8 +155,8 @@ func (f *credentialsFile) tokenSource(ctx context.Context, scopes []string) (oau
 // If no scopes are specified, a set of default scopes are automatically granted.
 // Further information about retrieving access tokens from the GCE metadata
 // server can be found at https://cloud.google.com/compute/docs/authentication.
-func ComputeTokenSource(account string, scope ...string) oauth2.TokenSource {
-	return oauth2.ReuseTokenSource(nil, computeSource{account: account, scopes: scope})
+func ComputeTokenSource(account string, scope ...string) xoauth2.TokenSource {
+	return xoauth2.ReuseTokenSource(nil, computeSource{account: account, scopes: scope})
 }
 
 type computeSource struct {
@@ -164,7 +164,7 @@ type computeSource struct {
 	scopes  []string
 }
 
-func (cs computeSource) Token() (*oauth2.Token, error) {
+func (cs computeSource) Token() (*xoauth2.Token, error) {
 	if !metadata.OnGCE() {
 		return nil, errors.New("oauth2/google: can't get a token from the metadata service; not running on GCE")
 	}
@@ -194,7 +194,7 @@ func (cs computeSource) Token() (*oauth2.Token, error) {
 	if res.ExpiresInSec == 0 || res.AccessToken == "" {
 		return nil, fmt.Errorf("oauth2/google: incomplete token received from metadata")
 	}
-	tok := &oauth2.Token{
+	tok := &xoauth2.Token{
 		AccessToken: res.AccessToken,
 		TokenType:   res.TokenType,
 		Expiry:      time.Now().Add(time.Duration(res.ExpiresInSec) * time.Second),
@@ -203,7 +203,7 @@ func (cs computeSource) Token() (*oauth2.Token, error) {
 	// This is needed for detection by client libraries to know that credentials come from the metadata server.
 	// This may be removed in a future version of this library.
 	return tok.WithExtra(map[string]interface{}{
-		"oauth2.google.tokenSource":    "compute-metadata",
-		"oauth2.google.serviceAccount": acct,
+		"xoauth2.google.tokenSource":    "compute-metadata",
+		"xoauth2.google.serviceAccount": acct,
 	}), nil
 }

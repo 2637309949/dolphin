@@ -14,7 +14,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/2637309949/dolphin/packages/xoauth2"
 	"google.golang.org/appengine"
 )
 
@@ -24,7 +23,7 @@ func init() {
 }
 
 // See comment on AppEngineTokenSource in appengine.go.
-func appEngineTokenSource(ctx context.Context, scope ...string) oauth2.TokenSource {
+func appEngineTokenSource(ctx context.Context, scope ...string) xoauth2.TokenSource {
 	scopes := append([]string{}, scope...)
 	sort.Strings(scopes)
 	return &gaeTokenSource{
@@ -42,7 +41,7 @@ var (
 
 type tokenLock struct {
 	mu sync.Mutex // guards t; held while fetching or updating t
-	t  *oauth2.Token
+	t  *xoauth2.Token
 }
 
 type gaeTokenSource struct {
@@ -51,7 +50,7 @@ type gaeTokenSource struct {
 	key    string // to aeTokens map; space-separated scopes
 }
 
-func (ts *gaeTokenSource) Token() (*oauth2.Token, error) {
+func (ts *gaeTokenSource) Token() (*xoauth2.Token, error) {
 	aeTokensMu.Lock()
 	tok, ok := aeTokens[ts.key]
 	if !ok {
@@ -69,7 +68,7 @@ func (ts *gaeTokenSource) Token() (*oauth2.Token, error) {
 	if err != nil {
 		return nil, err
 	}
-	tok.t = &oauth2.Token{
+	tok.t = &xoauth2.Token{
 		AccessToken: access,
 		Expiry:      exp,
 	}

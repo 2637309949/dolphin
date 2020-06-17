@@ -14,15 +14,15 @@ import (
 )
 
 // Endpoint is HipChat's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://www.hipchat.com/users/authorize",
 	TokenURL: "https://api.hipchat.com/v2/oauth/token",
 }
 
-// ServerEndpoint returns a new oauth2.Endpoint for a HipChat Server instance
+// ServerEndpoint returns a new xoauth2.Endpoint for a HipChat Server instance
 // running on the given domain or host.
-func ServerEndpoint(host string) oauth2.Endpoint {
-	return oauth2.Endpoint{
+func ServerEndpoint(host string) xoauth2.Endpoint {
+	return xoauth2.Endpoint{
 		AuthURL:  "https://" + host + "/users/authorize",
 		TokenURL: "https://" + host + "/v2/oauth/token",
 	}

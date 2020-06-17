@@ -10,7 +10,7 @@ import (
 )
 
 // Endpoint is the Yandex OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://oauth.yandex.com/authorize",
 	TokenURL: "https://oauth.yandex.com/token",
 }

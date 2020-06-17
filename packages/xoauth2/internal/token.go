@@ -27,9 +27,9 @@ import (
 // the requests to access protected resources on the OAuth 2.0
 // provider's backend.
 //
-// This type is a mirror of oauth2.Token and exists to break
+// This type is a mirror of xoauth2.Token and exists to break
 // an otherwise-circular dependency. Other internal packages
-// should convert this Token into an oauth2.Token before use.
+// should convert this Token into an xoauth2.Token before use.
 type Token struct {
 	// AccessToken is the token that authorizes and authenticates
 	// the requests.

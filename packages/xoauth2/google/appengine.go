@@ -21,7 +21,7 @@ var appengineAppIDFunc func(c context.Context) string
 // the current application's service account or from the metadata server,
 // depending on the App Engine environment. See below for environment-specific
 // details. If you are implementing a 3-legged OAuth 2.0 flow on App Engine that
-// involves user accounts, see oauth2.Config instead.
+// involves user accounts, see xoauth2.Config instead.
 //
 // First generation App Engine runtimes (<= Go 1.9):
 // AppEngineTokenSource returns a token source that fetches tokens issued to the
@@ -33,6 +33,6 @@ var appengineAppIDFunc func(c context.Context) string
 // flexible environment. It delegates to ComputeTokenSource, and the provided
 // context and scopes are not used. Please use DefaultTokenSource (or ComputeTokenSource,
 // which DefaultTokenSource will use in this case) instead.
-func AppEngineTokenSource(ctx context.Context, scope ...string) oauth2.TokenSource {
+func AppEngineTokenSource(ctx context.Context, scope ...string) xoauth2.TokenSource {
 	return appEngineTokenSource(ctx, scope...)
 }

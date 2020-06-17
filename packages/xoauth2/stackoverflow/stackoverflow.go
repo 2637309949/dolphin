@@ -10,7 +10,7 @@ import (
 )
 
 // Endpoint is Stack Overflow's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://stackoverflow.com/oauth",
 	TokenURL: "https://stackoverflow.com/oauth/access_token",
 }

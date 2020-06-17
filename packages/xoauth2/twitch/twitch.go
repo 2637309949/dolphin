@@ -13,7 +13,7 @@ import (
 //
 // For more information see:
 // https://dev.twitch.tv/docs/authentication
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://id.twitch.tv/oauth2/authorize",
 	TokenURL: "https://id.twitch.tv/oauth2/token",
 }

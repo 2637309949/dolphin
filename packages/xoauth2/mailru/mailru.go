@@ -10,7 +10,7 @@ import (
 )
 
 // Endpoint is Mail.Ru's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://o2.mail.ru/login",
 	TokenURL: "https://o2.mail.ru/token",
 }

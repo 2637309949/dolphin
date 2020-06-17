@@ -10,7 +10,7 @@ import (
 )
 
 // Endpoint is Kakao's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://kauth.kakao.com/oauth/authorize",
 	TokenURL: "https://kauth.kakao.com/oauth/token",
 }

@@ -41,8 +41,8 @@ type sdkCredentials struct {
 // An SDKConfig provides access to tokens from an account already
 // authorized via the Google Cloud SDK.
 type SDKConfig struct {
-	conf         oauth2.Config
-	initialToken *oauth2.Token
+	conf         xoauth2.Config
+	initialToken *xoauth2.Token
 }
 
 // NewSDKConfig creates an SDKConfig for the given Google Cloud SDK
@@ -102,14 +102,14 @@ func NewSDKConfig(account string) (*SDKConfig, error) {
 				expiry = *d.Credential.TokenExpiry
 			}
 			return &SDKConfig{
-				conf: oauth2.Config{
+				conf: xoauth2.Config{
 					ClientID:     d.Credential.ClientID,
 					ClientSecret: d.Credential.ClientSecret,
 					Scopes:       strings.Split(d.Key.Scope, " "),
 					Endpoint:     Endpoint,
 					RedirectURL:  "oob",
 				},
-				initialToken: &oauth2.Token{
+				initialToken: &xoauth2.Token{
 					AccessToken:  d.Credential.AccessToken,
 					RefreshToken: d.Credential.RefreshToken,
 					Expiry:       expiry,
@@ -127,18 +127,18 @@ func NewSDKConfig(account string) (*SDKConfig, error) {
 // modified.
 func (c *SDKConfig) Client(ctx context.Context) *http.Client {
 	return &http.Client{
-		Transport: &oauth2.Transport{
+		Transport: &xoauth2.Transport{
 			Source: c.TokenSource(ctx),
 		},
 	}
 }
 
-// TokenSource returns an oauth2.TokenSource that retrieve tokens from
+// TokenSource returns an xoauth2.TokenSource that retrieve tokens from
 // Google Cloud SDK credentials using the provided context.
 // It will returns the current access token stored in the credentials,
 // and refresh it when it expires, but it won't update the credentials
 // with the new access token.
-func (c *SDKConfig) TokenSource(ctx context.Context) oauth2.TokenSource {
+func (c *SDKConfig) TokenSource(ctx context.Context) xoauth2.TokenSource {
 	return c.conf.TokenSource(ctx, c.initialToken)
 }
 

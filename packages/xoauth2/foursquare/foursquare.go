@@ -10,7 +10,7 @@ import (
 )
 
 // Endpoint is Foursquare's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://foursquare.com/oauth2/authorize",
 	TokenURL: "https://foursquare.com/oauth2/access_token",
 }

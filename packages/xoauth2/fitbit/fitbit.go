@@ -10,7 +10,7 @@ import (
 )
 
 // Endpoint is the Fitbit API's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://www.fitbit.com/oauth2/authorize",
 	TokenURL: "https://api.fitbit.com/oauth2/token",
 }

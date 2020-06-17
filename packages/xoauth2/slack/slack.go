@@ -10,7 +10,7 @@ import (
 )
 
 // Endpoint is Slack's OAuth 2.0 endpoint.
-var Endpoint = oauth2.Endpoint{
+var Endpoint = xoauth2.Endpoint{
 	AuthURL:  "https://slack.com/oauth/authorize",
 	TokenURL: "https://slack.com/api/oauth.access",
 }
