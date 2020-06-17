@@ -23,6 +23,64 @@ time="2020/06/13 11:55:58" level=info msg="grpc listen on port:9081"
 time="2020/06/13 11:55:58" level=info msg="http listen on port:8082"
 ```
 
+## Directory structure
+> The quasi-directory structure of the project is shown below， The project structure has been simplified as a guideline, such as managing large-scale projects and recommending new sub-projects
+
+```sh
+.
+├── app
+│   ├── app.auto.go
+│   ├── app.go
+│   └── article.go
+├── app.properties
+├── doc
+│   └── swagger.yaml
+├── go.mod
+├── go.sum
+├── log
+│   ├── demo.2020061200
+│   └── demo.2020061300
+├── main.go
+├── model
+│   ├── article.auto.go
+│   └── article_info.auto.go
+├── script
+│   ├── apis
+│   │   ├── article.js
+│   │   └── index.js
+│   └── axios.js
+├── sql
+│   ├── article
+│   │   ├── article_page_count.tpl
+│   │   └── article_page_select.tpl
+│   └── sqlmap
+│       └── article.xml
+├── srv
+│   └── article.go
+├── static
+│   ├── files
+│   │   ├── 0528982f-2531-45c3-bd0b-8b52a8d15454.xlsx
+│   │   ├── 0c16c28b-d253-43ab-b7d7-8f02c042d7e1.xlsx
+│   │   ├── 2083ac01-9bd1-4954-84b4-4f5fcfdfc509.xlsx
+│   │   ├── debfe91b-e5d5-4a25-800e-32d6a4eb288c.xlsx
+│   │   ├── e314d20b-0c01-4c75-9052-520f36599bc7.xlsx
+│   │   ├── e44aa97e-fa14-4cbe-bd08-4f2049f3681f.xlsx
+│   │   └── f18d6794-2b34-40bf-a4f0-c3a85b0d4b4e.xlsx
+│   └── web
+│       ├── affirm.html
+│       └── login.html
+├── util
+│   └── tool.go
+└── xml
+    ├── application.xml
+    ├── bean
+    │   └── article_info.xml
+    ├── controller
+    │   └── article.xml
+    └── table
+        └── article.xml
+```
+
 ## Features
 
 ```
