@@ -2,7 +2,7 @@
 
 <img align="right" width="159px" src="./assets/dolphin.jpeg">
 
-Dolphin is a code generate tools and web Framework written in Go (Golang)
+Dolphin is a code generate tools and web Framework written in Go (Golang), Will reduce the repetitive workload of adding, deleting, revising, and conducting inspections
 
 
 # Contents
