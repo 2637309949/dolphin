@@ -27,6 +27,9 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
             - [one example](#one-example)
             - [other example](#other-example)
         - [table](#table)
+    - [Domain](#domain)
+        - [app_name](#app_name)
+        - [domain](#domain)
 
 <!-- /TOC -->
 
@@ -603,3 +606,42 @@ column
 | desc |    column desc  |
 | type | column type |
 | xorm | xorm tag, please refer to XORM for details |
+
+## Domain
+> Domain, a model of multi-tenant support core. Application splitting is also supported.
+
+```xml
+<table name="sys_domain" packages="xx/null" bind="platform">
+	<column name="id" type="null.String" xorm="varchar(36) notnull unique pk" />
+	<column name="name" type="null.String" xorm="varchar(36) notnull" />
+	<column name="app_name" type="null.String" xorm="varchar(36) notnull" />
+	<column name="domain" type="null.String" xorm="varchar(36) notnull" />
+	<column name="full_name" type="null.String" xorm="varchar(36)" />
+	<column name="contact_name" type="null.String" xorm="varchar(36)" />
+	<column name="contact_email" type="null.String" xorm="varchar(50) " />
+	<column name="contact_mobile" type="null.String" xorm="varchar(50) " />
+	<column name="data_source" type="null.String" xorm="varchar(200) notnull" />
+	<column name="driver_name" type="null.String" xorm="varchar(50) notnull" />
+	<column name="login_url" type="null.String" xorm="varchar(200)" />
+	<column name="api_url" type="null.String" xorm="varchar(200)" />
+	<column name="static_url" type="null.String" xorm="varchar(200)" />
+	<column name="theme" type="null.String" xorm="varchar(50) " />
+	<column name="type" type="null.Int" xorm="notnull" />
+	<column name="status" type="null.Int" xorm="notnull" />
+	<column name="auth_mode" type="null.Int" xorm="notnull" />
+	<column name="sync_flag" type="null.Int" xorm="notnull" />
+
+	<column name="create_by" type="null.String" xorm="varchar(36) notnull" />
+	<column name="create_time" type="null.Time" xorm="datetime notnull" />
+	<column name="update_by" type="null.String" xorm="varchar(36) notnull" />
+	<column name="update_time" type="null.Time" xorm="datetime notnull" />
+	<column name="del_flag" type="null.Int" xorm="notnull" />
+	<column name="remark" type="null.String" xorm="varchar(200)" />
+</table>
+```
+
+### app_name
+> app_name, desynchronize the model as a tag. if you connect same datasource url from localhost, and you would find all tables in `data_source` of same app_name datasource would be created
+
+### domain
+> Identify different tenants
