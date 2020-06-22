@@ -670,5 +670,5 @@ func Auth(ctx *Context) {
 if you want to get datasource of `xxx`, you can do the following.
 
 ```go
-App.Manager.GetBusinessDB("xxx");
+App.Manager.GetBusinessDB("xxx")
 ```
