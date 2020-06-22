@@ -644,4 +644,31 @@ column
 > app_name, desynchronize the model as a tag. if you connect same datasource url from localhost, and you would find all tables in `data_source` of same app_name datasource would be created
 
 ### domain
-> Identify different tenants, The logged in user will use the matching domain to find the DB
+> Identify different tenants, the logged in user will use the matching domain to find the DB
+
+As shown in the code below
+
+```go
+// Auth middles
+func Auth(ctx *Context) {
+	if !ctx.Auth(ctx.Request) {
+		ctx.Fail(util.ErrInvalidAccessToken, 401)
+		ctx.Abort()
+		return
+	}
+	if ctx.DB = ctx.engine.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
+		ctx.Fail(util.ErrInvalidDomain)
+		ctx.Abort()
+		return
+	}
+	ctx.Set("DB", ctx.DB)
+	ctx.Set("AuthInfo", ctx.AuthInfo)
+	ctx.Next()
+}
+```
+
+if you want to get datasource of `xxx`, you can do the following.
+
+```go
+App.Manager.GetBusinessDB("xxx");
+```
