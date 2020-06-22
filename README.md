@@ -18,14 +18,14 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [application](#application)
         - [bean](#bean)
         - [controller](#controller)
-        - [api](#api)
-            - [Add Example](#add-example)
-            - [Delete Example](#delete-example)
-            - [Update Example](#update-example)
-            - [Page Example](#page-example)
-            - [Tree Example](#tree-example)
-            - [One Example](#one-example)
-            - [Other Example](#other-example)
+        - [api example](#api-example)
+            - [add example](#add-example)
+            - [delete example](#delete-example)
+            - [update example](#update-example)
+            - [page example](#page-example)
+            - [tree example](#tree-example)
+            - [one example](#one-example)
+            - [other example](#other-example)
         - [table](#table)
 
 <!-- /TOC -->
@@ -222,10 +222,10 @@ controller
 | prefix |    controller desc  |
 
 
-### api
+### api example
 > api, api func in controller. we has some built-in func such as 'add', 'delete', 'update', 'page', 'get', 'tree', or you can refined if you need.
 
-#### Add Example
+#### add example
 ```xml
 <api name="add" func="add" table="sys_client" desc="添加客户端" method="post">
     <param name="user" type="$sys_client" desc="客户端信息" />
@@ -271,7 +271,7 @@ func SysClientAdd(ctx *Context) {
 }
 ```
 
-#### Delete Example
+#### delete example
 ```xml
 <api name="del" func="delete" table="sys_client" desc="删除客户端" method="delete">
     <param name="sys_client" type="$sys_client" desc="客户端" />
@@ -314,7 +314,7 @@ func SysClientDel(ctx *Context) {
 }
 ```
 
-#### Update Example
+#### update example
 ```xml
 <api name="update" func="update" table="sys_client" desc="更新客户端" method="put">
     <param name="user" type="$sys_role" desc="客户端信息" />
@@ -355,7 +355,7 @@ func SysClientUpdate(ctx *Context) {
 }
 ```
 
-#### Page Example
+#### page example
 ```xml
 <api name="page" func="page" table="sys_client" desc="客户端分页查询" method="get">
     <param name="page" type="int" value="1" desc="页码"/>
@@ -396,7 +396,7 @@ func SysClientPage(ctx *Context) {
 }
 ```
 
-#### Tree Example
+#### tree example
 ```xml
 <api name="page" func="page" table="sys_menu" desc="菜单分页查询" method="get">
 	<param name="page" type="int" value="1" desc="页码"/>
@@ -431,7 +431,7 @@ func SysMenuTree(ctx *Context) {
 }
 ```
 
-#### One Example
+#### one example
 ```xml
 <api name="get" func="one" table="sys_client" desc="获取客户端信息" method="get">
     <param name="id" type="string" desc="客户端id" />
@@ -466,7 +466,7 @@ func SysClientGet(ctx *Context) {
 }
 ```
 
-#### Other Example
+#### other example
 ```xml
 <api name="payment" method="post" desc="文章付费">
 	<param name="article" type="$article_info" desc="文章"/>
