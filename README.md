@@ -644,4 +644,4 @@ column
 > app_name, desynchronize the model as a tag. if you connect same datasource url from localhost, and you would find all tables in `data_source` of same app_name datasource would be created
 
 ### domain
-> Identify different tenants
+> Identify different tenants, The logged in user will use the matching domain to find the DB
