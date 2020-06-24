@@ -727,6 +727,52 @@ func SysWechatRoutes(engine *Engine) {
 // SysWechatInstance defined
 var SysWechatInstance = NewSysWechat()
 
+// SysWorker defined
+type SysWorker struct {
+	Add,
+	Del,
+	Get func(ctx *Context)
+}
+
+// NewSysWorker defined
+func NewSysWorker() *SysWorker {
+	ctr := &SysWorker{}
+	ctr.Add = SysWorkerAdd
+	ctr.Del = SysWorkerDel
+	ctr.Get = SysWorkerGet
+	return ctr
+}
+
+// SysWorkerRoutes defined
+func SysWorkerRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/worker/add", Auth, SysWorkerInstance.Add)
+	group.Handle("DELETE", "/sys/worker/del", Auth, SysWorkerInstance.Del)
+	group.Handle("GET", "/sys/worker/get", Auth, SysWorkerInstance.Get)
+}
+
+// SysWorkerInstance defined
+var SysWorkerInstance = NewSysWorker()
+
+// Executor defined
+type Executor []func() error
+
+// Add defined
+func (act *Executor) Add(i func() error) *Executor {
+	*act = append(*act, i)
+	return act
+}
+
+// Execute defined
+func (act *Executor) Execute() error {
+	for _, v := range *act {
+		if err := v(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // SyncModels defined
 func SyncModels() error {
 	mseti := App.Manager.MSet()
@@ -785,37 +831,15 @@ func SyncCtr() error {
 	SysUserRoutes(App)
 	SysUserTemplateRoutes(App)
 	SysWechatRoutes(App)
+	SysWorkerRoutes(App)
 	return nil
-}
-
-// Executor defined
-type Executor []func() error
-
-// Add defined
-func (act *Executor) Add(i ...func() error) *Executor {
-	*act = append(*act, i...)
-	return act
-}
-
-// Execute defined
-func (act *Executor) Execute() error {
-	for _, v := range *act {
-		if err := v(); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// NewExecutor defined
-func NewExecutor(i ...func() error) *Executor {
-	e := &Executor{}
-	e.Add(i...)
-	return e
 }
 
 // ExecutorInstance defined
-var ExecutorInstance = NewExecutor(SyncModels, SyncCtr)
+var ExecutorInstance = &Executor{
+	SyncModels,
+	SyncCtr,
+}
 
 func init() {
 	if err := ExecutorInstance.Execute(); err != nil {

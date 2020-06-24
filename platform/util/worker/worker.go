@@ -75,19 +75,9 @@ func (d *Dispatcher) AddJob(j Job) {
 	d.JobQueue <- j
 }
 
-// Payload For example usage
-type Payload interface {
+// Job defined
+type Job interface {
 	Do() (err error)
-}
-
-// Job represents the job to be run
-type Job struct {
-	Payload Payload
-}
-
-// NewJob represents the job
-func NewJob(payload Payload) Job {
-	return Job{Payload: payload}
 }
 
 // Worker represents the worker that executes the job
@@ -113,7 +103,7 @@ func (w Worker) Start() {
 			w.WorkerPool <- w.JobChannel
 			select {
 			case job := <-w.JobChannel:
-				if err := job.Payload.Do(); err != nil {
+				if err := job.Do(); err != nil {
 					logrus.Errorf("Error do payload function:%v", err.Error())
 				}
 			case <-w.quit:

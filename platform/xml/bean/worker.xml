@@ -1,0 +1,9 @@
+<bean name="worker" desc="work表单">
+    <prop name="name" desc="名称" type="string" json="name,omitempty"/>
+    <prop name="code" desc="编码" type="string" json="code,omitempty"/>
+    <prop name="status" desc="状态" type="int" json="status,omitempty"/>
+    <prop name="payload" desc="表单" type="interface{}" json="payload,omitempty"/>
+    <prop name="files" desc="文件" type="[]string" json="files,omitempty"/>
+    <prop name="result" desc="结果" type="interface{}" json="result,omitempty"/>
+    <prop name="user" desc="用户" type="$sys_user" json="user,omitempty"/>
+</bean>

@@ -99,6 +99,7 @@ func SysAttachmentUpload(ctx *Context) {
 		}
 		attachments = append(attachments, item)
 		attachs = append(attachs, model.Attach{
+			ID:   item.ID.String,
 			Name: item.Name.String,
 			Hash: item.Hash.String,
 			URL:  item.URL.String,
