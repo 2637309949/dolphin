@@ -170,7 +170,7 @@ func Auth(ctx *Context) {
 		ctx.Abort()
 		return
 	}
-	if ctx.DB = ctx.engine.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
+	if ctx.DB = App.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
 		ctx.Fail(util.ErrInvalidDomain)
 		ctx.Abort()
 		return
