@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 )
@@ -22,11 +23,13 @@ import (
 func SysSchedulingAdd(ctx *Context) {
 	var payload model.Scheduling
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 	ret, err := srv.SysSchedulingAction(payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -46,11 +49,13 @@ func SysSchedulingAdd(ctx *Context) {
 func SysSchedulingDel(ctx *Context) {
 	var payload model.Scheduling
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 	ret, err := srv.SysSchedulingAction(payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -70,11 +75,13 @@ func SysSchedulingDel(ctx *Context) {
 func SysSchedulingUpdate(ctx *Context) {
 	var payload model.Scheduling
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 	ret, err := srv.SysSchedulingAction(payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -97,6 +104,7 @@ func SysSchedulingPage(ctx *Context) {
 	q.SetInt("size", 15)
 	ret, err := srv.SysSchedulingAction(q)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -117,6 +125,7 @@ func SysSchedulingGet(ctx *Context) {
 	q.SetString("id")
 	ret, err := srv.SysSchedulingAction(q)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

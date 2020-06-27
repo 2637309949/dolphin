@@ -12,16 +12,6 @@ module.exports.add = (data) => {
   })
 }
 
-// del 删除worker
-module.exports.del = (data) => {
-  const url = '/api/sys/worker/del'
-  return axios({
-    url: url,
-    method: 'delete',
-    data
-  })
-}
-
 // get 获取worker信息
 module.exports.get = (data) => {
   let url = '/api/sys/worker/get?'

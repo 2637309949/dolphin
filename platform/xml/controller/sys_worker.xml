@@ -6,13 +6,6 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="del" method="delete" desc="删除worker">
-        <param name="id" type="string" desc="workerid" />
-        <return>
-            <success type="$success"/>
-            <failure type="$fail"/>
-        </return>
-    </api>
     <api name="get" method="get" desc="获取worker信息">
         <param name="code" type="string" desc="worker code" />
         <return>

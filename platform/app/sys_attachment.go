@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/packages/uuid"
@@ -31,6 +32,7 @@ import (
 func SysAttachmentAdd(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -42,6 +44,7 @@ func SysAttachmentAdd(ctx *Context) {
 	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -106,6 +109,7 @@ func SysAttachmentUpload(ctx *Context) {
 		})
 	}
 	if _, err = ctx.DB.Insert(attachments); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -144,6 +148,7 @@ func SysAttachmentExport(ctx *Context) {
 func SysAttachmentDel(ctx *Context) {
 	var payload model.SysAttachment
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -153,6 +158,7 @@ func SysAttachmentDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -172,6 +178,7 @@ func SysAttachmentDel(ctx *Context) {
 func SysAttachmentUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -179,6 +186,7 @@ func SysAttachmentUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -203,6 +211,7 @@ func SysAttachmentPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_attachment", "page", "sys_attachment", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -223,6 +232,7 @@ func SysAttachmentGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

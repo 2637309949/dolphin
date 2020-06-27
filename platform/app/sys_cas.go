@@ -280,6 +280,7 @@ func SysCasCheck(ctx *Context) {
 	q.SetString("openid")
 	ret, err := srv.SysCasAction(q)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -301,6 +302,7 @@ func SysCasProfile(ctx *Context) {
 		"user_id": user.ID.String,
 	}).Find(&roles)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/platform/model"
@@ -25,6 +26,7 @@ import (
 func SysOptionsetAdd(ctx *Context) {
 	var payload model.SysOptionset
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -36,6 +38,7 @@ func SysOptionsetAdd(ctx *Context) {
 	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -55,6 +58,7 @@ func SysOptionsetAdd(ctx *Context) {
 func SysOptionsetDel(ctx *Context) {
 	var payload model.SysOptionset
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -64,6 +68,7 @@ func SysOptionsetDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -83,6 +88,7 @@ func SysOptionsetDel(ctx *Context) {
 func SysOptionsetUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -90,6 +96,7 @@ func SysOptionsetUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -114,6 +121,7 @@ func SysOptionsetPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_optionset", "page", "sys_optionset", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -149,6 +157,7 @@ func SysOptionsetGet(ctx *Context) {
 	}
 	_, err := ctx.DB.SQL(sql).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

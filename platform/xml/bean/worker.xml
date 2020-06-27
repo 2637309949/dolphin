@@ -5,5 +5,6 @@
     <prop name="payload" desc="表单" type="interface{}" json="payload,omitempty"/>
     <prop name="files" desc="文件" type="[]string" json="files,omitempty"/>
     <prop name="result" desc="结果" type="interface{}" json="result,omitempty"/>
+    <prop name="error" desc="错误信息" type="interface{}" json="error,omitempty"/>
     <prop name="user" desc="用户" type="$sys_user" json="user,omitempty"/>
 </bean>

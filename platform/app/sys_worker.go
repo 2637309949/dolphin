@@ -5,19 +5,16 @@ package app
 
 import (
 	"encoding/json"
-	"time"
 
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/uuid"
 )
 
 // Job defined
-type Job struct {
-	model.Worker
-}
+type Job model.Worker
 
 // Do do something
 func (p Job) Do() error {
@@ -27,9 +24,11 @@ func (p Job) Do() error {
 		err error
 	)
 	if bs, err = json.Marshal(&p); err != nil {
+		logrus.Error(err)
 		return err
 	}
 	if err := json.Unmarshal(bs, &w); err != nil {
+		logrus.Error(err)
 		return err
 	}
 
@@ -37,22 +36,32 @@ func (p Job) Do() error {
 	worker := App.Manager.Worker()
 	b, err := worker.Find(p.Code)
 	if err != nil {
+		logrus.Error(err)
 		return err
 	}
 	b.Status = model.WorkerStatusProccessing
 	if err := worker.Update(b); err != nil {
+		logrus.Error(err)
 		return err
 	}
+	// Run a worker
 	ret, err := worker.GetJobHandler(p.Name)(w)
 	if err != nil {
+		logrus.Error(err)
+		b.Status = model.WorkerStatusInterrupt
+		b.Error = err
+		if err := worker.Update(b); err != nil {
+			logrus.Error(err)
+			return err
+		}
 		return err
 	}
 	b.Status = model.WorkerStatusFinish
 	b.Result = ret
 	if err := worker.Update(b); err != nil {
+		logrus.Error(err)
 		return err
 	}
-	time.Sleep(time.Second * 2)
 	return nil
 }
 
@@ -74,6 +83,7 @@ func SysWorkerAdd(ctx *Context) {
 		err     error
 	)
 	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -81,10 +91,12 @@ func SysWorkerAdd(ctx *Context) {
 	payload.User = ctx.LoginInInfo()
 	payload.Status = model.WorkerStatusInitial
 	if bs, err = json.Marshal(&payload); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 	if err := json.Unmarshal(bs, &w); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -96,30 +108,6 @@ func SysWorkerAdd(ctx *Context) {
 		"code":   w.Code,
 		"status": w.Status,
 	})
-}
-
-// SysWorkerDel api implementation
-// @Summary 删除worker
-// @Tags worker
-// @Accept application/json
-// @Param Authorization header string false "认证令牌"
-// @Param id body string false "workerid"
-// @Failure 403 {object} model.Fail
-// @Success 200 {object} model.Success
-// @Failure 500 {object} model.Fail
-// @Router /api/sys/worker/del [delete]
-func SysWorkerDel(ctx *Context) {
-	var payload string
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ret, err := srv.SysWorkerAction(payload)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
 }
 
 // SysWorkerGet api implementation
@@ -137,13 +125,19 @@ func SysWorkerGet(ctx *Context) {
 	worker := App.Manager.Worker()
 	w, err := worker.Find(q.GetString("code"))
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(&map[string]interface{}{
+	ret := map[string]interface{}{
 		"name":   w.Name,
 		"code":   w.Code,
 		"status": w.Status,
-		"result": w.Result,
-	})
+	}
+	if w.Status == model.WorkerStatusFinish {
+		ret["result"] = w.Result
+	} else if w.Status == model.WorkerStatusInterrupt {
+		ret["error"] = w.Error
+	}
+	ctx.Success(&ret)
 }

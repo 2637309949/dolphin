@@ -8,6 +8,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 )
@@ -25,6 +26,7 @@ import (
 func SysOrgAdd(ctx *Context) {
 	var payload model.SysOrg
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -36,6 +38,7 @@ func SysOrgAdd(ctx *Context) {
 	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -55,6 +58,7 @@ func SysOrgAdd(ctx *Context) {
 func SysOrgDel(ctx *Context) {
 	var payload model.SysOrg
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -64,6 +68,7 @@ func SysOrgDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -84,6 +89,7 @@ func SysOrgBatchDel(ctx *Context) {
 	var payload []model.SysOrg
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -96,6 +102,7 @@ func SysOrgBatchDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -115,6 +122,7 @@ func SysOrgBatchDel(ctx *Context) {
 func SysOrgUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -122,6 +130,7 @@ func SysOrgUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -149,6 +158,7 @@ func SysOrgPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_org", "page", "sys_org", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -175,6 +185,7 @@ func SysOrgTree(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_org", "tree", "sys_org", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -195,6 +206,7 @@ func SysOrgGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

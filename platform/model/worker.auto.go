@@ -17,6 +17,8 @@ type Worker struct {
 	Files []string `json:"files,omitempty" xml:"files"`
 	// 结果
 	Result interface{} `json:"result,omitempty" xml:"result"`
+	// 错误信息
+	Error interface{} `json:"error,omitempty" xml:"error"`
 	// 用户
 	User SysUser `json:"user,omitempty" xml:"user"`
 }

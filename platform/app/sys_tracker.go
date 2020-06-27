@@ -4,6 +4,7 @@
 package app
 
 import (
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 )
@@ -28,6 +29,7 @@ func SysTrackerPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_tracker", "page", "sys_tracker", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -55,6 +57,7 @@ func SysTrackerGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.PlatformDB.ID(id).Cols("id", "header", "req_body", "res_body").Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

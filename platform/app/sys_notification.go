@@ -7,6 +7,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 )
@@ -24,6 +25,7 @@ import (
 func SysNotificationAdd(ctx *Context) {
 	var payload model.SysNotification
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -35,6 +37,7 @@ func SysNotificationAdd(ctx *Context) {
 	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -54,6 +57,7 @@ func SysNotificationAdd(ctx *Context) {
 func SysNotificationDel(ctx *Context) {
 	var payload model.SysNotification
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -63,6 +67,7 @@ func SysNotificationDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -82,6 +87,7 @@ func SysNotificationDel(ctx *Context) {
 func SysNotificationUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -89,6 +95,7 @@ func SysNotificationUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -113,6 +120,7 @@ func SysNotificationPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_notification", "page", "sys_notification", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -133,6 +141,7 @@ func SysNotificationGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

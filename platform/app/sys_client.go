@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -24,6 +25,7 @@ import (
 func SysClientAdd(ctx *Context) {
 	var payload model.SysClient
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -36,6 +38,7 @@ func SysClientAdd(ctx *Context) {
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -55,6 +58,7 @@ func SysClientAdd(ctx *Context) {
 func SysClientDel(ctx *Context) {
 	var payload model.SysClient
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -64,6 +68,7 @@ func SysClientDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -83,6 +88,7 @@ func SysClientDel(ctx *Context) {
 func SysClientUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -90,6 +96,7 @@ func SysClientUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -115,6 +122,7 @@ func SysClientPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -135,6 +143,7 @@ func SysClientGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.PlatformDB.ID(id).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/platform/model"
@@ -23,6 +24,7 @@ import (
 func SysTagAdd(ctx *Context) {
 	var payload model.SysTag
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -34,6 +36,7 @@ func SysTagAdd(ctx *Context) {
 	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -53,6 +56,7 @@ func SysTagAdd(ctx *Context) {
 func SysTagDel(ctx *Context) {
 	var payload model.SysUserTemplate
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -62,6 +66,7 @@ func SysTagDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -81,6 +86,7 @@ func SysTagDel(ctx *Context) {
 func SysTagUpdate(ctx *Context) {
 	var payload model.SysTag
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -88,6 +94,7 @@ func SysTagUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -112,6 +119,7 @@ func SysTagPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_tag", "page", "sys_tag", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -132,6 +140,7 @@ func SysTagGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

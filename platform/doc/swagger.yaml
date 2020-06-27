@@ -748,6 +748,9 @@ definitions:
       code:
         description: 编码
         type: string
+      error:
+        description: 错误信息
+        type: object
       files:
         description: 文件
         items:
@@ -3935,36 +3938,6 @@ paths:
       summary: 添加worker
       tags:
       - worker
-  /api/sys/worker/del:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: workerid
-        in: body
-        name: id
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 删除worker
-      tags:
-      - worker
   /api/sys/worker/get:
     get:
       parameters:
@@ -3972,9 +3945,9 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: workerid
+      - description: worker code
         in: query
-        name: id
+        name: code
         type: string
       responses:
         "200":

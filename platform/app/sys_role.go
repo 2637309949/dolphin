@@ -7,6 +7,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 )
@@ -24,6 +25,7 @@ import (
 func SysRoleAdd(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -35,6 +37,7 @@ func SysRoleAdd(ctx *Context) {
 	payload.DelFlag = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -54,6 +57,7 @@ func SysRoleAdd(ctx *Context) {
 func SysRoleDel(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -63,6 +67,7 @@ func SysRoleDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -82,6 +87,7 @@ func SysRoleDel(ctx *Context) {
 func SysRoleUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -89,6 +95,7 @@ func SysRoleUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -113,6 +120,7 @@ func SysRolePage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -141,6 +149,7 @@ func SysRoleRoleMenuTree(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "menu_tree", "sys_org", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -162,6 +171,7 @@ func SysRoleRoleAppFunTree(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "app_fun_tree", "sys_org", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -182,6 +192,7 @@ func SysRoleGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

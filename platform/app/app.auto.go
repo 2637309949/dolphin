@@ -730,7 +730,6 @@ var SysWechatInstance = NewSysWechat()
 // SysWorker defined
 type SysWorker struct {
 	Add,
-	Del,
 	Get func(ctx *Context)
 }
 
@@ -738,7 +737,6 @@ type SysWorker struct {
 func NewSysWorker() *SysWorker {
 	ctr := &SysWorker{}
 	ctr.Add = SysWorkerAdd
-	ctr.Del = SysWorkerDel
 	ctr.Get = SysWorkerGet
 	return ctr
 }
@@ -747,7 +745,6 @@ func NewSysWorker() *SysWorker {
 func SysWorkerRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/worker/add", Auth, SysWorkerInstance.Add)
-	group.Handle("DELETE", "/sys/worker/del", Auth, SysWorkerInstance.Del)
 	group.Handle("GET", "/sys/worker/get", Auth, SysWorkerInstance.Get)
 }
 

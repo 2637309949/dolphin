@@ -9,6 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/platform/model"
@@ -27,6 +28,7 @@ import (
 func SysMenuAdd(ctx *Context) {
 	var payload model.SysMenu
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -53,6 +55,7 @@ func SysMenuAdd(ctx *Context) {
 
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -72,6 +75,7 @@ func SysMenuAdd(ctx *Context) {
 func SysMenuDel(ctx *Context) {
 	var payload model.SysMenu
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -81,6 +85,7 @@ func SysMenuDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -101,6 +106,7 @@ func SysMenuBatchDel(ctx *Context) {
 	var payload []model.SysMenu
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -113,6 +119,7 @@ func SysMenuBatchDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -132,6 +139,7 @@ func SysMenuBatchDel(ctx *Context) {
 func SysMenuUpdate(ctx *Context) {
 	var payload model.SysMenu
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -155,6 +163,7 @@ func SysMenuUpdate(ctx *Context) {
 
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -174,6 +183,7 @@ func SysMenuSidebar(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -201,6 +211,7 @@ func SysMenuPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -227,6 +238,7 @@ func SysMenuTree(ctx *Context) {
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -247,6 +259,7 @@ func SysMenuGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

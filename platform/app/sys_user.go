@@ -33,6 +33,7 @@ import (
 func SysUserAdd(ctx *Context) {
 	var payload model.SysUser
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -45,6 +46,7 @@ func SysUserAdd(ctx *Context) {
 	payload.SetPassword("123456")
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -64,6 +66,7 @@ func SysUserAdd(ctx *Context) {
 func SysUserDel(ctx *Context) {
 	var payload model.SysUser
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -73,6 +76,7 @@ func SysUserDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -92,6 +96,7 @@ func SysUserDel(ctx *Context) {
 func SysUserUpdate(ctx *Context) {
 	var payload model.SysUser
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -101,6 +106,7 @@ func SysUserUpdate(ctx *Context) {
 	payload.Salt.Valid = false
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -135,6 +141,7 @@ func SysUserPage(ctx *Context) {
 	}
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -153,12 +160,14 @@ func SysUserPage(ctx *Context) {
 
 	roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 
 	orgs, err := srv.SysUserGetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -215,6 +224,7 @@ func SysUserGet(ctx *Context) {
 	entity.Password.Valid = false
 	entity.Salt.Valid = false
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -233,6 +243,7 @@ func SysUserGet(ctx *Context) {
 func SysUserLogin(ctx *Context) {
 	var payload, account = model.Login{}, model.SysUser{}
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -282,6 +293,7 @@ func SysUserLogin(ctx *Context) {
 func SysUserLogout(ctx *Context) {
 	err := ctx.OAuth2.Manager.RemoveAccessToken(ctx.GetToken().GetAccess())
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}

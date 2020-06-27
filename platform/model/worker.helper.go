@@ -6,5 +6,6 @@ package model
 const (
 	WorkerStatusInitial = iota + 100
 	WorkerStatusProccessing
+	WorkerStatusInterrupt
 	WorkerStatusFinish
 )
