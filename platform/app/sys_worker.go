@@ -6,11 +6,10 @@ package app
 import (
 	"encoding/json"
 
-	"github.com/2637309949/dolphin/platform/model"
-
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/uuid"
+	"github.com/2637309949/dolphin/platform/model"
 )
 
 // Job defined
