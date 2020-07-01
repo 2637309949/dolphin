@@ -27,6 +27,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
             - [one](#one)
             - [other](#other)
         - [table](#table)
+        - [rpc](#rpc)
     - [Domain](#domain)
         - [app_name](#app_name)
         - [domain](#domain)
@@ -134,6 +135,8 @@ time="2020/06/13 11:55:58" level=info msg="http listen on port:8082"
 - Data permission control
 
 - Log trace record
+
+- RPC remote service
 ```
 
 ## API Examples
@@ -606,6 +609,29 @@ column
 | desc |    column desc  |
 | type | column type |
 | xorm | xorm tag, please refer to XORM for details |
+
+
+### rpc
+> rpc, as a microservice interaction, the basic proto file can be generated here in rpc dir, as well as automatic registration in auto file.
+
+```xml
+<service name="message" desc="消息">
+    <rpc name="send_mail" desc="发送邮件">
+        <request type="$article" desc="文章信息"/>
+        <reply type="$success" desc="文章信息"/>
+    </rpc>
+</service>
+```
+
+
+Generate code:
+
+```sh
+rpc/proto/message.proto
+rpc/proto/message.pb.go
+rpc/message.go
+```
+
 
 ## Domain
 > Domain, a model of multi-tenant support core. Application splitting is also supported.
