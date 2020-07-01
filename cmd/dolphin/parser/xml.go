@@ -57,6 +57,9 @@ func (parser *AppParser) parse(xmlPath string) error {
 	var prop *schema.Prop
 	var table *schema.Table
 	var column *schema.Column
+
+	var service *schema.Service
+	var rpc *schema.RPC
 	for t, err := decoder.Token(); err == nil; t, err = decoder.Token() {
 		switch token := t.(type) {
 		case xml.StartElement:
@@ -73,6 +76,14 @@ func (parser *AppParser) parse(xmlPath string) error {
 				parser.parseFailure(xmlPath, token.Attr, api)
 			case token.Name.Local == "param":
 				param = parser.parseParam(xmlPath, token.Attr)
+			case token.Name.Local == "service":
+				service = parser.parseService(xmlPath, token.Attr)
+			case token.Name.Local == "rpc":
+				rpc = parser.parseRPC(xmlPath, token.Attr)
+			case token.Name.Local == "request":
+				parser.parseRequest(xmlPath, token.Attr, rpc)
+			case token.Name.Local == "reply":
+				parser.parseReply(xmlPath, token.Attr, rpc)
 			case token.Name.Local == "bean":
 				bean = parser.parseBean(xmlPath, token.Attr)
 			case token.Name.Local == "prop":
@@ -88,6 +99,10 @@ func (parser *AppParser) parse(xmlPath string) error {
 				parser.Application.Controllers = append(parser.Application.Controllers, controller)
 			case token.Name.Local == "api":
 				controller.APIS = append(controller.APIS, api)
+			case token.Name.Local == "service":
+				parser.Application.Services = append(parser.Application.Services, service)
+			case token.Name.Local == "rpc":
+				service.RPCS = append(service.RPCS, rpc)
 			case token.Name.Local == "param":
 				api.Params = append(api.Params, param)
 			case token.Name.Local == "bean":

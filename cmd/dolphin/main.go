@@ -53,6 +53,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("dir.util", "util")
 	viper.SetDefault("dir.model", "model")
 	viper.SetDefault("dir.srv", "srv")
+	viper.SetDefault("dir.rpc", "rpc")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
 	viper.SetDefault("swag.securitydefinitions.oauth2.accessCode", "OAuth2AccessCode")
@@ -96,7 +97,7 @@ var (
 			if err := p.Walk(wd); err != nil {
 				return err
 			}
-			pipes := append(args, "main", "app", "ctr", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
+			pipes := append(args, "main", "app", "ctr", "proto", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
 			g := gen.New(p.Application)
 			g.AddPipe(gen.GetPipesByName(pipes...)...)
 			err = g.BuildWithDir(wd)

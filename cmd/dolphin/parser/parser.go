@@ -149,6 +149,75 @@ func (parser *AppParser) parseParam(xmlPath string, attr []xml.Attr) *schema.Par
 	return param
 }
 
+func (parser *AppParser) parseService(xmlPath string, attr []xml.Attr) *schema.Service {
+	service := &schema.Service{}
+	service.Path = xmlPath
+	for _, attr := range attr {
+		attrName := attr.Name.Local
+		attrValue := attr.Value
+		if strings.TrimSpace(attrValue) == "" {
+			continue
+		}
+		switch true {
+		case attrName == "name":
+			service.Name = attrValue
+		case attrName == "desc":
+			service.Desc = attrValue
+		}
+	}
+	return service
+}
+
+func (parser *AppParser) parseRPC(xmlPath string, attr []xml.Attr) *schema.RPC {
+	rpc := &schema.RPC{Request: &schema.Request{}, Reply: &schema.Reply{}}
+	for _, attr := range attr {
+		attrName := attr.Name.Local
+		attrValue := attr.Value
+		if strings.TrimSpace(attrValue) == "" {
+			continue
+		}
+		switch true {
+		case attrName == "name":
+			rpc.Name = attrValue
+		case attrName == "desc":
+			rpc.Desc = attrValue
+		}
+	}
+	return rpc
+}
+
+func (parser *AppParser) parseRequest(xmlPath string, attr []xml.Attr, rpc *schema.RPC) {
+	for _, attr := range attr {
+		attrName := attr.Name.Local
+		attrValue := attr.Value
+		if strings.TrimSpace(attrValue) == "" {
+			continue
+		}
+		switch true {
+		case attrName == "desc":
+			rpc.Request.Desc = attrValue
+		case attrName == "type":
+			rpc.Request.Type = attrValue
+		}
+	}
+}
+
+func (parser *AppParser) parseReply(xmlPath string, attr []xml.Attr, rpc *schema.RPC) {
+	for _, attr := range attr {
+		attrName := attr.Name.Local
+		attrValue := attr.Value
+		if strings.TrimSpace(attrValue) == "" {
+			continue
+		}
+		switch true {
+		case attrName == "desc":
+			rpc.Reply.Desc = attrValue
+		case attrName == "type":
+			rpc.Reply.Type = attrValue
+		}
+	}
+}
+
 func (parser *AppParser) parseBean(xmlPath string, attr []xml.Attr) *schema.Bean {
 	bean := &schema.Bean{}
 	bean.Path = xmlPath

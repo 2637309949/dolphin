@@ -12,6 +12,7 @@ type (
 		Data     interface{}
 		Overlap  Overlap
 		GOFmt    bool
+		GOProto  bool
 	}
 	// Pipe interface
 	Pipe interface {

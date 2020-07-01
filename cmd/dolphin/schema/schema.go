@@ -45,11 +45,36 @@ type API struct {
 	Return  *Return
 }
 
-// Controller struct
+// Controller deifned
 type Controller struct {
 	Common
 	APIS   []*API
 	Prefix string
+}
+
+// Service defined
+type Service struct {
+	Common
+	RPCS []*RPC
+}
+
+// RPC defined
+type RPC struct {
+	Common
+	Request *Request
+	Reply   *Reply
+}
+
+// Request defined
+type Request struct {
+	Common
+	Type string
+}
+
+// Reply defined
+type Reply struct {
+	Common
+	Type string
 }
 
 // Prop struct
@@ -91,6 +116,7 @@ type Application struct {
 	Common
 	PackageName string `validate:"required"`
 	Controllers []*Controller
+	Services    []*Service
 	Beans       []*Bean
 	Tables      []*Table
 }

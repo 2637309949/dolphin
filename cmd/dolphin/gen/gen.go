@@ -24,6 +24,7 @@ var lines = []pipe.Pipe{
 	&modules.Main{},
 	&modules.App{},
 	&modules.Ctr{},
+	&modules.Proto{},
 	&modules.Srv{},
 	&modules.Model{},
 	&modules.Bean{},
@@ -124,6 +125,12 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 	}
 	if cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" {
 		cmd := exec.Command("goimports", "-w", cfg.FilePath)
+		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
+			logrus.Error(err)
+		}
+	}
+	if cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" {
+		cmd := exec.Command("protoc", "-I", path.Dir(cfg.FilePath), cfg.FilePath, "--go_out=plugins=grpc:"+path.Dir(cfg.FilePath))
 		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
 			logrus.Error(err)
 		}

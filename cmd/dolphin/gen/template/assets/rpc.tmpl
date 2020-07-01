@@ -1,0 +1,18 @@
+package rpc
+
+import (
+    "{{.PackageName}}/rpc/proto"
+
+	"golang.org/x/net/context"
+)
+
+// {{.Service.ToUpperCase .Service.Name}} defined
+type {{.Service.ToUpperCase .Service.Name}} struct{}
+
+{{range .Service.RPCS}}
+// {{.ToUpperCase .Name}} defined
+func (s *{{$.Service.ToUpperCase $.Service.Name}}) {{.ToUpperCase .Name}}(ctx context.Context, in *proto.{{.PRef .Request.Type}}) (*proto.{{.PRef .Reply.Type}}, error) {
+	return &proto.{{.PRef .Reply.Type}}{}, nil
+}
+{{end}}
+

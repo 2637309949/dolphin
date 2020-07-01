@@ -29,6 +29,7 @@ func (auto *Auto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, 
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 		"Controllers": node.Controllers,
+		"Services":    node.Services,
 		"Tables":      node.Tables,
 	}
 	autoByte, _ := vfsutil.ReadFile(template.Assets, "auto.tmpl")

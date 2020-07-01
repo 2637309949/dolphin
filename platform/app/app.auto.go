@@ -5,7 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/platform/model"
-
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 )
@@ -751,25 +751,6 @@ func SysWorkerRoutes(engine *Engine) {
 // SysWorkerInstance defined
 var SysWorkerInstance = NewSysWorker()
 
-// Executor defined
-type Executor []func() error
-
-// Add defined
-func (act *Executor) Add(i func() error) *Executor {
-	*act = append(*act, i)
-	return act
-}
-
-// Execute defined
-func (act *Executor) Execute() error {
-	for _, v := range *act {
-		if err := v(); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 // SyncModels defined
 func SyncModels() error {
 	mseti := App.Manager.MSet()
@@ -833,7 +814,7 @@ func SyncCtr() error {
 }
 
 // ExecutorInstance defined
-var ExecutorInstance = &Executor{
+var ExecutorInstance = &util.Executor{
 	SyncModels,
 	SyncCtr,
 }
