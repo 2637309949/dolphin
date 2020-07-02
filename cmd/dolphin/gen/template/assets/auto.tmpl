@@ -81,11 +81,11 @@ func SyncService() error {
 	return nil
 }
 
-// ExecutorInstance defined
-var ExecutorInstance = util.NewExecutor(SyncModel, SyncCtr, SyncService)
+// Executor defined
+var Executor = util.NewExecutor(SyncModel, SyncCtr, SyncService)
 
 func init() {
-	if err := ExecutorInstance.Execute(); err != nil {
+	if err := Executor.Execute(); err != nil {
 		logrus.Fatal(err)
 	}
 }

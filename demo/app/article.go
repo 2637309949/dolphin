@@ -10,7 +10,6 @@ import (
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
-	pModel "github.com/2637309949/dolphin/platform/model"
 )
 
 // ArticleAdd api implementation
@@ -163,15 +162,4 @@ func ArticlePayment(ctx *Context) {
 		return
 	}
 	ctx.Success(ret)
-}
-
-func init() {
-	jobName := "hello"
-	worker := App.Manager.Worker()
-	worker.AddJobHandler(jobName, func(w pModel.Worker) (interface{}, error) {
-		return map[string]interface{}{
-			"mean":  78,
-			"score": 87,
-		}, nil
-	})
 }

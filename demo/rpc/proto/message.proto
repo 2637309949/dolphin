@@ -5,7 +5,7 @@ syntax = "proto3";
 
 package proto;
 
-// Message service definition.
+// Message defined
 service Message {
   rpc SendMail (Article) returns (Success) {}
 }
@@ -13,5 +13,6 @@ service Message {
 
 // Article defined
 message Article {}
+
 // Success defined
 message Success {}
