@@ -1,6 +1,6 @@
 <service name="message" desc="消息">
     <rpc name="send_mail" desc="发送邮件">
-        <request type="$article" desc="文章信息"/>
-        <reply type="$success" desc="文章信息"/>
+        <request type="$mail" desc="邮件"/>
+        <reply type="$reply" desc="反馈"/>
     </rpc>
 </service>

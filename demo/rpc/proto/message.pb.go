@@ -24,86 +24,85 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-// Article defined
-type Article struct {
+// Mail defined
+type Mail struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Article) Reset()         { *m = Article{} }
-func (m *Article) String() string { return proto.CompactTextString(m) }
-func (*Article) ProtoMessage()    {}
-func (*Article) Descriptor() ([]byte, []int) {
+func (m *Mail) Reset()         { *m = Mail{} }
+func (m *Mail) String() string { return proto.CompactTextString(m) }
+func (*Mail) ProtoMessage()    {}
+func (*Mail) Descriptor() ([]byte, []int) {
 	return fileDescriptor_33c57e4bae7b9afd, []int{0}
 }
 
-func (m *Article) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Article.Unmarshal(m, b)
+func (m *Mail) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Mail.Unmarshal(m, b)
 }
-func (m *Article) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Article.Marshal(b, m, deterministic)
+func (m *Mail) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Mail.Marshal(b, m, deterministic)
 }
-func (m *Article) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Article.Merge(m, src)
+func (m *Mail) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Mail.Merge(m, src)
 }
-func (m *Article) XXX_Size() int {
-	return xxx_messageInfo_Article.Size(m)
+func (m *Mail) XXX_Size() int {
+	return xxx_messageInfo_Mail.Size(m)
 }
-func (m *Article) XXX_DiscardUnknown() {
-	xxx_messageInfo_Article.DiscardUnknown(m)
+func (m *Mail) XXX_DiscardUnknown() {
+	xxx_messageInfo_Mail.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Article proto.InternalMessageInfo
+var xxx_messageInfo_Mail proto.InternalMessageInfo
 
-// Success defined
-type Success struct {
+// Reply defined
+type Reply struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Success) Reset()         { *m = Success{} }
-func (m *Success) String() string { return proto.CompactTextString(m) }
-func (*Success) ProtoMessage()    {}
-func (*Success) Descriptor() ([]byte, []int) {
+func (m *Reply) Reset()         { *m = Reply{} }
+func (m *Reply) String() string { return proto.CompactTextString(m) }
+func (*Reply) ProtoMessage()    {}
+func (*Reply) Descriptor() ([]byte, []int) {
 	return fileDescriptor_33c57e4bae7b9afd, []int{1}
 }
 
-func (m *Success) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Success.Unmarshal(m, b)
+func (m *Reply) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Reply.Unmarshal(m, b)
 }
-func (m *Success) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Success.Marshal(b, m, deterministic)
+func (m *Reply) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Reply.Marshal(b, m, deterministic)
 }
-func (m *Success) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Success.Merge(m, src)
+func (m *Reply) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Reply.Merge(m, src)
 }
-func (m *Success) XXX_Size() int {
-	return xxx_messageInfo_Success.Size(m)
+func (m *Reply) XXX_Size() int {
+	return xxx_messageInfo_Reply.Size(m)
 }
-func (m *Success) XXX_DiscardUnknown() {
-	xxx_messageInfo_Success.DiscardUnknown(m)
+func (m *Reply) XXX_DiscardUnknown() {
+	xxx_messageInfo_Reply.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Success proto.InternalMessageInfo
+var xxx_messageInfo_Reply proto.InternalMessageInfo
 
 func init() {
-	proto.RegisterType((*Article)(nil), "proto.Article")
-	proto.RegisterType((*Success)(nil), "proto.Success")
+	proto.RegisterType((*Mail)(nil), "proto.Mail")
+	proto.RegisterType((*Reply)(nil), "proto.Reply")
 }
 
 func init() { proto.RegisterFile("message.proto", fileDescriptor_33c57e4bae7b9afd) }
 
 var fileDescriptor_33c57e4bae7b9afd = []byte{
-	// 100 bytes of a gzipped FileDescriptorProto
+	// 96 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0xcd, 0x4d, 0x2d, 0x2e,
-	0x4e, 0x4c, 0x4f, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x53, 0x4a, 0x9c, 0x5c,
-	0xec, 0x8e, 0x45, 0x25, 0x99, 0xc9, 0x39, 0xa9, 0x20, 0x66, 0x70, 0x69, 0x72, 0x72, 0x6a, 0x71,
-	0xb1, 0x91, 0x39, 0x17, 0xbb, 0x2f, 0x44, 0xb5, 0x90, 0x0e, 0x17, 0x47, 0x70, 0x6a, 0x5e, 0x8a,
-	0x6f, 0x62, 0x66, 0x8e, 0x10, 0x1f, 0x44, 0xaf, 0x1e, 0x54, 0x87, 0x14, 0x8c, 0x0f, 0xd5, 0xa6,
-	0xc4, 0x90, 0xc4, 0x06, 0x16, 0x30, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0xb9, 0x50, 0x63, 0x6e,
-	0x6d, 0x00, 0x00, 0x00,
+	0x4e, 0x4c, 0x4f, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x05, 0x53, 0x4a, 0x6c, 0x5c,
+	0x2c, 0xbe, 0x89, 0x99, 0x39, 0x4a, 0xec, 0x5c, 0xac, 0x41, 0xa9, 0x05, 0x39, 0x95, 0x46, 0x46,
+	0x5c, 0xec, 0xbe, 0x10, 0x85, 0x42, 0xea, 0x5c, 0x1c, 0xc1, 0xa9, 0x79, 0x29, 0x20, 0x79, 0x21,
+	0x6e, 0x88, 0x36, 0x3d, 0x10, 0x47, 0x8a, 0x07, 0xca, 0x01, 0xeb, 0x50, 0x62, 0x48, 0x62, 0x03,
+	0x73, 0x8d, 0x01, 0x01, 0x00, 0x00, 0xff, 0xff, 0x87, 0xcc, 0x11, 0x1c, 0x63, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -118,7 +117,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MessageClient interface {
-	SendMail(ctx context.Context, in *Article, opts ...grpc.CallOption) (*Success, error)
+	SendMail(ctx context.Context, in *Mail, opts ...grpc.CallOption) (*Reply, error)
 }
 
 type messageClient struct {
@@ -129,8 +128,8 @@ func NewMessageClient(cc *grpc.ClientConn) MessageClient {
 	return &messageClient{cc}
 }
 
-func (c *messageClient) SendMail(ctx context.Context, in *Article, opts ...grpc.CallOption) (*Success, error) {
-	out := new(Success)
+func (c *messageClient) SendMail(ctx context.Context, in *Mail, opts ...grpc.CallOption) (*Reply, error) {
+	out := new(Reply)
 	err := c.cc.Invoke(ctx, "/proto.Message/SendMail", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -140,14 +139,14 @@ func (c *messageClient) SendMail(ctx context.Context, in *Article, opts ...grpc.
 
 // MessageServer is the server API for Message service.
 type MessageServer interface {
-	SendMail(context.Context, *Article) (*Success, error)
+	SendMail(context.Context, *Mail) (*Reply, error)
 }
 
 // UnimplementedMessageServer can be embedded to have forward compatible implementations.
 type UnimplementedMessageServer struct {
 }
 
-func (*UnimplementedMessageServer) SendMail(ctx context.Context, req *Article) (*Success, error) {
+func (*UnimplementedMessageServer) SendMail(ctx context.Context, req *Mail) (*Reply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMail not implemented")
 }
 
@@ -156,7 +155,7 @@ func RegisterMessageServer(s *grpc.Server, srv MessageServer) {
 }
 
 func _Message_SendMail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Article)
+	in := new(Mail)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -168,7 +167,7 @@ func _Message_SendMail_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/proto.Message/SendMail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MessageServer).SendMail(ctx, req.(*Article))
+		return srv.(MessageServer).SendMail(ctx, req.(*Mail))
 	}
 	return interceptor(ctx, in, info, handler)
 }

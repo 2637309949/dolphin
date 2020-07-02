@@ -10,6 +10,6 @@ import (
 type Message struct{}
 
 // SendMail defined
-func (s *Message) SendMail(ctx context.Context, in *proto.Article) (*proto.Success, error) {
-	return &proto.Success{}, nil
+func (s *Message) SendMail(ctx context.Context, in *proto.Mail) (*proto.Reply, error) {
+	return &proto.Reply{}, nil
 }

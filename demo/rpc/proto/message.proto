@@ -7,12 +7,12 @@ package proto;
 
 // Message defined
 service Message {
-  rpc SendMail (Article) returns (Success) {}
+  rpc SendMail (Mail) returns (Reply) {}
 }
 
 
-// Article defined
-message Article {}
+// Mail defined
+message Mail {}
 
-// Success defined
-message Success {}
+// Reply defined
+message Reply {}
