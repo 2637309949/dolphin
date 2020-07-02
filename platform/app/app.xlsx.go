@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"io"
+	"os"
 	"path"
 	"time"
 
@@ -144,6 +145,9 @@ func BuildExcel(cfg ExcelConfig) (model.ExportInfo, error) {
 			f.SetSheetRow(cfg.SheetName, fmt.Sprintf("A%v", i+2), &cells)
 			cells = []interface{}{}
 		}
+	}
+	if err := os.MkdirAll(path.Dir(filePath), os.ModePerm); err != nil {
+		return model.ExportInfo{}, err
 	}
 	err := f.SaveAs(filePath)
 	return model.ExportInfo{FileId: uuid, FilePath: filePath}, err
