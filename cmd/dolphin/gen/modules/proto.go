@@ -28,6 +28,7 @@ func (oa *Proto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, e
 	var tmplCfgs []*pipe.TmplCfg
 	ctrByte, _ := vfsutil.ReadFile(template.Assets, "proto.tmpl")
 	rpcByte, _ := vfsutil.ReadFile(template.Assets, "rpc.tmpl")
+	rpcCliByte, _ := vfsutil.ReadFile(template.Assets, "rpc.cli.tmpl")
 	for _, s := range node.Services {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
@@ -48,6 +49,14 @@ func (oa *Proto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, e
 			FilePath: path.Join(dir, viper.GetString("dir.rpc"), s.Name+".go"),
 			Data:     data,
 			Overlap:  pipe.OverlapInc,
+			GOFmt:    true,
+		}
+		tmplCfgs = append(tmplCfgs, tmplCfg)
+		tmplCfg = &pipe.TmplCfg{
+			Text:     string(rpcCliByte),
+			FilePath: path.Join(dir, viper.GetString("dir.rpc"), s.Name+".cli.go"),
+			Data:     data,
+			Overlap:  pipe.OverlapSkip,
 			GOFmt:    true,
 		}
 		tmplCfgs = append(tmplCfgs, tmplCfg)
