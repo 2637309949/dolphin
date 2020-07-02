@@ -119,7 +119,6 @@ func ArticlePage(ctx *Context) {
 	q.SetInt("size", 15)
 	q.SetRule("article_page")
 	q.SetTags()
-
 	ret, err := ctx.PageSearch(ctx.DB, "article", "page", "article", q.Value())
 	if err != nil {
 		logrus.Error(err)
