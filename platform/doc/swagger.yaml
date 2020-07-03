@@ -295,6 +295,9 @@ definitions:
       domain:
         description: 域
         type: string
+      domain_url:
+        description: 域绑定
+        type: string
       driver_name:
         description: 驱动名称
         type: string

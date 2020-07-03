@@ -37,6 +37,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			SyncFlag:   null.IntFrom(0),
 			AuthMode:   null.IntFrom(1),
 			Domain:     null.StringFrom("localhost"),
+			DomainUrl:  null.StringFrom("localhost"),
 			ApiUrl:     null.StringFrom("http://localhost:8082"),
 			CreateBy:   DefaultAdmin.ID,
 			CreateTime: null.TimeFrom(time.Now()),

@@ -17,6 +17,8 @@ type SysDomain struct {
 	AppName null.String `xorm:"varchar(36) notnull 'app_name'" json:"app_name" xml:"app_name"`
 	// 域
 	Domain null.String `xorm:"varchar(36) notnull 'domain'" json:"domain" xml:"domain"`
+	// 域绑定
+	DomainUrl null.String `xorm:"varchar(36) notnull 'domain_url'" json:"domain_url" xml:"domain_url"`
 	// 全名
 	FullName null.String `xorm:"varchar(36) 'full_name'" json:"full_name" xml:"full_name"`
 	// 负责人

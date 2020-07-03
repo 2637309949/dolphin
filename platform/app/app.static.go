@@ -42,7 +42,7 @@ func Domain(ctx *Context) {
 	contentType := "application/javascript"
 	groups := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
 	domain := model.SysDomain{}
-	ext, err := App.PlatformDB.Where("domain=? and del_flag=0 and status=1", groups[0][1]).Get(&domain)
+	ext, err := App.PlatformDB.Where("domain_url=? and del_flag=0 and status=1", groups[0][1]).Get(&domain)
 	if err != nil || !ext {
 		ctx.Data(200, contentType, DomainFormat("{}"))
 		return
