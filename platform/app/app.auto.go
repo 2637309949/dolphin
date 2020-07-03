@@ -5,6 +5,8 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/rpc"
+	"github.com/2637309949/dolphin/platform/rpc/proto"
 
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
@@ -752,6 +754,21 @@ func SysWorkerRoutes(engine *Engine) {
 // SysWorkerInstance defined
 var SysWorkerInstance = NewSysWorker()
 
+// ClientSrv defined
+func ClientSrvService(engine *Engine) {
+	proto.RegisterClientSrvServer(engine.GRPC, &rpc.ClientSrv{})
+}
+
+// DomainSrv defined
+func DomainSrvService(engine *Engine) {
+	proto.RegisterDomainSrvServer(engine.GRPC, &rpc.DomainSrv{})
+}
+
+// UserSrv defined
+func UserSrvService(engine *Engine) {
+	proto.RegisterUserSrvServer(engine.GRPC, &rpc.UserSrv{})
+}
+
 // SyncModel defined
 func SyncModel() error {
 	mseti := App.Manager.MSet()
@@ -816,6 +833,9 @@ func SyncCtr() error {
 
 // SyncService defined
 func SyncService() error {
+	ClientSrvService(App)
+	DomainSrvService(App)
+	UserSrvService(App)
 	return nil
 }
 

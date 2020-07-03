@@ -6,6 +6,7 @@ package modules
 
 import (
 	"path"
+	"path/filepath"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
@@ -35,9 +36,12 @@ func (oa *Proto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, e
 			"Name":        node.Name,
 			"Service":     s,
 		}
+		extension, filename := filepath.Ext(s.Path), filepath.Base(s.Path)
+		filename = filename[0 : len(filename)-len(extension)]
+
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(ctrByte),
-			FilePath: path.Join(dir, viper.GetString("dir.rpc"), "proto", s.Name+".proto"),
+			FilePath: path.Join(dir, viper.GetString("dir.rpc"), "proto", filename+".proto"),
 			Data:     data,
 			Overlap:  pipe.OverlapInc,
 			GOFmt:    false,
@@ -46,7 +50,7 @@ func (oa *Proto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, e
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 		tmplCfg = &pipe.TmplCfg{
 			Text:     string(rpcByte),
-			FilePath: path.Join(dir, viper.GetString("dir.rpc"), s.Name+".go"),
+			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".go"),
 			Data:     data,
 			Overlap:  pipe.OverlapInc,
 			GOFmt:    true,
@@ -54,7 +58,7 @@ func (oa *Proto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, e
 		tmplCfgs = append(tmplCfgs, tmplCfg)
 		tmplCfg = &pipe.TmplCfg{
 			Text:     string(rpcCliByte),
-			FilePath: path.Join(dir, viper.GetString("dir.rpc"), s.Name+".cli.go"),
+			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".cli.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 			GOFmt:    true,

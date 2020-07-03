@@ -1,0 +1,6 @@
+<service name="domain_srv" desc="域服务">
+    <rpc name="list" desc="域列表">
+        <request type="$domain_cond" desc="查询"/>
+        <reply type="$domain_reply" desc="反馈"/>
+    </rpc>
+</service>
