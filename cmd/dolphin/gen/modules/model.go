@@ -6,6 +6,7 @@ package modules
 
 import (
 	"path"
+	"path/filepath"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
@@ -33,9 +34,12 @@ func (m *Model) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 			"Name":        node.Name,
 			"Table":       table,
 		}
+		extension, filename := filepath.Ext(table.Path), filepath.Base(table.Path)
+		filename = filename[0 : len(filename)-len(extension)]
+
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(modelByte),
-			FilePath: path.Join(dir, viper.GetString("dir.model"), table.Name+".auto.go"),
+			FilePath: path.Join(dir, viper.GetString("dir.model"), filename+".auto.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapWrite,
 			GOFmt:    true,

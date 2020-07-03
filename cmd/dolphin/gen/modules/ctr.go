@@ -6,6 +6,7 @@ package modules
 
 import (
 	"path"
+	"path/filepath"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
@@ -33,9 +34,12 @@ func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, er
 			"Name":        node.Name,
 			"Controller":  c,
 		}
+		extension, filename := filepath.Ext(c.Path), filepath.Base(c.Path)
+		filename = filename[0 : len(filename)-len(extension)]
+
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(ctrByte),
-			FilePath: path.Join(dir, viper.GetString("dir.app"), c.Name+".go"),
+			FilePath: path.Join(dir, viper.GetString("dir.app"), filename+".go"),
 			Data:     data,
 			Overlap:  pipe.OverlapInc,
 			GOFmt:    true,

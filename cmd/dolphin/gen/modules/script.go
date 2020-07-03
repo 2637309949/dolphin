@@ -7,6 +7,7 @@ package modules
 import (
 	"fmt"
 	"path"
+	"path/filepath"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
@@ -50,6 +51,9 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 
 	apisByte, _ := vfsutil.ReadFile(template.Assets, "apis.tmpl")
 	for _, c := range node.Controllers {
+		extension, filename := filepath.Ext(c.Path), filepath.Base(c.Path)
+		filename = filename[0 : len(filename)-len(extension)]
+
 		for _, api := range c.APIS {
 			data := map[string]interface{}{
 				"PackageName": node.PackageName,
@@ -58,7 +62,7 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 				"Application": node,
 				"Api":         api,
 			}
-			cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v.js", c.Name))
+			cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v.js", filename))
 			if _, ok := tplCache[cpath]; !ok {
 				tmplCfg := &pipe.TmplCfg{
 					Text:     string(apisByte),
