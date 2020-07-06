@@ -8,8 +8,8 @@ where
 	and
 	{{.Api.Table}}.del_flag {{.Application.Unescaped "{{.ne}}"}} 1
 	{{- if .Api.Auth}}
-	{{.Application.Unescaped "{{if ne .role_rule"}} ""{{.Application.Unescaped "}}"}}
+{{.Application.Unescaped "{{if ne .role_rule"}} ""{{.Application.Unescaped "}}"}}
 	{{.Application.Unescaped "and {{.role_rule}}"}}
-	{{.Application.Unescaped "{{end}}"}}
+{{.Application.Unescaped "{{end}}"}}
 	{{- end}}
-LIMIT {{.Application.Unescaped "{{.size}}"}} OFFSET {{.Application.Unescaped "{{.offset}}"}}
+	LIMIT {{.Application.Unescaped "{{.size}}"}} OFFSET {{.Application.Unescaped "{{.offset}}"}}

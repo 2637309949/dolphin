@@ -6,11 +6,11 @@ package modules
 
 import (
 	"path"
-	"path/filepath"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/shurcooL/httpfs/vfsutil"
 )
@@ -36,9 +36,7 @@ func (oa *Proto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, e
 			"Name":        node.Name,
 			"Service":     s,
 		}
-		extension, filename := filepath.Ext(s.Path), filepath.Base(s.Path)
-		filename = filename[0 : len(filename)-len(extension)]
-
+		filename := utils.FileNameTrimSuffix(s.Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(ctrByte),
 			FilePath: path.Join(dir, viper.GetString("dir.rpc"), "proto", filename+".proto"),

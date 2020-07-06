@@ -10,4 +10,4 @@ where
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
-LIMIT {{.size}} OFFSET {{.offset}}
+	LIMIT {{.size}} OFFSET {{.offset}}

@@ -6,11 +6,11 @@ package modules
 
 import (
 	"path"
-	"path/filepath"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/shurcooL/httpfs/vfsutil"
 )
@@ -34,9 +34,7 @@ func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, err
 			"Name":        node.Name,
 			"Bean":        bean,
 		}
-		extension, filename := filepath.Ext(bean.Path), filepath.Base(bean.Path)
-		filename = filename[0 : len(filename)-len(extension)]
-
+		filename := utils.FileNameTrimSuffix(bean.Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(beanByte),
 			FilePath: path.Join(dir, viper.GetString("dir.model"), filename+".auto.go"),

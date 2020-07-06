@@ -7,11 +7,11 @@ package modules
 import (
 	"fmt"
 	"path"
-	"path/filepath"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/shurcooL/httpfs/vfsutil"
 )
@@ -51,9 +51,7 @@ func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg,
 
 	apisByte, _ := vfsutil.ReadFile(template.Assets, "apis.tmpl")
 	for _, c := range node.Controllers {
-		extension, filename := filepath.Ext(c.Path), filepath.Base(c.Path)
-		filename = filename[0 : len(filename)-len(extension)]
-
+		filename := utils.FileNameTrimSuffix(c.Path)
 		for _, api := range c.APIS {
 			data := map[string]interface{}{
 				"PackageName": node.PackageName,
