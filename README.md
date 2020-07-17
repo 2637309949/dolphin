@@ -13,6 +13,10 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
     - [Quick start](#quick-start)
     - [Directory structure](#directory-structure)
     - [Features](#features)
+    - [command](#command)
+        - [build](#build)
+        - [clean](#clean)
+        - [init](#init)
     - [API Examples](#api-examples)
     - [XML Label](#xml-label)
         - [application](#application)
@@ -143,6 +147,24 @@ time="2020/06/13 11:55:58" level=info msg="http listen on port:8082"
 - Log trace record
 
 - RPC remote service
+```
+
+## command
+
+### build
+
+```sh
+dolphin build @table xml/test
+```
+### clean
+
+```sh
+dolphin clean
+```
+### init
+
+```sh
+dolphin init
 ```
 
 ## API Examples
