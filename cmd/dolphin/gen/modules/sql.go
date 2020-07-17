@@ -27,7 +27,7 @@ func (app *SQL) Name() string {
 }
 
 // Build func
-func (app *SQL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *SQL) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
 	countByte, _ := vfsutil.ReadFile(template.Assets, "count.tmpl")

@@ -48,7 +48,7 @@ func (app *SQLTPL) Name() string {
 }
 
 // Build func
-func (app *SQLTPL) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *SQLTPL) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	var files []struct {
 		Name    string

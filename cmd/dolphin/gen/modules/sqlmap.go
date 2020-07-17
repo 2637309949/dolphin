@@ -25,7 +25,7 @@ func (app *SQLMap) Name() string {
 }
 
 // Build func
-func (app *SQLMap) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *SQLMap) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	sqlmapByte, _ := vfsutil.ReadFile(template.Assets, "sqlmap.tmpl")
 	for _, t := range node.Tables {

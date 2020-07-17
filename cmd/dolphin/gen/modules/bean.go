@@ -25,7 +25,7 @@ func (m *Bean) Name() string {
 }
 
 // Build func
-func (m *Bean) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Bean) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	beanByte, _ := vfsutil.ReadFile(template.Assets, "bean.tmpl")
 	for _, bean := range node.Beans {

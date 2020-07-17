@@ -26,7 +26,7 @@ func (m *Boilerplate) Name() string {
 }
 
 // Build func
-func (m *Boilerplate) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Boilerplate) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	cfgs := []*pipe.TmplCfg{}
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,

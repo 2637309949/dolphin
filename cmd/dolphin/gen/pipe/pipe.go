@@ -17,7 +17,7 @@ type (
 	// Pipe interface
 	Pipe interface {
 		Name() string
-		Build(string, *schema.Application) ([]*TmplCfg, error)
+		Build(string, []string, *schema.Application) ([]*TmplCfg, error)
 	}
 )
 

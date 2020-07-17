@@ -24,7 +24,7 @@ func (auto *Auto) Name() string {
 }
 
 // Build func
-func (auto *Auto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (auto *Auto) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,

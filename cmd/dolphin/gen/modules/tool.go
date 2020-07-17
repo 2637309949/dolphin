@@ -24,7 +24,7 @@ func (tool *Tool) Name() string {
 }
 
 // Build func
-func (tool *Tool) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (tool *Tool) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,

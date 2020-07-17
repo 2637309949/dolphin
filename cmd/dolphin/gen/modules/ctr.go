@@ -25,7 +25,7 @@ func (ctr *Ctr) Name() string {
 }
 
 // Build func
-func (ctr *Ctr) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (ctr *Ctr) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	ctrByte, _ := vfsutil.ReadFile(template.Assets, "ctr.tmpl")
 	for _, c := range node.Controllers {

@@ -23,7 +23,7 @@ func (m *Main) Name() string {
 }
 
 // Build func
-func (m *Main) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Main) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,

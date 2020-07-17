@@ -25,7 +25,7 @@ func (oa *Proto) Name() string {
 }
 
 // Build func
-func (oa *Proto) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (oa *Proto) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	ctrByte, _ := vfsutil.ReadFile(template.Assets, "proto.tmpl")
 	rpcByte, _ := vfsutil.ReadFile(template.Assets, "rpc.tmpl")

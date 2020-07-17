@@ -37,6 +37,7 @@ var lines = []pipe.Pipe{
 	&modules.Doc{},
 	&modules.SQLTPL{},
 	&modules.Boilerplate{},
+	&modules.Table{},
 }
 
 // AddPipe defined addPipe
@@ -73,9 +74,9 @@ func (gen *Gen) AddPipe(modules ...pipe.Pipe) {
 }
 
 // BuildWithDir defined
-func (gen *Gen) BuildWithDir(dir string) error {
+func (gen *Gen) BuildWithDir(dir string, args []string) error {
 	for _, pipe := range gen.Pipes {
-		cfgs, err := pipe.Build(dir, gen.App)
+		cfgs, err := pipe.Build(dir, args, gen.App)
 		if err != nil {
 			return err
 		}

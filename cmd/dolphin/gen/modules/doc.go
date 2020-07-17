@@ -23,7 +23,7 @@ func (m *Doc) Name() string {
 }
 
 // Build func
-func (m *Doc) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Doc) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	return []*pipe.TmplCfg{}, swag.New().Build(&swag.Config{
 		SearchDir:          dir,
 		MainAPIFile:        "main.go",

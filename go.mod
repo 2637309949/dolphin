@@ -47,6 +47,7 @@ require (
 	github.com/json-iterator/go v1.1.9
 	github.com/konsorten/go-windows-terminal-sequences v1.0.1
 	github.com/lestrrat-go/strftime v1.0.1
+	github.com/lib/pq v1.7.0
 	github.com/magiconair/properties v1.8.1
 	github.com/mattn/go-isatty v0.0.11
 	github.com/memcachier/mc v2.0.1+incompatible

@@ -26,7 +26,7 @@ func (app *Script) Name() string {
 }
 
 // Build func
-func (app *Script) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *Script) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
 	axiosByte, _ := vfsutil.ReadFile(template.Assets, "axios.tmpl")

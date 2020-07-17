@@ -24,7 +24,7 @@ func (app *App) Name() string {
 }
 
 // Build func
-func (app *App) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *App) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,

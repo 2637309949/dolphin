@@ -16,6 +16,11 @@ import (
 	"github.com/2637309949/dolphin/packages/cobra"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
+
+	// "github.com/go-sql-driver/mysql" init
+	_ "github.com/go-sql-driver/mysql"
+	// "github.com/lib/pq" init
+	_ "github.com/lib/pq"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
 )
@@ -54,6 +59,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("dir.model", "model")
 	viper.SetDefault("dir.srv", "srv")
 	viper.SetDefault("dir.rpc", "rpc")
+	viper.SetDefault("dir.xml", "xml")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
 	viper.SetDefault("swag.securitydefinitions.oauth2.accessCode", "OAuth2AccessCode")
@@ -90,6 +96,7 @@ var (
 		Short: "Build project from xml",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
+			justOne := false
 			if err != nil {
 				return err
 			}
@@ -97,10 +104,21 @@ var (
 			if err := p.Walk(wd); err != nil {
 				return err
 			}
-			pipes := append(args, "main", "app", "ctr", "proto", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
+			var pipes, cupArgs = []string{}, []string{}
+			for _, v := range args {
+				cupArgs = append(cupArgs, strings.ReplaceAll(v, "@", ""))
+				if strings.HasPrefix(v, "@") {
+					justOne = true
+				}
+			}
+			if !justOne {
+				pipes = append(cupArgs, "main", "app", "ctr", "proto", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "doc")
+			} else {
+				pipes = cupArgs
+			}
 			g := gen.New(p.Application)
 			g.AddPipe(gen.GetPipesByName(pipes...)...)
-			err = g.BuildWithDir(wd)
+			err = g.BuildWithDir(wd, args)
 			return err
 		},
 	}
@@ -131,7 +149,7 @@ var (
 				}
 				g := gen.New(p.Application)
 				g.AddPipe(gen.GetPipesByName("boilerplate")...)
-				return g.BuildWithDir(wd)
+				return g.BuildWithDir(wd, args)
 			}
 			logrus.Warn("It is not allowed to initialize a non-empty project")
 			return nil

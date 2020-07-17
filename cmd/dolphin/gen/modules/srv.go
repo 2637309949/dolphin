@@ -25,7 +25,7 @@ func (app *Srv) Name() string {
 }
 
 // Build func
-func (app *Srv) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *Srv) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	srvByte, _ := vfsutil.ReadFile(template.Assets, "srv.tmpl")
 	for _, c := range node.Controllers {

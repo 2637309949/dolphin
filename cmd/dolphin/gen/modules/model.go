@@ -25,7 +25,7 @@ func (m *Model) Name() string {
 }
 
 // Build func
-func (m *Model) Build(dir string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Model) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	modelByte, _ := vfsutil.ReadFile(template.Assets, "model.tmpl")
 	for _, table := range node.Tables {
