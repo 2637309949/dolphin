@@ -5,12 +5,15 @@
 package gen
 
 import (
+	"bytes"
 	"fmt"
 	"html/template"
+	"io"
 	"os"
 	"os/exec"
 	"path"
 	"reflect"
+	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/modules"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -94,17 +97,18 @@ func (gen *Gen) BuildWithDir(dir string, args []string) error {
 func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 	var err error
 	var tpl *template.Template
-
 	tpl = template.New("template")
 	tpl.Funcs(template.FuncMap{
 		"last": func(x int, a interface{}) bool {
 			return x == reflect.ValueOf(a).Len()-1
 		},
+		"safeHTML": func(b string) template.URL {
+			return template.URL(b)
+		},
 	})
 	if tpl, err = tpl.Parse(cfg.Text); err != nil {
 		return err
 	}
-
 	if _, err = os.Stat(cfg.FilePath); err == nil {
 		if cfg.Overlap == pipe.OverlapInc {
 			cfg.FilePath = cfg.FilePath + ".new"
@@ -116,12 +120,19 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 			return nil
 		}
 	}
-
+	var bf bytes.Buffer
+	bfw := io.Writer(&bf)
 	w, err := utils.OpenFile(cfg.FilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return err
 	}
-	if err = tpl.Execute(w, cfg.Data); err != nil {
+	if err = tpl.Execute(bfw, cfg.Data); err != nil {
+		return err
+	}
+	sbt := string(bf.Bytes())
+	sbt = strings.ReplaceAll(sbt, "&#39;", "'")
+	_, err = w.WriteString(sbt)
+	if err != nil {
 		return err
 	}
 	if cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" {

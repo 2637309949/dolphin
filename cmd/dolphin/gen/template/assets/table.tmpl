@@ -1,5 +1,5 @@
 <table name="{{.Table.Name}}" desc="{{.Table.Desc}}" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
 	{{- range .Table.Columns}}
-	<column name="{{.Name}}" desc="{{.Desc}}" type="{{.Type}}" xorm="{{.Xorm}}" />
+	<column name="{{.Name}}" desc="{{.Desc}}" type="{{.Type}}" xorm="{{.Xorm | safeHTML}}" />
 	{{- end}}
 </table>

@@ -13,6 +13,7 @@ type (
 		Overlap  Overlap
 		GOFmt    bool
 		GOProto  bool
+		Format   func(string) string
 	}
 	// Pipe interface
 	Pipe interface {

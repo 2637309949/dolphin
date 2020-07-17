@@ -44,7 +44,7 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 	if err != nil {
 		return tmplCfgs, err
 	}
-	err = engine.SQL("select data_source, driver_name from sys_domain where del_flag=0 and status=1").Find(&dataSources)
+	err = engine.SQL("select data_source, driver_name from sys_domain where del_flag=0 and status=1 and app_name=?", viper.GetString("app.name")).Find(&dataSources)
 	if err != nil {
 		return tmplCfgs, err
 	}
@@ -66,19 +66,23 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				c := schema.Column{}
 				c.Name = col.Name
 				c.Desc = col.Comment
+
 				// convert golang type
 				switch col.SQLType.Name {
 				case "VARCHAR", "TEXT":
 					c.Type = "null.String"
 				case "DATETIME":
 					c.Type = "null.Time"
-				case "INT":
+				case "INT", "BIGINT":
 					c.Type = "null.Int"
 				case "DECIMAL":
 					c.Type = "decimal.Decimal"
-				case "FLOAT":
+				case "BOOLEAN":
+					c.Type = "decimal.Bool"
+				case "FLOAT", "DOUBLE":
 					c.Type = "null.Float"
 				}
+
 				// convert sql type
 				switch col.SQLType.Name {
 				case "VARCHAR", "TEXT":
@@ -88,19 +92,22 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 					}
 				case "DATETIME":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-				case "INT":
+				case "INT", "BIGINT":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 					if col.SQLType.DefaultLength != 0 {
 						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
 					}
-				case "FLOAT":
+				case "BOOLEAN":
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
+				case "FLOAT", "DOUBLE":
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 					if col.SQLType.DefaultLength != 0 {
-						c.Xorm = fmt.Sprintf("%v(%v, %v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
+						c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
 					}
 				case "DECIMAL":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 					if col.SQLType.DefaultLength != 0 {
-						c.Xorm = fmt.Sprintf("%v(%v, %v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
+						c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
 					}
 				}
 				if col.IsPrimaryKey {
@@ -112,6 +119,10 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				if col.IsAutoIncrement {
 					c.Xorm = fmt.Sprintf("%v %v", c.Xorm, "autoincr")
 				}
+				if col.Default != "" {
+					c.Xorm = fmt.Sprintf(`%v default(%v)`, c.Xorm, col.Default)
+				}
+				c.Xorm = fmt.Sprintf("%v", c.Xorm)
 				meta.Columns = append(meta.Columns, &c)
 			}
 			data := map[string]interface{}{
