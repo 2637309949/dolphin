@@ -152,16 +152,20 @@ time="2020/06/13 11:55:58" level=info msg="http listen on port:8082"
 ## command
 
 ### build
+The build command generates the preset function by executing the built-in Pipeline function, You can specify that only a pipeline will be executed via the @ symbol
 
 ```sh
 dolphin build @table xml/test
 ```
+
 ### clean
+The clean command clears temporary files
 
 ```sh
 dolphin clean
 ```
 ### init
+The init command, as stated, generates a series of initialization files
 
 ```sh
 dolphin init
