@@ -10,23 +10,23 @@ import (
 // SysDataPermission defined 数据权限表
 type SysDataPermission struct {
 	// 主键
-	ID null.String `xorm:"varchar(36) notnull unique pk 'id'" json:"id" xml:"id"`
+	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" xml:"id"`
 	// 名称
-	Name null.String `xorm:"varchar(36) notnull 'name'" json:"name" xml:"name"`
+	Name null.String `xorm:"varchar(36) notnull comment('名称') 'name'" json:"name" xml:"name"`
 	// 编码
-	Code null.String `xorm:"varchar(36) 'code'" json:"code" xml:"code"`
+	Code null.String `xorm:"varchar(36) comment('编码') 'code'" json:"code" xml:"code"`
 	// 创建人
-	CreateBy null.String `xorm:"varchar(36) notnull 'create_by'" json:"create_by" xml:"create_by"`
+	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间
-	CreateTime null.Time `xorm:"datetime notnull 'create_time'" json:"create_time" xml:"create_time"`
+	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" xml:"create_time"`
 	// 最后更新人
-	UpdateBy null.String `xorm:"varchar(36) notnull 'update_by'" json:"update_by" xml:"update_by"`
+	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" xml:"update_by"`
 	// 最后更新时间
-	UpdateTime null.Time `xorm:"datetime notnull 'update_time'" json:"update_time" xml:"update_time"`
+	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" xml:"update_time"`
 	// 删除标记
-	DelFlag null.Int `xorm:"notnull 'del_flag'" json:"del_flag" xml:"del_flag"`
+	DelFlag null.Int `xorm:"notnull comment('删除标记') 'del_flag'" json:"del_flag" xml:"del_flag"`
 	// 备注
-	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" xml:"remark"`
 }
 
 // TableName table name of defined SysDataPermission

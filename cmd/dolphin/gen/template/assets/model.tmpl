@@ -9,7 +9,7 @@ package model
 type {{.Table.ToUpperCase .Table.Name}} struct {
 	{{- range .Table.Columns}}
 	// {{.Desc}}
-	{{.ToUpperCase .Name}} {{.SRef .Type}} `xorm:"{{.Xorm}} '{{.Name}}'" json:"{{- if ne .JSON ""}}{{.JSON}}{{- else}}{{.Name}}{{- end}}" xml:"{{.Name}}"{{- if ne .Example ""}} example:"{{.Example}}"{{- end}}`
+	{{.ToUpperCase .Name}} {{.SRef .Type}} `xorm:"{{- if ne .Xorm ""}}{{.Xorm}} {{end}}{{- if ne .Desc ""}}comment('{{.Desc}}') {{end}}'{{.Name}}'" json:"{{- if ne .JSON ""}}{{.JSON}}{{- else}}{{.Name}}{{- end}}" xml:"{{.Name}}"{{- if ne .Example ""}} example:"{{.Example}}"{{- end}}`
 	{{- end}}
 }
 

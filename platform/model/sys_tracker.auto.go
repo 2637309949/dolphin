@@ -10,43 +10,43 @@ import (
 // SysTracker defined 日志跟踪
 type SysTracker struct {
 	// 主键
-	ID null.String `xorm:"varchar(36) notnull unique pk 'id'" json:"id" xml:"id"`
+	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" xml:"id"`
 	// 令牌
-	Token null.String `xorm:"varchar(72) 'token'" json:"token" xml:"token"`
+	Token null.String `xorm:"varchar(72) comment('令牌') 'token'" json:"token" xml:"token"`
 	// 应用归属
-	AppName null.String `xorm:"varchar(36) notnull 'app_name'" json:"app_name" xml:"app_name"`
+	AppName null.String `xorm:"varchar(36) notnull comment('应用归属') 'app_name'" json:"app_name" xml:"app_name"`
 	// 域名
-	Domain null.String `xorm:"varchar(36) 'domain'" json:"domain" xml:"domain"`
+	Domain null.String `xorm:"varchar(36) comment('域名') 'domain'" json:"domain" xml:"domain"`
 	// 用户ID
-	UserId null.String `xorm:"varchar(36) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.String `xorm:"varchar(36) comment('用户ID') 'user_id'" json:"user_id" xml:"user_id"`
 	// 状态
-	StatusCode null.Int `xorm:"int 'status_code'" json:"status_code" xml:"status_code"`
+	StatusCode null.Int `xorm:"int comment('状态') 'status_code'" json:"status_code" xml:"status_code"`
 	// 反应时间
-	Latency null.Float `xorm:"float 'latency'" json:"latency" xml:"latency"`
+	Latency null.Float `xorm:"float comment('反应时间') 'latency'" json:"latency" xml:"latency"`
 	// 客户端id
-	ClientIp null.String `xorm:"varchar(36) 'client_ip'" json:"client_ip" xml:"client_ip"`
+	ClientIp null.String `xorm:"varchar(36) comment('客户端id') 'client_ip'" json:"client_ip" xml:"client_ip"`
 	// 请求方法
-	Method null.String `xorm:"varchar(36) 'method'" json:"method" xml:"method"`
+	Method null.String `xorm:"varchar(36) comment('请求方法') 'method'" json:"method" xml:"method"`
 	// 请求路径
-	Path null.String `xorm:"varchar(512) 'path'" json:"path" xml:"path"`
+	Path null.String `xorm:"varchar(512) comment('请求路径') 'path'" json:"path" xml:"path"`
 	// 请求头
-	Header []byte `xorm:"blob 'header'" json:"header" xml:"header"`
+	Header []byte `xorm:"blob comment('请求头') 'header'" json:"header" xml:"header"`
 	// 请求体
-	ReqBody []byte `xorm:"mediumblob 'req_body'" json:"req_body" xml:"req_body"`
+	ReqBody []byte `xorm:"mediumblob comment('请求体') 'req_body'" json:"req_body" xml:"req_body"`
 	// 返回体
-	ResBody []byte `xorm:"mediumblob 'res_body'" json:"res_body" xml:"res_body"`
+	ResBody []byte `xorm:"mediumblob comment('返回体') 'res_body'" json:"res_body" xml:"res_body"`
 	// 创建人
-	CreateBy null.String `xorm:"varchar(36) notnull 'create_by'" json:"create_by" xml:"create_by"`
+	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间
-	CreateTime null.Time `xorm:"datetime notnull 'create_time'" json:"create_time" xml:"create_time"`
+	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" xml:"create_time"`
 	// 最后更新人
-	UpdateBy null.String `xorm:"varchar(36) notnull 'update_by'" json:"update_by" xml:"update_by"`
+	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" xml:"update_by"`
 	// 最后更新时间
-	UpdateTime null.Time `xorm:"datetime notnull 'update_time'" json:"update_time" xml:"update_time"`
+	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" xml:"update_time"`
 	// 删除标记
-	DelFlag null.Int `xorm:"notnull 'del_flag'" json:"del_flag" xml:"del_flag"`
+	DelFlag null.Int `xorm:"notnull comment('删除标记') 'del_flag'" json:"del_flag" xml:"del_flag"`
 	// 备注
-	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" xml:"remark"`
 }
 
 // TableName table name of defined SysTracker

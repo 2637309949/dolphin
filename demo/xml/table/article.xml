@@ -5,7 +5,7 @@
     <column name="is_super_topic_vote" desc="是否超级话题投票" type="null.Int" />
     <column name="excerpt" desc="摘录" type="null.String" xorm="varchar(512)" />
     <column name="is_vote" desc="是否投票" type="null.Int" />
-    <column name="is_black" desc="是否拉黑" type="null.Int" />
+    <column name="is_black" type="null.Int" />
     <column name="questions_count" desc="提问数目" type="null.Int" />
 	<column name="category" desc="分类" type="null.String" xorm="varchar(36)" />
 	<column name="name" desc="标题" type="null.String" xorm="varchar(108)" />

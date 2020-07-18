@@ -29,7 +29,6 @@ definitions:
         description: 简介
         type: string
       is_black:
-        description: 是否拉黑
         type: number
       is_super_topic_vote:
         description: 是否超级话题投票
@@ -95,7 +94,6 @@ definitions:
         description: 简介
         type: string
       is_black:
-        description: 是否拉黑
         type: number
       is_super_topic_vote:
         description: 是否超级话题投票
