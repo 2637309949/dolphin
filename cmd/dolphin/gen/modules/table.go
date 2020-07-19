@@ -56,7 +56,10 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 		engines = append(engines, engine)
 	}
 	for _, engine := range engines {
-		tables, _ := engine.DBMetas()
+		tables, err := engine.DBMetas()
+		if err != nil {
+			return tmplCfgs, err
+		}
 		for _, tb := range tables {
 			meta := schema.Table{}
 			meta.Name = tb.Name
