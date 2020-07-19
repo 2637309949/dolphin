@@ -217,7 +217,7 @@ func (c *Common) PRef(m string) string {
 	if strings.HasPrefix(m, "$") {
 		return fmt.Sprintf("%v", c.ToUpperCase(strings.ReplaceAll(m, "$", "")))
 	}
-	return c.ToUpperCase(m)
+	return m
 }
 
 // SRef defined model name
