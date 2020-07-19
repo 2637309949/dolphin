@@ -41,6 +41,7 @@ var lines = []pipe.Pipe{
 	&modules.SQLTPL{},
 	&modules.Boilerplate{},
 	&modules.Table{},
+	&modules.Deploy{},
 }
 
 // AddPipe defined addPipe

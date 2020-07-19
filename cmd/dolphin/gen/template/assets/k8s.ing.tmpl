@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Ingress
+metadata:
+  name: {{.Name}}
+  namespace: dolphin
+spec:
+  rules:
+  - host: www.yourhost.com
+    http:
+      paths:
+      - backend:
+          serviceName: {{.Name}}
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - www.yourhost.com
+    secretName: www-tls

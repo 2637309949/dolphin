@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: demo
+  name: demo
+  namespace: dolphin
+binaryData:
+data:
+  app.properties: |-
+    app.name = demo
+    app.mode = debug
+    http.port = 8082
