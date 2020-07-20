@@ -33,6 +33,7 @@ func (dp *Deploy) Build(dir string, args []string, node *schema.Application) ([]
 	dpyByte, _ := vfsutil.ReadFile(template.Assets, "k8s.dpy.tmpl")
 	ingByte, _ := vfsutil.ReadFile(template.Assets, "k8s.ing.tmpl")
 	srvByte, _ := vfsutil.ReadFile(template.Assets, "k8s.srv.tmpl")
+	tlsByte, _ := vfsutil.ReadFile(template.Assets, "k8s.tls.tmpl")
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
 			Text:     string(cfgByte),
@@ -55,6 +56,12 @@ func (dp *Deploy) Build(dir string, args []string, node *schema.Application) ([]
 		&pipe.TmplCfg{
 			Text:     string(srvByte),
 			FilePath: path.Join(dir, viper.GetString("dir.deploy"), "service.yaml"),
+			Data:     data,
+			Overlap:  pipe.OverlapSkip,
+		},
+		&pipe.TmplCfg{
+			Text:     string(tlsByte),
+			FilePath: path.Join(dir, viper.GetString("dir.deploy"), "tls.yaml"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 		},
