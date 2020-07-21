@@ -48,7 +48,7 @@ $ go get -u github.com/2637309949/dolphin/cmd/dolphin
 2. Create project dir and run dolphin
 
 ```sh
-$ mkdir example && cd example && dolphin init && dolphin build && go run main
+$ mkdir example && cd example && dolphin init && dolphin build && go run main.go
 ```
 
 Output:
