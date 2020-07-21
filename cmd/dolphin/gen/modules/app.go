@@ -38,6 +38,7 @@ func (app *App) Build(dir string, args []string, node *schema.Application) ([]*p
 			FilePath: path.Join(dir, viper.GetString("dir.app"), "app.go"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
+			GOFmt:    true,
 		},
 	}, nil
 }
