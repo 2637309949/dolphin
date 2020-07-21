@@ -209,7 +209,7 @@ func (c *Common) Ref(m string) string {
 		}
 		return fmt.Sprintf("model.%v", c.ToUpperCase(m))
 	}
-	return c.ToUpperCase(m)
+	return m
 }
 
 // PRef defined model name
