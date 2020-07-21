@@ -60,7 +60,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("dir.srv", "srv")
 	viper.SetDefault("dir.rpc", "rpc")
 	viper.SetDefault("dir.xml", "xml")
-	viper.SetDefault("dir.deploy", "deploy")
+	viper.SetDefault("dir.k8s", "k8s")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
 	viper.SetDefault("swag.securitydefinitions.oauth2.accessCode", "OAuth2AccessCode")

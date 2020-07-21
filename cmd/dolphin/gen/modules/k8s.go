@@ -37,31 +37,31 @@ func (dp *Deploy) Build(dir string, args []string, node *schema.Application) ([]
 	return []*pipe.TmplCfg{
 		&pipe.TmplCfg{
 			Text:     string(cfgByte),
-			FilePath: path.Join(dir, viper.GetString("dir.deploy"), "configmap.yaml"),
+			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "configmap.yaml"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 		},
 		&pipe.TmplCfg{
 			Text:     string(dpyByte),
-			FilePath: path.Join(dir, viper.GetString("dir.deploy"), "deployment.yaml"),
+			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "deployment.yaml"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 		},
 		&pipe.TmplCfg{
 			Text:     string(ingByte),
-			FilePath: path.Join(dir, viper.GetString("dir.deploy"), "ingress.yaml"),
+			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "ingress.yaml"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 		},
 		&pipe.TmplCfg{
 			Text:     string(srvByte),
-			FilePath: path.Join(dir, viper.GetString("dir.deploy"), "service.yaml"),
+			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "service.yaml"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 		},
 		&pipe.TmplCfg{
 			Text:     string(tlsByte),
-			FilePath: path.Join(dir, viper.GetString("dir.deploy"), "tls.yaml"),
+			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "tls.yaml"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 		},
