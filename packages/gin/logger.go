@@ -11,8 +11,6 @@ import (
 	"os"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/logrus"
-
 	"github.com/mattn/go-isatty"
 )
 
@@ -72,7 +70,7 @@ type LogFormatterParams struct {
 	Path string
 	// ErrorMessage is set if error has occurred in processing the request.
 	ErrorMessage string
-	// IsTerm shows whether does gin's output descriptor refers to a terminal.
+	// isTerm shows whether does gin's output descriptor refers to a terminal.
 	IsTerm bool
 	// BodySize is the size of the Response Body
 	BodySize int
@@ -130,34 +128,11 @@ func (p *LogFormatterParams) IsOutputColor() bool {
 	return consoleColorMode == forceColor || (consoleColorMode == autoColor && p.IsTerm)
 }
 
-// // defaultLogFormatter is the default log format function Logger middleware uses.
-// var defaultLogFormatter = func(param LogFormatterParams) string {
-// 	var statusColor, methodColor, resetColor string
-// 	if param.IsOutputColor() {
-// 		statusColor = param.StatusCodeColor()
-// 		methodColor = param.MethodColor()
-// 		resetColor = param.ResetColor()
-// 	}
-
-// 	if param.Latency > time.Minute {
-// 		// Truncate in a golang < 1.8 safe way
-// 		param.Latency = param.Latency - param.Latency%time.Second
-// 	}
-// 	return fmt.Sprintf("%v |%s %3d %s| %13v | %15s |%s %-7s %s %s\n%s",
-// 		param.TimeStamp.Format("2006/01/02 - 15:04:05"),
-// 		statusColor, param.StatusCode, resetColor,
-// 		param.Latency,
-// 		param.ClientIP,
-// 		methodColor, param.Method, resetColor,
-// 		param.Path,
-// 		param.ErrorMessage,
-// 	)
-// }
-
 // defaultLogFormatter is the default log format function Logger middleware uses.
 var defaultLogFormatter = func(param LogFormatterParams) string {
-	var methodColor, resetColor string
+	var statusColor, methodColor, resetColor string
 	if param.IsOutputColor() {
+		statusColor = param.StatusCodeColor()
 		methodColor = param.MethodColor()
 		resetColor = param.ResetColor()
 	}
@@ -166,8 +141,9 @@ var defaultLogFormatter = func(param LogFormatterParams) string {
 		// Truncate in a golang < 1.8 safe way
 		param.Latency = param.Latency - param.Latency%time.Second
 	}
-	return fmt.Sprintf("%3d | %13v | %15s |%s %-7s %s %s%s",
-		param.StatusCode,
+	return fmt.Sprintf("[GIN] %v |%s %3d %s| %13v | %15s |%s %-7s %s %#v\n%s",
+		param.TimeStamp.Format("2006/01/02 - 15:04:05"),
+		statusColor, param.StatusCode, resetColor,
 		param.Latency,
 		param.ClientIP,
 		methodColor, param.Method, resetColor,
@@ -289,7 +265,7 @@ func LoggerWithConfig(conf LoggerConfig) HandlerFunc {
 
 			param.Path = path
 
-			logrus.Info(formatter(param))
+			fmt.Fprint(out, formatter(param))
 		}
 	}
 }

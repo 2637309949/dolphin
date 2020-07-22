@@ -29,11 +29,11 @@ require (
 	github.com/go-errors/errors v1.0.1
 	github.com/go-openapi/jsonreference v0.19.3
 	github.com/go-openapi/spec v0.19.5
-	github.com/go-playground/validator/v10 v10.0.1
+	github.com/go-playground/validator/v10 v10.2.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gogo/protobuf v1.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20190129154638-5b532d6fd5ef // indirect
-	github.com/golang/protobuf v1.3.2
+	github.com/golang/protobuf v1.3.3
 	github.com/google/btree v1.0.0 // indirect
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/websocket v1.4.0 // indirect
@@ -49,7 +49,7 @@ require (
 	github.com/lestrrat-go/strftime v1.0.1
 	github.com/lib/pq v1.7.0
 	github.com/magiconair/properties v1.8.1
-	github.com/mattn/go-isatty v0.0.11
+	github.com/mattn/go-isatty v0.0.12
 	github.com/memcachier/mc v2.0.1+incompatible
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/mitchellh/mapstructure v1.1.2
@@ -72,7 +72,7 @@ require (
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/tidwall/buntdb v1.1.2
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5 // indirect
-	github.com/ugorji/go v1.1.4
+	github.com/ugorji/go/codec v1.1.7
 	github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 // indirect
 	github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77
 	go.etcd.io/bbolt v1.3.2 // indirect
@@ -92,5 +92,5 @@ require (
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.30.2
 	gopkg.in/ini.v1 v1.51.0
-	gopkg.in/yaml.v2 v2.2.5
+	gopkg.in/yaml.v2 v2.2.8
 )
