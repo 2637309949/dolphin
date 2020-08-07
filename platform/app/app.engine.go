@@ -25,7 +25,6 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/log"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/sql"
@@ -80,13 +79,11 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 }
 
 func (e *Engine) database() {
-	xLogger := log.NewSimpleLogger(logrus.StandardLogger().Out)
-	xLogger.ShowSQL(viper.GetString("app.mode") == "debug")
-
 	// initPlatformDB
+	xlogger := createXLogger()
 	e.PlatformDB = util.EnsureLeft(xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))).(*xorm.Engine)
 	util.Ensure(e.PlatformDB.Ping())
-	e.PlatformDB.SetLogger(xLogger)
+	e.PlatformDB.SetLogger(xlogger)
 	e.PlatformDB.SetConnMaxLifetime(10 * time.Minute)
 	e.PlatformDB.SetMaxIdleConns(30)
 	e.PlatformDB.SetMaxOpenConns(80)
@@ -104,7 +101,7 @@ func (e *Engine) database() {
 		uri := util.EnsureLeft(http.Parse(domain.DataSource.String)).(*http.URI)
 		util.EnsureLeft(e.PlatformDB.SQL(fmt.Sprintf("create database if not exists %v default character set utf8mb4", uri.DbName)).Execute())
 		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)
-		db.SetLogger(xLogger)
+		db.SetLogger(xlogger)
 		db.SetConnMaxLifetime(10 * time.Minute)
 		db.SetMaxIdleConns(30)
 		db.SetMaxOpenConns(80)

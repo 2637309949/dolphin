@@ -90,12 +90,12 @@ func Ensure(err error) {
 func SetFormatter(isTerminal bool) {
 	if !isTerminal {
 		logrus.SetFormatter(&logrus.JSONFormatter{
-			TimestampFormat: "2006/01/02 15:04:05",
+			TimestampFormat: "02/01 15:04:05",
 		})
 	} else {
 		logrus.SetFormatter(&logrus.TextFormatter{
 			FullTimestamp:   true,
-			TimestampFormat: "2006/01/02 15:04:05",
+			TimestampFormat: "02/01 15:04:05",
 		})
 	}
 }

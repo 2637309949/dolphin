@@ -16,6 +16,7 @@ import (
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/log"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util"
@@ -23,6 +24,38 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
 )
+
+// XLogger defined
+type XLogger struct {
+	*logrus.Logger
+	showSQL bool
+	level   log.LogLevel
+}
+
+// ShowSQL implement ILogger
+func (s *XLogger) ShowSQL(show ...bool) {
+	if len(show) == 0 {
+		s.showSQL = true
+		return
+	}
+	s.showSQL = show[0]
+}
+
+// IsShowSQL implement ILogger
+func (s *XLogger) IsShowSQL() bool {
+	return s.showSQL
+}
+
+// Level implement ILogger
+func (s *XLogger) Level() log.LogLevel {
+	return s.level
+}
+
+// SetLevel implement ILogger
+func (s *XLogger) SetLevel(l log.LogLevel) {
+	s.level = l
+	return
+}
 
 // TrackerStore store logs
 var TrackerStore func(beans *[]model.SysTracker) error
@@ -89,6 +122,15 @@ func initTracker() {
 			}
 		}
 	}()
+}
+
+func createXLogger() interface{} {
+	xlogger := &XLogger{
+		Logger: logrus.StandardLogger(),
+	}
+	xlogger.SetLevel(log.DEFAULT_LOG_LEVEL)
+	xlogger.ShowSQL(viper.GetString("app.mode") == "debug")
+	return xlogger
 }
 
 func init() {
