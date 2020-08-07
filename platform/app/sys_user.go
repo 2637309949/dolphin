@@ -198,7 +198,6 @@ func SysUserPage(ctx *Context) {
 		OrgName  null.String `json:"org_name" xml:"org_name"`
 		OrgID    null.String `json:"org_id" xml:"org_id"`
 	}))
-
 	if ctx.QueryBool("__export__") {
 		cfg := NewBuildExcelConfig(ret.Data)
 		cfg.Format = OptionsetsFormat(ctx.DB)

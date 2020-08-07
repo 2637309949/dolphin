@@ -33,7 +33,6 @@ func SysTrackerPage(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-
 	if ctx.QueryBool("__export__") {
 		cfg := NewBuildExcelConfig(ret.Data)
 		cfg.Format = OptionsetsFormat(ctx.DB)
