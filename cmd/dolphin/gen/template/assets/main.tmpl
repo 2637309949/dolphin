@@ -14,5 +14,5 @@ import (
 
 //go:generate dolphin build
 func main() {
-	app.App.Run()
+	app.Run()
 }

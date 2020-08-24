@@ -236,5 +236,10 @@ func buildEngine() *Engine {
 	return e
 }
 
+// Run app
+func Run() {
+	App.Run()
+}
+
 // App defined application
 var App = buildEngine()

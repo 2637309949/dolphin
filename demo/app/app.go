@@ -91,5 +91,10 @@ func buildEngine() *Engine {
 	return e
 }
 
+// Run app
+func Run() {
+	App.Run()
+}
+
 // App instance
 var App = buildEngine()
