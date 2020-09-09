@@ -68,7 +68,6 @@ func ArticleDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -142,7 +141,8 @@ func ArticleGet(ctx *Context) {
 	id := ctx.Query("id")
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
-		ctx.Fail(err)
+		logrus.Error(err)
+
 		return
 	}
 	ctx.Success(entity)
@@ -161,11 +161,13 @@ func ArticleGet(ctx *Context) {
 func ArticlePayment(ctx *Context) {
 	var payload model.ArticleInfo
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.ArticleAction(payload)
+	ret, err := srv.ArticleAction(ctx.Context.Context, ctx.DB, struct{}{})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
