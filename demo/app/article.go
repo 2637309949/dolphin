@@ -165,7 +165,7 @@ func ArticlePayment(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.ArticleAction(ctx.Context.Context, ctx.DB, struct{}{})
+	ret, err := srv.ArticleAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

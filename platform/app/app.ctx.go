@@ -46,6 +46,11 @@ type (
 	}
 )
 
+// Raw defined
+func (ctx *Context) Raw() *gin.Context {
+	return ctx.Context
+}
+
 // LoginInInfo defined
 func (ctx *Context) LoginInInfo() model.SysUser {
 	user := model.SysUser{}
