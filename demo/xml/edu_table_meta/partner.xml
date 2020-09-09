@@ -1,0 +1,11 @@
+<table name="partner" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="partner_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="pr_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="pr_remark" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="partner_type" desc="" type="null.Int" xorm="int(11)" />
+</table>

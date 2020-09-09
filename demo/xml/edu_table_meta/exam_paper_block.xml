@@ -1,0 +1,15 @@
+<table name="exam_paper_block" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="e_p_b_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="ep_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="block_name" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="block_time_length" desc="" type="null.Int" xorm="int(11)" />
+	<column name="block_ques_num" desc="" type="null.Int" xorm="int(11)" />
+	<column name="block_score" desc="" type="null.Int" xorm="int(11)" />
+	<column name="block_order" desc="" type="null.Int" xorm="int(11)" />
+	<column name="block_remark" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+</table>

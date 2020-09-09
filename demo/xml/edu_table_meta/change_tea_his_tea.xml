@@ -1,0 +1,14 @@
+<table name="change_tea_his_tea" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="c_t_h_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="pk_change_tea" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_his_tea" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="start_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="end_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="kq_kc" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="if_kou_hour" desc="" type="null.Int" xorm="int(11)" />
+</table>

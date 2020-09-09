@@ -1,0 +1,24 @@
+<table name="market_fee_budget" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="m_f_b_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="project_name" desc="" type="null.Int" xorm="int(11)" />
+	<column name="digest" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="budget_detail" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="bgdget_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="remake" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="xgygout" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="xgygin" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="xgygbmr" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="budget_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="budget_school" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pro_name" desc="" type="null.Int" xorm="int(11)" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="begin_month" desc="" type="null.Time" xorm="datetime" />
+	<column name="end_month" desc="" type="null.Time" xorm="datetime" />
+	<column name="xgygmoney" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="mfb_city" desc="" type="null.Int" xorm="int(11)" />
+</table>

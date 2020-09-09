@@ -1,0 +1,18 @@
+<table name="invite_visit" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="plan_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="plan_content" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="real_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="iv_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sv_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sc_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="i_v_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="room_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="iv_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="stu_department" desc="" type="null.Int" xorm="int(11)" />
+</table>

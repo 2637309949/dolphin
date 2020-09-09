@@ -1,0 +1,13 @@
+<table name="materiel_minus" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="m_m_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="materiel_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="minus_num" desc="" type="null.Int" xorm="int(11)" />
+	<column name="minus_money" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="minus_reason" desc="" type="null.Int" xorm="int(11)" />
+	<column name="minus_object" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+</table>

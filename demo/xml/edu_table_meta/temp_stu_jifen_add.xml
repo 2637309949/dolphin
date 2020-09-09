@@ -1,0 +1,7 @@
+<table name="temp_stu_jifen_add" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="fid" desc="" type="null.Int" xorm="int(255) pk notnull" />
+	<column name="stu_name" desc="" type="null.String" xorm="varchar(255)" />
+	<column name="stu_phone" desc="" type="null.String" xorm="varchar(255)" />
+	<column name="zj_jifen" desc="" type="null.Int" xorm="int(11)" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(255)" />
+</table>

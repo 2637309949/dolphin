@@ -1,0 +1,17 @@
+<table name="student_customer" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_c_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="customer" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sc_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="stu_type_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sc_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="history_kf" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cancel_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="if_pl" desc="" type="null.Int" xorm="int(11)" />
+</table>

@@ -1,0 +1,23 @@
+<table name="user_message_notification" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="u_m_n_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="notice_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="message_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="message_content" desc="" type="null.String" xorm="varchar(10000)" />
+	<column name="if_read" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="ops_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cct_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pe_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="if_send" desc="" type="null.Int" xorm="int(11)" />
+	<column name="css_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="scs_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="language_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cs_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pacs_id" desc="" type="null.Int" xorm="int(11)" />
+</table>

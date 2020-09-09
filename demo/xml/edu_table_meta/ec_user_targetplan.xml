@@ -1,0 +1,15 @@
+<table name="ec_user_targetplan" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="e_u_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="plan_month" desc="" type="null.Time" xorm="datetime" />
+	<column name="mb_sign_num" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="user_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="user_phone" desc="" type="null.String" xorm="varchar(11)" />
+	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="month_task" desc="" type="null.Float" xorm="float(50,2)" />
+</table>

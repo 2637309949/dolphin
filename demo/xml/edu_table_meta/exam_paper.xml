@@ -1,0 +1,15 @@
+<table name="exam_paper" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="exam_paper_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="ep_name" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="ep_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ep_duration" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="ep_total_score" desc="" type="null.Int" xorm="int(11)" />
+	<column name="passing_score" desc="" type="null.Int" xorm="int(11)" />
+	<column name="eq_number" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+</table>

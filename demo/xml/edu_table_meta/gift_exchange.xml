@@ -1,0 +1,13 @@
+<table name="gift_exchange" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="g_e_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="express_number" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="stu_address" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="return_reason" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="gift_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="stu_gift_id" desc="" type="null.Int" xorm="int(11)" />
+</table>

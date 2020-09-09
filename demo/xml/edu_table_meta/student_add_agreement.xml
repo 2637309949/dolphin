@@ -1,0 +1,27 @@
+<table name="student_add_agreement" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_a_a_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="pk_stu" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="pk_pro_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_saam" desc="" type="null.Int" xorm="int(11)" />
+	<column name="stu_sign" desc="" type="null.Int" xorm="int(11)" />
+	<column name="jhr_sign" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sq_sign" desc="" type="null.Int" xorm="int(11)" />
+	<column name="stu_sign_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="yf_sign_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="pk_sch" desc="" type="null.Int" xorm="int(11)" />
+	<column name="agree_num" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="agreement_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="saa_desc" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="parent_auth_sign" desc="" type="null.Int" xorm="int(11)" />
+	<column name="parent_auth_sign_remark" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="check_status" desc="" type="null.Int" xorm="int(11) default(1751)" />
+	<column name="check_remark" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="check_user" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="shifou_update" desc="" type="null.Int" xorm="int(11)" />
+</table>

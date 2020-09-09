@@ -1,0 +1,31 @@
+<table name="fail_apply" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="fail_apply_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="fa_reason" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="fa_remark" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="fa_opponent" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="check_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_two_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="fail_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="check_remark" desc="" type="null.String" xorm="varchar(300)" />
+	<column name="check_two_remark" desc="" type="null.String" xorm="varchar(300)" />
+	<column name="entering_check_user" desc="" type="null.Int" xorm="int(11)" />
+	<column name="entering_check_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="sales_supervisor_check_user" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sales_supervisor_check_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="principal_check_user" desc="" type="null.Int" xorm="int(11)" />
+	<column name="principal_check_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="fa_buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pa_check_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pa_remark" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="if_from_tmk" desc="" type="null.Int" xorm="int(11)" />
+	<column name="old_stu_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="old_stu_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="hj_tmkjl_checkstate" desc="" type="null.Int" xorm="int(11)" />
+	<column name="hj_tmkjl_check_desc" desc="" type="null.String" xorm="varchar(1000)" />
+</table>

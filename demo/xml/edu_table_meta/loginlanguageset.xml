@@ -1,0 +1,5 @@
+<table name="loginlanguageset" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="t_224_0" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="language_name" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+</table>

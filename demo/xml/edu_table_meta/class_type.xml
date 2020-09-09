@@ -1,0 +1,24 @@
+<table name="class_type" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="class_type_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="ct_name" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="ct_remark" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="ct_number" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="ct_money" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ct_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ct_one_price" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ct_sort" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ct_minit" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="org_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ifmaincourse" desc="" type="null.Int" xorm="int(11) default(0)" />
+	<column name="ct_course_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="english_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="achievement_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="order_edition" desc="" type="null.Int" xorm="int(11)" />
+	<column name="mzks" desc="" type="null.Float" xorm="float(50,2)" />
+</table>

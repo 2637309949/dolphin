@@ -1,0 +1,17 @@
+<table name="stu_parent" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="stu_parent_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_parent_name" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="stu_parent_phone" desc="" type="null.String" xorm="varchar(11)" />
+	<column name="stu_parent_password" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="user_login_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="temp_phone" desc="" type="null.String" xorm="varchar(11)" />
+	<column name="jpush_code_par" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="par_appversion" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="par_appneedupdate" desc="" type="null.Int" xorm="int(11)" />
+	<column name="identification_number" desc="" type="null.String" xorm="varchar(1000)" />
+</table>

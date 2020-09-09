@@ -1,0 +1,26 @@
+<table name="student_class" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_c_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cm_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="of_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sc_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="if_cb" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="sc_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="zc_class" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sc_price" desc="" type="null.Int" xorm="int(11)" />
+	<column name="join_source" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="os_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="final_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="one_price" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="refund_one_price" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="visit_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="out_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(100)" />
+</table>

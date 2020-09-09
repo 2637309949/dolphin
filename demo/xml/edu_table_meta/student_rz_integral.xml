@@ -1,0 +1,18 @@
+<table name="student_rz_integral" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_r_i_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="integral" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="integral_source" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="integral_desc" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="integral_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="tls_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="buy_orderid" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ltorder_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="fee_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_odd" desc="" type="null.Int" xorm="int(11)" />
+</table>

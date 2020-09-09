@@ -1,0 +1,41 @@
+<table name="student_class_schedule" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_c_s_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cs_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.Int" xorm="int(11)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="scm_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="baoban_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="iv_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="scsp_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="bd_kc" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="attend_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="app_start_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="app_end_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="sts_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="kf_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="kq_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="if_kou_hour" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sct_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sctmin" desc="" type="null.Float" xorm="float(50,2) default(40.00)" />
+	<column name="csskqkc" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="csskq_ks" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="stu_ktfk_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="stu_ktzy_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="stu_wczy_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="tea_pg_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="stu_ktsl_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="stu_ktnr_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="stu_pj_num" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="class_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sch_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="one_price" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="all_price" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="real_kc" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="change_stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(100)" />
+</table>

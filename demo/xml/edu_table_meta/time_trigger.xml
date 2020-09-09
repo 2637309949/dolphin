@@ -1,0 +1,9 @@
+<table name="time_trigger" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="tg_tj_namestr" desc="" type="null.String" xorm="varchar(500) notnull" />
+	<column name="t_324_0" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="tg_name" desc="" type="null.String" xorm="varchar(500) notnull" />
+	<column name="tablecnname" desc="" type="null.String" xorm="varchar(500) notnull" />
+	<column name="exe_betweentime" desc="" type="null.String" xorm="varchar(500) notnull" />
+	<column name="exe_time" desc="" type="null.String" xorm="varchar(500) notnull" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+</table>
