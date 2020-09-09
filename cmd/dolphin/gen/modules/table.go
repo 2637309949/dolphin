@@ -61,18 +61,19 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 			return tmplCfgs, err
 		}
 		for _, tb := range tables {
+			logrus.Infoln(tb.Name)
 			meta := schema.Table{}
 			meta.Name = tb.Name
 			meta.Desc = tb.Comment
 			meta.Columns = []*schema.Column{}
 			for _, col := range tb.Columns() {
 				c := schema.Column{}
-				c.Name = col.Name
+				c.Name = strings.ToLower(col.Name)
 				c.Desc = col.Comment
 
 				// convert golang type
 				switch col.SQLType.Name {
-				case "VARCHAR", "TEXT":
+				case "VARCHAR", "TEXT", "LONGTEXT":
 					c.Type = "null.String"
 				case "DATETIME":
 					c.Type = "null.Time"
@@ -116,7 +117,7 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				if col.IsPrimaryKey {
 					c.Xorm = fmt.Sprintf("%v %v", c.Xorm, "pk")
 				}
-				if col.Nullable {
+				if !col.Nullable {
 					c.Xorm = fmt.Sprintf("%v %v", c.Xorm, "notnull")
 				}
 				if col.IsAutoIncrement {
