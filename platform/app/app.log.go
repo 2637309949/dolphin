@@ -59,6 +59,7 @@ func (s *XLogger) SetLevel(l log.LogLevel) {
 
 // TrackerStore store logs
 var TrackerStore func(beans *[]model.SysTracker) error
+var logWorkerPool chan chan *plugin.LogFormatterParams
 var logChannel chan *plugin.LogFormatterParams
 
 // Tracker defined tracker recorder
@@ -70,12 +71,19 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 			p.Domain = tokenInfo.GetDomain()
 			p.UserID = tokenInfo.GetUserID()
 		}
-		logChannel <- p
+
+		// would not be block <-logWorkerPool
+		// but <- p will
+		jobChannel := <-logWorkerPool
+		go func(p *plugin.LogFormatterParams) {
+			jobChannel <- p
+		}(p)
 	}
 }
 
 func initTracker() {
-	logChannel = make(chan *plugin.LogFormatterParams, 600)
+	logWorkerPool = make(chan chan *plugin.LogFormatterParams, 20)
+	logChannel = make(chan *plugin.LogFormatterParams, 150)
 	TrackerStore = func(beans *[]model.SysTracker) error {
 		App.PlatformDB.ShowSQL(false)
 		_, err := App.PlatformDB.Insert(*beans)
@@ -85,8 +93,9 @@ func initTracker() {
 	go func() {
 		var bucket slice.SyncSlice
 		for {
+			logWorkerPool <- logChannel
 			select {
-			case <-time.Tick(6 * time.Second):
+			case <-time.Tick(3 * time.Second):
 				logs := bucket.Reset()
 				beans := funk.Map(logs, func(entity interface{}) model.SysTracker {
 					item := entity.(*plugin.LogFormatterParams)

@@ -62,8 +62,8 @@ func (d *Dispatcher) dispatch() {
 		select {
 		case job := <-d.JobQueue:
 			logrus.Info("Store a job into jobChannel")
+			jobChannel := <-d.WorkerPool
 			go func(job Job) {
-				jobChannel := <-d.WorkerPool
 				jobChannel <- job
 			}(job)
 		}

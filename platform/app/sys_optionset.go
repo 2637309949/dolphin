@@ -86,7 +86,7 @@ func SysOptionsetDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/update [put]
 func SysOptionsetUpdate(ctx *Context) {
-	var payload model.SysRole
+	var payload model.SysOptionset
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
