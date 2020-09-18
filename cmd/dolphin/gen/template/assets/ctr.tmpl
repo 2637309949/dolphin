@@ -143,6 +143,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -199,7 +200,6 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
 		logrus.Error(err)
-
 		return
 	}
 	ctx.Success(entity)
