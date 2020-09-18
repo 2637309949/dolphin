@@ -13,11 +13,11 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Chronokeeper/anyxml"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/core"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/dialects"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/internal/utils"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
+	"github.com/Chronokeeper/anyxml"
 )
 
 type Record map[string]Value
@@ -463,7 +463,7 @@ func (session *Session) genSelectSql(dialect dialects.Dialect, rownumber string)
 				sql = fmt.Sprintf("%v LIMIT 0 OFFSET %v", sql, *pLimitN)
 			}
 		} else if pLimitN != nil {
-			sql = fmt.Sprintf("%v LIMIT %v", sql, session.statement.LimitN)
+			sql = fmt.Sprintf("%v LIMIT %v", sql, *pLimitN)
 		}
 	} else if dialect.URI().DBType == schemas.ORACLE {
 		if session.statement.Start != 0 || pLimitN != nil {
