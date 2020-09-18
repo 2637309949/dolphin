@@ -1,3 +1,0 @@
-<table name="system_set" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
-</table>
