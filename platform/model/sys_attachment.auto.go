@@ -29,6 +29,8 @@ type SysAttachment struct {
 	Path null.String `xorm:"varchar(300) comment('path') 'path'" json:"path" xml:"path"`
 	// url
 	URL null.String `xorm:"varchar(300) comment('url') 'url'" json:"url" xml:"url"`
+	// 是否持久化 0：否 1：是
+	Durable null.Int `xorm:"notnull comment('是否持久化 0：否 1：是') 'durable'" json:"durable" xml:"durable"`
 	// 创建人
 	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间

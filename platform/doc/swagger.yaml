@@ -154,6 +154,9 @@ definitions:
       del_flag:
         description: 删除标记
         type: number
+      durable:
+        description: 是否持久化 0：否 1：是
+        type: number
       ext:
         description: ext
         type: string
@@ -1112,7 +1115,7 @@ paths:
         in: body
         name: user
         schema:
-          $ref: '#/definitions/model.SysRole'
+          $ref: '#/definitions/model.SysAttachment'
       responses:
         "200":
           description: OK

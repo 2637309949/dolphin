@@ -9,6 +9,7 @@
     <column name="hash" desc="hash" type="null.String" xorm="varchar(500)" />
 	<column name="path" desc="path" type="null.String" xorm="varchar(300)" />
 	<column name="url" desc="url" type="null.String" xorm="varchar(300)" />
+	<column name="durable" desc="是否持久化 0：否 1：是" type="null.Int" xorm="notnull" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

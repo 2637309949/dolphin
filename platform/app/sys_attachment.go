@@ -94,6 +94,7 @@ func SysAttachmentUpload(ctx *Context) {
 			URL:        null.StringFrom(urlPath),
 			Path:       null.StringFrom(filePath),
 			Type:       null.StringFrom(fileType),
+			Durable:    null.IntFrom(0),
 			CreateTime: null.TimeFrom(time.Now().Value()),
 			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
