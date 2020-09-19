@@ -672,7 +672,7 @@ where
     and sys_app_fun.name = "{{.name}}"
     {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_area_page_count.tpl"] = `select
     count(*) records
@@ -779,7 +779,7 @@ LIMIT {{.size}} OFFSET {{.offset}}
 	SQLTPL["sys_data_permission_rule.tpl"] = `select
     sys_data_permission_detail.*
 from
-    ` + "`sys_data_permission`" + `, ` + "`sys_data_permission_detail`" + `,` + "`sys_user_role`" + `
+    `+"`sys_data_permission`"+`, `+"`sys_data_permission_detail`"+`,`+"`sys_user_role`"+`
 where
     sys_data_permission.id = sys_data_permission_detail.data_permission_id
     and sys_user_role.role_id = sys_data_permission_detail.role_id
@@ -874,7 +874,7 @@ where
 {{end}}
 	and
 	sys_menu.hidden = 0
-	order by ` + "`order`" + ``
+	order by `+"`order`"+``
 	SQLTPL["sys_menu_tree.tpl"] = `select
     sys_menu.id,
     sys_menu.parent,
@@ -896,7 +896,7 @@ where
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_notification_page_count.tpl"] = `select
     count(*) records
@@ -998,7 +998,7 @@ where
     and sys_org.name = "{{.name}}"
 {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_permission_page_count.tpl"] = `select
     count(*) records
@@ -1050,7 +1050,7 @@ where
     and sys_app_fun.name = "{{.name}}"
 {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_role_in_role_cnt.tpl"] = `select
     count(distinct(role_id))
@@ -1083,7 +1083,7 @@ where
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_role_page_count.tpl"] = `select
     count(*) records
@@ -1166,11 +1166,13 @@ from
 	sys_tracker
 where
 	sys_tracker.id {{.ne}} ""
-	and
-	sys_tracker.del_flag {{.ne}} 1
+	and sys_tracker.domain = "{{.domain}}"
+	and sys_tracker.app_name = "{{.app_name}}"
+	and sys_tracker.del_flag {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
-{{end}}`
+{{end}}
+`
 	SQLTPL["sys_tracker_page_select.tpl"] = `select
     sys_tracker.id,
 	sys_tracker.user_id,
@@ -1191,6 +1193,11 @@ where
 	and sys_tracker.del_flag {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
+{{end}}
+{{if ne .sort ""}}
+	order by {{.sort}}
+{{else}}
+	order by sys_tracker.update_time desc
 {{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `

@@ -19,4 +19,9 @@ where
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
+{{if ne .sort ""}}
+	order by {{.sort}}
+{{else}}
+	order by sys_tracker.update_time desc
+{{end}}
 LIMIT {{.size}} OFFSET {{.offset}}

@@ -117,22 +117,20 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	page := q["page"].(int)
 	size := q["size"].(int)
 	q["offset"] = (page - 1) * size
-	sqlTagName := fmt.Sprintf("%s_%s_select.tpl", controller, api)
-	result, err := db.SqlTemplateClient(sqlTagName, &q).Query().List()
+	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_select.tpl", controller, api), &q).Query().List()
 	if err != nil {
 		return nil, err
 	}
-	sqlTagName = fmt.Sprintf("%s_%s_count.tpl", controller, api)
-	cresult, err := db.SqlTemplateClient(sqlTagName, &q).Query().List()
+	cntSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_count.tpl", controller, api), &q).Query().List()
 	if err != nil {
 		return nil, err
 	}
-	var ret model.PageList
-	if result == nil || len(result) == 0 {
-		ret.Data = []map[string]interface{}{}
-		return &ret, nil
+	var plt model.PageList
+	if rowsSet == nil || len(rowsSet) == 0 {
+		plt.Data = []map[string]interface{}{}
+		return &plt, nil
 	}
-	records := cresult[0]["records"].(int64)
+	records := cntSet[0]["records"].(int64)
 	var totalpages int64 = 0
 	if records < int64(size) {
 		totalpages = 1
@@ -141,25 +139,24 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 	} else {
 		totalpages = records/int64(size) + 1
 	}
-	ret.Page = page
-	ret.Size = size
-	ret.Data = result
-	ret.TotalRecords = int(records)
-	ret.TotalPages = int(totalpages)
-	return &ret, nil
+	plt.Page = page
+	plt.Size = size
+	plt.Data = rowsSet
+	plt.TotalRecords = int(records)
+	plt.TotalPages = int(totalpages)
+	return &plt, nil
 }
 
 // TreeSearch defined
 func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
-	stplkey := fmt.Sprintf("%s_%s.tpl", controller, api)
-	result, err := db.SqlTemplateClient(stplkey, &q).Query().List()
+	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s.tpl", controller, api), &q).Query().List()
 	if err != nil {
 		return nil, err
 	}
 
 	root := ""
 	rootArr := []*model.TreeNode{}
-	paramsArr := result
+	paramsArr := rowsSet
 	valueFiled := "id"
 	parentField := "parent"
 	nameFiled := "name"
@@ -180,7 +177,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 		if params[nameFiled] != nil {
 			name = fmt.Sprintf("%v", params[nameFiled])
 		}
-		//json,_ := xorm.JSONString(params, true)
+		// json,_ := xorm.JSONString(params, true)
 		// 如果根节点root为空，则从parent为空中获取root节点数组
 		// 如果root不为空且treeSrcs中包含id为root的，则获取id等于的节点为root节点数组(相当于显示root节点的树)
 		// 如果root不为空且treeSrcs中不包含id为root的，则获取parent等于的节点为root节点数组(相当于不显示root节点的树)
@@ -232,26 +229,25 @@ func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[
 		Value interface{} `json:"value"`
 		Text  string      `json:"text"`
 	}
-	var optionset []model.SysOptionset
-	err := db.Where("del_flag = 0").In("code", keys).Find(&optionset)
-	if err != nil {
+	var optSets []model.SysOptionset
+	if err := db.Where("del_flag = 0").In("code", keys).Find(&optSets); err != nil {
 		return nil, err
 	}
 
-	optionMap := make(map[string]map[string]interface{})
-	for _, v := range optionset {
+	optMap := make(map[string]map[string]interface{})
+	for _, v := range optSets {
 		var options []Options
-		if err = json.Unmarshal([]byte(v.Value.String), &options); err != nil {
+		if err := json.Unmarshal([]byte(v.Value.String), &options); err != nil {
 			return nil, err
 		}
-		if optionMap[v.Code.String] == nil {
-			optionMap[v.Code.String] = map[string]interface{}{}
+		if optMap[v.Code.String] == nil {
+			optMap[v.Code.String] = map[string]interface{}{}
 		}
 		for _, item := range options {
-			optionMap[v.Code.String][item.Text] = item.Value
+			optMap[v.Code.String][item.Text] = item.Value
 		}
 	}
-	return optionMap, nil
+	return optMap, nil
 }
 
 // OmitByZero omit invalid fileds

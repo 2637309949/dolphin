@@ -23,6 +23,7 @@ func SysTrackerPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
+	q.SetString("sort", "sys_tracker.update_time desc")
 	q.SetString("app_name", viper.GetString("app.name"))
 	q.SetString("domain", ctx.GetToken().GetDomain())
 	q.SetRule("sys_tracker_page")
