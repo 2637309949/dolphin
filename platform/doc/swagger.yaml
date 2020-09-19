@@ -160,6 +160,9 @@ definitions:
       hash:
         description: hash
         type: string
+      icon:
+        description: 图标
+        type: string
       id:
         description: 主键
         type: string

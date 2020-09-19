@@ -13,6 +13,8 @@ type SysAttachment struct {
 	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" xml:"id"`
 	// 名称
 	Name null.String `xorm:"varchar(200) notnull comment('名称') 'name'" json:"name" xml:"name"`
+	// 图标
+	Icon null.String `xorm:"varchar(300) comment('图标') 'icon'" json:"icon" xml:"icon"`
 	// uuid
 	UUID null.String `xorm:"varchar(36) notnull comment('uuid') 'uuid'" json:"uuid" xml:"uuid"`
 	// 大小
