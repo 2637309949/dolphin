@@ -176,9 +176,9 @@ dolphin init
 ```
 
 ## API Examples
-You can find a number of ready-to-run examples at [dolphin examples repository.](https://github.com/2637309949/dolphin-ui)
-
 <img align="right" width="200px" src="./assets/dolphin-ui.png">
+
+You can find a number of ready-to-run examples at [dolphin examples repository.](https://github.com/2637309949/dolphin-ui)
 
 
 ## XML Label
