@@ -24,13 +24,13 @@ import (
 // @Tags 附件
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.SysRole false "附件信息"
+// @Param user body model.SysAttachment false "附件信息"
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/add [post]
 func SysAttachmentAdd(ctx *Context) {
-	var payload model.SysRole
+	var payload model.SysAttachment
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
