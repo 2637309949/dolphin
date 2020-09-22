@@ -796,7 +796,7 @@ App.Manager.GetBusinessDB("xxx")
 		||                           ||                              ||
 		||                           ||                              ||
 		||  4.                       ||		get token by code   	 ||
-		||	redirect and set cookie	 || -------------------------\   ||
+		|| redirect and set cookie	 || -------------------------\   ||
 		||  /----------------------  || /-------------------------   ||
 		||                           ||                              ||
 		
