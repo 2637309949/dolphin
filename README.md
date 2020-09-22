@@ -36,11 +36,11 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [app_name](#app_name)
         - [domain](#domain)
     - [SSO Server](#sso-server)
-        - [Redirect SSO](#redirect-sso)
-        - [SSO Auth](#sso-auth)
-        - [SSO Affirm](#sso-affirm)
-        - [SSO Token](#sso-token)
-        - [SSO CallBack](#sso-callback)
+        - [redirect sso](#redirect-sso)
+        - [sso auth](#sso-auth)
+        - [sso affirm](#sso-affirm)
+        - [sso token](#sso-token)
+        - [sso callback](#sso-callback)
 
 <!-- /TOC -->
 
@@ -800,7 +800,7 @@ App.Manager.GetBusinessDB("xxx")
 		|| /-------------------------   || /-------------------------   ||
 		||                           	||                              ||
 
-### Redirect SSO
+### redirect sso
 
 Code segment in platform, You can carry the status if needed.
 
@@ -817,7 +817,7 @@ Code segment in platform, You can carry the status if needed.
 func SysCasURL(ctx *Context)
 ```
 
-### SSO Auth
+### sso auth
 
 Code segment in platform, authentication logic
 
@@ -836,7 +836,7 @@ Code segment in platform, authentication logic
 func SysCasLogin(ctx *Context)
 ```
 
-### SSO Affirm
+### sso affirm
 
 Code segment in platform, you can rewrite this way if you want to skip Affirm
 
@@ -853,7 +853,7 @@ func SysCasAffirm(ctx *Context)
 ```
 
 
-### SSO Token
+### sso token
 
 Code segment in platform, Generate Token by code
 
@@ -869,7 +869,7 @@ Code segment in platform, Generate Token by code
 func SysCasToken(ctx *Context)
 ```
 
-### SSO CallBack
+### sso callback
 
 Code segment in client, Fetch token from platform and set cookie
 
