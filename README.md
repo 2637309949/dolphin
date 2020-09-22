@@ -777,7 +777,7 @@ App.Manager.GetBusinessDB("xxx")
 
 > All projects that inherit the platform support single sign-on by default, you can deploy independently or directly as SSO
 
-	Your FrontEnd Project      Your BackEnd Project                  SSO
+	Your FrontEnd Project      Your BackEnd Project                    SSO
 		||                              ||                              ||
 		||                              ||                              ||
 		||  1.     fetch api            ||                              ||
