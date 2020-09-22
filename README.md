@@ -35,6 +35,12 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
     - [Domain](#domain)
         - [app_name](#app_name)
         - [domain](#domain)
+    - [SSO](#sso)
+        - [Redirect SSO](#redirect-sso)
+        - [SSO Auth](#sso-auth)
+        - [SSO Affirm](#sso-affirm)
+        - [SSO Token](#sso-token)
+        - [SSO CallBack](#sso-callback)
 
 <!-- /TOC -->
 
@@ -699,6 +705,7 @@ The quasi-directory structure of the rpc is shown below
 
 
 ## Domain
+
 > Domain, a model of multi-tenant support core. Application splitting is also supported.
 
 ```xml
@@ -732,9 +739,11 @@ The quasi-directory structure of the rpc is shown below
 ```
 
 ### app_name
+
 > app_name, desynchronize the model as a tag. if you connect same datasource url from localhost, and you would find all tables in `data_source` of same app_name datasource would be created
 
 ### domain
+
 > Identify different tenants, the logged in user will use the matching domain to find the DB
 
 As shown in the code below
@@ -747,7 +756,7 @@ func Auth(ctx *Context) {
 		ctx.Abort()
 		return
 	}
-	if ctx.DB = ctx.engine.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
+	if ctx.DB = App.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
 		ctx.Fail(util.ErrInvalidDomain)
 		ctx.Abort()
 		return
@@ -762,4 +771,212 @@ if you want to get datasource of `xxx`, you can do the following.
 
 ```go
 App.Manager.GetBusinessDB("xxx")
+```
+
+## SSO
+
+> All projects that inherit the platform support single sign-on by default
+
+	Your FrontEnd Project      Your BackEnd Project          SSO(Any Project that inherit the platform)
+		||                           ||                              ||
+		||                           ||                              ||
+		||  1.     fetch api         ||                              ||
+		||  ----------------------\  ||                              ||
+		||      unauthorized         ||                              ||
+		||  /----------------------  ||                              ||
+		||                           ||                              ||
+		||  2. fetch oauth url       ||                              ||
+		||  ----------------------\  ||                              ||
+		|| /----------------------   ||                              ||
+		||                           ||                              ||
+		||  3. goto sso oauth        ||     goto sso oauth           ||
+		||  ----------------------   ||  -------------------------\  ||
+		||                           ||     goto client with code    ||
+		||                           || /-------------------------   ||
+		||                           ||                              ||
+		||    						 ||                              ||
+		||  4.					     ||		get token by code   	 ||
+		||	redirect and set cookie	 || -------------------------\   ||
+		||  /----------------------  || /-------------------------   ||
+		||                           ||                              ||
+		
+### Redirect SSO
+
+Code segment in platform, You can carry the status if needed.
+
+```go
+// SysCasURL api implementation
+// @Summary 授权地址
+// @Tags 认证中心
+// @Param redirect_uri query string false "定向URL"
+// @Param state query string false "状态"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/cas/url [get]
+func SysCasURL(ctx *Context) {
+	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
+	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
+}
+```
+
+### SSO Auth
+
+Code segment in platform, authentication logic
+
+```go
+// SysCasLogin api implementation
+// @Summary 用户认证
+// @Tags 认证中心
+// @Accept multipart/form-data
+// @Param username formData string false "用户名称"
+// @Param password formData string false "用户密码"
+// @Param domain formData string false "用户域"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/cas/login [post]
+func SysCasLogin(ctx *Context) {
+	store, err := session.Start(nil, ctx.Writer, ctx.Request)
+	if err != nil {
+		logrus.Errorf("SysCasLogin/Start:%v", err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
+		return
+	}
+	ctx.Request.ParseForm()
+	f := ctx.Request.Form
+	domain := f.Get("domain")
+	username := f.Get("username")
+	password := f.Get("password")
+	account := model.SysUser{
+		Name:   null.StringFrom(username),
+		Domain: null.StringFrom(domain),
+	}
+	if account.Domain.String == "" {
+		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
+		account.Domain = null.StringFrom(base[0][2])
+	}
+	ext, err := ctx.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
+
+	if err != nil {
+		logrus.Errorf("SysCasLogin/Where:%v", err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
+		return
+	}
+	if !ext || !account.ValidPassword(password) {
+		err = errors.New("Account doesn't exist or password error")
+		logrus.Errorf("SysCasLogin/ValidPassword:%v", err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+util.ErrInvalidGrant.Error())
+		return
+	}
+	store.Set("LoggedInUserID", account.ID.String)
+	store.Set("LoggedInDomain", account.Domain.String)
+	store.Save()
+	ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm"))
+}
+```
+
+### SSO Affirm
+
+Code segment in platform, you can rewrite this way if you want to skip Affirm
+
+```go
+// SysCasAffirm api implementation
+// @Summary 用户授权
+// @Tags 认证中心
+// @Accept application/json
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/cas/affirm [post]
+func SysCasAffirm(ctx *Context) {
+	store, err := session.Start(nil, ctx.Writer, ctx.Request)
+	if err != nil {
+		logrus.Errorf("SysCasAffirm/Start:%v", err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
+		return
+	}
+	var form url.Values
+	if v, ok := store.Get("ReturnUri"); ok {
+		form = v.(url.Values)
+	}
+	ctx.Request.Form = form
+	store.Delete("ReturnUri")
+	store.Save()
+	err = ctx.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
+	if err != nil {
+		logrus.Errorf("SysCasAffirm/HandleAuthorizeRequest:%v", err)
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
+		return
+	}
+}
+```
+
+
+### SSO Token
+
+Code segment in platform, Generate Token by code
+
+```go
+// SysCasToken api implementation
+// @Summary 获取令牌
+// @Tags 认证中心
+// @Accept application/json
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/cas/token [post]
+func SysCasToken(ctx *Context) {
+	err := ctx.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
+	if err != nil {
+		logrus.Errorf("SysCasToken/HandleTokenRequest:%v", err)
+		ctx.Fail(err)
+	}
+}
+```
+
+### SSO CallBack
+
+Code segment in client, Fetch token from platform and set cookie
+
+```go
+// SysCasOauth2 api implementation
+// @Summary 授权回调
+// @Tags 认证中心
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/cas/oauth2 [get]
+func SysCasOauth2(ctx *Context) {
+	ctx.Request.ParseForm()
+	f := ctx.Request.Form
+	state := f.Get("state")
+	code := f.Get("code")
+	state, _ = url.QueryUnescape(state)
+
+	if code == "" {
+		logrus.Errorf("SysCasOauth2/code:%v", errors.New("Code not found"))
+		ctx.Fail(errors.New("Code not found"))
+		return
+	}
+	ret, err := OA2Cfg.Exchange(context.Background(), code)
+	if err != nil {
+		logrus.Errorf("SysCasOauth2/Exchange:%v", errors.New("Code not found"))
+		ctx.Fail(err)
+		return
+	}
+	reg := regexp.MustCompile("redirect_uri=([^&]*)?&state=([^&]*)?$")
+	groups := reg.FindAllStringSubmatch(state, -1)
+	rawRedirect := groups[0][1]
+	rawState := groups[0][2]
+
+	ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "", false, false)
+	ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "", false, false)
+	if strings.TrimSpace(rawRedirect) != "" {
+		ctx.Redirect(http.StatusFound, rawRedirect+"?state="+rawState)
+		return
+	}
+	ctx.Redirect(http.StatusFound, "/?state="+rawState)
+}
 ```
