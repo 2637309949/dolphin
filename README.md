@@ -778,28 +778,28 @@ App.Manager.GetBusinessDB("xxx")
 > All projects that inherit the platform support single sign-on by default, you can deploy independently or directly as SSO
 
 	Your FrontEnd Project      Your BackEnd Project                  SSO
-		||                           ||                              ||
-		||                           ||                              ||
-		||  1.     fetch api         ||                              ||
-		||  ----------------------\  ||                              ||
-		||      unauthorized         ||                              ||
-		||  /----------------------  ||                              ||
-		||                           ||                              ||
-		||  2. fetch oauth url       ||                              ||
-		||  ----------------------\  ||                              ||
-		|| /----------------------   ||                              ||
-		||                           ||                              ||
-		||  3. goto sso oauth        ||     goto sso oauth           ||
-		||  ----------------------   ||  -------------------------\  ||
-		||                           ||     goto client with code    ||
-		||                           || /-------------------------   ||
-		||                           ||                              ||
-		||                           ||                              ||
-		||  4.                       ||		get token by code   	 ||
-		|| redirect and set cookie   || -------------------------\   ||
-		||  /----------------------  || /-------------------------   ||
-		||                           ||                              ||
-		
+		||                              ||                              ||
+		||                              ||                              ||
+		||  1.     fetch api            ||                              ||
+		||  -------------------------\  ||                              ||
+		||      unauthorized            ||                              ||
+		||  /-------------------------  ||                              ||
+		||                              ||                              ||
+		||  2. fetch oauth url          ||                              ||
+		||  ------------------------\   ||                              ||
+		|| /------------------------    ||                              ||
+		||                              ||                              ||
+		||  3. goto sso oauth           ||     goto sso oauth           ||
+		||  ------------------------    ||  -------------------------\  ||
+		||                              ||     goto client with code    ||
+		||                              || /-------------------------   ||
+		||                              ||                              ||
+		||                              ||                              ||
+		||  4. redirect and set cookie  ||     get token by code        ||
+		||    							|| -------------------------\   ||
+		||  /------------------------  	|| /-------------------------   ||
+		||                           	||                              ||
+
 ### Redirect SSO
 
 Code segment in platform, You can carry the status if needed.
