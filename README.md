@@ -35,7 +35,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
     - [Domain](#domain)
         - [app_name](#app_name)
         - [domain](#domain)
-    - [SSO](#sso)
+    - [SSO Server](#sso-server)
         - [Redirect SSO](#redirect-sso)
         - [SSO Auth](#sso-auth)
         - [SSO Affirm](#sso-affirm)
@@ -773,7 +773,7 @@ if you want to get datasource of `xxx`, you can do the following.
 App.Manager.GetBusinessDB("xxx")
 ```
 
-## SSO
+## SSO Server
 
 > All projects that inherit the platform support single sign-on by default, you can deploy independently or directly as SSO
 
