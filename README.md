@@ -13,7 +13,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
     - [Quick start](#quick-start)
     - [Directory structure](#directory-structure)
     - [Features](#features)
-    - [command](#command)
+    - [CMD](#cmd)
         - [build](#build)
         - [clean](#clean)
         - [init](#init)
@@ -159,7 +159,7 @@ time="2020/06/13 11:55:58" level=info msg="http listen on port:8082"
 - Support database reverse XML generation
 ```
 
-## command
+## CMD
 
 ### build
 The build command generates the preset function by executing the built-in Pipeline function, You can specify that only a pipeline will be executed via the @ symbol
