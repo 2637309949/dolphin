@@ -41,6 +41,10 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [sso affirm](#sso-affirm)
         - [sso token](#sso-token)
         - [sso callback](#sso-callback)
+    - [Workload](#workload)
+        - [Add Job](#add-job)
+        - [Add Handler](#add-handler)
+        - [Fetch Job status](#fetch-job-status)
 
 <!-- /TOC -->
 
@@ -948,4 +952,47 @@ Code segment in client, Fetch token from platform and set cookie
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/oauth2 [get]
 func SysCasOauth2(ctx *Context)
+```
+
+## Workload
+
+> High concurrent requests are processed with built-in load interfaces
+
+### Add Job
+
+```go
+// SysWorkerAdd api implementation
+// @Summary 添加worker
+// @Tags worker
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param worker body model.Worker false "worker信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/worker/add [post]
+func SysWorkerAdd(ctx *Context) {
+```
+
+### Add Handler
+
+```go
+// @Summary AddJobHandler
+// @Tags worker
+func (d *DefaultWorker) AddJobHandler(code string, funk func(model.Worker) (interface{}, error)) {
+```
+
+### Fetch Job status
+
+```go
+// SysWorkerGet api implementation
+// @Summary 获取worker信息
+// @Tags worker
+// @Param Authorization header string false "认证令牌"
+// @Param code  query  string false "worker code"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/worker/get [get]
+func SysWorkerGet(ctx *Context) {
 ```
