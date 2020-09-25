@@ -1,0 +1,38 @@
+<controller name="sys_comment" desc="评论">
+    <api name="add" func="add" table="sys_comment" method="post" desc="添加评论">
+        <param name="sys_comment" type="$sys_comment" desc="评论信息"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="del" func="delete" table="sys_comment" method="delete" desc="删除评论">
+        <param name="sys_comment" type="$sys_user_template" desc="评论"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="update" func="update" table="sys_comment" desc="更新评论" method="put">
+        <param name="sys_comment" type="$sys_comment" desc="评论信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="page" func="page" table="sys_comment" method="get" desc="评论分页查询">
+        <param name="page" type="int" value="1" desc="页码"/>
+        <param name="size" type="int" value="15" desc="单页数"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" func="one" table="sys_comment" method="get" desc="获取评论信息">
+        <param name="id" type="string" desc="评论id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

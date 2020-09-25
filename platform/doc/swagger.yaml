@@ -236,6 +236,42 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.SysComment:
+    properties:
+      content:
+        description: 评论内容
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      from_uid:
+        description: 评论用户id
+        type: string
+      id:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      topic_id:
+        description: 主题ID
+        type: string
+      topic_type:
+        description: 主题类型
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.SysDataPermission:
     properties:
       code:
@@ -1709,6 +1745,154 @@ paths:
       summary: 更新客户端
       tags:
       - 客户端
+  /api/sys/comment/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论信息
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/model.SysComment'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加评论
+      tags:
+      - 评论
+  /api/sys/comment/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/model.SysUserTemplate'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除评论
+      tags:
+      - 评论
+  /api/sys/comment/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取评论信息
+      tags:
+      - 评论
+  /api/sys/comment/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 评论分页查询
+      tags:
+      - 评论
+  /api/sys/comment/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论信息
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/model.SysComment'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新评论
+      tags:
+      - 评论
   /api/sys/data/permission/add:
     post:
       consumes:

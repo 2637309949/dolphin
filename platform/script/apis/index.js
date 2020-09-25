@@ -9,6 +9,8 @@ module.exports.sysAttachment = require('./sys_attachment')
 module.exports.sysCas = require('./sys_cas')
 // sysClient 客户端
 module.exports.sysClient = require('./sys_client')
+// sysComment 评论
+module.exports.sysComment = require('./sys_comment')
 // sysDataPermission 数据权限
 module.exports.sysDataPermission = require('./sys_data_permission')
 // sysDingtalk 钉钉

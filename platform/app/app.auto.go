@@ -208,6 +208,39 @@ func SysClientRoutes(engine *Engine) {
 // SysClientInstance defined
 var SysClientInstance = NewSysClient()
 
+// SysComment defined
+type SysComment struct {
+	Add,
+	Del,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysComment defined
+func NewSysComment() *SysComment {
+	ctr := &SysComment{}
+	ctr.Add = SysCommentAdd
+	ctr.Del = SysCommentDel
+	ctr.Update = SysCommentUpdate
+	ctr.Page = SysCommentPage
+	ctr.Get = SysCommentGet
+	return ctr
+}
+
+// SysCommentRoutes defined
+func SysCommentRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/comment/add", Auth, SysCommentInstance.Add)
+	group.Handle("DELETE", "/sys/comment/del", Auth, SysCommentInstance.Del)
+	group.Handle("PUT", "/sys/comment/update", Auth, SysCommentInstance.Update)
+	group.Handle("GET", "/sys/comment/page", Auth, SysCommentInstance.Page)
+	group.Handle("GET", "/sys/comment/get", Auth, SysCommentInstance.Get)
+}
+
+// SysCommentInstance defined
+var SysCommentInstance = NewSysComment()
+
 // SysDataPermission defined
 type SysDataPermission struct {
 	Add,
@@ -813,6 +846,7 @@ func SyncCtr() error {
 	SysAttachmentRoutes(App)
 	SysCasRoutes(App)
 	SysClientRoutes(App)
+	SysCommentRoutes(App)
 	SysDataPermissionRoutes(App)
 	SysDingtalkRoutes(App)
 	SysDomainRoutes(App)
