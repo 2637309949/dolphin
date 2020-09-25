@@ -1,11 +1,10 @@
 <table name="sys_notification" desc="站内消息" packages="github.com/2637309949/dolphin/packages/null">
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
-    <column name="recipient_id" desc="接受者" type="null.String" xorm="varchar(36)" />
-    <column name="sender_id" desc="发送者" type="null.String" xorm="varchar(36)" />
-    <column name="unread" desc="是否已读" type="null.Int" xorm="notnull" />
-    <column name="type" desc="消息类型" type="null.Int" xorm="notnull" />
-    <column name="parameters" desc="额外数据" type="null.String" xorm="text" />
-    <column name="reference_id" desc="对象引用" type="null.String" xorm="varchar(36)" />
+	<column name="topic_id" desc="主题ID" type="null.String" xorm="varchar(36) notnull" />
+	<column name="topic_type" desc="主题类型" type="null.String" xorm="varchar(36) notnull" />
+    <column name="to_uid" desc="接受者" type="null.String" xorm="varchar(36)" />
+    <column name="from_uid" desc="发送者" type="null.String" xorm="varchar(36)" />
+    <column name="is_read" desc="是否已读" type="null.Int" xorm="notnull" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

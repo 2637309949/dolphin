@@ -778,6 +778,8 @@ func SyncModel() error {
 	mseti.Add(new(model.SysAreaTemplateDetail))
 	mseti.Add(new(model.SysAttachment))
 	mseti.Add(new(model.SysClient), "platform")
+	mseti.Add(new(model.SysComment))
+	mseti.Add(new(model.SysCommentReply))
 	mseti.Add(new(model.SysDataPermission))
 	mseti.Add(new(model.SysDataPermissionDetail))
 	mseti.Add(new(model.SysDomain), "platform")

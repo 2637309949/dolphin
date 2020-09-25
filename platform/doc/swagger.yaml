@@ -412,30 +412,27 @@ definitions:
       del_flag:
         description: 删除标记
         type: number
+      from_uid:
+        description: 发送者
+        type: string
       id:
         description: 主键
         type: string
-      parameters:
-        description: 额外数据
-        type: string
-      recipient_id:
-        description: 接受者
-        type: string
-      reference_id:
-        description: 对象引用
-        type: string
+      is_read:
+        description: 是否已读
+        type: number
       remark:
         description: 备注
         type: string
-      sender_id:
-        description: 发送者
+      to_uid:
+        description: 接受者
         type: string
-      type:
-        description: 消息类型
-        type: number
-      unread:
-        description: 是否已读
-        type: number
+      topic_id:
+        description: 主题ID
+        type: string
+      topic_type:
+        description: 主题类型
+        type: string
       update_by:
         description: 最后更新人
         type: string

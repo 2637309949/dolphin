@@ -7,20 +7,22 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 )
 
-// SysNotification defined 站内消息
-type SysNotification struct {
+// SysCommentReply defined 评论回复表
+type SysCommentReply struct {
 	// 主键
 	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" xml:"id"`
-	// 主题ID
-	TopicId null.String `xorm:"varchar(36) notnull comment('主题ID') 'topic_id'" json:"topic_id" xml:"topic_id"`
-	// 主题类型
-	TopicType null.String `xorm:"varchar(36) notnull comment('主题类型') 'topic_type'" json:"topic_type" xml:"topic_type"`
-	// 接受者
-	ToUid null.String `xorm:"varchar(36) comment('接受者') 'to_uid'" json:"to_uid" xml:"to_uid"`
-	// 发送者
-	FromUid null.String `xorm:"varchar(36) comment('发送者') 'from_uid'" json:"from_uid" xml:"from_uid"`
-	// 是否已读
-	IsRead null.Int `xorm:"notnull comment('是否已读') 'is_read'" json:"is_read" xml:"is_read"`
+	// 评论id
+	CommentId null.String `xorm:"varchar(36) notnull comment('评论id') 'comment_id'" json:"comment_id" xml:"comment_id"`
+	// 回复目标id
+	ReplyId null.String `xorm:"varchar(36) notnull comment('回复目标id') 'reply_id'" json:"reply_id" xml:"reply_id"`
+	// 回复类型
+	ReplyType null.Int `xorm:"notnull comment('回复类型') 'reply_type'" json:"reply_type" xml:"reply_type"`
+	// 回复内容
+	Content null.String `xorm:"varchar(36) comment('回复内容') 'content'" json:"content" xml:"content"`
+	// 评论用户id
+	FromUid null.String `xorm:"varchar(36) notnull comment('评论用户id') 'from_uid'" json:"from_uid" xml:"from_uid"`
+	// 目标用户id
+	ToUid null.String `xorm:"varchar(36) notnull comment('目标用户id') 'to_uid'" json:"to_uid" xml:"to_uid"`
 	// 创建人
 	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间
@@ -35,7 +37,7 @@ type SysNotification struct {
 	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" xml:"remark"`
 }
 
-// TableName table name of defined SysNotification
-func (m *SysNotification) TableName() string {
-	return "sys_notification"
+// TableName table name of defined SysCommentReply
+func (m *SysCommentReply) TableName() string {
+	return "sys_comment_reply"
 }
