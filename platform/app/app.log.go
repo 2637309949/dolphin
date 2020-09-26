@@ -21,6 +21,7 @@ import (
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/pkg/errors"
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
 )
@@ -58,7 +59,7 @@ func (s *XLogger) SetLevel(l log.LogLevel) {
 }
 
 // TrackerStore store logs
-var TrackerStore func(beans *[]model.SysTracker) error
+var TrackerStore func(domain string, beans *[]model.SysTracker) error
 var logWorkerPool chan chan *plugin.LogFormatterParams
 var logChannel chan *plugin.LogFormatterParams
 
@@ -84,19 +85,28 @@ func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 func initTracker() {
 	logWorkerPool = make(chan chan *plugin.LogFormatterParams, 20)
 	logChannel = make(chan *plugin.LogFormatterParams, 150)
-	TrackerStore = func(beans *[]model.SysTracker) error {
-		App.PlatformDB.ShowSQL(false)
-		_, err := App.PlatformDB.Insert(*beans)
-		App.PlatformDB.ShowSQL(viper.GetString("app.mode") == "debug")
-		return err
+	TrackerStore = func(domain string, beans *[]model.SysTracker) error {
+		if db := App.Manager.GetBusinessDB(domain); db != nil {
+			db, err := db.Clone()
+			db.ShowSQL(false)
+			_, err = db.Insert(*beans)
+			if err != nil {
+				logrus.Error(err)
+				return err
+			}
+			db.Close()
+			return nil
+		}
+		return errors.Errorf("no datasource found, %v", domain)
 	}
 	go func() {
 		var bucket slice.SyncSlice
 		for {
 			logWorkerPool <- logChannel
 			select {
-			case <-time.Tick(3 * time.Second):
+			case <-time.Tick(5 * time.Second):
 				logs := bucket.Reset()
+				bmp := map[string][]model.SysTracker{}
 				beans := funk.Map(logs, func(entity interface{}) model.SysTracker {
 					item := entity.(*plugin.LogFormatterParams)
 					return model.SysTracker{
@@ -120,8 +130,17 @@ func initTracker() {
 						DelFlag:    null.IntFrom(0),
 					}
 				}).([]model.SysTracker)
-				if len(beans) > 0 {
-					err := TrackerStore(&beans)
+				beans = funk.Filter(beans, func(entity model.SysTracker) bool {
+					return entity.Domain.String != ""
+				}).([]model.SysTracker)
+				funk.ForEach(beans, func(entity model.SysTracker) {
+					if _, ok := bmp[entity.Domain.String]; !ok {
+						bmp[entity.Domain.String] = []model.SysTracker{}
+					}
+					bmp[entity.Domain.String] = append(bmp[entity.Domain.String], entity)
+				})
+				for k, v := range bmp {
+					err := TrackerStore(k, &v)
 					if err != nil {
 						logrus.Error(err)
 					}

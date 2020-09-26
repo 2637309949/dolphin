@@ -153,10 +153,26 @@ func SysUserPage(ctx *Context) {
 	uorgs := []string{}
 	for _, v := range ret.Data {
 		if v["id"] != nil {
-			uids = append(uids, fmt.Sprintf("'%v'", v["id"]))
+			has := false
+			for _, v1 := range uids {
+				if v1 == fmt.Sprintf("'%v'", v["id"]) {
+					has = true
+				}
+			}
+			if !has {
+				uids = append(uids, fmt.Sprintf("'%v'", v["id"]))
+			}
 		}
 		if v["org_id"] != nil {
-			uorgs = append(uorgs, fmt.Sprintf("'%v'", v["org_id"]))
+			has := false
+			for _, v1 := range uorgs {
+				if v1 == fmt.Sprintf("'%v'", v["org_id"]) {
+					has = true
+				}
+			}
+			if !has {
+				uorgs = append(uorgs, fmt.Sprintf("'%v'", v["org_id"]))
+			}
 		}
 	}
 

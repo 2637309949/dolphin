@@ -4,6 +4,8 @@
 package app
 
 import (
+	"fmt"
+
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
@@ -24,16 +26,47 @@ func SysTrackerPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
 	q.SetString("sort", "sys_tracker.update_time desc")
-	q.SetString("app_name", viper.GetString("app.name"))
+	q.SetString("app_name", viper.GetString("app.name"))()
 	q.SetString("domain", ctx.GetToken().GetDomain())
 	q.SetRule("sys_tracker_page")
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_tracker", "page", "sys_tracker", q.Value())
+	ret, err := ctx.PageSearch(ctx.DB, "sys_tracker", "page", "sys_tracker", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
+	uids := []string{}
+	for _, v := range ret.Data {
+		if v["user_id"] != nil {
+			has := false
+			for _, v1 := range uids {
+				if v1 == fmt.Sprintf("%v", v["user_id"]) {
+					has = true
+				}
+			}
+			if !has {
+				uids = append(uids, fmt.Sprintf("%v", v["user_id"]))
+			}
+		}
+	}
+
+	users := []model.SysUser{}
+	err = ctx.PlatformDB.Cols("id", "name").In("id", uids).Find(&users)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+
+	for i := range ret.Data {
+		for _, v := range users {
+			if v.ID.String == fmt.Sprintf("%v", ret.Data[i]["user_id"]) {
+				ret.Data[i]["user_name"] = v.Name.String
+			}
+		}
+	}
+
 	if ctx.QueryBool("__export__") {
 		cfg := NewBuildExcelConfig(ret.Data)
 		cfg.Format = OptionsetsFormat(ctx.DB)
@@ -55,7 +88,7 @@ func SysTrackerPage(ctx *Context) {
 func SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker
 	id := ctx.Query("id")
-	_, err := ctx.PlatformDB.ID(id).Cols("id", "header", "req_body", "res_body").Get(&entity)
+	_, err := ctx.DB.ID(id).Cols("id", "header", "req_body", "res_body").Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
