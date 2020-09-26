@@ -176,22 +176,22 @@ Existing built-in Pipeline function:
 
 | Function   |      Action      |
 |----------|:-------------:|
-| main |   |
-| app |    |
-| ctr |    |
-| proto |  |
-| srv |    |
-| model |  |
-| bean |   |
-| auto |   |
-| tool |   |
-| sql |    |
-| sqlmap | |
-| oauth |  |
-| script | |
-| deploy | |
-| doc |    |
-| table |    |
+| main | create main file source |
+| app | create engine template source |
+| ctr | create controller source |
+| proto | create proto3 source |
+| srv | create server source |
+| model | create model source |
+| bean | create bean source |
+| auto | create register source |
+| tool | create tool source |
+| sql | create sql source, .sql to .go |
+| sqlmap | create table sqlmap |
+| oauth | create oauth h5 template |
+| script | create js api |
+| deploy | create k8s template |
+| doc | create swagger api doc |
+| table | create table from datasource |
 
 
 ### clean
