@@ -580,6 +580,39 @@ func SysSchedulingRoutes(engine *Engine) {
 // SysSchedulingInstance defined
 var SysSchedulingInstance = NewSysScheduling()
 
+// SysSetting defined
+type SysSetting struct {
+	Add,
+	Del,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysSetting defined
+func NewSysSetting() *SysSetting {
+	ctr := &SysSetting{}
+	ctr.Add = SysSettingAdd
+	ctr.Del = SysSettingDel
+	ctr.Update = SysSettingUpdate
+	ctr.Page = SysSettingPage
+	ctr.Get = SysSettingGet
+	return ctr
+}
+
+// SysSettingRoutes defined
+func SysSettingRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/setting/add", Auth, SysSettingInstance.Add)
+	group.Handle("DELETE", "/sys/setting/del", Auth, SysSettingInstance.Del)
+	group.Handle("PUT", "/sys/setting/update", Auth, SysSettingInstance.Update)
+	group.Handle("GET", "/sys/setting/page", Auth, SysSettingInstance.Page)
+	group.Handle("GET", "/sys/setting/get", Auth, SysSettingInstance.Get)
+}
+
+// SysSettingInstance defined
+var SysSettingInstance = NewSysSetting()
+
 // SysTag defined
 type SysTag struct {
 	Add,
@@ -859,6 +892,7 @@ func SyncCtr() error {
 	SysPermissionRoutes(App)
 	SysRoleRoutes(App)
 	SysSchedulingRoutes(App)
+	SysSettingRoutes(App)
 	SysTagRoutes(App)
 	SysTagGroupRoutes(App)
 	SysTrackerRoutes(App)

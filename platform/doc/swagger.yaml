@@ -629,6 +629,36 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.SysSetting:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      key:
+        description: 键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      value:
+        description: 值
+        type: string
+    type: object
   model.SysTag:
     properties:
       create_by:
@@ -3390,6 +3420,158 @@ paths:
       summary: 更新调度
       tags:
       - 调度
+  /api/sys/setting/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysSetting'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加设置
+      tags:
+      - 设置
+  /api/sys/setting/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置
+        in: body
+        name: sys_setting
+        schema:
+          $ref: '#/definitions/model.SysSetting'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除设置
+      tags:
+      - 设置
+  /api/sys/setting/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取设置信息
+      tags:
+      - 设置
+  /api/sys/setting/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      - description: 所属应用
+        in: query
+        name: app_name
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 设置分页查询
+      tags:
+      - 设置
+  /api/sys/setting/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新设置
+      tags:
+      - 设置
   /api/sys/tag/add:
     post:
       consumes:

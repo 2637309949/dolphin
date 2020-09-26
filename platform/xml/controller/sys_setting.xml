@@ -1,0 +1,39 @@
+<controller name="sys_setting" desc="设置">
+    <api name="add" func="add" table="sys_setting" method="post" desc="添加设置">
+        <param name="user" type="$sys_setting" desc="设置信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="del" func="delete" table="sys_setting" method="delete" desc="删除设置">
+        <param name="sys_setting" type="$sys_setting" desc="设置" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="update" func="update" table="sys_setting" method="put" desc="更新设置">
+        <param name="user" type="$sys_role" desc="设置信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="page" func="page" table="sys_setting" method="get" desc="设置分页查询">
+        <param name="page" type="int" value="1" desc="页码"/>
+        <param name="size" type="int"  value="15" desc="单页数"/>
+        <param name="app_name" type="string" desc="所属应用"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" func="one" table="sys_setting" method="get" desc="获取设置信息">
+        <param name="id" type="string" desc="设置id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>
