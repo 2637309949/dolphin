@@ -25,6 +25,8 @@ type SysUser struct {
 	Mobile null.String `xorm:"varchar(50) comment('电话') 'mobile'" json:"mobile" xml:"mobile"`
 	// 邮箱
 	Email null.String `xorm:"varchar(50) comment('邮箱') 'email'" json:"email" xml:"email"`
+	// 是否邮件确认(0：尚未,1：确认)
+	IsEmailConfirmed null.Int `xorm:"comment('是否邮件确认(0：尚未,1：确认)') 'is_email_confirmed'" json:"is_email_confirmed" xml:"is_email_confirmed"`
 	// 组织ID
 	OrgId null.String `xorm:"varchar(36) comment('组织ID') 'org_id'" json:"org_id" xml:"org_id"`
 	// 性别(0：女,1：男)
@@ -35,6 +37,10 @@ type SysUser struct {
 	Status null.Int `xorm:"notnull comment('状态(0：禁用,1：正常)') 'status'" json:"status" xml:"status"`
 	// 头像
 	Avatar null.String `xorm:"varchar(255) comment('头像') 'avatar'" json:"avatar" xml:"avatar"`
+	// 标记所有已读时间
+	MarkedAllAsReadAt null.Time `xorm:"datetime comment('标记所有已读时间') 'marked_all_as_read_at'" json:"marked_all_as_read_at" xml:"marked_all_as_read_at"`
+	// 标记读取消息时间
+	ReadNotificationsAt null.Time `xorm:"datetime comment('标记读取消息时间') 'read_notifications_at'" json:"read_notifications_at" xml:"read_notifications_at"`
 	// 域
 	Domain null.String `xorm:"varchar(50) notnull comment('域') 'domain'" json:"domain" xml:"domain"`
 	// 创建人

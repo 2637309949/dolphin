@@ -7,11 +7,14 @@
 	<column name="intro" desc="简介" type="null.String" xorm="text" />
 	<column name="mobile" desc="电话" type="null.String" xorm="varchar(50)" />
 	<column name="email" desc="邮箱" type="null.String" xorm="varchar(50)" />
+	<column name="is_email_confirmed" desc="是否邮件确认(0：尚未,1：确认)" type="null.Int"/>
 	<column name="org_id" desc="组织ID" type="null.String" xorm="varchar(36)" />
 	<column name="gender" desc="性别(0：女,1：男)" type="null.Int" />
 	<column name="type" desc="用户类型" type="null.Int"/>
 	<column name="status" desc="状态(0：禁用,1：正常)" type="null.Int" xorm="notnull" />
 	<column name="avatar" desc="头像" type="null.String" xorm="varchar(255)" />
+	<column name="marked_all_as_read_at" desc="标记所有已读时间" type="null.Time" xorm="datetime" />
+	<column name="read_notifications_at" desc="标记读取消息时间" type="null.Time" xorm="datetime" />
 	<column name="domain" desc="域" type="null.String" xorm="varchar(50) notnull" />
 	
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
