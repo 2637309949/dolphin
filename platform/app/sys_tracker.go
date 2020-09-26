@@ -7,7 +7,6 @@ import (
 	"fmt"
 
 	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 )
 
@@ -26,8 +25,6 @@ func SysTrackerPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
 	q.SetString("sort", "sys_tracker.update_time desc")
-	q.SetString("app_name", viper.GetString("app.name"))()
-	q.SetString("domain", ctx.GetToken().GetDomain())
 	q.SetRule("sys_tracker_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_tracker", "page", "sys_tracker", q.Value())

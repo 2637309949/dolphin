@@ -1,8 +1,6 @@
 <table name="sys_tracker" desc="日志跟踪" packages="github.com/2637309949/dolphin/packages/null">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="token" desc="令牌" type="null.String" xorm="varchar(72)" />
-	<column name="app_name" desc="应用归属" type="null.String" xorm="varchar(36) notnull" />
-	<column name="domain" desc="域名" type="null.String" xorm="varchar(36)" />
     <column name="user_id" desc="用户ID" type="null.String" xorm="varchar(36)" />
 	<column name="status_code" desc="状态" type="null.Int" xorm="int" />
 	<column name="latency" desc="反应时间" type="null.Float" xorm="float" />

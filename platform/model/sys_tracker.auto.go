@@ -13,10 +13,6 @@ type SysTracker struct {
 	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" xml:"id"`
 	// 令牌
 	Token null.String `xorm:"varchar(72) comment('令牌') 'token'" json:"token" xml:"token"`
-	// 应用归属
-	AppName null.String `xorm:"varchar(36) notnull comment('应用归属') 'app_name'" json:"app_name" xml:"app_name"`
-	// 域名
-	Domain null.String `xorm:"varchar(36) comment('域名') 'domain'" json:"domain" xml:"domain"`
 	// 用户ID
 	UserId null.String `xorm:"varchar(36) comment('用户ID') 'user_id'" json:"user_id" xml:"user_id"`
 	// 状态

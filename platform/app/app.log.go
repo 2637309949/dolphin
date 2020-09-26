@@ -101,43 +101,48 @@ func initTracker() {
 	}
 	go func() {
 		var bucket slice.SyncSlice
+		type SysTracker struct {
+			model.SysTracker
+			Domain null.String `xorm:"varchar(36) comment('域名') 'domain'" json:"domain" xml:"domain"`
+		}
 		for {
 			logWorkerPool <- logChannel
 			select {
 			case <-time.Tick(5 * time.Second):
 				logs := bucket.Reset()
 				bmp := map[string][]model.SysTracker{}
-				beans := funk.Map(logs, func(entity interface{}) model.SysTracker {
+				beans := funk.Map(logs, func(entity interface{}) SysTracker {
 					item := entity.(*plugin.LogFormatterParams)
-					return model.SysTracker{
-						ID:         null.StringFromUUID(),
-						AppName:    null.StringFrom(viper.GetString("app.name")),
-						Token:      null.StringFrom(item.Token),
-						Domain:     null.StringFrom(item.Domain),
-						UserId:     null.StringFrom(item.UserID),
-						StatusCode: null.IntFrom(int64(item.StatusCode)),
-						Latency:    null.FloatFrom(item.Latency.Seconds()),
-						ClientIp:   null.StringFrom(item.ClientIP),
-						Method:     null.StringFrom(item.Method),
-						Path:       null.StringFrom(item.Path),
-						Header:     item.Header,
-						ReqBody:    item.ReqBody,
-						ResBody:    item.ResBody,
-						CreateTime: null.TimeFrom(time.Now()),
-						CreateBy:   model.DefaultAdmin.ID,
-						UpdateTime: null.TimeFrom(time.Now()),
-						UpdateBy:   model.DefaultAdmin.ID,
-						DelFlag:    null.IntFrom(0),
+					return SysTracker{
+						SysTracker: model.SysTracker{
+							ID:         null.StringFromUUID(),
+							Token:      null.StringFrom(item.Token),
+							UserId:     null.StringFrom(item.UserID),
+							StatusCode: null.IntFrom(int64(item.StatusCode)),
+							Latency:    null.FloatFrom(item.Latency.Seconds()),
+							ClientIp:   null.StringFrom(item.ClientIP),
+							Method:     null.StringFrom(item.Method),
+							Path:       null.StringFrom(item.Path),
+							Header:     item.Header,
+							ReqBody:    item.ReqBody,
+							ResBody:    item.ResBody,
+							CreateTime: null.TimeFrom(time.Now()),
+							CreateBy:   model.DefaultAdmin.ID,
+							UpdateTime: null.TimeFrom(time.Now()),
+							UpdateBy:   model.DefaultAdmin.ID,
+							DelFlag:    null.IntFrom(0),
+						},
+						Domain: null.StringFrom(item.Domain),
 					}
-				}).([]model.SysTracker)
-				beans = funk.Filter(beans, func(entity model.SysTracker) bool {
+				}).([]SysTracker)
+				beans = funk.Filter(beans, func(entity SysTracker) bool {
 					return entity.Domain.String != ""
-				}).([]model.SysTracker)
-				funk.ForEach(beans, func(entity model.SysTracker) {
+				}).([]SysTracker)
+				funk.ForEach(beans, func(entity SysTracker) {
 					if _, ok := bmp[entity.Domain.String]; !ok {
 						bmp[entity.Domain.String] = []model.SysTracker{}
 					}
-					bmp[entity.Domain.String] = append(bmp[entity.Domain.String], entity)
+					bmp[entity.Domain.String] = append(bmp[entity.Domain.String], entity.SysTracker)
 				})
 				for k, v := range bmp {
 					err := TrackerStore(k, &v)
