@@ -3,8 +3,10 @@
 	<column name="password" desc="密码" type="null.String" xorm="varchar(150) notnull" />
 	<column name="salt" desc="盐噪点" type="null.String" xorm="varchar(36) notnull" />
 	<column name="name" desc="名字" type="null.String" xorm="varchar(36) notnull" />
-	<column name="nickname" desc="全名" type="null.String" xorm="varchar(36)" />
+	<column name="full_name" desc="全名" type="null.String" xorm="varchar(36)" />
+	<column name="nickname" desc="昵称" type="null.String" xorm="varchar(36)" />
 	<column name="intro" desc="简介" type="null.String" xorm="text" />
+	<column name="address" desc="地址" type="null.String" xorm="varchar(150)" />
 	<column name="mobile" desc="电话" type="null.String" xorm="varchar(50)" />
 	<column name="email" desc="邮箱" type="null.String" xorm="varchar(50)" />
 	<column name="is_email_confirmed" desc="是否邮件确认(0：尚未,1：确认)" type="null.Int"/>
@@ -15,6 +17,8 @@
 	<column name="avatar" desc="头像" type="null.String" xorm="varchar(255)" />
 	<column name="marked_all_as_read_at" desc="标记所有已读时间" type="null.Time" xorm="datetime" />
 	<column name="read_notifications_at" desc="标记读取消息时间" type="null.Time" xorm="datetime" />
+	<column name="temp_id" desc="模板ID" type="null.String" xorm="varchar(36)" />
+	<column name="temp_value" desc="模板值" type="null.String" xorm="text" />
 	<column name="domain" desc="域" type="null.String" xorm="varchar(50) notnull" />
 	
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />

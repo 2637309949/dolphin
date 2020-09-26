@@ -721,6 +721,9 @@ definitions:
     type: object
   model.SysUser:
     properties:
+      address:
+        description: 地址
+        type: string
       avatar:
         description: 头像
         type: string
@@ -738,6 +741,9 @@ definitions:
         type: string
       email:
         description: 邮箱
+        type: string
+      full_name:
+        description: 全名
         type: string
       gender:
         description: 性别(0：女,1：男)
@@ -761,7 +767,7 @@ definitions:
         description: 名字
         type: string
       nickname:
-        description: 全名
+        description: 昵称
         type: string
       org_id:
         description: 组织ID
@@ -781,6 +787,12 @@ definitions:
       status:
         description: 状态(0：禁用,1：正常)
         type: number
+      temp_id:
+        description: 模板ID
+        type: string
+      temp_value:
+        description: 模板值
+        type: string
       type:
         description: 用户类型
         type: number

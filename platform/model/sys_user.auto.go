@@ -18,9 +18,13 @@ type SysUser struct {
 	// 名字
 	Name null.String `xorm:"varchar(36) notnull comment('名字') 'name'" json:"name" xml:"name"`
 	// 全名
-	Nickname null.String `xorm:"varchar(36) comment('全名') 'nickname'" json:"nickname" xml:"nickname"`
+	FullName null.String `xorm:"varchar(36) comment('全名') 'full_name'" json:"full_name" xml:"full_name"`
+	// 昵称
+	Nickname null.String `xorm:"varchar(36) comment('昵称') 'nickname'" json:"nickname" xml:"nickname"`
 	// 简介
 	Intro null.String `xorm:"text comment('简介') 'intro'" json:"intro" xml:"intro"`
+	// 地址
+	Address null.String `xorm:"varchar(150) comment('地址') 'address'" json:"address" xml:"address"`
 	// 电话
 	Mobile null.String `xorm:"varchar(50) comment('电话') 'mobile'" json:"mobile" xml:"mobile"`
 	// 邮箱
@@ -41,6 +45,10 @@ type SysUser struct {
 	MarkedAllAsReadAt null.Time `xorm:"datetime comment('标记所有已读时间') 'marked_all_as_read_at'" json:"marked_all_as_read_at" xml:"marked_all_as_read_at"`
 	// 标记读取消息时间
 	ReadNotificationsAt null.Time `xorm:"datetime comment('标记读取消息时间') 'read_notifications_at'" json:"read_notifications_at" xml:"read_notifications_at"`
+	// 模板ID
+	TempId null.String `xorm:"varchar(36) comment('模板ID') 'temp_id'" json:"temp_id" xml:"temp_id"`
+	// 模板值
+	TempValue null.String `xorm:"text comment('模板值') 'temp_value'" json:"temp_value" xml:"temp_value"`
 	// 域
 	Domain null.String `xorm:"varchar(50) notnull comment('域') 'domain'" json:"domain" xml:"domain"`
 	// 创建人
