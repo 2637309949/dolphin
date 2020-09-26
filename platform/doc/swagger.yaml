@@ -718,6 +718,12 @@ definitions:
       intro:
         description: 简介
         type: string
+      is_email_confirmed:
+        description: 是否邮件确认(0：尚未,1：确认)
+        type: number
+      marked_all_as_read_at:
+        description: 标记所有已读时间
+        type: string
       mobile:
         description: 电话
         type: string
@@ -732,6 +738,9 @@ definitions:
         type: string
       password:
         description: 密码
+        type: string
+      read_notifications_at:
+        description: 标记读取消息时间
         type: string
       remark:
         description: 备注
