@@ -172,6 +172,27 @@ The build command generates the preset function by executing the built-in Pipeli
 dolphin build @table xml/test
 ```
 
+Existing built-in Pipeline function:
+
+| Function   |      Action      |
+|----------|:-------------:|
+| main |   |
+| app |    |
+| ctr |    |
+| proto |  |
+| srv |    |
+| model |  |
+| bean |   |
+| auto |   |
+| tool |   |
+| sql |    |
+| sqlmap | |
+| oauth |  |
+| script | |
+| deploy | |
+| doc |    |
+
+
 ### clean
 The clean command clears temporary files
 
