@@ -128,6 +128,8 @@ func SysUserPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
 	q.SetString("org_id")
+	q.SetString("mobile")
+	q.SetString("name")
 	q.SetString("cn_org_id")
 	q.SetRule("sys_user_page")
 	q.SetTags()

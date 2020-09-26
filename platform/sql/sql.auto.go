@@ -132,6 +132,48 @@ func init() {
 	SQLTPL["selectall_sys_client"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_client
     `
+	SQLTPL["insert_sys_comment"] = `
+        insert into sys_comment
+		(` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?topic_id,?topic_type,?content,?from_uid,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_comment"] = `
+        update sys_comment set ` + "`id`" + `=?id,` + "`topic_id`" + `=?topic_id,` + "`topic_type`" + `=?topic_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_comment"] = `
+        delete from sys_comment
+		where id =?id
+    `
+	SQLTPL["selectone_sys_comment"] = `
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_comment"] = `
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment
+    `
+	SQLTPL["insert_sys_comment_reply"] = `
+        insert into sys_comment_reply
+		(` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?comment_id,?reply_id,?reply_type,?content,?from_uid,?to_uid,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_comment_reply"] = `
+        update sys_comment_reply set ` + "`id`" + `=?id,` + "`comment_id`" + `=?comment_id,` + "`reply_id`" + `=?reply_id,` + "`reply_type`" + `=?reply_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`to_uid`" + `=?to_uid,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_comment_reply"] = `
+        delete from sys_comment_reply
+		where id =?id
+    `
+	SQLTPL["selectone_sys_comment_reply"] = `
+        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment_reply
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_comment_reply"] = `
+        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment_reply
+    `
 	SQLTPL["insert_sys_data_permission"] = `
         insert into sys_data_permission
 		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
@@ -194,6 +236,27 @@ func init() {
     `
 	SQLTPL["selectall_sys_domain"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`sync_flag`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_domain
+    `
+	SQLTPL["insert_sys_email_token"] = `
+        insert into sys_email_token
+		(` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?token,?email,?user_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_email_token"] = `
+        update sys_email_token set ` + "`id`" + `=?id,` + "`token`" + `=?token,` + "`email`" + `=?email,` + "`user_id`" + `=?user_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_email_token"] = `
+        delete from sys_email_token
+		where id =?id
+    `
+	SQLTPL["selectone_sys_email_token"] = `
+        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_email_token
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_email_token"] = `
+        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_email_token
     `
 	SQLTPL["insert_sys_menu"] = `
         insert into sys_menu
@@ -437,6 +500,27 @@ func init() {
     `
 	SQLTPL["selectall_sys_role_user"] = `
         select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_user
+    `
+	SQLTPL["insert_sys_setting"] = `
+        insert into sys_setting
+		(` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?key,?value,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_setting"] = `
+        update sys_setting set ` + "`id`" + `=?id,` + "`key`" + `=?key,` + "`value`" + `=?value,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_setting"] = `
+        delete from sys_setting
+		where id =?id
+    `
+	SQLTPL["selectone_sys_setting"] = `
+        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_setting
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_setting"] = `
+        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_setting
     `
 	SQLTPL["insert_sys_table_col_user"] = `
         insert into sys_table_col_user
@@ -751,6 +835,33 @@ where
 	and {{.role_rule}}
 {{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
+`
+	SQLTPL["sys_comment_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    count(*) records
+from
+	sys_comment
+where
+	sys_comment.id {{.ne}} ""
+	and
+	sys_comment.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+`
+	SQLTPL["sys_comment_page_select.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    sys_comment.id
+from
+	sys_comment
+where
+	sys_comment.id {{.ne}} ""
+	and
+	sys_comment.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_data_permission_page_count.tpl"] = `select
     count(*) records
@@ -1112,6 +1223,33 @@ where
 {{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
+	SQLTPL["sys_setting_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    count(*) records
+from
+	sys_setting
+where
+	sys_setting.id {{.ne}} ""
+	and
+	sys_setting.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+`
+	SQLTPL["sys_setting_page_select.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    sys_setting.id
+from
+	sys_setting
+where
+	sys_setting.id {{.ne}} ""
+	and
+	sys_setting.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+	LIMIT {{.size}} OFFSET {{.offset}}
+`
 	SQLTPL["sys_tag_page_count.tpl"] = `select
     count(*) records
 from
@@ -1222,6 +1360,18 @@ where
 	sys_user.del_flag {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
+{{end}}
+{{if ne .org_id ""}}
+	and sys_user.org_id = "{{.org_id}}"
+{{end}}
+{{if ne .mobile ""}}
+	and sys_user.mobile like "%{{.mobile}}%"
+{{end}}
+{{if ne .cn_org_id ""}}
+	and sys_user.org_id in ({{.cn_org_id}})
+{{end}}
+{{if ne .name ""}}
+	and sys_user.name like "%{{.name}}%"
 {{end}}`
 	SQLTPL["sys_user_page_select.tpl"] = `select
     sys_user.id,
@@ -1242,8 +1392,14 @@ where
 {{if ne .org_id ""}}
 	and sys_user.org_id = "{{.org_id}}"
 {{end}}
+{{if ne .mobile ""}}
+	and sys_user.mobile like "%{{.mobile}}%"
+{{end}}
 {{if ne .cn_org_id ""}}
 	and sys_user.org_id in ({{.cn_org_id}})
+{{end}}
+{{if ne .name ""}}
+	and sys_user.name like "%{{.name}}%"
 {{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
