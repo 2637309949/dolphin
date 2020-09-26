@@ -191,6 +191,7 @@ Existing built-in Pipeline function:
 | script | |
 | deploy | |
 | doc |    |
+| table |    |
 
 
 ### clean
