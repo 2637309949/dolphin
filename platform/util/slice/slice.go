@@ -96,14 +96,9 @@ func PatchSliceByField(target interface{}, source interface{}, targetMatchKey st
 	if err = json.Unmarshal(ste, &ssm); err != nil || len(ssm) == 0 {
 		return nil
 	}
-	fmt.Println("---------source", source)
-	fmt.Println("---------tsm", tsm)
-	fmt.Println("---------ssm", ssm)
 
 	for i := range tsm {
 		for i2 := range ssm {
-			fmt.Println("---------1", tsm[i][targetMatchKey])
-			fmt.Println("---------2", ssm[i2][sourceMatchKey])
 			if tsm[i][targetMatchKey] == ssm[i2][sourceMatchKey] {
 				for i3 := range key {
 					keys := strings.Split(key[i3], "#")
