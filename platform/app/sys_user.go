@@ -5,7 +5,6 @@ package app
 
 import (
 	"errors"
-	"fmt"
 	"html/template"
 	"regexp"
 	"strings"
@@ -166,19 +165,18 @@ func SysUserPage(ctx *Context) {
 		return
 	}
 
-	for i := range ret.Data {
-		for _, v := range roles {
-			if v["user_id"].NullString().String == fmt.Sprintf("%v", ret.Data[i]["id"]) {
-				ret.Data[i]["role_name"] = v["role_name"].NullString().String
-				ret.Data[i]["user_role"] = v["user_role"].NullString().String
-			}
-		}
-		for _, v := range orgs {
-			if v["id"].NullString().String == fmt.Sprintf("%v", ret.Data[i]["org_id"]) {
-				ret.Data[i]["org_id"] = v["id"].NullString().String
-				ret.Data[i]["org_name"] = v["name"].NullString().String
-			}
-		}
+	err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+
+	err = slice.PatchSliceByField(ret.Data, orgs, "org_id", "id", "org_id#id", "org_name#name")(&ret.Data)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
 	}
 
 	ret = ret.With(new([]struct {

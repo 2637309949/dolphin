@@ -35,8 +35,8 @@ func SysUserGetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error)
 }
 
 // SysUserGetUserRolesByUID defined
-func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) (xorm.Result, error) {
-	roles, err := db.SqlTemplateClient("sys_user_role.tpl", &map[string]interface{}{"uids": template.HTML(ids)}).QueryResult().List()
+func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
+	roles, err := db.SqlTemplateClient("sys_user_role.tpl", &map[string]interface{}{"uids": template.HTML(ids)}).Query().List()
 	if err != nil {
 		return nil, err
 	}
@@ -44,8 +44,8 @@ func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) (xorm.Result, error) 
 }
 
 // SysUserGetUserOrgsByUID defined
-func SysUserGetUserOrgsByUID(db *xorm.Engine, ids string) (xorm.Result, error) {
-	orgs, err := db.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"ne": template.HTML("<>"), "oids": template.HTML(ids)}).QueryResult().List()
+func SysUserGetUserOrgsByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
+	orgs, err := db.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"ne": template.HTML("<>"), "oids": template.HTML(ids)}).Query().List()
 	if err != nil {
 		return nil, err
 	}

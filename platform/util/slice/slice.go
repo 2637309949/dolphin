@@ -2,8 +2,10 @@ package slice
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/2637309949/dolphin/platform/util/snaker"
 )
@@ -64,6 +66,72 @@ func GetFieldSliceByName(arr interface{}, name string, format ...string) interfa
 		resultSlice = reflect.Append(resultSlice, iv)
 	}
 	return resultSlice.Interface()
+}
+
+// PatchSliceByField defined
+func PatchSliceByField(target interface{}, source interface{}, targetMatchKey string, sourceMatchKey string, key ...string) func(interface{}) error {
+	if !IsIteratee(target) {
+		panic("First parameter must be an iteratee")
+	}
+
+	if !IsIteratee(source) {
+		panic("Second parameter must be an iteratee")
+	}
+
+	tsm := []map[string]interface{}{}
+	bte, err := json.Marshal(target)
+	if err != nil {
+		return nil
+	}
+
+	if err = json.Unmarshal(bte, &tsm); err != nil || len(tsm) == 0 {
+		return nil
+	}
+
+	ssm := []map[string]interface{}{}
+	ste, err := json.Marshal(source)
+	if err != nil {
+		return nil
+	}
+	if err = json.Unmarshal(ste, &ssm); err != nil || len(ssm) == 0 {
+		return nil
+	}
+	fmt.Println("---------source", source)
+	fmt.Println("---------tsm", tsm)
+	fmt.Println("---------ssm", ssm)
+
+	for i := range tsm {
+		for i2 := range ssm {
+			fmt.Println("---------1", tsm[i][targetMatchKey])
+			fmt.Println("---------2", ssm[i2][sourceMatchKey])
+			if tsm[i][targetMatchKey] == ssm[i2][sourceMatchKey] {
+				for i3 := range key {
+					keys := strings.Split(key[i3], "#")
+					if len(keys) > 1 {
+						tsm[i][keys[0]] = ssm[i2][keys[1]]
+					} else {
+						tsm[i][keys[0]] = ssm[i2][keys[0]]
+					}
+				}
+			}
+		}
+	}
+
+	return func(v interface{}) error {
+		val := reflect.ValueOf(v)
+		if val.Kind() != reflect.Ptr {
+			return errors.New("non-pointer passed to Unmarshal")
+		}
+		btr, err := json.Marshal(tsm)
+		if err != nil {
+			return err
+		}
+		err = json.Unmarshal(btr, v)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
 }
 
 // IsIteratee returns if the argument is an iteratee.

@@ -4,8 +4,6 @@
 package app
 
 import (
-	"fmt"
-
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util/slice"
@@ -44,12 +42,11 @@ func SysTrackerPage(ctx *Context) {
 		return
 	}
 
-	for i := range ret.Data {
-		for _, v := range users {
-			if v.ID.String == fmt.Sprintf("%v", ret.Data[i]["user_id"]) {
-				ret.Data[i]["user_name"] = v.Name.String
-			}
-		}
+	err = slice.PatchSliceByField(ret.Data, users, "user_id", "id", "user_name#name")(&ret.Data)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
 	}
 
 	if ctx.QueryBool("__export__") {
