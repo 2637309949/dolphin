@@ -18,6 +18,7 @@ import (
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
+	"github.com/2637309949/dolphin/platform/util/slice"
 )
 
 // SysUserAdd api implementation
@@ -148,33 +149,8 @@ func SysUserPage(ctx *Context) {
 		return
 	}
 
-	// combile from srv sql
-	uids := []string{}
-	uorgs := []string{}
-	for _, v := range ret.Data {
-		if v["id"] != nil {
-			has := false
-			for _, v1 := range uids {
-				if v1 == fmt.Sprintf("'%v'", v["id"]) {
-					has = true
-				}
-			}
-			if !has {
-				uids = append(uids, fmt.Sprintf("'%v'", v["id"]))
-			}
-		}
-		if v["org_id"] != nil {
-			has := false
-			for _, v1 := range uorgs {
-				if v1 == fmt.Sprintf("'%v'", v["org_id"]) {
-					has = true
-				}
-			}
-			if !has {
-				uorgs = append(uorgs, fmt.Sprintf("'%v'", v["org_id"]))
-			}
-		}
-	}
+	uids := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string)
+	uorgs := slice.GetFieldSliceByName(ret.Data, "org_id", "'%v'").([]string)
 
 	roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
 	if err != nil {

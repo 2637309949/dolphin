@@ -8,6 +8,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/util/slice"
 )
 
 // SysTrackerPage api implementation
@@ -33,21 +34,8 @@ func SysTrackerPage(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	uids := []string{}
-	for _, v := range ret.Data {
-		if v["user_id"] != nil {
-			has := false
-			for _, v1 := range uids {
-				if v1 == fmt.Sprintf("%v", v["user_id"]) {
-					has = true
-				}
-			}
-			if !has {
-				uids = append(uids, fmt.Sprintf("%v", v["user_id"]))
-			}
-		}
-	}
 
+	uids := slice.GetFieldSliceByName(ret.Data, "user_id").([]string)
 	users := []model.SysUser{}
 	err = ctx.PlatformDB.Cols("id", "name").In("id", uids).Find(&users)
 	if err != nil {
