@@ -47,6 +47,8 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [Add Job](#add-job)
         - [Fetch Job status](#fetch-job-status)
     - [Load User Info](#load-user-info)
+        - [GetFieldSliceByName](#getfieldslicebyname)
+        - [PatchSliceByField](#patchslicebyfield)
 
 <!-- /TOC -->
 
@@ -1136,7 +1138,8 @@ ctx.DB
 Else, You should load business info from ctx.DB 
 
 
-Example:
+### GetFieldSliceByName
+Create a new array from inside an array based on the field name.  
 
 ```go
 uids := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string)
@@ -1155,7 +1158,14 @@ if err != nil {
 	ctx.Fail(err)
 	return
 }
+```
 
+### PatchSliceByField
+Patch the field value to another array.  
+
+Example:
+
+```go
 err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
 if err != nil {
 	logrus.Error(err)
