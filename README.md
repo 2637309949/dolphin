@@ -41,7 +41,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [sso affirm](#sso-affirm)
         - [sso token](#sso-token)
         - [sso callback](#sso-callback)
-        - [Example](#example)
+        - [example](#example)
     - [Workload](#workload)
         - [Add Handler](#add-handler)
         - [Add Job](#add-job)
@@ -977,12 +977,12 @@ Code segment in client, Fetch token from platform and set cookie
 func SysCasOauth2(ctx *Context)
 ```
 
-### Example
+### example
 
 For more information, please check out dolphin-ui [dolphin-ui](https://github.com/2637309949/dolphin-ui)  
 
 
-If you want to go sso auth then you can auth_mode to `1`  
+If you want to go sso auth then you can set `auth_mode` to `1`  
 
 ```json
 "auth_mode": 1
