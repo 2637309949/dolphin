@@ -1158,7 +1158,7 @@ Patch the field value to another array.
 Example:
 
 ```go
-err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
+err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name")(&ret.Data)
 if err != nil {
 	logrus.Error(err)
 	ctx.Fail(err)
