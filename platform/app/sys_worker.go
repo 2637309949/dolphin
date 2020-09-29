@@ -48,7 +48,7 @@ func (p Job) Do() error {
 	if err != nil {
 		logrus.Error(err)
 		b.Status = model.WorkerStatusInterrupt
-		b.Error = err
+		b.Error = err.Error()
 		if err := worker.Update(b); err != nil {
 			logrus.Error(err)
 			return err

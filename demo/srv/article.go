@@ -5,12 +5,24 @@ package srv
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	pApp "github.com/2637309949/dolphin/platform/app"
+	pModel "github.com/2637309949/dolphin/platform/model"
 )
 
 // ArticleAction defined srv
 func ArticleAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
+}
+
+func init() {
+	pApp.App.Manager.Worker().AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
+		fmt.Printf("topic=%v, payload=%", "hello", args.Payload)
+		return map[string]interface{}{
+			"score": 99,
+		}, nil
+	})
 }

@@ -42,8 +42,8 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [sso token](#sso-token)
         - [sso callback](#sso-callback)
     - [Workload](#workload)
-        - [Add Job](#add-job)
         - [Add Handler](#add-handler)
+        - [Add Job](#add-job)
         - [Fetch Job status](#fetch-job-status)
 
 <!-- /TOC -->
@@ -980,6 +980,28 @@ func SysCasOauth2(ctx *Context)
 
 > High concurrent requests are processed with built-in load interfaces
 
+### Add Handler
+
+```go
+// @Summary AddJobHandler
+// @Tags worker
+func (d *DefaultWorker) AddJobHandler(code string, funk func(model.Worker) (interface{}, error)) {
+```
+
+Example:  
+demo/srv/article.go  
+```go
+func init() {
+	// add hello topic handler
+	pApp.App.Manager.Worker().AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
+		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
+		return map[string]interface{}{
+			"score": 99,
+		}, nil
+	})
+}
+```
+
 ### Add Job
 
 ```go
@@ -996,13 +1018,36 @@ func SysCasOauth2(ctx *Context)
 func SysWorkerAdd(ctx *Context) {
 ```
 
-### Add Handler
+Example:  
 
-```go
-// @Summary AddJobHandler
-// @Tags worker
-func (d *DefaultWorker) AddJobHandler(code string, funk func(model.Worker) (interface{}, error)) {
+Request:  
+```sh
+POST /api/sys/worker/add HTTP/1.1
+Host: 127.0.0.1:8082
+Content-Type: application/json
+token: f4c9f457c82c9ee51e3dc50fea74562b64dd9269
+Authorization: Bearer BY3KDUJNMWCN-NQJLKQVAW
+Cache-Control: no-cache
+Postman-Token: 0a39bb7e-d9bf-607d-120d-ffa59102dab8
+
+{
+	"name": "hello",
+	"payload": { "user_id": "sdhfusd9f"}
+}
 ```
+
+Reponse:  
+```json
+{
+    "code": 200,
+    "data": {
+        "code": "fb9b4a91-c918-4d11-a8f7-878e4dd94f70",
+        "name": "hello",
+        "status": 100
+    }
+}
+```
+
 
 ### Fetch Job status
 
@@ -1017,4 +1062,28 @@ func (d *DefaultWorker) AddJobHandler(code string, funk func(model.Worker) (inte
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/worker/get [get]
 func SysWorkerGet(ctx *Context) {
+```
+
+Example:  
+```sh
+GET /api/sys/worker/get?code=a4d13b27-4836-4a1b-b6fe-63473716bc4c HTTP/1.1
+Host: 127.0.0.1:8082
+Authorization: Bearer BY3KDUJNMWCN-NQJLKQVAW
+Cache-Control: no-cache
+Postman-Token: 4f1595de-583b-fac6-06bc-2eafad956d40
+```
+
+Response:  
+```json
+{
+    "code": 200,
+    "data": {
+        "code": "a4d13b27-4836-4a1b-b6fe-63473716bc4c",
+        "name": "hello",
+        "result": {
+            "score": 99
+        },
+        "status": 103
+    }
+}
 ```
