@@ -993,7 +993,9 @@ demo/srv/article.go
 ```go
 func init() {
 	// add hello topic handler
-	pApp.App.Manager.Worker().AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
+	pApp.App.Manager
+	.Worker()
+	.AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
 		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
 		return map[string]interface{}{
 			"score": 99,
