@@ -46,7 +46,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [Add Handler](#add-handler)
         - [Add Job](#add-job)
         - [Fetch Job status](#fetch-job-status)
-        - [Load User Info](#load-user-info)
+    - [Load User Info](#load-user-info)
 
 <!-- /TOC -->
 
@@ -1120,7 +1120,7 @@ Response:
 ```
 
 
-### Load User Info
+## Load User Info
 
 Because user info db and the primary business db are separated, so user information needs to be loaded separately.  
 
