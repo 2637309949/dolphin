@@ -999,8 +999,8 @@ window.Domain = {
     "contact_name": null,
     "contact_email": null,
     "contact_mobile": null,
-    "login_url": "127.0.0.1",
-    "api_url": "http://127.0.0.1:8082",
+    "login_url": "localhost",
+    "api_url": "http://localhost:8082",
     "static_url": null,
     "theme": "default",
     "auth_mode": 1
@@ -1056,7 +1056,7 @@ Example:
 Request:  
 ```sh
 POST /api/sys/worker/add HTTP/1.1
-Host: 127.0.0.1:8082
+Host: localhost:8082
 Content-Type: application/json
 token: f4c9f457c82c9ee51e3dc50fea74562b64dd9269
 Authorization: Bearer BY3KDUJNMWCN-NQJLKQVAW
@@ -1100,7 +1100,7 @@ func SysWorkerGet(ctx *Context) {
 Example:  
 ```sh
 GET /api/sys/worker/get?code=a4d13b27-4836-4a1b-b6fe-63473716bc4c HTTP/1.1
-Host: 127.0.0.1:8082
+Host: localhost:8082
 Authorization: Bearer BY3KDUJNMWCN-NQJLKQVAW
 Cache-Control: no-cache
 Postman-Token: 4f1595de-583b-fac6-06bc-2eafad956d40
