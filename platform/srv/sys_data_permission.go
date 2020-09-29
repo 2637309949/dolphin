@@ -5,9 +5,12 @@ package srv
 
 import (
 	"errors"
+
+	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
 
 // SysDataPermissionAction defined srv
-func SysDataPermissionAction(v interface{}) (interface{}, error) {
+func SysDataPermissionAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
 }

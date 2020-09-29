@@ -27,7 +27,7 @@ func SysSchedulingAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingAction(payload)
+	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -53,7 +53,7 @@ func SysSchedulingDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingAction(payload)
+	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -79,7 +79,7 @@ func SysSchedulingUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingAction(payload)
+	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -102,7 +102,7 @@ func SysSchedulingPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
-	ret, err := srv.SysSchedulingAction(q)
+	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -123,7 +123,7 @@ func SysSchedulingPage(ctx *Context) {
 func SysSchedulingGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
-	ret, err := srv.SysSchedulingAction(q)
+	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

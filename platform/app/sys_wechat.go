@@ -17,7 +17,8 @@ import (
 // @Router /api/sys/wechat/oauth2 [get]
 func SysWechatOauth2(ctx *Context) {
 	q := ctx.TypeQuery()
-	ret, err := srv.SysWechatAction(q)
+	q.SetUser()
+	ret, err := srv.SysWechatAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

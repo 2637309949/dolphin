@@ -17,7 +17,8 @@ import (
 // @Router /api/sys/dingtalk/oauth2 [get]
 func SysDingtalkOauth2(ctx *Context) {
 	q := ctx.TypeQuery()
-	ret, err := srv.SysDingtalkAction(q)
+	q.SetUser()
+	ret, err := srv.SysDingtalkAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
