@@ -46,6 +46,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [Add Handler](#add-handler)
         - [Add Job](#add-job)
         - [Fetch Job status](#fetch-job-status)
+        - [Load User Info](#load-user-info)
 
 <!-- /TOC -->
 
@@ -1115,5 +1116,57 @@ Response:
         },
         "status": 103
     }
+}
+```
+
+
+### Load User Info
+
+Because user info db and the primary business db are separated, so user information needs to be loaded separately.  
+
+```go
+ctx.PlatformDB 
+```
+You can load platform info from `PlatformDB`, such as sys_user, sys_client, sys_domain    
+
+
+```go
+ctx.DB 
+```
+Else, You should load business info from ctx.DB 
+
+
+Example:
+
+```go
+uids := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string)
+uorgs := slice.GetFieldSliceByName(ret.Data, "org_id", "'%v'").([]string)
+
+roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
+if err != nil {
+	logrus.Error(err)
+	ctx.Fail(err)
+	return
+}
+
+orgs, err := srv.SysUserGetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
+if err != nil {
+	logrus.Error(err)
+	ctx.Fail(err)
+	return
+}
+
+err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
+if err != nil {
+	logrus.Error(err)
+	ctx.Fail(err)
+	return
+}
+
+err = slice.PatchSliceByField(ret.Data, orgs, "org_id", "id", "org_id#id", "org_name#name")(&ret.Data)
+if err != nil {
+	logrus.Error(err)
+	ctx.Fail(err)
+	return
 }
 ```
