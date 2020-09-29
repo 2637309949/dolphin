@@ -1143,16 +1143,8 @@ Create a new array from inside an array based on the field name.
 
 ```go
 uids := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string)
-uorgs := slice.GetFieldSliceByName(ret.Data, "org_id", "'%v'").([]string)
 
 roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
-if err != nil {
-	logrus.Error(err)
-	ctx.Fail(err)
-	return
-}
-
-orgs, err := srv.SysUserGetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
 if err != nil {
 	logrus.Error(err)
 	ctx.Fail(err)
@@ -1167,13 +1159,6 @@ Example:
 
 ```go
 err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
-if err != nil {
-	logrus.Error(err)
-	ctx.Fail(err)
-	return
-}
-
-err = slice.PatchSliceByField(ret.Data, orgs, "org_id", "id", "org_id#id", "org_name#name")(&ret.Data)
 if err != nil {
 	logrus.Error(err)
 	ctx.Fail(err)
