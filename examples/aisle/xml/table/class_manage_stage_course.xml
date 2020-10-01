@@ -1,0 +1,17 @@
+<table name="class_manage_stage_course" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="c_m_s_c_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="cms_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ctsc_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="course_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cmsc_hour" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cmsc_minute" desc="" type="null.Int" xorm="int(11)" />
+	<column name="plan_hour" desc="" type="null.Int" xorm="int(11)" />
+	<column name="qr_hour" desc="" type="null.Int" xorm="int(11)" />
+	<column name="use_hour" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="class_id" desc="" type="null.Int" xorm="int(11)" />
+</table>

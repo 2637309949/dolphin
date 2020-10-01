@@ -1,0 +1,42 @@
+<table name="deposit_out" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="d_o_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="out_money" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="out_way" desc="" type="null.Int" xorm="int(11)" />
+	<column name="out_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="di_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="fee_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="out_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="actual_refund_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="zd_check_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="pk_flow_set" desc="" type="null.Int" xorm="int(11)" />
+	<column name="now_check_user" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="now_floor" desc="" type="null.Int" xorm="int(11)" />
+	<column name="turn_floor" desc="" type="null.Int" xorm="int(11)" />
+	<column name="history_check_user" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="pk_cfp_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="now_cfid" desc="" type="null.Int" xorm="int(11)" />
+	<column name="next_cfid" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_check_user" desc="" type="null.Int" xorm="int(11)" />
+	<column name="jzzm_fileid" desc="" type="null.Int" xorm="int(11)" />
+	<column name="jzbm_fileid" desc="" type="null.Int" xorm="int(11)" />
+	<column name="hm_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="bank_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="card_number" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="ref_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="now_checkid" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="now_checkname" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="next_checkid" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="next_checkname" desc="" type="null.String" xorm="varchar(100)" />
+</table>

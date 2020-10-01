@@ -1,0 +1,20 @@
+<table name="temp_20190330" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="order_form_id" desc="" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="of_number" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="teaching_materia_amount" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="total_ach" desc="" type="null.Float" xorm="double(19,2)" />
+	<column name="must_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="get_money" desc="" type="null.Float" xorm="double(19,2)" />
+	<column name="danjia" desc="" type="null.Float" xorm="double(19,2)" />
+	<column name="s_c_t_id" desc="" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="all_price" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="one_price" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="os_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="final_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="refund_one_price" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="buy_hour" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="use_hour" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="surplus_hour" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="wxh_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="xh_money" desc="" type="null.Float" xorm="float(10,2)" />
+</table>

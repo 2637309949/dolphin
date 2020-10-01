@@ -1,0 +1,13 @@
+<table name="otm_classroom" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="o_c_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="classroom_name" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="school_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="classroom_contain" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="remarke" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="english_name" desc="" type="null.String" xorm="varchar(100)" />
+</table>

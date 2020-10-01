@@ -1,0 +1,21 @@
+<table name="pc_sct_give_mx" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="p_s_g_m_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sct_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sf_surplus_hour" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="yuan_give_hour" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="zs_bl" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="bl_give_hour" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="of_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pc_number" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="bx_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="wxh_money" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="organ_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sch_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="class_course_type" desc="" type="null.Int" xorm="int(11)" />
+</table>

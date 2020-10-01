@@ -1,0 +1,12 @@
+<table name="android_hotfix" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="a_h_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="app_name" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="applicationid" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="version_name" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="descriptions" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+</table>

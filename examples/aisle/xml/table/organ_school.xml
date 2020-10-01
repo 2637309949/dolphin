@@ -1,0 +1,34 @@
+<table name="organ_school" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="o_s_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="sch_x" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="sch_y" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="os_name" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="organ_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="oc_num" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="sch_tell" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="school_address" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="school_measure" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="opening_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="school_company" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="english_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="os_easnum" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="onoff" desc="" type="null.Int" xorm="int(11)" />
+	<column name="campus_property" desc="" type="null.Int" xorm="int(11)" />
+	<column name="off_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="sch_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sch_of_picture" desc="" type="null.Int" xorm="int(11)" />
+	<column name="financial_instruments_file" desc="" type="null.Int" xorm="int(11)" />
+	<column name="bc_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="area_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pos_password" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="os_room_num1" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="os_room_num2" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="os_room_num3" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="os_room_num4" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="os_room_num" desc="" type="null.Float" xorm="float(50,2)" />
+</table>

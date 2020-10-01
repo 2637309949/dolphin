@@ -1,0 +1,40 @@
+<table name="yb_pay_flowing" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="y_p_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="order_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pay_money" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="yb_flow_number" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="success_failure" desc="" type="null.Int" xorm="int(11)" />
+	<column name="source_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="posmenu" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pay_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="login_num" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="pos_num" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="posrequestid" desc="" type="null.String" xorm="varchar(6)" />
+	<column name="referno" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="chequeno" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="bankcardno" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="bankcardname" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="bankcardtype" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="bankorderno" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="yeepayorderno" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="customerno" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="paytypecode" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pay_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_sch_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="yee_pay_num" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="amount" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
+	<column name="account_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="reconciliations_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="error_msg" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="pk_yrr_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="service_charge" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
+	<column name="get_money" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
+	<column name="update_stuybzf_desc" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="ypf_id" desc="" type="null.Int" xorm="int(11)" />
+</table>

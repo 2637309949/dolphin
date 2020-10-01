@@ -1,0 +1,11 @@
+<table name="student_reopened" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_r_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_remark" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="str_id" desc="" type="null.Int" xorm="int(11)" />
+</table>

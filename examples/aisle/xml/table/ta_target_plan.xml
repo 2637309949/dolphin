@@ -1,0 +1,22 @@
+<table name="ta_target_plan" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="t_t_p_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="plan_month" desc="" type="null.Time" xorm="datetime" />
+	<column name="yx_target" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="tqx_target" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="zb_target" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="lt_qd_target" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="lt_target" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="sch_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="user_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="user_phone" desc="" type="null.String" xorm="varchar(11)" />
+	<column name="kx_money_target" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="yx_moeny_target" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="tqx_moeny_target" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="lt_moeny_target" desc="" type="null.Float" xorm="float(50,2)" />
+</table>

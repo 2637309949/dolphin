@@ -1,0 +1,4 @@
+<bean name="organ_info" desc="Organ info" packages="github.com/2637309949/dolphin/packages/null" extends="$article">
+    <prop name="content" desc="Content" type="null.String" />
+    <prop name="title" desc="Title" type="null.String" />
+</bean>

@@ -1,0 +1,35 @@
+<table name="fee" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="fee_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="fee_way" desc="" type="null.Int" xorm="int(11)" />
+	<column name="fee_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="sale_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="get_money" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="of_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="yh_count" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="yh_name" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="fee_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_remark" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="receipt_num" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="next_fee_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="payee" desc="" type="null.String" xorm="varchar(300)" />
+	<column name="check_user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="account_operator" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="actual_charge_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="fee_remark" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="pos_pay_detail" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_odd" desc="" type="null.Int" xorm="int(11)" />
+	<column name="overdue_days" desc="" type="null.Int" xorm="int(11)" />
+	<column name="overdue_money" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
+	<column name="pk_pvaa_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="real_overdue_money" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
+	<column name="performance_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="yjuser_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="bf_fee_time" desc="" type="null.Time" xorm="datetime" />
+</table>

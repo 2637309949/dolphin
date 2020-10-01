@@ -1,0 +1,16 @@
+<table name="stu_allot_tmk" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_a_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="tmk_userid" desc="" type="null.Int" xorm="int(11)" />
+	<column name="allot_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="allot_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="qx_allot_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="his_tmk_userid" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="allot_desc" desc="" type="null.String" xorm="varchar(5000)" />
+	<column name="if_pl" desc="" type="null.Int" xorm="int(11)" />
+</table>

@@ -48,6 +48,10 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 	if err != nil {
 		return tmplCfgs, err
 	}
+	if len(dataSources) == 0 {
+		logrus.Infoln("Not found any datasource in app_name:%v", viper.GetString("app.name"))
+		return tmplCfgs, nil
+	}
 	for _, ds := range dataSources {
 		engine, err := xorm.NewEngine(ds.DriverName, ds.DataSource)
 		if err != nil {

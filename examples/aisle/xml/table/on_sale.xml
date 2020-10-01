@@ -1,0 +1,23 @@
+<table name="on_sale" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="on_sale_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="os_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="start_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="end_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="os_money" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="os_discount" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="organ_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="os_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="os_way" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="ma_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="na_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="os_check" desc="" type="null.Int" xorm="int(11)" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(3000)" />
+	<column name="os_big_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sale_jx_type" desc="" type="null.Int" xorm="int(11)" />
+</table>

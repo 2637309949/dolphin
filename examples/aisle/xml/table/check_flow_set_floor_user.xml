@@ -1,0 +1,10 @@
+<table name="check_flow_set_floor_user" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="c_f_s_f_u_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="pk_ckfl" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_user" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+</table>

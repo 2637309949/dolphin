@@ -81,6 +81,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 func (e *Engine) database() {
 	// initPlatformDB
 	xlogger := createXLogger()
+	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	e.PlatformDB = util.EnsureLeft(xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))).(*xorm.Engine)
 	util.Ensure(e.PlatformDB.Ping())
 	e.PlatformDB.SetLogger(xlogger)
@@ -98,6 +99,7 @@ func (e *Engine) database() {
 	domains := []model.SysDomain{}
 	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and del_flag = 0", viper.GetString("app.name")).Find(&domains))
 	funk.ForEach(domains, func(domain model.SysDomain) {
+		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
 		uri := util.EnsureLeft(http.Parse(domain.DataSource.String)).(*http.URI)
 		util.EnsureLeft(e.PlatformDB.SQL(fmt.Sprintf("create database if not exists %v default character set utf8mb4", uri.DbName)).Execute())
 		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)

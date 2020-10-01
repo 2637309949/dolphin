@@ -1,0 +1,21 @@
+<table name="icbc_pay_list" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="i_p_l_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="pk_stu" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_sch" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="response_code" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="trans_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="terminal_id" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="merchantid" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="reference_no" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="card_no" desc="" type="null.String" xorm="varchar(30)" />
+	<column name="order_id" desc="" type="null.String" xorm="varchar(30)" />
+	<column name="receipt_no" desc="" type="null.String" xorm="varchar(30)" />
+	<column name="trans_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="trans_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="amout" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
+</table>

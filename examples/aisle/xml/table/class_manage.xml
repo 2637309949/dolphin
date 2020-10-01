@@ -1,0 +1,30 @@
+<table name="class_manage" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="c_m_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="class_contain_stu" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="class_number" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cm_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="kf_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isornokf" desc="" type="null.Int" xorm="int(11)" />
+	<column name="bm_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cpc_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="now_stucount" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="class_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="par_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="if_auto_pk" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_classroom" desc="" type="null.Int" xorm="int(11)" />
+	<column name="class_name" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="ifholiday" desc="" type="null.Int" xorm="int(11)" />
+	<column name="shuzi" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cm_open_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="open_user" desc="" type="null.String" xorm="varchar(30)" />
+	<column name="if_class_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cm_gdkb_type" desc="" type="null.Int" xorm="int(11)" />
+</table>

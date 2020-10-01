@@ -1,0 +1,25 @@
+<table name="complaint" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="complaint_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="student_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="complaint_reason" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="complaint_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="if_solve" desc="" type="null.Int" xorm="int(11)" />
+	<column name="solution" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="solve_result" desc="" type="null.Int" xorm="int(11)" />
+	<column name="solution_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="receive_user" desc="" type="null.Int" xorm="int(11)" />
+	<column name="com_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="com_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="content_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="parental_feedback" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="complaint_school" desc="" type="null.Int" xorm="int(11)" />
+	<column name="complaint" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="complaint_phone" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="complaint_form" desc="" type="null.Int" xorm="int(11)" />
+</table>

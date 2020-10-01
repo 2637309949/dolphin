@@ -1,0 +1,14 @@
+<table name="class_allot_customer" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="c_a_c_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="class_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="customer_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="allot_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="allot_cancel_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="hiscustomer_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="cac_desc" desc="" type="null.String" xorm="varchar(500)" />
+</table>

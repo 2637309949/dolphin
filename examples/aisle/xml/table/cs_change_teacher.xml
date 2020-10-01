@@ -1,0 +1,11 @@
+<table name="cs_change_teacher" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="c_c_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="pk_cs" desc="" type="null.Int" xorm="int(11)" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="kq_kc" desc="" type="null.Float" xorm="float(50,2)" />
+</table>

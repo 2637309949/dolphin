@@ -1,0 +1,9 @@
+<table name="temp_huifu" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="fid" desc="" type="null.Int" xorm="int(11) pk notnull" />
+	<column name="stu_name" desc="" type="null.String" xorm="varchar(255)" />
+	<column name="stu_type" desc="" type="null.String" xorm="varchar(255)" />
+	<column name="stu_city" desc="" type="null.String" xorm="varchar(255)" />
+	<column name="os_name" desc="" type="null.String" xorm="varchar(255)" />
+	<column name="stu_phone" desc="" type="null.String" xorm="varchar(11)" />
+	<column name="of_number" desc="" type="null.String" xorm="varchar(255)" />
+</table>

@@ -1,0 +1,14 @@
+<table name="class_yp_sc" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="c_y_s_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="pk_class" desc="" type="null.Int" xorm="int(11)" />
+	<column name="kc" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="class_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="start_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="class_week" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="pk_sch" desc="" type="null.Int" xorm="int(11)" />
+</table>

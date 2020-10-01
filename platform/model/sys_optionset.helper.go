@@ -79,6 +79,17 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
+		SysOptionset{
+			ID:         null.StringFrom("c2b5b260-7jad-12d1-81b5-10c34fd460e6"),
+			Name:       null.StringFrom("持久类型"),
+			Code:       null.StringFrom("sys_attachment_durable"),
+			Value:      null.StringFrom(`[{"text":"否","value":0},{"text":"是","value":1}]`),
+			CreateBy:   DefaultAdmin.ID,
+			CreateTime: null.TimeFrom(time.Now()),
+			UpdateBy:   DefaultAdmin.ID,
+			UpdateTime: null.TimeFrom(time.Now()),
+			DelFlag:    null.IntFrom(0),
+		},
 	}
 	for _, option := range options {
 		if ct, err := s.Where("id=?", option.ID.String).Count(new(SysOptionset)); ct == 0 || err != nil {

@@ -1,0 +1,35 @@
+<table name="xl_hc" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="xl_hc_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="xl_url" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="only_id" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="task_id" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="task_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="employee_id" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="employee_username" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="sv_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="task_result" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="customer_phone" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="hangup_cause" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="hangup_cause_q850" desc="" type="null.Int" xorm="int(11)" />
+	<column name="duration" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="billsec" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="waitsec" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="start_stamp" desc="" type="null.Time" xorm="datetime" />
+	<column name="bridge_stamp" desc="" type="null.Time" xorm="datetime" />
+	<column name="end_stamp" desc="" type="null.Time" xorm="datetime" />
+	<column name="area_name" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="area_code" desc="" type="null.Int" xorm="int(11)" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="gl_hf_id" desc="" type="null.String" xorm="varchar(10000)" />
+	<column name="context" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="username" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="caller_id_name" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="caller_id_number" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="destination_number" desc="" type="null.String" xorm="varchar(100)" />
+</table>

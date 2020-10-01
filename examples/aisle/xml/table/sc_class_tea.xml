@@ -1,0 +1,28 @@
+<table name="sc_class_tea" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="s_c_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="tea_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="tea_start_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="tea_end_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="sc_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sct_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="leave_notes" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="if_count_hour" desc="" type="null.Int" xorm="int(11)" />
+	<column name="not_count_reason" desc="" type="null.String" xorm="varchar(1000)" />
+	<column name="kq_hour" desc="" type="null.Float" xorm="float(10,2)" />
+	<column name="qj_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="check_state" desc="" type="null.Int" xorm="int(11)" />
+	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="shenhe_person" desc="" type="null.Int" xorm="int(11)" />
+	<column name="kq_kc" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="par_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="pk_class" desc="" type="null.Int" xorm="int(11)" />
+	<column name="change_tea_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="real_kc" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="zd_not_reason" desc="" type="null.Int" xorm="int(11)" />
+</table>

@@ -1,0 +1,15 @@
+<table name="home_weixin_message" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="t_283_0" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="title" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="content" desc="" type="null.String" xorm="varchar(2000)" />
+	<column name="weixin_number" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="sendtime" desc="" type="null.Time" xorm="datetime" />
+	<column name="if_send" desc="" type="null.Int" xorm="int(11)" />
+	<column name="if_sendcn" desc="" type="null.String" xorm="varchar(50)" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+</table>

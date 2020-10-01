@@ -1,0 +1,16 @@
+<table name="files" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="f_name" desc="" type="null.String" xorm="varchar(500)" />
+	<column name="f_size" desc="" type="null.Float" xorm="float(11,2)" />
+	<column name="f_type" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="f_mongoid" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="f_downloadnum" desc="" type="null.Int" xorm="int(11)" />
+	<column name="f_previewnum" desc="" type="null.Int" xorm="int(11)" />
+	<column name="sp_allhour" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="sp_bfhour" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="if_zm" desc="" type="null.String" xorm="varchar(10) default('1')" />
+</table>

@@ -1,0 +1,18 @@
+<table name="re_teaching_time" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="r_t_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="remark" desc="" type="null.String" xorm="varchar(200)" />
+	<column name="date" desc="" type="null.Time" xorm="datetime" />
+	<column name="minute_number" desc="" type="null.Int" xorm="int(11)" />
+	<column name="start_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="end_time" desc="" type="null.Time" xorm="datetime" />
+	<column name="tea_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
+	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
+	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
+	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="school_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="non_tea_type" desc="" type="null.Int" xorm="int(11)" />
+	<column name="class_hour" desc="" type="null.Float" xorm="float(50,2)" />
+	<column name="if_kou_hour" desc="" type="null.Int" xorm="int(11)" />
+</table>

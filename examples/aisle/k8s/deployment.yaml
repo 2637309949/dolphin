@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: education
+  namespace: dolphin
+spec:
+  selector:
+    matchLabels:
+      app: education
+  template:
+    metadata:
+      labels:
+        app: education
+    spec:
+      containers:
+      - name: education
+        image: registry.cn-hangzhou.aliyuncs.com/education:1001
+        volumeMounts:
+          - name: config
+            mountPath: /app/app.properties
+            subPath: app.properties
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "10Mi"
+            cpu: "11m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: registrykey
+      volumes:
+        - name: config
+          configMap:
+            name: education

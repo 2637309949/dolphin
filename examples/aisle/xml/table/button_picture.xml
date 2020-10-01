@@ -1,0 +1,8 @@
+<table name="button_picture" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="t_223_0" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="btnpic_name" desc="" type="null.String" xorm="varchar(500) notnull" />
+	<column name="btnpic_type" desc="" type="null.Float" xorm="float(11,2) notnull" />
+	<column name="btnpic_picture" desc="" type="null.Int" xorm="int(11) notnull" />
+	<column name="pro_id" desc="" type="null.Int" xorm="int(11)" />
+	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+</table>
