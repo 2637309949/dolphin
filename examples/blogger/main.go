@@ -8,8 +8,8 @@ import (
 	_ "github.com/2637309949/dolphin/platform/app"
 	// "github.com/go-sql-driver/mysql" init
 	_ "github.com/go-sql-driver/mysql"
-	// "demo/app" init
-	"demo/app"
+	// "blogger/app" init
+	"blogger/app"
 )
 
 //go:generate dolphin build

@@ -318,13 +318,19 @@ func (q *Query) Unescaped(s string) template.HTML {
 }
 
 // SetTags defined
-func (q *Query) SetTags() {
+func (q *Query) SetTags(tags ...struct {
+	Key   string
+	Value string
+}) {
 	q.SetString("eq", q.Unescaped("="))
 	q.SetString("ne", q.Unescaped("<>"))
 	q.SetString("lt", q.Unescaped("<"))
 	q.SetString("lte", q.Unescaped("<="))
 	q.SetString("gt", q.Unescaped(">"))
 	q.SetString("gte", q.Unescaped(">="))
+	for i := range tags {
+		q.SetString(tags[i].Key, tags[i].Value)
+	}
 }
 
 // ParseRule defined
