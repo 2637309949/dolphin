@@ -1,0 +1,25 @@
+<table name="flarum_users" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="id" desc="" type="null.Int" xorm="int(10) pk notnull autoincr" />
+	<column name="username" desc="" type="null.String" xorm="varchar(100) notnull" />
+	<column name="email" desc="" type="null.String" xorm="varchar(150) notnull" />
+	<column name="is_email_confirmed" desc="" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="password" desc="" type="null.String" xorm="varchar(100) notnull" />
+	<column name="bio" desc="" type="null.String" xorm="text" />
+	<column name="avatar_url" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="preferences" desc="" type="[]byte" xorm="blob" />
+	<column name="joined_at" desc="" type="null.Time" xorm="datetime" />
+	<column name="last_seen_at" desc="" type="null.Time" xorm="datetime" />
+	<column name="marked_all_as_read_at" desc="" type="null.Time" xorm="datetime" />
+	<column name="read_notifications_at" desc="" type="null.Time" xorm="datetime" />
+	<column name="discussion_count" desc="" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="comment_count" desc="" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="read_flags_at" desc="" type="null.Time" xorm="datetime" />
+	<column name="suspended_until" desc="" type="null.Time" xorm="datetime" />
+
+	<column name="create_by" desc="Creator" type="null.String" xorm="varchar(36)" />
+    <column name="create_time" desc="Creation time" type="null.Time" xorm="datetime" />
+    <column name="update_by" desc="Last updated by" type="null.String" xorm="varchar(36)" />
+    <column name="update_time" desc="Last update time" type="null.Time" xorm="datetime" />
+    <column name="del_flag" desc="Delete tag" type="null.Int" xorm="notnull" />
+    <column name="remark" desc="Remark" type="null.String" xorm="varchar(200)" />
+</table>

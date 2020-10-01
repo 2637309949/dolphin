@@ -81,7 +81,7 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 					c.Type = "null.String"
 				case "DATETIME":
 					c.Type = "null.Time"
-				case "INT", "BIGINT":
+				case "ENUM", "INT", "BIGINT", "TINYINT":
 					c.Type = "null.Int"
 				case "DECIMAL":
 					c.Type = "decimal.Decimal"
@@ -89,6 +89,8 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 					c.Type = "decimal.Bool"
 				case "FLOAT", "DOUBLE":
 					c.Type = "null.Float"
+				case "MEDIUMBLOB", "BLOB":
+					c.Type = "[]byte"
 				}
 
 				// convert sql type
@@ -100,12 +102,16 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 					}
 				case "DATETIME":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-				case "INT", "BIGINT":
+				case "ENUM", "INT", "BIGINT":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-					if col.SQLType.DefaultLength != 0 {
+					if col.SQLType.Name == "ENUM" {
+						c.Xorm = fmt.Sprintf("int(%v)", c.Xorm, 10)
+					} else if col.SQLType.DefaultLength != 0 {
 						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
 					}
 				case "BOOLEAN":
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
+				case "MEDIUMBLOB", "BLOB":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 				case "FLOAT", "DOUBLE":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))

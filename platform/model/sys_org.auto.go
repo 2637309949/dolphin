@@ -38,7 +38,7 @@ type SysOrg struct {
 	// 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" xml:"update_time"`
 	// 删除标记
-	DelFlag null.Int `xorm:"notnull default(0) comment('删除标记') 'del_flag'" json:"del_flag" xml:"del_flag"`
+	DelFlag null.Int `xorm:"notnull comment('删除标记') 'del_flag'" json:"del_flag" xml:"del_flag"`
 	// 备注
 	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" xml:"remark"`
 }

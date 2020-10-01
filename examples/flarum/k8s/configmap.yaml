@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: flarum
+  name: flarum
+  namespace: dolphin
+binaryData:
+data:
+  app.properties: |-
+    app.name = flarum
+    app.mode = debug
+    http.port = 8082

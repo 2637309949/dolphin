@@ -1,0 +1,38 @@
+<controller name="flarum_posts" desc="FlarumPosts controller">
+    <api name="add" func="add" table="flarum_posts" desc="Add flarum_posts" method="post">
+        <param name="user" type="$flarum_posts" desc="FlarumPost info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="del" func="delete" table="flarum_posts" desc="Delete flarum_posts" method="delete">
+        <param name="flarum_posts" type="$flarum_posts" desc="flarum_posts" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="update" func="update" table="flarum_posts" desc="Update flarum_posts" method="put">
+        <param name="user" type="$flarum_posts" desc="FlarumPost info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="page" func="page" table="flarum_posts" desc="FlarumPost page query" method="get">
+        <param name="page" type="int" desc="Page number" value="1"/>
+        <param name="size" type="int" desc="Page size" value="15" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" desc="Get flarum_posts info" func="one" table="flarum_posts" method="get">
+        <param name="id" type="string" desc="FlarumPost id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

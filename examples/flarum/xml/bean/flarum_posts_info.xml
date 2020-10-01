@@ -1,0 +1,4 @@
+<bean name="flarum_posts_info" desc="FlarumPosts info" packages="github.com/2637309949/dolphin/packages/null" extends="$flarum_posts">
+    <prop name="content" desc="Content" type="null.String" />
+    <prop name="title" desc="Title" type="null.String" />
+</bean>

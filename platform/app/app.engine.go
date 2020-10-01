@@ -115,12 +115,6 @@ func (e *Engine) database() {
 	// migration db
 	zmap := map[string]*xorm.Engine{}
 	if util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Count(new(model.SysDomain))).(int64) > 0 {
-		defer func() {
-			if err := recover(); err == nil {
-				util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
-				e.Manager.MSet().Release()
-			}
-		}()
 		nset := e.Manager.MSet().Name(func(n string) bool {
 			return n != Name
 		})
@@ -135,6 +129,10 @@ func (e *Engine) database() {
 				e.migration(n, v)
 			}
 		})
+
+		// ensure sync_flag
+		util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
+		e.Manager.MSet().Release()
 	}
 
 	// initialize PlatformDB data

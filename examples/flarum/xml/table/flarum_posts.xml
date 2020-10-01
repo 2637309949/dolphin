@@ -1,0 +1,22 @@
+<table name="flarum_posts" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="id" desc="" type="null.Int" xorm="int(10) pk notnull autoincr" />
+	<column name="discussion_id" desc="" type="null.Int" xorm="int(10) notnull" />
+	<column name="number" desc="" type="null.Int" xorm="int(10)" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(10)" />
+	<column name="type" desc="" type="null.String" xorm="varchar(100)" />
+	<column name="content" desc="" type="null.String" xorm="text" />
+	<column name="edited_at" desc="" type="null.Time" xorm="datetime" />
+	<column name="edited_user_id" desc="" type="null.Int" xorm="int(10)" />
+	<column name="hidden_at" desc="" type="null.Time" xorm="datetime" />
+	<column name="hidden_user_id" desc="" type="null.Int" xorm="int(10)" />
+	<column name="ip_address" desc="" type="null.String" xorm="varchar(45)" />
+	<column name="is_private" desc="" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="is_approved" desc="" type="null.Int" xorm="int(10) notnull default(1)" />
+
+	<column name="create_by" desc="Creator" type="null.String" xorm="varchar(36)" />
+    <column name="create_time" desc="Creation time" type="null.Time" xorm="datetime" />
+    <column name="update_by" desc="Last updated by" type="null.String" xorm="varchar(36)" />
+    <column name="update_time" desc="Last update time" type="null.Time" xorm="datetime" />
+    <column name="del_flag" desc="Delete tag" type="null.Int" xorm="notnull" />
+    <column name="remark" desc="Remark" type="null.String" xorm="varchar(200)" />
+</table>

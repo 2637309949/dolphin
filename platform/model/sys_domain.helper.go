@@ -52,7 +52,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 				s.Rollback()
 				panic(err)
 			}
-			domain.DataSource = null.StringFrom(strings.Replace(viper.GetString("db.dataSource"), "?", "_localhost?", 1))
+			domain.DataSource = null.StringFrom(strings.Replace(viper.GetString("app.name"), "?", "_localhost?", 1))
 			if _, err := s.InsertOne(&domain); err != nil {
 				s.Rollback()
 				panic(err)

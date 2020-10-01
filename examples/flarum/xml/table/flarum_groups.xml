@@ -1,0 +1,14 @@
+<table name="flarum_groups" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+	<column name="id" desc="" type="null.Int" xorm="int(10) pk notnull autoincr" />
+	<column name="name_singular" desc="" type="null.String" xorm="varchar(100) notnull" />
+	<column name="name_plural" desc="" type="null.String" xorm="varchar(100) notnull" />
+	<column name="color" desc="" type="null.String" xorm="varchar(20)" />
+	<column name="icon" desc="" type="null.String" xorm="varchar(100)" />
+
+	<column name="create_by" desc="Creator" type="null.String" xorm="varchar(36)" />
+    <column name="create_time" desc="Creation time" type="null.Time" xorm="datetime" />
+    <column name="update_by" desc="Last updated by" type="null.String" xorm="varchar(36)" />
+    <column name="update_time" desc="Last update time" type="null.Time" xorm="datetime" />
+    <column name="del_flag" desc="Delete tag" type="null.Int" xorm="notnull" />
+    <column name="remark" desc="Remark" type="null.String" xorm="varchar(200)" />
+</table>
