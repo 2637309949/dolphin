@@ -37,6 +37,10 @@ definitions:
         type: number
       ip_address:
         type: string
+      is_approved:
+        type: number
+      is_private:
+        type: number
       number:
         type: number
       remark:
@@ -52,6 +56,61 @@ definitions:
         type: string
       user_id:
         type: number
+    type: object
+  model.FlarumUsers:
+    properties:
+      avatar_url:
+        type: string
+      bio:
+        type: string
+      comment_count:
+        type: number
+      create_by:
+        description: Creator
+        type: string
+      create_time:
+        description: Creation time
+        type: string
+      del_flag:
+        description: Delete tag
+        type: number
+      discussion_count:
+        type: number
+      email:
+        type: string
+      id:
+        type: number
+      is_email_confirmed:
+        type: number
+      joined_at:
+        type: string
+      last_seen_at:
+        type: string
+      marked_all_as_read_at:
+        type: string
+      password:
+        type: string
+      preferences:
+        items:
+          type: integer
+        type: array
+      read_flags_at:
+        type: string
+      read_notifications_at:
+        type: string
+      remark:
+        description: Remark
+        type: string
+      suspended_until:
+        type: string
+      update_by:
+        description: Last updated by
+        type: string
+      update_time:
+        description: Last update time
+        type: string
+      username:
+        type: string
     type: object
   model.Login:
     properties:
@@ -280,6 +339,42 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.SysComment:
+    properties:
+      content:
+        description: 评论内容
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      from_uid:
+        description: 评论用户id
+        type: string
+      id:
+        description: 主键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      topic_id:
+        description: 主题ID
+        type: string
+      topic_type:
+        description: 主题类型
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.SysDataPermission:
     properties:
       code:
@@ -457,30 +552,27 @@ definitions:
       del_flag:
         description: 删除标记
         type: number
+      from_uid:
+        description: 发送者
+        type: string
       id:
         description: 主键
         type: string
-      parameters:
-        description: 额外数据
-        type: string
-      recipient_id:
-        description: 接受者
-        type: string
-      reference_id:
-        description: 对象引用
-        type: string
+      is_read:
+        description: 是否已读
+        type: number
       remark:
         description: 备注
         type: string
-      sender_id:
-        description: 发送者
+      to_uid:
+        description: 接受者
         type: string
-      type:
-        description: 消息类型
-        type: number
-      unread:
-        description: 是否已读
-        type: number
+      topic_id:
+        description: 主题ID
+        type: string
+      topic_type:
+        description: 主题类型
+        type: string
       update_by:
         description: 最后更新人
         type: string
@@ -641,6 +733,36 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.SysSetting:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      key:
+        description: 键
+        type: string
+      remark:
+        description: 备注
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      value:
+        description: 值
+        type: string
+    type: object
   model.SysTag:
     properties:
       create_by:
@@ -703,6 +825,9 @@ definitions:
     type: object
   model.SysUser:
     properties:
+      address:
+        description: 地址
+        type: string
       avatar:
         description: 头像
         type: string
@@ -721,6 +846,9 @@ definitions:
       email:
         description: 邮箱
         type: string
+      full_name:
+        description: 全名
+        type: string
       gender:
         description: 性别(0：女,1：男)
         type: number
@@ -730,6 +858,12 @@ definitions:
       intro:
         description: 简介
         type: string
+      is_email_confirmed:
+        description: 是否邮件确认(0：尚未,1：确认)
+        type: number
+      marked_all_as_read_at:
+        description: 标记所有已读时间
+        type: string
       mobile:
         description: 电话
         type: string
@@ -737,13 +871,16 @@ definitions:
         description: 名字
         type: string
       nickname:
-        description: 全名
+        description: 昵称
         type: string
       org_id:
         description: 组织ID
         type: string
       password:
         description: 密码
+        type: string
+      read_notifications_at:
+        description: 标记读取消息时间
         type: string
       remark:
         description: 备注
@@ -754,6 +891,12 @@ definitions:
       status:
         description: 状态(0：禁用,1：正常)
         type: number
+      temp_id:
+        description: 模板ID
+        type: string
+      temp_value:
+        description: 模板值
+        type: string
       type:
         description: 用户类型
         type: number
@@ -984,6 +1127,154 @@ paths:
       summary: Update flarum_posts
       tags:
       - FlarumPosts controller
+  /api/flarum/users/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: FlarumUser info
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.FlarumUsers'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Add flarum_users
+      tags:
+      - FlarumUser controller
+  /api/flarum/users/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: flarum_users
+        in: body
+        name: flarum_users
+        schema:
+          $ref: '#/definitions/model.FlarumUsers'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Delete flarum_users
+      tags:
+      - FlarumUser controller
+  /api/flarum/users/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: FlarumUser id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Get flarum_users info
+      tags:
+      - FlarumUser controller
+  /api/flarum/users/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: FlarumUser page query
+      tags:
+      - FlarumUser controller
+  /api/flarum/users/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: FlarumUser info
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.FlarumUsers'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Update flarum_users
+      tags:
+      - FlarumUser controller
   /api/sys/app/fun/add:
     post:
       consumes:
@@ -1905,6 +2196,154 @@ paths:
       summary: 更新客户端
       tags:
       - 客户端
+  /api/sys/comment/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论信息
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/model.SysComment'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加评论
+      tags:
+      - 评论
+  /api/sys/comment/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/model.SysUserTemplate'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除评论
+      tags:
+      - 评论
+  /api/sys/comment/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取评论信息
+      tags:
+      - 评论
+  /api/sys/comment/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 评论分页查询
+      tags:
+      - 评论
+  /api/sys/comment/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论信息
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/model.SysComment'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新评论
+      tags:
+      - 评论
   /api/sys/data/permission/add:
     post:
       consumes:
@@ -3393,6 +3832,158 @@ paths:
       summary: 更新调度
       tags:
       - 调度
+  /api/sys/setting/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysSetting'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加设置
+      tags:
+      - 设置
+  /api/sys/setting/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置
+        in: body
+        name: sys_setting
+        schema:
+          $ref: '#/definitions/model.SysSetting'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除设置
+      tags:
+      - 设置
+  /api/sys/setting/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取设置信息
+      tags:
+      - 设置
+  /api/sys/setting/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      - description: 所属应用
+        in: query
+        name: app_name
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 设置分页查询
+      tags:
+      - 设置
+  /api/sys/setting/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新设置
+      tags:
+      - 设置
   /api/sys/tag/add:
     post:
       consumes:

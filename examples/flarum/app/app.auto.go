@@ -47,6 +47,39 @@ func FlarumPostsRoutes(engine *Engine) {
 // FlarumPostsInstance defined
 var FlarumPostsInstance = NewFlarumPosts()
 
+// FlarumUsers defined
+type FlarumUsers struct {
+	Add,
+	Del,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewFlarumUsers defined
+func NewFlarumUsers() *FlarumUsers {
+	ctr := &FlarumUsers{}
+	ctr.Add = FlarumUsersAdd
+	ctr.Del = FlarumUsersDel
+	ctr.Update = FlarumUsersUpdate
+	ctr.Page = FlarumUsersPage
+	ctr.Get = FlarumUsersGet
+	return ctr
+}
+
+// FlarumUsersRoutes defined
+func FlarumUsersRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/flarum/users/add", Auth, FlarumUsersInstance.Add)
+	group.Handle("DELETE", "/flarum/users/del", Auth, FlarumUsersInstance.Del)
+	group.Handle("PUT", "/flarum/users/update", Auth, FlarumUsersInstance.Update)
+	group.Handle("GET", "/flarum/users/page", Auth, FlarumUsersInstance.Page)
+	group.Handle("GET", "/flarum/users/get", Auth, FlarumUsersInstance.Get)
+}
+
+// FlarumUsersInstance defined
+var FlarumUsersInstance = NewFlarumUsers()
+
 // SyncModel defined
 func SyncModel() error {
 	mseti := App.Manager.MSet()
@@ -80,6 +113,7 @@ func SyncModel() error {
 // SyncCtr defined
 func SyncCtr() error {
 	FlarumPostsRoutes(App)
+	FlarumUsersRoutes(App)
 	return nil
 }
 

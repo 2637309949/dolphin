@@ -148,35 +148,34 @@ func SysUserPage(ctx *Context) {
 		return
 	}
 
-	uids := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string)
-	uorgs := slice.GetFieldSliceByName(ret.Data, "org_id", "'%v'").([]string)
-
-	roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
+	if uids, ok := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string); ok {
+		roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
+		err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 	}
 
-	orgs, err := srv.SysUserGetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-
-	err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-
-	err = slice.PatchSliceByField(ret.Data, orgs, "org_id", "id", "org_id#id", "org_name#name")(&ret.Data)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
+	if uorgs, ok := slice.GetFieldSliceByName(ret.Data, "org_id", "'%v'").([]string); ok {
+		orgs, err := srv.SysUserGetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
+		err = slice.PatchSliceByField(ret.Data, orgs, "org_id", "id", "org_id#id", "org_name#name")(&ret.Data)
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 	}
 
 	ret = ret.With(new([]struct {

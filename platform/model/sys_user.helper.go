@@ -19,6 +19,7 @@ var DefaultAdmin = SysUser{
 	Avatar:     null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg"),
 	Status:     null.IntFrom(1),
 	Domain:     null.StringFrom("localhost"),
+	OrgId:      null.StringFrom("c637bt50-7dad-31d1-81b5-10c34fd460e1"),
 	CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),

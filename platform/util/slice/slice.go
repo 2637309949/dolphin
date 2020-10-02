@@ -47,7 +47,7 @@ func GetFieldSliceByName(arr interface{}, name string, format ...string) interfa
 	if err != nil {
 		return nil
 	}
-	if err = json.Unmarshal(bte, &sm); err != nil || len(sm) == 0 {
+	if err = json.Unmarshal(bte, &sm); err != nil || len(sm) == 0 || sm[0][name] == nil {
 		return nil
 	}
 	var (

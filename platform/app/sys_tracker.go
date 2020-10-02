@@ -33,20 +33,20 @@ func SysTrackerPage(ctx *Context) {
 		return
 	}
 
-	uids := slice.GetFieldSliceByName(ret.Data, "user_id").([]string)
-	users := []model.SysUser{}
-	err = ctx.PlatformDB.Cols("id", "name").In("id", uids).Find(&users)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-
-	err = slice.PatchSliceByField(ret.Data, users, "user_id", "id", "user_name#name")(&ret.Data)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
+	if uids, ok := slice.GetFieldSliceByName(ret.Data, "user_id").([]string); ok {
+		users := []model.SysUser{}
+		err = ctx.PlatformDB.Cols("id", "name").In("id", uids).Find(&users)
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
+		err = slice.PatchSliceByField(ret.Data, users, "user_id", "id", "user_name#name")(&ret.Data)
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 	}
 
 	if ctx.QueryBool("__export__") {
