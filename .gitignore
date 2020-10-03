@@ -21,6 +21,9 @@
 
 # Log files
 platform/log
+examples/*/log
+examples/*/.git
+examples/*/.drone.yml
 
 # upload files
 files
