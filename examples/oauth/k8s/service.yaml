@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauth
+  namespace: dolphin
+spec:
+  ports:
+  - name: 80tcp01
+    port: 80
+    protocol: TCP
+    targetPort: 8082
+  selector:
+    app: oauth
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

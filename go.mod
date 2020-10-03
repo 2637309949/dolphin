@@ -82,9 +82,9 @@ require (
 	go.uber.org/fx v1.10.0
 	go.uber.org/multierr v1.4.0
 	go.uber.org/zap v1.10.0 // indirect
-	golang.org/x/crypto v0.0.0-20190510104115-cbcb75029529
-	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553
-	golang.org/x/sys v0.0.0-20200122134326-e047566fdf82
+	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+	golang.org/x/net v0.0.0-20201002202402-0a1ea396d57c
+	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
 	golang.org/x/tools v0.0.0-20191114200427-caa0b0f7d508
 	google.golang.org/appengine v1.6.0
