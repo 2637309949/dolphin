@@ -158,6 +158,7 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 	base := reg.FindAllStringSubmatch(baseURI, -1)
 	redirect := reg.FindAllStringSubmatch(redirectURI, -1)
 	if base[0][2] != redirect[0][2] {
+		logrus.Errorf("baseURI=%v, redirectURI=%v", base[0][2], redirect[0][2])
 		return errors.New("invalid redirect uri")
 	}
 	return nil
