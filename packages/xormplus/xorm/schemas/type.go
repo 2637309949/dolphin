@@ -9,6 +9,8 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/2637309949/dolphin/packages/null"
 )
 
 type DBType string
@@ -217,6 +219,15 @@ var (
 	c_TIME_DEFAULT       time.Time
 )
 
+// !nashtsai! treat following var as interal const values, these are used for reflect.TypeOf comparison
+var (
+	c_NULLBOLL_DEFAULT   null.Bool
+	c_NULLFLOAT_DEFAULT  null.Float
+	c_NULLINT_DEFAULT    null.Int
+	c_NULLSTRING_DEFAULT null.String
+	c_NULLTIME_DEFAULT   null.Time
+)
+
 var (
 	IntType   = reflect.TypeOf(c_INT_DEFAULT)
 	Int8Type  = reflect.TypeOf(c_INT8_DEFAULT)
@@ -242,6 +253,14 @@ var (
 	BytesType  = reflect.SliceOf(ByteType)
 
 	TimeType = reflect.TypeOf(c_TIME_DEFAULT)
+)
+
+var (
+	NullBoolType   = reflect.TypeOf(c_NULLBOLL_DEFAULT)
+	NullFloatType  = reflect.TypeOf(c_NULLFLOAT_DEFAULT)
+	NullIntType    = reflect.TypeOf(c_NULLINT_DEFAULT)
+	NullStringType = reflect.TypeOf(c_NULLSTRING_DEFAULT)
+	NullTimeType   = reflect.TypeOf(c_NULLTIME_DEFAULT)
 )
 
 var (
@@ -296,8 +315,17 @@ func Type2SQLType(t reflect.Type) (st SQLType) {
 	case reflect.Struct:
 		if t.ConvertibleTo(TimeType) {
 			st = SQLType{DateTime, 0, 0}
+		} else if t.ConvertibleTo(NullTimeType) {
+			st = SQLType{DateTime, 0, 0}
+		} else if t.ConvertibleTo(NullBoolType) {
+			st = SQLType{Bool, 0, 0}
+		} else if t.ConvertibleTo(NullFloatType) {
+			st = SQLType{Float, 0, 0}
+		} else if t.ConvertibleTo(NullIntType) {
+			st = SQLType{Int, 0, 0}
+		} else if t.ConvertibleTo(NullStringType) {
+			st = SQLType{Varchar, 255, 0}
 		} else {
-			// TODO need to handle association struct
 			st = SQLType{Text, 0, 0}
 		}
 	case reflect.Ptr:
