@@ -616,11 +616,6 @@ func (session *Session) slice2Bean(scanResults []interface{}, fields []string, b
 				fieldValue.SetUint(uint64(vv.Int()))
 			}
 		case reflect.Struct:
-			fmt.Println("--------------------------------------123", key)
-			fmt.Println("--------------------------------------123", fieldType)
-			fmt.Println("--------------------------------------123", fieldType.ConvertibleTo(schemas.TimeType))
-			fmt.Println("--------------------------------------123", rawValueType)
-
 			if fieldType.ConvertibleTo(schemas.TimeType) {
 				dbTZ := session.engine.DatabaseTZ
 				if col.TimeZone != nil {
@@ -629,9 +624,7 @@ func (session *Session) slice2Bean(scanResults []interface{}, fields []string, b
 
 				if rawValueType == schemas.TimeType {
 					hasAssigned = true
-
 					t := vv.Convert(schemas.TimeType).Interface().(time.Time)
-
 					z, _ := t.Zone()
 					// set new location if database don't save timezone or give an incorrect timezone
 					if len(z) == 0 || t.Year() == 0 || t.Location().String() != dbTZ.String() { // !nashtsai! HACK tmp work around for lib/pq doesn't properly time with location
