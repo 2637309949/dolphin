@@ -167,7 +167,7 @@ var CacheStore persistence.CacheStore
 
 func init() {
 	if uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI); uri.Laddr != "" {
-		RedisClient := redis.NewClient(&redis.Options{
+		RedisClient = redis.NewClient(&redis.Options{
 			Addr:     uri.Laddr,
 			Password: uri.Passwd,
 			DB:       util.EnsureLeft(strconv.Atoi(uri.DbName)).(int),
@@ -175,6 +175,8 @@ func init() {
 		if _, err := RedisClient.Ping().Result(); err != nil {
 			logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
 			RedisClient = nil
+		} else {
+			logrus.Infof("Redis:%v connect successfully", viper.GetString("rd.dataSource"))
 		}
 	}
 	CacheStore = persistence.NewInMemoryStore(60 * time.Second)
