@@ -377,6 +377,7 @@ type Cell *interface{}
 func (session *Session) rows2Beans(rows *core.Rows, fields []string,
 	table *schemas.Table, newElemFunc func([]string) reflect.Value,
 	sliceValueSetFunc func(*reflect.Value, schemas.PK) error) error {
+
 	for rows.Next() {
 		var newValue = newElemFunc(fields)
 		bean := newValue.Interface()
@@ -412,10 +413,10 @@ func (session *Session) row2Slice(rows *core.Rows, fields []string, bean interfa
 		var cell interface{}
 		scanResults[i] = &cell
 	}
+
 	if err := rows.Scan(scanResults...); err != nil {
 		return nil, err
 	}
-
 	executeBeforeSet(bean, fields, scanResults)
 
 	return scanResults, nil
@@ -615,6 +616,11 @@ func (session *Session) slice2Bean(scanResults []interface{}, fields []string, b
 				fieldValue.SetUint(uint64(vv.Int()))
 			}
 		case reflect.Struct:
+			fmt.Println("--------------------------------------123", key)
+			fmt.Println("--------------------------------------123", fieldType)
+			fmt.Println("--------------------------------------123", fieldType.ConvertibleTo(schemas.TimeType))
+			fmt.Println("--------------------------------------123", rawValueType)
+
 			if fieldType.ConvertibleTo(schemas.TimeType) {
 				dbTZ := session.engine.DatabaseTZ
 				if col.TimeZone != nil {
@@ -668,9 +674,36 @@ func (session *Session) slice2Bean(scanResults []interface{}, fields []string, b
 			} else if nulVal, ok := fieldValue.Addr().Interface().(sql.Scanner); ok {
 				// !<winxxp>! 增加支持sql.Scanner接口的结构，如sql.NullString
 				hasAssigned = true
-				if err := nulVal.Scan(vv.Interface()); err != nil {
-					session.engine.logger.Errorf("sql.Sanner error: %v", err)
-					hasAssigned = false
+				if fieldType.ConvertibleTo(schemas.NullTimeType) {
+					if d, ok := vv.Interface().([]uint8); ok {
+						t, err := session.byte2Time(col, d)
+						if err != nil {
+							session.engine.logger.Errorf("byte2Time error: %v", err)
+							hasAssigned = false
+						} else {
+							if err := nulVal.Scan(t); err != nil {
+								session.engine.logger.Errorf("sql.Sanner error: %v", err)
+								hasAssigned = false
+							}
+						}
+					} else if d, ok := vv.Interface().(string); ok {
+						hasAssigned = true
+						t, err := session.str2Time(col, d)
+						if err != nil {
+							session.engine.logger.Errorf("byte2Time error: %v", err)
+							hasAssigned = false
+						} else {
+							if err := nulVal.Scan(t); err != nil {
+								session.engine.logger.Errorf("sql.Sanner error: %v", err)
+								hasAssigned = false
+							}
+						}
+					}
+				} else {
+					if err := nulVal.Scan(vv.Interface()); err != nil {
+						session.engine.logger.Errorf("sql.Sanner error: %v", err)
+						hasAssigned = false
+					}
 				}
 			} else if col.SQLType.IsJson() {
 				if rawValueType.Kind() == reflect.String {
