@@ -43,6 +43,8 @@ module.exports.sysTracker = require('./sys_tracker')
 module.exports.sysUser = require('./sys_user')
 // sysUserTemplate 用户模板
 module.exports.sysUserTemplate = require('./sys_user_template')
+// sysUserTemplateDetail 用户模板详情
+module.exports.sysUserTemplateDetail = require('./sys_user_template_detail')
 // sysWechat 微信
 module.exports.sysWechat = require('./sys_wechat')
 // sysWorker worker

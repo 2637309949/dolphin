@@ -1,5 +1,8 @@
 select
-    sys_user_template.id
+    sys_user_template.id,
+	sys_user_template.name,
+	sys_user_template.type,
+	sys_user_template.default
 from
 	sys_user_template
 where

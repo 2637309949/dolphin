@@ -1,0 +1,38 @@
+<controller name="sys_user_template_detail" desc="用户模板详情">
+    <api name="add" func="add" table="sys_user_template_detail" method="post" desc="添加用户模板详情">
+        <param name="sys_user_template_detail" type="$sys_user_template_detail" desc="用户模板详情信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="del" func="delete" table="sys_user_template_detail" method="delete" desc="删除用户模板详情">
+        <param name="sys_user_template_detail" type="$sys_user_template_detail" desc="用户模板详情信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="update" func="update" table="sys_user_template_detail" method="put" desc="更新用户模板详情">
+        <param name="sys_user_template_detail" type="$sys_user_template_detail" desc="用户模板详情信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="page" func="page" table="sys_user_template_detail" method="get" desc="用户模板详情分页查询">
+        <param name="page" type="int" value="1" desc="页码"/>
+        <param name="size" type="int"  value="15" desc="单页数"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" func="one" table="sys_user_template_detail" method="get" desc="获取用户模板详情信息">
+        <param name="id" type="string" desc="用户模板详情id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

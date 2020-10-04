@@ -38,6 +38,7 @@ func SysUserAdd(ctx *Context) {
 		return
 	}
 	payload.ID = null.StringFromUUID()
+	payload.Domain = null.StringFrom(ctx.GetToken().GetDomain())
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())

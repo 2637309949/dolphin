@@ -775,6 +775,39 @@ func SysUserTemplateRoutes(engine *Engine) {
 // SysUserTemplateInstance defined
 var SysUserTemplateInstance = NewSysUserTemplate()
 
+// SysUserTemplateDetail defined
+type SysUserTemplateDetail struct {
+	Add,
+	Del,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysUserTemplateDetail defined
+func NewSysUserTemplateDetail() *SysUserTemplateDetail {
+	ctr := &SysUserTemplateDetail{}
+	ctr.Add = SysUserTemplateDetailAdd
+	ctr.Del = SysUserTemplateDetailDel
+	ctr.Update = SysUserTemplateDetailUpdate
+	ctr.Page = SysUserTemplateDetailPage
+	ctr.Get = SysUserTemplateDetailGet
+	return ctr
+}
+
+// SysUserTemplateDetailRoutes defined
+func SysUserTemplateDetailRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/user/template/detail/add", Auth, SysUserTemplateDetailInstance.Add)
+	group.Handle("DELETE", "/sys/user/template/detail/del", Auth, SysUserTemplateDetailInstance.Del)
+	group.Handle("PUT", "/sys/user/template/detail/update", Auth, SysUserTemplateDetailInstance.Update)
+	group.Handle("GET", "/sys/user/template/detail/page", Auth, SysUserTemplateDetailInstance.Page)
+	group.Handle("GET", "/sys/user/template/detail/get", Auth, SysUserTemplateDetailInstance.Get)
+}
+
+// SysUserTemplateDetailInstance defined
+var SysUserTemplateDetailInstance = NewSysUserTemplateDetail()
+
 // SysWechat defined
 type SysWechat struct {
 	Oauth2 func(ctx *Context)
@@ -898,6 +931,7 @@ func SyncCtr() error {
 	SysTrackerRoutes(App)
 	SysUserRoutes(App)
 	SysUserTemplateRoutes(App)
+	SysUserTemplateDetailRoutes(App)
 	SysWechatRoutes(App)
 	SysWorkerRoutes(App)
 	return nil

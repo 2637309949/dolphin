@@ -95,8 +95,7 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
-          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysArea:
@@ -435,8 +434,7 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
-          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysNotification:
@@ -836,6 +834,48 @@ definitions:
         type: string
       update_time:
         description: 最后更新时间
+        type: string
+    type: object
+  model.SysUserTemplateDetail:
+    properties:
+      content:
+        description: 名称
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 名称
+        type: string
+      priority:
+        description: 优先级
+        type: number
+      remark:
+        description: 备注
+        type: string
+      temp_id:
+        description: 模板ID
+        type: string
+      type:
+        description: 模板类型 0:数值项 1:单选项 2:文字项 3:列表项
+        type: number
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+      value:
+        description: 值
         type: string
     type: object
   model.Worker:
@@ -4167,6 +4207,154 @@ paths:
       summary: 删除用户模板
       tags:
       - 用户模板
+  /api/sys/user/template/detail/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情信息
+        in: body
+        name: sys_user_template_detail
+        schema:
+          $ref: '#/definitions/model.SysUserTemplateDetail'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加用户模板详情
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情信息
+        in: body
+        name: sys_user_template_detail
+        schema:
+          $ref: '#/definitions/model.SysUserTemplateDetail'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除用户模板详情
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取用户模板详情信息
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 用户模板详情分页查询
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情信息
+        in: body
+        name: sys_user_template_detail
+        schema:
+          $ref: '#/definitions/model.SysUserTemplateDetail'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新用户模板详情
+      tags:
+      - 用户模板详情
   /api/sys/user/template/get:
     get:
       parameters:

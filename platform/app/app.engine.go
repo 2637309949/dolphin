@@ -149,6 +149,8 @@ func (e *Engine) database() {
 			(new(model.SysRoleUser)).InitSysData(v.NewSession())
 			(new(model.SysMenu)).InitSysData(v.NewSession())
 			(new(model.SysOptionset)).InitSysData(v.NewSession())
+			(new(model.SysUserTemplate)).InitSysData(v.NewSession())
+			(new(model.SysUserTemplateDetail)).InitSysData(v.NewSession())
 		}
 	}
 }
