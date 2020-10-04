@@ -5,7 +5,9 @@ select
 	sys_user.email,
 	sys_user.mobile,
 	sys_user.status,
-	sys_user.org_id
+	sys_user.org_id,
+	sys_user.temp_id,
+	sys_user.temp_value
 from
 	sys_user
 where

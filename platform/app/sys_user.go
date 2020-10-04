@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
@@ -95,7 +96,10 @@ func SysUserDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/update [put]
 func SysUserUpdate(ctx *Context) {
-	var payload model.SysUser
+	var payload struct {
+		model.SysUser `xorm:"extends"`
+		UserRole      null.String `json:"user_role" xml:"user_role"`
+	}
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -105,10 +109,62 @@ func SysUserUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
-	ret, err := ctx.PlatformDB.ID(payload.ID.String).Update(&payload)
+
+	ps := ctx.PlatformDB.NewSession()
+	ds := ctx.DB.NewSession()
+	defer ps.Close()
+	defer ds.Close()
+	ret, err := ps.Table(new(model.SysUser)).ID(payload.ID.String).Omit("user_role").Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
+		ps.Rollback()
+		return
+	}
+
+	_, err = ds.SQL("delete from sys_role_user where user_id=?", payload.ID.String).Execute()
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		ps.Rollback()
+		ds.Rollback()
+		return
+	}
+
+	roleUsers := funk.Map(strings.Split(payload.UserRole.String, ","), func(role string) model.SysRoleUser {
+		return model.SysRoleUser{
+			ID:         null.StringFromUUID(),
+			UserId:     payload.ID,
+			RoleId:     null.StringFrom(role),
+			CreateTime: null.TimeFrom(time.Now().Value()),
+			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			UpdateTime: null.TimeFrom(time.Now().Value()),
+			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			DelFlag:    null.IntFrom(0),
+		}
+	}).([]model.SysRoleUser)
+	_, err = ds.Insert(&roleUsers)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		ps.Rollback()
+		ds.Rollback()
+		return
+	}
+	err = ps.Commit()
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		ps.Rollback()
+		ds.Rollback()
+		return
+	}
+	err = ds.Commit()
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		ps.Rollback()
+		ds.Rollback()
 		return
 	}
 	ctx.Success(ret)
@@ -180,15 +236,17 @@ func SysUserPage(ctx *Context) {
 	}
 
 	ret = ret.With(new([]struct {
-		ID       null.String `json:"id" xml:"id"`
-		Name     null.String `json:"name" xml:"name"`
-		NickName null.String `json:"nickname" xml:"nickname"`
-		Mobile   null.String `json:"mobile" xml:"mobile"`
-		Email    null.String `json:"email" xml:"email"`
-		RoleName null.String `json:"role_name" xml:"role_name"`
-		UserRole null.String `json:"user_role" xml:"user_role"`
-		OrgName  null.String `json:"org_name" xml:"org_name"`
-		OrgID    null.String `json:"org_id" xml:"org_id"`
+		ID        null.String `json:"id" xml:"id"`
+		Name      null.String `json:"name" xml:"name"`
+		NickName  null.String `json:"nickname" xml:"nickname"`
+		Mobile    null.String `json:"mobile" xml:"mobile"`
+		Email     null.String `json:"email" xml:"email"`
+		RoleName  null.String `json:"role_name" xml:"role_name"`
+		UserRole  null.String `json:"user_role" xml:"user_role"`
+		OrgName   null.String `json:"org_name" xml:"org_name"`
+		OrgID     null.String `json:"org_id" xml:"org_id"`
+		TempID    null.String `json:"temp_id" xml:"temp_id"`
+		TempValue null.String `json:"temp_value" xml:"temp_value"`
 	}))
 	if ctx.QueryBool("__export__") {
 		cfg := NewBuildExcelConfig(ret.Data)

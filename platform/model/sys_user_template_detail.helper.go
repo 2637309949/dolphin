@@ -14,8 +14,8 @@ import (
 var sysUserTemplateDetails = []SysUserTemplateDetail{
 	SysUserTemplateDetail{
 		ID:         null.StringFrom("7c3da436-2772-48da-86d8-97b2bd80e391"),
-		Name:       null.StringFrom("爱好"),
-		Value:      null.StringFrom("Hobby"),
+		Name:       null.StringFrom("Hobby"),
+		Value:      null.StringFrom("Writing"),
 		TempId:     DefaultUserTemplate.ID,
 		Type:       null.IntFrom(2),
 		Content:    null.StringFrom(""),
