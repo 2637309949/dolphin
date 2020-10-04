@@ -104,7 +104,7 @@ func SysUserUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
-	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
+	ret, err := ctx.PlatformDB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
