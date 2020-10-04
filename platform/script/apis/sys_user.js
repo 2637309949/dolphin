@@ -21,6 +21,16 @@ module.exports.del = (data) => {
   })
 }
 
+// batchDel 删除用户
+module.exports.batchDel = (data) => {
+  const url = '/api/sys/user/batch_del'
+  return axios({
+    url: url,
+    method: 'delete',
+    data
+  })
+}
+
 // update 更新用户
 module.exports.update = (data) => {
   const url = '/api/sys/user/update'

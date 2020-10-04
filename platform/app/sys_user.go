@@ -85,6 +85,40 @@ func SysUserDel(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysUserBatchDel api implementation
+// @Summary 删除用户
+// @Tags 用户
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param user body []model.SysUser false "用户信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/user/batch_del [delete]
+func SysUserBatchDel(ctx *Context) {
+	var payload []model.SysUser
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	funk.ForEach(payload, func(form model.SysUser) {
+		ids = append(ids, form.ID.String)
+	})
+	ret, err := ctx.PlatformDB.In("id", ids).Update(&model.SysUser{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysUserUpdate api implementation
 // @Summary 更新用户
 // @Tags 用户

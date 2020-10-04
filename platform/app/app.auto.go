@@ -707,6 +707,7 @@ var SysTrackerInstance = NewSysTracker()
 type SysUser struct {
 	Add,
 	Del,
+	BatchDel,
 	Update,
 	Page,
 	Get,
@@ -719,6 +720,7 @@ func NewSysUser() *SysUser {
 	ctr := &SysUser{}
 	ctr.Add = SysUserAdd
 	ctr.Del = SysUserDel
+	ctr.BatchDel = SysUserBatchDel
 	ctr.Update = SysUserUpdate
 	ctr.Page = SysUserPage
 	ctr.Get = SysUserGet
@@ -732,6 +734,7 @@ func SysUserRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/user/add", Auth, Roles("X8e6D3y60K"), SysUserInstance.Add)
 	group.Handle("DELETE", "/sys/user/del", Auth, Roles("X8e6D3y60K"), SysUserInstance.Del)
+	group.Handle("DELETE", "/sys/user/batch_del", Auth, Roles("X8e6D3y60K"), SysUserInstance.BatchDel)
 	group.Handle("PUT", "/sys/user/update", Auth, Roles("X8e6D3y60K"), SysUserInstance.Update)
 	group.Handle("GET", "/sys/user/page", Auth, SysUserInstance.Page)
 	group.Handle("GET", "/sys/user/get", Auth, SysUserInstance.Get)
