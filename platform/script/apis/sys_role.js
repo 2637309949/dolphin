@@ -21,6 +21,16 @@ module.exports.del = (data) => {
   })
 }
 
+// batchDel 删除角色
+module.exports.batchDel = (data) => {
+  const url = '/api/sys/role/batch_del'
+  return axios({
+    url: url,
+    method: 'delete',
+    data
+  })
+}
+
 // update 更新角色
 module.exports.update = (data) => {
   const url = '/api/sys/role/update'

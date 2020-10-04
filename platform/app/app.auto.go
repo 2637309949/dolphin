@@ -512,6 +512,7 @@ var SysPermissionInstance = NewSysPermission()
 type SysRole struct {
 	Add,
 	Del,
+	BatchDel,
 	Update,
 	Page,
 	RoleMenuTree,
@@ -524,6 +525,7 @@ func NewSysRole() *SysRole {
 	ctr := &SysRole{}
 	ctr.Add = SysRoleAdd
 	ctr.Del = SysRoleDel
+	ctr.BatchDel = SysRoleBatchDel
 	ctr.Update = SysRoleUpdate
 	ctr.Page = SysRolePage
 	ctr.RoleMenuTree = SysRoleRoleMenuTree
@@ -537,6 +539,7 @@ func SysRoleRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/role/add", Auth, SysRoleInstance.Add)
 	group.Handle("DELETE", "/sys/role/del", Auth, SysRoleInstance.Del)
+	group.Handle("DELETE", "/sys/role/batch_del", Auth, SysRoleInstance.BatchDel)
 	group.Handle("PUT", "/sys/role/update", Auth, SysRoleInstance.Update)
 	group.Handle("GET", "/sys/role/page", Auth, SysRoleInstance.Page)
 	group.Handle("GET", "/sys/role/role_menu_tree", Auth, SysRoleInstance.RoleMenuTree)
