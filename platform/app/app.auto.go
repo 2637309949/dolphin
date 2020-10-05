@@ -625,6 +625,78 @@ func SysSettingRoutes(engine *Engine) {
 // SysSettingInstance defined
 var SysSettingInstance = NewSysSetting()
 
+// SysTable defined
+type SysTable struct {
+	Add,
+	Del,
+	BatchDel,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysTable defined
+func NewSysTable() *SysTable {
+	ctr := &SysTable{}
+	ctr.Add = SysTableAdd
+	ctr.Del = SysTableDel
+	ctr.BatchDel = SysTableBatchDel
+	ctr.Update = SysTableUpdate
+	ctr.Page = SysTablePage
+	ctr.Get = SysTableGet
+	return ctr
+}
+
+// SysTableRoutes defined
+func SysTableRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/table/add", Auth, SysTableInstance.Add)
+	group.Handle("DELETE", "/sys/table/del", Auth, SysTableInstance.Del)
+	group.Handle("DELETE", "/sys/table/batch_del", Auth, SysTableInstance.BatchDel)
+	group.Handle("PUT", "/sys/table/update", Auth, SysTableInstance.Update)
+	group.Handle("GET", "/sys/table/page", Auth, SysTableInstance.Page)
+	group.Handle("GET", "/sys/table/get", Auth, SysTableInstance.Get)
+}
+
+// SysTableInstance defined
+var SysTableInstance = NewSysTable()
+
+// SysTableColumn defined
+type SysTableColumn struct {
+	Add,
+	Del,
+	BatchDel,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysTableColumn defined
+func NewSysTableColumn() *SysTableColumn {
+	ctr := &SysTableColumn{}
+	ctr.Add = SysTableColumnAdd
+	ctr.Del = SysTableColumnDel
+	ctr.BatchDel = SysTableColumnBatchDel
+	ctr.Update = SysTableColumnUpdate
+	ctr.Page = SysTableColumnPage
+	ctr.Get = SysTableColumnGet
+	return ctr
+}
+
+// SysTableColumnRoutes defined
+func SysTableColumnRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/table/column/add", Auth, SysTableColumnInstance.Add)
+	group.Handle("DELETE", "/sys/table/column/del", Auth, SysTableColumnInstance.Del)
+	group.Handle("DELETE", "/sys/table/column/batch_del", Auth, SysTableColumnInstance.BatchDel)
+	group.Handle("PUT", "/sys/table/column/update", Auth, SysTableColumnInstance.Update)
+	group.Handle("GET", "/sys/table/column/page", Auth, SysTableColumnInstance.Page)
+	group.Handle("GET", "/sys/table/column/get", Auth, SysTableColumnInstance.Get)
+}
+
+// SysTableColumnInstance defined
+var SysTableColumnInstance = NewSysTableColumn()
+
 // SysTag defined
 type SysTag struct {
 	Add,
@@ -943,6 +1015,8 @@ func SyncCtr() error {
 	SysRoleRoutes(App)
 	SysSchedulingRoutes(App)
 	SysSettingRoutes(App)
+	SysTableRoutes(App)
+	SysTableColumnRoutes(App)
 	SysTagRoutes(App)
 	SysTagGroupRoutes(App)
 	SysTrackerRoutes(App)

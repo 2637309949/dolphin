@@ -659,6 +659,84 @@ definitions:
         description: 值
         type: string
     type: object
+  model.SysTable:
+    properties:
+      charset:
+        description: 字符集
+        type: string
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      desc:
+        description: 描述
+        type: string
+      id:
+        description: 主键
+        type: string
+      name:
+        description: 表名
+        type: string
+      remark:
+        description: 备注
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
+  model.SysTableColumn:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      default:
+        description: 默认值
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      desc:
+        description: 描述
+        type: string
+      id:
+        description: 主键
+        type: string
+      is_primary_key:
+        description: 是否主键
+        type: boolean
+      name:
+        description: 表名
+        type: string
+      nullable:
+        description: 是否为空
+        type: boolean
+      remark:
+        description: 备注
+        type: string
+      tb_id:
+        description: 表ID
+        type: string
+      type:
+        description: 类型
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.SysTag:
     properties:
       create_by:
@@ -3754,6 +3832,366 @@ paths:
       summary: 更新设置
       tags:
       - 设置
+  /api/sys/table/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysTable'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加表
+      tags:
+      - 表
+  /api/sys/table/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表
+        in: body
+        name: sys_table
+        schema:
+          items:
+            $ref: '#/definitions/model.SysTable'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除表
+      tags:
+      - 表
+  /api/sys/table/column/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysTableColumn'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加表字段
+      tags:
+      - 表字段
+  /api/sys/table/column/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段
+        in: body
+        name: sys_table_column
+        schema:
+          items:
+            $ref: '#/definitions/model.SysTableColumn'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除表字段
+      tags:
+      - 表字段
+  /api/sys/table/column/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段
+        in: body
+        name: sys_table_column
+        schema:
+          $ref: '#/definitions/model.SysTableColumn'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除表字段
+      tags:
+      - 表字段
+  /api/sys/table/column/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取表字段信息
+      tags:
+      - 表字段
+  /api/sys/table/column/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 表字段分页查询
+      tags:
+      - 表字段
+  /api/sys/table/column/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新表字段
+      tags:
+      - 表字段
+  /api/sys/table/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表
+        in: body
+        name: sys_table
+        schema:
+          $ref: '#/definitions/model.SysTable'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除表
+      tags:
+      - 表
+  /api/sys/table/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取表信息
+      tags:
+      - 表
+  /api/sys/table/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 表分页查询
+      tags:
+      - 表
+  /api/sys/table/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/model.SysRole'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新表
+      tags:
+      - 表
   /api/sys/tag/add:
     post:
       consumes:

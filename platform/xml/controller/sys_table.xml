@@ -1,0 +1,45 @@
+<controller name="sys_table" desc="表">
+    <api name="add" func="add" table="sys_table" method="post" desc="添加表">
+        <param name="user" type="$sys_table" desc="表信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="del" func="delete" table="sys_table" method="delete" desc="删除表">
+        <param name="sys_table" type="$sys_table" desc="表" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_del" func="delete" table="sys_table" method="delete" desc="删除表">
+        <param name="sys_table" type="[]$sys_table" desc="表" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="update" func="update" table="sys_table" method="put" desc="更新表">
+        <param name="user" type="$sys_role" desc="表信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="page" func="page" table="sys_table" method="get" desc="表分页查询">
+        <param name="page" type="int" value="1" desc="页码"/>
+        <param name="size" type="int"  value="15" desc="单页数"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" func="one" table="sys_table" method="get" desc="获取表信息">
+        <param name="id" type="string" desc="表id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

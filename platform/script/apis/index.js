@@ -33,6 +33,10 @@ module.exports.sysRole = require('./sys_role')
 module.exports.sysScheduling = require('./sys_scheduling')
 // sysSetting 设置
 module.exports.sysSetting = require('./sys_setting')
+// sysTable 表
+module.exports.sysTable = require('./sys_table')
+// sysTableColumn 表字段
+module.exports.sysTableColumn = require('./sys_table_column')
 // sysTag 标签
 module.exports.sysTag = require('./sys_tag')
 // sysTagGroup 标签组
