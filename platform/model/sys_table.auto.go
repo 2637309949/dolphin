@@ -17,6 +17,10 @@ type SysTable struct {
 	Desc null.String `xorm:"varchar(300) notnull comment('描述') 'desc'" json:"desc" xml:"desc"`
 	// 字符集
 	Charset null.String `xorm:"varchar(100) notnull comment('字符集') 'charset'" json:"charset" xml:"charset"`
+	// 自增
+	AutoIncrement null.String `xorm:"varchar(100) notnull comment('自增') 'auto_increment'" json:"auto_increment" xml:"auto_increment"`
+	// 存储引擎
+	StoreEngine null.String `xorm:"varchar(100) notnull comment('存储引擎') 'store_engine'" json:"store_engine" xml:"store_engine"`
 	// 创建人
 	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间

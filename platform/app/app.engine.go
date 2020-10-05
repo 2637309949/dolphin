@@ -90,15 +90,17 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 		tableInfo := util.EnsureLeft(db.TableInfo(m)).(*schemas.Table)
 		colsInfo := tableInfo.Columns()
 		tables = append(tables, model.SysTable{
-			ID:         null.StringFromUUID(),
-			Name:       null.StringFrom(tableInfo.Name),
-			Desc:       null.StringFrom(tableInfo.Comment),
-			Charset:    null.StringFrom(tableInfo.Charset),
-			CreateTime: null.TimeFrom(time.Now()),
-			CreateBy:   model.DefaultAdmin.ID,
-			UpdateTime: null.TimeFrom(time.Now()),
-			UpdateBy:   model.DefaultAdmin.ID,
-			DelFlag:    null.IntFrom(0),
+			ID:            null.StringFromUUID(),
+			Name:          null.StringFrom(tableInfo.Name),
+			Desc:          null.StringFrom(tableInfo.Comment),
+			Charset:       null.StringFrom(tableInfo.Charset),
+			AutoIncrement: null.StringFrom(tableInfo.AutoIncrement),
+			StoreEngine:   null.StringFrom(tableInfo.StoreEngine),
+			CreateTime:    null.TimeFrom(time.Now()),
+			CreateBy:      model.DefaultAdmin.ID,
+			UpdateTime:    null.TimeFrom(time.Now()),
+			UpdateBy:      model.DefaultAdmin.ID,
+			DelFlag:       null.IntFrom(0),
 		})
 		funk.ForEach(colsInfo, func(col *schemas.Column) {
 			columns = append(columns, model.SysTableColumn{

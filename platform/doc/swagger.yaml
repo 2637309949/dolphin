@@ -661,6 +661,9 @@ definitions:
     type: object
   model.SysTable:
     properties:
+      auto_increment:
+        description: 自增
+        type: string
       charset:
         description: 字符集
         type: string
@@ -684,6 +687,9 @@ definitions:
         type: string
       remark:
         description: 备注
+        type: string
+      store_engine:
+        description: 存储引擎
         type: string
       update_by:
         description: 最后更新人

@@ -3,6 +3,8 @@
 	<column name="name" desc="表名" type="null.String" xorm="varchar(200) notnull" />
     <column name="desc" desc="描述" type="null.String" xorm="varchar(300) notnull" />
     <column name="charset" desc="字符集" type="null.String" xorm="varchar(100) notnull" />
+    <column name="auto_increment" desc="自增" type="null.String" xorm="varchar(100) notnull" />
+    <column name="store_engine" desc="存储引擎" type="null.String" xorm="varchar(100) notnull" />
 
 	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
