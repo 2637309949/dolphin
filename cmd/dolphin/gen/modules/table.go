@@ -105,7 +105,7 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				case "ENUM", "INT", "BIGINT":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 					if col.SQLType.Name == "ENUM" {
-						c.Xorm = fmt.Sprintf("int(%v)", c.Xorm, 10)
+						c.Xorm = fmt.Sprintf("int(%v)", 10)
 					} else if col.SQLType.DefaultLength != 0 {
 						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
 					}

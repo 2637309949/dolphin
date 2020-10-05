@@ -1,0 +1,17 @@
+<table name="sys_table_column" desc="系统字段" packages="github.com/2637309949/dolphin/packages/null">
+    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+	<column name="tb_id" desc="表ID" type="null.String" xorm="varchar(36) notnull" />
+	<column name="name" desc="表名" type="null.String" xorm="varchar(150) notnull" />
+	<column name="desc" desc="描述" type="null.String" xorm="varchar(300) notnull" />
+	<column name="is_primary_key" desc="是否主键" type="null.Bool" xorm="notnull" />
+	<column name="type" desc="类型" type="null.String" xorm="varchar(100) notnull" />
+	<column name="nullable" desc="是否为空" type="null.Bool" xorm="notnull" />
+	<column name="default" desc="默认值" type="null.String" xorm="varchar(100) notnull" />
+
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>

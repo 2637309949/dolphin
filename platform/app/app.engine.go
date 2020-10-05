@@ -25,6 +25,7 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/sql"
@@ -73,9 +74,55 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 
 // Migration models
 func (e *Engine) migration(name string, db *xorm.Engine) {
+	tables := []model.SysTable{}
+	columns := []model.SysTableColumn{}
+	session := db.NewSession()
+	defer session.Close()
+	defer func() {
+		if err := recover(); err != nil {
+			session.Rollback()
+			panic(err)
+		}
+	}()
+	util.Ensure(db.Sync2(new(model.SysTable), new(model.SysTableColumn)))
 	e.Manager.MSet().ForEach(func(n string, m interface{}) {
 		util.Ensure(db.Sync2(m))
+		tableInfo := util.EnsureLeft(db.TableInfo(m)).(*schemas.Table)
+		colsInfo := tableInfo.Columns()
+		tables = append(tables, model.SysTable{
+			ID:         null.StringFromUUID(),
+			Name:       null.StringFrom(tableInfo.Name),
+			Desc:       null.StringFrom(tableInfo.Comment),
+			Charset:    null.StringFrom(tableInfo.Charset),
+			CreateTime: null.TimeFrom(time.Now()),
+			CreateBy:   model.DefaultAdmin.ID,
+			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateBy:   model.DefaultAdmin.ID,
+			DelFlag:    null.IntFrom(0),
+		})
+		funk.ForEach(colsInfo, func(col *schemas.Column) {
+			columns = append(columns, model.SysTableColumn{
+				ID:           null.StringFromUUID(),
+				Name:         null.StringFrom(col.Name),
+				Type:         null.StringFrom(col.SQLType.Name),
+				Desc:         null.StringFrom(col.Comment),
+				TbId:         tables[len(tables)-1].ID,
+				IsPrimaryKey: null.BoolFrom(col.IsPrimaryKey),
+				Nullable:     null.BoolFrom(col.Nullable),
+				Default:      null.StringFrom(col.Default),
+				CreateTime:   null.TimeFrom(time.Now()),
+				CreateBy:     model.DefaultAdmin.ID,
+				UpdateTime:   null.TimeFrom(time.Now()),
+				UpdateBy:     model.DefaultAdmin.ID,
+				DelFlag:      null.IntFrom(0),
+			})
+		})
 	}, name)
+	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTable).TableName())))
+	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTableColumn).TableName())))
+	util.EnsureLeft(session.Insert(tables))
+	util.EnsureLeft(session.Insert(columns))
+	session.Commit()
 }
 
 func (e *Engine) database() {
