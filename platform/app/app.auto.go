@@ -556,6 +556,63 @@ func SysRoleRoutes(engine *Engine) {
 // SysRoleInstance defined
 var SysRoleInstance = NewSysRole()
 
+// SysSchedule defined
+type SysSchedule struct {
+	Add,
+	Del,
+	BatchDel,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysSchedule defined
+func NewSysSchedule() *SysSchedule {
+	ctr := &SysSchedule{}
+	ctr.Add = SysScheduleAdd
+	ctr.Del = SysScheduleDel
+	ctr.BatchDel = SysScheduleBatchDel
+	ctr.Update = SysScheduleUpdate
+	ctr.Page = SysSchedulePage
+	ctr.Get = SysScheduleGet
+	return ctr
+}
+
+// SysScheduleRoutes defined
+func SysScheduleRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/schedule/add", Auth, SysScheduleInstance.Add)
+	group.Handle("DELETE", "/sys/schedule/del", Auth, SysScheduleInstance.Del)
+	group.Handle("DELETE", "/sys/schedule/batch_del", Auth, SysScheduleInstance.BatchDel)
+	group.Handle("PUT", "/sys/schedule/update", Auth, SysScheduleInstance.Update)
+	group.Handle("GET", "/sys/schedule/page", Auth, SysScheduleInstance.Page)
+	group.Handle("GET", "/sys/schedule/get", Auth, SysScheduleInstance.Get)
+}
+
+// SysScheduleInstance defined
+var SysScheduleInstance = NewSysSchedule()
+
+// SysScheduleHistory defined
+type SysScheduleHistory struct {
+	Page func(ctx *Context)
+}
+
+// NewSysScheduleHistory defined
+func NewSysScheduleHistory() *SysScheduleHistory {
+	ctr := &SysScheduleHistory{}
+	ctr.Page = SysScheduleHistoryPage
+	return ctr
+}
+
+// SysScheduleHistoryRoutes defined
+func SysScheduleHistoryRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("GET", "/sys/schedule/history/page", Auth, SysScheduleHistoryInstance.Page)
+}
+
+// SysScheduleHistoryInstance defined
+var SysScheduleHistoryInstance = NewSysScheduleHistory()
+
 // SysScheduling defined
 type SysScheduling struct {
 	Add,
@@ -981,6 +1038,8 @@ func SyncModel() error {
 	mseti.Add(new(model.SysRoleMenu))
 	mseti.Add(new(model.SysRolePermission))
 	mseti.Add(new(model.SysRoleUser))
+	mseti.Add(new(model.SysSchedule))
+	mseti.Add(new(model.SysScheduleHistory))
 	mseti.Add(new(model.SysSetting))
 	mseti.Add(new(model.SysTable))
 	mseti.Add(new(model.SysTableColUser))
@@ -1013,6 +1072,8 @@ func SyncCtr() error {
 	SysOrgRoutes(App)
 	SysPermissionRoutes(App)
 	SysRoleRoutes(App)
+	SysScheduleRoutes(App)
+	SysScheduleHistoryRoutes(App)
 	SysSchedulingRoutes(App)
 	SysSettingRoutes(App)
 	SysTableRoutes(App)
