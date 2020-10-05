@@ -179,6 +179,7 @@ var SysCasInstance = NewSysCas()
 type SysClient struct {
 	Add,
 	Del,
+	BatchDel,
 	Update,
 	Page,
 	Get func(ctx *Context)
@@ -189,6 +190,7 @@ func NewSysClient() *SysClient {
 	ctr := &SysClient{}
 	ctr.Add = SysClientAdd
 	ctr.Del = SysClientDel
+	ctr.BatchDel = SysClientBatchDel
 	ctr.Update = SysClientUpdate
 	ctr.Page = SysClientPage
 	ctr.Get = SysClientGet
@@ -200,6 +202,7 @@ func SysClientRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/client/add", Auth, SysClientInstance.Add)
 	group.Handle("DELETE", "/sys/client/del", Auth, SysClientInstance.Del)
+	group.Handle("DELETE", "/sys/client/batch_del", Auth, SysClientInstance.BatchDel)
 	group.Handle("PUT", "/sys/client/update", Auth, SysClientInstance.Update)
 	group.Handle("GET", "/sys/client/page", Auth, SysClientInstance.Page)
 	group.Handle("GET", "/sys/client/get", Auth, SysClientInstance.Get)
@@ -590,6 +593,7 @@ var SysSchedulingInstance = NewSysScheduling()
 type SysSetting struct {
 	Add,
 	Del,
+	BatchDel,
 	Update,
 	Page,
 	Get func(ctx *Context)
@@ -600,6 +604,7 @@ func NewSysSetting() *SysSetting {
 	ctr := &SysSetting{}
 	ctr.Add = SysSettingAdd
 	ctr.Del = SysSettingDel
+	ctr.BatchDel = SysSettingBatchDel
 	ctr.Update = SysSettingUpdate
 	ctr.Page = SysSettingPage
 	ctr.Get = SysSettingGet
@@ -611,6 +616,7 @@ func SysSettingRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/setting/add", Auth, SysSettingInstance.Add)
 	group.Handle("DELETE", "/sys/setting/del", Auth, SysSettingInstance.Del)
+	group.Handle("DELETE", "/sys/setting/batch_del", Auth, SysSettingInstance.BatchDel)
 	group.Handle("PUT", "/sys/setting/update", Auth, SysSettingInstance.Update)
 	group.Handle("GET", "/sys/setting/page", Auth, SysSettingInstance.Page)
 	group.Handle("GET", "/sys/setting/get", Auth, SysSettingInstance.Get)

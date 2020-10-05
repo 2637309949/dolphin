@@ -21,6 +21,16 @@ module.exports.del = (data) => {
   })
 }
 
+// batchDel 删除设置
+module.exports.batchDel = (data) => {
+  const url = '/api/sys/setting/batch_del'
+  return axios({
+    url: url,
+    method: 'delete',
+    data
+  })
+}
+
 // update 更新设置
 module.exports.update = (data) => {
   const url = '/api/sys/setting/update'

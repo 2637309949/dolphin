@@ -21,6 +21,16 @@ module.exports.del = (data) => {
   })
 }
 
+// batchDel 删除客户端
+module.exports.batchDel = (data) => {
+  const url = '/api/sys/client/batch_del'
+  return axios({
+    url: url,
+    method: 'delete',
+    data
+  })
+}
+
 // update 更新客户端
 module.exports.update = (data) => {
   const url = '/api/sys/client/update'
