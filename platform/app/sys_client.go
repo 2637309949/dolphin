@@ -97,7 +97,7 @@ func SysClientBatchDel(ctx *Context) {
 	funk.ForEach(payload, func(form model.SysClient) {
 		ids = append(ids, form.ID.String)
 	})
-	ret, err := ctx.DB.In("id", ids).Update(&model.SysClient{
+	ret, err := ctx.PlatformDB.In("id", ids).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
