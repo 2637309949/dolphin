@@ -13,6 +13,13 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_del" func="delete" table="sys_optionset" method="delete" desc="删除字典">
+        <param name="user" type="[]$sys_optionset" desc="字典" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="update" func="update" table="sys_optionset" method="put" desc="更新字典">
         <param name="user" type="$sys_role" desc="字典信息" />
         <return>

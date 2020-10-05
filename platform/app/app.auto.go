@@ -407,6 +407,7 @@ var SysNotificationInstance = NewSysNotification()
 type SysOptionset struct {
 	Add,
 	Del,
+	BatchDel,
 	Update,
 	Page,
 	Get func(ctx *Context)
@@ -417,6 +418,7 @@ func NewSysOptionset() *SysOptionset {
 	ctr := &SysOptionset{}
 	ctr.Add = SysOptionsetAdd
 	ctr.Del = SysOptionsetDel
+	ctr.BatchDel = SysOptionsetBatchDel
 	ctr.Update = SysOptionsetUpdate
 	ctr.Page = SysOptionsetPage
 	ctr.Get = SysOptionsetGet
@@ -428,6 +430,7 @@ func SysOptionsetRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/optionset/add", Auth, SysOptionsetInstance.Add)
 	group.Handle("DELETE", "/sys/optionset/del", Auth, SysOptionsetInstance.Del)
+	group.Handle("DELETE", "/sys/optionset/batch_del", Auth, SysOptionsetInstance.BatchDel)
 	group.Handle("PUT", "/sys/optionset/update", Auth, SysOptionsetInstance.Update)
 	group.Handle("GET", "/sys/optionset/page", Auth, SysOptionsetInstance.Page)
 	group.Handle("GET", "/sys/optionset/get", Auth, SysOptionsetInstance.Get)

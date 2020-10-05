@@ -21,6 +21,16 @@ module.exports.del = (data) => {
   })
 }
 
+// batchDel 删除字典
+module.exports.batchDel = (data) => {
+  const url = '/api/sys/optionset/batch_del'
+  return axios({
+    url: url,
+    method: 'delete',
+    data
+  })
+}
+
 // update 更新字典
 module.exports.update = (data) => {
   const url = '/api/sys/optionset/update'
