@@ -45,6 +45,9 @@ func SysUserAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
+	if payload.Avatar.IsZero() {
+		payload.Avatar = null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg?imageView2/1/w/80/h/80")
+	}
 	payload.SetPassword("123456")
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
