@@ -501,6 +501,48 @@ func init() {
 	SQLTPL["selectall_sys_role_user"] = `
         select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_user
     `
+	SQLTPL["insert_sys_schedule"] = `
+        insert into sys_schedule
+		(` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_schedule"] = `
+        update sys_schedule set ` + "`id`" + `=?id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_schedule"] = `
+        delete from sys_schedule
+		where id =?id
+    `
+	SQLTPL["selectone_sys_schedule"] = `
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_schedule"] = `
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule
+    `
+	SQLTPL["insert_sys_schedule_history"] = `
+        insert into sys_schedule_history
+		(` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		values
+		(?id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+    `
+	SQLTPL["update_sys_schedule_history"] = `
+        update sys_schedule_history set ` + "`id`" + `=?id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+		where  id =?id
+    `
+	SQLTPL["delete_sys_schedule_history"] = `
+        delete from sys_schedule_history
+		where id =?id
+    `
+	SQLTPL["selectone_sys_schedule_history"] = `
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule_history
+		where  id =?id
+    `
+	SQLTPL["selectall_sys_schedule_history"] = `
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule_history
+    `
 	SQLTPL["insert_sys_setting"] = `
         insert into sys_setting
 		(` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
@@ -932,13 +974,13 @@ LIMIT {{.size}} OFFSET {{.offset}}
 	SQLTPL["sys_data_permission_rule.tpl"] = `select
     sys_data_permission_detail.*
 from
-    `+"`sys_data_permission`"+`, `+"`sys_data_permission_detail`"+`,`+"`sys_user_role`"+`
+    `+"`sys_data_permission`"+`, `+"`sys_data_permission_detail`"+`,`+"`sys_role_user`"+`
 where
     sys_data_permission.id = sys_data_permission_detail.data_permission_id
-    and sys_user_role.role_id = sys_data_permission_detail.role_id
+    and sys_role_user.role_id = sys_data_permission_detail.role_id
     and sys_data_permission_detail.del_flag = 0
     and sys_data_permission.code = "{{.code}}"
-    and sys_user_role.user_id = "{{.user_id}}"`
+    and sys_role_user.user_id = "{{.user_id}}"`
 	SQLTPL["sys_domain_page_count.tpl"] = `select
     count(*) records
 from
@@ -1008,15 +1050,8 @@ LIMIT {{.size}} OFFSET {{.offset}}
 from
 	sys_menu
 {{if ne .isAdmin true}}
-left join sys_role_menu
-on
-    sys_menu.id = sys_role_menu.menu_id
-left join sys_user_role
-on 
-    sys_role_menu.role_id = sys_user_role.role_id
-left join sys_user
-on
-    sys_user_role.user_id = sys_user.id
+left join sys_role_menu on sys_menu.id = sys_role_menu.menu_id
+inner join sys_role_user on sys_role_menu.role_id = sys_role_user.role_id and sys_role_user.user_id = "{{.uid}}"
 {{end}}
 where
 	sys_menu.id {{.ne}} ""
@@ -1027,7 +1062,8 @@ where
 {{end}}
 	and
 	sys_menu.hidden = 0
-	order by `+"`order`"+``
+order by `+"`order`"+`
+`
 	SQLTPL["sys_menu_tree.tpl"] = `select
     sys_menu.id,
     sys_menu.parent,
@@ -1253,7 +1289,9 @@ where
     sys_role.id,
 	sys_role.name,
 	sys_role.code,
-	sys_role.status
+	sys_role.status,
+	sys_role.app_index,
+	sys_role.admin_index
 from
 	sys_role
 where
@@ -1264,6 +1302,105 @@ where
 	and {{.role_rule}}
 {{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
+`
+	SQLTPL["sys_role_user.tpl"] = `select
+sys_role_user.user_id,
+IFNULL(GROUP_CONCAT(sys_role.name), '') role_name,
+IFNULL(GROUP_CONCAT(sys_role.id), '') user_role
+from
+    sys_role_user
+left join
+    sys_role
+on sys_role.id = sys_role_user.role_id
+where sys_role_user.del_flag=0
+{{if ne .uids ""}}
+    and sys_role_user.user_id in ({{.uids}})
+{{end}}
+GROUP BY sys_role_user.user_id
+{{if eq .uids ""}}
+    limit 0 offset 0
+{{end}}
+`
+	SQLTPL["sys_role_menu_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    count(*) records
+from
+	sys_role_menu
+where
+	sys_role_menu.id {{.ne}} ""
+	and
+	sys_role_menu.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+`
+	SQLTPL["sys_role_menu_page_select.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    sys_role_menu.id
+from
+	sys_role_menu
+where
+	sys_role_menu.id {{.ne}} ""
+	and
+	sys_role_menu.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+	LIMIT {{.size}} OFFSET {{.offset}}
+`
+	SQLTPL["sys_schedule_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    count(*) records
+from
+	sys_schedule
+where
+	sys_schedule.id {{.ne}} ""
+	and
+	sys_schedule.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+`
+	SQLTPL["sys_schedule_page_select.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    sys_schedule.id
+from
+	sys_schedule
+where
+	sys_schedule.id {{.ne}} ""
+	and
+	sys_schedule.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+	LIMIT {{.size}} OFFSET {{.offset}}
+`
+	SQLTPL["sys_schedule_history_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    count(*) records
+from
+	sys_schedule
+where
+	sys_schedule.id {{.ne}} ""
+	and
+	sys_schedule.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+`
+	SQLTPL["sys_schedule_history_page_select.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
+select
+    sys_schedule.id
+from
+	sys_schedule
+where
+	sys_schedule.id {{.ne}} ""
+	and
+	sys_schedule.del_flag {{.ne}} 1
+{{if ne .role_rule ""}}
+	and {{.role_rule}}
+{{end}}
+	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_setting_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
 select
@@ -1505,24 +1642,6 @@ where
 	and sys_user.name like "%{{.name}}%"
 {{end}}
 LIMIT {{.size}} OFFSET {{.offset}}
-`
-	SQLTPL["sys_user_role.tpl"] = `select
-sys_role_user.user_id,
-IFNULL(GROUP_CONCAT(sys_role.name), '') role_name,
-IFNULL(GROUP_CONCAT(sys_role.id), '') user_role
-from
-    sys_role_user
-left join
-    sys_role
-on sys_role.id = sys_role_user.role_id
-where sys_role_user.del_flag=0
-{{if ne .uids ""}}
-    and sys_role_user.user_id in ({{.uids}})
-{{end}}
-GROUP BY sys_role_user.user_id
-{{if eq .uids ""}}
-    limit 0 offset 0
-{{end}}
 `
 	SQLTPL["sys_user_template_page_count.tpl"] = `select
     count(*) records

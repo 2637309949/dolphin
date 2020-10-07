@@ -85,7 +85,7 @@ func SysSettingDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/setting/batch_del [delete]
 func SysSettingBatchDel(ctx *Context) {
-	var payload []model.SysSetting
+	var payload []*model.SysSetting
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)

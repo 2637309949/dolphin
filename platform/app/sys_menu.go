@@ -103,7 +103,7 @@ func SysMenuDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/batch_del [delete]
 func SysMenuBatchDel(ctx *Context) {
-	var payload []model.SysMenu
+	var payload []*model.SysMenu
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
@@ -179,6 +179,7 @@ func SysMenuUpdate(ctx *Context) {
 func SysMenuSidebar(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetBool("isAdmin", ctx.InAdmin())()
+	q.SetUser()
 	q.SetRule("sys_menu_sidebar")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())

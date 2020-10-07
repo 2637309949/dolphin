@@ -85,7 +85,7 @@ func SysScheduleDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/batch_del [delete]
 func SysScheduleBatchDel(ctx *Context) {
-	var payload []model.SysSchedule
+	var payload []*model.SysSchedule
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)

@@ -86,7 +86,7 @@ func SysRoleDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/batch_del [delete]
 func SysRoleBatchDel(ctx *Context) {
-	var payload []model.SysRole
+	var payload []*model.SysRole
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)

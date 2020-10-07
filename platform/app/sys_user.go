@@ -96,7 +96,7 @@ func SysUserDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/batch_del [delete]
 func SysUserBatchDel(ctx *Context) {
-	var payload []model.SysUser
+	var payload []*model.SysUser
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)

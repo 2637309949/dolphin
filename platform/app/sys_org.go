@@ -86,7 +86,7 @@ func SysOrgDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/org/batch_del [delete]
 func SysOrgBatchDel(ctx *Context) {
-	var payload []model.SysOrg
+	var payload []*model.SysOrg
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)

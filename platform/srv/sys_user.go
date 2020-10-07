@@ -36,7 +36,7 @@ func SysUserGetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error)
 
 // SysUserGetUserRolesByUID defined
 func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
-	roles, err := db.SqlTemplateClient("sys_user_role.tpl", &map[string]interface{}{"uids": template.HTML(ids)}).Query().List()
+	roles, err := db.SqlTemplateClient("sys_role_user.tpl", &map[string]interface{}{"uids": template.HTML(ids)}).Query().List()
 	if err != nil {
 		return nil, err
 	}

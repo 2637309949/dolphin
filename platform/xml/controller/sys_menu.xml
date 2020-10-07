@@ -14,7 +14,7 @@
         </return>
     </api>
     <api name="batch_del" func="delete" table="sys_menu" method="delete" desc="删除菜单">
-        <param name="sys_menu" type="[]$sys_menu" desc="菜单" />
+        <param name="sys_menu" type="[]*$sys_menu" desc="菜单" />
         <return>
             <success type="$response" />
             <failure type="$response" />

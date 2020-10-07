@@ -556,6 +556,45 @@ func SysRoleRoutes(engine *Engine) {
 // SysRoleInstance defined
 var SysRoleInstance = NewSysRole()
 
+// SysRoleMenu defined
+type SysRoleMenu struct {
+	Add,
+	BatchAdd,
+	Del,
+	BatchDel,
+	Update,
+	Page,
+	Get func(ctx *Context)
+}
+
+// NewSysRoleMenu defined
+func NewSysRoleMenu() *SysRoleMenu {
+	ctr := &SysRoleMenu{}
+	ctr.Add = SysRoleMenuAdd
+	ctr.BatchAdd = SysRoleMenuBatchAdd
+	ctr.Del = SysRoleMenuDel
+	ctr.BatchDel = SysRoleMenuBatchDel
+	ctr.Update = SysRoleMenuUpdate
+	ctr.Page = SysRoleMenuPage
+	ctr.Get = SysRoleMenuGet
+	return ctr
+}
+
+// SysRoleMenuRoutes defined
+func SysRoleMenuRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/sys/role/menu/add", Auth, SysRoleMenuInstance.Add)
+	group.Handle("POST", "/sys/role/menu/batch_add", Auth, SysRoleMenuInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/role/menu/del", Auth, SysRoleMenuInstance.Del)
+	group.Handle("DELETE", "/sys/role/menu/batch_del", Auth, SysRoleMenuInstance.BatchDel)
+	group.Handle("PUT", "/sys/role/menu/update", Auth, SysRoleMenuInstance.Update)
+	group.Handle("GET", "/sys/role/menu/page", Auth, SysRoleMenuInstance.Page)
+	group.Handle("GET", "/sys/role/menu/get", Auth, SysRoleMenuInstance.Get)
+}
+
+// SysRoleMenuInstance defined
+var SysRoleMenuInstance = NewSysRoleMenu()
+
 // SysSchedule defined
 type SysSchedule struct {
 	Add,
@@ -1072,6 +1111,7 @@ func SyncCtr() error {
 	SysOrgRoutes(App)
 	SysPermissionRoutes(App)
 	SysRoleRoutes(App)
+	SysRoleMenuRoutes(App)
 	SysScheduleRoutes(App)
 	SysScheduleHistoryRoutes(App)
 	SysSchedulingRoutes(App)

@@ -629,6 +629,36 @@ definitions:
         description: 最后更新时间
         type: string
     type: object
+  model.SysRoleMenu:
+    properties:
+      create_by:
+        description: 创建人
+        type: string
+      create_time:
+        description: 创建时间
+        type: string
+      del_flag:
+        description: 删除标记
+        type: number
+      id:
+        description: 主键
+        type: string
+      menu_id:
+        description: 菜单ID
+        type: string
+      remark:
+        description: 备注
+        type: string
+      role_id:
+        description: 用户ID
+        type: string
+      update_by:
+        description: 最后更新人
+        type: string
+      update_time:
+        description: 最后更新时间
+        type: string
+    type: object
   model.SysSchedule:
     properties:
       create_by:
@@ -3440,6 +3470,218 @@ paths:
       summary: 获取角色信息
       tags:
       - 角色
+  /api/sys/role/menu/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: sys_role_menu
+        schema:
+          $ref: '#/definitions/model.SysRoleMenu'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/batch_add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: role_menu
+        schema:
+          items:
+            $ref: '#/definitions/model.SysRoleMenu'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: user
+        schema:
+          items:
+            $ref: '#/definitions/model.SysRoleMenu'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单
+        in: body
+        name: sys_role_menu
+        schema:
+          $ref: '#/definitions/model.SysRoleMenu'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 获取角色菜单信息
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 角色菜单分页查询
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: sys_role_menu
+        schema:
+          $ref: '#/definitions/model.SysRoleMenu'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新角色菜单
+      tags:
+      - 角色菜单
   /api/sys/role/page:
     get:
       parameters:

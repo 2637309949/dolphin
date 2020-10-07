@@ -85,7 +85,7 @@ func SysTableColumnDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/table/column/batch_del [delete]
 func SysTableColumnBatchDel(ctx *Context) {
-	var payload []model.SysTableColumn
+	var payload []*model.SysTableColumn
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)

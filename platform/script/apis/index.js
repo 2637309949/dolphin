@@ -29,6 +29,8 @@ module.exports.sysOrg = require('./sys_org')
 module.exports.sysPermission = require('./sys_permission')
 // sysRole 角色
 module.exports.sysRole = require('./sys_role')
+// sysRoleMenu 角色菜单
+module.exports.sysRoleMenu = require('./sys_role_menu')
 // sysSchedule 调度
 module.exports.sysSchedule = require('./sys_schedule')
 // sysScheduleHistory 调度历史

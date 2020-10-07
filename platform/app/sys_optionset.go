@@ -87,7 +87,7 @@ func SysOptionsetDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/batch_del [delete]
 func SysOptionsetBatchDel(ctx *Context) {
-	var payload []model.SysOptionset
+	var payload []*model.SysOptionset
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
