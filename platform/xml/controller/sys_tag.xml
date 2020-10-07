@@ -7,7 +7,14 @@
         </return>
     </api>
     <api name="del" func="delete" table="sys_tag" method="delete" desc="删除标签">
-        <param name="sys_tag" type="$sys_user_template" desc="标签"/>
+        <param name="sys_tag" type="$sys_tag" desc="标签"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_del" func="delete" table="sys_tag" method="delete" desc="删除标签">
+        <param name="sys_tag" type="[]$sys_tag" desc="删除标签" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

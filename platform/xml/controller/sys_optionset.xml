@@ -14,7 +14,7 @@
         </return>
     </api>
     <api name="batch_del" func="delete" table="sys_optionset" method="delete" desc="删除字典">
-        <param name="user" type="[]*$sys_optionset" desc="字典" />
+        <param name="user" type="[]$sys_optionset" desc="字典" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

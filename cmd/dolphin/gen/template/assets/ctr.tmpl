@@ -75,7 +75,8 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ctx.Success(ret)
 {{- else if eq .Func "add"}}
 	{{- $bp := index .Params 0}}
-	var payload {{$bp.Ref $bp.Type}}
+	{{- $ref := $bp.Ref $bp.Type}}
+	var payload {{$bp.TypeWithPointer $ref}}
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 	    logrus.Error(err)
 		ctx.Fail(err)
@@ -107,9 +108,10 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ctx.Success(ret)
 {{- else if eq .Func "delete"}}
 	{{- $bp := index .Params 0}}
+	{{- $ref := $bp.Ref $bp.Type}}
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
-	var payload {{$bp.Ref $bp.Type}}
+	var payload {{$bp.TypeWithPointer $ref}}
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
@@ -151,9 +153,10 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- end}}
 {{- else if eq .Func "update"}}
 	{{- $bp := index .Params 0}}
+	{{- $ref := $bp.Ref $bp.Type}}
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
-	var payload {{$bp.Ref $bp.Type}}
+	var payload {{$bp.TypeWithPointer $ref}}
 	var err error
 	var ret []int64
 	var r int64

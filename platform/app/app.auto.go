@@ -797,6 +797,7 @@ var SysTableColumnInstance = NewSysTableColumn()
 type SysTag struct {
 	Add,
 	Del,
+	BatchDel,
 	Update,
 	Page,
 	Get func(ctx *Context)
@@ -807,6 +808,7 @@ func NewSysTag() *SysTag {
 	ctr := &SysTag{}
 	ctr.Add = SysTagAdd
 	ctr.Del = SysTagDel
+	ctr.BatchDel = SysTagBatchDel
 	ctr.Update = SysTagUpdate
 	ctr.Page = SysTagPage
 	ctr.Get = SysTagGet
@@ -818,6 +820,7 @@ func SysTagRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/tag/add", Auth, SysTagInstance.Add)
 	group.Handle("DELETE", "/sys/tag/del", Auth, SysTagInstance.Del)
+	group.Handle("DELETE", "/sys/tag/batch_del", Auth, SysTagInstance.BatchDel)
 	group.Handle("PUT", "/sys/tag/update", Auth, SysTagInstance.Update)
 	group.Handle("GET", "/sys/tag/page", Auth, SysTagInstance.Page)
 	group.Handle("GET", "/sys/tag/get", Auth, SysTagInstance.Get)

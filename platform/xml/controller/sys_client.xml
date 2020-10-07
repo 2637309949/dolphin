@@ -14,7 +14,7 @@
         </return>
     </api>
     <api name="batch_del" func="delete" table="sys_client" method="delete" desc="删除客户端">
-        <param name="sys_client" type="[]*$sys_client" desc="客户端" />
+        <param name="sys_client" type="[]$sys_client" desc="客户端" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

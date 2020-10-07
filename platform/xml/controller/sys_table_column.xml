@@ -14,7 +14,7 @@
         </return>
     </api>
     <api name="batch_del" func="delete" table="sys_table_column" method="delete" desc="删除表字段">
-        <param name="sys_table_column" type="[]*$sys_table_column" desc="表字段" />
+        <param name="sys_table_column" type="[]$sys_table_column" desc="表字段" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

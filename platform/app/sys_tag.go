@@ -5,6 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
@@ -61,6 +62,40 @@ func SysTagDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysUserTemplate{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysTagBatchDel api implementation
+// @Summary 删除标签
+// @Tags 标签
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_tag body []model.SysTag false "删除标签"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/tag/batch_del [delete]
+func SysTagBatchDel(ctx *Context) {
+	var payload []*model.SysTag
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	funk.ForEach(payload, func(form *model.SysTag) {
+		ids = append(ids, form.ID.String)
+	})
+	ret, err := ctx.DB.In("id", ids).Update(&model.SysTag{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),

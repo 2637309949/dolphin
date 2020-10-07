@@ -14,7 +14,7 @@
         </return>
     </api>
     <api name="batch_del" func="delete" table="sys_org" method="delete" desc="删除组织">
-        <param name="sys_org" type="[]*$sys_org" desc="组织" />
+        <param name="sys_org" type="[]$sys_org" desc="组织" />
         <return>
             <success type="$response" />
             <failure type="$response" />

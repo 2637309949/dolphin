@@ -14,7 +14,7 @@
         </return>
     </api>
     <api name="batch_del" func="delete" table="sys_schedule" method="delete" desc="删除调度">
-        <param name="user" type="[]*$sys_schedule" desc="调度信息" />
+        <param name="user" type="[]$sys_schedule" desc="调度信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

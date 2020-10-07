@@ -212,6 +212,18 @@ func (c *Common) Ref(m string) string {
 	return m
 }
 
+// TypeWithPointer defined model name
+func (c *Common) TypeWithPointer(m string) string {
+	if strings.Contains(m, "*") {
+		return m
+	}
+	splites := strings.Split(m, "[]")
+	if len(splites) == 1 {
+		return fmt.Sprintf("%v%v", "*", m)
+	}
+	return fmt.Sprintf("%v%v%v", "[]", "*", splites[1])
+}
+
 // PRef defined model name
 func (c *Common) PRef(m string) string {
 	if strings.HasPrefix(m, "$") {
