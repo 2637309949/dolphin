@@ -745,7 +745,9 @@ import (
 type MessageSrv struct{}
 
 // SendMail defined
-func (srv *MessageSrv) SendMail(ctx context.Context, in *proto.MessageMail) (*proto.MessageReply, error) {
+func (srv *MessageSrv) SendMail(
+	ctx context.Context, 
+	in *proto.MessageMail) (*proto.MessageReply, error) {
 	return &proto.MessageReply{}, nil
 }
 ```
