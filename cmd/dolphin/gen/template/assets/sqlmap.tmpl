@@ -8,8 +8,7 @@
         {{.Table.SQLUpdateOne .Table $TableName}}
     </sql>
     <sql id="delete_{{$TableName}}">
-        delete from {{$TableName}}
-		where id =?id
+        {{.Table.SQLDelOne .Table $TableName}}
     </sql>
     <sql id="selectone_{{$TableName}}">
         {{.Table.SQLSelectOne .Table $TableName}}

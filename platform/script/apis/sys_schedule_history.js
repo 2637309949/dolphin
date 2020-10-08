@@ -12,3 +12,4 @@ module.exports.page = (data) => {
     method: 'get'
   })
 }
+

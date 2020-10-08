@@ -11,12 +11,10 @@
 		where  id =?id
     </sql>
     <sql id="delete_sys_schedule">
-        delete from sys_schedule
-		where id =?id
+        delete from sys_schedule where id =?id
     </sql>
     <sql id="selectone_sys_schedule">
-        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_schedule
-		where  id =?id
+        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_schedule where  id =?id
     </sql>
     <sql id="selectall_sys_schedule">
         select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_schedule

@@ -12,3 +12,4 @@ module.exports.oauth2 = (data) => {
     method: 'get'
   })
 }
+

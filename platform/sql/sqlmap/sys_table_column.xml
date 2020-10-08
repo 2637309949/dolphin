@@ -11,12 +11,10 @@
 		where  id =?id
     </sql>
     <sql id="delete_sys_table_column">
-        delete from sys_table_column
-		where id =?id
+        delete from sys_table_column where id =?id
     </sql>
     <sql id="selectone_sys_table_column">
-        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table_column
-		where  id =?id
+        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table_column where  id =?id
     </sql>
     <sql id="selectall_sys_table_column">
         select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table_column

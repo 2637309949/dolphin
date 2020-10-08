@@ -86,3 +86,4 @@ module.exports.logout = (data) => {
     method: 'get'
   })
 }
+

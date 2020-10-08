@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_table">
         insert into sys_table
-		(`id`,`name`,`desc`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`name`,`desc`,`charset`,`auto_increment`,`store_engine`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
 		values
-		(?id,?name,?desc,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?desc,?charset,?auto_increment,?store_engine,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
     </sql>
     <sql id="update_sys_table">
-        update sys_table set `id`=?id,`name`=?name,`desc`=?desc,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_table set `id`=?id,`name`=?name,`desc`=?desc,`charset`=?charset,`auto_increment`=?auto_increment,`store_engine`=?store_engine,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_table">
-        delete from sys_table
-		where id =?id
+        delete from sys_table where id =?id
     </sql>
     <sql id="selectone_sys_table">
-        select `id`,`name`,`desc`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table
-		where  id =?id
+        select `id`,`name`,`desc`,`charset`,`auto_increment`,`store_engine`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table where  id =?id
     </sql>
     <sql id="selectall_sys_table">
-        select `id`,`name`,`desc`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table
+        select `id`,`name`,`desc`,`charset`,`auto_increment`,`store_engine`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table
     </sql>
 </sqlMap>

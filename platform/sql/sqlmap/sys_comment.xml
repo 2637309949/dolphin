@@ -11,12 +11,10 @@
 		where  id =?id
     </sql>
     <sql id="delete_sys_comment">
-        delete from sys_comment
-		where id =?id
+        delete from sys_comment where id =?id
     </sql>
     <sql id="selectone_sys_comment">
-        select `id`,`topic_id`,`topic_type`,`content`,`from_uid`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_comment
-		where  id =?id
+        select `id`,`topic_id`,`topic_type`,`content`,`from_uid`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_comment where  id =?id
     </sql>
     <sql id="selectall_sys_comment">
         select `id`,`topic_id`,`topic_type`,`content`,`from_uid`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_comment

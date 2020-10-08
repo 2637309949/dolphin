@@ -58,8 +58,12 @@ func (c *Common) SQLSelectOne(table Table, name string) string {
 	names := strings.Join(funk.Map(table.Columns, func(col *Column) string {
 		return fmt.Sprintf("`%v`", col.Name)
 	}).([]string), ",")
-	return `select ` + names + ` from ` + name + `
-		where  id =?id`
+	return `select ` + names + ` from ` + name + ` where  id =?id`
+}
+
+// SQLDelOne remove one
+func (c *Common) SQLDelOne(table Table, name string) string {
+	return `delete from ` + name + ` where id =?id`
 }
 
 // SQLSelectAll select one

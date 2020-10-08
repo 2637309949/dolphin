@@ -11,12 +11,10 @@
 		where  id =?id
     </sql>
     <sql id="delete_sys_setting">
-        delete from sys_setting
-		where id =?id
+        delete from sys_setting where id =?id
     </sql>
     <sql id="selectone_sys_setting">
-        select `id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_setting
-		where  id =?id
+        select `id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_setting where  id =?id
     </sql>
     <sql id="selectall_sys_setting">
         select `id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_setting
