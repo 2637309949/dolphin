@@ -22,6 +22,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/worker"
+	"github.com/go-errors/errors"
 )
 
 // Worker defined
@@ -81,9 +82,12 @@ func (d *DefaultCron) AddFunc(spec string, cmd func()) (id int, err error) {
 // RefreshFunc defined
 func (d *DefaultCron) RefreshFunc(id int, spec string) (int, error) {
 	var entry cron.EntryID
-	s, err := cron.ParseStandard(spec)
+	s, err := cron.NewParser(cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor).Parse(spec)
 	if err != nil {
 		return 0, err
+	}
+	if !d.cron.Entry(cron.EntryID(id)).Valid() {
+		return 0, errors.Errorf("invalid entry#%v", id)
 	}
 	job := d.cron.Entry(cron.EntryID(id)).Job
 	entry = d.cron.Schedule(s, cron.FuncJob(func() {
