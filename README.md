@@ -46,6 +46,11 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [Add Handler](#add-handler)
         - [Add Job](#add-job)
         - [Fetch Job status](#fetch-job-status)
+    - [Cron](#cron)
+        - [Add Func](#add-func)
+        - [Reflesh Func](#reflesh-func)
+        - [Del Func](#del-func)
+        - [Try Func](#try-func)
     - [Load User Info](#load-user-info)
         - [GetFieldSliceByName](#getfieldslicebyname)
         - [PatchSliceByField](#patchslicebyfield)
@@ -1121,6 +1126,32 @@ Response:
 }
 ```
 
+
+## Cron
+
+Cron is not enabled by default, You can do this by modifying the configuration`app.cron = true` if you need. But Cron is stateful, so it must be deployed separately when applying load.
+
+### Add Func
+
+```go
+AddFunc(string, func()) (int, error)
+```
+### Reflesh Func
+
+```go
+RefreshFunc(int, string) (int, error)
+```
+### Del Func
+
+```go
+DelFunc(int) error
+```
+
+### Try Func
+
+```go
+TryFunc(int) error
+```
 
 ## Load User Info
 
