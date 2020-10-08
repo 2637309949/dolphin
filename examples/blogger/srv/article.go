@@ -19,8 +19,12 @@ func ArticleAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interfac
 }
 
 func init() {
+	_, err := pApp.App.Manager.Cron().AddFunc("*/3 * * * * *", func() {
+		fmt.Println("hello")
+	})
+	fmt.Println(err)
 	pApp.App.Manager.Worker().AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
-		fmt.Printf("topic=%v, payload=%", "hello", args.Payload)
+		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
 		return map[string]interface{}{
 			"score": 99,
 		}, nil

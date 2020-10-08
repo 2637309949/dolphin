@@ -11,6 +11,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/cache"
 	"github.com/2637309949/dolphin/packages/cache/persistence"
+	"github.com/2637309949/dolphin/packages/cron"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
@@ -33,14 +34,89 @@ type Worker interface {
 	Find(string) (model.Worker, error)
 }
 
+// Cron defined
+type Cron interface {
+	AddFunc(string, func()) (int, error)
+	RefreshFunc(int, string) (int, error)
+	DelFunc(int) error
+	TryFunc(int) error
+}
+
 // Manager Engine management interface
 type Manager interface {
 	MSet() MSeti
 	Worker() Worker
+	Cron() Cron
 	GetBusinessDBSet() map[string]*xorm.Engine
 	GetBusinessDB(string) *xorm.Engine
 	AddBusinessDB(string, *xorm.Engine)
 	GetTokenStore() oauth2.TokenStore
+}
+
+// DefaultCron defined
+type DefaultCron struct {
+	cron *cron.Cron
+}
+
+// AddFunc defined
+func (d *DefaultCron) AddFunc(spec string, cmd func()) (id int, err error) {
+	var entry cron.EntryID
+	entry, err = d.cron.AddFunc(spec, func() {
+		iEntry := entry
+		defer func() {
+			if err1 := recover(); err1 != nil {
+				err = fmt.Errorf("%v", err1)
+			}
+			// only valid ouput, just for RefreshFunc wrap
+			if d.cron.Entry(iEntry).Valid() {
+				fmt.Println(int(iEntry), err)
+			}
+		}()
+		cmd()
+	})
+	id = int(entry)
+	return int(id), err
+}
+
+// RefreshFunc defined
+func (d *DefaultCron) RefreshFunc(id int, spec string) (int, error) {
+	var entry cron.EntryID
+	s, err := cron.ParseStandard(spec)
+	if err != nil {
+		return 0, err
+	}
+	job := d.cron.Entry(cron.EntryID(id)).Job
+	entry = d.cron.Schedule(s, cron.FuncJob(func() {
+		iEntry := entry
+		defer func() {
+			if err1 := recover(); err1 != nil {
+				err = fmt.Errorf("%v", err1)
+			}
+			// only valid ouput, just for RefreshFunc wrap
+			if d.cron.Entry(iEntry).Valid() {
+				fmt.Println(int(iEntry), err)
+			}
+		}()
+		job.Run()
+	}))
+	d.cron.Remove(cron.EntryID(id))
+	return int(entry), nil
+}
+
+// DelFunc defined
+func (d *DefaultCron) DelFunc(id int) error {
+	d.cron.Remove(cron.EntryID(id))
+	return nil
+}
+
+// TryFunc defined
+func (d *DefaultCron) TryFunc(id int) error {
+	entry := d.cron.Entry(cron.EntryID(id))
+	if !entry.Valid() {
+		return fmt.Errorf("invalid id#%v", id)
+	}
+	entry.Job.Run()
+	return nil
 }
 
 // DefaultWorker defined
@@ -95,6 +171,7 @@ type DefaultManager struct {
 	BusinessDBSet map[string]*xorm.Engine
 	MSeti         MSeti
 	worker        Worker
+	cron          Cron
 }
 
 // MSet defined
@@ -134,6 +211,11 @@ func (d *DefaultManager) Worker() Worker {
 	return d.worker
 }
 
+// Cron defined
+func (d *DefaultManager) Cron() Cron {
+	return d.cron
+}
+
 // NewDefaultManager defined
 func NewDefaultManager() Manager {
 	mg := &DefaultManager{}
@@ -145,7 +227,12 @@ func NewDefaultManager() Manager {
 
 	woker := &DefaultWorker{store: map[string]model.Worker{}, JobHandlers: map[string]func(model.Worker) (interface{}, error){}}
 	woker.Dispatcher = dispatcher
+	corn := cron.New(cron.WithSeconds())
+	if viper.GetBool("app.cron") {
+		corn.Start()
+	}
 	mg.worker = woker
+	mg.cron = &DefaultCron{corn}
 	return mg
 }
 
