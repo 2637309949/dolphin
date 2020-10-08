@@ -51,6 +51,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [Reflesh Func](#reflesh-func)
         - [Del Func](#del-func)
         - [Try Func](#try-func)
+        - [Example](#example)
     - [Load User Info](#load-user-info)
         - [GetFieldSliceByName](#getfieldslicebyname)
         - [PatchSliceByField](#patchslicebyfield)
@@ -1151,6 +1152,19 @@ DelFunc(int) error
 
 ```go
 TryFunc(int) error
+```
+
+### Example
+
+```go
+func init() {
+	id := 0
+	id, _ = pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+		fmt.Println("hello")
+		entry, err := pApp.App.Manager.Cron().RefreshFunc(id, "*/1 * * * * *")
+		fmt.Println(entry, err)
+	})
+}
 ```
 
 ## Load User Info
