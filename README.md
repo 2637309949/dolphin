@@ -51,7 +51,6 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [Reflesh Func](#reflesh-func)
         - [Del Func](#del-func)
         - [Try Func](#try-func)
-        - [Example](#example)
     - [Load User Info](#load-user-info)
         - [GetFieldSliceByName](#getfieldslicebyname)
         - [PatchSliceByField](#patchslicebyfield)
@@ -1134,37 +1133,62 @@ Cron is not enabled by default, You can do this by modifying the configuration`a
 
 ### Add Func
 
+Add a timer task via AddFunc.
+
 ```go
 AddFunc(string, func()) (int, error)
 ```
+
+```go
+pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+	fmt.Println("hello")
+})
+```
+
 ### Reflesh Func
+
+Reflesh a timer task via RefreshFunc.
 
 ```go
 RefreshFunc(int, string) (int, error)
 ```
+
+```go
+id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+	fmt.Println("hello")
+})
+pApp.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+```
+
 ### Del Func
+
+Remove a timer task via DelFunc.
 
 ```go
 DelFunc(int) error
 ```
 
+```go
+id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+	fmt.Println("hello")
+})
+
+pApp.App.Manager.Cron().DelFunc(id)
+```
+
 ### Try Func
+
+Try a timer task via TryFunc.
 
 ```go
 TryFunc(int) error
 ```
 
-### Example
-
 ```go
-func init() {
-	id := 0
-	id, _ = pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
-		fmt.Println("hello")
-		entry, err := pApp.App.Manager.Cron().RefreshFunc(id, "*/1 * * * * *")
-		fmt.Println(entry, err)
-	})
-}
+id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+	fmt.Println("hello")
+})
+pApp.App.Manager.Cron().TryFunc(id)
 ```
 
 ## Load User Info

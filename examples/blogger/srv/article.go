@@ -19,13 +19,12 @@ func ArticleAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interfac
 }
 
 func init() {
-	// id := 0
-	// id, _ = pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
-	// 	fmt.Println("hello")
-	// 	fmt.Println(id)
-	// 	entry, err := pApp.App.Manager.Cron().RefreshFunc(id, "*/1 * * * * *")
-	// 	fmt.Println(entry, err)
-	// })
+	id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+		fmt.Println("hello")
+	})
+
+	entry, _ := pApp.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+	pApp.App.Manager.Cron().TryFunc(entry)
 	pApp.App.Manager.Worker().AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
 		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
 		return map[string]interface{}{
