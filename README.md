@@ -395,7 +395,8 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 		form.DelFlag = null.IntFrom(0)
 	})
 	payload = funk.Filter(payload, func(form *model.SysRoleMenu) bool {
-		ext, _ := ctx.DB.Where("role_id=? and menu_id=?", form.RoleId.String, form.MenuId.String).Exist(new(model.SysRoleMenu))
+		ext, _ := ctx.DB.Where("role_id=? and menu_id=?", form.RoleId.String, form.MenuId.String)
+			.Exist(new(model.SysRoleMenu))
 		return !ext
 	}).([]*model.SysRoleMenu)
 	ret, err := ctx.DB.Insert(&payload)
