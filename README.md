@@ -24,8 +24,14 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [controller](#controller)
         - [api example](#api-example)
             - [add](#add)
+                - [add one](#add-one)
+                - [add batch](#add-batch)
             - [delete](#delete)
+                - [del one](#del-one)
+                - [del batch](#del-batch)
             - [update](#update)
+                - [update one](#update-one)
+                - [update batch](#update-batch)
             - [page](#page)
             - [tree](#tree)
             - [one](#one)
@@ -311,6 +317,8 @@ controller
 > api, api func in controller. we has some built-in func such as 'add', 'delete', 'update', 'page', 'get', 'tree', or you can refined if you need.
 
 #### add
+
+##### add one
 ```xml
 <api name="add" func="add" table="sys_client" desc="添加客户端" method="post">
     <param name="user" type="$sys_client" desc="客户端信息" />
@@ -356,6 +364,7 @@ func SysClientAdd(ctx *Context) {
 }
 ```
 
+##### add batch
 ```xml
 <api name="batch_add" func="add" table="sys_role_menu" method="post" desc="添加角色菜单">
 	<param name="role_menu" type="[]$sys_role_menu" desc="角色菜单信息" />
@@ -411,6 +420,8 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 
 
 #### delete
+
+##### del one
 ```xml
 <api name="del" func="delete" table="sys_client" desc="删除客户端" method="delete">
     <param name="sys_client" type="$sys_client" desc="客户端" />
@@ -453,6 +464,7 @@ func SysClientDel(ctx *Context) {
 }
 ```
 
+##### del batch
 ```xml
 <api name="batch_del" func="delete" table="sys_optionset" method="delete" desc="删除字典">
 	<param name="user" type="[]$sys_optionset" desc="字典" />
@@ -503,6 +515,8 @@ func SysOptionsetBatchDel(ctx *Context) {
 
 
 #### update
+
+##### update one
 ```xml
 <api name="update" func="update" table="sys_client" desc="更新客户端" method="put">
     <param name="user" type="$sys_role" desc="客户端信息" />
@@ -543,6 +557,7 @@ func SysClientUpdate(ctx *Context) {
 }
 ```
 
+##### update batch
 ```xml
 <api name="batch_update" func="update" table="article" desc="更新文章" method="put">
 	<param name="article" type="[]$article" desc="文章信息" />
