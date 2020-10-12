@@ -356,6 +356,59 @@ func SysClientAdd(ctx *Context) {
 }
 ```
 
+```xml
+<api name="batch_add" func="add" table="sys_role_menu" method="post" desc="添加角色菜单">
+	<param name="role_menu" type="[]$sys_role_menu" desc="角色菜单信息" />
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
+
+Generate code:  
+
+```go
+// SysRoleMenuBatchAdd api implementation
+// @Summary 添加角色菜单
+// @Tags 角色菜单
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param role_menu body []model.SysRoleMenu false "角色菜单信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/role/menu/batch_add [post]
+func SysRoleMenuBatchAdd(ctx *Context) {
+	var payload []*model.SysRoleMenu
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	funk.ForEach(payload, func(form *model.SysRoleMenu) {
+		form.ID = null.StringFromUUID()
+		form.CreateTime = null.TimeFrom(time.Now().Value())
+		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFrom(time.Now().Value())
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.DelFlag = null.IntFrom(0)
+	})
+	payload = funk.Filter(payload, func(form *model.SysRoleMenu) bool {
+		ext, _ := ctx.DB.Where("role_id=? and menu_id=?", form.RoleId.String, form.MenuId.String).Exist(new(model.SysRoleMenu))
+		return !ext
+	}).([]*model.SysRoleMenu)
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+```
+
+
 #### delete
 ```xml
 <api name="del" func="delete" table="sys_client" desc="删除客户端" method="delete">
@@ -398,6 +451,55 @@ func SysClientDel(ctx *Context) {
 	ctx.Success(ret)
 }
 ```
+
+```xml
+<api name="batch_del" func="delete" table="sys_optionset" method="delete" desc="删除字典">
+	<param name="user" type="[]$sys_optionset" desc="字典" />
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
+
+Generate code:   
+
+```go
+// SysOptionsetBatchDel api implementation
+// @Summary 删除字典
+// @Tags 字典
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param user body []model.SysOptionset false "字典"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/sys/optionset/batch_del [delete]
+func SysOptionsetBatchDel(ctx *Context) {
+	var payload []*model.SysOptionset
+	var ids []string
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	funk.ForEach(payload, func(form model.SysOptionset) {
+		ids = append(ids, form.ID.String)
+	})
+	ret, err := ctx.DB.In("id", ids).Update(&model.SysOptionset{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+```
+
 
 #### update
 ```xml
