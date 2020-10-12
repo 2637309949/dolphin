@@ -20,6 +20,13 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_update" func="update" table="article" desc="更新文章" method="put">
+        <param name="article" type="[]$article" desc="文章信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="page" func="page" table="article" method="get" desc="文章分页查询">
         <param name="page" type="int" value="1" desc="页码"/>
         <param name="size" type="int" value="15" desc="单页数"/>

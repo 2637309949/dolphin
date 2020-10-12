@@ -31,6 +31,16 @@ module.exports.update = (data) => {
   })
 }
 
+// batchUpdate 更新文章
+module.exports.batchUpdate = (data) => {
+  const url = '/api/article/batch_update'
+  return axios({
+    url: url,
+    method: 'put',
+    data
+  })
+}
+
 // page 文章分页查询
 module.exports.page = (data) => {
   let url = '/api/article/page?'

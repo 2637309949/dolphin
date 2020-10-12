@@ -542,6 +542,56 @@ func SysClientUpdate(ctx *Context) {
 }
 ```
 
+```xml
+<api name="batch_update" func="update" table="article" desc="更新文章" method="put">
+	<param name="article" type="[]$article" desc="文章信息" />
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
+
+Generate code:
+
+```go
+// ArticleBatchUpdate api implementation
+// @Summary 更新文章 
+// @Tags 文章
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param article body []model.Article false "文章信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/article/batch_update [put]
+func ArticleBatchUpdate(ctx *Context) {
+	var payload []*model.Article
+	var err error
+	var ret []int64
+	var r int64
+	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	funk.ForEach(payload, func(form model.Article) {
+		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.UpdateTime = null.TimeFrom(time.Now().Value())
+		r, err = s.ID(form.ID.String).Update(&form)
+		ret = append(ret, r)
+	})
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+```
+
 #### page
 ```xml
 <api name="page" func="page" table="sys_client" desc="客户端分页查询" method="get">
