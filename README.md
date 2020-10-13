@@ -365,6 +365,9 @@ func SysClientAdd(ctx *Context) {
 ```
 
 ##### add batch
+
+Of course, you can also specify array parameters, which will automatically generate batch added templates.
+
 ```xml
 <api name="batch_add" func="add" table="sys_role_menu" method="post" desc="添加角色菜单">
 	<param name="role_menu" type="[]$sys_role_menu" desc="角色菜单信息" />
@@ -422,6 +425,9 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 #### delete
 
 ##### del one
+
+The system default templates are soft delete logic, this is also highly recommended. If you need hard delete, please do it yourself
+
 ```xml
 <api name="del" func="delete" table="sys_client" desc="删除客户端" method="delete">
     <param name="sys_client" type="$sys_client" desc="客户端" />
@@ -465,6 +471,10 @@ func SysClientDel(ctx *Context) {
 ```
 
 ##### del batch
+
+Of course, you can also specify array parameters, which will automatically generate batch deleted templates.
+
+
 ```xml
 <api name="batch_del" func="delete" table="sys_optionset" method="delete" desc="删除字典">
 	<param name="user" type="[]$sys_optionset" desc="字典" />
@@ -517,6 +527,10 @@ func SysOptionsetBatchDel(ctx *Context) {
 #### update
 
 ##### update one
+
+The entire model field definition is null type, so don't worry about the default value types, as long as you reference packages/ xormplus (native xorm has been modified to fit null packages)  
+
+
 ```xml
 <api name="update" func="update" table="sys_client" desc="更新客户端" method="put">
     <param name="user" type="$sys_role" desc="客户端信息" />
@@ -558,6 +572,9 @@ func SysClientUpdate(ctx *Context) {
 ```
 
 ##### update batch
+
+Of course, you can also specify array parameters, which will automatically generate batch updated templates.
+
 ```xml
 <api name="batch_update" func="update" table="article" desc="更新文章" method="put">
 	<param name="article" type="[]$article" desc="文章信息" />
@@ -609,6 +626,9 @@ func ArticleBatchUpdate(ctx *Context) {
 ```
 
 #### page
+
+The most basic paging interface template is also supported by default.
+
 ```xml
 <api name="page" func="page" table="sys_client" desc="客户端分页查询" method="get">
     <param name="page" type="int" value="1" desc="页码"/>
@@ -650,6 +670,9 @@ func SysClientPage(ctx *Context) {
 ```
 
 #### tree
+
+Tree structure is also a common algorithm. The framework integrates a TreeSearch interface for tree retrieval.
+
 ```xml
 <api name="page" func="page" table="sys_menu" desc="菜单分页查询" method="get">
 	<param name="page" type="int" value="1" desc="页码"/>
@@ -695,6 +718,9 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string,
 ```
 
 #### one
+
+Find a single piece of data by unique key.
+
 ```xml
 <api name="get" func="one" table="sys_client" desc="获取客户端信息" method="get">
     <param name="id" type="string" desc="客户端id" />
@@ -730,6 +756,9 @@ func SysClientGet(ctx *Context) {
 ```
 
 #### other
+
+In addition to the default interface, custom interfaces are also supported.
+
 ```xml
 <api name="payment" method="post" desc="文章付费">
 	<param name="article" type="$article_info" desc="文章"/>
