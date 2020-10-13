@@ -18,6 +18,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [clean](#clean)
         - [init](#init)
     - [API Examples](#api-examples)
+        - [dolphin-ui](#dolphin-ui)
     - [XML Label](#xml-label)
         - [application](#application)
         - [bean](#bean)
@@ -225,6 +226,11 @@ dolphin init
 ```
 
 ## API Examples
+
+### dolphin-ui 
+
+An erp template that uses dolphin background support.
+
 <img align="right" width="200px" src="./assets/dolphin-ui.png">
 
 You can find a number of ready-to-run examples at [dolphin examples repository.](https://github.com/2637309949/dolphin-ui)
