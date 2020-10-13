@@ -327,6 +327,7 @@ controller
 #### add
 
 ##### add one
+
 ```xml
 <api name="add" func="add" table="sys_client" desc="添加客户端" method="post">
     <param name="user" type="$sys_client" desc="客户端信息" />
@@ -374,7 +375,7 @@ func SysClientAdd(ctx *Context) {
 
 ##### add batch
 
-Of course, you can also specify array parameters, which will automatically generate batch added templates.
+> Of course, you can also specify array parameters, which will automatically generate batch added templates.
 
 ```xml
 <api name="batch_add" func="add" table="sys_role_menu" method="post" desc="添加角色菜单">
@@ -434,7 +435,7 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 
 ##### del one
 
-The system default templates are soft delete logic, this is also highly recommended. If you need hard delete, please do it yourself
+> The system default templates are soft delete logic, this is also highly recommended. If you need hard delete, please do it yourself
 
 ```xml
 <api name="del" func="delete" table="sys_client" desc="删除客户端" method="delete">
@@ -480,7 +481,7 @@ func SysClientDel(ctx *Context) {
 
 ##### del batch
 
-Of course, you can also specify array parameters, which will automatically generate batch deleted templates.
+> Of course, you can also specify array parameters, which will automatically generate batch deleted templates.
 
 
 ```xml
@@ -536,7 +537,7 @@ func SysOptionsetBatchDel(ctx *Context) {
 
 ##### update one
 
-The entire model field definition is null type, so don't worry about the default value types, as long as you reference packages/ xormplus (native xorm has been modified to fit null packages)  
+> The entire model field definition is null type, so don't worry about the default value types, as long as you reference packages/ xormplus (native xorm has been modified to fit null packages)  
 
 
 ```xml
@@ -581,7 +582,7 @@ func SysClientUpdate(ctx *Context) {
 
 ##### update batch
 
-Of course, you can also specify array parameters, which will automatically generate batch updated templates.
+> Of course, you can also specify array parameters, which will automatically generate batch updated templates.
 
 ```xml
 <api name="batch_update" func="update" table="article" desc="更新文章" method="put">
@@ -635,7 +636,7 @@ func ArticleBatchUpdate(ctx *Context) {
 
 #### page
 
-The most basic paging interface template is also supported by default.
+> The most basic paging interface template is also supported by default.
 
 ```xml
 <api name="page" func="page" table="sys_client" desc="客户端分页查询" method="get">
@@ -679,7 +680,7 @@ func SysClientPage(ctx *Context) {
 
 #### tree
 
-Tree structure is also a common algorithm. The framework integrates a TreeSearch interface for tree retrieval.
+> Tree structure is also a common algorithm. The framework integrates a TreeSearch interface for tree retrieval.
 
 ```xml
 <api name="page" func="page" table="sys_menu" desc="菜单分页查询" method="get">
@@ -715,9 +716,8 @@ func SysMenuTree(ctx *Context) {
 }
 ```
 
-TreeSearch:   
-
-Detailed instructions can be found in the TreeSearch source code  
+> TreeSearch:   
+> Detailed instructions can be found in the TreeSearch source code  
 
 ```go
 // platform/app/app.ctx.go#TreeSearch
@@ -727,7 +727,7 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string,
 
 #### one
 
-Find a single piece of data by unique key.
+> Find a single piece of data by unique key.
 
 ```xml
 <api name="get" func="one" table="sys_client" desc="获取客户端信息" method="get">
@@ -765,7 +765,7 @@ func SysClientGet(ctx *Context) {
 
 #### other
 
-In addition to the default interface, custom interfaces are also supported.
+> In addition to the default interface, custom interfaces are also supported.
 
 ```xml
 <api name="payment" method="post" desc="文章付费">
@@ -908,7 +908,7 @@ func (m *Article) TableName() string {
 
 ####  table packages
 
-The system adds the null and decimal packages by default, null is used to support data type default issues, and decimal is used to support financial data calculations.  
+> The system adds the null and decimal packages by default, null is used to support data type default issues, and decimal is used to support financial data calculations.  
 
 Example: 
 ```xml
@@ -932,7 +932,7 @@ Example:
 
 ####  table helpers
 
-It is recommended to write the helper tool class in the corresponding model directory.
+> It is recommended to write the helper tool class in the corresponding model directory.
 
 Example: 
 ```go
