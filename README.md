@@ -684,6 +684,15 @@ func SysMenuTree(ctx *Context) {
 }
 ```
 
+TreeSearch:   
+
+Detailed instructions can be found in the TreeSearch source code  
+
+```go
+// platform/app/app.ctx.go#TreeSearch
+func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error)
+```
+
 #### one
 ```xml
 <api name="get" func="one" table="sys_client" desc="获取客户端信息" method="get">
