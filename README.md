@@ -229,7 +229,7 @@ dolphin init
 
 ### dolphin-ui 
 
-An erp template that uses dolphin background support.
+> An erp template that uses dolphin background support.
 
 <img align="right" width="200px" src="./assets/dolphin-ui.png">
 
