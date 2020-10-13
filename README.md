@@ -907,18 +907,19 @@ The system adds the null and decimal packages by default, null is used to suppor
 Example: 
 ```xml
 <table 
-  name="article" 
-  desc="文章" 
-  packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
-  <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
-  <column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
-  
-  <column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
-  <column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
-  <column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
-  <column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
-  <column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
-  <column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+	name="article" 
+	desc="文章" 
+	packages="github.com/2637309949/dolphin/packages/null,
+	github.com/2637309949/dolphin/packages/decimal">
+	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+	<column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
+
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
 </table>
 ```
 
