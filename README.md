@@ -690,7 +690,10 @@ Detailed instructions can be found in the TreeSearch source code
 
 ```go
 // platform/app/app.ctx.go#TreeSearch
-func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error)
+func (ctx *Context) TreeSearch(
+		db *xorm.Engine, 
+		controller, api, table string, 
+		q map[string]interface{}) (interface{}, error)
 ```
 
 #### one
