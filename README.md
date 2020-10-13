@@ -37,6 +37,8 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
             - [one](#one)
             - [other](#other)
         - [table](#table)
+            - [table packages](#table-packages)
+            - [table helpers](#table-helpers)
         - [rpc](#rpc)
     - [Domain](#domain)
         - [app_name](#app_name)
@@ -827,6 +829,23 @@ return
 ### table
 > table, as you khnow, you can defined any table structure as you need. and you should use `null` type if you wan to accept form data that avoid null value problems in golang.
 
+
+table
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  table name |
+| desc |    table desc   |
+| packages | third party package name，use "," to split |
+
+column
+| LabelName   |      LabelMeaning      |
+|----------|:-------------:|
+| name |  column name |
+| desc |    column desc  |
+| type | column type |
+| xorm | xorm tag, please refer to XORM for details |
+
+
 Example: 
 
 ```xml
@@ -881,20 +900,53 @@ func (m *Article) TableName() string {
 }
 ```
 
-table
-| LabelName   |      LabelMeaning      |
-|----------|:-------------:|
-| name |  table name |
-| desc |    table desc   |
-| packages | third party package name，use "," to split |
+####  table packages
 
-column
-| LabelName   |      LabelMeaning      |
-|----------|:-------------:|
-| name |  column name |
-| desc |    column desc  |
-| type | column type |
-| xorm | xorm tag, please refer to XORM for details |
+The system adds the null and decimal packages by default, null is used to support data type default issues, and decimal is used to support financial data calculations.  
+
+Example: 
+```xml
+<table name="article" desc="文章" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+    <column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
+
+	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>
+```
+
+
+####  table helpers
+
+It is recommended to write the helper tool class in the corresponding model directory.
+
+Example: 
+```go
+//platform/model/sys_user.helper.go
+// SetPassword Method to set salt and hash the password for a user
+func (m *SysUser) SetPassword(password string) {
+	b := util.RandString(16, util.RandNumChar)
+	m.Salt = null.StringFrom(b)
+	dk, err := scrypt.Key([]byte(password), []byte(m.Salt.String), 512, 8, 1, 64)
+	if err != nil {
+		panic(err)
+	}
+	m.Password = null.StringFrom(fmt.Sprintf("%x", dk))
+}
+
+// ValidPassword Method to check the entered password is correct or not
+func (m *SysUser) ValidPassword(password string) bool {
+	dk, err := scrypt.Key([]byte(password), []byte(m.Salt.String), 512, 8, 1, 64)
+	if err != nil {
+		panic(err)
+	}
+	return m.Password.String == fmt.Sprintf("%x", dk)
+}
+```
 
 
 ### rpc
