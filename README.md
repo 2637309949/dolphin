@@ -25,17 +25,17 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [controller](#controller)
         - [api example](#api-example)
             - [add](#add)
-                - [add one](#add-one)
-                - [add batch](#add-batch)
+                - [one](#one)
+                - [batch](#batch)
             - [delete](#delete)
-                - [del one](#del-one)
-                - [del batch](#del-batch)
+                - [one](#one-1)
+                - [batch](#batch-1)
             - [update](#update)
-                - [update one](#update-one)
-                - [update batch](#update-batch)
+                - [one](#one-2)
+                - [batch](#batch-2)
             - [page](#page)
             - [tree](#tree)
-            - [one](#one)
+            - [one](#one-3)
             - [other](#other)
         - [table](#table)
             - [packages](#packages)
@@ -328,7 +328,7 @@ controller
 
 #### add
 
-##### add one
+##### one
 
 ```xml
 <api name="add" func="add" table="sys_client" desc="添加客户端" method="post">
@@ -375,7 +375,7 @@ func SysClientAdd(ctx *Context) {
 }
 ```
 
-##### add batch
+##### batch
 
 > Of course, you can also specify array parameters, which will automatically generate batch added templates.
 
@@ -435,7 +435,7 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 
 #### delete
 
-##### del one
+##### one
 
 > The system default templates are soft delete logic, this is also highly recommended. If you need hard delete, please do it yourself
 
@@ -481,7 +481,7 @@ func SysClientDel(ctx *Context) {
 }
 ```
 
-##### del batch
+##### batch
 
 > Of course, you can also specify array parameters, which will automatically generate batch deleted templates.
 
@@ -537,7 +537,7 @@ func SysOptionsetBatchDel(ctx *Context) {
 
 #### update
 
-##### update one
+##### one
 
 > The entire model field definition is null type, so don't worry about the default value types, as long as you reference packages/ xormplus (native xorm has been modified to fit null packages)  
 
@@ -582,7 +582,7 @@ func SysClientUpdate(ctx *Context) {
 }
 ```
 
-##### update batch
+##### batch
 
 > Of course, you can also specify array parameters, which will automatically generate batch updated templates.
 
