@@ -3,6 +3,12 @@ package util
 // Executor defined
 type Executor []func() error
 
+// Inital defined
+func (act *Executor) Inital(i ...func() error) *Executor {
+	*act = append(i, *act...)
+	return act
+}
+
 // Add defined
 func (act *Executor) Add(i ...func() error) *Executor {
 	*act = append(*act, i...)
