@@ -38,8 +38,8 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
             - [one](#one)
             - [other](#other)
         - [table](#table)
-            - [table packages](#table-packages)
-            - [table helpers](#table-helpers)
+            - [packages](#packages)
+            - [helpers](#helpers)
         - [rpc](#rpc)
             - [server](#server)
             - [client](#client)
@@ -908,7 +908,7 @@ func (m *Article) TableName() string {
 }
 ```
 
-####  table packages
+####  packages
 
 > The system adds the null and decimal packages by default, null is used to support data type default issues, and decimal is used to support financial data calculations.  
 
@@ -932,7 +932,7 @@ Example:
 ```
 
 
-####  table helpers
+####  helpers
 
 > It is recommended to write the helper tool class in the corresponding model directory.
 
