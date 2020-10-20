@@ -87,15 +87,12 @@ func SysOrgDel(ctx *Context) {
 // @Router /api/sys/org/batch_del [delete]
 func SysOrgBatchDel(ctx *Context) {
 	var payload []*model.SysOrg
-	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	funk.ForEach(payload, func(form model.SysOrg) {
-		ids = append(ids, form.ID.String)
-	})
+	var ids = funk.Map(payload, func(form model.SysOrg) string { return form.ID.String })
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysOrg{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),

@@ -31,6 +31,7 @@ func (auto *Auto) Build(dir string, args []string, node *schema.Application) ([]
 		"Controllers": node.Controllers,
 		"Services":    node.Services,
 		"Tables":      node.Tables,
+		"Viper":       viper.GetViper(),
 	}
 	autoByte, _ := vfsutil.ReadFile(template.Assets, "auto.tmpl")
 	return []*pipe.TmplCfg{

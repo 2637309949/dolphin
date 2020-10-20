@@ -13,6 +13,8 @@ module.exports.sysClient = require('./sys_client')
 module.exports.sysComment = require('./sys_comment')
 // sysDataPermission 数据权限
 module.exports.sysDataPermission = require('./sys_data_permission')
+// debug pprof诊断接口
+module.exports.debug = require('./debug')
 // sysDingtalk 钉钉
 module.exports.sysDingtalk = require('./sys_dingtalk')
 // sysDomain 域

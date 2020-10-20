@@ -74,3 +74,4 @@ module.exports.payment = (data) => {
     data
   })
 }
+

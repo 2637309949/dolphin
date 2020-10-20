@@ -105,6 +105,7 @@ func (app *SQLTPL) Build(dir string, args []string, node *schema.Application) ([
 		"Name":        node.Name,
 		"Application": node,
 		"Files":       files,
+		"Viper":       viper.GetViper(),
 	}
 	tmplCfg := &pipe.TmplCfg{
 		Text:     string(sqlByte),

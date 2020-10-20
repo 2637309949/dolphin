@@ -37,7 +37,7 @@ import (
 {{- if ne .Return.Failure.Type ""}}
 // @Failure 500 {object} {{.Ref .Return.Failure.Type}}
 {{- end}}
-// @Router /api{{.APIPrefix .Version}}/{{.APIPath $.Controller.Name .Path}}/{{.Name}} [{{.Method}}]
+// @Router {{- if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}} [{{.Method}}]
 func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
 {{- if eq .Func "page"}}
 	q := ctx.TypeQuery()
@@ -112,15 +112,12 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
 	var payload {{$bp.TypeWithPointer $ref}}
-	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
-		ids = append(ids, form.ID.String)
-	})
+	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) string { return form.ID.String }).([]string{})
 	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),

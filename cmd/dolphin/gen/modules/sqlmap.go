@@ -34,6 +34,7 @@ func (app *SQLMap) Build(dir string, args []string, node *schema.Application) ([
 			"Name":        node.Name,
 			"Application": node,
 			"Table":       t,
+			"Viper":       viper.GetViper(),
 		}
 		filename := utils.FileNameTrimSuffix(t.Path)
 		tmplCfg := &pipe.TmplCfg{

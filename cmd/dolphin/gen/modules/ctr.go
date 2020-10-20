@@ -33,6 +33,7 @@ func (ctr *Ctr) Build(dir string, args []string, node *schema.Application) ([]*p
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
 			"Controller":  c,
+			"Viper":       viper.GetViper(),
 		}
 		filename := utils.FileNameTrimSuffix(c.Path)
 		tmplCfg := &pipe.TmplCfg{

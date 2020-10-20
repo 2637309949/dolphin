@@ -188,12 +188,9 @@ func (c *Common) APIPrefix(v string) string {
 }
 
 // APIPath api path
-func (c *Common) APIPath(apiName, apiPath string) string {
+func (c *Common) APIPath(ctrName, apiName, apiPath string) string {
 	if apiPath == "" {
-		if apiName == "" {
-			return ""
-		}
-		return strings.ReplaceAll(apiName, "_", "/")
+		return "/" + strings.ReplaceAll(ctrName, "_", "/") + "/" + apiName
 	}
 	return apiPath
 }

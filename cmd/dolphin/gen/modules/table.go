@@ -143,6 +143,7 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				"PackageName": node.PackageName,
 				"Name":        node.Name,
 				"Table":       meta,
+				"Viper":       viper.GetViper(),
 			}
 			tmplCfg := &pipe.TmplCfg{
 				Text:     string(tbByte),

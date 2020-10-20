@@ -29,6 +29,7 @@ func (app *App) Build(dir string, args []string, node *schema.Application) ([]*p
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 		"Application": node,
+		"Viper":       viper.GetViper(),
 	}
 
 	appByte, _ := vfsutil.ReadFile(template.Assets, "app.tmpl")

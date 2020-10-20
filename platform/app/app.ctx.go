@@ -363,8 +363,10 @@ func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
 }
 
 // Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
-	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
-		return rg.engine.HandlerFunc(h)
-	}).([]gin.HandlerFunc)...)
+func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
+	return funk.Map(strings.Split(httpMethod, ","), func(method string) gin.IRoutes {
+		return rg.RouterGroup.Handle(method, relativePath, funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
+			return rg.engine.HandlerFunc(h)
+		}).([]gin.HandlerFunc)...)
+	}).([]gin.IRoutes)
 }

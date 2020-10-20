@@ -276,6 +276,57 @@ func SysDataPermissionRoutes(engine *Engine) {
 // SysDataPermissionInstance defined
 var SysDataPermissionInstance = NewSysDataPermission()
 
+// Debug defined
+type Debug struct {
+	Pprof,
+	Heap,
+	Goroutine,
+	Allocs,
+	Block,
+	Threadcreate,
+	Cmdline,
+	Profile,
+	Symbol,
+	Trace,
+	Mutex func(ctx *Context)
+}
+
+// NewDebug defined
+func NewDebug() *Debug {
+	ctr := &Debug{}
+	ctr.Pprof = DebugPprof
+	ctr.Heap = DebugHeap
+	ctr.Goroutine = DebugGoroutine
+	ctr.Allocs = DebugAllocs
+	ctr.Block = DebugBlock
+	ctr.Threadcreate = DebugThreadcreate
+	ctr.Cmdline = DebugCmdline
+	ctr.Profile = DebugProfile
+	ctr.Symbol = DebugSymbol
+	ctr.Trace = DebugTrace
+	ctr.Mutex = DebugMutex
+	return ctr
+}
+
+// DebugRoutes defined
+func DebugRoutes(engine *Engine) {
+	group := engine.Group("/debug")
+	group.Handle("GET", "/pprof/", Auth, Roles("X8e6D3y60K"), DebugInstance.Pprof)
+	group.Handle("GET", "/pprof/heap", Auth, Roles("X8e6D3y60K"), DebugInstance.Heap)
+	group.Handle("GET", "/pprof/goroutine", Auth, Roles("X8e6D3y60K"), DebugInstance.Goroutine)
+	group.Handle("GET", "/pprof/allocs", Auth, Roles("X8e6D3y60K"), DebugInstance.Allocs)
+	group.Handle("GET", "/pprof/block", Auth, Roles("X8e6D3y60K"), DebugInstance.Block)
+	group.Handle("GET", "/pprof/threadcreate", Auth, Roles("X8e6D3y60K"), DebugInstance.Threadcreate)
+	group.Handle("GET", "/pprof/cmdline", Auth, Roles("X8e6D3y60K"), DebugInstance.Cmdline)
+	group.Handle("GET", "/pprof/profile", Auth, Roles("X8e6D3y60K"), DebugInstance.Profile)
+	group.Handle("GET,POST", "/pprof/symbol", Auth, Roles("X8e6D3y60K"), DebugInstance.Symbol)
+	group.Handle("GET", "/pprof/trace", Auth, Roles("X8e6D3y60K"), DebugInstance.Trace)
+	group.Handle("GET", "/pprof/mutex", Auth, Roles("X8e6D3y60K"), DebugInstance.Mutex)
+}
+
+// DebugInstance defined
+var DebugInstance = NewDebug()
+
 // SysDingtalk defined
 type SysDingtalk struct {
 	Oauth2 func(ctx *Context)
@@ -1105,6 +1156,7 @@ func SyncCtr() error {
 	SysClientRoutes(App)
 	SysCommentRoutes(App)
 	SysDataPermissionRoutes(App)
+	DebugRoutes(App)
 	SysDingtalkRoutes(App)
 	SysDomainRoutes(App)
 	SysMenuRoutes(App)

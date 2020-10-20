@@ -35,6 +35,7 @@ func (oa *Proto) Build(dir string, args []string, node *schema.Application) ([]*
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
 			"Service":     s,
+			"Viper":       viper.GetViper(),
 		}
 		filename := utils.FileNameTrimSuffix(s.Path)
 		tmplCfg := &pipe.TmplCfg{

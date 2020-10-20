@@ -52,7 +52,7 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
 }
 
 // Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) gin.IRoutes {
+func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
 	rh := rg.RouterGroup.Handle(
 		httpMethod,
 		relativePath,

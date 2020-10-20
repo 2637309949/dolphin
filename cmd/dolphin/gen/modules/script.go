@@ -44,6 +44,7 @@ func (app *Script) Build(dir string, args []string, node *schema.Application) ([
 			"Name":        node.Name,
 			"Controllers": node.Controllers,
 			"Application": node,
+			"Viper":       viper.GetViper(),
 		},
 		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index.js"),
 		Overlap:  pipe.OverlapWrite,
@@ -59,6 +60,7 @@ func (app *Script) Build(dir string, args []string, node *schema.Application) ([
 				"Controller":  c,
 				"Application": node,
 				"Api":         api,
+				"Viper":       viper.GetViper(),
 			}
 			cpath := path.Join(dir, viper.GetString("dir.script"), "apis", fmt.Sprintf("%v.js", filename))
 			if _, ok := tplCache[cpath]; !ok {

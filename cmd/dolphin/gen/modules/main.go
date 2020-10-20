@@ -10,6 +10,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/shurcooL/httpfs/vfsutil"
 )
 
@@ -27,6 +28,7 @@ func (m *Main) Build(dir string, args []string, node *schema.Application) ([]*pi
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
+		"Viper":       viper.GetViper(),
 	}
 	mainByte, _ := vfsutil.ReadFile(template.Assets, "main.tmpl")
 	return []*pipe.TmplCfg{

@@ -28,6 +28,7 @@ func (tool *Tool) Build(dir string, args []string, node *schema.Application) ([]
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
+		"Viper":       viper.GetViper(),
 	}
 	toolByte, _ := vfsutil.ReadFile(template.Assets, "tool.tmpl")
 	return []*pipe.TmplCfg{

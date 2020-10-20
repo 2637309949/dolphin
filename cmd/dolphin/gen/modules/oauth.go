@@ -30,6 +30,7 @@ func (oa *OAuth) Build(dir string, args []string, node *schema.Application) ([]*
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
+		"Viper":       viper.GetViper(),
 	}
 
 	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")

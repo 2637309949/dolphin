@@ -33,6 +33,7 @@ func (m *Bean) Build(dir string, args []string, node *schema.Application) ([]*pi
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
 			"Bean":        bean,
+			"Viper":       viper.GetViper(),
 		}
 		filename := utils.FileNameTrimSuffix(bean.Path)
 		tmplCfg := &pipe.TmplCfg{

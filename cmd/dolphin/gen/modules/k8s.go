@@ -28,6 +28,7 @@ func (dp *Deploy) Build(dir string, args []string, node *schema.Application) ([]
 	data := map[string]interface{}{
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
+		"Viper":       viper.GetViper(),
 	}
 	cfgByte, _ := vfsutil.ReadFile(template.Assets, "k8s.cfg.tmpl")
 	dpyByte, _ := vfsutil.ReadFile(template.Assets, "k8s.dpy.tmpl")

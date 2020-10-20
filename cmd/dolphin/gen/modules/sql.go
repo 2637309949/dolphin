@@ -42,6 +42,7 @@ func (app *SQL) Build(dir string, args []string, node *schema.Application) ([]*p
 					"Controller":  c,
 					"Application": node,
 					"Api":         api,
+					"Viper":       viper.GetViper(),
 				}
 				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v.tpl", c.Name, api.Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
@@ -72,6 +73,7 @@ func (app *SQL) Build(dir string, args []string, node *schema.Application) ([]*p
 					"Controller":  c,
 					"Application": node,
 					"Api":         api,
+					"Viper":       viper.GetViper(),
 				}
 				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v.tpl", c.Name, api.Name))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {

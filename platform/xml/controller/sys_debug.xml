@@ -1,0 +1,68 @@
+<controller name="debug" prefix="/debug" desc="pprof诊断接口">
+    <api name="pprof" method="GET" path="/pprof/" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="heap" method="GET" path="/pprof/heap" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="goroutine" method="GET" path="/pprof/goroutine" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="allocs" method="GET" path="/pprof/allocs" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="block" method="GET" path="/pprof/block" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="threadcreate" method="GET" path="/pprof/threadcreate" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="cmdline" method="GET" path="/pprof/cmdline" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="profile" method="GET" path="/pprof/profile" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="symbol" method="GET,POST" path="/pprof/symbol" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="trace" method="GET" path="/pprof/trace" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="mutex" method="GET" path="/pprof/mutex" roles="X8e6D3y60K">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>
