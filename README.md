@@ -66,6 +66,8 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [GetFieldSliceByName](#getfieldslicebyname)
         - [PatchSliceByField](#patchslicebyfield)
     - [Debug pprof](#debug-pprof)
+        - [ModHeader](#modheader)
+        - [Debug](#debug)
 
 <!-- /TOC -->
 
@@ -1518,7 +1520,16 @@ if err != nil {
 ```
 
 ## Debug pprof
-> The framework itself provides the functionality of Pprof, note that only the ADMIN role is visible
+
+> The framework itself provides the functionality of pprof, note that only the admin role is visible
+
+### ModHeader
+
+Install ModHeader in chrome, and add token header for any request.
+
+### Debug
+
+Goto http://127.0.0.1:8082/debug/pprof/
 
 ```text
 /debug/pprof/
