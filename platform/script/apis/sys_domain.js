@@ -2,56 +2,91 @@
 const axios = require('@/utils/request').default
 
 // add 添加域
-module.exports.add = (data) => {
-  const url = '/api/sys/domain/add'
+module.exports.add = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/domain/add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // del 删除域
-module.exports.del = (data) => {
-  const url = '/api/sys/domain/del'
+module.exports.del = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/domain/del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // update 更新域
-module.exports.update = (data) => {
-  const url = '/api/sys/domain/update'
+module.exports.update = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/domain/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'put',
-    data
+    data,
+    ...opt
   })
 }
 
 // page 域分页查询
-module.exports.page = (data) => {
-  let url = '/api/sys/domain/page?'
+module.exports.page = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/domain/page?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // get 获取域信息
-module.exports.get = (data) => {
-  let url = '/api/sys/domain/get?'
+module.exports.get = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/domain/get?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 

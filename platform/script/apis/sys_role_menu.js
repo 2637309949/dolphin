@@ -2,76 +2,133 @@
 const axios = require('@/utils/request').default
 
 // add 添加角色菜单
-module.exports.add = (data) => {
-  const url = '/api/sys/role/menu/add'
+module.exports.add = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/role/menu/add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // batchAdd 添加角色菜单
-module.exports.batchAdd = (data) => {
-  const url = '/api/sys/role/menu/batch_add'
+module.exports.batchAdd = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/role/menu/batch_add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // del 删除角色菜单
-module.exports.del = (data) => {
-  const url = '/api/sys/role/menu/del'
+module.exports.del = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/role/menu/del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // batchDel 删除角色菜单
-module.exports.batchDel = (data) => {
-  const url = '/api/sys/role/menu/batch_del'
+module.exports.batchDel = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/role/menu/batch_del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // update 更新角色菜单
-module.exports.update = (data) => {
-  const url = '/api/sys/role/menu/update'
+module.exports.update = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/role/menu/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'put',
-    data
+    data,
+    ...opt
   })
 }
 
 // page 角色菜单分页查询
-module.exports.page = (data) => {
-  let url = '/api/sys/role/menu/page?'
+module.exports.page = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/role/menu/page?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // get 获取角色菜单信息
-module.exports.get = (data) => {
-  let url = '/api/sys/role/menu/get?'
+module.exports.get = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/role/menu/get?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 

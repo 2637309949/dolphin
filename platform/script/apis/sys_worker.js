@@ -2,24 +2,36 @@
 const axios = require('@/utils/request').default
 
 // add 添加worker
-module.exports.add = (data) => {
-  const url = '/api/sys/worker/add'
+module.exports.add = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/worker/add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // get 获取worker信息
-module.exports.get = (data) => {
-  let url = '/api/sys/worker/get?'
+module.exports.get = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/worker/get?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 

@@ -2,68 +2,104 @@
 const axios = require('@/utils/request').default
 
 // add 添加APP功能
-module.exports.add = (data) => {
-  const url = '/api/sys/app/fun/add'
+module.exports.add = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/app/fun/add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // del 删除APP功能
-module.exports.del = (data) => {
-  const url = '/api/sys/app/fun/del'
+module.exports.del = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/app/fun/del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // update 更新APP功能
-module.exports.update = (data) => {
-  const url = '/api/sys/app/fun/update'
+module.exports.update = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/app/fun/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'put',
-    data
+    data,
+    ...opt
   })
 }
 
 // page APP功能分页查询
-module.exports.page = (data) => {
-  let url = '/api/sys/app/fun/page?'
+module.exports.page = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/app/fun/page?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // tree 菜单树形结构
-module.exports.tree = (data) => {
-  let url = '/api/sys/app/fun/tree?'
+module.exports.tree = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/app/fun/tree?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // get 获取APP功能信息
-module.exports.get = (data) => {
-  let url = '/api/sys/app/fun/get?'
+module.exports.get = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/app/fun/get?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 

@@ -2,112 +2,153 @@
 const axios = require('@/utils/request').default
 
 // pprof 
-module.exports.pprof = (data) => {
-  const url = '/debug/pprof/'
+module.exports.pprof = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // heap 
-module.exports.heap = (data) => {
-  const url = '/debug/pprof/heap'
+module.exports.heap = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/heap?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // goroutine 
-module.exports.goroutine = (data) => {
-  const url = '/debug/pprof/goroutine'
+module.exports.goroutine = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/goroutine?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // allocs 
-module.exports.allocs = (data) => {
-  const url = '/debug/pprof/allocs'
+module.exports.allocs = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/allocs?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // block 
-module.exports.block = (data) => {
-  const url = '/debug/pprof/block'
+module.exports.block = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/block?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // threadcreate 
-module.exports.threadcreate = (data) => {
-  const url = '/debug/pprof/threadcreate'
+module.exports.threadcreate = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/threadcreate?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // cmdline 
-module.exports.cmdline = (data) => {
-  const url = '/debug/pprof/cmdline'
+module.exports.cmdline = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/cmdline?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // profile 
-module.exports.profile = (data) => {
-  const url = '/debug/pprof/profile'
+module.exports.profile = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/profile?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // symbol 
-module.exports.symbol = (data) => {
-  const url = '/debug/pprof/symbol'
+module.exports.symbol = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/debug/pprof/symbol'
+  if ((opt.url || 'get,post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
-    method: 'GET,POST',
-    data
+    method: 'get,post',
+    data,
+    ...opt
   })
 }
 
 // trace 
-module.exports.trace = (data) => {
-  const url = '/debug/pprof/trace'
+module.exports.trace = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/trace?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 
 // mutex 
-module.exports.mutex = (data) => {
-  const url = '/debug/pprof/mutex'
+module.exports.mutex = (data = {}, opt = {}) => {
+  let url = opt.url || '/debug/pprof/mutex?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
   return axios({
     url: url,
-    method: 'GET',
-    data
+    method: 'get',
+    ...opt
   })
 }
 

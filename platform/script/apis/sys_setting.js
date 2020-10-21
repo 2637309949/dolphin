@@ -2,66 +2,112 @@
 const axios = require('@/utils/request').default
 
 // add 添加设置
-module.exports.add = (data) => {
-  const url = '/api/sys/setting/add'
+module.exports.add = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/setting/add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // del 删除设置
-module.exports.del = (data) => {
-  const url = '/api/sys/setting/del'
+module.exports.del = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/setting/del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // batchDel 删除设置
-module.exports.batchDel = (data) => {
-  const url = '/api/sys/setting/batch_del'
+module.exports.batchDel = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/setting/batch_del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // update 更新设置
-module.exports.update = (data) => {
-  const url = '/api/sys/setting/update'
+module.exports.update = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/setting/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'put',
-    data
+    data,
+    ...opt
   })
 }
 
 // page 设置分页查询
-module.exports.page = (data) => {
-  let url = '/api/sys/setting/page?'
+module.exports.page = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/setting/page?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // get 获取设置信息
-module.exports.get = (data) => {
-  let url = '/api/sys/setting/get?'
+module.exports.get = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/setting/get?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 

@@ -2,78 +2,125 @@
 const axios = require('@/utils/request').default
 
 // add 添加组织
-module.exports.add = (data) => {
-  const url = '/api/sys/org/add'
+module.exports.add = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/org/add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // del 删除组织
-module.exports.del = (data) => {
-  const url = '/api/sys/org/del'
+module.exports.del = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/org/del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // batchDel 删除组织
-module.exports.batchDel = (data) => {
-  const url = '/api/sys/org/batch_del'
+module.exports.batchDel = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/org/batch_del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // update 更新组织
-module.exports.update = (data) => {
-  const url = '/api/sys/org/update'
+module.exports.update = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/org/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'put',
-    data
+    data,
+    ...opt
   })
 }
 
 // page 组织分页查询
-module.exports.page = (data) => {
-  let url = '/api/sys/org/page?'
+module.exports.page = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/org/page?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // tree 菜单树形结构
-module.exports.tree = (data) => {
-  let url = '/api/sys/org/tree?'
+module.exports.tree = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/org/tree?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // get 获取组织信息
-module.exports.get = (data) => {
-  let url = '/api/sys/org/get?'
+module.exports.get = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/org/get?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 

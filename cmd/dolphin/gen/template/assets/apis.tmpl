@@ -3,22 +3,34 @@ const axios = require('@/utils/request').default
 {{range .Controller.APIS}}
 {{- $tn := .ToUpperCase .Name}}
 // {{.LcFirst $tn}} {{.Desc}}
-module.exports.{{.LcFirst $tn}} = (data) => {
+module.exports.{{.LcFirst $tn}} = (data = {}, opt = {}) => {
   {{- if eq .Method "get"}}
-  let url = '{{- if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}}?'
+  let url = opt.url || '{{- if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}}?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: '{{.Method}}'
+    method: '{{.Method}}',
+    ...opt
   })
-  {{- else}}
-  const url = '{{- if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}}'
+  {{- else }}
+  const url = opt.url ||  '{{- if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}}'
+  if ((opt.url || '{{.Method}}') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: '{{.Method}}',
-    data
+    data,
+    ...opt
   })
   {{- end}}
 }

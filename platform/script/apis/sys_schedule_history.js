@@ -2,14 +2,15 @@
 const axios = require('@/utils/request').default
 
 // page 调度分页查询
-module.exports.page = (data) => {
-  let url = '/api/sys/schedule/history/page?'
+module.exports.page = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/sys/schedule/history/page?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
