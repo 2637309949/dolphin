@@ -104,10 +104,21 @@ func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFun
 
 	return func(c *gin.Context) {
 		// bytes buffer
-		buf, err := ioutil.ReadAll(c.Request.Body)
-		if err != nil {
-			panic(err)
+		var buf []byte
+		var err error
+		if cb, ok := c.Get(gin.BodyBytesKey); ok {
+			if cbb, ok := cb.([]byte); ok {
+				buf = cbb
+			}
 		}
+		if buf == nil {
+			buf, err = ioutil.ReadAll(c.Request.Body)
+			if err != nil {
+				panic(err)
+			}
+			c.Set(gin.BodyBytesKey, buf)
+		}
+
 		c.Request.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(buf)))
 		writer := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
 		c.Writer = writer
