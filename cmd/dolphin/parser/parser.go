@@ -258,6 +258,8 @@ func (parser *AppParser) parseProp(xmlPath string, attr []xml.Attr) *schema.Prop
 			prop.Type = attrValue
 		case attrName == "json":
 			prop.JSON = attrValue
+		case attrName == "form":
+			prop.Form = attrValue
 		case attrName == "example":
 			prop.Example = attrValue
 		}

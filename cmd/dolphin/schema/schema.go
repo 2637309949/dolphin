@@ -82,6 +82,7 @@ type Prop struct {
 	Common
 	Type    string
 	JSON    string
+	Form    string
 	Example string
 }
 
@@ -99,6 +100,7 @@ type Column struct {
 	Type    string
 	Xorm    string
 	JSON    string
+	Form    string
 	Example string
 }
 

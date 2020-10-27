@@ -4,6 +4,7 @@
 package app
 
 import (
+	"errors"
 	"{{.PackageName}}/model"
 	"{{.PackageName}}/srv"
 
@@ -194,12 +195,20 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ctx.Success(ret)
 	{{- end}}
 {{- else if eq .Func "one"}}
-	{{- $bp := index .Params 0}}
 	var entity model.{{.ToUpperCase .Table}}
-	id := ctx.Query("{{$bp.Name}}")
-	_, err := ctx.DB.ID(id).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ext, err := ctx.DB.Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(entity)

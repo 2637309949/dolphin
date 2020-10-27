@@ -6,6 +6,7 @@ package app
 import (
 	"blogger/model"
 	"blogger/srv"
+	"errors"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/go-funk"
@@ -23,9 +24,9 @@ import (
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/article/add [post]
+// @Router/api/article/add [post]
 func ArticleAdd(ctx *Context) {
-	var payload model.Article
+	var payload *model.Article
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -55,7 +56,7 @@ func ArticleAdd(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/article/del [delete]
+// @Router/api/article/del [delete]
 func ArticleDel(ctx *Context) {
 	var payload model.Article
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
@@ -69,6 +70,7 @@ func ArticleDel(ctx *Context) {
 		DelFlag:    null.IntFrom(1),
 	})
 	if err != nil {
+		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
@@ -84,7 +86,7 @@ func ArticleDel(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/article/update [put]
+// @Router/api/article/update [put]
 func ArticleUpdate(ctx *Context) {
 	var payload model.Article
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
@@ -112,9 +114,9 @@ func ArticleUpdate(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/article/batch_update [put]
+// @Router/api/article/batch_update [put]
 func ArticleBatchUpdate(ctx *Context) {
-	var payload []model.Article
+	var payload []*model.Article
 	var err error
 	var ret []int64
 	var r int64
@@ -148,7 +150,7 @@ func ArticleBatchUpdate(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/article/page [get]
+// @Router/api/article/page [get]
 func ArticlePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
@@ -172,14 +174,22 @@ func ArticlePage(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/article/get [get]
+// @Router/api/article/get [get]
 func ArticleGet(ctx *Context) {
 	var entity model.Article
-	id := ctx.Query("id")
-	_, err := ctx.DB.ID(id).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
-
+		ctx.Fail(err)
+		return
+	}
+	ext, err := ctx.DB.Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(entity)
@@ -194,7 +204,7 @@ func ArticleGet(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/article/payment [post]
+// @Router/api/article/payment [post]
 func ArticlePayment(ctx *Context) {
 	var payload model.ArticleInfo
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {

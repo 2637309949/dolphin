@@ -2,76 +2,133 @@
 const axios = require('@/utils/request').default
 
 // add 添加文章
-module.exports.add = (data) => {
-  const url = '/api/article/add'
+module.exports.add = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/article/add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 
 // del 删除文章
-module.exports.del = (data) => {
-  const url = '/api/article/del'
+module.exports.del = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/article/del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'delete',
-    data
+    data,
+    ...opt
   })
 }
 
 // update 更新文章
-module.exports.update = (data) => {
-  const url = '/api/article/update'
+module.exports.update = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/article/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'put',
-    data
+    data,
+    ...opt
   })
 }
 
 // batchUpdate 更新文章
-module.exports.batchUpdate = (data) => {
-  const url = '/api/article/batch_update'
+module.exports.batchUpdate = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/article/batch_update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'put',
-    data
+    data,
+    ...opt
   })
 }
 
 // page 文章分页查询
-module.exports.page = (data) => {
-  let url = '/api/article/page?'
+module.exports.page = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/article/page?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // get 获取文章信息
-module.exports.get = (data) => {
-  let url = '/api/article/get?'
+module.exports.get = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/article/get?'
   for (var key in data) {
     url += key + '=' + encodeURIComponent(data[key]) + '&'
   }
   return axios({
     url: url,
-    method: 'get'
+    method: 'get',
+    ...opt
   })
 }
 
 // payment 文章付费
-module.exports.payment = (data) => {
-  const url = '/api/article/payment'
+module.exports.payment = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/article/payment'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
   return axios({
     url: url,
     method: 'post',
-    data
+    data,
+    ...opt
   })
 }
 

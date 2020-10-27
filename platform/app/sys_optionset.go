@@ -4,7 +4,7 @@
 package app
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/go-funk"
@@ -180,19 +180,20 @@ func SysOptionsetPage(ctx *Context) {
 // @Router /api/sys/optionset/get [get]
 func SysOptionsetGet(ctx *Context) {
 	var entity model.SysOptionset
-	id := ctx.Query("id")
-	code := ctx.Query("code")
-	sql := "select id, name, code, value from sys_optionset where del_flag=0"
-	if id != "" {
-		sql += fmt.Sprintf(" and id='%v'", id)
-	}
-	if code != "" {
-		sql += fmt.Sprintf(" and code='%v'", code)
-	}
-	_, err := ctx.DB.SQL(sql).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
+		return
+	}
+	ext, err := ctx.DB.Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(ctx.OmitByZero(entity))
