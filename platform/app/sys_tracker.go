@@ -4,6 +4,8 @@
 package app
 
 import (
+	"errors"
+
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util/slice"
@@ -69,12 +71,21 @@ func SysTrackerPage(ctx *Context) {
 // @Router /api/sys/tracker/get [get]
 func SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker
-	id := ctx.Query("id")
-	_, err := ctx.DB.ID(id).Cols("id", "header", "req_body", "res_body").Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ctx.OmitByZero(entity))
+	ext, err := ctx.DB.Cols("id", "header", "req_body", "res_body").Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
+		return
+	}
+	ctx.Success(entity)
 }

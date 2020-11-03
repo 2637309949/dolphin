@@ -205,6 +205,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ext, err := ctx.DB.Get(&entity)
 	if err != nil {
 		logrus.Error(err)
+		ctx.Fail(err)
 		return
 	}
 	if !ext {

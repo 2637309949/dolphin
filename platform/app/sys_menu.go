@@ -256,11 +256,20 @@ func SysMenuTree(ctx *Context) {
 // @Router /api/sys/menu/get [get]
 func SysMenuGet(ctx *Context) {
 	var entity model.SysMenu
-	id := ctx.Query("id")
-	_, err := ctx.DB.ID(id).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
+		return
+	}
+	ext, err := ctx.DB.Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(entity)

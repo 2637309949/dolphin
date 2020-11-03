@@ -186,6 +186,7 @@ func ArticleGet(ctx *Context) {
 	ext, err := ctx.DB.Get(&entity)
 	if err != nil {
 		logrus.Error(err)
+		ctx.Fail(err)
 		return
 	}
 	if !ext {

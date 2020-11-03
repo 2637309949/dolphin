@@ -4,6 +4,7 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 	"path"
 	"path/filepath"
@@ -230,11 +231,20 @@ func SysAttachmentPage(ctx *Context) {
 // @Router /api/sys/attachment/get [get]
 func SysAttachmentGet(ctx *Context) {
 	var entity model.SysAttachment
-	id := ctx.Query("id")
-	_, err := ctx.DB.ID(id).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
+		return
+	}
+	ext, err := ctx.DB.Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(entity)

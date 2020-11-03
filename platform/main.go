@@ -12,5 +12,5 @@ import (
 
 //go:generate dolphin build sqltpl
 func main() {
-	app.App.Run()
+	app.Run()
 }

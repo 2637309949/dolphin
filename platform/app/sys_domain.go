@@ -4,6 +4,8 @@
 package app
 
 import (
+	"errors"
+
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
@@ -140,11 +142,20 @@ func SysDomainPage(ctx *Context) {
 // @Router /api/sys/domain/get [get]
 func SysDomainGet(ctx *Context) {
 	var entity model.SysDomain
-	id := ctx.Query("id")
-	_, err := ctx.PlatformDB.ID(id).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
+		return
+	}
+	ext, err := ctx.DB.Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(entity)

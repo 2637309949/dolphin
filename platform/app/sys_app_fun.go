@@ -4,6 +4,8 @@
 package app
 
 import (
+	"errors"
+
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
@@ -157,11 +159,20 @@ func SysAppFunTree(ctx *Context) {
 // @Router /api/sys/app/fun/get [get]
 func SysAppFunGet(ctx *Context) {
 	var entity model.SysAppFun
-	id := ctx.Query("id")
-	_, err := ctx.DB.ID(id).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
+		return
+	}
+	ext, err := ctx.DB.Get(&entity)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(entity)

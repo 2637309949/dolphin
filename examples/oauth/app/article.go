@@ -142,6 +142,7 @@ func ArticleGet(ctx *Context) {
 	_, err := ctx.DB.ID(id).Get(&entity)
 	if err != nil {
 		logrus.Error(err)
+		ctx.Fail(err)
 		return
 	}
 	ctx.Success(entity)
