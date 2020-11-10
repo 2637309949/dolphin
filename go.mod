@@ -28,8 +28,7 @@ require (
 	github.com/go-asn1-ber/asn1-ber v1.4.1
 	github.com/go-errors/errors v1.0.1
 	github.com/go-openapi/jsonreference v0.19.4
-	github.com/go-openapi/spec v0.19.11
-	github.com/go-openapi/swag v0.19.11 // indirect
+	github.com/go-openapi/spec v0.19.12
 	github.com/go-playground/validator/v10 v10.2.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gogo/protobuf v1.2.1 // indirect
@@ -86,10 +85,11 @@ require (
 	go.uber.org/multierr v1.4.0
 	go.uber.org/zap v1.10.0 // indirect
 	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
-	golang.org/x/net v0.0.0-20201026091529-146b70c837a4
-	golang.org/x/sys v0.0.0-20201026173827-119d4633e4d1
+	golang.org/x/net v0.0.0-20201109172640-a11eb1b685be
+	golang.org/x/sys v0.0.0-20201109165425-215b40eba54c
+	golang.org/x/text v0.3.4 // indirect
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
-	golang.org/x/tools v0.0.0-20201026223136-e84cfc6dd5ca
+	golang.org/x/tools v0.0.0-20201109182053-3db8fd265862
 	google.golang.org/appengine v1.6.0
 	google.golang.org/genproto v0.0.0-20191230161307-f3c370f40bfb // indirect
 	google.golang.org/grpc v1.26.0
