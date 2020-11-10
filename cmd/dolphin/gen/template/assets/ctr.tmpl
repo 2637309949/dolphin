@@ -78,7 +78,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $bp := index .Params 0}}
 	{{- $ref := $bp.Ref $bp.Type}}
 	var payload {{$bp.TypeWithPointer $ref}}
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
 	    logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -113,7 +113,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $isArr := $bp.ISArray $bp.Type}}
 	{{- if $isArr}}
 	var payload {{$bp.TypeWithPointer $ref}}
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -158,7 +158,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	var err error
 	var ret []int64
 	var r int64
-	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err = ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

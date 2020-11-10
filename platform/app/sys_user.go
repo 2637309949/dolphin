@@ -27,7 +27,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body model.SysUser false "用户信息"
-// @Failure 403 {object} model.Fail
+// @Failure 403 {object} model.Fail "Invalid token"
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/add [post]
