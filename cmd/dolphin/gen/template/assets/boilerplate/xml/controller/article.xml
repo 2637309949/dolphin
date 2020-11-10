@@ -1,6 +1,13 @@
 <controller name="article" desc="Article controller">
     <api name="add" func="add" table="article" desc="Add article" method="post">
-        <param name="user" type="$article" desc="Article info" />
+        <param name="article" type="$article" desc="Article info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="article" desc="Add article" method="post">
+        <param name="article" type="[]$article" desc="Article info" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
@@ -13,8 +20,22 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_del" func="delete" table="article" desc="Delete article" method="delete">
+        <param name="article" type="[]$article" desc="article" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="update" func="update" table="article" desc="Update article" method="put">
-        <param name="user" type="$article" desc="Article info" />
+        <param name="article" type="$article" desc="Article info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="article" desc="Update article" method="put">
+        <param name="article" type="[]$article" desc="Article info" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
