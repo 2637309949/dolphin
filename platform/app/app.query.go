@@ -308,8 +308,7 @@ func (q *Query) Unmarshal(v interface{}) error {
 	if e != nil {
 		return e
 	}
-	json.Unmarshal(mbyte, v)
-	return nil
+	return json.Unmarshal(mbyte, v)
 }
 
 // Unescaped defined
