@@ -10,29 +10,29 @@ import (
 // SysNotification defined 站内消息
 type SysNotification struct {
 	// 主键
-	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
+	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" xml:"id"`
 	// 主题ID
-	TopicId null.String `xorm:"varchar(36) notnull comment('主题ID') 'topic_id'" json:"topic_id" form:"topic_id" xml:"topic_id"`
+	TopicId null.String `xorm:"varchar(36) notnull comment('主题ID') 'topic_id'" json:"topic_id" xml:"topic_id"`
 	// 主题类型
-	TopicType null.String `xorm:"varchar(36) notnull comment('主题类型') 'topic_type'" json:"topic_type" form:"topic_type" xml:"topic_type"`
+	TopicType null.String `xorm:"varchar(36) notnull comment('主题类型') 'topic_type'" json:"topic_type" xml:"topic_type"`
 	// 接受者
-	ToUid null.String `xorm:"varchar(36) comment('接受者') 'to_uid'" json:"to_uid" form:"to_uid" xml:"to_uid"`
+	ToUid null.String `xorm:"varchar(36) comment('接受者') 'to_uid'" json:"to_uid" xml:"to_uid"`
 	// 发送者
-	FromUid null.String `xorm:"varchar(36) comment('发送者') 'from_uid'" json:"from_uid" form:"from_uid" xml:"from_uid"`
+	FromUid null.String `xorm:"varchar(36) comment('发送者') 'from_uid'" json:"from_uid" xml:"from_uid"`
 	// 是否已读
-	IsRead null.Int `xorm:"notnull comment('是否已读') 'is_read'" json:"is_read" form:"is_read" xml:"is_read"`
+	IsRead null.Int `xorm:"notnull comment('是否已读') 'is_read'" json:"is_read" xml:"is_read"`
 	// 创建人
-	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" form:"create_by" xml:"create_by"`
+	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" xml:"create_by"`
 	// 创建时间
-	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
+	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" xml:"create_time"`
 	// 最后更新人
-	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" form:"update_by" xml:"update_by"`
+	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" xml:"update_by"`
 	// 最后更新时间
-	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
+	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" xml:"update_time"`
 	// 删除标记
-	DelFlag null.Int `xorm:"notnull comment('删除标记') 'del_flag'" json:"del_flag" form:"del_flag" xml:"del_flag"`
+	DelFlag null.Int `xorm:"notnull comment('删除标记') 'del_flag'" json:"del_flag" xml:"del_flag"`
 	// 备注
-	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" form:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" xml:"remark"`
 }
 
 // TableName table name of defined SysNotification

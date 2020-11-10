@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"log"
 	"os"
 	"path"
@@ -30,6 +31,7 @@ func (m *Boilerplate) Name() string {
 func (m *Boilerplate) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	cfgs := []*pipe.TmplCfg{}
 	data := map[string]interface{}{
+		"lt":          ht.HTML("<"),
 		"PackageName": node.PackageName,
 		"Name":        node.Name,
 		"Desc":        node.Desc,
