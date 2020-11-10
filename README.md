@@ -227,7 +227,7 @@ dolphin clean
 The init command, as stated, generates a series of initialization files
 
 ```sh
-dolphin init
+mkdir demo && dolphin init
 ```
 
 ## API Examples
