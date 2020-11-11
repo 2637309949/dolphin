@@ -3,7 +3,7 @@ package plugin
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"time"
 
@@ -75,6 +75,28 @@ func (w bodyLogWriter) WriteString(s string) (int, error) {
 	return w.ResponseWriter.WriteString(s)
 }
 
+// NopCloser defined
+type NopCloser struct {
+	rc io.ReadCloser
+	w  io.Writer
+}
+
+// Read defined
+func (rc *NopCloser) Read(p []byte) (n int, err error) {
+	n, err = rc.rc.Read(p)
+	if n > 0 {
+		if n, err := rc.w.Write(p[:n]); err != nil {
+			return n, err
+		}
+	}
+	return n, err
+}
+
+// Close defined
+func (rc *NopCloser) Close() error {
+	return rc.rc.Close()
+}
+
 // Tracker instance a Logger middleware with config.
 func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFunc {
 	notlogged := []string{}
@@ -104,24 +126,19 @@ func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFun
 
 	return func(c *gin.Context) {
 		// bytes buffer
+		var bufWriter bytes.Buffer
+		var bufReader bytes.Buffer
 		var buf []byte
-		var err error
 		if cb, ok := c.Get(gin.BodyBytesKey); ok {
 			if cbb, ok := cb.([]byte); ok {
 				buf = cbb
 			}
 		}
 		if buf == nil {
-			buf, err = ioutil.ReadAll(c.Request.Body)
-			if err != nil {
-				panic(err)
-			}
-			c.Set(gin.BodyBytesKey, buf)
+			c.Request.Body = &NopCloser{c.Request.Body, &bufWriter}
 		}
 
-		c.Request.Body = ioutil.NopCloser(bytes.NewBuffer([]byte(buf)))
-		writer := &bodyLogWriter{body: bytes.NewBufferString(""), ResponseWriter: c.Writer}
-		c.Writer = writer
+		c.Writer = &bodyLogWriter{body: &bufReader, ResponseWriter: c.Writer}
 
 		// Start timer
 		start := time.Now()
@@ -135,6 +152,12 @@ func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFun
 		// Process request
 		c.Next()
 
+		// Bytes set
+		if buf == nil {
+			buf = bufWriter.Bytes()
+			c.Set(gin.BodyBytesKey, buf)
+		}
+
 		// Log only when path is not being skipped
 		if _, ok := skip[path]; !ok {
 			param := LogFormatterParams{
@@ -145,7 +168,7 @@ func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFun
 				},
 				Header:  hr.Bytes(),
 				ReqBody: buf,
-				ResBody: writer.body.Bytes(),
+				ResBody: bufReader.Bytes(),
 			}
 
 			// Stop timer
