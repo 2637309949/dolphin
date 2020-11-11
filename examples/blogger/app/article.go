@@ -27,7 +27,7 @@ import (
 // @Router/api/article/add [post]
 func ArticleAdd(ctx *Context) {
 	var payload *model.Article
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -120,7 +120,7 @@ func ArticleBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err = ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -134,6 +134,12 @@ func ArticleBatchUpdate(ctx *Context) {
 	})
 	if err != nil {
 		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
+	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

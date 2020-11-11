@@ -176,6 +176,12 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
+	err = s.Commit()
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
 	ctx.Success(ret)
 	{{- else }}
 	var payload {{$bp.Ref $bp.Type}}

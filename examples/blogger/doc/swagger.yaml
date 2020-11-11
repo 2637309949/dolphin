@@ -5211,7 +5211,7 @@ paths:
           schema:
             $ref: '#/definitions/model.Success'
         "403":
-          description: Forbidden
+          description: Invalid token
           schema:
             $ref: '#/definitions/model.Fail'
         "500":
