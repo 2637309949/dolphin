@@ -26,8 +26,8 @@ import (
 // @Failure 500 {object} model.Fail
 // @Router/api/article/add [post]
 func ArticleAdd(ctx *Context) {
-	var payload *model.Article
-	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
+	var payload model.Article
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -38,6 +38,40 @@ func ArticleAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.DelFlag = null.IntFrom(0)
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// ArticleBatchAdd api implementation
+// @Summary 添加文章
+// @Tags 文章
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param article body []model.Article false "文章信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/article/batch_add [put]
+func ArticleBatchAdd(ctx *Context) {
+	var payload []model.Article
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -65,6 +99,37 @@ func ArticleDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.Article{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// ArticleBatchDel api implementation
+// @Summary 删除文章
+// @Tags 文章
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param article body []model.Article false "文章信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/article/batch_del [put]
+func ArticleBatchDel(ctx *Context) {
+	var payload []*model.Article
+	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	var ids = funk.Map(payload, func(form model.Article) string { return form.ID.String }).([]string)
+	ret, err := ctx.DB.In("id", ids).Update(&model.Article{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
@@ -126,12 +191,12 @@ func ArticleBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
-	funk.ForEach(payload, func(form model.Article) {
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		r, err = s.ID(form.ID.String).Update(&form)
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
 		ret = append(ret, r)
-	})
+	}
 	if err != nil {
 		s.Rollback()
 		logrus.Error(err)

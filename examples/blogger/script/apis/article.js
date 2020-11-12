@@ -22,6 +22,27 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
+// batchAdd 添加文章
+module.exports.batchAdd = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/article/batch_add'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'put',
+    data,
+    ...opt
+  })
+}
+
 // del 删除文章
 module.exports.del = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/article/del'
@@ -38,6 +59,27 @@ module.exports.del = (data = {}, opt = {}) => {
   return axios({
     url: url,
     method: 'delete',
+    data,
+    ...opt
+  })
+}
+
+// batchDel 删除文章
+module.exports.batchDel = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/article/batch_del'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'put',
     data,
     ...opt
   })

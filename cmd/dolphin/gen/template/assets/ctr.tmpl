@@ -76,22 +76,21 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ctx.Success(ret)
 {{- else if eq .Func "add"}}
 	{{- $bp := index .Params 0}}
-	{{- $ref := $bp.Ref $bp.Type}}
-	var payload {{$bp.TypeWithPointer $ref}}
-	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
+	var payload {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 	    logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 	{{- if .ISArray $bp.Type}}
-	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
-		form.ID = null.StringFromUUID()
-		form.CreateTime = null.TimeFrom(time.Now().Value())
-		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.DelFlag = null.IntFrom(0)
-	})
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
 	{{- else}}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
@@ -118,7 +117,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) string { return form.ID.String }).([]string{})
+	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) string { return form.ID.String }).([]string)
 	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
@@ -164,12 +163,12 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	s := ctx.DB.NewSession()
-	funk.ForEach(payload, func(form {{$bp.ORef $bp.Type}}) {
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		r, err = s.ID(form.ID.String).Update(&form)
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
 		ret = append(ret, r)
-	})
+	}
 	if err != nil {
 		s.Rollback()
 		logrus.Error(err)
