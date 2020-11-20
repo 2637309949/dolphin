@@ -5,9 +5,12 @@ package srv
 
 import (
 	"errors"
+
+	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
 
 // SysScheduleHistoryAction defined srv
-func SysScheduleHistoryAction(v interface{}) (interface{}, error) {
+func SysScheduleHistoryAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	return nil, errors.New("No implementation found")
 }
