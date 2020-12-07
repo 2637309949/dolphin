@@ -1,6 +1,13 @@
 <controller name="sys_notification" desc="站内消息">
     <api name="add" func="add" table="sys_notification" method="post" desc="添加站内消息">
-        <param name="notification" type="$sys_notification" desc="站内消息信息" />
+        <param name="sys_notification" type="$sys_notification" desc="站内消息信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="sys_notification" method="post" desc="添加站内消息">
+        <param name="sys_notification" type="[]$sys_notification" desc="站内消息信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
@@ -13,8 +20,22 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_del" func="delete" table="sys_notification" method="delete" desc="删除站内消息">
+        <param name="sys_notification" type="[]$sys_notification" desc="站内消息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="update" func="update" table="sys_notification" method="put" desc="更新站内消息">
-        <param name="notification" type="$sys_role" desc="站内消息信息" />
+        <param name="sys_notification" type="$sys_notification" desc="站内消息信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_notification" method="put" desc="更新站内消息">
+        <param name="sys_notification" type="[]$sys_notification" desc="站内消息信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

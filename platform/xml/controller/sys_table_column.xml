@@ -6,6 +6,13 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_add" func="add" table="sys_table_column" method="post" desc="添加表字段">
+        <param name="sys_table_column" type="[]$sys_table_column" desc="表字段" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="del" func="delete" table="sys_table_column" method="delete" desc="删除表字段">
         <param name="sys_table_column" type="$sys_table_column" desc="表字段" />
         <return>
@@ -22,6 +29,13 @@
     </api>
     <api name="update" func="update" table="sys_table_column" method="put" desc="更新表字段">
         <param name="user" type="$sys_role" desc="表字段信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_table_column" method="put" desc="更新表字段">
+        <param name="sys_table_column" type="[]$sys_table_column" desc="表字段" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

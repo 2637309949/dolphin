@@ -1,6 +1,13 @@
 <controller name="sys_optionset" desc="字典">
     <api name="add" func="add" table="sys_optionset" method="post" desc="添加字典">
-        <param name="user" type="$sys_optionset" desc="字典信息" />
+        <param name="sys_optionset" type="$sys_optionset" desc="字典信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="sys_optionset" method="post" desc="添加字典">
+        <param name="sys_optionset" type="[]$sys_optionset" desc="字典信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
@@ -14,14 +21,21 @@
         </return>
     </api>
     <api name="batch_del" func="delete" table="sys_optionset" method="delete" desc="删除字典">
-        <param name="user" type="[]$sys_optionset" desc="字典" />
+        <param name="sys_optionset" type="[]$sys_optionset" desc="字典" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
     <api name="update" func="update" table="sys_optionset" method="put" desc="更新字典">
-        <param name="user" type="$sys_role" desc="字典信息" />
+        <param name="sys_optionset" type="$sys_role" desc="字典信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_optionset" method="put" desc="更新字典">
+        <param name="sys_optionset" type="[]$sys_optionset" desc="字典信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

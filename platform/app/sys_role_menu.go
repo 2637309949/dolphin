@@ -176,6 +176,48 @@ func SysRoleMenuUpdate(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysRoleMenuBatchUpdate api implementation
+// @Summary 更新角色菜单
+// @Tags 角色菜单
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_role_menu body []model.SysRoleMenu false "角色菜单信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/role/menu/batch_update [put]
+func SysRoleMenuBatchUpdate(ctx *Context) {
+	var payload []model.SysRoleMenu
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysRoleMenuPage api implementation
 // @Summary 角色菜单分页查询
 // @Tags 角色菜单

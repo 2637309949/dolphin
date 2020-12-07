@@ -106,6 +106,27 @@ module.exports.update = (data = {}, opt = {}) => {
   })
 }
 
+// batchUpdate 更新角色菜单
+module.exports.batchUpdate = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/role/menu/batch_update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'put',
+    data,
+    ...opt
+  })
+}
+
 // page 角色菜单分页查询
 module.exports.page = (data = {}, opt = {}) => {
   let url = opt.url || '/api/sys/role/menu/page?'

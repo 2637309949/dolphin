@@ -7,6 +7,7 @@ import (
 	"errors"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
@@ -47,6 +48,40 @@ func SysDomainAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysDomainBatchAdd api implementation
+// @Summary 添加域
+// @Tags 域
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_domain body []model.SysDomain false "域信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/domain/batch_add [post]
+func SysDomainBatchAdd(ctx *Context) {
+	var payload []model.SysDomain
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysDomainDel api implementation
 // @Summary 删除域
 // @Tags 域
@@ -65,6 +100,37 @@ func SysDomainDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysDomain{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysDomainBatchDel api implementation
+// @Summary 删除域
+// @Tags 域
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_domain body []model.SysDomain false "域信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/domain/batch_del [delete]
+func SysDomainBatchDel(ctx *Context) {
+	var payload []model.SysDomain
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	var ids = funk.Map(payload, func(form model.SysDomain) string { return form.ID.String }).([]string)
+	ret, err := ctx.DB.In("id", ids).Update(&model.SysDomain{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 		DelFlag:    null.IntFrom(1),
@@ -97,6 +163,48 @@ func SysDomainUpdate(ctx *Context) {
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysDomainBatchUpdate api implementation
+// @Summary 更新域
+// @Tags 域
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_domain body []model.SysDomain false "域信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/domain/batch_update [put]
+func SysDomainBatchUpdate(ctx *Context) {
+	var payload []model.SysDomain
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

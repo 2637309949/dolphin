@@ -6,6 +6,13 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_add" func="add" table="sys_schedule" method="post" desc="添加调度">
+        <param name="sys_schedule" type="[]$sys_schedule" desc="调度信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="del" func="delete" table="sys_schedule" method="delete" desc="删除调度">
         <param name="sys_schedule" type="$sys_schedule" desc="调度" />
         <return>
@@ -22,6 +29,13 @@
     </api>
     <api name="update" func="update" table="sys_schedule" method="put" desc="更新调度">
         <param name="sys_schedule" type="$sys_schedule" desc="调度信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_schedule" method="post" desc="更新调度">
+        <param name="sys_schedule" type="[]$sys_schedule" desc="调度信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

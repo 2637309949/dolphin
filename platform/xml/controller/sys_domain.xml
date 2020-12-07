@@ -1,6 +1,13 @@
 <controller name="sys_domain" desc="域">
     <api name="add" func="add" table="sys_domain" method="post" desc="添加域">
-        <param name="user" type="$sys_domain" desc="域信息" />
+        <param name="sys_domain" type="$sys_domain" desc="域信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="sys_domain" method="post" desc="添加域">
+        <param name="sys_domain" type="[]$sys_domain" desc="域信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
@@ -13,8 +20,22 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_del" func="delete" table="sys_domain" method="delete" desc="删除域">
+        <param name="sys_domain" type="[]$sys_domain" desc="域信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="update" func="update" table="sys_domain" method="put" desc="更新域">
-        <param name="user" type="$sys_role" desc="域信息" />
+        <param name="sys_domain" type="$sys_domain" desc="域信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_domain" method="put" desc="更新域">
+        <param name="sys_domain" type="[]$sys_domain" desc="域信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

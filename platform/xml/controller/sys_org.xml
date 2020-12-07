@@ -1,6 +1,13 @@
 <controller name="sys_org" desc="组织">
     <api name="add" func="add" table="sys_org" method="post" desc="添加组织">
-        <param name="user" type="$sys_org" desc="组织信息" />
+        <param name="article" type="$sys_org" desc="组织信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="sys_org" method="post" desc="添加组织">
+        <param name="sys_org" type="[]$sys_org" desc="组织信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
@@ -21,7 +28,14 @@
         </return>
     </api>
     <api name="update" func="update" table="sys_org" method="put" desc="更新组织">
-        <param name="user" type="$sys_role" desc="组织信息" />
+        <param name="sys_org" type="$sys_org" desc="组织信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_org" method="put" desc="更新组织">
+        <param name="sys_org" type="[]$sys_org" desc="组织信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

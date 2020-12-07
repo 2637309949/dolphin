@@ -7,6 +7,7 @@ import (
 	"errors"
 
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -46,6 +47,40 @@ func SysPermissionAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysPermissionBatchAdd api implementation
+// @Summary 添加权限
+// @Tags 权限
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_permission body []model.SysPermission false "权限信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/permission/batch_add [post]
+func SysPermissionBatchAdd(ctx *Context) {
+	var payload []model.SysPermission
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysPermissionDel api implementation
 // @Summary 删除权限
 // @Tags 权限
@@ -76,6 +111,32 @@ func SysPermissionDel(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysPermissionBatchDel api implementation
+// @Summary 删除权限
+// @Tags 权限
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_permission body []model.SysPermission false "权限"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/permission/batch_del [delete]
+func SysPermissionBatchDel(ctx *Context) {
+	var payload []model.SysPermission
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ret, err := srv.SysPermissionAction(ctx.Raw(), ctx.DB, struct{}{})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysPermissionUpdate api implementation
 // @Summary 更新权限
 // @Tags 权限
@@ -96,6 +157,48 @@ func SysPermissionUpdate(ctx *Context) {
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysPermissionBatchUpdate api implementation
+// @Summary 更新权限
+// @Tags 权限
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_permission body []model.SysPermission false "权限信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/permission/batch_update [put]
+func SysPermissionBatchUpdate(ctx *Context) {
+	var payload []model.SysPermission
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

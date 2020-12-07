@@ -58,6 +58,40 @@ func SysUserAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysUserBatchAdd api implementation
+// @Summary 添加用户
+// @Tags 用户
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param user body []model.SysUser false "用户信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/user/batch_add [post]
+func SysUserBatchAdd(ctx *Context) {
+	var payload []model.SysUser
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysUserDel api implementation
 // @Summary 删除用户
 // @Tags 用户
@@ -202,6 +236,48 @@ func SysUserUpdate(ctx *Context) {
 		ctx.Fail(err)
 		ps.Rollback()
 		ds.Rollback()
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysUserBatchUpdate api implementation
+// @Summary 更新用户
+// @Tags 用户
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param user body []model.SysUser false "用户信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/user/batch_update [put]
+func SysUserBatchUpdate(ctx *Context) {
+	var payload []model.SysUser
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
 		return
 	}
 	ctx.Success(ret)

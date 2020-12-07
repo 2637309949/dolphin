@@ -6,6 +6,13 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_add" func="add" table="sys_menu" method="post" desc="添加菜单">
+        <param name="sys_menu" type="[]$sys_menu" desc="菜单信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="del" func="delete" table="sys_menu" method="delete" desc="删除菜单">
         <param name="sys_menu" type="$sys_menu" desc="菜单" />
         <return>
@@ -22,6 +29,13 @@
     </api>
     <api name="update" func="update" table="sys_menu" method="put" desc="更新菜单">
         <param name="sys_menu" type="$sys_menu" desc="菜单信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_menu" method="put" desc="更新菜单">
+        <param name="sys_menu" type="[]$sys_menu" desc="菜单信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

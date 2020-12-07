@@ -6,6 +6,13 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_add" func="add" table="sys_tag_group" method="post" desc="添加标签组">
+        <param name="sys_tag_group" type="[]$sys_tag_group" desc="标签组信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="del" func="delete" table="sys_tag_group" method="delete" desc="删除标签组">
         <param name="sys_tag_group" type="$sys_tag_group" desc="标签" />
         <return>
@@ -13,8 +20,22 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_del" func="delete" table="sys_tag_group" method="delete" desc="删除标签组">
+        <param name="sys_tag_group" type="[]$sys_tag_group" desc="标签组信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="update" func="update" table="sys_tag_group" method="put" desc="更新标签组">
         <param name="sys_tag_group" type="$sys_tag_group" desc="标签组信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_tag_group" method="put" desc="更新标签组">
+        <param name="sys_tag_group" type="[]$sys_tag_group" desc="标签组信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

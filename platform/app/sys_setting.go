@@ -47,6 +47,40 @@ func SysSettingAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysSettingBatchAdd api implementation
+// @Summary 添加设置
+// @Tags 设置
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_setting body []model.SysSetting false "设置信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/setting/batch_add [post]
+func SysSettingBatchAdd(ctx *Context) {
+	var payload []model.SysSetting
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysSettingDel api implementation
 // @Summary 删除设置
 // @Tags 设置
@@ -130,6 +164,48 @@ func SysSettingUpdate(ctx *Context) {
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysSettingBatchUpdate api implementation
+// @Summary 更新设置
+// @Tags 设置
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_setting body []model.SysSetting false "设置信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/setting/batch_update [put]
+func SysSettingBatchUpdate(ctx *Context) {
+	var payload []model.SysSetting
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

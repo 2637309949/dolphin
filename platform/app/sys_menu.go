@@ -62,6 +62,40 @@ func SysMenuAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysMenuBatchAdd api implementation
+// @Summary 添加菜单
+// @Tags 菜单
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_menu body []model.SysMenu false "菜单信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/menu/batch_add [post]
+func SysMenuBatchAdd(ctx *Context) {
+	var payload []model.SysMenu
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysMenuDel api implementation
 // @Summary 删除菜单
 // @Tags 菜单
@@ -162,6 +196,48 @@ func SysMenuUpdate(ctx *Context) {
 	}
 
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysMenuBatchUpdate api implementation
+// @Summary 更新菜单
+// @Tags 菜单
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_menu body []model.SysMenu false "菜单信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/menu/batch_update [put]
+func SysMenuBatchUpdate(ctx *Context) {
+	var payload []model.SysMenu
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
