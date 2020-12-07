@@ -56,7 +56,7 @@ func ArticleAdd(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router/api/article/batch_add [put]
+// @Router/api/article/batch_add [post]
 func ArticleBatchAdd(ctx *Context) {
 	var payload []model.Article
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
@@ -122,8 +122,8 @@ func ArticleDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router/api/article/batch_del [put]
 func ArticleBatchDel(ctx *Context) {
-	var payload []*model.Article
-	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
+	var payload []model.Article
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -181,11 +181,11 @@ func ArticleUpdate(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router/api/article/batch_update [put]
 func ArticleBatchUpdate(ctx *Context) {
-	var payload []*model.Article
+	var payload []model.Article
 	var err error
 	var ret []int64
 	var r int64
-	if err = ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

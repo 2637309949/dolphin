@@ -22,6 +22,27 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
+// batchAdd 添加APP功能
+module.exports.batchAdd = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/app/fun/batch_add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'post',
+    data,
+    ...opt
+  })
+}
+
 // del 删除APP功能
 module.exports.del = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/app/fun/del'
@@ -43,9 +64,51 @@ module.exports.del = (data = {}, opt = {}) => {
   })
 }
 
+// batchDel 删除APP功能
+module.exports.batchDel = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/app/fun/batch_del'
+  if ((opt.url || 'delete') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'delete',
+    data,
+    ...opt
+  })
+}
+
 // update 更新APP功能
 module.exports.update = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/app/fun/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'put',
+    data,
+    ...opt
+  })
+}
+
+// batchUpdate 更新APP功能
+module.exports.batchUpdate = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/app/fun/batch_update'
   if ((opt.url || 'put') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'

@@ -25,7 +25,7 @@ module.exports.add = (data = {}, opt = {}) => {
 // batchAdd 添加文章
 module.exports.batchAdd = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/article/batch_add'
-  if ((opt.url || 'put') === 'get') {
+  if ((opt.url || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -37,7 +37,7 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
   }
   return axios({
     url: url,
-    method: 'put',
+    method: 'post',
     data,
     ...opt
   })

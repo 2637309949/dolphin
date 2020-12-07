@@ -18,8 +18,11 @@ var Name = "platform"
 // SysAppFun defined
 type SysAppFun struct {
 	Add,
+	BatchAdd,
 	Del,
+	BatchDel,
 	Update,
+	BatchUpdate,
 	Page,
 	Tree,
 	Get func(ctx *Context)
@@ -29,8 +32,11 @@ type SysAppFun struct {
 func NewSysAppFun() *SysAppFun {
 	ctr := &SysAppFun{}
 	ctr.Add = SysAppFunAdd
+	ctr.BatchAdd = SysAppFunBatchAdd
 	ctr.Del = SysAppFunDel
+	ctr.BatchDel = SysAppFunBatchDel
 	ctr.Update = SysAppFunUpdate
+	ctr.BatchUpdate = SysAppFunBatchUpdate
 	ctr.Page = SysAppFunPage
 	ctr.Tree = SysAppFunTree
 	ctr.Get = SysAppFunGet
@@ -41,8 +47,11 @@ func NewSysAppFun() *SysAppFun {
 func SysAppFunRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/app/fun/add", Auth, SysAppFunInstance.Add)
+	group.Handle("POST", "/sys/app/fun/batch_add", Auth, SysAppFunInstance.BatchAdd)
 	group.Handle("DELETE", "/sys/app/fun/del", Auth, SysAppFunInstance.Del)
+	group.Handle("DELETE", "/sys/app/fun/batch_del", Auth, SysAppFunInstance.BatchDel)
 	group.Handle("PUT", "/sys/app/fun/update", Auth, SysAppFunInstance.Update)
+	group.Handle("PUT", "/sys/app/fun/batch_update", Auth, SysAppFunInstance.BatchUpdate)
 	group.Handle("GET", "/sys/app/fun/page", Auth, SysAppFunInstance.Page)
 	group.Handle("GET", "/sys/app/fun/tree", Auth, SysAppFunInstance.Tree)
 	group.Handle("GET", "/sys/app/fun/get", Auth, SysAppFunInstance.Get)
@@ -54,8 +63,11 @@ var SysAppFunInstance = NewSysAppFun()
 // SysArea defined
 type SysArea struct {
 	Add,
+	BatchAdd,
 	Del,
+	BatchDel,
 	Update,
+	BatchUpdate,
 	Page,
 	Get func(ctx *Context)
 }
@@ -64,8 +76,11 @@ type SysArea struct {
 func NewSysArea() *SysArea {
 	ctr := &SysArea{}
 	ctr.Add = SysAreaAdd
+	ctr.BatchAdd = SysAreaBatchAdd
 	ctr.Del = SysAreaDel
+	ctr.BatchDel = SysAreaBatchDel
 	ctr.Update = SysAreaUpdate
+	ctr.BatchUpdate = SysAreaBatchUpdate
 	ctr.Page = SysAreaPage
 	ctr.Get = SysAreaGet
 	return ctr
@@ -75,8 +90,11 @@ func NewSysArea() *SysArea {
 func SysAreaRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/area/add", Auth, SysAreaInstance.Add)
+	group.Handle("POST", "/sys/area/batch_add", Auth, SysAreaInstance.BatchAdd)
 	group.Handle("DELETE", "/sys/area/del", Auth, SysAreaInstance.Del)
+	group.Handle("DELETE", "/sys/area/batch_del", Auth, SysAreaInstance.BatchDel)
 	group.Handle("PUT", "/sys/area/update", Auth, SysAreaInstance.Update)
+	group.Handle("PUT", "/sys/area/batch_update", Auth, SysAreaInstance.BatchUpdate)
 	group.Handle("GET", "/sys/area/page", Auth, SysAreaInstance.Page)
 	group.Handle("GET", "/sys/area/get", Auth, SysAreaInstance.Get)
 }
@@ -87,10 +105,13 @@ var SysAreaInstance = NewSysArea()
 // SysAttachment defined
 type SysAttachment struct {
 	Add,
+	BatchAdd,
 	Upload,
 	Export,
 	Del,
+	BatchDel,
 	Update,
+	BatchUpdate,
 	Page,
 	Get func(ctx *Context)
 }
@@ -99,10 +120,13 @@ type SysAttachment struct {
 func NewSysAttachment() *SysAttachment {
 	ctr := &SysAttachment{}
 	ctr.Add = SysAttachmentAdd
+	ctr.BatchAdd = SysAttachmentBatchAdd
 	ctr.Upload = SysAttachmentUpload
 	ctr.Export = SysAttachmentExport
 	ctr.Del = SysAttachmentDel
+	ctr.BatchDel = SysAttachmentBatchDel
 	ctr.Update = SysAttachmentUpdate
+	ctr.BatchUpdate = SysAttachmentBatchUpdate
 	ctr.Page = SysAttachmentPage
 	ctr.Get = SysAttachmentGet
 	return ctr
@@ -112,10 +136,13 @@ func NewSysAttachment() *SysAttachment {
 func SysAttachmentRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/attachment/add", Auth, SysAttachmentInstance.Add)
+	group.Handle("POST", "/sys/attachment/batch_add", Auth, SysAttachmentInstance.BatchAdd)
 	group.Handle("POST", "/sys/attachment/upload", Auth, SysAttachmentInstance.Upload)
 	group.Handle("GET", "/sys/attachment/export", SysAttachmentInstance.Export)
 	group.Handle("DELETE", "/sys/attachment/del", Auth, SysAttachmentInstance.Del)
+	group.Handle("POST", "/sys/attachment/batch_del", Auth, SysAttachmentInstance.BatchDel)
 	group.Handle("PUT", "/sys/attachment/update", Auth, SysAttachmentInstance.Update)
+	group.Handle("POST", "/sys/attachment/batch_update", Auth, SysAttachmentInstance.BatchUpdate)
 	group.Handle("GET", "/sys/attachment/page", Auth, SysAttachmentInstance.Page)
 	group.Handle("GET", "/sys/attachment/get", Auth, SysAttachmentInstance.Get)
 }
@@ -177,9 +204,11 @@ var SysCasInstance = NewSysCas()
 // SysClient defined
 type SysClient struct {
 	Add,
+	BatchAdd,
 	Del,
 	BatchDel,
 	Update,
+	BatchUpdate,
 	Page,
 	Get func(ctx *Context)
 }
@@ -188,9 +217,11 @@ type SysClient struct {
 func NewSysClient() *SysClient {
 	ctr := &SysClient{}
 	ctr.Add = SysClientAdd
+	ctr.BatchAdd = SysClientBatchAdd
 	ctr.Del = SysClientDel
 	ctr.BatchDel = SysClientBatchDel
 	ctr.Update = SysClientUpdate
+	ctr.BatchUpdate = SysClientBatchUpdate
 	ctr.Page = SysClientPage
 	ctr.Get = SysClientGet
 	return ctr
@@ -200,9 +231,11 @@ func NewSysClient() *SysClient {
 func SysClientRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/client/add", Auth, SysClientInstance.Add)
+	group.Handle("POST", "/sys/client/batch_add", Auth, SysClientInstance.BatchAdd)
 	group.Handle("DELETE", "/sys/client/del", Auth, SysClientInstance.Del)
 	group.Handle("DELETE", "/sys/client/batch_del", Auth, SysClientInstance.BatchDel)
 	group.Handle("PUT", "/sys/client/update", Auth, SysClientInstance.Update)
+	group.Handle("PUT", "/sys/client/batch_update", Auth, SysClientInstance.BatchUpdate)
 	group.Handle("GET", "/sys/client/page", Auth, SysClientInstance.Page)
 	group.Handle("GET", "/sys/client/get", Auth, SysClientInstance.Get)
 }
@@ -213,8 +246,11 @@ var SysClientInstance = NewSysClient()
 // SysComment defined
 type SysComment struct {
 	Add,
+	BatchAdd,
 	Del,
+	BatchDel,
 	Update,
+	BatchUpdate,
 	Page,
 	Get func(ctx *Context)
 }
@@ -223,8 +259,11 @@ type SysComment struct {
 func NewSysComment() *SysComment {
 	ctr := &SysComment{}
 	ctr.Add = SysCommentAdd
+	ctr.BatchAdd = SysCommentBatchAdd
 	ctr.Del = SysCommentDel
+	ctr.BatchDel = SysCommentBatchDel
 	ctr.Update = SysCommentUpdate
+	ctr.BatchUpdate = SysCommentBatchUpdate
 	ctr.Page = SysCommentPage
 	ctr.Get = SysCommentGet
 	return ctr
@@ -234,8 +273,11 @@ func NewSysComment() *SysComment {
 func SysCommentRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/sys/comment/add", Auth, SysCommentInstance.Add)
+	group.Handle("POST", "/sys/comment/batch_add", Auth, SysCommentInstance.BatchAdd)
 	group.Handle("DELETE", "/sys/comment/del", Auth, SysCommentInstance.Del)
+	group.Handle("DELETE", "/sys/comment/batch_del", Auth, SysCommentInstance.BatchDel)
 	group.Handle("PUT", "/sys/comment/update", Auth, SysCommentInstance.Update)
+	group.Handle("PUT", "/sys/comment/batch_update", Auth, SysCommentInstance.BatchUpdate)
 	group.Handle("GET", "/sys/comment/page", Auth, SysCommentInstance.Page)
 	group.Handle("GET", "/sys/comment/get", Auth, SysCommentInstance.Get)
 }

@@ -1,6 +1,13 @@
 <controller name="sys_app_fun" desc="APP功能">
     <api name="add" func="add" table="sys_app_fun" method="post" desc="添加APP功能" >
-        <param name="user" type="$sys_app_fun" desc="APP功能信息" />
+        <param name="sys_app_fun" type="$sys_app_fun" desc="APP功能信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="sys_app_fun" method="post" desc="添加APP功能">
+        <param name="sys_app_fun" type="[]$sys_app_fun" desc="APP功能信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
@@ -13,8 +20,22 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="batch_del" func="delete" table="sys_app_fun" method="delete" desc="删除APP功能">
+        <param name="sys_app_fun" type="[]$sys_app_fun" desc="APP功能" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="update" func="update" table="sys_app_fun" method="put" desc="更新APP功能">
-        <param name="user" type="$sys_role" desc="APP功能信息" />
+        <param name="sys_app_fun" type="$sys_app_fun" desc="APP功能信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_app_fun" method="put" desc="更新APP功能">
+        <param name="sys_app_fun" type="[]$sys_app_fun" desc="APP功能信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

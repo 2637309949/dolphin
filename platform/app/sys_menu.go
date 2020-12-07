@@ -103,7 +103,7 @@ func SysMenuDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/batch_del [delete]
 func SysMenuBatchDel(ctx *Context) {
-	var payload []*model.SysMenu
+	var payload []model.SysMenu
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)

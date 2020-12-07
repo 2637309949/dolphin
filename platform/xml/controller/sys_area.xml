@@ -1,6 +1,13 @@
 <controller name="sys_area" desc="区域">
     <api name="add" func="add" table="sys_area" method="post" desc="添加区域">
-        <param name="user" type="$sys_area" desc="区域信息" />
+        <param name="sys_area" type="$sys_area" desc="区域信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="sys_area" method="post" desc="添加区域">
+        <param name="sys_area" type="[]$sys_area" desc="区域信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
@@ -13,8 +20,22 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="update" func="update" table="sys_area" desc="更新区域" method="put">
-        <param name="user" type="$sys_role" desc="区域信息" />
+    <api name="batch_del" func="delete" table="sys_area" method="delete" desc="删除文章">
+        <param name="sys_area" type="[]$sys_area" desc="区域" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="update" func="update" table="sys_area" method="put" desc="更新区域">
+        <param name="sys_area" type="$sys_role" desc="区域信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="sys_area" method="put" desc="更新文章">
+        <param name="sys_area" type="[]$sys_area" desc="区域信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

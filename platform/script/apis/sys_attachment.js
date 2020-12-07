@@ -22,6 +22,27 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
+// batchAdd 添加附件
+module.exports.batchAdd = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/attachment/batch_add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'post',
+    data,
+    ...opt
+  })
+}
+
 // upload 上传附件
 module.exports.upload = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/attachment/upload'
@@ -77,6 +98,27 @@ module.exports.del = (data = {}, opt = {}) => {
   })
 }
 
+// batchDel 删除附件
+module.exports.batchDel = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/attachment/batch_del'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'post',
+    data,
+    ...opt
+  })
+}
+
 // update 更新附件
 module.exports.update = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/attachment/update'
@@ -93,6 +135,27 @@ module.exports.update = (data = {}, opt = {}) => {
   return axios({
     url: url,
     method: 'put',
+    data,
+    ...opt
+  })
+}
+
+// batchUpdate 添加附件
+module.exports.batchUpdate = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/attachment/batch_update'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'post',
     data,
     ...opt
   })

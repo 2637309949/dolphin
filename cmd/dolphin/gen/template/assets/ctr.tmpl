@@ -108,15 +108,13 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ctx.Success(ret)
 {{- else if eq .Func "delete"}}
 	{{- $bp := index .Params 0}}
-	{{- $ref := $bp.Ref $bp.Type}}
-	{{- $isArr := $bp.ISArray $bp.Type}}
-	{{- if $isArr}}
-	var payload {{$bp.TypeWithPointer $ref}}
-	if err := ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
+	var payload {{$bp.Ref $bp.Type}}
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
+	{{- if .ISArray $bp.Type}}
 	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) string { return form.ID.String }).([]string)
 	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
@@ -130,12 +128,6 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- else }}
-	var payload {{$bp.Ref $bp.Type}}
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
@@ -150,18 +142,18 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- end}}
 {{- else if eq .Func "update"}}
 	{{- $bp := index .Params 0}}
-	{{- $ref := $bp.Ref $bp.Type}}
-	{{- $isArr := $bp.ISArray $bp.Type}}
-	{{- if $isArr}}
-	var payload {{$bp.TypeWithPointer $ref}}
+	var payload {{$bp.Ref $bp.Type}}
+	{{- if .ISArray $bp.Type}}
 	var err error
 	var ret []int64
 	var r int64
-	if err = ctx.ShouldBindBodyWith(payload, binding.JSON); err != nil {
+	{{- end}}
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
+	{{- if .ISArray $bp.Type}}
 	s := ctx.DB.NewSession()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
@@ -183,12 +175,6 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- else }}
-	var payload {{$bp.Ref $bp.Type}}
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)

@@ -22,6 +22,27 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
+// batchAdd 添加客户端
+module.exports.batchAdd = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/client/batch_add'
+  if ((opt.url || 'post') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'post',
+    data,
+    ...opt
+  })
+}
+
 // del 删除客户端
 module.exports.del = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/client/del'
@@ -67,6 +88,27 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 // update 更新客户端
 module.exports.update = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/client/update'
+  if ((opt.url || 'put') === 'get') {
+    for (var key in data) {
+      url += key + '=' + encodeURIComponent(data[key]) + '&'
+    }
+    return axios({
+      url: url,
+      method: 'get',
+      ...opt
+    })
+  }
+  return axios({
+    url: url,
+    method: 'put',
+    data,
+    ...opt
+  })
+}
+
+// batchUpdate 更新客户端
+module.exports.batchUpdate = (data = {}, opt = {}) => {
+  const url = opt.url ||  '/api/sys/client/batch_update'
   if ((opt.url || 'put') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'

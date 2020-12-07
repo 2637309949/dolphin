@@ -48,6 +48,40 @@ func SysClientAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
+// SysClientBatchAdd api implementation
+// @Summary 添加客户端
+// @Tags 客户端
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_client body []model.SysClient false "客户端信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/client/batch_add [post]
+func SysClientBatchAdd(ctx *Context) {
+	var payload []model.SysClient
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].ID = null.StringFromUUID()
+		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].DelFlag = null.IntFrom(0)
+	}
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
 // SysClientDel api implementation
 // @Summary 删除客户端
 // @Tags 客户端
@@ -89,7 +123,7 @@ func SysClientDel(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/client/batch_del [delete]
 func SysClientBatchDel(ctx *Context) {
-	var payload []*model.SysClient
+	var payload []model.SysClient
 	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
@@ -132,6 +166,48 @@ func SysClientUpdate(ctx *Context) {
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// SysClientBatchUpdate api implementation
+// @Summary 更新客户端
+// @Tags 客户端
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param sys_client body []model.SysClient false "客户端信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router/api/sys/client/batch_update [put]
+func SysClientBatchUpdate(ctx *Context) {
+	var payload []model.SysClient
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	for i := range payload {
+		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
