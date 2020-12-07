@@ -254,13 +254,11 @@ func ArticleGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.DB.Get(&entity)
-	if err != nil {
+	if ext, err := ctx.DB.Get(&entity); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
-	}
-	if !ext {
+	} else if !ext {
 		ctx.Fail(errors.New("not found"))
 		return
 	}
