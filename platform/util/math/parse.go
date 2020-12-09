@@ -47,3 +47,12 @@ func Round(f float64, n int) float64 {
 	n10 := math.Pow10(n)
 	return math.Trunc((f+0.5/n10)*n10) / n10
 }
+
+// SafeMul defined
+func SafeMul(a, b uint) uint {
+	c := a * b
+	if a > 1 && b > 1 && c/b != a {
+		return 0
+	}
+	return c
+}
