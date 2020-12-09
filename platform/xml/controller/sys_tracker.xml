@@ -8,7 +8,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" desc="获取日志信息" func="one" table="sys_tracker" method="get">
+    <api name="get" func="one" table="sys_tracker" method="get" desc="获取日志信息">
         <param name="id" type="string" desc="日志id" />
         <return>
             <success type="$success"/>
