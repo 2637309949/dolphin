@@ -7,9 +7,9 @@ import (
 	"errors"
 
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
+	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
@@ -128,7 +128,12 @@ func SysPermissionBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysPermissionAction(ctx.Raw(), ctx.DB, struct{}{})
+	var ids = funk.Map(payload, func(form model.SysPermission) string { return form.ID.String }).([]string)
+	ret, err := ctx.DB.In("id", ids).Update(&model.SysPermission{
+		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		DelFlag:    null.IntFrom(1),
+	})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

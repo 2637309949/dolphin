@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="del" table="sys_permission" method="delete" desc="删除权限">
+    <api name="batch_del" func="delete" table="sys_permission" method="delete" desc="删除权限">
         <param name="sys_permission" type="[]$sys_permission" desc="权限" />
         <return>
             <success type="$success"/>
