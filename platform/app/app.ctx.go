@@ -74,8 +74,14 @@ func (ctx *Context) InRole(role ...string) bool {
 }
 
 // InAdmin defined
-func (ctx *Context) InAdmin() bool {
-	exit, _ := ctx.DB.Where(`role_id = ? and user_id = ?`, model.AdminRole.ID.String, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
+func (ctx *Context) InAdmin(idn ...string) bool {
+	roles := []string{model.AdminRole.ID.String}
+	roles = append(roles, idn...)
+	exit, err := ctx.DB.In("role_id", roles).Where(`user_id = ? and del_flag != 1`, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
+	if err != nil {
+		logrus.Error(err)
+		return false
+	}
 	return exit
 }
 

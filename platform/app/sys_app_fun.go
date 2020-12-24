@@ -19,11 +19,11 @@ import (
 // @Tags APP功能
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.SysAppFun false "APP功能信息"
+// @Param sys_app_fun body model.SysAppFun false "APP功能信息"
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router /api/sys/app/fun/add [post]
+// @Router/api/sys/app/fun/add [post]
 func SysAppFunAdd(ctx *Context) {
 	var payload model.SysAppFun
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
