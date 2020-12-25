@@ -29,10 +29,10 @@ func (app *Script) Name() string {
 func (app *Script) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
-	axiosByte, _ := vfsutil.ReadFile(template.Assets, "axios.tmpl")
+	axiosByte, _ := vfsutil.ReadFile(template.Assets, "request.tmpl")
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text:     string(axiosByte),
-		FilePath: path.Join(viper.GetString("dir.script"), "axios.js"),
+		FilePath: path.Join(viper.GetString("dir.script"), "request.js"),
 		Overlap:  pipe.OverlapWrite,
 	})
 
