@@ -646,7 +646,7 @@ func ArticleBatchUpdate(ctx *Context) {
 ```xml
 <api name="page" func="page" table="sys_client" desc="客户端分页查询" method="get">
     <param name="page" type="int" value="1" desc="页码"/>
-    <param name="size" type="int"  value="15" desc="单页数"/>
+    <param name="size" type="int"  value="10" desc="单页数"/>
     <param name="app_name" type="string" desc="所属应用"/>
     <return>
         <success type="$success"/>
@@ -671,7 +671,7 @@ Generate code:
 func SysClientPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetString("app_name", viper.GetString("app.name"))
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
@@ -690,7 +690,7 @@ func SysClientPage(ctx *Context) {
 ```xml
 <api name="page" func="page" table="sys_menu" desc="菜单分页查询" method="get">
 	<param name="page" type="int" value="1" desc="页码"/>
-	<param name="size" type="int"  value="15" desc="单页数"/>
+	<param name="size" type="int"  value="10" desc="单页数"/>
 	<return>
 		<success type="$success"/>
 		<failure type="$fail"/>

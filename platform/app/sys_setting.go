@@ -228,7 +228,7 @@ func SysSettingBatchUpdate(ctx *Context) {
 func SysSettingPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetString("app_name")
 	q.SetRule("sys_setting_page")
 	q.SetTags()

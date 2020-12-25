@@ -224,7 +224,7 @@ func SysUserTemplateDetailBatchUpdate(ctx *Context) {
 func SysUserTemplateDetailPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetString("temp_id")
 	q.SetRule("sys_user_template_detail_page")
 	q.SetTags()

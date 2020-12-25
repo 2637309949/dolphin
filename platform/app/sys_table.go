@@ -227,7 +227,7 @@ func SysTableBatchUpdate(ctx *Context) {
 func SysTablePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("sys_table_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_table", "page", "sys_table", q.Value())

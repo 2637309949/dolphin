@@ -114,7 +114,7 @@ func OrganUpdate(ctx *Context) {
 func OrganPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("organ_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "organ", "page", "organ", q.Value())

@@ -218,7 +218,7 @@ func SysUserTemplateBatchUpdate(ctx *Context) {
 func SysUserTemplatePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("sys_user_template_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_user_template", "page", "sys_user_template", q.Value())

@@ -228,7 +228,7 @@ func SysRoleBatchUpdate(ctx *Context) {
 func SysRolePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("sys_role_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())

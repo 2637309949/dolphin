@@ -229,7 +229,7 @@ func SysClientBatchUpdate(ctx *Context) {
 func SysClientPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetString("app_name", viper.GetString("app.name"))()
 	q.SetRule("sys_client_page")
 	q.SetTags()

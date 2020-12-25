@@ -114,7 +114,7 @@ func FlarumUsersUpdate(ctx *Context) {
 func FlarumUsersPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("flarum_users_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "flarum_users", "page", "flarum_users", q.Value())

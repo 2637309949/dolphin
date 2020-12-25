@@ -225,7 +225,7 @@ func SysOrgBatchUpdate(ctx *Context) {
 func SysOrgPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetString("name")
 	q.SetString("code")
 	q.SetString("sort", "`order`")

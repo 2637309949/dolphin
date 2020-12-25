@@ -225,7 +225,7 @@ func ArticleBatchUpdate(ctx *Context) {
 func ArticlePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("article_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "article", "page", "article", q.Value())

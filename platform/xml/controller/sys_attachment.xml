@@ -57,7 +57,7 @@
     </api>
     <api name="page" func="page" table="sys_attachment" method="get" desc="附件分页查询">
         <param name="page" type="int" value="1" desc="页码"/>
-        <param name="size" type="int"  value="15" desc="单页数"/>
+        <param name="size" type="int"  value="10" desc="单页数"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

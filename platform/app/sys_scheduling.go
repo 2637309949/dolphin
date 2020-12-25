@@ -101,7 +101,7 @@ func SysSchedulingUpdate(ctx *Context) {
 func SysSchedulingPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)

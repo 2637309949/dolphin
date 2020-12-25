@@ -24,7 +24,7 @@ import (
 func SysTrackerPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetString("sort", "sys_tracker.update_time desc")
 	q.SetRule("sys_tracker_page")
 	q.SetTags()

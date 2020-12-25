@@ -231,7 +231,7 @@ func SysRoleMenuBatchUpdate(ctx *Context) {
 func SysRoleMenuPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("sys_role_menu_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role_menu", "page", "sys_role_menu", q.Value())

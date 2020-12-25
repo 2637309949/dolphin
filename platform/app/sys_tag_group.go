@@ -224,7 +224,7 @@ func SysTagGroupBatchUpdate(ctx *Context) {
 func SysTagGroupPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("sys_tag_group_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_tag_group", "page", "sys_tag_group", q.Value())

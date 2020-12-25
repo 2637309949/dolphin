@@ -225,7 +225,7 @@ func SysPermissionBatchUpdate(ctx *Context) {
 func SysPermissionPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 15)
+	q.SetInt("size", 10)
 	q.SetRule("sys_permission_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_permission", "page", "sys_permission", q.Value())
