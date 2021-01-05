@@ -27,8 +27,8 @@ require (
 	github.com/gin-contrib/sse v0.1.0
 	github.com/go-asn1-ber/asn1-ber v1.4.1
 	github.com/go-errors/errors v1.0.1
-	github.com/go-openapi/jsonreference v0.19.4
-	github.com/go-openapi/spec v0.19.12
+	github.com/go-openapi/jsonreference v0.19.5
+	github.com/go-openapi/spec v0.20.0
 	github.com/go-playground/validator/v10 v10.2.0
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gogo/protobuf v1.2.1 // indirect
@@ -47,14 +47,14 @@ require (
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/json-iterator/go v1.1.9
 	github.com/konsorten/go-windows-terminal-sequences v1.0.3
+	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lestrrat-go/strftime v1.0.1
-	github.com/lib/pq v1.8.0
+	github.com/lib/pq v1.9.0
 	github.com/magiconair/properties v1.8.4
-	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mattn/go-isatty v0.0.12
 	github.com/memcachier/mc v2.0.1+incompatible
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/mitchellh/mapstructure v1.3.3
+	github.com/mitchellh/mapstructure v1.4.0
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 	github.com/modern-go/reflect2 v1.0.1
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
@@ -65,11 +65,11 @@ require (
 	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/soheilhy/cmux v0.1.4 // indirect
-	github.com/spf13/afero v1.4.1
+	github.com/spf13/afero v1.5.1
 	github.com/spf13/cast v1.3.1
 	github.com/spf13/jwalterweatherman v1.1.0
 	github.com/spf13/pflag v1.0.5
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.6.1
 	github.com/subosito/gotenv v1.2.0
 	github.com/syndtr/goleveldb v1.0.0
 	github.com/tealeg/xlsx v1.0.5 // indirect
@@ -84,12 +84,12 @@ require (
 	go.uber.org/fx v1.10.0
 	go.uber.org/multierr v1.4.0
 	go.uber.org/zap v1.10.0 // indirect
-	golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897
-	golang.org/x/net v0.0.0-20201109172640-a11eb1b685be
-	golang.org/x/sys v0.0.0-20201109165425-215b40eba54c
-	golang.org/x/text v0.3.4 // indirect
+	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
+	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
+	golang.org/x/sys v0.0.0-20201223074533-0d417f636930
+	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf // indirect
 	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4 // indirect
-	golang.org/x/tools v0.0.0-20201109182053-3db8fd265862
+	golang.org/x/tools v0.0.0-20201224043029-2b0845dc783e
 	google.golang.org/appengine v1.6.0
 	google.golang.org/genproto v0.0.0-20191230161307-f3c370f40bfb // indirect
 	google.golang.org/grpc v1.26.0
@@ -97,5 +97,5 @@ require (
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0
 	gopkg.in/ini.v1 v1.62.0
-	gopkg.in/yaml.v2 v2.3.0
+	gopkg.in/yaml.v2 v2.4.0
 )
