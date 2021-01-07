@@ -326,6 +326,7 @@ func Type2SQLType(t reflect.Type) (st SQLType) {
 		} else if t.ConvertibleTo(NullStringType) {
 			st = SQLType{Varchar, 255, 0}
 		} else {
+			// TODO need to handle association struct
 			st = SQLType{Text, 0, 0}
 		}
 	case reflect.Ptr:

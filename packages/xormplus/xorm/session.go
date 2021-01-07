@@ -692,11 +692,9 @@ func (session *Session) slice2Bean(scanResults []interface{}, fields []string, b
 							}
 						}
 					}
-				} else {
-					if err := nulVal.Scan(vv.Interface()); err != nil {
-						session.engine.logger.Errorf("sql.Sanner error: %v", err)
-						hasAssigned = false
-					}
+				} else if err := nulVal.Scan(vv.Interface()); err != nil {
+					session.engine.logger.Errorf("sql.Sanner error: %v", err)
+					hasAssigned = false
 				}
 			} else if col.SQLType.IsJson() {
 				if rawValueType.Kind() == reflect.String {
