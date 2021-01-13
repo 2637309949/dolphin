@@ -71,7 +71,8 @@ Dolphin是一个使用Golang代码生成工具, 用于避免日常代码增删�
 <!-- /TOC -->
 ## 快速入手
 
-<img align="right" width="500x" src="./assets/dolphin.gif">
+<img width="580px" src="./assets/dolphin.gif">      
+
 
 1. 首先安装Golang环境 [Go](https://golang.org/), 接着使用下面的命令安装Dolphin
 ```sh
