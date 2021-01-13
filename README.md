@@ -73,6 +73,8 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
 
 ## Quick start
 
+<img align="right" width="500x" src="./assets/dolphin.gif">
+
 1. The first need [Go](https://golang.org/) installed, then you can use the below Go command to install Dolphin.
 ```sh
 $ go get -u github.com/2637309949/dolphin/cmd/dolphin
