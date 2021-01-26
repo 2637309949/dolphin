@@ -37,7 +37,7 @@ type (
 		OAuth2     *server.Server
 		engine     *Engine
 	}
-	// HandlerFunc defines the handler used by gin middleware as return value.
+	// HandlerFunc defines the handler used by gin middleware as return value
 	HandlerFunc func(*Context)
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
