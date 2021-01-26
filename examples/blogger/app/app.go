@@ -28,7 +28,7 @@ type (
 		*pApp.RouterGroup
 		engine *Engine
 	}
-	// HandlerFunc defines the handler used by gin middleware as return value.
+	// HandlerFunc defines the handler used by gin middleware as return value
 	HandlerFunc func(*Context)
 )
 
