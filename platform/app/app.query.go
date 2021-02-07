@@ -13,6 +13,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/util"
 )
 
 // Query defined parse struct from query
@@ -330,6 +331,18 @@ func (q *Query) SetTags(tags ...struct {
 	for i := range tags {
 		q.SetString(tags[i].Key, tags[i].Value)
 	}
+}
+
+// Remove defined
+func (q *Query) Remove(keys ...string) {
+	for _, k := range keys {
+		delete(q.m, k)
+	}
+}
+
+// Reset defined
+func (q *Query) Reset() {
+	q.m = util.M{}
 }
 
 // ParseRule defined
