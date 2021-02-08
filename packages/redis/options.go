@@ -12,7 +12,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/redis/internal"
 	"github.com/2637309949/dolphin/packages/redis/internal/pool"
+	"go.opentelemetry.io/otel/label"
+	"go.opentelemetry.io/otel/trace"
 )
 
 // Limiter is the interface of a rate limiter or a circuit breaker.
@@ -21,11 +24,12 @@ type Limiter interface {
 	// If operation is allowed client must ReportResult of the operation
 	// whether it is a success or a failure.
 	Allow() error
-	// ReportResult reports the result of previously allowed operation.
-	// nil indicates a success, non-nil error indicates a failure.
+	// ReportResult reports the result of the previously allowed operation.
+	// nil indicates a success, non-nil error usually indicates a failure.
 	ReportResult(result error)
 }
 
+// Options keeps the settings to setup redis connection.
 type Options struct {
 	// The network type, either tcp or unix.
 	// Default is tcp.
@@ -38,16 +42,23 @@ type Options struct {
 	Dialer func(ctx context.Context, network, addr string) (net.Conn, error)
 
 	// Hook that is called when new connection is established.
-	OnConnect func(*Conn) error
+	OnConnect func(ctx context.Context, cn *Conn) error
 
+	// Use the specified Username to authenticate the current connection
+	// with one of the connections defined in the ACL list when connecting
+	// to a Redis 6.0 instance, or greater, that is using the Redis ACL system.
+	Username string
 	// Optional password. Must match the password specified in the
-	// requirepass server configuration option.
+	// requirepass server configuration option (if connecting to a Redis 5.0 instance, or lower),
+	// or the User Password when connecting to a Redis 6.0 instance, or greater,
+	// that is using the Redis ACL system.
 	Password string
+
 	// Database to be selected after connecting to the server.
 	DB int
 
 	// Maximum number of retries before giving up.
-	// Default is to not retry failed commands.
+	// Default is 3 retries; -1 (not 0) disables retries.
 	MaxRetries int
 	// Minimum backoff between each retry.
 	// Default is 8 milliseconds; -1 disables backoff.
@@ -96,6 +107,9 @@ type Options struct {
 
 	// TLS Config to use. When set TLS will be negotiated.
 	TLSConfig *tls.Config
+
+	// Limiter interface used to implemented circuit breaker or rate limiter.
+	Limiter Limiter
 }
 
 func (opt *Options) init() {
@@ -108,6 +122,9 @@ func (opt *Options) init() {
 		} else {
 			opt.Network = "tcp"
 		}
+	}
+	if opt.DialTimeout == 0 {
+		opt.DialTimeout = 5 * time.Second
 	}
 	if opt.Dialer == nil {
 		opt.Dialer = func(ctx context.Context, network, addr string) (net.Conn, error) {
@@ -123,9 +140,6 @@ func (opt *Options) init() {
 	}
 	if opt.PoolSize == 0 {
 		opt.PoolSize = 10 * runtime.NumCPU()
-	}
-	if opt.DialTimeout == 0 {
-		opt.DialTimeout = 5 * time.Second
 	}
 	switch opt.ReadTimeout {
 	case -1:
@@ -149,6 +163,11 @@ func (opt *Options) init() {
 		opt.IdleCheckFrequency = time.Minute
 	}
 
+	if opt.MaxRetries == -1 {
+		opt.MaxRetries = 0
+	} else if opt.MaxRetries == 0 {
+		opt.MaxRetries = 3
+	}
 	switch opt.MinRetryBackoff {
 	case -1:
 		opt.MinRetryBackoff = 0
@@ -163,26 +182,41 @@ func (opt *Options) init() {
 	}
 }
 
+func (opt *Options) clone() *Options {
+	clone := *opt
+	return &clone
+}
+
 // ParseURL parses an URL into Options that can be used to connect to Redis.
+// Scheme is required.
+// There are two connection types: by tcp socket and by unix socket.
+// Tcp connection:
+// 		redis://<user>:<password>@<host>:<port>/<db_number>
+// Unix connection:
+//		unix://<user>:<password>@</path/to/redis.sock>?db=<db_number>
 func ParseURL(redisURL string) (*Options, error) {
-	o := &Options{Network: "tcp"}
 	u, err := url.Parse(redisURL)
 	if err != nil {
 		return nil, err
 	}
 
-	if u.Scheme != "redis" && u.Scheme != "rediss" {
-		return nil, errors.New("invalid redis URL scheme: " + u.Scheme)
+	switch u.Scheme {
+	case "redis", "rediss":
+		return setupTCPConn(u)
+	case "unix":
+		return setupUnixConn(u)
+	default:
+		return nil, fmt.Errorf("redis: invalid URL scheme: %s", u.Scheme)
 	}
+}
 
-	if u.User != nil {
-		if p, ok := u.User.Password(); ok {
-			o.Password = p
-		}
-	}
+func setupTCPConn(u *url.URL) (*Options, error) {
+	o := &Options{Network: "tcp"}
+
+	o.Username, o.Password = getUserPassword(u)
 
 	if len(u.Query()) > 0 {
-		return nil, errors.New("no options supported")
+		return nil, errors.New("redis: no options supported")
 	}
 
 	h, p, err := net.SplitHostPort(u.Host)
@@ -205,22 +239,73 @@ func ParseURL(redisURL string) (*Options, error) {
 		o.DB = 0
 	case 1:
 		if o.DB, err = strconv.Atoi(f[0]); err != nil {
-			return nil, fmt.Errorf("invalid redis database number: %q", f[0])
+			return nil, fmt.Errorf("redis: invalid database number: %q", f[0])
 		}
 	default:
-		return nil, errors.New("invalid redis URL path: " + u.Path)
+		return nil, fmt.Errorf("redis: invalid URL path: %s", u.Path)
 	}
 
 	if u.Scheme == "rediss" {
 		o.TLSConfig = &tls.Config{ServerName: h}
 	}
+
 	return o, nil
+}
+
+func setupUnixConn(u *url.URL) (*Options, error) {
+	o := &Options{
+		Network: "unix",
+	}
+
+	if strings.TrimSpace(u.Path) == "" { // path is required with unix connection
+		return nil, errors.New("redis: empty unix socket path")
+	}
+	o.Addr = u.Path
+
+	o.Username, o.Password = getUserPassword(u)
+
+	dbStr := u.Query().Get("db")
+	if dbStr == "" {
+		return o, nil // if database is not set, connect to 0 db.
+	}
+
+	db, err := strconv.Atoi(dbStr)
+	if err != nil {
+		return nil, fmt.Errorf("redis: invalid database number: %w", err)
+	}
+	o.DB = db
+
+	return o, nil
+}
+
+func getUserPassword(u *url.URL) (string, string) {
+	var user, password string
+	if u.User != nil {
+		user = u.User.Username()
+		if p, ok := u.User.Password(); ok {
+			password = p
+		}
+	}
+	return user, password
 }
 
 func newConnPool(opt *Options) *pool.ConnPool {
 	return pool.NewConnPool(&pool.Options{
 		Dialer: func(ctx context.Context) (net.Conn, error) {
-			return opt.Dialer(ctx, opt.Network, opt.Addr)
+			var conn net.Conn
+			err := internal.WithSpan(ctx, "redis.dial", func(ctx context.Context, span trace.Span) error {
+				span.SetAttributes(
+					label.String("db.connection_string", opt.Addr),
+				)
+
+				var err error
+				conn, err = opt.Dialer(ctx, opt.Network, opt.Addr)
+				if err != nil {
+					_ = internal.RecordError(ctx, span, err)
+				}
+				return err
+			})
+			return conn, err
 		},
 		PoolSize:           opt.PoolSize,
 		MinIdleConns:       opt.MinIdleConns,

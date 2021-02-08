@@ -6,18 +6,34 @@ import (
 	"net"
 	"strings"
 
+	"github.com/2637309949/dolphin/packages/redis/internal/pool"
 	"github.com/2637309949/dolphin/packages/redis/internal/proto"
 )
 
-func isRetryableError(err error, retryTimeout bool) bool {
+var ErrClosed = pool.ErrClosed
+
+type Error interface {
+	error
+
+	// RedisError is a no-op function but
+	// serves to distinguish types that are Redis
+	// errors from ordinary errors: a type is a
+	// Redis error if it has a RedisError method.
+	RedisError()
+}
+
+var _ Error = proto.RedisError("")
+
+func shouldRetry(err error, retryTimeout bool) bool {
 	switch err {
+	case io.EOF, io.ErrUnexpectedEOF:
+		return true
 	case nil, context.Canceled, context.DeadlineExceeded:
 		return false
-	case io.EOF:
-		return true
 	}
-	if netErr, ok := err.(net.Error); ok {
-		if netErr.Timeout() {
+
+	if v, ok := err.(timeoutError); ok {
+		if v.Timeout() {
 			return retryTimeout
 		}
 		return true
@@ -36,6 +52,10 @@ func isRetryableError(err error, retryTimeout bool) bool {
 	if strings.HasPrefix(s, "CLUSTERDOWN ") {
 		return true
 	}
+	if strings.HasPrefix(s, "TRYAGAIN ") {
+		return true
+	}
+
 	return false
 }
 
@@ -45,19 +65,25 @@ func isRedisError(err error) bool {
 }
 
 func isBadConn(err error, allowTimeout bool) bool {
-	if err == nil {
+	switch err {
+	case nil:
 		return false
+	case context.Canceled, context.DeadlineExceeded:
+		return true
 	}
+
 	if isRedisError(err) {
 		// Close connections in read only state in case domain addr is used
 		// and domain resolves to a different Redis Server. See #790.
 		return isReadOnlyError(err)
 	}
+
 	if allowTimeout {
 		if netErr, ok := err.(net.Error); ok && netErr.Timeout() {
-			return false
+			return !netErr.Temporary()
 		}
 	}
+
 	return true
 }
 
@@ -90,4 +116,10 @@ func isLoadingError(err error) bool {
 
 func isReadOnlyError(err error) bool {
 	return strings.HasPrefix(err.Error(), "READONLY ")
+}
+
+//------------------------------------------------------------------------------
+
+type timeoutError interface {
+	Timeout() bool
 }

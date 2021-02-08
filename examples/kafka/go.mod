@@ -8,7 +8,7 @@ require (
 	github.com/2637309949/dolphin v1.0.53
 	github.com/go-errors/errors v1.0.1
 	github.com/go-sql-driver/mysql v1.5.0
-	github.com/golang/protobuf v1.3.3
+	github.com/golang/protobuf v1.4.2
 	github.com/klauspost/compress v1.11.7 // indirect
 	github.com/pierrec/lz4 v2.6.0+incompatible // indirect
 	github.com/pkg/errors v0.8.1

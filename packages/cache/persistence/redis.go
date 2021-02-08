@@ -1,6 +1,7 @@
 package persistence
 
 import (
+	"context"
 	"strconv"
 	"time"
 
@@ -23,7 +24,7 @@ func NewRedisCache(addr string, password string, db int, defaultExpiration time.
 		Password: password,
 		DB:       db,
 	})
-	if _, err := redisClient.Ping().Result(); err != nil {
+	if _, err := redisClient.Ping(context.Background()).Result(); err != nil {
 		logrus.Error("Redis: connect failed")
 	}
 	return &RedisStore{redisClient, defaultExpiration}
@@ -56,7 +57,7 @@ func (c *RedisStore) Replace(key string, value interface{}, expires time.Duratio
 
 // Get (see CacheStore interface)
 func (c *RedisStore) Get(key string, ptrValue interface{}) error {
-	buf, err := c.redisClient.Get(key).Bytes()
+	buf, err := c.redisClient.Get(context.Background(), key).Bytes()
 	if err != nil {
 		return err
 	}
@@ -64,7 +65,7 @@ func (c *RedisStore) Get(key string, ptrValue interface{}) error {
 }
 
 func exists(client *redis.Client, key string) bool {
-	iresult := client.Exists(key)
+	iresult := client.Exists(context.Background(), key)
 	if err := iresult.Err(); err != nil && err != redis.Nil {
 		return false
 	}
@@ -76,7 +77,7 @@ func (c *RedisStore) Delete(key string) error {
 	if !exists(c.redisClient, key) {
 		return ErrCacheMiss
 	}
-	result := c.redisClient.Del(key)
+	result := c.redisClient.Del(context.Background(), key)
 	if err := result.Err(); err != nil && err != redis.Nil {
 		return err
 	}
@@ -89,7 +90,7 @@ func (c *RedisStore) Increment(key string, delta uint64) (uint64, error) {
 	// redis will auto create the key, and we don't want that. Since we need to do increment
 	// ourselves instead of natively via INCRBY (redis doesn't support wrapping), we get the value
 	// and do the exists check this way to minimize calls to Redis
-	val, err := c.redisClient.Get(key).Result()
+	val, err := c.redisClient.Get(context.Background(), key).Result()
 	if val == "" {
 		return 0, ErrCacheMiss
 	}
@@ -99,7 +100,7 @@ func (c *RedisStore) Increment(key string, delta uint64) (uint64, error) {
 			return 0, err
 		}
 		sum := currentVal + int64(delta)
-		_, err = c.redisClient.Set(key, sum, 0).Result()
+		_, err = c.redisClient.Set(context.Background(), key, sum, 0).Result()
 		return uint64(sum), nil
 	}
 
@@ -116,22 +117,22 @@ func (c *RedisStore) Decrement(key string, delta uint64) (newValue uint64, err e
 	// Decrement contract says you can only go to 0
 	// so we go fetch the value and if the delta is greater than the amount,
 	// 0 out the value
-	val, err := c.redisClient.Get(key).Result()
+	val, err := c.redisClient.Get(context.Background(), key).Result()
 	if val == "" {
 		return 0, ErrCacheMiss
 	}
 	currentVal, err := strconv.ParseInt(val, 10, 64)
 	if err == nil && delta > uint64(currentVal) {
-		tempint, err := c.redisClient.DecrBy(key, currentVal).Result()
+		tempint, err := c.redisClient.DecrBy(context.Background(), key, currentVal).Result()
 		return uint64(tempint), err
 	}
-	tempint, err := c.redisClient.DecrBy(key, int64(delta)).Result()
+	tempint, err := c.redisClient.DecrBy(context.Background(), key, int64(delta)).Result()
 	return uint64(tempint), err
 }
 
 // Flush (see CacheStore interface)
 func (c *RedisStore) Flush() error {
-	_, err := c.redisClient.FlushAll().Result()
+	_, err := c.redisClient.FlushAll(context.Background()).Result()
 	return err
 }
 
@@ -150,11 +151,11 @@ func (c *RedisStore) invoke(key string, value interface{}, expires time.Duration
 	}
 
 	if expires > 0 {
-		_, err := c.redisClient.SetNX(key, b, expires).Result()
+		_, err := c.redisClient.SetNX(context.Background(), key, b, expires).Result()
 		return err
 	}
 
-	_, err = c.redisClient.Set(key, b, expires).Result()
+	_, err = c.redisClient.Set(context.Background(), key, b, expires).Result()
 	return err
 
 }

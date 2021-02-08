@@ -1,8 +1,9 @@
 package hashtag
 
 import (
-	"math/rand"
 	"strings"
+
+	"github.com/2637309949/dolphin/packages/redis/internal/rand"
 )
 
 const slotNumber = 16384

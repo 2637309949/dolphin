@@ -4,19 +4,24 @@ import (
 	"context"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/redis/internal/proto"
 	"github.com/2637309949/dolphin/packages/redis/internal/util"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/trace"
 )
 
 func Sleep(ctx context.Context, dur time.Duration) error {
-	t := time.NewTimer(dur)
-	defer t.Stop()
+	return WithSpan(ctx, "time.Sleep", func(ctx context.Context, span trace.Span) error {
+		t := time.NewTimer(dur)
+		defer t.Stop()
 
-	select {
-	case <-t.C:
-		return nil
-	case <-ctx.Done():
-		return ctx.Err()
-	}
+		select {
+		case <-t.C:
+			return nil
+		case <-ctx.Done():
+			return ctx.Err()
+		}
+	})
 }
 
 func ToLower(s string) string {
@@ -45,12 +50,24 @@ func isLower(s string) bool {
 	return true
 }
 
-func Unwrap(err error) error {
-	u, ok := err.(interface {
-		Unwrap() error
-	})
-	if !ok {
-		return nil
+//------------------------------------------------------------------------------
+
+var tracer = otel.Tracer("github.com/go-redis/redis")
+
+func WithSpan(ctx context.Context, name string, fn func(context.Context, trace.Span) error) error {
+	if span := trace.SpanFromContext(ctx); !span.IsRecording() {
+		return fn(ctx, span)
 	}
-	return u.Unwrap()
+
+	ctx, span := tracer.Start(ctx, name)
+	defer span.End()
+
+	return fn(ctx, span)
+}
+
+func RecordError(ctx context.Context, span trace.Span, err error) error {
+	if err != proto.Nil {
+		span.RecordError(err)
+	}
+	return err
 }

@@ -5,6 +5,7 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 	"time"
@@ -263,7 +264,7 @@ func init() {
 			Password: uri.Passwd,
 			DB:       util.EnsureLeft(strconv.Atoi(uri.DbName)).(int),
 		})
-		if _, err := RedisClient.Ping().Result(); err != nil {
+		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
 			logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
 			RedisClient = nil
 		} else {

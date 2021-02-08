@@ -1,13 +1,14 @@
 package store
 
 import (
+	"context"
 	"fmt"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
-	"github.com/2637309949/dolphin/packages/uuid"
 	"github.com/2637309949/dolphin/packages/redis"
+	"github.com/2637309949/dolphin/packages/uuid"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -58,10 +59,10 @@ func NewRedisClusterStoreWithCli(cli *redis.ClusterClient, keyNamespace ...strin
 }
 
 type clienter interface {
-	Get(key string) *redis.StringCmd
-	Exists(key ...string) *redis.IntCmd
+	Get(context.Context, string) *redis.StringCmd
+	Exists(context.Context, ...string) *redis.IntCmd
 	TxPipeline() redis.Pipeliner
-	Del(keys ...string) *redis.IntCmd
+	Del(context.Context, ...string) *redis.IntCmd
 	Close() error
 }
 
@@ -92,7 +93,7 @@ func (s *RedisStore) checkError(result redis.Cmder) (bool, error) {
 
 // remove
 func (s *RedisStore) remove(key string) error {
-	result := s.cli.Del(s.wrapperKey(key))
+	result := s.cli.Del(context.Background(), s.wrapperKey(key))
 	_, err := s.checkError(result)
 	return err
 }
@@ -121,7 +122,7 @@ func (s *RedisStore) removeToken(tokenString string, isRefresh bool) error {
 	if isRefresh {
 		checkToken = token.GetAccess()
 	}
-	iresult := s.cli.Exists(s.wrapperKey(checkToken))
+	iresult := s.cli.Exists(context.Background(), s.wrapperKey(checkToken))
 	if err := iresult.Err(); err != nil && err != redis.Nil {
 		return err
 	} else if iresult.Val() == 0 {
@@ -154,7 +155,7 @@ func (s *RedisStore) parseToken(result *redis.StringCmd) (oauth2.TokenInfo, erro
 }
 
 func (s *RedisStore) getToken(key string) (oauth2.TokenInfo, error) {
-	result := s.cli.Get(s.wrapperKey(key))
+	result := s.cli.Get(context.Background(), s.wrapperKey(key))
 	return s.parseToken(result)
 }
 
@@ -168,7 +169,7 @@ func (s *RedisStore) parseBasicID(result *redis.StringCmd) (string, error) {
 }
 
 func (s *RedisStore) getBasicID(token string) (string, error) {
-	result := s.cli.Get(s.wrapperKey(token))
+	result := s.cli.Get(context.Background(), s.wrapperKey(token))
 	return s.parseBasicID(result)
 }
 
@@ -182,7 +183,7 @@ func (s *RedisStore) Create(info oauth2.TokenInfo) error {
 
 	pipe := s.cli.TxPipeline()
 	if code := info.GetCode(); code != "" {
-		pipe.Set(s.wrapperKey(code), jv, info.GetCodeExpiresIn())
+		pipe.Set(context.Background(), s.wrapperKey(code), jv, info.GetCodeExpiresIn())
 	} else {
 		basicID := uuid.MustString()
 		aexp := info.GetAccessExpiresIn()
@@ -193,14 +194,14 @@ func (s *RedisStore) Create(info oauth2.TokenInfo) error {
 			if aexp.Seconds() > rexp.Seconds() {
 				aexp = rexp
 			}
-			pipe.Set(s.wrapperKey(refresh), basicID, rexp)
+			pipe.Set(context.Background(), s.wrapperKey(refresh), basicID, rexp)
 		}
 
-		pipe.Set(s.wrapperKey(info.GetAccess()), basicID, aexp)
-		pipe.Set(s.wrapperKey(basicID), jv, rexp)
+		pipe.Set(context.Background(), s.wrapperKey(info.GetAccess()), basicID, aexp)
+		pipe.Set(context.Background(), s.wrapperKey(basicID), jv, rexp)
 	}
 
-	if _, err := pipe.Exec(); err != nil {
+	if _, err := pipe.Exec(context.Background()); err != nil {
 		return err
 	}
 	return nil
