@@ -20,7 +20,7 @@ import (
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router/api/kafka/add [post]
+// @Router /api/kafka/add [post]
 func KafkaAdd(ctx *Context) {
 	var payload model.KafkaInfo
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
@@ -45,7 +45,7 @@ func KafkaAdd(ctx *Context) {
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
-// @Router/api/kafka/get [get]
+// @Router /api/kafka/get [get]
 func KafkaGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
