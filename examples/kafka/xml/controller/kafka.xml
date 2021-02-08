@@ -1,0 +1,16 @@
+<controller name="kafka" desc="Kafka controller">
+    <api name="add" desc="Add article" method="post">
+        <param name="kafka" type="$kafka_info" desc="Kafka info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" desc="Get kafka info" method="get">
+        <param name="id" type="string" desc="kafka id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

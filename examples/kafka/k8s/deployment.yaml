@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: kafka
+  namespace: dolphin
+spec:
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: registry.cn-hangzhou.aliyuncs.com/kafka:1001
+        volumeMounts:
+          - name: config
+            mountPath: /app/app.properties
+            subPath: app.properties
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "10Mi"
+            cpu: "11m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: registrykey
+      volumes:
+        - name: config
+          configMap:
+            name: kafka

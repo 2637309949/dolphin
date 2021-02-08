@@ -1,0 +1,4 @@
+<bean name="kafka_info" desc="Kafka info" packages="github.com/2637309949/dolphin/packages/null">
+    <prop name="id" desc="id" type="null.String" />
+    <prop name="score" desc="score" type="null.Int" />
+</bean>
