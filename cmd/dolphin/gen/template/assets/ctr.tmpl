@@ -38,7 +38,7 @@ import (
 {{- if ne .Return.Failure.Type ""}}
 // @Failure 500 {object} {{.Ref .Return.Failure.Type}}
 {{- end}}
-// @Router {{- if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}} [{{.Method}}]
+// @Router {{if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}} [{{.Method}}]
 func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
 {{- if eq .Func "page"}}
 	q := ctx.TypeQuery()
