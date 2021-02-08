@@ -26,9 +26,10 @@ func init() {
 	kafkaConn, err = kafka.DialLeader(context.Background(), "tcp", "172.16.10.191:9092", topic, partition)
 	if err != nil {
 		logrus.Error("failed to dial leader:", err)
+	} else {
+		kafkaConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
+		kafkaConn.SetReadDeadline(time.Now().Add(10 * time.Second))
 	}
-	kafkaConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
-	kafkaConn.SetReadDeadline(time.Now().Add(10 * time.Second))
 }
 
 // KafkaProducer defined srv
