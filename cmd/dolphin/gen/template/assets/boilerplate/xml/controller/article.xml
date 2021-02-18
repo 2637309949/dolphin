@@ -49,7 +49,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" desc="Get article info" func="one" table="article" method="get">
+    <api name="get" func="one" table="article" desc="Get article info" method="get">
         <param name="id" type="string" desc="Article id" />
         <return>
             <success type="$success"/>

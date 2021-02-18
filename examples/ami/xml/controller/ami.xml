@@ -1,0 +1,9 @@
+<controller name="ami" desc="Ami controller">
+    <api name="submit" desc="Add ami" method="post">
+        <param name="ami_info" type="$ami_info" desc="Ami info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>
