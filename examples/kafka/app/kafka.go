@@ -49,9 +49,8 @@ func KafkaAdd(ctx *Context) {
 func KafkaGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
-	ret, err := srv.KafkaConsumer(ctx.Raw(), ctx.DB, struct{ ID int64 }{
-		ID: q.GetInt("id"),
-	})
+	q.Value()
+	ret, err := srv.KafkaConsumer(ctx.Raw(), ctx.DB, q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

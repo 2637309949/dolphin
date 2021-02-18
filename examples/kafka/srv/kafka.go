@@ -48,7 +48,7 @@ func KafkaProducer(ctx *gin.Context, db *xorm.Engine, params model.KafkaInfo) (i
 }
 
 // KafkaConsumer defined srv
-func KafkaConsumer(ctx *gin.Context, db *xorm.Engine, params struct{ ID int64 }) (interface{}, error) {
+func KafkaConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
