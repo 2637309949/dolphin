@@ -57,7 +57,7 @@ func {{.ToUpperCase .Name}}Service(engine *Engine) {
 
 // SyncModel defined
 func SyncModel() error {
-	{{ $tLen := len .Tables }}{{ if ne $tLen 0 }}
+	{{- $tLen := len .Tables }}{{- if ne $tLen 0 }}
 	mseti := App.Manager.MSet()
 	{{- range .Tables}}
 	mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
@@ -66,8 +66,8 @@ func SyncModel() error {
 	return nil
 }
 
-// SyncCtr defined
-func SyncCtr() error {
+// SyncController defined
+func SyncController() error {
 	{{- range .Controllers}}
 	{{.ToUpperCase .Name}}Routes(App)
 	{{- end}}
@@ -83,7 +83,7 @@ func SyncService() error {
 }
 
 // Executor defined
-var Executor = util.NewExecutor(SyncModel, SyncCtr, SyncService)
+var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)
 
 func init() {
 	if err := Executor.Execute(); err != nil {

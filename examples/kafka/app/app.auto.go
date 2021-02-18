@@ -37,12 +37,11 @@ var KafkaInstance = NewKafka()
 
 // SyncModel defined
 func SyncModel() error {
-
 	return nil
 }
 
-// SyncCtr defined
-func SyncCtr() error {
+// SyncController defined
+func SyncController() error {
 	KafkaRoutes(App)
 	return nil
 }
@@ -53,7 +52,7 @@ func SyncService() error {
 }
 
 // Executor defined
-var Executor = util.NewExecutor(SyncModel, SyncCtr, SyncService)
+var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)
 
 func init() {
 	if err := Executor.Execute(); err != nil {
