@@ -44,6 +44,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.9.0 // indirect
 	github.com/hashicorp/hcl v1.0.0
+	github.com/imdario/mergo v0.3.11
 	github.com/inconshreveable/mousetrap v1.0.0
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jonboulle/clockwork v0.1.0 // indirect
@@ -73,6 +74,7 @@ require (
 	github.com/spf13/cast v1.3.1
 	github.com/spf13/jwalterweatherman v1.1.0
 	github.com/spf13/pflag v1.0.5
+	github.com/ssgreg/repeat v1.5.1
 	github.com/stretchr/testify v1.6.1
 	github.com/subosito/gotenv v1.2.0
 	github.com/syndtr/goleveldb v1.0.0
