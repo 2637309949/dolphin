@@ -1618,7 +1618,8 @@ func AmiProducer(ctx *gin.Context,
 
 // AmiConsumer defined srv
 // AmiConsumer defined srv
-func AmiConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+func AmiConsumer(ctx *gin.Context, 
+	db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
