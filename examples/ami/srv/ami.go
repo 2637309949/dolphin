@@ -6,12 +6,15 @@ package srv
 import (
 	"ami/model"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/ami"
 	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/redis"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/go-errors/errors"
 )
 
 type errorLogger struct{}
@@ -20,15 +23,15 @@ func (l *errorLogger) AmiError(err error) {
 	println("Got error from Ami:", err.Error())
 }
 
-// AmiProducer defined
-var AmiProducer *ami.Producer
+// AmiProducerConn defined
+var AmiProducerConn *ami.Producer
 
-// AmiConsumer defined
-var AmiConsumer *ami.Consumer
+// AmiConsumerConn defined
+var AmiConsumerConn *ami.Consumer
 
 func init() {
 	var err error
-	AmiProducer, err = ami.NewProducer(
+	AmiProducerConn, err = ami.NewProducer(
 		ami.ProducerOptions{
 			Name:              "ami",
 			ErrorNotifier:     &errorLogger{},
@@ -47,7 +50,7 @@ func init() {
 		panic(err)
 	}
 
-	AmiConsumer, err = ami.NewConsumer(
+	AmiConsumerConn, err = ami.NewConsumer(
 		ami.ConsumerOptions{
 			Name:              "ami",
 			Consumer:          "ami",
@@ -67,23 +70,49 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-
-	c := AmiConsumer.Start()
-
-	go func() {
-		for {
-			m, _ := <-c
-			println("Got", m.Body, "ID", m.ID)
-			AmiConsumer.Ack(m)
-		}
-	}()
 }
 
-// AmiAction defined srv
-func AmiAction(ctx *gin.Context, db *xorm.Engine, payload model.AmiInfo) (interface{}, error) {
-	pld, _ := json.Marshal(payload)
-	for i := 0; i < 10000; i++ {
-		AmiProducer.Send(string(pld))
+// AmiProducer defined srv
+func AmiProducer(ctx *gin.Context, db *xorm.Engine, params model.AmiInfo) (interface{}, error) {
+	aiStr, err := json.Marshal(params)
+	if err != nil {
+		logrus.Error("failed to marshal:", err)
+		return nil, err
 	}
+	AmiProducerConn.Send(string(aiStr))
 	return nil, nil
+}
+
+// AmiConsumer defined srv
+func AmiConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+	defer func() {
+		if err := recover(); err != nil {
+			goErr := errors.Wrap(err.(error), 3)
+			fmt.Print(string(goErr.Stack()))
+		}
+	}()
+	c := AmiConsumerConn.Start()
+	var items []model.AmiInfo
+	quit := make(chan bool)
+	go func() {
+		for {
+			select {
+			case m, more := <-c:
+				if !more {
+					AmiConsumerConn.Stop()
+					quit <- true
+				}
+				AmiConsumerConn.Ack(m)
+				value := model.AmiInfo{}
+				if err := json.Unmarshal([]byte(m.Body), &value); err != nil {
+					logrus.Error("failed to unmarshal:", err)
+				}
+				items = append(items, value)
+			case <-time.After(3 * time.Second):
+				quit <- true
+			}
+		}
+	}()
+	<-quit
+	return items, nil
 }

@@ -58,6 +58,7 @@ func KafkaConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interfac
 	batch := kafkaConn.ReadBatch(10e3, 1e6) // fetch 10KB min, 1MB max
 	defer batch.Close()
 	var buffer bytes.Buffer
+	var items []model.KafkaInfo
 	for {
 		b := make([]byte, 10e3) // 10KB max per message
 		n, err := batch.Read(b)
@@ -65,13 +66,14 @@ func KafkaConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interfac
 		if err != nil {
 			break
 		}
-	}
-	value := model.KafkaInfo{}
-	if bte := buffer.Bytes(); len(bte) > 0 {
-		if err := json.Unmarshal(bte, &value); err != nil {
-			logrus.Error("failed to unmarshal:", err)
-			return nil, err
+		if bte := buffer.Bytes(); len(bte) > 0 {
+			value := model.KafkaInfo{}
+			if err := json.Unmarshal(bte, &value); err != nil {
+				logrus.Error("failed to unmarshal:", err)
+				return nil, err
+			}
+			items = append(items, value)
 		}
 	}
-	return value, nil
+	return items, nil
 }

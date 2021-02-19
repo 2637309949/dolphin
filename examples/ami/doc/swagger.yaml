@@ -1066,6 +1066,33 @@ info:
   title: ami
   version: "1.0"
 paths:
+  /api/ami/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: ami id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Get ami info
+      tags:
+      - Ami controller
   /api/ami/submit:
     post:
       consumes:

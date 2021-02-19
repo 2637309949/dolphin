@@ -1577,7 +1577,7 @@ investigate the trace.
 
 ```go
 // examples/ami
-// AmiSubmit api implementation
+// AmiAdd api implementation
 // @Summary Add ami
 // @Tags Ami controller
 // @Accept application/json
@@ -1587,14 +1587,14 @@ investigate the trace.
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/ami/submit [post]
-func AmiSubmit(ctx *Context) {
+func AmiAdd(ctx *Context) {
 	var payload model.AmiInfo
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.AmiAction(ctx.Raw(), ctx.DB, payload)
+	ret, err := srv.AmiProducer(ctx.Raw(), ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -1604,13 +1604,51 @@ func AmiSubmit(ctx *Context) {
 }
 
 // examples/ami
-// AmiAction defined srv
-func AmiAction(ctx *gin.Context, db *xorm.Engine, payload model.AmiInfo) (interface{}, error) {
-	pld, _ := json.Marshal(payload)
-	for i := 0; i < 10000; i++ {
-		AmiProducer.Send(string(pld))
+// AmiProducer defined srv
+func AmiProducer(ctx *gin.Context, 
+	db *xorm.Engine, params model.AmiInfo) (interface{}, error) {
+	aiStr, err := json.Marshal(params)
+	if err != nil {
+		logrus.Error("failed to marshal:", err)
+		return nil, err
 	}
+	AmiProducerConn.Send(string(aiStr))
 	return nil, nil
+}
+
+// AmiConsumer defined srv
+func AmiConsumer(ctx *gin.Context, 
+	db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+	defer func() {
+		if err := recover(); err != nil {
+			goErr := errors.Wrap(err.(error), 3)
+			fmt.Print(string(goErr.Stack()))
+		}
+	}()
+	c := AmiConsumerConn.Start()
+	var items []model.AmiInfo
+	quit := make(chan bool)
+	go func() {
+		for {
+			select {
+			case m, more := <-c:
+				if !more {
+					AmiConsumerConn.Stop()
+					quit <- true
+				}
+				AmiConsumerConn.Ack(m)
+				value := model.AmiInfo{}
+				if err := json.Unmarshal([]byte(m.Body), &value); err != nil {
+					logrus.Error("failed to unmarshal:", err)
+				}
+				items = append(items, value)
+			case <-time.After(3 * time.Second):
+				quit <- true
+			}
+		}
+	}()
+	<-quit
+	return items, nil
 }
 ```
 
@@ -1661,4 +1699,37 @@ func KafkaProducer(ctx *gin.Context,
 	}
 	return n, nil
 }
+
+// examples/kafka
+func KafkaConsumer(ctx *gin.Context, 
+	db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+	defer func() {
+		if err := recover(); err != nil {
+			goErr := errors.Wrap(err.(error), 3)
+			fmt.Print(string(goErr.Stack()))
+		}
+	}()
+	batch := kafkaConn.ReadBatch(10e3, 1e6) // fetch 10KB min, 1MB max
+	defer batch.Close()
+	var buffer bytes.Buffer
+	var items []model.KafkaInfo
+	for {
+		b := make([]byte, 10e3) // 10KB max per message
+		n, err := batch.Read(b)
+		buffer.Write(b[:n])
+		if err != nil {
+			break
+		}
+		if bte := buffer.Bytes(); len(bte) > 0 {
+			value := model.KafkaInfo{}
+			if err := json.Unmarshal(bte, &value); err != nil {
+				logrus.Error("failed to unmarshal:", err)
+				return nil, err
+			}
+			items = append(items, value)
+		}
+	}
+	return items, nil
+}
+
 ```

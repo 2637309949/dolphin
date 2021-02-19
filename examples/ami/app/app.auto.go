@@ -13,20 +13,23 @@ var Name = "ami"
 
 // Ami defined
 type Ami struct {
-	Submit func(ctx *Context)
+	Add,
+	Get func(ctx *Context)
 }
 
 // NewAmi defined
 func NewAmi() *Ami {
 	ctr := &Ami{}
-	ctr.Submit = AmiSubmit
+	ctr.Add = AmiAdd
+	ctr.Get = AmiGet
 	return ctr
 }
 
 // AmiRoutes defined
 func AmiRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/ami/submit", Auth, AmiInstance.Submit)
+	group.Handle("POST", "/ami/add", Auth, AmiInstance.Add)
+	group.Handle("GET", "/ami/get", Auth, AmiInstance.Get)
 }
 
 // AmiInstance defined
