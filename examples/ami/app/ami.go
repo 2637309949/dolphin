@@ -28,7 +28,7 @@ func AmiSubmit(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.AmiAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.AmiAction(ctx.Raw(), ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

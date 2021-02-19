@@ -4,6 +4,8 @@
 package srv
 
 import (
+	"ami/model"
+	"encoding/json"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/ami"
@@ -18,15 +20,15 @@ func (l *errorLogger) AmiError(err error) {
 	println("Got error from Ami:", err.Error())
 }
 
-// Producer defined
-var Producer *ami.Producer
+// AmiProducer defined
+var AmiProducer *ami.Producer
 
-// Consumer defined
-var Consumer *ami.Consumer
+// AmiConsumer defined
+var AmiConsumer *ami.Consumer
 
 func init() {
 	var err error
-	Producer, err = ami.NewProducer(
+	AmiProducer, err = ami.NewProducer(
 		ami.ProducerOptions{
 			Name:              "ami",
 			ErrorNotifier:     &errorLogger{},
@@ -35,8 +37,8 @@ func init() {
 			PipePeriod:        time.Microsecond * 1000,
 			ShardsCount:       10,
 		},
-		&redis.ClusterOptions{
-			Addrs:        []string{":6379"},
+		&redis.Options{
+			Addr:         ":6379",
 			ReadTimeout:  time.Second * 60,
 			WriteTimeout: time.Second * 60,
 		},
@@ -45,7 +47,7 @@ func init() {
 		panic(err)
 	}
 
-	Consumer, err = ami.NewConsumer(
+	AmiConsumer, err = ami.NewConsumer(
 		ami.ConsumerOptions{
 			Name:              "ami",
 			Consumer:          "ami",
@@ -56,8 +58,8 @@ func init() {
 			PrefetchCount:     100,
 			ShardsCount:       10,
 		},
-		&redis.ClusterOptions{
-			Addrs:        []string{":6379"},
+		&redis.Options{
+			Addr:         ":6379",
 			ReadTimeout:  time.Second * 60,
 			WriteTimeout: time.Second * 60,
 		},
@@ -66,21 +68,22 @@ func init() {
 		panic(err)
 	}
 
-	c := Consumer.Start()
+	c := AmiConsumer.Start()
 
 	go func() {
 		for {
 			m, _ := <-c
 			println("Got", m.Body, "ID", m.ID)
-			Consumer.Ack(m)
+			AmiConsumer.Ack(m)
 		}
 	}()
 }
 
 // AmiAction defined srv
-func AmiAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+func AmiAction(ctx *gin.Context, db *xorm.Engine, payload model.AmiInfo) (interface{}, error) {
+	pld, _ := json.Marshal(payload)
 	for i := 0; i < 10000; i++ {
-		Producer.Send("{}")
+		AmiProducer.Send(string(pld))
 	}
 	return nil, nil
 }
