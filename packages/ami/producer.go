@@ -22,7 +22,7 @@ import (
 // This is especially strictly for Producer, because it send big queries with
 // big messages. And not so strictly for Consumer, because it send big queries
 // with not so big messages (only ids of ACKed messages).
-func NewProducer(opt ProducerOptions, ropt *redis.ClusterOptions) (*Producer, error) {
+func NewProducer(opt ProducerOptions, ropt *redis.Options) (*Producer, error) {
 	if err := mergo.Merge(&opt, defaultProducerOptions); err != nil {
 		return nil, err
 	}

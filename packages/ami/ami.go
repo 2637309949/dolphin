@@ -18,7 +18,7 @@ func newClient(opt clientOptions) (*client, error) {
 		opt.ropt.WriteTimeout = time.Second * 30
 	}
 
-	rDB := redis.NewClusterClient(opt.ropt)
+	rDB := redis.NewClient(opt.ropt)
 
 	c := &client{
 		opt: opt,

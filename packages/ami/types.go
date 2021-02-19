@@ -17,12 +17,12 @@ type Message struct {
 
 type client struct {
 	opt clientOptions
-	rDB *redis.ClusterClient
+	rDB *redis.Client
 }
 
 type clientOptions struct {
 	name        string
-	ropt        *redis.ClusterOptions
+	ropt        *redis.Options
 	shardsCount int8
 }
 
