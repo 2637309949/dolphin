@@ -68,6 +68,10 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
     - [Debug pprof](#debug-pprof)
         - [ModHeader](#modheader)
         - [Debug](#debug)
+    - [High-level Example](#high-level-example)
+        - [Queue processing](#queue-processing)
+            - [Base on Redis](#base-on-redis)
+            - [Base on Kafka](#base-on-kafka)
 
 <!-- /TOC -->
 
@@ -1563,4 +1567,98 @@ threadcreate: Stack traces that led to the creation of new OS threads
 trace: A trace of execution of the current program. You can specify the duration in the 
 seconds GET parameter. After you get the trace file, use the go tool trace command to 
 investigate the trace.
+```
+
+## High-level Example
+
+### Queue processing
+
+#### Base on Redis 
+
+```go
+// examples/ami
+// AmiSubmit api implementation
+// @Summary Add ami
+// @Tags Ami controller
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param ami_info body model.AmiInfo false "Ami info"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/ami/submit [post]
+func AmiSubmit(ctx *Context) {
+	var payload model.AmiInfo
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ret, err := srv.AmiAction(ctx.Raw(), ctx.DB, payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// examples/ami
+// AmiAction defined srv
+func AmiAction(ctx *gin.Context, db *xorm.Engine, payload model.AmiInfo) (interface{}, error) {
+	pld, _ := json.Marshal(payload)
+	for i := 0; i < 10000; i++ {
+		AmiProducer.Send(string(pld))
+	}
+	return nil, nil
+}
+```
+
+
+#### Base on Kafka 
+
+```go
+// examples/kafka
+// KafkaAdd api implementation
+// @Summary Add article
+// @Tags Kafka controller
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param kafka body model.KafkaInfo false "Kafka info"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/kafka/add [post]
+func KafkaAdd(ctx *Context) {
+	var payload model.KafkaInfo
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ret, err := srv.KafkaProducer(ctx.Raw(), ctx.DB, payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// examples/kafka
+// KafkaProducer defined srv
+func KafkaProducer(ctx *gin.Context, 
+	db *xorm.Engine, params model.KafkaInfo) (interface{}, error) {
+	kpStr, err := json.Marshal(&params)
+	if err != nil {
+		logrus.Error("failed to marshal:", err)
+		return nil, err
+	}
+	n, err := kafkaConn.WriteMessages(kafka.Message{Value: kpStr})
+	if err != nil {
+		logrus.Error("failed to write messages:", err)
+		return nil, err
+	}
+	return n, nil
+}
 ```
