@@ -1617,24 +1617,24 @@ func AmiProducer(ctx *gin.Context,
 }
 
 // AmiConsumer defined srv
-func AmiConsumer(ctx *gin.Context, 
-	db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+// AmiConsumer defined srv
+func AmiConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
 			fmt.Print(string(goErr.Stack()))
 		}
 	}()
-	c := AmiConsumerConn.Start()
 	var items []model.AmiInfo
-	quit := make(chan bool)
-	go func() {
+	c := AmiConsumerConn.Start()
+	cwt, cancel := context.WithCancel(context.TODO())
+	go func(cwt context.Context) {
 		for {
 			select {
-			case m, more := <-c:
-				if !more {
-					AmiConsumerConn.Stop()
-					quit <- true
+			case m, ok := <-c:
+				if !ok {
+					cancel()
+					return
 				}
 				AmiConsumerConn.Ack(m)
 				value := model.AmiInfo{}
@@ -1643,11 +1643,13 @@ func AmiConsumer(ctx *gin.Context,
 				}
 				items = append(items, value)
 			case <-time.After(3 * time.Second):
-				quit <- true
+				cancel()
+				return
 			}
 		}
-	}()
-	<-quit
+	}(cwt)
+	<-cwt.Done()
+	// AmiConsumerConn.Stop()
 	return items, nil
 }
 ```
