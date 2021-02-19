@@ -1616,7 +1616,7 @@ func AmiProducer(ctx *gin.Context,
 	return nil, nil
 }
 
-// AmiConsumer defined srv
+// examples/ami
 // AmiConsumer defined srv
 func AmiConsumer(ctx *gin.Context, 
 	db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
