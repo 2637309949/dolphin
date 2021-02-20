@@ -21,6 +21,7 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/slice"
 )
 
 type (
@@ -61,8 +62,9 @@ func (ctx *Context) LoginInInfo() model.SysUser {
 // InRole defined
 func (ctx *Context) InRole(role ...string) bool {
 	var cnt int
+	role, _ = slice.RemoveStringDuplicates(role)
 	if _, err := ctx.DB.SqlTemplateClient("sys_role_in_role_cnt.tpl", &map[string]interface{}{
-		"user_id": ctx.GetToken().GetUserID(),
+		"uid": ctx.GetToken().GetUserID(),
 		"roles": template.HTML(strings.Join(funk.Map(role, func(r string) string {
 			return fmt.Sprintf(`"%v"`, r)
 		}).([]string), ",")),
