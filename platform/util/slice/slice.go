@@ -150,3 +150,20 @@ func StringInSlice(a string, list []string) bool {
 	}
 	return false
 }
+
+// RemoveStringDuplicates defined
+func RemoveStringDuplicates(s []string) ([]string, []string) {
+	encountered := make(map[string]struct{})
+	result := make([]string, 0)
+	duplicate := make([]string, 0)
+	for _, v := range s {
+		if _, ok := encountered[v]; ok {
+			duplicate = append(duplicate, v)
+			continue
+		} else {
+			encountered[v] = struct{}{}
+			result = append(result, v)
+		}
+	}
+	return result, duplicate
+}
