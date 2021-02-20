@@ -69,6 +69,9 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [ModHeader](#modheader)
         - [Debug](#debug)
     - [High-level Example](#high-level-example)
+        - [File processing](#file-processing)
+            - [Upload File](#upload-file)
+            - [Persist File or Remove File](#persist-file-or-remove-file)
         - [Queue processing](#queue-processing)
             - [Base on Redis](#base-on-redis)
             - [Base on Kafka](#base-on-kafka)
@@ -1570,6 +1573,47 @@ investigate the trace.
 ```
 
 ## High-level Example
+
+### File processing
+
+#### Upload File
+```shell
+curl -X POST \
+  http://127.0.0.1:8081/api/sys/attachment/upload \
+  -H 'authorization: Bearer MAGFJEYNMPI9XAIK8GQKLA' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'postman-token: 3ddea434-b9ee-a3e8-516c-0914facc6517' \
+  -F files=@k8s-eschool-1.json
+```
+
+#### Persist File or Remove File
+
+```go
+// KafkaGet api implementation
+// @Summary Get kafka info
+// @Tags Kafka controller
+// @Param Authorization header string false "认证令牌"
+// @Param id  query  string false "kafka id"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/kafka/get [get]
+func KafkaGet(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.SetString("id")
+	q.Value()
+	ctx.Persist(ctx.DB, "0586e250-5b6c-4a79-9f4a-767a742b7890")
+	ctx.Remove(ctx.DB, "6ebce24f-6887-4d6d-a62a-2a706fcf1c3f")
+	ret, err := srv.KafkaConsumer(ctx.Raw(), ctx.DB, q.Value())
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+```
 
 ### Queue processing
 

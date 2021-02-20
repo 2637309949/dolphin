@@ -6,7 +6,7 @@ package model
 import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"os"
+	// "os"
 )
 
 // Persist table name of defined SysAttachment
