@@ -135,7 +135,7 @@ func SysAttachmentUpload(ctx *Context) {
 			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
 			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-			DelFlag:    null.IntFrom(1),
+			DelFlag:    null.IntFrom(0),
 		}
 		attachments = append(attachments, item)
 		attachs = append(attachs, model.Attach{

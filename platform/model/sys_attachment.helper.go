@@ -6,11 +6,87 @@ package model
 import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"os"
 )
 
-// TableName table name of defined SysAttachment
+// Persist table name of defined SysAttachment
 func (m *SysAttachment) Persist(db *xorm.Engine, ids ...string) (int64, error) {
 	return db.In("id", ids).Update(&SysAttachment{
 		Durable: null.IntFrom(1),
 	})
+}
+
+// PersistFile table name of defined SysAttachment
+func (m *SysAttachment) PersistFile(db *xorm.Engine, cb func([]SysAttachment) error, ids ...string) (int64, error) {
+	sess := db.NewSession()
+	defer sess.Close()
+	var files []SysAttachment
+	if cb == nil {
+		cb = func(files []SysAttachment) error {
+			return nil
+		}
+	}
+	err := sess.In("id", ids).Find(&files)
+	if err != nil {
+		sess.Rollback()
+		return 0, err
+	}
+	err = cb(files)
+	if err != nil {
+		sess.Rollback()
+		return 0, err
+	}
+	cnt, err := sess.In("id", ids).Update(&SysAttachment{
+		Durable: null.IntFrom(1),
+	})
+	if err != nil {
+		sess.Rollback()
+		return 0, err
+	}
+	sess.Commit()
+	return cnt, err
+}
+
+// Remove table name of defined SysAttachment
+func (m *SysAttachment) Remove(db *xorm.Engine, ids ...string) (int64, error) {
+	return db.In("id", ids).Update(&SysAttachment{
+		DelFlag: null.IntFrom(1),
+	})
+}
+
+// RemoveFile table name of defined SysAttachment
+func (m *SysAttachment) RemoveFile(db *xorm.Engine, cb func([]SysAttachment) error, ids ...string) (int64, error) {
+	sess := db.NewSession()
+	defer sess.Close()
+	var files []SysAttachment
+	if cb == nil {
+		cb = func(files []SysAttachment) error {
+			// for i := range files {
+			// 	err := os.Remove(files[i].Path.String)
+			// 	if err != nil {
+			// 		return err
+			// 	}
+			// }
+			return nil
+		}
+	}
+	err := sess.In("id", ids).Find(&files)
+	if err != nil {
+		sess.Rollback()
+		return 0, err
+	}
+	err = cb(files)
+	if err != nil {
+		sess.Rollback()
+		return 0, err
+	}
+	cnt, err := sess.In("id", ids).Update(&SysAttachment{
+		DelFlag: null.IntFrom(1),
+	})
+	if err != nil {
+		sess.Rollback()
+		return 0, err
+	}
+	sess.Commit()
+	return cnt, err
 }

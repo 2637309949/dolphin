@@ -370,6 +370,26 @@ func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
 	ctx.Success(excelInfo)
 }
 
+// Persist defined
+func (ctx *Context) Persist(db *xorm.Engine, ids ...string) (int64, error) {
+	return new(model.SysAttachment).Persist(db, ids...)
+}
+
+// PersistFile defined
+func (ctx *Context) PersistFile(db *xorm.Engine, cb func([]model.SysAttachment) error, ids ...string) (int64, error) {
+	return new(model.SysAttachment).PersistFile(db, cb, ids...)
+}
+
+// Remove defined
+func (ctx *Context) Remove(db *xorm.Engine, ids ...string) (int64, error) {
+	return new(model.SysAttachment).Remove(db, ids...)
+}
+
+// RemoveFile defined
+func (ctx *Context) RemoveFile(db *xorm.Engine, cb func([]model.SysAttachment) error, ids ...string) (int64, error) {
+	return new(model.SysAttachment).RemoveFile(db, cb, ids...)
+}
+
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
 	return funk.Map(strings.Split(httpMethod, ","), func(method string) gin.IRoutes {
