@@ -20,6 +20,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/KyleBanks/depth"
 	"github.com/go-openapi/spec"
 )
@@ -103,7 +104,7 @@ func New(options ...func(*Parser)) *Parser {
 				Info: &spec.Info{
 					InfoProps: spec.InfoProps{
 						Contact: &spec.ContactInfo{},
-						License: nil,
+						License: &spec.License{},
 					},
 					VendorExtensible: spec.VendorExtensible{
 						Extensions: spec.Extensions{},
@@ -249,10 +250,22 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 	if err != nil {
 		return fmt.Errorf("cannot parse source files %s: %s", mainAPIFile, err)
 	}
-
+	// inital
 	parser.swagger.Swagger = "2.0"
+	parser.swagger.Host = viper.GetString("host")
+	parser.swagger.Info.Title = viper.GetString("app.name")
+	parser.swagger.Info.Version = viper.GetString("app.version")
+	parser.swagger.Info.License.Name = viper.GetString("swag.license.name")
+	parser.swagger.Info.License.URL = viper.GetString("swag.license.url")
 	securityMap := map[string]*spec.SecurityScheme{}
-
+	securityMap[viper.GetString("swag.securitydefinitions.oauth2.accessCode")] = securitySchemeOAuth2AccessToken(viper.GetString("oauth.server")+viper.GetString("swag.authorizationurl"), viper.GetString("oauth.server")+viper.GetString("swag.tokenUrl"), map[string]string{
+		"read":  viper.GetString("swag.scope.read"),
+		"write": viper.GetString("swag.scope.write"),
+		"admin": viper.GetString("swag.scope.admin"),
+	}, map[string]interface{}{
+		"x-tokenName": "Authorization",
+	})
+	// parse
 	for _, comment := range fileTree.Comments {
 		if !isGeneralAPIComment(comment) {
 			continue
@@ -604,10 +617,12 @@ func convertFromSpecificToPrimitive(typeName string) (string, error) {
 		name = strings.Split(name, ".")[1]
 	}
 	switch strings.ToUpper(name) {
-	case "TIME", "OBJECTID", "UUID":
+	case "TIME", "OBJECTID", "UUID", "STRING":
 		return STRING, nil
-	case "DECIMAL":
+	case "DECIMAL", "FLOAT", "INT":
 		return NUMBER, nil
+	case "BOOL":
+		return "boolean", nil
 	}
 	return typeName, ErrFailedConvertPrimitiveType
 }

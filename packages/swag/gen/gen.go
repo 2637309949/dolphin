@@ -6,16 +6,18 @@ import (
 	"fmt"
 	"go/format"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/ghodss/yaml"
+
 	"github.com/go-openapi/spec"
-	"github.com/swaggo/swag"
+
+	"github.com/2637309949/dolphin/packages/swag"
 )
 
 // Gen presents a generate tool for swag.
@@ -79,7 +81,7 @@ func (g *Gen) Build(config *Config) error {
 		return fmt.Errorf("dir: %s is not exist", config.SearchDir)
 	}
 
-	log.Println("Generate swagger docs....")
+	logrus.Println("Generate swagger docs....")
 	p := swag.New(swag.SetMarkdownFileDirectory(config.MarkdownFilesDir),
 		swag.SetExcludedDirsAndFiles(config.Excludes),
 		swag.SetCodeExamplesDirectory(config.CodeExampleFilesDir))
@@ -102,25 +104,25 @@ func (g *Gen) Build(config *Config) error {
 		return err
 	}
 
-	absOutputDir, err := filepath.Abs(config.OutputDir)
-	if err != nil {
-		return err
-	}
-	packageName := filepath.Base(absOutputDir)
-	docFileName := filepath.Join(config.OutputDir, "docs.go")
-	jsonFileName := filepath.Join(config.OutputDir, "swagger.json")
+	// absOutputDir, err := filepath.Abs(config.OutputDir)
+	// if err != nil {
+	// 	return err
+	// }
+	// packageName := filepath.Base(absOutputDir)
+	// docFileName := filepath.Join(config.OutputDir, "docs.go")
+	// jsonFileName := filepath.Join(config.OutputDir, "swagger.json")
 	yamlFileName := filepath.Join(config.OutputDir, "swagger.yaml")
 
-	docs, err := os.Create(docFileName)
-	if err != nil {
-		return err
-	}
-	defer docs.Close()
+	// docs, err := os.Create(docFileName)
+	// if err != nil {
+	// 	return err
+	// }
+	// defer docs.Close()
 
-	err = g.writeFile(b, jsonFileName)
-	if err != nil {
-		return err
-	}
+	// err = g.writeFile(b, jsonFileName)
+	// if err != nil {
+	// 	return err
+	// }
 
 	y, err := g.jsonToYAML(b)
 	if err != nil {
@@ -133,14 +135,14 @@ func (g *Gen) Build(config *Config) error {
 	}
 
 	// Write doc
-	err = g.writeGoDoc(packageName, docs, swagger, config)
-	if err != nil {
-		return err
-	}
+	// err = g.writeGoDoc(packageName, docs, swagger, config)
+	// if err != nil {
+	// 	return err
+	// }
 
-	log.Printf("create docs.go at %+v", docFileName)
-	log.Printf("create swagger.json at %+v", jsonFileName)
-	log.Printf("create swagger.yaml at %+v", yamlFileName)
+	// log.Printf("create docs.go at %+v", docFileName)
+	// log.Printf("create swagger.json at %+v", jsonFileName)
+	logrus.Printf("create swagger.yaml at %+v", yamlFileName)
 
 	return nil
 }
@@ -260,7 +262,7 @@ import (
 	"strings"
 
 	"github.com/alecthomas/template"
-	"github.com/swaggo/swag"
+	"github.com/2637309949/dolphin/packages/swag"
 )
 
 var doc = ` + "`{{ printDoc .Doc}}`" + `
