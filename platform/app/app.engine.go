@@ -49,9 +49,10 @@ type Engine struct {
 func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
 		c := e.pool.Get().(*Context)
+		c.reset()
 		c.Context = ctx
-		for _, v := range ctx.Keys {
-			switch t := v.(type) {
+		for k := range ctx.Keys {
+			switch t := ctx.Keys[k].(type) {
 			case *xorm.Engine:
 				c.DB = t
 			case AuthInfo:
@@ -89,36 +90,12 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 		util.Ensure(db.Sync2(m))
 		tableInfo := util.EnsureLeft(db.TableInfo(m)).(*schemas.Table)
 		colsInfo := tableInfo.Columns()
-		tables = append(tables, model.SysTable{
-			ID:            null.StringFromUUID(),
-			Name:          null.StringFrom(tableInfo.Name),
-			Desc:          null.StringFrom(tableInfo.Comment),
-			Charset:       null.StringFrom(tableInfo.Charset),
-			AutoIncrement: null.StringFrom(tableInfo.AutoIncrement),
-			StoreEngine:   null.StringFrom(tableInfo.StoreEngine),
-			CreateTime:    null.TimeFrom(time.Now()),
-			CreateBy:      model.DefaultAdmin.ID,
-			UpdateTime:    null.TimeFrom(time.Now()),
-			UpdateBy:      model.DefaultAdmin.ID,
-			DelFlag:       null.IntFrom(0),
-		})
-		funk.ForEach(colsInfo, func(col *schemas.Column) {
-			columns = append(columns, model.SysTableColumn{
-				ID:           null.StringFromUUID(),
-				Name:         null.StringFrom(col.Name),
-				Type:         null.StringFrom(col.SQLType.Name),
-				Desc:         null.StringFrom(col.Comment),
-				TbId:         tables[len(tables)-1].ID,
-				IsPrimaryKey: null.BoolFrom(col.IsPrimaryKey),
-				Nullable:     null.BoolFrom(col.Nullable),
-				Default:      null.StringFrom(col.Default),
-				CreateTime:   null.TimeFrom(time.Now()),
-				CreateBy:     model.DefaultAdmin.ID,
-				UpdateTime:   null.TimeFrom(time.Now()),
-				UpdateBy:     model.DefaultAdmin.ID,
-				DelFlag:      null.IntFrom(0),
-			})
-		})
+		tables = append(tables, new(model.SysTable).TableInfo(tableInfo))
+		columns = append(columns, funk.Map(colsInfo, func(col *schemas.Column) model.SysTableColumn {
+			sc := new(model.SysTableColumn).ColumnInfo(col)
+			sc.TbId = tables[len(tables)-1].ID
+			return sc
+		}).([]model.SysTableColumn)...)
 	}, name)
 	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTable).TableName())))
 	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTableColumn).TableName())))
@@ -191,15 +168,15 @@ func (e *Engine) database() {
 	}
 
 	// initialize BusinessDBSet data
-	for _, v := range zmap {
+	for k := range zmap {
 		{
-			(new(model.SysRole)).InitSysData(v.NewSession())
-			(new(model.SysOrg)).InitSysData(v.NewSession())
-			(new(model.SysRoleUser)).InitSysData(v.NewSession())
-			(new(model.SysMenu)).InitSysData(v.NewSession())
-			(new(model.SysOptionset)).InitSysData(v.NewSession())
-			(new(model.SysUserTemplate)).InitSysData(v.NewSession())
-			(new(model.SysUserTemplateDetail)).InitSysData(v.NewSession())
+			(new(model.SysRole)).InitSysData(zmap[k].NewSession())
+			(new(model.SysOrg)).InitSysData(zmap[k].NewSession())
+			(new(model.SysRoleUser)).InitSysData(zmap[k].NewSession())
+			(new(model.SysMenu)).InitSysData(zmap[k].NewSession())
+			(new(model.SysOptionset)).InitSysData(zmap[k].NewSession())
+			(new(model.SysUserTemplate)).InitSysData(zmap[k].NewSession())
+			(new(model.SysUserTemplateDetail)).InitSysData(zmap[k].NewSession())
 		}
 	}
 }

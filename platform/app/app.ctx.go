@@ -52,6 +52,12 @@ func (ctx *Context) Raw() *gin.Context {
 	return ctx.Context
 }
 
+// reset defined clean vars in ctx
+func (ctx *Context) reset() {
+	ctx.DB = nil
+	ctx.Context = nil
+}
+
 // LoginInInfo defined
 func (ctx *Context) LoginInInfo() model.SysUser {
 	user := model.SysUser{}
@@ -392,9 +398,10 @@ func (ctx *Context) RemoveFile(db *xorm.Engine, cb func([]model.SysAttachment) e
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
+	pAppHandlers := funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
+		return rg.engine.HandlerFunc(h)
+	}).([]gin.HandlerFunc)
 	return funk.Map(strings.Split(httpMethod, ","), func(method string) gin.IRoutes {
-		return rg.RouterGroup.Handle(method, relativePath, funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
-			return rg.engine.HandlerFunc(h)
-		}).([]gin.HandlerFunc)...)
+		return rg.RouterGroup.Handle(method, relativePath, pAppHandlers...)
 	}).([]gin.IRoutes)
 }
