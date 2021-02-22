@@ -1,7 +1,7 @@
 package swag
 
 import (
-	"github.com/2637309949/dolphin/packages/logrus"
+	"log"
 )
 
 const (
@@ -18,13 +18,13 @@ func isRelease() bool {
 // Println calls Output to print to the standard logger when release mode.
 func Println(v ...interface{}) {
 	if isRelease() {
-		logrus.Info(v...)
+		log.Println(v...)
 	}
 }
 
 // Printf calls Output to print to the standard logger when release mode.
 func Printf(format string, v ...interface{}) {
 	if isRelease() {
-		logrus.Infof(format, v...)
+		log.Printf(format, v...)
 	}
 }

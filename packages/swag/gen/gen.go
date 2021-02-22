@@ -6,18 +6,16 @@ import (
 	"fmt"
 	"go/format"
 	"io"
+	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 	"text/template"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/logrus"
-
-	"github.com/go-openapi/spec"
-
-	"github.com/2637309949/dolphin/packages/swag"
 	"github.com/ghodss/yaml"
+	"github.com/go-openapi/spec"
+	"github.com/swaggo/swag"
 )
 
 // Gen presents a generate tool for swag.
@@ -41,6 +39,9 @@ type Config struct {
 	// SearchDir the swag would be parse
 	SearchDir string
 
+	// excludes dirs and files in SearchDir,comma separated
+	Excludes string
+
 	// OutputDir represents the output directory for all the generated files
 	OutputDir string
 
@@ -56,8 +57,20 @@ type Config struct {
 	// ParseDependencies whether swag should be parse outside dependency folder
 	ParseDependency bool
 
+	// ParseInternal whether swag should parse internal packages
+	ParseInternal bool
+
 	// MarkdownFilesDir used to find markdownfiles, which can be used for tag descriptions
 	MarkdownFilesDir string
+
+	// GeneratedTime whether swag should generate the timestamp at the top of docs.go
+	GeneratedTime bool
+
+	// CodeExampleFilesDir used to find code example files, which can be used for x-codeSamples
+	CodeExampleFilesDir string
+
+	// ParseDepth dependency parse depth
+	ParseDepth int
 }
 
 // Build builds swagger json file  for given searchDir and mainAPIFile. Returns json
@@ -66,12 +79,16 @@ func (g *Gen) Build(config *Config) error {
 		return fmt.Errorf("dir: %s is not exist", config.SearchDir)
 	}
 
-	p := swag.New(swag.SetMarkdownFileDirectory(config.MarkdownFilesDir))
+	log.Println("Generate swagger docs....")
+	p := swag.New(swag.SetMarkdownFileDirectory(config.MarkdownFilesDir),
+		swag.SetExcludedDirsAndFiles(config.Excludes),
+		swag.SetCodeExamplesDirectory(config.CodeExampleFilesDir))
 	p.PropNamingStrategy = config.PropNamingStrategy
 	p.ParseVendor = config.ParseVendor
 	p.ParseDependency = config.ParseDependency
+	p.ParseInternal = config.ParseInternal
 
-	if err := p.ParseAPI(config.SearchDir, config.MainAPIFile); err != nil {
+	if err := p.ParseAPI(config.SearchDir, config.MainAPIFile, config.ParseDepth); err != nil {
 		return err
 	}
 	swagger := p.GetSwagger()
@@ -85,24 +102,29 @@ func (g *Gen) Build(config *Config) error {
 		return err
 	}
 
-	// docFileName := path.Join(config.OutputDir, "docs.go")
-	// jsonFileName := path.Join(config.OutputDir, "swagger.json")
-	yamlFileName := path.Join(config.OutputDir, "swagger.yaml")
+	absOutputDir, err := filepath.Abs(config.OutputDir)
+	if err != nil {
+		return err
+	}
+	packageName := filepath.Base(absOutputDir)
+	docFileName := filepath.Join(config.OutputDir, "docs.go")
+	jsonFileName := filepath.Join(config.OutputDir, "swagger.json")
+	yamlFileName := filepath.Join(config.OutputDir, "swagger.yaml")
 
-	// docs, err := os.Create(docFileName)
-	// if err != nil {
-	// 	return err
-	// }
-	// defer docs.Close()
+	docs, err := os.Create(docFileName)
+	if err != nil {
+		return err
+	}
+	defer docs.Close()
 
-	// err = g.writeFile(b, jsonFileName)
-	// if err != nil {
-	// 	return err
-	// }
+	err = g.writeFile(b, jsonFileName)
+	if err != nil {
+		return err
+	}
 
 	y, err := g.jsonToYAML(b)
 	if err != nil {
-		return fmt.Errorf("cannot covert json to yaml error: %s", err)
+		return fmt.Errorf("cannot convert json to yaml error: %s", err)
 	}
 
 	err = g.writeFile(y, yamlFileName)
@@ -111,14 +133,14 @@ func (g *Gen) Build(config *Config) error {
 	}
 
 	// Write doc
-	// err = g.writeGoDoc(docs, swagger)
-	// if err != nil {
-	// 	return err
-	// }
+	err = g.writeGoDoc(packageName, docs, swagger, config)
+	if err != nil {
+		return err
+	}
 
-	// log.Printf("create docs.go at  %+v", docFileName)
-	// log.Printf("create swagger.json at  %+v", jsonFileName)
-	logrus.Infof("%v", yamlFileName)
+	log.Printf("create docs.go at %+v", docFileName)
+	log.Printf("create swagger.json at %+v", jsonFileName)
+	log.Printf("create swagger.yaml at %+v", yamlFileName)
 
 	return nil
 }
@@ -137,13 +159,12 @@ func (g *Gen) writeFile(b []byte, file string) error {
 func (g *Gen) formatSource(src []byte) []byte {
 	code, err := format.Source(src)
 	if err != nil {
-		code = src // Output the unformated code anyway
+		code = src // Output the unformatted code anyway
 	}
 	return code
 }
 
-func (g *Gen) writeGoDoc(output io.Writer, swagger *spec.Swagger) error {
-
+func (g *Gen) writeGoDoc(packageName string, output io.Writer, swagger *spec.Swagger, config *Config) error {
 	generator, err := template.New("swagger_info").Funcs(template.FuncMap{
 		"printDoc": func(v string) string {
 			// Add schemes
@@ -195,23 +216,27 @@ func (g *Gen) writeGoDoc(output io.Writer, swagger *spec.Swagger) error {
 
 	buffer := &bytes.Buffer{}
 	err = generator.Execute(buffer, struct {
-		Timestamp   time.Time
-		Doc         string
-		Host        string
-		BasePath    string
-		Schemes     []string
-		Title       string
-		Description string
-		Version     string
+		Timestamp     time.Time
+		GeneratedTime bool
+		Doc           string
+		Host          string
+		PackageName   string
+		BasePath      string
+		Schemes       []string
+		Title         string
+		Description   string
+		Version       string
 	}{
-		Timestamp:   time.Now(),
-		Doc:         string(buf),
-		Host:        swagger.Host,
-		BasePath:    swagger.BasePath,
-		Schemes:     swagger.Schemes,
-		Title:       swagger.Info.Title,
-		Description: swagger.Info.Description,
-		Version:     swagger.Info.Version,
+		Timestamp:     time.Now(),
+		GeneratedTime: config.GeneratedTime,
+		Doc:           string(buf),
+		Host:          swagger.Host,
+		PackageName:   packageName,
+		BasePath:      swagger.BasePath,
+		Schemes:       swagger.Schemes,
+		Title:         swagger.Info.Title,
+		Description:   swagger.Info.Description,
+		Version:       swagger.Info.Version,
 	})
 	if err != nil {
 		return err
@@ -224,11 +249,10 @@ func (g *Gen) writeGoDoc(output io.Writer, swagger *spec.Swagger) error {
 	return err
 }
 
-var packageTemplate = `// GENERATED BY THE COMMAND ABOVE; DO NOT EDIT
-// This file was generated by swaggo/swag at
-// {{ .Timestamp }}
-
-package docs
+var packageTemplate = `// Package {{.PackageName}} GENERATED BY THE COMMAND ABOVE; DO NOT EDIT
+// This file was generated by swaggo/swag{{ if .GeneratedTime }} at
+// {{ .Timestamp }}{{ end }}
+package {{.PackageName}}
 
 import (
 	"bytes"
@@ -236,7 +260,7 @@ import (
 	"strings"
 
 	"github.com/alecthomas/template"
-	"github.com/2637309949/dolphin/packages/swag"
+	"github.com/swaggo/swag"
 )
 
 var doc = ` + "`{{ printDoc .Doc}}`" + `
