@@ -1055,7 +1055,6 @@ definitions:
       user:
         $ref: '#/definitions/model.SysUser'
         description: 用户
-        type: object
     type: object
 host: localhost:8081
 info:
@@ -5709,4 +5708,5 @@ securityDefinitions:
       write: Grants write access
     tokenUrl: http://localhost:8081/api/sys/cas/token
     type: oauth2
+    x-tokenName: Authorization
 swagger: "2.0"

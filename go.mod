@@ -29,7 +29,6 @@ require (
 	github.com/gin-contrib/sse v0.1.0
 	github.com/go-asn1-ber/asn1-ber v1.4.1
 	github.com/go-errors/errors v1.0.1
-	github.com/go-openapi/jsonreference v0.19.5
 	github.com/go-openapi/spec v0.20.0
 	github.com/go-playground/validator/v10 v10.2.0
 	github.com/go-sql-driver/mysql v1.5.0
