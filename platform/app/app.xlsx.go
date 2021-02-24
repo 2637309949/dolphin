@@ -27,6 +27,12 @@ type ExcelConfig struct {
 	Handler    func(map[string]interface{}) map[string]interface{}
 }
 
+// AddRows defined
+func (e *ExcelConfig) AddRows(rows ...map[string]interface{}) *ExcelConfig {
+	e.Rows = append(e.Rows, rows...)
+	return e
+}
+
 // DefaultFormat defined
 func DefaultFormat(interface{}) func(interface{}) interface{} {
 	return func(source interface{}) interface{} {
