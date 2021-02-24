@@ -48,12 +48,12 @@ type StudentClassYpk struct {
 }
 
 // Parser defined
-func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+func (m *StudentClassYpk) Parser(db *xorm.Engine) *tags.Parser {
 	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
 }
 
 // PrimaryKeys defined
-func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+func (m *StudentClassYpk) PrimaryKeys(db *xorm.Engine) ([]string, error) {
 	v := reflect.Indirect(reflect.ValueOf(m))
 	table, err := m.Parser(db).Parse(v)
 	return table.PrimaryKeys, err
