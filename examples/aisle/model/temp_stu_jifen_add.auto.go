@@ -14,15 +14,15 @@ import (
 
 // TempStuJifenAdd defined
 type TempStuJifenAdd struct {
-	//
+	// Fid defined
 	Fid null.Int `xorm:"int(255) pk notnull 'fid'" json:"fid" form:"fid" xml:"fid"`
-	//
+	// StuName defined
 	StuName null.String `xorm:"varchar(255) 'stu_name'" json:"stu_name" form:"stu_name" xml:"stu_name"`
-	//
+	// StuPhone defined
 	StuPhone null.String `xorm:"varchar(255) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
-	//
+	// ZjJifen defined
 	ZjJifen null.Int `xorm:"int(11) 'zj_jifen'" json:"zj_jifen" form:"zj_jifen" xml:"zj_jifen"`
-	//
+	// Remark defined
 	Remark null.String `xorm:"varchar(255) 'remark'" json:"remark" form:"remark" xml:"remark"`
 }
 

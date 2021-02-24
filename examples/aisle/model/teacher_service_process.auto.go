@@ -14,25 +14,25 @@ import (
 
 // TeacherServiceProcess defined
 type TeacherServiceProcess struct {
-	//
+	// TSPId defined
 	TSPId null.Int `xorm:"int(11) pk notnull autoincr 't_s_p_id'" json:"t_s_p_id" form:"t_s_p_id" xml:"t_s_p_id"`
-	//
+	// TspRemark defined
 	TspRemark null.String `xorm:"varchar(2000) 'tsp_remark'" json:"tsp_remark" form:"tsp_remark" xml:"tsp_remark"`
-	//
+	// TspOrder defined
 	TspOrder null.Int `xorm:"int(11) 'tsp_order'" json:"tsp_order" form:"tsp_order" xml:"tsp_order"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// CpcId defined
 	CpcId null.Int `xorm:"int(11) 'cpc_id'" json:"cpc_id" form:"cpc_id" xml:"cpc_id"`
-	//
+	// TspNumber defined
 	TspNumber null.Int `xorm:"int(11) 'tsp_number'" json:"tsp_number" form:"tsp_number" xml:"tsp_number"`
 }
 

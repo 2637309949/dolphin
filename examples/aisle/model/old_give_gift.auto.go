@@ -14,21 +14,21 @@ import (
 
 // OldGiveGift defined
 type OldGiveGift struct {
-	//
+	// OGGId defined
 	OGGId null.Int `xorm:"int(11) pk notnull autoincr 'o_g_g_id'" json:"o_g_g_id" form:"o_g_g_id" xml:"o_g_g_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// Remark defined
 	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" form:"remark" xml:"remark"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

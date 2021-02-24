@@ -15,35 +15,35 @@ import (
 
 // PeriodViolateAbnormalApply defined
 type PeriodViolateAbnormalApply struct {
-	//
+	// PVAAId defined
 	PVAAId null.Int `xorm:"int(11) pk notnull autoincr 'p_v_a_a_id'" json:"p_v_a_a_id" form:"p_v_a_a_id" xml:"p_v_a_a_id"`
-	//
+	// PkOf defined
 	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" form:"pk_of" xml:"pk_of"`
-	//
+	// Period defined
 	Period null.Int `xorm:"int(11) 'period'" json:"period" form:"period" xml:"period"`
-	//
+	// ViolateDays defined
 	ViolateDays null.Int `xorm:"int(11) 'violate_days'" json:"violate_days" form:"violate_days" xml:"violate_days"`
-	//
+	// ViolateMoney defined
 	ViolateMoney decimal.Decimal `xorm:"decimal(11,2) 'violate_money'" json:"violate_money" form:"violate_money" xml:"violate_money"`
-	//
+	// ApplyReason defined
 	ApplyReason null.String `xorm:"varchar(1000) 'apply_reason'" json:"apply_reason" form:"apply_reason" xml:"apply_reason"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// CheckState defined
 	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
-	//
+	// FinalMoney defined
 	FinalMoney decimal.Decimal `xorm:"decimal(50,3) 'final_money'" json:"final_money" form:"final_money" xml:"final_money"`
-	//
+	// CheckUser defined
 	CheckUser null.Int `xorm:"int(11) 'check_user'" json:"check_user" form:"check_user" xml:"check_user"`
-	//
+	// CheckDate defined
 	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 }
 

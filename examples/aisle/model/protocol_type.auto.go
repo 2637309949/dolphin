@@ -14,29 +14,29 @@ import (
 
 // ProtocolType defined
 type ProtocolType struct {
-	//
+	// PTId defined
 	PTId null.Int `xorm:"int(11) pk notnull autoincr 'p_t_id'" json:"p_t_id" form:"p_t_id" xml:"p_t_id"`
-	//
+	// CourseName defined
 	CourseName null.String `xorm:"varchar(100) 'course_name'" json:"course_name" form:"course_name" xml:"course_name"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// PtState defined
 	PtState null.Int `xorm:"int(11) 'pt_state'" json:"pt_state" form:"pt_state" xml:"pt_state"`
-	//
+	// PtDescribe defined
 	PtDescribe null.Int `xorm:"int(11) 'pt_describe'" json:"pt_describe" form:"pt_describe" xml:"pt_describe"`
-	//
+	// PtLevel defined
 	PtLevel null.Int `xorm:"int(11) 'pt_level'" json:"pt_level" form:"pt_level" xml:"pt_level"`
-	//
+	// TypeName defined
 	TypeName null.String `xorm:"varchar(50) 'type_name'" json:"type_name" form:"type_name" xml:"type_name"`
-	//
+	// PtContent defined
 	PtContent null.Int `xorm:"int(11) 'pt_content'" json:"pt_content" form:"pt_content" xml:"pt_content"`
 }
 

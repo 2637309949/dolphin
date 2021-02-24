@@ -14,21 +14,21 @@ import (
 
 // BuysctGlGivesct defined
 type BuysctGlGivesct struct {
-	//
+	// BGGId defined
 	BGGId null.Int `xorm:"int(11) pk notnull autoincr 'b_g_g_id'" json:"b_g_g_id" form:"b_g_g_id" xml:"b_g_g_id"`
-	//
+	// BuysctId defined
 	BuysctId null.Int `xorm:"int(11) 'buysct_id'" json:"buysct_id" form:"buysct_id" xml:"buysct_id"`
-	//
+	// GivesctId defined
 	GivesctId null.Int `xorm:"int(11) 'givesct_id'" json:"givesct_id" form:"givesct_id" xml:"givesct_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

@@ -14,21 +14,21 @@ import (
 
 // FailApplyFile defined
 type FailApplyFile struct {
-	//
+	// FAFId defined
 	FAFId null.Int `xorm:"int(11) pk notnull autoincr 'f_a_f_id'" json:"f_a_f_id" form:"f_a_f_id" xml:"f_a_f_id"`
-	//
+	// FaId defined
 	FaId null.Int `xorm:"int(11) 'fa_id'" json:"fa_id" form:"fa_id" xml:"fa_id"`
-	//
+	// File defined
 	File null.Int `xorm:"int(11) 'file'" json:"file" form:"file" xml:"file"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

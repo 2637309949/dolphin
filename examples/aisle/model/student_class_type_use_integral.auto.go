@@ -14,25 +14,25 @@ import (
 
 // StudentClassTypeUseIntegral defined
 type StudentClassTypeUseIntegral struct {
-	//
+	// SCTUIId defined
 	SCTUIId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_u_i_id'" json:"s_c_t_u_i_id" form:"s_c_t_u_i_id" xml:"s_c_t_u_i_id"`
-	//
+	// SctId defined
 	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
-	//
+	// UseIntegral defined
 	UseIntegral null.Float `xorm:"float(11,2) 'use_integral'" json:"use_integral" form:"use_integral" xml:"use_integral"`
-	//
+	// DyMoney defined
 	DyMoney null.Float `xorm:"float(11,2) 'dy_money'" json:"dy_money" form:"dy_money" xml:"dy_money"`
-	//
+	// StuIntegral defined
 	StuIntegral null.Int `xorm:"int(11) 'stu_integral'" json:"stu_integral" form:"stu_integral" xml:"stu_integral"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

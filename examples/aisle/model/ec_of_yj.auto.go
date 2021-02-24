@@ -14,23 +14,23 @@ import (
 
 // EcOfYj defined
 type EcOfYj struct {
-	//
+	// EcOfYjId defined
 	EcOfYjId null.Int `xorm:"int(11) pk notnull autoincr 'ec_of_yj_id'" json:"ec_of_yj_id" form:"ec_of_yj_id" xml:"ec_of_yj_id"`
-	//
+	// OfId defined
 	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
-	//
+	// UserId defined
 	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
-	//
+	// YjblNum defined
 	YjblNum null.Float `xorm:"float(11,2) 'yjbl_num'" json:"yjbl_num" form:"yjbl_num" xml:"yjbl_num"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

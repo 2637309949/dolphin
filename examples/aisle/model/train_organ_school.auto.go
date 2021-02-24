@@ -14,21 +14,21 @@ import (
 
 // TrainOrganSchool defined
 type TrainOrganSchool struct {
-	//
+	// TOSId defined
 	TOSId null.Int `xorm:"int(11) pk notnull autoincr 't_o_s_id'" json:"t_o_s_id" form:"t_o_s_id" xml:"t_o_s_id"`
-	//
+	// TrainId defined
 	TrainId null.Int `xorm:"int(11) 'train_id'" json:"train_id" form:"train_id" xml:"train_id"`
-	//
+	// OrganSchoolId defined
 	OrganSchoolId null.Int `xorm:"int(11) 'organ_school_id'" json:"organ_school_id" form:"organ_school_id" xml:"organ_school_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

@@ -14,25 +14,25 @@ import (
 
 // StuBussType defined
 type StuBussType struct {
-	//
+	// SBTId defined
 	SBTId null.Int `xorm:"int(11) pk notnull autoincr 's_b_t_id'" json:"s_b_t_id" form:"s_b_t_id" xml:"s_b_t_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// BussType defined
 	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// StuSurplusHour defined
 	StuSurplusHour null.Float `xorm:"float(50,2) 'stu_surplus_hour'" json:"stu_surplus_hour" form:"stu_surplus_hour" xml:"stu_surplus_hour"`
-	//
+	// StuSurplusMoney defined
 	StuSurplusMoney null.Float `xorm:"float(50,2) 'stu_surplus_money'" json:"stu_surplus_money" form:"stu_surplus_money" xml:"stu_surplus_money"`
 }
 

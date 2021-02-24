@@ -14,29 +14,29 @@ import (
 
 // ClassProductCategories defined
 type ClassProductCategories struct {
-	//
+	// CPCId defined
 	CPCId null.Int `xorm:"int(11) pk notnull autoincr 'c_p_c_id'" json:"c_p_c_id" form:"c_p_c_id" xml:"c_p_c_id"`
-	//
+	// CpcName defined
 	CpcName null.String `xorm:"varchar(1000) 'cpc_name'" json:"cpc_name" form:"cpc_name" xml:"cpc_name"`
-	//
+	// CpNumberType defined
 	CpNumberType null.Int `xorm:"int(11) 'cp_number_type'" json:"cp_number_type" form:"cp_number_type" xml:"cp_number_type"`
-	//
+	// CpNumber defined
 	CpNumber null.Int `xorm:"int(11) 'cp_number'" json:"cp_number" form:"cp_number" xml:"cp_number"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// BussType defined
 	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
-	//
+	// CourseId defined
 	CourseId null.Int `xorm:"int(11) 'course_id'" json:"course_id" form:"course_id" xml:"course_id"`
-	//
+	// EnglishName defined
 	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" form:"english_name" xml:"english_name"`
 }
 

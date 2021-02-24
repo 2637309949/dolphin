@@ -14,23 +14,23 @@ import (
 
 // StuBfJl defined
 type StuBfJl struct {
-	//
+	// StuBfJlId defined
 	StuBfJlId null.Int `xorm:"int(11) pk notnull autoincr 'stu_bf_jl_id'" json:"stu_bf_jl_id" form:"stu_bf_jl_id" xml:"stu_bf_jl_id"`
-	//
+	// LbfId defined
 	LbfId null.Int `xorm:"int(11) 'lbf_id'" json:"lbf_id" form:"lbf_id" xml:"lbf_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// BfSc defined
 	BfSc null.String `xorm:"varchar(500) 'bf_sc'" json:"bf_sc" form:"bf_sc" xml:"bf_sc"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

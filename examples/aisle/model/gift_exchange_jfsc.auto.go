@@ -14,25 +14,25 @@ import (
 
 // GiftExchangeJfsc defined
 type GiftExchangeJfsc struct {
-	//
+	// GEJId defined
 	GEJId null.Int `xorm:"int(11) pk notnull autoincr 'g_e_j_id'" json:"g_e_j_id" form:"g_e_j_id" xml:"g_e_j_id"`
-	//
+	// ExchangeNum defined
 	ExchangeNum null.Float `xorm:"float(11,2) 'exchange_num'" json:"exchange_num" form:"exchange_num" xml:"exchange_num"`
-	//
+	// XhJf defined
 	XhJf null.Float `xorm:"float(11,2) 'xh_jf'" json:"xh_jf" form:"xh_jf" xml:"xh_jf"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// GiftId defined
 	GiftId null.Int `xorm:"int(11) 'gift_id'" json:"gift_id" form:"gift_id" xml:"gift_id"`
-	//
+	// PkStu defined
 	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
 }
 

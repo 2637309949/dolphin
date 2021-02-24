@@ -14,27 +14,27 @@ import (
 
 // OtmClassroom defined
 type OtmClassroom struct {
-	//
+	// OCId defined
 	OCId null.Int `xorm:"int(11) pk notnull autoincr 'o_c_id'" json:"o_c_id" form:"o_c_id" xml:"o_c_id"`
-	//
+	// ClassroomName defined
 	ClassroomName null.String `xorm:"varchar(500) 'classroom_name'" json:"classroom_name" form:"classroom_name" xml:"classroom_name"`
-	//
+	// SchoolId defined
 	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" form:"school_id" xml:"school_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// ClassroomContain defined
 	ClassroomContain null.Float `xorm:"float(11,2) 'classroom_contain'" json:"classroom_contain" form:"classroom_contain" xml:"classroom_contain"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// Remarke defined
 	Remarke null.String `xorm:"varchar(2000) 'remarke'" json:"remarke" form:"remarke" xml:"remarke"`
-	//
+	// EnglishName defined
 	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" form:"english_name" xml:"english_name"`
 }
 

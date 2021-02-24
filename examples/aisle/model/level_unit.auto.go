@@ -14,23 +14,23 @@ import (
 
 // LevelUnit defined
 type LevelUnit struct {
-	//
+	// LevelUnitId defined
 	LevelUnitId null.Int `xorm:"int(11) pk notnull autoincr 'level_unit_id'" json:"level_unit_id" form:"level_unit_id" xml:"level_unit_id"`
-	//
+	// LevelId defined
 	LevelId null.Int `xorm:"int(11) 'level_id'" json:"level_id" form:"level_id" xml:"level_id"`
-	//
+	// UnitId defined
 	UnitId null.Int `xorm:"int(11) 'unit_id'" json:"unit_id" form:"unit_id" xml:"unit_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// UnitTotalScore defined
 	UnitTotalScore null.Float `xorm:"float(50,2) 'unit_total_score'" json:"unit_total_score" form:"unit_total_score" xml:"unit_total_score"`
 }
 

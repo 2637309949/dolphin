@@ -14,27 +14,27 @@ import (
 
 // MaterielMinus defined
 type MaterielMinus struct {
-	//
+	// MMId defined
 	MMId null.Int `xorm:"int(11) pk notnull autoincr 'm_m_id'" json:"m_m_id" form:"m_m_id" xml:"m_m_id"`
-	//
+	// MaterielId defined
 	MaterielId null.Int `xorm:"int(11) 'materiel_id'" json:"materiel_id" form:"materiel_id" xml:"materiel_id"`
-	//
+	// MinusNum defined
 	MinusNum null.Int `xorm:"int(11) 'minus_num'" json:"minus_num" form:"minus_num" xml:"minus_num"`
-	//
+	// MinusMoney defined
 	MinusMoney null.Float `xorm:"float(11,2) 'minus_money'" json:"minus_money" form:"minus_money" xml:"minus_money"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// MinusReason defined
 	MinusReason null.Int `xorm:"int(11) 'minus_reason'" json:"minus_reason" form:"minus_reason" xml:"minus_reason"`
-	//
+	// MinusObject defined
 	MinusObject null.Int `xorm:"int(11) 'minus_object'" json:"minus_object" form:"minus_object" xml:"minus_object"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

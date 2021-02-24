@@ -14,25 +14,25 @@ import (
 
 // ZbxzsgzValiddate defined
 type ZbxzsgzValiddate struct {
-	//
+	// ZVId defined
 	ZVId null.Int `xorm:"int(11) pk notnull autoincr 'z_v_id'" json:"z_v_id" form:"z_v_id" xml:"z_v_id"`
-	//
+	// ZbxzsgzId defined
 	ZbxzsgzId null.Int `xorm:"int(11) 'zbxzsgz_id'" json:"zbxzsgz_id" form:"zbxzsgz_id" xml:"zbxzsgz_id"`
-	//
+	// BeginDate defined
 	BeginDate null.Time `xorm:"datetime 'begin_date'" json:"begin_date" form:"begin_date" xml:"begin_date"`
-	//
+	// EndDate defined
 	EndDate null.Time `xorm:"datetime 'end_date'" json:"end_date" form:"end_date" xml:"end_date"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// SyhourZsbl defined
 	SyhourZsbl null.Float `xorm:"float(50,2) 'syhour_zsbl'" json:"syhour_zsbl" form:"syhour_zsbl" xml:"syhour_zsbl"`
 }
 

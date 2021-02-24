@@ -14,23 +14,23 @@ import (
 
 // PartTimeUser defined
 type PartTimeUser struct {
-	//
+	// PTUId defined
 	PTUId null.Int `xorm:"int(11) pk notnull autoincr 'p_t_u_id'" json:"p_t_u_id" form:"p_t_u_id" xml:"p_t_u_id"`
-	//
+	// Name defined
 	Name null.String `xorm:"varchar(50) 'name'" json:"name" form:"name" xml:"name"`
-	//
+	// IponeNumber defined
 	IponeNumber null.String `xorm:"varchar(11) 'ipone_number'" json:"ipone_number" form:"ipone_number" xml:"ipone_number"`
-	//
+	// Sex defined
 	Sex null.Int `xorm:"int(11) 'sex'" json:"sex" form:"sex" xml:"sex"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

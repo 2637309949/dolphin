@@ -15,85 +15,85 @@ import (
 
 // YeepayReconciliationsRecord defined
 type YeepayReconciliationsRecord struct {
-	//
+	// YRRId defined
 	YRRId null.Int `xorm:"int(11) pk notnull autoincr 'y_r_r_id'" json:"y_r_r_id" form:"y_r_r_id" xml:"y_r_r_id"`
-	//
+	// ConsumerName defined
 	ConsumerName null.String `xorm:"varchar(100) 'consumer_name'" json:"consumer_name" form:"consumer_name" xml:"consumer_name"`
-	//
+	// ConsumerNum defined
 	ConsumerNum null.String `xorm:"varchar(100) 'consumer_num'" json:"consumer_num" form:"consumer_num" xml:"consumer_num"`
-	//
+	// NetConsumerNum defined
 	NetConsumerNum null.String `xorm:"varchar(100) 'net_consumer_num'" json:"net_consumer_num" form:"net_consumer_num" xml:"net_consumer_num"`
-	//
+	// NetConsumerName defined
 	NetConsumerName null.String `xorm:"varchar(100) 'net_consumer_name'" json:"net_consumer_name" form:"net_consumer_name" xml:"net_consumer_name"`
-	//
+	// OrderNum defined
 	OrderNum null.String `xorm:"varchar(100) 'order_num'" json:"order_num" form:"order_num" xml:"order_num"`
-	//
+	// Yeepayorderno defined
 	Yeepayorderno null.String `xorm:"varchar(100) 'yeepayorderno'" json:"yeepayorderno" form:"yeepayorderno" xml:"yeepayorderno"`
-	//
+	// TransactionType defined
 	TransactionType null.String `xorm:"varchar(100) 'transaction_type'" json:"transaction_type" form:"transaction_type" xml:"transaction_type"`
-	//
+	// Amount defined
 	Amount decimal.Decimal `xorm:"decimal(11,2) 'amount'" json:"amount" form:"amount" xml:"amount"`
-	//
+	// ServiceCharge defined
 	ServiceCharge decimal.Decimal `xorm:"decimal(11,2) 'service_charge'" json:"service_charge" form:"service_charge" xml:"service_charge"`
-	//
+	// GetMoney defined
 	GetMoney decimal.Decimal `xorm:"decimal(11,2) 'get_money'" json:"get_money" form:"get_money" xml:"get_money"`
-	//
+	// PayState defined
 	PayState null.String `xorm:"varchar(10) 'pay_state'" json:"pay_state" form:"pay_state" xml:"pay_state"`
-	//
+	// RefundNum defined
 	RefundNum null.String `xorm:"varchar(100) 'refund_num'" json:"refund_num" form:"refund_num" xml:"refund_num"`
-	//
+	// ConsumerRefundNum defined
 	ConsumerRefundNum null.String `xorm:"varchar(100) 'consumer_refund_num'" json:"consumer_refund_num" form:"consumer_refund_num" xml:"consumer_refund_num"`
-	//
+	// RefundState defined
 	RefundState null.String `xorm:"varchar(10) 'refund_state'" json:"refund_state" form:"refund_state" xml:"refund_state"`
-	//
+	// RefundMoney defined
 	RefundMoney decimal.Decimal `xorm:"decimal(11,2) 'refund_money'" json:"refund_money" form:"refund_money" xml:"refund_money"`
-	//
+	// PosTerminalNum defined
 	PosTerminalNum null.String `xorm:"varchar(100) 'pos_terminal_num'" json:"pos_terminal_num" form:"pos_terminal_num" xml:"pos_terminal_num"`
-	//
+	// PosNum defined
 	PosNum null.String `xorm:"varchar(100) 'pos_num'" json:"pos_num" form:"pos_num" xml:"pos_num"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// PosSerialNum defined
 	PosSerialNum null.String `xorm:"varchar(50) 'pos_serial_num'" json:"pos_serial_num" form:"pos_serial_num" xml:"pos_serial_num"`
-	//
+	// ChargeBatchNum defined
 	ChargeBatchNum null.String `xorm:"varchar(50) 'charge_batch_num'" json:"charge_batch_num" form:"charge_batch_num" xml:"charge_batch_num"`
-	//
+	// Referno defined
 	Referno null.String `xorm:"varchar(50) 'referno'" json:"referno" form:"referno" xml:"referno"`
-	//
+	// AuthorizationNum defined
 	AuthorizationNum null.String `xorm:"varchar(50) 'authorization_num'" json:"authorization_num" form:"authorization_num" xml:"authorization_num"`
-	//
+	// ChargeRequestDate defined
 	ChargeRequestDate null.Time `xorm:"datetime 'charge_request_date'" json:"charge_request_date" form:"charge_request_date" xml:"charge_request_date"`
-	//
+	// ChargeSuccessDate defined
 	ChargeSuccessDate null.Time `xorm:"datetime 'charge_success_date'" json:"charge_success_date" form:"charge_success_date" xml:"charge_success_date"`
-	//
+	// RefundRequestDate defined
 	RefundRequestDate null.Time `xorm:"datetime 'refund_request_date'" json:"refund_request_date" form:"refund_request_date" xml:"refund_request_date"`
-	//
+	// Bankcardno defined
 	Bankcardno null.String `xorm:"varchar(20) 'bankcardno'" json:"bankcardno" form:"bankcardno" xml:"bankcardno"`
-	//
+	// Bankcardtype defined
 	Bankcardtype null.String `xorm:"varchar(10) 'bankcardtype'" json:"bankcardtype" form:"bankcardtype" xml:"bankcardtype"`
-	//
+	// Bankcardname defined
 	Bankcardname null.String `xorm:"varchar(50) 'bankcardname'" json:"bankcardname" form:"bankcardname" xml:"bankcardname"`
-	//
+	// PayType defined
 	PayType null.String `xorm:"varchar(10) 'pay_type'" json:"pay_type" form:"pay_type" xml:"pay_type"`
-	//
+	// ReconciliationsState defined
 	ReconciliationsState null.Int `xorm:"int(11) 'reconciliations_state'" json:"reconciliations_state" form:"reconciliations_state" xml:"reconciliations_state"`
-	//
+	// ErrorMsg defined
 	ErrorMsg null.String `xorm:"varchar(500) 'error_msg'" json:"error_msg" form:"error_msg" xml:"error_msg"`
-	//
+	// PkYpfId defined
 	PkYpfId null.Int `xorm:"int(11) 'pk_ypf_id'" json:"pk_ypf_id" form:"pk_ypf_id" xml:"pk_ypf_id"`
-	//
+	// AccountState defined
 	AccountState null.Int `xorm:"int(11) 'account_state'" json:"account_state" form:"account_state" xml:"account_state"`
-	//
+	// IfOwnRecon defined
 	IfOwnRecon null.Int `xorm:"int(11) 'if_own_recon'" json:"if_own_recon" form:"if_own_recon" xml:"if_own_recon"`
-	//
+	// IfPerfect defined
 	IfPerfect null.Int `xorm:"int(11) 'if_perfect'" json:"if_perfect" form:"if_perfect" xml:"if_perfect"`
 }
 

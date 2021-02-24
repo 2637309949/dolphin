@@ -14,31 +14,31 @@ import (
 
 // ClassTypeStageCourse defined
 type ClassTypeStageCourse struct {
-	//
+	// CTSCId defined
 	CTSCId null.Int `xorm:"int(11) pk notnull autoincr 'c_t_s_c_id'" json:"c_t_s_c_id" form:"c_t_s_c_id" xml:"c_t_s_c_id"`
-	//
+	// CtsId defined
 	CtsId null.Int `xorm:"int(11) 'cts_id'" json:"cts_id" form:"cts_id" xml:"cts_id"`
-	//
+	// CourseId defined
 	CourseId null.Int `xorm:"int(11) 'course_id'" json:"course_id" form:"course_id" xml:"course_id"`
-	//
+	// CtscHour defined
 	CtscHour null.Int `xorm:"int(11) 'ctsc_hour'" json:"ctsc_hour" form:"ctsc_hour" xml:"ctsc_hour"`
-	//
+	// CtscMinute defined
 	CtscMinute null.Int `xorm:"int(11) 'ctsc_minute'" json:"ctsc_minute" form:"ctsc_minute" xml:"ctsc_minute"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// Price defined
 	Price null.Float `xorm:"float(10,2) 'price'" json:"price" form:"price" xml:"price"`
-	//
+	// AllPrice defined
 	AllPrice null.Float `xorm:"float(10,2) 'all_price'" json:"all_price" form:"all_price" xml:"all_price"`
-	//
+	// CtId defined
 	CtId null.Int `xorm:"int(11) 'ct_id'" json:"ct_id" form:"ct_id" xml:"ct_id"`
 }
 

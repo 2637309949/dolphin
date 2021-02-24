@@ -14,71 +14,71 @@ import (
 
 // XlHc defined
 type XlHc struct {
-	//
+	// XlHcId defined
 	XlHcId null.Int `xorm:"int(11) pk notnull autoincr 'xl_hc_id'" json:"xl_hc_id" form:"xl_hc_id" xml:"xl_hc_id"`
-	//
+	// XlUrl defined
 	XlUrl null.String `xorm:"varchar(1000) 'xl_url'" json:"xl_url" form:"xl_url" xml:"xl_url"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// OnlyId defined
 	OnlyId null.String `xorm:"varchar(1000) 'only_id'" json:"only_id" form:"only_id" xml:"only_id"`
-	//
+	// TaskId defined
 	TaskId null.String `xorm:"varchar(1000) 'task_id'" json:"task_id" form:"task_id" xml:"task_id"`
-	//
+	// TaskType defined
 	TaskType null.Int `xorm:"int(11) 'task_type'" json:"task_type" form:"task_type" xml:"task_type"`
-	//
+	// EmployeeId defined
 	EmployeeId null.String `xorm:"varchar(1000) 'employee_id'" json:"employee_id" form:"employee_id" xml:"employee_id"`
-	//
+	// EmployeeUsername defined
 	EmployeeUsername null.String `xorm:"varchar(1000) 'employee_username'" json:"employee_username" form:"employee_username" xml:"employee_username"`
-	//
+	// SvId defined
 	SvId null.Int `xorm:"int(11) 'sv_id'" json:"sv_id" form:"sv_id" xml:"sv_id"`
-	//
+	// TaskResult defined
 	TaskResult null.String `xorm:"varchar(1000) 'task_result'" json:"task_result" form:"task_result" xml:"task_result"`
-	//
+	// CustomerPhone defined
 	CustomerPhone null.String `xorm:"varchar(1000) 'customer_phone'" json:"customer_phone" form:"customer_phone" xml:"customer_phone"`
-	//
+	// HangupCause defined
 	HangupCause null.String `xorm:"varchar(1000) 'hangup_cause'" json:"hangup_cause" form:"hangup_cause" xml:"hangup_cause"`
-	//
+	// HangupCauseQ850 defined
 	HangupCauseQ850 null.Int `xorm:"int(11) 'hangup_cause_q850'" json:"hangup_cause_q850" form:"hangup_cause_q850" xml:"hangup_cause_q850"`
-	//
+	// Duration defined
 	Duration null.Float `xorm:"float(50,2) 'duration'" json:"duration" form:"duration" xml:"duration"`
-	//
+	// Billsec defined
 	Billsec null.Float `xorm:"float(50,2) 'billsec'" json:"billsec" form:"billsec" xml:"billsec"`
-	//
+	// Waitsec defined
 	Waitsec null.Float `xorm:"float(50,2) 'waitsec'" json:"waitsec" form:"waitsec" xml:"waitsec"`
-	//
+	// StartStamp defined
 	StartStamp null.Time `xorm:"datetime 'start_stamp'" json:"start_stamp" form:"start_stamp" xml:"start_stamp"`
-	//
+	// BridgeStamp defined
 	BridgeStamp null.Time `xorm:"datetime 'bridge_stamp'" json:"bridge_stamp" form:"bridge_stamp" xml:"bridge_stamp"`
-	//
+	// EndStamp defined
 	EndStamp null.Time `xorm:"datetime 'end_stamp'" json:"end_stamp" form:"end_stamp" xml:"end_stamp"`
-	//
+	// AreaName defined
 	AreaName null.String `xorm:"varchar(100) 'area_name'" json:"area_name" form:"area_name" xml:"area_name"`
-	//
+	// AreaCode defined
 	AreaCode null.Int `xorm:"int(11) 'area_code'" json:"area_code" form:"area_code" xml:"area_code"`
-	//
+	// UserId defined
 	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// GlHfId defined
 	GlHfId null.String `xorm:"varchar(10000) 'gl_hf_id'" json:"gl_hf_id" form:"gl_hf_id" xml:"gl_hf_id"`
-	//
+	// Context defined
 	Context null.String `xorm:"varchar(1000) 'context'" json:"context" form:"context" xml:"context"`
-	//
+	// Username defined
 	Username null.String `xorm:"varchar(1000) 'username'" json:"username" form:"username" xml:"username"`
-	//
+	// CallerIdName defined
 	CallerIdName null.String `xorm:"varchar(1000) 'caller_id_name'" json:"caller_id_name" form:"caller_id_name" xml:"caller_id_name"`
-	//
+	// CallerIdNumber defined
 	CallerIdNumber null.String `xorm:"varchar(100) 'caller_id_number'" json:"caller_id_number" form:"caller_id_number" xml:"caller_id_number"`
-	//
+	// DestinationNumber defined
 	DestinationNumber null.String `xorm:"varchar(100) 'destination_number'" json:"destination_number" form:"destination_number" xml:"destination_number"`
 }
 

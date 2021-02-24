@@ -14,21 +14,21 @@ import (
 
 // CspvTea defined
 type CspvTea struct {
-	//
+	// CspvTeaId defined
 	CspvTeaId null.Int `xorm:"int(11) pk notnull autoincr 'cspv_tea_id'" json:"cspv_tea_id" form:"cspv_tea_id" xml:"cspv_tea_id"`
-	//
+	// CspvId defined
 	CspvId null.Int `xorm:"int(11) 'cspv_id'" json:"cspv_id" form:"cspv_id" xml:"cspv_id"`
-	//
+	// TeaId defined
 	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" form:"tea_id" xml:"tea_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

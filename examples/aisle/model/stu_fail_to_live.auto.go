@@ -14,25 +14,25 @@ import (
 
 // StuFailToLive defined
 type StuFailToLive struct {
-	//
+	// SFTLId defined
 	SFTLId null.Int `xorm:"int(11) pk notnull autoincr 's_f_t_l_id'" json:"s_f_t_l_id" form:"s_f_t_l_id" xml:"s_f_t_l_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// SftlRemark defined
 	SftlRemark null.String `xorm:"varchar(2000) 'sftl_remark'" json:"sftl_remark" form:"sftl_remark" xml:"sftl_remark"`
-	//
+	// SftlDate defined
 	SftlDate null.Time `xorm:"datetime 'sftl_date'" json:"sftl_date" form:"sftl_date" xml:"sftl_date"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// SftlBussType defined
 	SftlBussType null.Int `xorm:"int(11) 'sftl_buss_type'" json:"sftl_buss_type" form:"sftl_buss_type" xml:"sftl_buss_type"`
 }
 

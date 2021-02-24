@@ -14,23 +14,23 @@ import (
 
 // TempStorageCzFlow defined
 type TempStorageCzFlow struct {
-	//
+	// CFlowId defined
 	CFlowId null.Int `xorm:"int(11) pk notnull autoincr 'c_flow_id'" json:"c_flow_id" form:"c_flow_id" xml:"c_flow_id"`
-	//
+	// PkTSCId defined
 	PkTSCId null.Int `xorm:"int(11) 'pk_t_s_c_id'" json:"pk_t_s_c_id" form:"pk_t_s_c_id" xml:"pk_t_s_c_id"`
-	//
+	// PkCfs defined
 	PkCfs null.Int `xorm:"int(11) 'pk_cfs'" json:"pk_cfs" form:"pk_cfs" xml:"pk_cfs"`
-	//
+	// PkUser defined
 	PkUser null.Int `xorm:"int(11) 'pk_user'" json:"pk_user" form:"pk_user" xml:"pk_user"`
-	//
+	// ZdCheckState defined
 	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" form:"zd_check_state" xml:"zd_check_state"`
-	//
+	// CheckDate defined
 	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
-	//
+	// CheckRemark defined
 	CheckRemark null.String `xorm:"varchar(500) 'check_remark'" json:"check_remark" form:"check_remark" xml:"check_remark"`
-	//
+	// NowFloor defined
 	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" form:"now_floor" xml:"now_floor"`
-	//
+	// PkCfPool defined
 	PkCfPool null.Int `xorm:"int(11) 'pk_cf_pool'" json:"pk_cf_pool" form:"pk_cf_pool" xml:"pk_cf_pool"`
 }
 

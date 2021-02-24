@@ -14,21 +14,21 @@ import (
 
 // LanguagePackOrder defined
 type LanguagePackOrder struct {
-	//
+	// LPOId defined
 	LPOId null.Int `xorm:"int(11) pk notnull autoincr 'l_p_o_id'" json:"l_p_o_id" form:"l_p_o_id" xml:"l_p_o_id"`
-	//
+	// LpId defined
 	LpId null.Int `xorm:"int(11) 'lp_id'" json:"lp_id" form:"lp_id" xml:"lp_id"`
-	//
+	// OrderId defined
 	OrderId null.Int `xorm:"int(11) 'order_id'" json:"order_id" form:"order_id" xml:"order_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

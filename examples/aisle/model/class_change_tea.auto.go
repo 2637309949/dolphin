@@ -14,23 +14,23 @@ import (
 
 // ClassChangeTea defined
 type ClassChangeTea struct {
-	//
+	// CCTId defined
 	CCTId null.Int `xorm:"int(11) pk notnull autoincr 'c_c_t_id'" json:"c_c_t_id" form:"c_c_t_id" xml:"c_c_t_id"`
-	//
+	// ChangeReason defined
 	ChangeReason null.String `xorm:"varchar(200) 'change_reason'" json:"change_reason" form:"change_reason" xml:"change_reason"`
-	//
+	// ChangeTime defined
 	ChangeTime null.Time `xorm:"datetime 'change_time'" json:"change_time" form:"change_time" xml:"change_time"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// PkClass defined
 	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" form:"pk_class" xml:"pk_class"`
 }
 

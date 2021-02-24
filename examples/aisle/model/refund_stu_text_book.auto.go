@@ -14,23 +14,23 @@ import (
 
 // RefundStuTextBook defined
 type RefundStuTextBook struct {
-	//
+	// RSTBId defined
 	RSTBId null.Int `xorm:"int(11) pk notnull autoincr 'r_s_t_b_id'" json:"r_s_t_b_id" form:"r_s_t_b_id" xml:"r_s_t_b_id"`
-	//
+	// RefId defined
 	RefId null.Int `xorm:"int(11) 'ref_id'" json:"ref_id" form:"ref_id" xml:"ref_id"`
-	//
+	// StbId defined
 	StbId null.Int `xorm:"int(11) 'stb_id'" json:"stb_id" form:"stb_id" xml:"stb_id"`
-	//
+	// Money defined
 	Money null.Float `xorm:"float(11,2) 'money'" json:"money" form:"money" xml:"money"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

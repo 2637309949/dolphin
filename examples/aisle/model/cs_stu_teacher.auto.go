@@ -14,23 +14,23 @@ import (
 
 // CsStuTeacher defined
 type CsStuTeacher struct {
-	//
+	// CSTId defined
 	CSTId null.Int `xorm:"int(11) pk notnull autoincr 'c_s_t_id'" json:"c_s_t_id" form:"c_s_t_id" xml:"c_s_t_id"`
-	//
+	// PkCsStu defined
 	PkCsStu null.Int `xorm:"int(11) 'pk_cs_stu'" json:"pk_cs_stu" form:"pk_cs_stu" xml:"pk_cs_stu"`
-	//
+	// PkTea defined
 	PkTea null.Int `xorm:"int(11) 'pk_tea'" json:"pk_tea" form:"pk_tea" xml:"pk_tea"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 }
 

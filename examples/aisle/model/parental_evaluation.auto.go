@@ -14,27 +14,27 @@ import (
 
 // ParentalEvaluation defined
 type ParentalEvaluation struct {
-	//
+	// PEId defined
 	PEId null.Int `xorm:"int(11) pk notnull autoincr 'p_e_id'" json:"p_e_id" form:"p_e_id" xml:"p_e_id"`
-	//
+	// CsId defined
 	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
-	//
+	// EvaluateContent defined
 	EvaluateContent null.String `xorm:"varchar(500) 'evaluate_content'" json:"evaluate_content" form:"evaluate_content" xml:"evaluate_content"`
-	//
+	// CurriculumEffect defined
 	CurriculumEffect null.Int `xorm:"int(11) 'curriculum_effect'" json:"curriculum_effect" form:"curriculum_effect" xml:"curriculum_effect"`
-	//
+	// TeachingService defined
 	TeachingService null.Int `xorm:"int(11) 'teaching_service'" json:"teaching_service" form:"teaching_service" xml:"teaching_service"`
-	//
+	// ScsId defined
 	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

@@ -14,29 +14,29 @@ import (
 
 // CssCsTaskFile defined
 type CssCsTaskFile struct {
-	//
+	// CCTFId defined
 	CCTFId null.Int `xorm:"int(11) pk notnull autoincr 'c_c_t_f_id'" json:"c_c_t_f_id" form:"c_c_t_f_id" xml:"c_c_t_f_id"`
-	//
+	// CsId defined
 	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
-	//
+	// Fileid defined
 	Fileid null.Int `xorm:"int(11) 'fileid'" json:"fileid" form:"fileid" xml:"fileid"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// CssCsTId defined
 	CssCsTId null.Int `xorm:"int(11) 'css_cs_t_id'" json:"css_cs_t_id" form:"css_cs_t_id" xml:"css_cs_t_id"`
-	//
+	// CsTFiled defined
 	CsTFiled null.Int `xorm:"int(11) 'cs_t_filed'" json:"cs_t_filed" form:"cs_t_filed" xml:"cs_t_filed"`
-	//
+	// CssId defined
 	CssId null.Int `xorm:"int(11) 'css_id'" json:"css_id" form:"css_id" xml:"css_id"`
-	//
+	// CstId defined
 	CstId null.Int `xorm:"int(11) 'cst_id'" json:"cst_id" form:"cst_id" xml:"cst_id"`
 }
 

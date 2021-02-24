@@ -15,37 +15,37 @@ import (
 
 // StuClassTypeSusHour defined
 type StuClassTypeSusHour struct {
-	//
+	// SCTSHId defined
 	SCTSHId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_s_h_id'" json:"s_c_t_s_h_id" form:"s_c_t_s_h_id" xml:"s_c_t_s_h_id"`
-	//
+	// PkStu defined
 	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
-	//
+	// PkCt defined
 	PkCt null.Int `xorm:"int(11) 'pk_ct'" json:"pk_ct" form:"pk_ct" xml:"pk_ct"`
-	//
+	// SusHour defined
 	SusHour null.Float `xorm:"float(11,2) 'sus_hour'" json:"sus_hour" form:"sus_hour" xml:"sus_hour"`
-	//
+	// StartHour defined
 	StartHour null.Float `xorm:"float(11,2) 'start_hour'" json:"start_hour" form:"start_hour" xml:"start_hour"`
-	//
+	// EndHour defined
 	EndHour null.Float `xorm:"float(11,2) 'end_hour'" json:"end_hour" form:"end_hour" xml:"end_hour"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// OnePrice defined
 	OnePrice decimal.Decimal `xorm:"decimal(50,3) 'one_price'" json:"one_price" form:"one_price" xml:"one_price"`
-	//
+	// YpHour defined
 	YpHour null.Float `xorm:"float(50,2) 'yp_hour'" json:"yp_hour" form:"yp_hour" xml:"yp_hour"`
-	//
+	// UseHour defined
 	UseHour null.Float `xorm:"float(50,2) 'use_hour'" json:"use_hour" form:"use_hour" xml:"use_hour"`
-	//
+	// PkClass defined
 	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" form:"pk_class" xml:"pk_class"`
-	//
+	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
 }
 

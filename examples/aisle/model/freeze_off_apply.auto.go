@@ -14,29 +14,29 @@ import (
 
 // FreezeOffApply defined
 type FreezeOffApply struct {
-	//
+	// FOAId defined
 	FOAId null.Int `xorm:"int(11) pk notnull autoincr 'f_o_a_id'" json:"f_o_a_id" form:"f_o_a_id" xml:"f_o_a_id"`
-	//
+	// FreezeOffDesc defined
 	FreezeOffDesc null.String `xorm:"varchar(500) 'freeze_off_desc'" json:"freeze_off_desc" form:"freeze_off_desc" xml:"freeze_off_desc"`
-	//
+	// FreezeOffTime defined
 	FreezeOffTime null.Time `xorm:"datetime 'freeze_off_time'" json:"freeze_off_time" form:"freeze_off_time" xml:"freeze_off_time"`
-	//
+	// FreezeOffAuditing defined
 	FreezeOffAuditing null.Int `xorm:"int(11) 'freeze_off_auditing'" json:"freeze_off_auditing" form:"freeze_off_auditing" xml:"freeze_off_auditing"`
-	//
+	// BussType defined
 	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// ShenhePerson defined
 	ShenhePerson null.Int `xorm:"int(11) 'shenhe_person'" json:"shenhe_person" form:"shenhe_person" xml:"shenhe_person"`
 }
 

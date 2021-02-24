@@ -14,23 +14,23 @@ import (
 
 // ViolateRatioManage defined
 type ViolateRatioManage struct {
-	//
+	// VRMId defined
 	VRMId null.Int `xorm:"int(11) pk notnull autoincr 'v_r_m_id'" json:"v_r_m_id" form:"v_r_m_id" xml:"v_r_m_id"`
-	//
+	// RatioName defined
 	RatioName null.String `xorm:"varchar(50) 'ratio_name'" json:"ratio_name" form:"ratio_name" xml:"ratio_name"`
-	//
+	// Ratio defined
 	Ratio null.String `xorm:"varchar(20) 'ratio'" json:"ratio" form:"ratio" xml:"ratio"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// IfOpen defined
 	IfOpen null.Int `xorm:"int(11) 'if_open'" json:"if_open" form:"if_open" xml:"if_open"`
 }
 

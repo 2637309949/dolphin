@@ -14,21 +14,21 @@ import (
 
 // StuWxdqDate defined
 type StuWxdqDate struct {
-	//
+	// SWDId defined
 	SWDId null.Int `xorm:"int(11) pk notnull autoincr 's_w_d_id'" json:"s_w_d_id" form:"s_w_d_id" xml:"s_w_d_id"`
-	//
+	// DayNum defined
 	DayNum null.Float `xorm:"float(11,2) 'day_num'" json:"day_num" form:"day_num" xml:"day_num"`
-	//
+	// WxdqDesc defined
 	WxdqDesc null.String `xorm:"varchar(500) 'wxdq_desc'" json:"wxdq_desc" form:"wxdq_desc" xml:"wxdq_desc"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

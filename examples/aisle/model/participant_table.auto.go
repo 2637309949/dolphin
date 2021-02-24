@@ -14,31 +14,31 @@ import (
 
 // ParticipantTable defined
 type ParticipantTable struct {
-	//
+	// PTId defined
 	PTId null.Int `xorm:"int(11) pk notnull autoincr 'p_t_id'" json:"p_t_id" form:"p_t_id" xml:"p_t_id"`
-	//
+	// UserId defined
 	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
-	//
+	// TrainId defined
 	TrainId null.Int `xorm:"int(11) 'train_id'" json:"train_id" form:"train_id" xml:"train_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// PDesc defined
 	PDesc null.String `xorm:"varchar(500) 'p_desc'" json:"p_desc" form:"p_desc" xml:"p_desc"`
-	//
+	// StartTime defined
 	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
-	//
+	// EndTime defined
 	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
-	//
+	// TrainingState defined
 	TrainingState null.Int `xorm:"int(11) 'training_state'" json:"training_state" form:"training_state" xml:"training_state"`
-	//
+	// EvaluateRemark defined
 	EvaluateRemark null.String `xorm:"varchar(300) 'evaluate_remark'" json:"evaluate_remark" form:"evaluate_remark" xml:"evaluate_remark"`
 }
 

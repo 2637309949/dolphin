@@ -14,21 +14,21 @@ import (
 
 // EnterprisesOrgan defined
 type EnterprisesOrgan struct {
-	//
+	// EOId defined
 	EOId null.Int `xorm:"int(11) pk notnull autoincr 'e_o_id'" json:"e_o_id" form:"e_o_id" xml:"e_o_id"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// EntId defined
 	EntId null.Int `xorm:"int(11) 'ent_id'" json:"ent_id" form:"ent_id" xml:"ent_id"`
-	//
+	// OrganId defined
 	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" form:"organ_id" xml:"organ_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

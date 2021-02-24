@@ -14,23 +14,23 @@ import (
 
 // CcsHomeworkCheckFile defined
 type CcsHomeworkCheckFile struct {
-	//
+	// CHCFId defined
 	CHCFId null.Int `xorm:"int(11) pk notnull autoincr 'c_h_c_f_id'" json:"c_h_c_f_id" form:"c_h_c_f_id" xml:"c_h_c_f_id"`
-	//
+	// CctId defined
 	CctId null.Int `xorm:"int(11) 'cct_id'" json:"cct_id" form:"cct_id" xml:"cct_id"`
-	//
+	// File defined
 	File null.Int `xorm:"int(11) 'file'" json:"file" form:"file" xml:"file"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// ScsId defined
 	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 }
 

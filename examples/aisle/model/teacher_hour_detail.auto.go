@@ -15,43 +15,43 @@ import (
 
 // TeacherHourDetail defined
 type TeacherHourDetail struct {
-	//
+	// THDId defined
 	THDId null.Int `xorm:"int(11) pk notnull autoincr 't_h_d_id'" json:"t_h_d_id" form:"t_h_d_id" xml:"t_h_d_id"`
-	//
+	// PkCss defined
 	PkCss null.Int `xorm:"int(11) 'pk_css'" json:"pk_css" form:"pk_css" xml:"pk_css"`
-	//
+	// PkCs defined
 	PkCs null.Int `xorm:"int(11) 'pk_cs'" json:"pk_cs" form:"pk_cs" xml:"pk_cs"`
-	//
+	// KqKc defined
 	KqKc null.Float `xorm:"float(11,2) 'kq_kc'" json:"kq_kc" form:"kq_kc" xml:"kq_kc"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// PkTea defined
 	PkTea null.Int `xorm:"int(11) 'pk_tea'" json:"pk_tea" form:"pk_tea" xml:"pk_tea"`
-	//
+	// ZdRsType defined
 	ZdRsType null.Int `xorm:"int(11) 'zd_rs_type'" json:"zd_rs_type" form:"zd_rs_type" xml:"zd_rs_type"`
-	//
+	// PkStu defined
 	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
-	//
+	// PkClass defined
 	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" form:"pk_class" xml:"pk_class"`
-	//
+	// KxOnePrice defined
 	KxOnePrice decimal.Decimal `xorm:"decimal(50,3) 'kx_one_price'" json:"kx_one_price" form:"kx_one_price" xml:"kx_one_price"`
-	//
+	// KxAllPrice defined
 	KxAllPrice decimal.Decimal `xorm:"decimal(50,3) 'kx_all_price'" json:"kx_all_price" form:"kx_all_price" xml:"kx_all_price"`
-	//
+	// JfOnePrice defined
 	JfOnePrice decimal.Decimal `xorm:"decimal(50,3) 'jf_one_price'" json:"jf_one_price" form:"jf_one_price" xml:"jf_one_price"`
-	//
+	// JfAllPrice defined
 	JfAllPrice decimal.Decimal `xorm:"decimal(50,3) 'jf_all_price'" json:"jf_all_price" form:"jf_all_price" xml:"jf_all_price"`
-	//
+	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
-	//
+	// KqDate defined
 	KqDate null.Time `xorm:"datetime 'kq_date'" json:"kq_date" form:"kq_date" xml:"kq_date"`
 }
 

@@ -14,27 +14,27 @@ import (
 
 // NetworkDetail defined
 type NetworkDetail struct {
-	//
+	// NDId defined
 	NDId null.Int `xorm:"int(11) pk notnull autoincr 'n_d_id'" json:"n_d_id" form:"n_d_id" xml:"n_d_id"`
-	//
+	// QdDetail defined
 	QdDetail null.String `xorm:"varchar(100) 'qd_detail'" json:"qd_detail" form:"qd_detail" xml:"qd_detail"`
-	//
+	// Remake defined
 	Remake null.String `xorm:"varchar(500) 'remake'" json:"remake" form:"remake" xml:"remake"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// Qudao defined
 	Qudao null.Int `xorm:"int(11) 'qudao'" json:"qudao" form:"qudao" xml:"qudao"`
-	//
+	// ChannelType defined
 	ChannelType null.Int `xorm:"int(11) 'channel_type'" json:"channel_type" form:"channel_type" xml:"channel_type"`
-	//
+	// QueryType defined
 	QueryType null.Int `xorm:"int(11) 'query_type'" json:"query_type" form:"query_type" xml:"query_type"`
 }
 

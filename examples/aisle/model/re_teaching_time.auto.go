@@ -14,37 +14,37 @@ import (
 
 // ReTeachingTime defined
 type ReTeachingTime struct {
-	//
+	// RTTId defined
 	RTTId null.Int `xorm:"int(11) pk notnull autoincr 'r_t_t_id'" json:"r_t_t_id" form:"r_t_t_id" xml:"r_t_t_id"`
-	//
+	// Remark defined
 	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" form:"remark" xml:"remark"`
-	//
+	// Date defined
 	Date null.Time `xorm:"datetime 'date'" json:"date" form:"date" xml:"date"`
-	//
+	// MinuteNumber defined
 	MinuteNumber null.Int `xorm:"int(11) 'minute_number'" json:"minute_number" form:"minute_number" xml:"minute_number"`
-	//
+	// StartTime defined
 	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
-	//
+	// EndTime defined
 	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
-	//
+	// TeaId defined
 	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" form:"tea_id" xml:"tea_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// SchoolId defined
 	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" form:"school_id" xml:"school_id"`
-	//
+	// NonTeaType defined
 	NonTeaType null.Int `xorm:"int(11) 'non_tea_type'" json:"non_tea_type" form:"non_tea_type" xml:"non_tea_type"`
-	//
+	// ClassHour defined
 	ClassHour null.Float `xorm:"float(50,2) 'class_hour'" json:"class_hour" form:"class_hour" xml:"class_hour"`
-	//
+	// IfKouHour defined
 	IfKouHour null.Int `xorm:"int(11) 'if_kou_hour'" json:"if_kou_hour" form:"if_kou_hour" xml:"if_kou_hour"`
 }
 

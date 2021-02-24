@@ -14,23 +14,23 @@ import (
 
 // GjssAppIntroduction defined
 type GjssAppIntroduction struct {
-	//
+	// GAIId defined
 	GAIId null.Int `xorm:"int(11) pk notnull autoincr 'g_a_i_id'" json:"g_a_i_id" form:"g_a_i_id" xml:"g_a_i_id"`
-	//
+	// GjssTitle defined
 	GjssTitle null.String `xorm:"varchar(100) 'gjss_title'" json:"gjss_title" form:"gjss_title" xml:"gjss_title"`
-	//
+	// GjssIntroduction defined
 	GjssIntroduction null.String `xorm:"varchar(5000) 'gjss_introduction'" json:"gjss_introduction" form:"gjss_introduction" xml:"gjss_introduction"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// StuTeaDic defined
 	StuTeaDic null.Int `xorm:"int(11) 'stu_tea_dic'" json:"stu_tea_dic" form:"stu_tea_dic" xml:"stu_tea_dic"`
 }
 

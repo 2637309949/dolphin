@@ -14,25 +14,25 @@ import (
 
 // Materiel defined
 type Materiel struct {
-	//
+	// MaterielId defined
 	MaterielId null.Int `xorm:"int(11) pk notnull autoincr 'materiel_id'" json:"materiel_id" form:"materiel_id" xml:"materiel_id"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// MaterielName defined
 	MaterielName null.String `xorm:"varchar(50) 'materiel_name'" json:"materiel_name" form:"materiel_name" xml:"materiel_name"`
-	//
+	// MaterielNum defined
 	MaterielNum null.Int `xorm:"int(11) 'materiel_num'" json:"materiel_num" form:"materiel_num" xml:"materiel_num"`
-	//
+	// OrganId defined
 	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" form:"organ_id" xml:"organ_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// OsId defined
 	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

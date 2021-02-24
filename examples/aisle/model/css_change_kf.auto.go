@@ -14,23 +14,23 @@ import (
 
 // CssChangeKf defined
 type CssChangeKf struct {
-	//
+	// CCKId defined
 	CCKId null.Int `xorm:"int(11) pk notnull autoincr 'c_c_k_id'" json:"c_c_k_id" form:"c_c_k_id" xml:"c_c_k_id"`
-	//
+	// PkCss defined
 	PkCss null.Int `xorm:"int(11) 'pk_css'" json:"pk_css" form:"pk_css" xml:"pk_css"`
-	//
+	// PkOldKf defined
 	PkOldKf null.Int `xorm:"int(11) 'pk_old_kf'" json:"pk_old_kf" form:"pk_old_kf" xml:"pk_old_kf"`
-	//
+	// PkNewKf defined
 	PkNewKf null.Int `xorm:"int(11) 'pk_new_kf'" json:"pk_new_kf" form:"pk_new_kf" xml:"pk_new_kf"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

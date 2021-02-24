@@ -14,21 +14,21 @@ import (
 
 // ZbxGiftrules defined
 type ZbxGiftrules struct {
-	//
+	// ZGId defined
 	ZGId null.Int `xorm:"int(11) pk notnull autoincr 'z_g_id'" json:"z_g_id" form:"z_g_id" xml:"z_g_id"`
-	//
+	// BxType defined
 	BxType null.Int `xorm:"int(11) 'bx_type'" json:"bx_type" form:"bx_type" xml:"bx_type"`
-	//
+	// ZbxDesc defined
 	ZbxDesc null.String `xorm:"varchar(1000) 'zbx_desc'" json:"zbx_desc" form:"zbx_desc" xml:"zbx_desc"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

@@ -14,27 +14,27 @@ import (
 
 // StuUseTextbook defined
 type StuUseTextbook struct {
-	//
+	// SUTId defined
 	SUTId null.Int `xorm:"int(11) pk notnull autoincr 's_u_t_id'" json:"s_u_t_id" form:"s_u_t_id" xml:"s_u_t_id"`
-	//
+	// PkStu defined
 	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
-	//
+	// UseStartDate defined
 	UseStartDate null.Time `xorm:"datetime 'use_start_date'" json:"use_start_date" form:"use_start_date" xml:"use_start_date"`
-	//
+	// UseEndDate defined
 	UseEndDate null.Time `xorm:"datetime 'use_end_date'" json:"use_end_date" form:"use_end_date" xml:"use_end_date"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// PkTm defined
 	PkTm null.Int `xorm:"int(11) 'pk_tm'" json:"pk_tm" form:"pk_tm" xml:"pk_tm"`
-	//
+	// PkLevel defined
 	PkLevel null.Int `xorm:"int(11) 'pk_level'" json:"pk_level" form:"pk_level" xml:"pk_level"`
 }
 

@@ -14,27 +14,27 @@ import (
 
 // ExamPaperIntroduction defined
 type ExamPaperIntroduction struct {
-	//
+	// EPIId defined
 	EPIId null.Int `xorm:"int(11) pk notnull autoincr 'e_p_i_id'" json:"e_p_i_id" form:"e_p_i_id" xml:"e_p_i_id"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// EpId defined
 	EpId null.Int `xorm:"int(11) 'ep_id'" json:"ep_id" form:"ep_id" xml:"ep_id"`
-	//
+	// EpiTitle defined
 	EpiTitle null.String `xorm:"varchar(50) 'epi_title'" json:"epi_title" form:"epi_title" xml:"epi_title"`
-	//
+	// EpiDetail defined
 	EpiDetail null.Int `xorm:"int(11) 'epi_detail'" json:"epi_detail" form:"epi_detail" xml:"epi_detail"`
-	//
+	// EpiKey defined
 	EpiKey null.String `xorm:"varchar(100) 'epi_key'" json:"epi_key" form:"epi_key" xml:"epi_key"`
-	//
+	// EpiOrder defined
 	EpiOrder null.Int `xorm:"int(11) 'epi_order'" json:"epi_order" form:"epi_order" xml:"epi_order"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

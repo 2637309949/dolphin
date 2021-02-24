@@ -15,43 +15,43 @@ import (
 
 // IcbcPayList defined
 type IcbcPayList struct {
-	//
+	// IPLId defined
 	IPLId null.Int `xorm:"int(11) pk notnull autoincr 'i_p_l_id'" json:"i_p_l_id" form:"i_p_l_id" xml:"i_p_l_id"`
-	//
+	// PkStu defined
 	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
-	//
+	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// ResponseCode defined
 	ResponseCode null.String `xorm:"varchar(20) 'response_code'" json:"response_code" form:"response_code" xml:"response_code"`
-	//
+	// TransType defined
 	TransType null.Int `xorm:"int(11) 'trans_type'" json:"trans_type" form:"trans_type" xml:"trans_type"`
-	//
+	// TerminalId defined
 	TerminalId null.String `xorm:"varchar(50) 'terminal_id'" json:"terminal_id" form:"terminal_id" xml:"terminal_id"`
-	//
+	// Merchantid defined
 	Merchantid null.String `xorm:"varchar(50) 'merchantid'" json:"merchantid" form:"merchantid" xml:"merchantid"`
-	//
+	// ReferenceNo defined
 	ReferenceNo null.String `xorm:"varchar(50) 'reference_no'" json:"reference_no" form:"reference_no" xml:"reference_no"`
-	//
+	// CardNo defined
 	CardNo null.String `xorm:"varchar(30) 'card_no'" json:"card_no" form:"card_no" xml:"card_no"`
-	//
+	// OrderId defined
 	OrderId null.String `xorm:"varchar(30) 'order_id'" json:"order_id" form:"order_id" xml:"order_id"`
-	//
+	// ReceiptNo defined
 	ReceiptNo null.String `xorm:"varchar(30) 'receipt_no'" json:"receipt_no" form:"receipt_no" xml:"receipt_no"`
-	//
+	// TransDate defined
 	TransDate null.Time `xorm:"datetime 'trans_date'" json:"trans_date" form:"trans_date" xml:"trans_date"`
-	//
+	// TransTime defined
 	TransTime null.Time `xorm:"datetime 'trans_time'" json:"trans_time" form:"trans_time" xml:"trans_time"`
-	//
+	// Amout defined
 	Amout decimal.Decimal `xorm:"decimal(50,3) 'amout'" json:"amout" form:"amout" xml:"amout"`
 }
 

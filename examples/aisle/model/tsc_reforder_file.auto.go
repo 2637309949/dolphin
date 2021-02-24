@@ -14,21 +14,21 @@ import (
 
 // TscReforderFile defined
 type TscReforderFile struct {
-	//
+	// TRFId defined
 	TRFId null.Int `xorm:"int(11) pk notnull autoincr 't_r_f_id'" json:"t_r_f_id" form:"t_r_f_id" xml:"t_r_f_id"`
-	//
+	// TscId defined
 	TscId null.Int `xorm:"int(11) 'tsc_id'" json:"tsc_id" form:"tsc_id" xml:"tsc_id"`
-	//
+	// Fileid defined
 	Fileid null.Int `xorm:"int(11) 'fileid'" json:"fileid" form:"fileid" xml:"fileid"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

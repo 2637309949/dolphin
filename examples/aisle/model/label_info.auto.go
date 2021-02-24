@@ -14,25 +14,25 @@ import (
 
 // LabelInfo defined
 type LabelInfo struct {
-	//
+	// LabelInfoId defined
 	LabelInfoId null.Int `xorm:"int(11) pk notnull autoincr 'label_info_id'" json:"label_info_id" form:"label_info_id" xml:"label_info_id"`
-	//
+	// ParentId defined
 	ParentId null.Int `xorm:"int(11) 'parent_id'" json:"parent_id" form:"parent_id" xml:"parent_id"`
-	//
+	// LabelName defined
 	LabelName null.String `xorm:"varchar(100) 'label_name'" json:"label_name" form:"label_name" xml:"label_name"`
-	//
+	// LabelRemark defined
 	LabelRemark null.String `xorm:"varchar(500) 'label_remark'" json:"label_remark" form:"label_remark" xml:"label_remark"`
-	//
+	// PtId defined
 	PtId null.Int `xorm:"int(11) 'pt_id'" json:"pt_id" form:"pt_id" xml:"pt_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

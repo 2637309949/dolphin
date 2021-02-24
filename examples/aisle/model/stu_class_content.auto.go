@@ -14,23 +14,23 @@ import (
 
 // StuClassContent defined
 type StuClassContent struct {
-	//
+	// SCCId defined
 	SCCId null.Int `xorm:"int(11) pk notnull autoincr 's_c_c_id'" json:"s_c_c_id" form:"s_c_c_id" xml:"s_c_c_id"`
-	//
+	// CssId defined
 	CssId null.Int `xorm:"int(11) 'css_id'" json:"css_id" form:"css_id" xml:"css_id"`
-	//
+	// ClassContent defined
 	ClassContent null.Int `xorm:"int(11) 'class_content'" json:"class_content" form:"class_content" xml:"class_content"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// ScsId defined
 	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 }
 

@@ -14,21 +14,21 @@ import (
 
 // RpsSch defined
 type RpsSch struct {
-	//
+	// RpsSchId defined
 	RpsSchId null.Int `xorm:"int(11) pk notnull autoincr 'rps_sch_id'" json:"rps_sch_id" form:"rps_sch_id" xml:"rps_sch_id"`
-	//
+	// RpsId defined
 	RpsId null.Int `xorm:"int(11) 'rps_id'" json:"rps_id" form:"rps_id" xml:"rps_id"`
-	//
+	// SchId defined
 	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

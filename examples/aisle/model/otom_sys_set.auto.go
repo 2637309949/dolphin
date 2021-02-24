@@ -14,49 +14,49 @@ import (
 
 // OtomSysSet defined
 type OtomSysSet struct {
-	//
+	// OSSId defined
 	OSSId null.Int `xorm:"int(11) pk notnull autoincr 'o_s_s_id'" json:"o_s_s_id" form:"o_s_s_id" xml:"o_s_s_id"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// OtAppraise defined
 	OtAppraise null.Int `xorm:"int(11) 'ot_appraise'" json:"ot_appraise" form:"ot_appraise" xml:"ot_appraise"`
-	//
+	// OtLateclass defined
 	OtLateclass null.Int `xorm:"int(11) 'ot_lateclass'" json:"ot_lateclass" form:"ot_lateclass" xml:"ot_lateclass"`
-	//
+	// OtAheadclass defined
 	OtAheadclass null.Int `xorm:"int(11) 'ot_aheadclass'" json:"ot_aheadclass" form:"ot_aheadclass" xml:"ot_aheadclass"`
-	//
+	// OtDismissclass defined
 	OtDismissclass null.Int `xorm:"int(11) 'ot_dismissclass'" json:"ot_dismissclass" form:"ot_dismissclass" xml:"ot_dismissclass"`
-	//
+	// OtExtendclass defined
 	OtExtendclass null.Int `xorm:"int(11) 'ot_extendclass'" json:"ot_extendclass" form:"ot_extendclass" xml:"ot_extendclass"`
-	//
+	// OtWelcome defined
 	OtWelcome null.String `xorm:"varchar(200) 'ot_welcome'" json:"ot_welcome" form:"ot_welcome" xml:"ot_welcome"`
-	//
+	// OtSaybye defined
 	OtSaybye null.String `xorm:"varchar(200) 'ot_saybye'" json:"ot_saybye" form:"ot_saybye" xml:"ot_saybye"`
-	//
+	// OtAutoCard defined
 	OtAutoCard null.Int `xorm:"int(11) 'ot_auto_card'" json:"ot_auto_card" form:"ot_auto_card" xml:"ot_auto_card"`
-	//
+	// OtImg defined
 	OtImg null.String `xorm:"varchar(200) 'ot_img'" json:"ot_img" form:"ot_img" xml:"ot_img"`
-	//
+	// OtCopyright defined
 	OtCopyright null.String `xorm:"varchar(200) 'ot_copyright'" json:"ot_copyright" form:"ot_copyright" xml:"ot_copyright"`
-	//
+	// OtLianxu defined
 	OtLianxu null.Int `xorm:"int(11) 'ot_lianxu'" json:"ot_lianxu" form:"ot_lianxu" xml:"ot_lianxu"`
-	//
+	// OtLessonItvl defined
 	OtLessonItvl null.Int `xorm:"int(11) 'ot_lesson_itvl'" json:"ot_lesson_itvl" form:"ot_lesson_itvl" xml:"ot_lesson_itvl"`
-	//
+	// PrintTimes defined
 	PrintTimes null.Int `xorm:"int(11) 'print_times'" json:"print_times" form:"print_times" xml:"print_times"`
-	//
+	// OtAppraiseSeconds defined
 	OtAppraiseSeconds null.Int `xorm:"int(11) 'ot_appraise_seconds'" json:"ot_appraise_seconds" form:"ot_appraise_seconds" xml:"ot_appraise_seconds"`
-	//
+	// OtTitle defined
 	OtTitle null.String `xorm:"varchar(200) 'ot_title'" json:"ot_title" form:"ot_title" xml:"ot_title"`
-	//
+	// SkTitle defined
 	SkTitle null.String `xorm:"varchar(200) 'sk_title'" json:"sk_title" form:"sk_title" xml:"sk_title"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

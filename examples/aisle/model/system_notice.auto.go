@@ -14,19 +14,19 @@ import (
 
 // SystemNotice defined
 type SystemNotice struct {
-	//
+	// SysnId defined
 	SysnId null.Int `xorm:"int(11) pk notnull autoincr 'sysn_id'" json:"sysn_id" form:"sysn_id" xml:"sysn_id"`
-	//
+	// SysnName defined
 	SysnName null.String `xorm:"varchar(500) 'sysn_name'" json:"sysn_name" form:"sysn_name" xml:"sysn_name"`
-	//
+	// SysnContent defined
 	SysnContent null.String `xorm:"varchar(4000) 'sysn_content'" json:"sysn_content" form:"sysn_content" xml:"sysn_content"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 }
 

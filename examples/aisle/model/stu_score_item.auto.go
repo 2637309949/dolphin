@@ -14,23 +14,23 @@ import (
 
 // StuScoreItem defined
 type StuScoreItem struct {
-	//
+	// SSIId defined
 	SSIId null.Int `xorm:"int(11) pk notnull autoincr 's_s_i_id'" json:"s_s_i_id" form:"s_s_i_id" xml:"s_s_i_id"`
-	//
+	// SsId defined
 	SsId null.Int `xorm:"int(11) 'ss_id'" json:"ss_id" form:"ss_id" xml:"ss_id"`
-	//
+	// SiId defined
 	SiId null.Int `xorm:"int(11) 'si_id'" json:"si_id" form:"si_id" xml:"si_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// Score defined
 	Score null.Float `xorm:"float(50,2) 'score'" json:"score" form:"score" xml:"score"`
 }
 

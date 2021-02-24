@@ -14,21 +14,21 @@ import (
 
 // ClassChangeTeaHis defined
 type ClassChangeTeaHis struct {
-	//
+	// CCTHId defined
 	CCTHId null.Int `xorm:"int(11) pk notnull autoincr 'c_c_t_h_id'" json:"c_c_t_h_id" form:"c_c_t_h_id" xml:"c_c_t_h_id"`
-	//
+	// PkCct defined
 	PkCct null.Int `xorm:"int(11) 'pk_cct'" json:"pk_cct" form:"pk_cct" xml:"pk_cct"`
-	//
+	// PkHisTea defined
 	PkHisTea null.Int `xorm:"int(11) 'pk_his_tea'" json:"pk_his_tea" form:"pk_his_tea" xml:"pk_his_tea"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

@@ -14,21 +14,21 @@ import (
 
 // CoverComplaintPeople defined
 type CoverComplaintPeople struct {
-	//
+	// CCPId defined
 	CCPId null.Int `xorm:"int(11) pk notnull autoincr 'c_c_p_id'" json:"c_c_p_id" form:"c_c_p_id" xml:"c_c_p_id"`
-	//
+	// ComplaintId defined
 	ComplaintId null.Int `xorm:"int(11) 'complaint_id'" json:"complaint_id" form:"complaint_id" xml:"complaint_id"`
-	//
+	// ComplaintPeople defined
 	ComplaintPeople null.Int `xorm:"int(11) 'complaint_people'" json:"complaint_people" form:"complaint_people" xml:"complaint_people"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

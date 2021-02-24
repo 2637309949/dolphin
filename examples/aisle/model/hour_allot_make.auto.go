@@ -14,21 +14,21 @@ import (
 
 // HourAllotMake defined
 type HourAllotMake struct {
-	//
+	// HAMId defined
 	HAMId null.Int `xorm:"int(11) pk notnull autoincr 'h_a_m_id'" json:"h_a_m_id" form:"h_a_m_id" xml:"h_a_m_id"`
-	//
+	// HamName defined
 	HamName null.String `xorm:"varchar(20) 'ham_name'" json:"ham_name" form:"ham_name" xml:"ham_name"`
-	//
+	// Denominator defined
 	Denominator null.Int `xorm:"int(11) 'denominator'" json:"denominator" form:"denominator" xml:"denominator"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

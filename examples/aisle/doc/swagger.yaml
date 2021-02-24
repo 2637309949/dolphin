@@ -25,30 +25,43 @@ definitions:
   model.Organ:
     properties:
       create_date:
+        description: CreateDate defined
         type: string
       creater:
+        description: Creater defined
         type: string
       if_buy_online:
+        description: IfBuyOnline defined
         type: number
       isdelete:
+        description: Isdelete defined
         type: number
       organ_id:
+        description: OrganId defined
         type: number
       organ_name:
+        description: OrganName defined
         type: string
       organ_number:
+        description: OrganNumber defined
         type: string
       organ_pinyin:
+        description: OrganPinyin defined
         type: string
       organ_tell:
+        description: OrganTell defined
         type: string
       parent_id:
+        description: ParentId defined
         type: number
       sheng_id:
+        description: ShengId defined
         type: number
       update_date:
+        description: UpdateDate defined
         type: string
       updater:
+        description: Updater defined
         type: string
     type: object
   model.Scheduling:

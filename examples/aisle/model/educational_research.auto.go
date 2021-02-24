@@ -14,21 +14,21 @@ import (
 
 // EducationalResearch defined
 type EducationalResearch struct {
-	//
+	// ERId defined
 	ERId null.Int `xorm:"int(11) pk notnull autoincr 'e_r_id'" json:"e_r_id" form:"e_r_id" xml:"e_r_id"`
-	//
+	// ErDate defined
 	ErDate null.Time `xorm:"datetime 'er_date'" json:"er_date" form:"er_date" xml:"er_date"`
-	//
+	// Remark defined
 	Remark null.String `xorm:"varchar(300) 'remark'" json:"remark" form:"remark" xml:"remark"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

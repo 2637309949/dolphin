@@ -14,31 +14,31 @@ import (
 
 // LearningparkBookFileid defined
 type LearningparkBookFileid struct {
-	//
+	// LBFId defined
 	LBFId null.Int `xorm:"int(11) pk notnull autoincr 'l_b_f_id'" json:"l_b_f_id" form:"l_b_f_id" xml:"l_b_f_id"`
-	//
+	// UnitId defined
 	UnitId null.Int `xorm:"int(11) 'unit_id'" json:"unit_id" form:"unit_id" xml:"unit_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// VideoFiled defined
 	VideoFiled null.Int `xorm:"int(11) 'video_filed'" json:"video_filed" form:"video_filed" xml:"video_filed"`
-	//
+	// LbId defined
 	LbId null.Int `xorm:"int(11) 'lb_id'" json:"lb_id" form:"lb_id" xml:"lb_id"`
-	//
+	// CoursesName defined
 	CoursesName null.String `xorm:"varchar(100) 'courses_name'" json:"courses_name" form:"courses_name" xml:"courses_name"`
-	//
+	// BrowsingVolume defined
 	BrowsingVolume null.Float `xorm:"float(50,2) 'browsing_volume'" json:"browsing_volume" form:"browsing_volume" xml:"browsing_volume"`
-	//
+	// PkSl defined
 	PkSl null.Int `xorm:"int(11) 'pk_sl'" json:"pk_sl" form:"pk_sl" xml:"pk_sl"`
-	//
+	// SpsltFiled defined
 	SpsltFiled null.Int `xorm:"int(11) 'spslt_filed'" json:"spslt_filed" form:"spslt_filed" xml:"spslt_filed"`
 }
 

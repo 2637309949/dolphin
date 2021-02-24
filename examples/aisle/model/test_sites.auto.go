@@ -14,23 +14,23 @@ import (
 
 // TestSites defined
 type TestSites struct {
-	//
+	// TestSitesId defined
 	TestSitesId null.Int `xorm:"int(11) pk notnull autoincr 'test_sites_id'" json:"test_sites_id" form:"test_sites_id" xml:"test_sites_id"`
-	//
+	// TsName defined
 	TsName null.String `xorm:"varchar(100) 'ts_name'" json:"ts_name" form:"ts_name" xml:"ts_name"`
-	//
+	// TsRemark defined
 	TsRemark null.String `xorm:"varchar(200) 'ts_remark'" json:"ts_remark" form:"ts_remark" xml:"ts_remark"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// SchoolId defined
 	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" form:"school_id" xml:"school_id"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

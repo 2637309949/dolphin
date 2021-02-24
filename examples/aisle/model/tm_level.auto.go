@@ -14,21 +14,21 @@ import (
 
 // TmLevel defined
 type TmLevel struct {
-	//
+	// TmLevelId defined
 	TmLevelId null.Int `xorm:"int(11) pk notnull autoincr 'tm_level_id'" json:"tm_level_id" form:"tm_level_id" xml:"tm_level_id"`
-	//
+	// TmId defined
 	TmId null.Int `xorm:"int(11) 'tm_id'" json:"tm_id" form:"tm_id" xml:"tm_id"`
-	//
+	// LevelId defined
 	LevelId null.Int `xorm:"int(11) 'level_id'" json:"level_id" form:"level_id" xml:"level_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

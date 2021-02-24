@@ -14,21 +14,21 @@ import (
 
 // TrainerEvaluateParticipant defined
 type TrainerEvaluateParticipant struct {
-	//
+	// TEPId defined
 	TEPId null.Int `xorm:"int(11) pk notnull autoincr 't_e_p_id'" json:"t_e_p_id" form:"t_e_p_id" xml:"t_e_p_id"`
-	//
+	// TrainerId defined
 	TrainerId null.Int `xorm:"int(11) 'trainer_id'" json:"trainer_id" form:"trainer_id" xml:"trainer_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// EvaluateRemark defined
 	EvaluateRemark null.String `xorm:"varchar(300) 'evaluate_remark'" json:"evaluate_remark" form:"evaluate_remark" xml:"evaluate_remark"`
 }
 

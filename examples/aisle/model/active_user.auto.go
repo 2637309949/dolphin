@@ -14,21 +14,21 @@ import (
 
 // ActiveUser defined
 type ActiveUser struct {
-	//
+	// AUId defined
 	AUId null.Int `xorm:"int(11) pk notnull autoincr 'a_u_id'" json:"a_u_id" form:"a_u_id" xml:"a_u_id"`
-	//
+	// ActiveId defined
 	ActiveId null.Int `xorm:"int(11) 'active_id'" json:"active_id" form:"active_id" xml:"active_id"`
-	//
+	// UserId defined
 	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

@@ -14,23 +14,23 @@ import (
 
 // LgClasstype defined
 type LgClasstype struct {
-	//
+	// LCId defined
 	LCId null.Int `xorm:"int(11) pk notnull autoincr 'l_c_id'" json:"l_c_id" form:"l_c_id" xml:"l_c_id"`
-	//
+	// LgId defined
 	LgId null.Int `xorm:"int(11) 'lg_id'" json:"lg_id" form:"lg_id" xml:"lg_id"`
-	//
+	// CtId defined
 	CtId null.Int `xorm:"int(11) 'ct_id'" json:"ct_id" form:"ct_id" xml:"ct_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// FsId defined
 	FsId null.Int `xorm:"int(11) 'fs_id'" json:"fs_id" form:"fs_id" xml:"fs_id"`
 }
 

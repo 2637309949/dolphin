@@ -14,25 +14,25 @@ import (
 
 // StudentVisitLanguage defined
 type StudentVisitLanguage struct {
-	//
+	// SvlResult defined
 	SvlResult null.String `xorm:"varchar(1000) 'svl_result'" json:"svl_result" form:"svl_result" xml:"svl_result"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// SvId defined
 	SvId null.Int `xorm:"int(11) 'sv_id'" json:"sv_id" form:"sv_id" xml:"sv_id"`
-	//
+	// SlmId defined
 	SlmId null.Int `xorm:"int(11) 'slm_id'" json:"slm_id" form:"slm_id" xml:"slm_id"`
-	//
+	// SVLId defined
 	SVLId null.Int `xorm:"int(11) pk notnull autoincr 's_v_l_id'" json:"s_v_l_id" form:"s_v_l_id" xml:"s_v_l_id"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// StuSystemSta defined
 	StuSystemSta null.Int `xorm:"int(11) 'stu_system_sta'" json:"stu_system_sta" form:"stu_system_sta" xml:"stu_system_sta"`
 }
 

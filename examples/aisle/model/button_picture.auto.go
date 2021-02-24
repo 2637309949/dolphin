@@ -14,17 +14,17 @@ import (
 
 // ButtonPicture defined
 type ButtonPicture struct {
-	//
+	// T2230 defined
 	T2230 null.Int `xorm:"int(11) pk notnull autoincr 't_223_0'" json:"t_223_0" form:"t_223_0" xml:"t_223_0"`
-	//
+	// BtnpicName defined
 	BtnpicName null.String `xorm:"varchar(500) notnull 'btnpic_name'" json:"btnpic_name" form:"btnpic_name" xml:"btnpic_name"`
-	//
+	// BtnpicType defined
 	BtnpicType null.Float `xorm:"float(11,2) notnull 'btnpic_type'" json:"btnpic_type" form:"btnpic_type" xml:"btnpic_type"`
-	//
+	// BtnpicPicture defined
 	BtnpicPicture null.Int `xorm:"int(11) notnull 'btnpic_picture'" json:"btnpic_picture" form:"btnpic_picture" xml:"btnpic_picture"`
-	//
+	// ProId defined
 	ProId null.Int `xorm:"int(11) 'pro_id'" json:"pro_id" form:"pro_id" xml:"pro_id"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

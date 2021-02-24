@@ -14,27 +14,27 @@ import (
 
 // ActiveLessonStudent defined
 type ActiveLessonStudent struct {
-	//
+	// ALSId defined
 	ALSId null.Int `xorm:"int(11) pk notnull autoincr 'a_l_s_id'" json:"a_l_s_id" form:"a_l_s_id" xml:"a_l_s_id"`
-	//
+	// ActiveId defined
 	ActiveId null.Int `xorm:"int(11) 'active_id'" json:"active_id" form:"active_id" xml:"active_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// TlsState defined
 	TlsState null.Int `xorm:"int(11) 'tls_state'" json:"tls_state" form:"tls_state" xml:"tls_state"`
-	//
+	// SvId defined
 	SvId null.Int `xorm:"int(11) 'sv_id'" json:"sv_id" form:"sv_id" xml:"sv_id"`
-	//
+	// IvId defined
 	IvId null.Int `xorm:"int(11) 'iv_id'" json:"iv_id" form:"iv_id" xml:"iv_id"`
 }
 

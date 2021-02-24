@@ -15,35 +15,35 @@ import (
 
 // PrearrangedCourses defined
 type PrearrangedCourses struct {
-	//
+	// PCId defined
 	PCId null.Int `xorm:"int(11) pk notnull autoincr 'p_c_id'" json:"p_c_id" form:"p_c_id" xml:"p_c_id"`
-	//
+	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
-	//
+	// Hour defined
 	Hour null.Float `xorm:"float(11,2) 'hour'" json:"hour" form:"hour" xml:"hour"`
-	//
+	// PkSct defined
 	PkSct null.Int `xorm:"int(11) 'pk_sct'" json:"pk_sct" form:"pk_sct" xml:"pk_sct"`
-	//
+	// OnePrice defined
 	OnePrice decimal.Decimal `xorm:"decimal(11,2) 'one_price'" json:"one_price" form:"one_price" xml:"one_price"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// AttendDate defined
 	AttendDate null.Time `xorm:"datetime 'attend_date'" json:"attend_date" form:"attend_date" xml:"attend_date"`
-	//
+	// PkStu defined
 	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
-	//
+	// ClassStartTime defined
 	ClassStartTime null.Time `xorm:"datetime 'class_start_time'" json:"class_start_time" form:"class_start_time" xml:"class_start_time"`
-	//
+	// ClassEndTime defined
 	ClassEndTime null.Time `xorm:"datetime 'class_end_time'" json:"class_end_time" form:"class_end_time" xml:"class_end_time"`
-	//
+	// PkClass defined
 	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" form:"pk_class" xml:"pk_class"`
 }
 

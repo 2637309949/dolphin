@@ -14,39 +14,39 @@ import (
 
 // StuClassTypeTextbook defined
 type StuClassTypeTextbook struct {
-	//
+	// SCTTId defined
 	SCTTId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_t_id'" json:"s_c_t_t_id" form:"s_c_t_t_id" xml:"s_c_t_t_id"`
-	//
+	// SctId defined
 	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
-	//
+	// TbId defined
 	TbId null.Int `xorm:"int(11) 'tb_id'" json:"tb_id" form:"tb_id" xml:"tb_id"`
-	//
+	// TbSource defined
 	TbSource null.Int `xorm:"int(11) 'tb_source'" json:"tb_source" form:"tb_source" xml:"tb_source"`
-	//
+	// IfReceive defined
 	IfReceive null.Int `xorm:"int(11) 'if_receive'" json:"if_receive" form:"if_receive" xml:"if_receive"`
-	//
+	// StbPrice defined
 	StbPrice null.Float `xorm:"float(10,2) 'stb_price'" json:"stb_price" form:"stb_price" xml:"stb_price"`
-	//
+	// RefPrice defined
 	RefPrice null.Float `xorm:"float(10,2) 'ref_price'" json:"ref_price" form:"ref_price" xml:"ref_price"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// RefMoney defined
 	RefMoney null.Float `xorm:"float(10,2) 'ref_money'" json:"ref_money" form:"ref_money" xml:"ref_money"`
-	//
+	// BuyNum defined
 	BuyNum null.Float `xorm:"float(10,2) 'buy_num'" json:"buy_num" form:"buy_num" xml:"buy_num"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// OrderId defined
 	OrderId null.Int `xorm:"int(11) 'order_id'" json:"order_id" form:"order_id" xml:"order_id"`
-	//
+	// BussType defined
 	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 }
 

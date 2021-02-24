@@ -14,27 +14,27 @@ import (
 
 // CmStandardOperation defined
 type CmStandardOperation struct {
-	//
+	// CSOId defined
 	CSOId null.Int `xorm:"int(11) pk notnull autoincr 'c_s_o_id'" json:"c_s_o_id" form:"c_s_o_id" xml:"c_s_o_id"`
-	//
+	// CmId defined
 	CmId null.Int `xorm:"int(11) 'cm_id'" json:"cm_id" form:"cm_id" xml:"cm_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// CmSOType defined
 	CmSOType null.Int `xorm:"int(11) 'cm_s_o_type'" json:"cm_s_o_type" form:"cm_s_o_type" xml:"cm_s_o_type"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// TmLevelId defined
 	TmLevelId null.Int `xorm:"int(11) 'tm_level_id'" json:"tm_level_id" form:"tm_level_id" xml:"tm_level_id"`
-	//
+	// CmSOContent defined
 	CmSOContent null.Int `xorm:"int(11) 'cm_s_o_content'" json:"cm_s_o_content" form:"cm_s_o_content" xml:"cm_s_o_content"`
 }
 

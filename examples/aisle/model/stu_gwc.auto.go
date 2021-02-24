@@ -14,23 +14,23 @@ import (
 
 // StuGwc defined
 type StuGwc struct {
-	//
+	// StuGwcId defined
 	StuGwcId null.Int `xorm:"int(11) pk notnull autoincr 'stu_gwc_id'" json:"stu_gwc_id" form:"stu_gwc_id" xml:"stu_gwc_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// GwcName defined
 	GwcName null.String `xorm:"varchar(100) 'gwc_name'" json:"gwc_name" form:"gwc_name" xml:"gwc_name"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// GwcPassword defined
 	GwcPassword null.String `xorm:"varchar(1000) 'gwc_password'" json:"gwc_password" form:"gwc_password" xml:"gwc_password"`
 }
 

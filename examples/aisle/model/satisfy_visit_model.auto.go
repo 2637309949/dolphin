@@ -14,21 +14,21 @@ import (
 
 // SatisfyVisitModel defined
 type SatisfyVisitModel struct {
-	//
+	// SVMId defined
 	SVMId null.Int `xorm:"int(11) pk notnull autoincr 's_v_m_id'" json:"s_v_m_id" form:"s_v_m_id" xml:"s_v_m_id"`
-	//
+	// ModelName defined
 	ModelName null.String `xorm:"varchar(500) 'model_name'" json:"model_name" form:"model_name" xml:"model_name"`
-	//
+	// ModelDesc defined
 	ModelDesc null.String `xorm:"varchar(500) 'model_desc'" json:"model_desc" form:"model_desc" xml:"model_desc"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

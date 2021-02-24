@@ -14,29 +14,29 @@ import (
 
 // WastageFollowupRecord defined
 type WastageFollowupRecord struct {
-	//
+	// WFRId defined
 	WFRId null.Int `xorm:"int(11) pk notnull autoincr 'w_f_r_id'" json:"w_f_r_id" form:"w_f_r_id" xml:"w_f_r_id"`
-	//
+	// EnglishLevel defined
 	EnglishLevel null.String `xorm:"varchar(20) 'english_level'" json:"english_level" form:"english_level" xml:"english_level"`
-	//
+	// EnglishSchool defined
 	EnglishSchool null.String `xorm:"varchar(50) 'english_school'" json:"english_school" form:"english_school" xml:"english_school"`
-	//
+	// IfStudy defined
 	IfStudy null.Int `xorm:"int(11) 'if_study'" json:"if_study" form:"if_study" xml:"if_study"`
-	//
+	// TrackingProgram defined
 	TrackingProgram null.String `xorm:"varchar(200) 'tracking_program'" json:"tracking_program" form:"tracking_program" xml:"tracking_program"`
-	//
+	// WastageMonth defined
 	WastageMonth null.Float `xorm:"float(10,2) 'wastage_month'" json:"wastage_month" form:"wastage_month" xml:"wastage_month"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 }
 

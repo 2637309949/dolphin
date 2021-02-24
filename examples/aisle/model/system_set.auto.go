@@ -14,7 +14,7 @@ import (
 
 // SystemSet defined
 type SystemSet struct {
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

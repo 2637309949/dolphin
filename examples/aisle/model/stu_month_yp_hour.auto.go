@@ -15,27 +15,27 @@ import (
 
 // StuMonthYpHour defined
 type StuMonthYpHour struct {
-	//
+	// SMYHId defined
 	SMYHId null.Int `xorm:"int(11) pk notnull autoincr 's_m_y_h_id'" json:"s_m_y_h_id" form:"s_m_y_h_id" xml:"s_m_y_h_id"`
-	//
+	// PkStu defined
 	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
-	//
+	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
-	//
+	// MonthHour defined
 	MonthHour null.Float `xorm:"float(11,2) 'month_hour'" json:"month_hour" form:"month_hour" xml:"month_hour"`
-	//
+	// MonthMoney defined
 	MonthMoney decimal.Decimal `xorm:"decimal(11,2) 'month_money'" json:"month_money" form:"month_money" xml:"month_money"`
-	//
+	// MonthDate defined
 	MonthDate null.Time `xorm:"datetime 'month_date'" json:"month_date" form:"month_date" xml:"month_date"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

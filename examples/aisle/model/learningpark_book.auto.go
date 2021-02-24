@@ -14,21 +14,21 @@ import (
 
 // LearningparkBook defined
 type LearningparkBook struct {
-	//
+	// LBId defined
 	LBId null.Int `xorm:"int(11) pk notnull autoincr 'l_b_id'" json:"l_b_id" form:"l_b_id" xml:"l_b_id"`
-	//
+	// BookName defined
 	BookName null.String `xorm:"varchar(100) 'book_name'" json:"book_name" form:"book_name" xml:"book_name"`
-	//
+	// SyFileid defined
 	SyFileid null.Int `xorm:"int(11) 'sy_fileid'" json:"sy_fileid" form:"sy_fileid" xml:"sy_fileid"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

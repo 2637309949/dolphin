@@ -15,23 +15,23 @@ import (
 
 // DegreeDeposit defined
 type DegreeDeposit struct {
-	//
+	// DDId defined
 	DDId null.Int `xorm:"int(11) pk notnull autoincr 'd_d_id'" json:"d_d_id" form:"d_d_id" xml:"d_d_id"`
-	//
+	// DdName defined
 	DdName null.String `xorm:"varchar(10) 'dd_name'" json:"dd_name" form:"dd_name" xml:"dd_name"`
-	//
+	// DdMoney defined
 	DdMoney decimal.Decimal `xorm:"decimal(11,2) 'dd_money'" json:"dd_money" form:"dd_money" xml:"dd_money"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// DdState defined
 	DdState null.Int `xorm:"int(11) 'dd_state'" json:"dd_state" form:"dd_state" xml:"dd_state"`
 }
 

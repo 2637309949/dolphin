@@ -14,21 +14,21 @@ import (
 
 // RefundFiles defined
 type RefundFiles struct {
-	//
+	// RFId defined
 	RFId null.Int `xorm:"int(11) pk notnull autoincr 'r_f_id'" json:"r_f_id" form:"r_f_id" xml:"r_f_id"`
-	//
+	// RefundId defined
 	RefundId null.Int `xorm:"int(11) 'refund_id'" json:"refund_id" form:"refund_id" xml:"refund_id"`
-	//
+	// Files defined
 	Files null.Int `xorm:"int(11) 'files'" json:"files" form:"files" xml:"files"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

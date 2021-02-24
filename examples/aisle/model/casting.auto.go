@@ -14,19 +14,19 @@ import (
 
 // Casting defined
 type Casting struct {
-	//
+	// CastId defined
 	CastId null.Int `xorm:"int(11) pk notnull autoincr 'cast_id'" json:"cast_id" form:"cast_id" xml:"cast_id"`
-	//
+	// CastName defined
 	CastName null.String `xorm:"varchar(500) 'cast_name'" json:"cast_name" form:"cast_name" xml:"cast_name"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// IfShow defined
 	IfShow null.Int `xorm:"int(11) 'if_show'" json:"if_show" form:"if_show" xml:"if_show"`
 }
 

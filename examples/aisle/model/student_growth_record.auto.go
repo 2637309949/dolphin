@@ -14,23 +14,23 @@ import (
 
 // StudentGrowthRecord defined
 type StudentGrowthRecord struct {
-	//
+	// SGRId defined
 	SGRId null.Int `xorm:"int(11) pk notnull autoincr 's_g_r_id'" json:"s_g_r_id" form:"s_g_r_id" xml:"s_g_r_id"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// Remark defined
 	Remark null.String `xorm:"varchar(300) 'remark'" json:"remark" form:"remark" xml:"remark"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// GrowthTime defined
 	GrowthTime null.Time `xorm:"datetime 'growth_time'" json:"growth_time" form:"growth_time" xml:"growth_time"`
 }
 

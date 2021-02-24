@@ -14,13 +14,13 @@ import (
 
 // TimeSet defined
 type TimeSet struct {
-	//
+	// T3250 defined
 	T3250 null.Int `xorm:"int(11) pk notnull autoincr 't_325_0'" json:"t_325_0" form:"t_325_0" xml:"t_325_0"`
-	//
+	// TimeName defined
 	TimeName null.String `xorm:"varchar(500) notnull 'time_name'" json:"time_name" form:"time_name" xml:"time_name"`
-	//
+	// TimeCode defined
 	TimeCode null.String `xorm:"varchar(500) notnull 'time_code'" json:"time_code" form:"time_code" xml:"time_code"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

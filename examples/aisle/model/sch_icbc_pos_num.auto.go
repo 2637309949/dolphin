@@ -14,21 +14,21 @@ import (
 
 // SchIcbcPosNum defined
 type SchIcbcPosNum struct {
-	//
+	// SIPNId defined
 	SIPNId null.Int `xorm:"int(11) pk notnull autoincr 's_i_p_n_id'" json:"s_i_p_n_id" form:"s_i_p_n_id" xml:"s_i_p_n_id"`
-	//
+	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
-	//
+	// PosNum defined
 	PosNum null.String `xorm:"varchar(100) 'pos_num'" json:"pos_num" form:"pos_num" xml:"pos_num"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

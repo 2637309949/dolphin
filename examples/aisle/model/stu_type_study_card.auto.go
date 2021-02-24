@@ -14,23 +14,23 @@ import (
 
 // StuTypeStudyCard defined
 type StuTypeStudyCard struct {
-	//
+	// STSCId defined
 	STSCId null.Int `xorm:"int(11) pk notnull autoincr 's_t_s_c_id'" json:"s_t_s_c_id" form:"s_t_s_c_id" xml:"s_t_s_c_id"`
-	//
+	// SctId defined
 	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
-	//
+	// ScId defined
 	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" form:"sc_id" xml:"sc_id"`
-	//
+	// ScDiscountAmount defined
 	ScDiscountAmount null.Float `xorm:"float(11,2) 'sc_discount_amount'" json:"sc_discount_amount" form:"sc_discount_amount" xml:"sc_discount_amount"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 

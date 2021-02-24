@@ -14,41 +14,41 @@ import (
 
 // RefundStuClassType defined
 type RefundStuClassType struct {
-	//
+	// RSCTId defined
 	RSCTId null.Int `xorm:"int(11) pk notnull autoincr 'r_s_c_t_id'" json:"r_s_c_t_id" form:"r_s_c_t_id" xml:"r_s_c_t_id"`
-	//
+	// RefId defined
 	RefId null.Int `xorm:"int(11) 'ref_id'" json:"ref_id" form:"ref_id" xml:"ref_id"`
-	//
+	// SctId defined
 	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
-	//
+	// Money defined
 	Money null.Float `xorm:"float(10,2) 'money'" json:"money" form:"money" xml:"money"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// RefundHour defined
 	RefundHour null.Float `xorm:"float(10,2) 'refund_hour'" json:"refund_hour" form:"refund_hour" xml:"refund_hour"`
-	//
+	// RefUnitprice defined
 	RefUnitprice null.Float `xorm:"float(10,2) 'ref_unitprice'" json:"ref_unitprice" form:"ref_unitprice" xml:"ref_unitprice"`
-	//
+	// RstInvoiceFee defined
 	RstInvoiceFee null.Float `xorm:"float(50,2) 'rst_invoice_fee'" json:"rst_invoice_fee" form:"rst_invoice_fee" xml:"rst_invoice_fee"`
-	//
+	// RstServiceFee defined
 	RstServiceFee null.Float `xorm:"float(50,2) 'rst_service_fee'" json:"rst_service_fee" form:"rst_service_fee" xml:"rst_service_fee"`
-	//
+	// CheckState defined
 	CheckState null.Int `xorm:"int(11) default(54) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
-	//
+	// RefWay defined
 	RefWay null.Int `xorm:"int(11) 'ref_way'" json:"ref_way" form:"ref_way" xml:"ref_way"`
-	//
+	// RefType defined
 	RefType null.Int `xorm:"int(11) 'ref_type'" json:"ref_type" form:"ref_type" xml:"ref_type"`
-	//
+	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
-	//
+	// OrderId defined
 	OrderId null.Int `xorm:"int(11) 'order_id'" json:"order_id" form:"order_id" xml:"order_id"`
 }
 

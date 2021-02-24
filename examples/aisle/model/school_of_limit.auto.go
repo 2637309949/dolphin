@@ -15,31 +15,31 @@ import (
 
 // SchoolOfLimit defined
 type SchoolOfLimit struct {
-	//
+	// SOLId defined
 	SOLId null.Int `xorm:"int(11) pk notnull autoincr 's_o_l_id'" json:"s_o_l_id" form:"s_o_l_id" xml:"s_o_l_id"`
-	//
+	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
-	//
+	// StartDate defined
 	StartDate null.Time `xorm:"datetime 'start_date'" json:"start_date" form:"start_date" xml:"start_date"`
-	//
+	// EndDate defined
 	EndDate null.Time `xorm:"datetime 'end_date'" json:"end_date" form:"end_date" xml:"end_date"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// OfYjType defined
 	OfYjType null.Int `xorm:"int(11) 'of_yj_type'" json:"of_yj_type" form:"of_yj_type" xml:"of_yj_type"`
-	//
+	// OfBase defined
 	OfBase decimal.Decimal `xorm:"decimal(50,3) 'of_base'" json:"of_base" form:"of_base" xml:"of_base"`
-	//
+	// SolName defined
 	SolName null.String `xorm:"varchar(20) 'sol_name'" json:"sol_name" form:"sol_name" xml:"sol_name"`
-	//
+	// PkYyb defined
 	PkYyb null.Int `xorm:"int(11) 'pk_yyb'" json:"pk_yyb" form:"pk_yyb" xml:"pk_yyb"`
 }
 

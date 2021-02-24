@@ -14,29 +14,29 @@ import (
 
 // StudyCard defined
 type StudyCard struct {
-	//
+	// StudyCardId defined
 	StudyCardId null.Int `xorm:"int(11) pk notnull autoincr 'study_card_id'" json:"study_card_id" form:"study_card_id" xml:"study_card_id"`
-	//
+	// StudyCardnumber defined
 	StudyCardnumber null.String `xorm:"varchar(100) 'study_cardnumber'" json:"study_cardnumber" form:"study_cardnumber" xml:"study_cardnumber"`
-	//
+	// ArrivedMoney defined
 	ArrivedMoney null.Float `xorm:"float(50,2) 'arrived_money'" json:"arrived_money" form:"arrived_money" xml:"arrived_money"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// ArrivedType defined
 	ArrivedType null.Int `xorm:"int(11) 'arrived_type'" json:"arrived_type" form:"arrived_type" xml:"arrived_type"`
-	//
+	// ArrivedDiscount defined
 	ArrivedDiscount null.Float `xorm:"float(50,2) 'arrived_discount'" json:"arrived_discount" form:"arrived_discount" xml:"arrived_discount"`
-	//
+	// BussType defined
 	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
-	//
+	// CardName defined
 	CardName null.String `xorm:"varchar(300) 'card_name'" json:"card_name" form:"card_name" xml:"card_name"`
 }
 

@@ -14,29 +14,29 @@ import (
 
 // ComplaintDeal defined
 type ComplaintDeal struct {
-	//
+	// CDId defined
 	CDId null.Int `xorm:"int(11) pk notnull autoincr 'c_d_id'" json:"c_d_id" form:"c_d_id" xml:"c_d_id"`
-	//
+	// CdState defined
 	CdState null.Int `xorm:"int(11) 'cd_state'" json:"cd_state" form:"cd_state" xml:"cd_state"`
-	//
+	// CdUser defined
 	CdUser null.Int `xorm:"int(11) 'cd_user'" json:"cd_user" form:"cd_user" xml:"cd_user"`
-	//
+	// CdSituation defined
 	CdSituation null.String `xorm:"varchar(2000) 'cd_situation'" json:"cd_situation" form:"cd_situation" xml:"cd_situation"`
-	//
+	// CdDate defined
 	CdDate null.Time `xorm:"datetime 'cd_date'" json:"cd_date" form:"cd_date" xml:"cd_date"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// CdDeal defined
 	CdDeal null.Int `xorm:"int(11) 'cd_deal'" json:"cd_deal" form:"cd_deal" xml:"cd_deal"`
-	//
+	// CpId defined
 	CpId null.Int `xorm:"int(11) 'cp_id'" json:"cp_id" form:"cp_id" xml:"cp_id"`
 }
 

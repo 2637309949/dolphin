@@ -14,25 +14,25 @@ import (
 
 // YbzfPos defined
 type YbzfPos struct {
-	//
+	// YbzfPosId defined
 	YbzfPosId null.Int `xorm:"int(11) pk notnull autoincr 'ybzf_pos_id'" json:"ybzf_pos_id" form:"ybzf_pos_id" xml:"ybzf_pos_id"`
-	//
+	// YbzfNumber defined
 	YbzfNumber null.String `xorm:"varchar(10000) 'ybzf_number'" json:"ybzf_number" form:"ybzf_number" xml:"ybzf_number"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	//
+	// Isdelete defined
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
-	//
+	// OnOffState defined
 	OnOffState null.Int `xorm:"int(11) 'on_off_state'" json:"on_off_state" form:"on_off_state" xml:"on_off_state"`
-	//
+	// YbzfDesc defined
 	YbzfDesc null.String `xorm:"varchar(1000) 'ybzf_desc'" json:"ybzf_desc" form:"ybzf_desc" xml:"ybzf_desc"`
-	//
+	// SchId defined
 	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
 }
 

@@ -14,25 +14,25 @@ import (
 
 // CheckFlowSetFloor defined
 type CheckFlowSetFloor struct {
-	//
+	// CFSFId defined
 	CFSFId null.Int `xorm:"int(11) pk notnull autoincr 'c_f_s_f_id'" json:"c_f_s_f_id" form:"c_f_s_f_id" xml:"c_f_s_f_id"`
-	//
+	// PkCfs defined
 	PkCfs null.Int `xorm:"int(11) 'pk_cfs'" json:"pk_cfs" form:"pk_cfs" xml:"pk_cfs"`
-	//
+	// CfsfOr defined
 	CfsfOr null.Int `xorm:"int(11) 'cfsf_or'" json:"cfsf_or" form:"cfsf_or" xml:"cfsf_or"`
-	//
+	// CfsfType defined
 	CfsfType null.Int `xorm:"int(11) 'cfsf_type'" json:"cfsf_type" form:"cfsf_type" xml:"cfsf_type"`
-	//
+	// FloorName defined
 	FloorName null.String `xorm:"varchar(100) 'floor_name'" json:"floor_name" form:"floor_name" xml:"floor_name"`
-	//
+	// IfFilterSchool defined
 	IfFilterSchool null.Int `xorm:"int(11) 'if_filter_school'" json:"if_filter_school" form:"if_filter_school" xml:"if_filter_school"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 }
 

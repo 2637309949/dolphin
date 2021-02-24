@@ -14,19 +14,19 @@ import (
 
 // UserCasting defined
 type UserCasting struct {
-	//
+	// UserCastId defined
 	UserCastId null.Int `xorm:"int(11) pk notnull autoincr 'user_cast_id'" json:"user_cast_id" form:"user_cast_id" xml:"user_cast_id"`
-	//
+	// UserId defined
 	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
-	//
+	// CastId defined
 	CastId null.Int `xorm:"int(11) 'cast_id'" json:"cast_id" form:"cast_id" xml:"cast_id"`
-	//
+	// Creater defined
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
-	//
+	// CreateDate defined
 	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
-	//
+	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	//
+	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 }
 
