@@ -13,6 +13,16 @@ type {{.Table.ToUpperCase .Table.Name}} struct {
 	{{- end}}
 }
 
+// Marshal defined
+func (m *{{.Table.ToUpperCase .Table.Name}}) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *{{.Table.ToUpperCase .Table.Name}}) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
+}
+
 // Parser defined
 func (m *{{.Table.ToUpperCase .Table.Name}}) Parser(db *xorm.Engine) *tags.Parser {
 	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
