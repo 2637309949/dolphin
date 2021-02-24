@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // PaActivityClassFile defined
 type PaActivityClassFile struct {
 	//
-	PACFId null.Int `xorm:"int(11) pk notnull autoincr 'p_a_c_f_id'" json:"p_a_c_f_id" xml:"p_a_c_f_id"`
+	PACFId null.Int `xorm:"int(11) pk notnull autoincr 'p_a_c_f_id'" json:"p_a_c_f_id" form:"p_a_c_f_id" xml:"p_a_c_f_id"`
 	//
-	FileId null.Int `xorm:"int(11) 'file_id'" json:"file_id" xml:"file_id"`
+	FileId null.Int `xorm:"int(11) 'file_id'" json:"file_id" form:"file_id" xml:"file_id"`
 	//
-	PacfDesc null.String `xorm:"varchar(500) 'pacf_desc'" json:"pacf_desc" xml:"pacf_desc"`
+	PacfDesc null.String `xorm:"varchar(500) 'pacf_desc'" json:"pacf_desc" form:"pacf_desc" xml:"pacf_desc"`
 	//
-	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" xml:"par_id"`
+	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" form:"par_id" xml:"par_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined PaActivityClassFile

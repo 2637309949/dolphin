@@ -4,143 +4,160 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Refund defined
 type Refund struct {
 	//
-	RefundId null.Int `xorm:"int(11) pk notnull autoincr 'refund_id'" json:"refund_id" xml:"refund_id"`
+	RefundId null.Int `xorm:"int(11) pk notnull autoincr 'refund_id'" json:"refund_id" form:"refund_id" xml:"refund_id"`
 	//
-	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" xml:"of_id"`
+	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
 	//
-	RefMoney null.Float `xorm:"float(10,2) 'ref_money'" json:"ref_money" xml:"ref_money"`
+	RefMoney null.Float `xorm:"float(10,2) 'ref_money'" json:"ref_money" form:"ref_money" xml:"ref_money"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	RefWay null.Int `xorm:"int(11) 'ref_way'" json:"ref_way" xml:"ref_way"`
+	RefWay null.Int `xorm:"int(11) 'ref_way'" json:"ref_way" form:"ref_way" xml:"ref_way"`
 	//
-	RefReason null.Int `xorm:"int(11) 'ref_reason'" json:"ref_reason" xml:"ref_reason"`
+	RefReason null.Int `xorm:"int(11) 'ref_reason'" json:"ref_reason" form:"ref_reason" xml:"ref_reason"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	CheckRenmark null.String `xorm:"varchar(500) 'check_renmark'" json:"check_renmark" xml:"check_renmark"`
+	CheckRenmark null.String `xorm:"varchar(500) 'check_renmark'" json:"check_renmark" form:"check_renmark" xml:"check_renmark"`
 	//
-	RefRemark null.String `xorm:"varchar(500) 'ref_remark'" json:"ref_remark" xml:"ref_remark"`
+	RefRemark null.String `xorm:"varchar(500) 'ref_remark'" json:"ref_remark" form:"ref_remark" xml:"ref_remark"`
 	//
-	RefType null.Int `xorm:"int(11) 'ref_type'" json:"ref_type" xml:"ref_type"`
+	RefType null.Int `xorm:"int(11) 'ref_type'" json:"ref_type" form:"ref_type" xml:"ref_type"`
 	//
-	ZcStuId null.Int `xorm:"int(11) 'zc_stu_id'" json:"zc_stu_id" xml:"zc_stu_id"`
+	ZcStuId null.Int `xorm:"int(11) 'zc_stu_id'" json:"zc_stu_id" form:"zc_stu_id" xml:"zc_stu_id"`
 	//
-	RefundType null.Int `xorm:"int(11) 'refund_type'" json:"refund_type" xml:"refund_type"`
+	RefundType null.Int `xorm:"int(11) 'refund_type'" json:"refund_type" form:"refund_type" xml:"refund_type"`
 	//
-	YhCount null.String `xorm:"varchar(50) 'yh_count'" json:"yh_count" xml:"yh_count"`
+	YhCount null.String `xorm:"varchar(50) 'yh_count'" json:"yh_count" form:"yh_count" xml:"yh_count"`
 	//
-	YhName null.String `xorm:"varchar(1000) 'yh_name'" json:"yh_name" xml:"yh_name"`
+	YhName null.String `xorm:"varchar(1000) 'yh_name'" json:"yh_name" form:"yh_name" xml:"yh_name"`
 	//
-	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" xml:"check_user_id"`
+	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" form:"check_user_id" xml:"check_user_id"`
 	//
-	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" xml:"check_time"`
+	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" form:"check_time" xml:"check_time"`
 	//
-	ActualRefundTime null.Time `xorm:"datetime 'actual_refund_time'" json:"actual_refund_time" xml:"actual_refund_time"`
+	ActualRefundTime null.Time `xorm:"datetime 'actual_refund_time'" json:"actual_refund_time" form:"actual_refund_time" xml:"actual_refund_time"`
 	//
-	BookFeeDeduction null.Float `xorm:"float(50,2) 'book_fee_deduction'" json:"book_fee_deduction" xml:"book_fee_deduction"`
+	BookFeeDeduction null.Float `xorm:"float(50,2) 'book_fee_deduction'" json:"book_fee_deduction" form:"book_fee_deduction" xml:"book_fee_deduction"`
 	//
-	GiftFeeDeduction null.Float `xorm:"float(50,2) 'gift_fee_deduction'" json:"gift_fee_deduction" xml:"gift_fee_deduction"`
+	GiftFeeDeduction null.Float `xorm:"float(50,2) 'gift_fee_deduction'" json:"gift_fee_deduction" form:"gift_fee_deduction" xml:"gift_fee_deduction"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	SbtId null.Int `xorm:"int(11) 'sbt_id'" json:"sbt_id" xml:"sbt_id"`
+	SbtId null.Int `xorm:"int(11) 'sbt_id'" json:"sbt_id" form:"sbt_id" xml:"sbt_id"`
 	//
-	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" xml:"zd_check_state"`
+	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" form:"zd_check_state" xml:"zd_check_state"`
 	//
-	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" xml:"check_date"`
+	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 	//
-	PkFlowSet null.Int `xorm:"int(11) 'pk_flow_set'" json:"pk_flow_set" xml:"pk_flow_set"`
+	PkFlowSet null.Int `xorm:"int(11) 'pk_flow_set'" json:"pk_flow_set" form:"pk_flow_set" xml:"pk_flow_set"`
 	//
-	NowCheckUser null.String `xorm:"varchar(500) 'now_check_user'" json:"now_check_user" xml:"now_check_user"`
+	NowCheckUser null.String `xorm:"varchar(500) 'now_check_user'" json:"now_check_user" form:"now_check_user" xml:"now_check_user"`
 	//
-	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" xml:"now_floor"`
+	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" form:"now_floor" xml:"now_floor"`
 	//
-	TurnFloor null.Int `xorm:"int(11) 'turn_floor'" json:"turn_floor" xml:"turn_floor"`
+	TurnFloor null.Int `xorm:"int(11) 'turn_floor'" json:"turn_floor" form:"turn_floor" xml:"turn_floor"`
 	//
-	HistoryCheckUser null.String `xorm:"varchar(500) 'history_check_user'" json:"history_check_user" xml:"history_check_user"`
+	HistoryCheckUser null.String `xorm:"varchar(500) 'history_check_user'" json:"history_check_user" form:"history_check_user" xml:"history_check_user"`
 	//
-	PkCfpId null.Int `xorm:"int(11) 'pk_cfp_id'" json:"pk_cfp_id" xml:"pk_cfp_id"`
+	PkCfpId null.Int `xorm:"int(11) 'pk_cfp_id'" json:"pk_cfp_id" form:"pk_cfp_id" xml:"pk_cfp_id"`
 	//
-	PkCheckUser null.Int `xorm:"int(11) 'pk_check_user'" json:"pk_check_user" xml:"pk_check_user"`
+	PkCheckUser null.Int `xorm:"int(11) 'pk_check_user'" json:"pk_check_user" form:"pk_check_user" xml:"pk_check_user"`
 	//
-	RefApplyFile null.Int `xorm:"int(11) 'ref_apply_file'" json:"ref_apply_file" xml:"ref_apply_file"`
+	RefApplyFile null.Int `xorm:"int(11) 'ref_apply_file'" json:"ref_apply_file" form:"ref_apply_file" xml:"ref_apply_file"`
 	//
-	ParentFile null.Int `xorm:"int(11) 'parent_file'" json:"parent_file" xml:"parent_file"`
+	ParentFile null.Int `xorm:"int(11) 'parent_file'" json:"parent_file" form:"parent_file" xml:"parent_file"`
 	//
-	RefReductionFile null.Int `xorm:"int(11) 'ref_reduction_file'" json:"ref_reduction_file" xml:"ref_reduction_file"`
+	RefReductionFile null.Int `xorm:"int(11) 'ref_reduction_file'" json:"ref_reduction_file" form:"ref_reduction_file" xml:"ref_reduction_file"`
 	//
-	RefDisclaimerFile null.Int `xorm:"int(11) 'ref_disclaimer_file'" json:"ref_disclaimer_file" xml:"ref_disclaimer_file"`
+	RefDisclaimerFile null.Int `xorm:"int(11) 'ref_disclaimer_file'" json:"ref_disclaimer_file" form:"ref_disclaimer_file" xml:"ref_disclaimer_file"`
 	//
-	RefHn null.String `xorm:"varchar(1000) 'ref_hn'" json:"ref_hn" xml:"ref_hn"`
+	RefHn null.String `xorm:"varchar(1000) 'ref_hn'" json:"ref_hn" form:"ref_hn" xml:"ref_hn"`
 	//
-	RefActualmoney null.Float `xorm:"float(50,2) 'ref_actualmoney'" json:"ref_actualmoney" xml:"ref_actualmoney"`
+	RefActualmoney null.Float `xorm:"float(50,2) 'ref_actualmoney'" json:"ref_actualmoney" form:"ref_actualmoney" xml:"ref_actualmoney"`
 	//
-	RefParentbackFile null.Int `xorm:"int(11) 'ref_parentback_file'" json:"ref_parentback_file" xml:"ref_parentback_file"`
+	RefParentbackFile null.Int `xorm:"int(11) 'ref_parentback_file'" json:"ref_parentback_file" form:"ref_parentback_file" xml:"ref_parentback_file"`
 	//
-	NowCfid null.Int `xorm:"int(11) 'now_cfid'" json:"now_cfid" xml:"now_cfid"`
+	NowCfid null.Int `xorm:"int(11) 'now_cfid'" json:"now_cfid" form:"now_cfid" xml:"now_cfid"`
 	//
-	NextCfid null.Int `xorm:"int(11) 'next_cfid'" json:"next_cfid" xml:"next_cfid"`
+	NextCfid null.Int `xorm:"int(11) 'next_cfid'" json:"next_cfid" form:"next_cfid" xml:"next_cfid"`
 	//
-	IfRelief null.Int `xorm:"int(11) 'if_relief'" json:"if_relief" xml:"if_relief"`
+	IfRelief null.Int `xorm:"int(11) 'if_relief'" json:"if_relief" form:"if_relief" xml:"if_relief"`
 	//
-	OtherRefund null.Float `xorm:"float(50,2) 'other_refund'" json:"other_refund" xml:"other_refund"`
+	OtherRefund null.Float `xorm:"float(50,2) 'other_refund'" json:"other_refund" form:"other_refund" xml:"other_refund"`
 	//
-	NowCheckid null.String `xorm:"varchar(1000) 'now_checkid'" json:"now_checkid" xml:"now_checkid"`
+	NowCheckid null.String `xorm:"varchar(1000) 'now_checkid'" json:"now_checkid" form:"now_checkid" xml:"now_checkid"`
 	//
-	NowCheckname null.String `xorm:"varchar(1000) 'now_checkname'" json:"now_checkname" xml:"now_checkname"`
+	NowCheckname null.String `xorm:"varchar(1000) 'now_checkname'" json:"now_checkname" form:"now_checkname" xml:"now_checkname"`
 	//
-	NextCheckid null.String `xorm:"varchar(1000) 'next_checkid'" json:"next_checkid" xml:"next_checkid"`
+	NextCheckid null.String `xorm:"varchar(1000) 'next_checkid'" json:"next_checkid" form:"next_checkid" xml:"next_checkid"`
 	//
-	NextCheckname null.String `xorm:"varchar(1000) 'next_checkname'" json:"next_checkname" xml:"next_checkname"`
+	NextCheckname null.String `xorm:"varchar(1000) 'next_checkname'" json:"next_checkname" form:"next_checkname" xml:"next_checkname"`
 	//
-	CheckServiceRate null.Float `xorm:"float(50,2) 'check_service_rate'" json:"check_service_rate" xml:"check_service_rate"`
+	CheckServiceRate null.Float `xorm:"float(50,2) 'check_service_rate'" json:"check_service_rate" form:"check_service_rate" xml:"check_service_rate"`
 	//
-	CheckServiceMoney null.Float `xorm:"float(50,2) 'check_service_money'" json:"check_service_money" xml:"check_service_money"`
+	CheckServiceMoney null.Float `xorm:"float(50,2) 'check_service_money'" json:"check_service_money" form:"check_service_money" xml:"check_service_money"`
 	//
-	CheckInvoiceRate null.Float `xorm:"float(50,2) 'check_invoice_rate'" json:"check_invoice_rate" xml:"check_invoice_rate"`
+	CheckInvoiceRate null.Float `xorm:"float(50,2) 'check_invoice_rate'" json:"check_invoice_rate" form:"check_invoice_rate" xml:"check_invoice_rate"`
 	//
-	CheckInvoiceMoney null.Float `xorm:"float(50,2) 'check_invoice_money'" json:"check_invoice_money" xml:"check_invoice_money"`
+	CheckInvoiceMoney null.Float `xorm:"float(50,2) 'check_invoice_money'" json:"check_invoice_money" form:"check_invoice_money" xml:"check_invoice_money"`
 	//
-	CheckIfkouBook null.Int `xorm:"int(11) 'check_ifkou_book'" json:"check_ifkou_book" xml:"check_ifkou_book"`
+	CheckIfkouBook null.Int `xorm:"int(11) 'check_ifkou_book'" json:"check_ifkou_book" form:"check_ifkou_book" xml:"check_ifkou_book"`
 	//
-	CheckKouBookmoney null.Float `xorm:"float(50,2) 'check_kou_bookmoney'" json:"check_kou_bookmoney" xml:"check_kou_bookmoney"`
+	CheckKouBookmoney null.Float `xorm:"float(50,2) 'check_kou_bookmoney'" json:"check_kou_bookmoney" form:"check_kou_bookmoney" xml:"check_kou_bookmoney"`
 	//
-	CheckIfkouGift null.Int `xorm:"int(11) 'check_ifkou_gift'" json:"check_ifkou_gift" xml:"check_ifkou_gift"`
+	CheckIfkouGift null.Int `xorm:"int(11) 'check_ifkou_gift'" json:"check_ifkou_gift" form:"check_ifkou_gift" xml:"check_ifkou_gift"`
 	//
-	CheckKouGiftmoney null.Float `xorm:"float(50,2) 'check_kou_giftmoney'" json:"check_kou_giftmoney" xml:"check_kou_giftmoney"`
+	CheckKouGiftmoney null.Float `xorm:"float(50,2) 'check_kou_giftmoney'" json:"check_kou_giftmoney" form:"check_kou_giftmoney" xml:"check_kou_giftmoney"`
 	//
-	CheckKouOrtermoney null.Float `xorm:"float(50,2) 'check_kou_ortermoney'" json:"check_kou_ortermoney" xml:"check_kou_ortermoney"`
+	CheckKouOrtermoney null.Float `xorm:"float(50,2) 'check_kou_ortermoney'" json:"check_kou_ortermoney" form:"check_kou_ortermoney" xml:"check_kou_ortermoney"`
 	//
-	CheckActualRefmoney null.Float `xorm:"float(50,2) 'check_actual_refmoney'" json:"check_actual_refmoney" xml:"check_actual_refmoney"`
+	CheckActualRefmoney null.Float `xorm:"float(50,2) 'check_actual_refmoney'" json:"check_actual_refmoney" form:"check_actual_refmoney" xml:"check_actual_refmoney"`
 	//
-	RefApplyFile2 null.Int `xorm:"int(11) 'ref_apply_file2'" json:"ref_apply_file2" xml:"ref_apply_file2"`
+	RefApplyFile2 null.Int `xorm:"int(11) 'ref_apply_file2'" json:"ref_apply_file2" form:"ref_apply_file2" xml:"ref_apply_file2"`
 	//
-	RefHour null.Float `xorm:"float(50,2) 'ref_hour'" json:"ref_hour" xml:"ref_hour"`
+	RefHour null.Float `xorm:"float(50,2) 'ref_hour'" json:"ref_hour" form:"ref_hour" xml:"ref_hour"`
 	//
-	RefBeforeMoney null.Float `xorm:"float(50,2) 'ref_before_money'" json:"ref_before_money" xml:"ref_before_money"`
+	RefBeforeMoney null.Float `xorm:"float(50,2) 'ref_before_money'" json:"ref_before_money" form:"ref_before_money" xml:"ref_before_money"`
 	//
-	RdrId null.Int `xorm:"int(11) 'rdr_id'" json:"rdr_id" xml:"rdr_id"`
+	RdrId null.Int `xorm:"int(11) 'rdr_id'" json:"rdr_id" form:"rdr_id" xml:"rdr_id"`
 	//
-	SxfCheckLevel null.Int `xorm:"int(11) 'sxf_check_level'" json:"sxf_check_level" xml:"sxf_check_level"`
+	SxfCheckLevel null.Int `xorm:"int(11) 'sxf_check_level'" json:"sxf_check_level" form:"sxf_check_level" xml:"sxf_check_level"`
 	//
-	MzCheckLevel null.Int `xorm:"int(11) 'mz_check_level'" json:"mz_check_level" xml:"mz_check_level"`
+	MzCheckLevel null.Int `xorm:"int(11) 'mz_check_level'" json:"mz_check_level" form:"mz_check_level" xml:"mz_check_level"`
 	//
-	Version null.Int `xorm:"int(11) 'version'" json:"version" xml:"version"`
+	Version null.Int `xorm:"int(11) 'version'" json:"version" form:"version" xml:"version"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Refund

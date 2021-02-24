@@ -4,55 +4,72 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // MarketFeeBudget defined
 type MarketFeeBudget struct {
 	//
-	MFBId null.Int `xorm:"int(11) pk notnull autoincr 'm_f_b_id'" json:"m_f_b_id" xml:"m_f_b_id"`
+	MFBId null.Int `xorm:"int(11) pk notnull autoincr 'm_f_b_id'" json:"m_f_b_id" form:"m_f_b_id" xml:"m_f_b_id"`
 	//
-	ProjectName null.Int `xorm:"int(11) 'project_name'" json:"project_name" xml:"project_name"`
+	ProjectName null.Int `xorm:"int(11) 'project_name'" json:"project_name" form:"project_name" xml:"project_name"`
 	//
-	Digest null.String `xorm:"varchar(2000) 'digest'" json:"digest" xml:"digest"`
+	Digest null.String `xorm:"varchar(2000) 'digest'" json:"digest" form:"digest" xml:"digest"`
 	//
-	BudgetDetail null.String `xorm:"varchar(2000) 'budget_detail'" json:"budget_detail" xml:"budget_detail"`
+	BudgetDetail null.String `xorm:"varchar(2000) 'budget_detail'" json:"budget_detail" form:"budget_detail" xml:"budget_detail"`
 	//
-	BgdgetMoney null.Float `xorm:"float(10,2) 'bgdget_money'" json:"bgdget_money" xml:"bgdget_money"`
+	BgdgetMoney null.Float `xorm:"float(10,2) 'bgdget_money'" json:"bgdget_money" form:"bgdget_money" xml:"bgdget_money"`
 	//
-	Remake null.String `xorm:"varchar(2000) 'remake'" json:"remake" xml:"remake"`
+	Remake null.String `xorm:"varchar(2000) 'remake'" json:"remake" form:"remake" xml:"remake"`
 	//
-	Xgygout null.Float `xorm:"float(10,2) 'xgygout'" json:"xgygout" xml:"xgygout"`
+	Xgygout null.Float `xorm:"float(10,2) 'xgygout'" json:"xgygout" form:"xgygout" xml:"xgygout"`
 	//
-	Xgygin null.Float `xorm:"float(10,2) 'xgygin'" json:"xgygin" xml:"xgygin"`
+	Xgygin null.Float `xorm:"float(10,2) 'xgygin'" json:"xgygin" form:"xgygin" xml:"xgygin"`
 	//
-	Xgygbmr null.Float `xorm:"float(10,2) 'xgygbmr'" json:"xgygbmr" xml:"xgygbmr"`
+	Xgygbmr null.Float `xorm:"float(10,2) 'xgygbmr'" json:"xgygbmr" form:"xgygbmr" xml:"xgygbmr"`
 	//
-	BudgetDate null.Time `xorm:"datetime 'budget_date'" json:"budget_date" xml:"budget_date"`
+	BudgetDate null.Time `xorm:"datetime 'budget_date'" json:"budget_date" form:"budget_date" xml:"budget_date"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	BudgetSchool null.Int `xorm:"int(11) 'budget_school'" json:"budget_school" xml:"budget_school"`
+	BudgetSchool null.Int `xorm:"int(11) 'budget_school'" json:"budget_school" form:"budget_school" xml:"budget_school"`
 	//
-	ProName null.Int `xorm:"int(11) 'pro_name'" json:"pro_name" xml:"pro_name"`
+	ProName null.Int `xorm:"int(11) 'pro_name'" json:"pro_name" form:"pro_name" xml:"pro_name"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	BeginMonth null.Time `xorm:"datetime 'begin_month'" json:"begin_month" xml:"begin_month"`
+	BeginMonth null.Time `xorm:"datetime 'begin_month'" json:"begin_month" form:"begin_month" xml:"begin_month"`
 	//
-	EndMonth null.Time `xorm:"datetime 'end_month'" json:"end_month" xml:"end_month"`
+	EndMonth null.Time `xorm:"datetime 'end_month'" json:"end_month" form:"end_month" xml:"end_month"`
 	//
-	Xgygmoney null.Float `xorm:"float(10,2) 'xgygmoney'" json:"xgygmoney" xml:"xgygmoney"`
+	Xgygmoney null.Float `xorm:"float(10,2) 'xgygmoney'" json:"xgygmoney" form:"xgygmoney" xml:"xgygmoney"`
 	//
-	MfbCity null.Int `xorm:"int(11) 'mfb_city'" json:"mfb_city" xml:"mfb_city"`
+	MfbCity null.Int `xorm:"int(11) 'mfb_city'" json:"mfb_city" form:"mfb_city" xml:"mfb_city"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined MarketFeeBudget

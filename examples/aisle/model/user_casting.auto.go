@@ -4,25 +4,42 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // UserCasting defined
 type UserCasting struct {
 	//
-	UserCastId null.Int `xorm:"int(11) pk notnull autoincr 'user_cast_id'" json:"user_cast_id" xml:"user_cast_id"`
+	UserCastId null.Int `xorm:"int(11) pk notnull autoincr 'user_cast_id'" json:"user_cast_id" form:"user_cast_id" xml:"user_cast_id"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	CastId null.Int `xorm:"int(11) 'cast_id'" json:"cast_id" xml:"cast_id"`
+	CastId null.Int `xorm:"int(11) 'cast_id'" json:"cast_id" form:"cast_id" xml:"cast_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined UserCasting

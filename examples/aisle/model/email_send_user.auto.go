@@ -4,27 +4,44 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // EmailSendUser defined
 type EmailSendUser struct {
 	//
-	ESUId null.Int `xorm:"int(11) pk notnull autoincr 'e_s_u_id'" json:"e_s_u_id" xml:"e_s_u_id"`
+	ESUId null.Int `xorm:"int(11) pk notnull autoincr 'e_s_u_id'" json:"e_s_u_id" form:"e_s_u_id" xml:"e_s_u_id"`
 	//
-	PkEss null.Int `xorm:"int(11) 'pk_ess'" json:"pk_ess" xml:"pk_ess"`
+	PkEss null.Int `xorm:"int(11) 'pk_ess'" json:"pk_ess" form:"pk_ess" xml:"pk_ess"`
 	//
-	PkUser null.Int `xorm:"int(11) 'pk_user'" json:"pk_user" xml:"pk_user"`
+	PkUser null.Int `xorm:"int(11) 'pk_user'" json:"pk_user" form:"pk_user" xml:"pk_user"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined EmailSendUser

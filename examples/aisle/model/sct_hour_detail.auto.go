@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // SctHourDetail defined
 type SctHourDetail struct {
 	//
-	SHDId null.Int `xorm:"int(11) pk notnull autoincr 's_h_d_id'" json:"s_h_d_id" xml:"s_h_d_id"`
+	SHDId null.Int `xorm:"int(11) pk notnull autoincr 's_h_d_id'" json:"s_h_d_id" form:"s_h_d_id" xml:"s_h_d_id"`
 	//
-	PkCs null.Int `xorm:"int(11) 'pk_cs'" json:"pk_cs" xml:"pk_cs"`
+	PkCs null.Int `xorm:"int(11) 'pk_cs'" json:"pk_cs" form:"pk_cs" xml:"pk_cs"`
 	//
-	PkTea null.Int `xorm:"int(11) 'pk_tea'" json:"pk_tea" xml:"pk_tea"`
+	PkTea null.Int `xorm:"int(11) 'pk_tea'" json:"pk_tea" form:"pk_tea" xml:"pk_tea"`
 	//
-	KqKc null.Float `xorm:"float(11,2) 'kq_kc'" json:"kq_kc" xml:"kq_kc"`
+	KqKc null.Float `xorm:"float(11,2) 'kq_kc'" json:"kq_kc" form:"kq_kc" xml:"kq_kc"`
 	//
-	ZdRsType null.Int `xorm:"int(11) 'zd_rs_type'" json:"zd_rs_type" xml:"zd_rs_type"`
+	ZdRsType null.Int `xorm:"int(11) 'zd_rs_type'" json:"zd_rs_type" form:"zd_rs_type" xml:"zd_rs_type"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	PkScTea null.Int `xorm:"int(11) 'pk_sc_tea'" json:"pk_sc_tea" xml:"pk_sc_tea"`
+	PkScTea null.Int `xorm:"int(11) 'pk_sc_tea'" json:"pk_sc_tea" form:"pk_sc_tea" xml:"pk_sc_tea"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined SctHourDetail

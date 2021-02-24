@@ -4,31 +4,48 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // School defined
 type School struct {
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	SchoolId null.Int `xorm:"int(11) pk notnull autoincr 'school_id'" json:"school_id" xml:"school_id"`
+	SchoolId null.Int `xorm:"int(11) pk notnull autoincr 'school_id'" json:"school_id" form:"school_id" xml:"school_id"`
 	//
-	SchoolName null.String `xorm:"varchar(500) 'school_name'" json:"school_name" xml:"school_name"`
+	SchoolName null.String `xorm:"varchar(500) 'school_name'" json:"school_name" form:"school_name" xml:"school_name"`
 	//
-	SchoolArea null.String `xorm:"varchar(2000) 'school_area'" json:"school_area" xml:"school_area"`
+	SchoolArea null.String `xorm:"varchar(2000) 'school_area'" json:"school_area" form:"school_area" xml:"school_area"`
 	//
-	SchoolRemark null.String `xorm:"varchar(2000) 'school_remark'" json:"school_remark" xml:"school_remark"`
+	SchoolRemark null.String `xorm:"varchar(2000) 'school_remark'" json:"school_remark" form:"school_remark" xml:"school_remark"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" xml:"organ_id"`
+	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" form:"organ_id" xml:"organ_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined School

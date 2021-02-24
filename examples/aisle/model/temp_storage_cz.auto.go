@@ -4,97 +4,114 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TempStorageCz defined
 type TempStorageCz struct {
 	//
-	TSCId null.Int `xorm:"int(11) pk notnull autoincr 't_s_c_id'" json:"t_s_c_id" xml:"t_s_c_id"`
+	TSCId null.Int `xorm:"int(11) pk notnull autoincr 't_s_c_id'" json:"t_s_c_id" form:"t_s_c_id" xml:"t_s_c_id"`
 	//
-	CzStuId null.Int `xorm:"int(11) 'cz_stu_id'" json:"cz_stu_id" xml:"cz_stu_id"`
+	CzStuId null.Int `xorm:"int(11) 'cz_stu_id'" json:"cz_stu_id" form:"cz_stu_id" xml:"cz_stu_id"`
 	//
-	CzRPremium null.Float `xorm:"float(10,2) 'cz_r_premium'" json:"cz_r_premium" xml:"cz_r_premium"`
+	CzRPremium null.Float `xorm:"float(10,2) 'cz_r_premium'" json:"cz_r_premium" form:"cz_r_premium" xml:"cz_r_premium"`
 	//
-	CzWay null.Int `xorm:"int(11) 'cz_way'" json:"cz_way" xml:"cz_way"`
+	CzWay null.Int `xorm:"int(11) 'cz_way'" json:"cz_way" form:"cz_way" xml:"cz_way"`
 	//
-	CzCEnter null.Int `xorm:"int(11) 'cz_c_enter'" json:"cz_c_enter" xml:"cz_c_enter"`
+	CzCEnter null.Int `xorm:"int(11) 'cz_c_enter'" json:"cz_c_enter" form:"cz_c_enter" xml:"cz_c_enter"`
 	//
-	CzRetDate null.Time `xorm:"datetime 'cz_ret_date'" json:"cz_ret_date" xml:"cz_ret_date"`
+	CzRetDate null.Time `xorm:"datetime 'cz_ret_date'" json:"cz_ret_date" form:"cz_ret_date" xml:"cz_ret_date"`
 	//
-	CzRemark null.String `xorm:"varchar(500) 'cz_remark'" json:"cz_remark" xml:"cz_remark"`
+	CzRemark null.String `xorm:"varchar(500) 'cz_remark'" json:"cz_remark" form:"cz_remark" xml:"cz_remark"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CzTStorage null.Int `xorm:"int(11) 'cz_t_storage'" json:"cz_t_storage" xml:"cz_t_storage"`
+	CzTStorage null.Int `xorm:"int(11) 'cz_t_storage'" json:"cz_t_storage" form:"cz_t_storage" xml:"cz_t_storage"`
 	//
-	FeeId null.Int `xorm:"int(11) 'fee_id'" json:"fee_id" xml:"fee_id"`
+	FeeId null.Int `xorm:"int(11) 'fee_id'" json:"fee_id" form:"fee_id" xml:"fee_id"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	OutType null.Int `xorm:"int(11) 'out_type'" json:"out_type" xml:"out_type"`
+	OutType null.Int `xorm:"int(11) 'out_type'" json:"out_type" form:"out_type" xml:"out_type"`
 	//
-	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" xml:"check_user_id"`
+	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" form:"check_user_id" xml:"check_user_id"`
 	//
-	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" xml:"check_time"`
+	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" form:"check_time" xml:"check_time"`
 	//
-	ActualRefundTime null.Time `xorm:"datetime 'actual_refund_time'" json:"actual_refund_time" xml:"actual_refund_time"`
+	ActualRefundTime null.Time `xorm:"datetime 'actual_refund_time'" json:"actual_refund_time" form:"actual_refund_time" xml:"actual_refund_time"`
 	//
-	RefType null.Int `xorm:"int(11) 'ref_type'" json:"ref_type" xml:"ref_type"`
+	RefType null.Int `xorm:"int(11) 'ref_type'" json:"ref_type" form:"ref_type" xml:"ref_type"`
 	//
-	RefstorageCzFile null.Int `xorm:"int(11) 'refstorage_cz_file'" json:"refstorage_cz_file" xml:"refstorage_cz_file"`
+	RefstorageCzFile null.Int `xorm:"int(11) 'refstorage_cz_file'" json:"refstorage_cz_file" form:"refstorage_cz_file" xml:"refstorage_cz_file"`
 	//
-	JzzmFile null.Int `xorm:"int(11) 'jzzm_file'" json:"jzzm_file" xml:"jzzm_file"`
+	JzzmFile null.Int `xorm:"int(11) 'jzzm_file'" json:"jzzm_file" form:"jzzm_file" xml:"jzzm_file"`
 	//
-	JzbmFile null.Int `xorm:"int(11) 'jzbm_file'" json:"jzbm_file" xml:"jzbm_file"`
+	JzbmFile null.Int `xorm:"int(11) 'jzbm_file'" json:"jzbm_file" form:"jzbm_file" xml:"jzbm_file"`
 	//
-	HmName null.String `xorm:"varchar(100) 'hm_name'" json:"hm_name" xml:"hm_name"`
+	HmName null.String `xorm:"varchar(100) 'hm_name'" json:"hm_name" form:"hm_name" xml:"hm_name"`
 	//
-	BankCard null.String `xorm:"varchar(100) 'bank_card'" json:"bank_card" xml:"bank_card"`
+	BankCard null.String `xorm:"varchar(100) 'bank_card'" json:"bank_card" form:"bank_card" xml:"bank_card"`
 	//
-	BankName null.String `xorm:"varchar(100) 'bank_name'" json:"bank_name" xml:"bank_name"`
+	BankName null.String `xorm:"varchar(100) 'bank_name'" json:"bank_name" form:"bank_name" xml:"bank_name"`
 	//
-	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" xml:"zd_check_state"`
+	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" form:"zd_check_state" xml:"zd_check_state"`
 	//
-	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" xml:"check_date"`
+	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 	//
-	PkFlowSet null.Int `xorm:"int(11) 'pk_flow_set'" json:"pk_flow_set" xml:"pk_flow_set"`
+	PkFlowSet null.Int `xorm:"int(11) 'pk_flow_set'" json:"pk_flow_set" form:"pk_flow_set" xml:"pk_flow_set"`
 	//
-	NowCheckUser null.String `xorm:"varchar(500) 'now_check_user'" json:"now_check_user" xml:"now_check_user"`
+	NowCheckUser null.String `xorm:"varchar(500) 'now_check_user'" json:"now_check_user" form:"now_check_user" xml:"now_check_user"`
 	//
-	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" xml:"now_floor"`
+	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" form:"now_floor" xml:"now_floor"`
 	//
-	TurnFloor null.Int `xorm:"int(11) 'turn_floor'" json:"turn_floor" xml:"turn_floor"`
+	TurnFloor null.Int `xorm:"int(11) 'turn_floor'" json:"turn_floor" form:"turn_floor" xml:"turn_floor"`
 	//
-	HistoryCheckUser null.String `xorm:"varchar(500) 'history_check_user'" json:"history_check_user" xml:"history_check_user"`
+	HistoryCheckUser null.String `xorm:"varchar(500) 'history_check_user'" json:"history_check_user" form:"history_check_user" xml:"history_check_user"`
 	//
-	PkCfpId null.Int `xorm:"int(11) 'pk_cfp_id'" json:"pk_cfp_id" xml:"pk_cfp_id"`
+	PkCfpId null.Int `xorm:"int(11) 'pk_cfp_id'" json:"pk_cfp_id" form:"pk_cfp_id" xml:"pk_cfp_id"`
 	//
-	NowCfid null.Int `xorm:"int(11) 'now_cfid'" json:"now_cfid" xml:"now_cfid"`
+	NowCfid null.Int `xorm:"int(11) 'now_cfid'" json:"now_cfid" form:"now_cfid" xml:"now_cfid"`
 	//
-	NextCfid null.Int `xorm:"int(11) 'next_cfid'" json:"next_cfid" xml:"next_cfid"`
+	NextCfid null.Int `xorm:"int(11) 'next_cfid'" json:"next_cfid" form:"next_cfid" xml:"next_cfid"`
 	//
-	PkCheckUser null.Int `xorm:"int(11) 'pk_check_user'" json:"pk_check_user" xml:"pk_check_user"`
+	PkCheckUser null.Int `xorm:"int(11) 'pk_check_user'" json:"pk_check_user" form:"pk_check_user" xml:"pk_check_user"`
 	//
-	NowCheckid null.String `xorm:"varchar(100) 'now_checkid'" json:"now_checkid" xml:"now_checkid"`
+	NowCheckid null.String `xorm:"varchar(100) 'now_checkid'" json:"now_checkid" form:"now_checkid" xml:"now_checkid"`
 	//
-	NowCheckname null.String `xorm:"varchar(100) 'now_checkname'" json:"now_checkname" xml:"now_checkname"`
+	NowCheckname null.String `xorm:"varchar(100) 'now_checkname'" json:"now_checkname" form:"now_checkname" xml:"now_checkname"`
 	//
-	NextCheckid null.String `xorm:"varchar(100) 'next_checkid'" json:"next_checkid" xml:"next_checkid"`
+	NextCheckid null.String `xorm:"varchar(100) 'next_checkid'" json:"next_checkid" form:"next_checkid" xml:"next_checkid"`
 	//
-	NextCheckname null.String `xorm:"varchar(100) 'next_checkname'" json:"next_checkname" xml:"next_checkname"`
+	NextCheckname null.String `xorm:"varchar(100) 'next_checkname'" json:"next_checkname" form:"next_checkname" xml:"next_checkname"`
 	//
-	RdrId null.Int `xorm:"int(11) 'rdr_id'" json:"rdr_id" xml:"rdr_id"`
+	RdrId null.Int `xorm:"int(11) 'rdr_id'" json:"rdr_id" form:"rdr_id" xml:"rdr_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TempStorageCz

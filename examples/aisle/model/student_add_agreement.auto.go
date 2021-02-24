@@ -4,61 +4,78 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentAddAgreement defined
 type StudentAddAgreement struct {
 	//
-	SAAId null.Int `xorm:"int(11) pk notnull autoincr 's_a_a_id'" json:"s_a_a_id" xml:"s_a_a_id"`
+	SAAId null.Int `xorm:"int(11) pk notnull autoincr 's_a_a_id'" json:"s_a_a_id" form:"s_a_a_id" xml:"s_a_a_id"`
 	//
-	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" xml:"pk_stu"`
+	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	PkProType null.Int `xorm:"int(11) 'pk_pro_type'" json:"pk_pro_type" xml:"pk_pro_type"`
+	PkProType null.Int `xorm:"int(11) 'pk_pro_type'" json:"pk_pro_type" form:"pk_pro_type" xml:"pk_pro_type"`
 	//
-	PkSaam null.Int `xorm:"int(11) 'pk_saam'" json:"pk_saam" xml:"pk_saam"`
+	PkSaam null.Int `xorm:"int(11) 'pk_saam'" json:"pk_saam" form:"pk_saam" xml:"pk_saam"`
 	//
-	StuSign null.Int `xorm:"int(11) 'stu_sign'" json:"stu_sign" xml:"stu_sign"`
+	StuSign null.Int `xorm:"int(11) 'stu_sign'" json:"stu_sign" form:"stu_sign" xml:"stu_sign"`
 	//
-	JhrSign null.Int `xorm:"int(11) 'jhr_sign'" json:"jhr_sign" xml:"jhr_sign"`
+	JhrSign null.Int `xorm:"int(11) 'jhr_sign'" json:"jhr_sign" form:"jhr_sign" xml:"jhr_sign"`
 	//
-	SqSign null.Int `xorm:"int(11) 'sq_sign'" json:"sq_sign" xml:"sq_sign"`
+	SqSign null.Int `xorm:"int(11) 'sq_sign'" json:"sq_sign" form:"sq_sign" xml:"sq_sign"`
 	//
-	StuSignDate null.Time `xorm:"datetime 'stu_sign_date'" json:"stu_sign_date" xml:"stu_sign_date"`
+	StuSignDate null.Time `xorm:"datetime 'stu_sign_date'" json:"stu_sign_date" form:"stu_sign_date" xml:"stu_sign_date"`
 	//
-	YfSignDate null.Time `xorm:"datetime 'yf_sign_date'" json:"yf_sign_date" xml:"yf_sign_date"`
+	YfSignDate null.Time `xorm:"datetime 'yf_sign_date'" json:"yf_sign_date" form:"yf_sign_date" xml:"yf_sign_date"`
 	//
-	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" xml:"pk_sch"`
+	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
 	//
-	AgreeNum null.String `xorm:"varchar(20) 'agree_num'" json:"agree_num" xml:"agree_num"`
+	AgreeNum null.String `xorm:"varchar(20) 'agree_num'" json:"agree_num" form:"agree_num" xml:"agree_num"`
 	//
-	AgreementDate null.Time `xorm:"datetime 'agreement_date'" json:"agreement_date" xml:"agreement_date"`
+	AgreementDate null.Time `xorm:"datetime 'agreement_date'" json:"agreement_date" form:"agreement_date" xml:"agreement_date"`
 	//
-	SaaDesc null.String `xorm:"varchar(1000) 'saa_desc'" json:"saa_desc" xml:"saa_desc"`
+	SaaDesc null.String `xorm:"varchar(1000) 'saa_desc'" json:"saa_desc" form:"saa_desc" xml:"saa_desc"`
 	//
-	ParentAuthSign null.Int `xorm:"int(11) 'parent_auth_sign'" json:"parent_auth_sign" xml:"parent_auth_sign"`
+	ParentAuthSign null.Int `xorm:"int(11) 'parent_auth_sign'" json:"parent_auth_sign" form:"parent_auth_sign" xml:"parent_auth_sign"`
 	//
-	ParentAuthSignRemark null.String `xorm:"varchar(1000) 'parent_auth_sign_remark'" json:"parent_auth_sign_remark" xml:"parent_auth_sign_remark"`
+	ParentAuthSignRemark null.String `xorm:"varchar(1000) 'parent_auth_sign_remark'" json:"parent_auth_sign_remark" form:"parent_auth_sign_remark" xml:"parent_auth_sign_remark"`
 	//
-	CheckStatus null.Int `xorm:"int(11) default(1751) 'check_status'" json:"check_status" xml:"check_status"`
+	CheckStatus null.Int `xorm:"int(11) default(1751) 'check_status'" json:"check_status" form:"check_status" xml:"check_status"`
 	//
-	CheckRemark null.String `xorm:"varchar(1000) 'check_remark'" json:"check_remark" xml:"check_remark"`
+	CheckRemark null.String `xorm:"varchar(1000) 'check_remark'" json:"check_remark" form:"check_remark" xml:"check_remark"`
 	//
-	CheckUser null.Int `xorm:"int(11) 'check_user'" json:"check_user" xml:"check_user"`
+	CheckUser null.Int `xorm:"int(11) 'check_user'" json:"check_user" form:"check_user" xml:"check_user"`
 	//
-	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" xml:"check_date"`
+	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 	//
-	ShifouUpdate null.Int `xorm:"int(11) 'shifou_update'" json:"shifou_update" xml:"shifou_update"`
+	ShifouUpdate null.Int `xorm:"int(11) 'shifou_update'" json:"shifou_update" form:"shifou_update" xml:"shifou_update"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentAddAgreement

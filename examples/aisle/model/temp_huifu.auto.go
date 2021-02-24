@@ -4,25 +4,42 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TempHuifu defined
 type TempHuifu struct {
 	//
-	Fid null.Int `xorm:"int(11) pk notnull 'fid'" json:"fid" xml:"fid"`
+	Fid null.Int `xorm:"int(11) pk notnull 'fid'" json:"fid" form:"fid" xml:"fid"`
 	//
-	StuName null.String `xorm:"varchar(255) 'stu_name'" json:"stu_name" xml:"stu_name"`
+	StuName null.String `xorm:"varchar(255) 'stu_name'" json:"stu_name" form:"stu_name" xml:"stu_name"`
 	//
-	StuType null.String `xorm:"varchar(255) 'stu_type'" json:"stu_type" xml:"stu_type"`
+	StuType null.String `xorm:"varchar(255) 'stu_type'" json:"stu_type" form:"stu_type" xml:"stu_type"`
 	//
-	StuCity null.String `xorm:"varchar(255) 'stu_city'" json:"stu_city" xml:"stu_city"`
+	StuCity null.String `xorm:"varchar(255) 'stu_city'" json:"stu_city" form:"stu_city" xml:"stu_city"`
 	//
-	OsName null.String `xorm:"varchar(255) 'os_name'" json:"os_name" xml:"os_name"`
+	OsName null.String `xorm:"varchar(255) 'os_name'" json:"os_name" form:"os_name" xml:"os_name"`
 	//
-	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" xml:"stu_phone"`
+	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
 	//
-	OfNumber null.String `xorm:"varchar(255) 'of_number'" json:"of_number" xml:"of_number"`
+	OfNumber null.String `xorm:"varchar(255) 'of_number'" json:"of_number" form:"of_number" xml:"of_number"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TempHuifu

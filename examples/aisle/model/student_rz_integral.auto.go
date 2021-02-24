@@ -4,43 +4,60 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentRzIntegral defined
 type StudentRzIntegral struct {
 	//
-	SRIId null.Int `xorm:"int(11) pk notnull autoincr 's_r_i_id'" json:"s_r_i_id" xml:"s_r_i_id"`
+	SRIId null.Int `xorm:"int(11) pk notnull autoincr 's_r_i_id'" json:"s_r_i_id" form:"s_r_i_id" xml:"s_r_i_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	Integral null.Float `xorm:"float(10,2) 'integral'" json:"integral" xml:"integral"`
+	Integral null.Float `xorm:"float(10,2) 'integral'" json:"integral" form:"integral" xml:"integral"`
 	//
-	IntegralSource null.Int `xorm:"int(11) 'integral_source'" json:"integral_source" xml:"integral_source"`
+	IntegralSource null.Int `xorm:"int(11) 'integral_source'" json:"integral_source" form:"integral_source" xml:"integral_source"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	IntegralDesc null.String `xorm:"varchar(500) 'integral_desc'" json:"integral_desc" xml:"integral_desc"`
+	IntegralDesc null.String `xorm:"varchar(500) 'integral_desc'" json:"integral_desc" form:"integral_desc" xml:"integral_desc"`
 	//
-	IntegralState null.Int `xorm:"int(11) 'integral_state'" json:"integral_state" xml:"integral_state"`
+	IntegralState null.Int `xorm:"int(11) 'integral_state'" json:"integral_state" form:"integral_state" xml:"integral_state"`
 	//
-	TlsId null.Int `xorm:"int(11) 'tls_id'" json:"tls_id" xml:"tls_id"`
+	TlsId null.Int `xorm:"int(11) 'tls_id'" json:"tls_id" form:"tls_id" xml:"tls_id"`
 	//
-	BuyOrderid null.Int `xorm:"int(11) 'buy_orderid'" json:"buy_orderid" xml:"buy_orderid"`
+	BuyOrderid null.Int `xorm:"int(11) 'buy_orderid'" json:"buy_orderid" form:"buy_orderid" xml:"buy_orderid"`
 	//
-	LtorderId null.Int `xorm:"int(11) 'ltorder_id'" json:"ltorder_id" xml:"ltorder_id"`
+	LtorderId null.Int `xorm:"int(11) 'ltorder_id'" json:"ltorder_id" form:"ltorder_id" xml:"ltorder_id"`
 	//
-	FeeId null.Int `xorm:"int(11) 'fee_id'" json:"fee_id" xml:"fee_id"`
+	FeeId null.Int `xorm:"int(11) 'fee_id'" json:"fee_id" form:"fee_id" xml:"fee_id"`
 	//
-	PkOdd null.Int `xorm:"int(11) 'pk_odd'" json:"pk_odd" xml:"pk_odd"`
+	PkOdd null.Int `xorm:"int(11) 'pk_odd'" json:"pk_odd" form:"pk_odd" xml:"pk_odd"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentRzIntegral

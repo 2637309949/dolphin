@@ -6,7 +6,6 @@ package app
 import (
 	"aisle/model"
 
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/util"
 )
@@ -463,8 +462,8 @@ func SyncModel() error {
 	return nil
 }
 
-// SyncCtr defined
-func SyncCtr() error {
+// SyncController defined
+func SyncController() error {
 	OrganRoutes(App)
 	return nil
 }
@@ -475,10 +474,10 @@ func SyncService() error {
 }
 
 // Executor defined
-var Executor = util.NewExecutor(SyncModel, SyncCtr, SyncService)
+var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)
 
 func init() {
 	if err := Executor.Execute(); err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
 }

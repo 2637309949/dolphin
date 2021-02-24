@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // UserOnoffRz defined
 type UserOnoffRz struct {
 	//
-	UORId null.Int `xorm:"int(11) pk notnull autoincr 'u_o_r_id'" json:"u_o_r_id" xml:"u_o_r_id"`
+	UORId null.Int `xorm:"int(11) pk notnull autoincr 'u_o_r_id'" json:"u_o_r_id" form:"u_o_r_id" xml:"u_o_r_id"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	NowState null.Int `xorm:"int(11) 'now_state'" json:"now_state" xml:"now_state"`
+	NowState null.Int `xorm:"int(11) 'now_state'" json:"now_state" form:"now_state" xml:"now_state"`
 	//
-	OnoffDate null.Time `xorm:"datetime 'onoff_date'" json:"onoff_date" xml:"onoff_date"`
+	OnoffDate null.Time `xorm:"datetime 'onoff_date'" json:"onoff_date" form:"onoff_date" xml:"onoff_date"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined UserOnoffRz

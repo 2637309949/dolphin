@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // OldPushStudent defined
 type OldPushStudent struct {
 	//
-	OPSId null.Int `xorm:"int(11) pk notnull autoincr 'o_p_s_id'" json:"o_p_s_id" xml:"o_p_s_id"`
+	OPSId null.Int `xorm:"int(11) pk notnull autoincr 'o_p_s_id'" json:"o_p_s_id" form:"o_p_s_id" xml:"o_p_s_id"`
 	//
-	StuName null.String `xorm:"varchar(100) 'stu_name'" json:"stu_name" xml:"stu_name"`
+	StuName null.String `xorm:"varchar(100) 'stu_name'" json:"stu_name" form:"stu_name" xml:"stu_name"`
 	//
-	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" xml:"stu_phone"`
+	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
 	//
-	SutId null.Int `xorm:"int(11) 'sut_id'" json:"sut_id" xml:"sut_id"`
+	SutId null.Int `xorm:"int(11) 'sut_id'" json:"sut_id" form:"sut_id" xml:"sut_id"`
 	//
-	PaId null.Int `xorm:"int(11) 'pa_id'" json:"pa_id" xml:"pa_id"`
+	PaId null.Int `xorm:"int(11) 'pa_id'" json:"pa_id" form:"pa_id" xml:"pa_id"`
 	//
-	SalerId null.Int `xorm:"int(11) 'saler_id'" json:"saler_id" xml:"saler_id"`
+	SalerId null.Int `xorm:"int(11) 'saler_id'" json:"saler_id" form:"saler_id" xml:"saler_id"`
 	//
-	ShState null.Int `xorm:"int(11) 'sh_state'" json:"sh_state" xml:"sh_state"`
+	ShState null.Int `xorm:"int(11) 'sh_state'" json:"sh_state" form:"sh_state" xml:"sh_state"`
 	//
-	Remark null.String `xorm:"varchar(500) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(500) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined OldPushStudent

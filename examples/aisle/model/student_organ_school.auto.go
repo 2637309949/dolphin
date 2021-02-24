@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentOrganSchool defined
 type StudentOrganSchool struct {
 	//
-	SOSId null.Int `xorm:"int(11) pk notnull autoincr 's_o_s_id'" json:"s_o_s_id" xml:"s_o_s_id"`
+	SOSId null.Int `xorm:"int(11) pk notnull autoincr 's_o_s_id'" json:"s_o_s_id" form:"s_o_s_id" xml:"s_o_s_id"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	StudentId null.Int `xorm:"int(11) 'student_id'" json:"student_id" xml:"student_id"`
+	StudentId null.Int `xorm:"int(11) 'student_id'" json:"student_id" form:"student_id" xml:"student_id"`
 	//
-	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" xml:"os_id"`
+	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	SyId null.Int `xorm:"int(11) 'sy_id'" json:"sy_id" xml:"sy_id"`
+	SyId null.Int `xorm:"int(11) 'sy_id'" json:"sy_id" form:"sy_id" xml:"sy_id"`
 	//
-	StuGxYy null.Int `xorm:"int(11) 'stu_gx_yy'" json:"stu_gx_yy" xml:"stu_gx_yy"`
+	StuGxYy null.Int `xorm:"int(11) 'stu_gx_yy'" json:"stu_gx_yy" form:"stu_gx_yy" xml:"stu_gx_yy"`
 	//
-	SfPlzx null.Int `xorm:"int(11) 'sf_plzx'" json:"sf_plzx" xml:"sf_plzx"`
+	SfPlzx null.Int `xorm:"int(11) 'sf_plzx'" json:"sf_plzx" form:"sf_plzx" xml:"sf_plzx"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentOrganSchool

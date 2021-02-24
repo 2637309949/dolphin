@@ -4,210 +4,227 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // OrderForm defined
 type OrderForm struct {
 	//
-	OrderFormId null.Int `xorm:"int(11) pk notnull autoincr 'order_form_id'" json:"order_form_id" xml:"order_form_id"`
+	OrderFormId null.Int `xorm:"int(11) pk notnull autoincr 'order_form_id'" json:"order_form_id" form:"order_form_id" xml:"order_form_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" xml:"organ_id"`
+	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" form:"organ_id" xml:"organ_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" xml:"sc_id"`
+	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" form:"sc_id" xml:"sc_id"`
 	//
-	AllMoney null.Float `xorm:"float(10,2) 'all_money'" json:"all_money" xml:"all_money"`
+	AllMoney null.Float `xorm:"float(10,2) 'all_money'" json:"all_money" form:"all_money" xml:"all_money"`
 	//
-	SaleMoney null.Float `xorm:"float(10,2) 'sale_money'" json:"sale_money" xml:"sale_money"`
+	SaleMoney null.Float `xorm:"float(10,2) 'sale_money'" json:"sale_money" form:"sale_money" xml:"sale_money"`
 	//
-	MustMoney null.Float `xorm:"float(10,2) 'must_money'" json:"must_money" xml:"must_money"`
+	MustMoney null.Float `xorm:"float(10,2) 'must_money'" json:"must_money" form:"must_money" xml:"must_money"`
 	//
-	GetMoney null.Float `xorm:"float(10,2) 'get_money'" json:"get_money" xml:"get_money"`
+	GetMoney null.Float `xorm:"float(10,2) 'get_money'" json:"get_money" form:"get_money" xml:"get_money"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	OfState null.Int `xorm:"int(11) 'of_state'" json:"of_state" xml:"of_state"`
+	OfState null.Int `xorm:"int(11) 'of_state'" json:"of_state" form:"of_state" xml:"of_state"`
 	//
-	OfType null.Int `xorm:"int(11) 'of_type'" json:"of_type" xml:"of_type"`
+	OfType null.Int `xorm:"int(11) 'of_type'" json:"of_type" form:"of_type" xml:"of_type"`
 	//
-	OfNumber null.String `xorm:"varchar(100) 'of_number'" json:"of_number" xml:"of_number"`
+	OfNumber null.String `xorm:"varchar(100) 'of_number'" json:"of_number" form:"of_number" xml:"of_number"`
 	//
-	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" xml:"os_id"`
+	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	//
-	RefundMoney null.Int `xorm:"int(11) 'refund_money'" json:"refund_money" xml:"refund_money"`
+	RefundMoney null.Int `xorm:"int(11) 'refund_money'" json:"refund_money" form:"refund_money" xml:"refund_money"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	OfStartDate null.Time `xorm:"datetime 'of_start_date'" json:"of_start_date" xml:"of_start_date"`
+	OfStartDate null.Time `xorm:"datetime 'of_start_date'" json:"of_start_date" form:"of_start_date" xml:"of_start_date"`
 	//
-	OfEndDate null.Time `xorm:"datetime 'of_end_date'" json:"of_end_date" xml:"of_end_date"`
+	OfEndDate null.Time `xorm:"datetime 'of_end_date'" json:"of_end_date" form:"of_end_date" xml:"of_end_date"`
 	//
-	OfRemark null.String `xorm:"varchar(500) 'of_remark'" json:"of_remark" xml:"of_remark"`
+	OfRemark null.String `xorm:"varchar(500) 'of_remark'" json:"of_remark" form:"of_remark" xml:"of_remark"`
 	//
-	OfJxType null.Int `xorm:"int(11) 'of_jx_type'" json:"of_jx_type" xml:"of_jx_type"`
+	OfJxType null.Int `xorm:"int(11) 'of_jx_type'" json:"of_jx_type" form:"of_jx_type" xml:"of_jx_type"`
 	//
-	PtId null.Int `xorm:"int(11) 'pt_id'" json:"pt_id" xml:"pt_id"`
+	PtId null.Int `xorm:"int(11) 'pt_id'" json:"pt_id" form:"pt_id" xml:"pt_id"`
 	//
-	OrganSchoolId null.Int `xorm:"int(11) 'organ_school_id'" json:"organ_school_id" xml:"organ_school_id"`
+	OrganSchoolId null.Int `xorm:"int(11) 'organ_school_id'" json:"organ_school_id" form:"organ_school_id" xml:"organ_school_id"`
 	//
-	TuitionFee null.Float `xorm:"float(10,2) 'tuition_fee'" json:"tuition_fee" xml:"tuition_fee"`
+	TuitionFee null.Float `xorm:"float(10,2) 'tuition_fee'" json:"tuition_fee" form:"tuition_fee" xml:"tuition_fee"`
 	//
-	TuitionShouldFee null.Float `xorm:"float(10,2) 'tuition_should_fee'" json:"tuition_should_fee" xml:"tuition_should_fee"`
+	TuitionShouldFee null.Float `xorm:"float(10,2) 'tuition_should_fee'" json:"tuition_should_fee" form:"tuition_should_fee" xml:"tuition_should_fee"`
 	//
-	GiftAmount null.Float `xorm:"float(10,2) 'gift_amount'" json:"gift_amount" xml:"gift_amount"`
+	GiftAmount null.Float `xorm:"float(10,2) 'gift_amount'" json:"gift_amount" form:"gift_amount" xml:"gift_amount"`
 	//
-	TeachingMateriaAmount null.Float `xorm:"float(10,2) 'teaching_materia_amount'" json:"teaching_materia_amount" xml:"teaching_materia_amount"`
+	TeachingMateriaAmount null.Float `xorm:"float(10,2) 'teaching_materia_amount'" json:"teaching_materia_amount" form:"teaching_materia_amount" xml:"teaching_materia_amount"`
 	//
-	FmShareNum null.String `xorm:"varchar(100) 'fm_share_num'" json:"fm_share_num" xml:"fm_share_num"`
+	FmShareNum null.String `xorm:"varchar(100) 'fm_share_num'" json:"fm_share_num" form:"fm_share_num" xml:"fm_share_num"`
 	//
-	ContractNum null.String `xorm:"varchar(50) 'contract_num'" json:"contract_num" xml:"contract_num"`
+	ContractNum null.String `xorm:"varchar(50) 'contract_num'" json:"contract_num" form:"contract_num" xml:"contract_num"`
 	//
-	AuditState null.Int `xorm:"int(11) 'audit_state'" json:"audit_state" xml:"audit_state"`
+	AuditState null.Int `xorm:"int(11) 'audit_state'" json:"audit_state" form:"audit_state" xml:"audit_state"`
 	//
-	FsnId null.Int `xorm:"int(11) 'fsn_id'" json:"fsn_id" xml:"fsn_id"`
+	FsnId null.Int `xorm:"int(11) 'fsn_id'" json:"fsn_id" form:"fsn_id" xml:"fsn_id"`
 	//
-	OfBussType null.Int `xorm:"int(11) 'of_buss_type'" json:"of_buss_type" xml:"of_buss_type"`
+	OfBussType null.Int `xorm:"int(11) 'of_buss_type'" json:"of_buss_type" form:"of_buss_type" xml:"of_buss_type"`
 	//
-	InvoiceFee null.Float `xorm:"float(10,7) 'invoice_fee'" json:"invoice_fee" xml:"invoice_fee"`
+	InvoiceFee null.Float `xorm:"float(10,7) 'invoice_fee'" json:"invoice_fee" form:"invoice_fee" xml:"invoice_fee"`
 	//
-	IfDedLpfee null.Int `xorm:"int(11) 'if_ded_lpfee'" json:"if_ded_lpfee" xml:"if_ded_lpfee"`
+	IfDedLpfee null.Int `xorm:"int(11) 'if_ded_lpfee'" json:"if_ded_lpfee" form:"if_ded_lpfee" xml:"if_ded_lpfee"`
 	//
-	ServiceFee null.Float `xorm:"float(10,7) 'service_fee'" json:"service_fee" xml:"service_fee"`
+	ServiceFee null.Float `xorm:"float(10,7) 'service_fee'" json:"service_fee" form:"service_fee" xml:"service_fee"`
 	//
-	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" xml:"check_user_id"`
+	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" form:"check_user_id" xml:"check_user_id"`
 	//
-	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" xml:"check_time"`
+	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" form:"check_time" xml:"check_time"`
 	//
-	TransferSctid null.Int `xorm:"int(11) 'transfer_sctid'" json:"transfer_sctid" xml:"transfer_sctid"`
+	TransferSctid null.Int `xorm:"int(11) 'transfer_sctid'" json:"transfer_sctid" form:"transfer_sctid" xml:"transfer_sctid"`
 	//
-	ZxMoney null.Float `xorm:"float(50,2) 'zx_money'" json:"zx_money" xml:"zx_money"`
+	ZxMoney null.Float `xorm:"float(50,2) 'zx_money'" json:"zx_money" form:"zx_money" xml:"zx_money"`
 	//
-	ServiceRatioModifier null.Int `xorm:"int(11) 'service_ratio_modifier'" json:"service_ratio_modifier" xml:"service_ratio_modifier"`
+	ServiceRatioModifier null.Int `xorm:"int(11) 'service_ratio_modifier'" json:"service_ratio_modifier" form:"service_ratio_modifier" xml:"service_ratio_modifier"`
 	//
-	FwfkfAllmoney null.Float `xorm:"float(50,2) 'fwfkf_allmoney'" json:"fwfkf_allmoney" xml:"fwfkf_allmoney"`
+	FwfkfAllmoney null.Float `xorm:"float(50,2) 'fwfkf_allmoney'" json:"fwfkf_allmoney" form:"fwfkf_allmoney" xml:"fwfkf_allmoney"`
 	//
-	KfpkfAllmoney null.Float `xorm:"float(50,2) 'kfpkf_allmoney'" json:"kfpkf_allmoney" xml:"kfpkf_allmoney"`
+	KfpkfAllmoney null.Float `xorm:"float(50,2) 'kfpkf_allmoney'" json:"kfpkf_allmoney" form:"kfpkf_allmoney" xml:"kfpkf_allmoney"`
 	//
-	ZxHour null.Float `xorm:"float(50,2) 'zx_hour'" json:"zx_hour" xml:"zx_hour"`
+	ZxHour null.Float `xorm:"float(50,2) 'zx_hour'" json:"zx_hour" form:"zx_hour" xml:"zx_hour"`
 	//
-	FeeCheckState null.Int `xorm:"int(11) 'fee_check_state'" json:"fee_check_state" xml:"fee_check_state"`
+	FeeCheckState null.Int `xorm:"int(11) 'fee_check_state'" json:"fee_check_state" form:"fee_check_state" xml:"fee_check_state"`
 	//
-	StkId null.Int `xorm:"int(11) 'stk_id'" json:"stk_id" xml:"stk_id"`
+	StkId null.Int `xorm:"int(11) 'stk_id'" json:"stk_id" form:"stk_id" xml:"stk_id"`
 	//
-	ShangkeId null.Int `xorm:"int(11) 'shangke_id'" json:"shangke_id" xml:"shangke_id"`
+	ShangkeId null.Int `xorm:"int(11) 'shangke_id'" json:"shangke_id" form:"shangke_id" xml:"shangke_id"`
 	//
-	TrialLessonId null.Int `xorm:"int(11) 'trial_lesson_id'" json:"trial_lesson_id" xml:"trial_lesson_id"`
+	TrialLessonId null.Int `xorm:"int(11) 'trial_lesson_id'" json:"trial_lesson_id" form:"trial_lesson_id" xml:"trial_lesson_id"`
 	//
-	IfBookMoney null.Int `xorm:"int(11) 'if_book_money'" json:"if_book_money" xml:"if_book_money"`
+	IfBookMoney null.Int `xorm:"int(11) 'if_book_money'" json:"if_book_money" form:"if_book_money" xml:"if_book_money"`
 	//
-	OrderFullTime null.Time `xorm:"datetime 'order_full_time'" json:"order_full_time" xml:"order_full_time"`
+	OrderFullTime null.Time `xorm:"datetime 'order_full_time'" json:"order_full_time" form:"order_full_time" xml:"order_full_time"`
 	//
-	SbtId null.Int `xorm:"int(11) 'sbt_id'" json:"sbt_id" xml:"sbt_id"`
+	SbtId null.Int `xorm:"int(11) 'sbt_id'" json:"sbt_id" form:"sbt_id" xml:"sbt_id"`
 	//
-	OrderNozcMoney null.Float `xorm:"float(50,2) 'order_nozc_money'" json:"order_nozc_money" xml:"order_nozc_money"`
+	OrderNozcMoney null.Float `xorm:"float(50,2) 'order_nozc_money'" json:"order_nozc_money" form:"order_nozc_money" xml:"order_nozc_money"`
 	//
-	OrderFeeDate null.Time `xorm:"datetime 'order_fee_date'" json:"order_fee_date" xml:"order_fee_date"`
+	OrderFeeDate null.Time `xorm:"datetime 'order_fee_date'" json:"order_fee_date" form:"order_fee_date" xml:"order_fee_date"`
 	//
-	PkCurrentPay null.Int `xorm:"int(11) 'pk_current_pay'" json:"pk_current_pay" xml:"pk_current_pay"`
+	PkCurrentPay null.Int `xorm:"int(11) 'pk_current_pay'" json:"pk_current_pay" form:"pk_current_pay" xml:"pk_current_pay"`
 	//
-	ContractNumNew null.String `xorm:"varchar(50) 'contract_num_new'" json:"contract_num_new" xml:"contract_num_new"`
+	ContractNumNew null.String `xorm:"varchar(50) 'contract_num_new'" json:"contract_num_new" form:"contract_num_new" xml:"contract_num_new"`
 	//
-	RefHour null.Float `xorm:"float(50,2) 'ref_hour'" json:"ref_hour" xml:"ref_hour"`
+	RefHour null.Float `xorm:"float(50,2) 'ref_hour'" json:"ref_hour" form:"ref_hour" xml:"ref_hour"`
 	//
-	RefMoney null.Float `xorm:"float(50,2) 'ref_money'" json:"ref_money" xml:"ref_money"`
+	RefMoney null.Float `xorm:"float(50,2) 'ref_money'" json:"ref_money" form:"ref_money" xml:"ref_money"`
 	//
-	BookYkMoney null.Float `xorm:"float(50,2) 'book_yk_money'" json:"book_yk_money" xml:"book_yk_money"`
+	BookYkMoney null.Float `xorm:"float(50,2) 'book_yk_money'" json:"book_yk_money" form:"book_yk_money" xml:"book_yk_money"`
 	//
-	StuSign null.Int `xorm:"int(11) 'stu_sign'" json:"stu_sign" xml:"stu_sign"`
+	StuSign null.Int `xorm:"int(11) 'stu_sign'" json:"stu_sign" form:"stu_sign" xml:"stu_sign"`
 	//
-	JhrSign null.Int `xorm:"int(11) 'jhr_sign'" json:"jhr_sign" xml:"jhr_sign"`
+	JhrSign null.Int `xorm:"int(11) 'jhr_sign'" json:"jhr_sign" form:"jhr_sign" xml:"jhr_sign"`
 	//
-	SqSign null.Int `xorm:"int(11) 'sq_sign'" json:"sq_sign" xml:"sq_sign"`
+	SqSign null.Int `xorm:"int(11) 'sq_sign'" json:"sq_sign" form:"sq_sign" xml:"sq_sign"`
 	//
-	StuSignDate null.Time `xorm:"datetime 'stu_sign_date'" json:"stu_sign_date" xml:"stu_sign_date"`
+	StuSignDate null.Time `xorm:"datetime 'stu_sign_date'" json:"stu_sign_date" form:"stu_sign_date" xml:"stu_sign_date"`
 	//
-	YfSignDate null.Time `xorm:"datetime 'yf_sign_date'" json:"yf_sign_date" xml:"yf_sign_date"`
+	YfSignDate null.Time `xorm:"datetime 'yf_sign_date'" json:"yf_sign_date" form:"yf_sign_date" xml:"yf_sign_date"`
 	//
-	Mzks null.Float `xorm:"float(50,2) 'mzks'" json:"mzks" xml:"mzks"`
+	Mzks null.Float `xorm:"float(50,2) 'mzks'" json:"mzks" form:"mzks" xml:"mzks"`
 	//
-	UseMzks null.Float `xorm:"float(50,2) 'use_mzks'" json:"use_mzks" xml:"use_mzks"`
+	UseMzks null.Float `xorm:"float(50,2) 'use_mzks'" json:"use_mzks" form:"use_mzks" xml:"use_mzks"`
 	//
-	SusMzks null.Float `xorm:"float(50,2) 'sus_mzks'" json:"sus_mzks" xml:"sus_mzks"`
+	SusMzks null.Float `xorm:"float(50,2) 'sus_mzks'" json:"sus_mzks" form:"sus_mzks" xml:"sus_mzks"`
 	//
-	EffectiveMonth null.Int `xorm:"int(11) 'effective_month'" json:"effective_month" xml:"effective_month"`
+	EffectiveMonth null.Int `xorm:"int(11) 'effective_month'" json:"effective_month" form:"effective_month" xml:"effective_month"`
 	//
-	OfGetMoneyType null.Int `xorm:"int(11) 'of_get_money_type'" json:"of_get_money_type" xml:"of_get_money_type"`
+	OfGetMoneyType null.Int `xorm:"int(11) 'of_get_money_type'" json:"of_get_money_type" form:"of_get_money_type" xml:"of_get_money_type"`
 	//
-	OfPeriods null.Int `xorm:"int(11) 'of_periods'" json:"of_periods" xml:"of_periods"`
+	OfPeriods null.Int `xorm:"int(11) 'of_periods'" json:"of_periods" form:"of_periods" xml:"of_periods"`
 	//
-	OfNextPeriod null.Int `xorm:"int(11) 'of_next_period'" json:"of_next_period" xml:"of_next_period"`
+	OfNextPeriod null.Int `xorm:"int(11) 'of_next_period'" json:"of_next_period" form:"of_next_period" xml:"of_next_period"`
 	//
-	NextPeriodDate null.Time `xorm:"datetime 'next_period_date'" json:"next_period_date" xml:"next_period_date"`
+	NextPeriodDate null.Time `xorm:"datetime 'next_period_date'" json:"next_period_date" form:"next_period_date" xml:"next_period_date"`
 	//
-	OfDeposit decimal.Decimal `xorm:"decimal(50,3) 'of_deposit'" json:"of_deposit" xml:"of_deposit"`
+	OfDeposit decimal.Decimal `xorm:"decimal(50,3) 'of_deposit'" json:"of_deposit" form:"of_deposit" xml:"of_deposit"`
 	//
-	AllViolateMoney decimal.Decimal `xorm:"decimal(50,3) 'all_violate_money'" json:"all_violate_money" xml:"all_violate_money"`
+	AllViolateMoney decimal.Decimal `xorm:"decimal(50,3) 'all_violate_money'" json:"all_violate_money" form:"all_violate_money" xml:"all_violate_money"`
 	//
-	ViolateRatio null.Float `xorm:"float(50,5) 'violate_ratio'" json:"violate_ratio" xml:"violate_ratio"`
+	ViolateRatio null.Float `xorm:"float(50,5) 'violate_ratio'" json:"violate_ratio" form:"violate_ratio" xml:"violate_ratio"`
 	//
-	UseHour null.Float `xorm:"float(50,2) 'use_hour'" json:"use_hour" xml:"use_hour"`
+	UseHour null.Float `xorm:"float(50,2) 'use_hour'" json:"use_hour" form:"use_hour" xml:"use_hour"`
 	//
-	DuePeriod null.Int `xorm:"int(11) 'due_period'" json:"due_period" xml:"due_period"`
+	DuePeriod null.Int `xorm:"int(11) 'due_period'" json:"due_period" form:"due_period" xml:"due_period"`
 	//
-	ZxCanhour null.Float `xorm:"float(50,2) 'zx_canhour'" json:"zx_canhour" xml:"zx_canhour"`
+	ZxCanhour null.Float `xorm:"float(50,2) 'zx_canhour'" json:"zx_canhour" form:"zx_canhour" xml:"zx_canhour"`
 	//
-	FxCanhour null.Float `xorm:"float(50,2) 'fx_canhour'" json:"fx_canhour" xml:"fx_canhour"`
+	FxCanhour null.Float `xorm:"float(50,2) 'fx_canhour'" json:"fx_canhour" form:"fx_canhour" xml:"fx_canhour"`
 	//
-	ZxUsehour null.Float `xorm:"float(50,2) 'zx_usehour'" json:"zx_usehour" xml:"zx_usehour"`
+	ZxUsehour null.Float `xorm:"float(50,2) 'zx_usehour'" json:"zx_usehour" form:"zx_usehour" xml:"zx_usehour"`
 	//
-	FxUsehour null.Float `xorm:"float(50,2) 'fx_usehour'" json:"fx_usehour" xml:"fx_usehour"`
+	FxUsehour null.Float `xorm:"float(50,2) 'fx_usehour'" json:"fx_usehour" form:"fx_usehour" xml:"fx_usehour"`
 	//
-	XfsyYypblHour null.Float `xorm:"float(50,2) 'xfsy_yypbl_hour'" json:"xfsy_yypbl_hour" xml:"xfsy_yypbl_hour"`
+	XfsyYypblHour null.Float `xorm:"float(50,2) 'xfsy_yypbl_hour'" json:"xfsy_yypbl_hour" form:"xfsy_yypbl_hour" xml:"xfsy_yypbl_hour"`
 	//
-	XfsyZsHour null.Float `xorm:"float(50,2) 'xfsy_zs_hour'" json:"xfsy_zs_hour" xml:"xfsy_zs_hour"`
+	XfsyZsHour null.Float `xorm:"float(50,2) 'xfsy_zs_hour'" json:"xfsy_zs_hour" form:"xfsy_zs_hour" xml:"xfsy_zs_hour"`
 	//
-	OffqTime null.Time `xorm:"datetime 'offq_time'" json:"offq_time" xml:"offq_time"`
+	OffqTime null.Time `xorm:"datetime 'offq_time'" json:"offq_time" form:"offq_time" xml:"offq_time"`
 	//
-	TmkZxsUsername null.String `xorm:"varchar(1000) 'tmk_zxs_username'" json:"tmk_zxs_username" xml:"tmk_zxs_username"`
+	TmkZxsUsername null.String `xorm:"varchar(1000) 'tmk_zxs_username'" json:"tmk_zxs_username" form:"tmk_zxs_username" xml:"tmk_zxs_username"`
 	//
-	TmkZxsDate null.Time `xorm:"datetime 'tmk_zxs_date'" json:"tmk_zxs_date" xml:"tmk_zxs_date"`
+	TmkZxsDate null.Time `xorm:"datetime 'tmk_zxs_date'" json:"tmk_zxs_date" form:"tmk_zxs_date" xml:"tmk_zxs_date"`
 	//
-	BfOffqTime null.Time `xorm:"datetime 'bf_offq_time'" json:"bf_offq_time" xml:"bf_offq_time"`
+	BfOffqTime null.Time `xorm:"datetime 'bf_offq_time'" json:"bf_offq_time" form:"bf_offq_time" xml:"bf_offq_time"`
 	//
-	PkProtocolType null.Int `xorm:"int(11) 'pk_protocol_type'" json:"pk_protocol_type" xml:"pk_protocol_type"`
+	PkProtocolType null.Int `xorm:"int(11) 'pk_protocol_type'" json:"pk_protocol_type" form:"pk_protocol_type" xml:"pk_protocol_type"`
 	//
-	PkDegreeDeposit null.Int `xorm:"int(11) 'pk_degree_deposit'" json:"pk_degree_deposit" xml:"pk_degree_deposit"`
+	PkDegreeDeposit null.Int `xorm:"int(11) 'pk_degree_deposit'" json:"pk_degree_deposit" form:"pk_degree_deposit" xml:"pk_degree_deposit"`
 	//
-	DdMoney decimal.Decimal `xorm:"decimal(50,3) 'dd_money'" json:"dd_money" xml:"dd_money"`
+	DdMoney decimal.Decimal `xorm:"decimal(50,3) 'dd_money'" json:"dd_money" form:"dd_money" xml:"dd_money"`
 	//
-	OfVersion null.Int `xorm:"int(11) 'of_version'" json:"of_version" xml:"of_version"`
+	OfVersion null.Int `xorm:"int(11) 'of_version'" json:"of_version" form:"of_version" xml:"of_version"`
 	//
-	OfDiscountCoupon null.String `xorm:"varchar(200) 'of_discount_coupon'" json:"of_discount_coupon" xml:"of_discount_coupon"`
+	OfDiscountCoupon null.String `xorm:"varchar(200) 'of_discount_coupon'" json:"of_discount_coupon" form:"of_discount_coupon" xml:"of_discount_coupon"`
 	//
-	NormalOs decimal.Decimal `xorm:"decimal(50,3) 'normal_os'" json:"normal_os" xml:"normal_os"`
+	NormalOs decimal.Decimal `xorm:"decimal(50,3) 'normal_os'" json:"normal_os" form:"normal_os" xml:"normal_os"`
 	//
-	PkSchOfNorm null.Int `xorm:"int(11) 'pk_sch_of_norm'" json:"pk_sch_of_norm" xml:"pk_sch_of_norm"`
+	PkSchOfNorm null.Int `xorm:"int(11) 'pk_sch_of_norm'" json:"pk_sch_of_norm" form:"pk_sch_of_norm" xml:"pk_sch_of_norm"`
 	//
-	DealDate null.Time `xorm:"datetime 'deal_date'" json:"deal_date" xml:"deal_date"`
+	DealDate null.Time `xorm:"datetime 'deal_date'" json:"deal_date" form:"deal_date" xml:"deal_date"`
 	//
-	FqDjmoney null.Float `xorm:"float(50,2) 'fq_djmoney'" json:"fq_djmoney" xml:"fq_djmoney"`
+	FqDjmoney null.Float `xorm:"float(50,2) 'fq_djmoney'" json:"fq_djmoney" form:"fq_djmoney" xml:"fq_djmoney"`
 	//
-	RefundMark null.Int `xorm:"int(11) 'refund_mark'" json:"refund_mark" xml:"refund_mark"`
+	RefundMark null.Int `xorm:"int(11) 'refund_mark'" json:"refund_mark" form:"refund_mark" xml:"refund_mark"`
 	//
-	OfBatch null.Int `xorm:"int(11) 'of_batch'" json:"of_batch" xml:"of_batch"`
+	OfBatch null.Int `xorm:"int(11) 'of_batch'" json:"of_batch" form:"of_batch" xml:"of_batch"`
 	//
-	IfPartXy null.Int `xorm:"int(11) 'if_part_xy'" json:"if_part_xy" xml:"if_part_xy"`
+	IfPartXy null.Int `xorm:"int(11) 'if_part_xy'" json:"if_part_xy" form:"if_part_xy" xml:"if_part_xy"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined OrderForm

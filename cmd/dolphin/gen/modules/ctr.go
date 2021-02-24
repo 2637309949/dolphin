@@ -31,6 +31,7 @@ func (ctr *Ctr) Build(dir string, args []string, node *schema.Application) ([]*p
 	for _, c := range node.Controllers {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
+			"Tables":      node.Tables,
 			"Name":        node.Name,
 			"Controller":  c,
 			"Viper":       viper.GetViper(),

@@ -4,39 +4,56 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // UserTrainingTable defined
 type UserTrainingTable struct {
 	//
-	UTTId null.Int `xorm:"int(11) pk notnull autoincr 'u_t_t_id'" json:"u_t_t_id" xml:"u_t_t_id"`
+	UTTId null.Int `xorm:"int(11) pk notnull autoincr 'u_t_t_id'" json:"u_t_t_id" form:"u_t_t_id" xml:"u_t_t_id"`
 	//
-	TrainType null.Int `xorm:"int(11) 'train_type'" json:"train_type" xml:"train_type"`
+	TrainType null.Int `xorm:"int(11) 'train_type'" json:"train_type" form:"train_type" xml:"train_type"`
 	//
-	TrainContent null.String `xorm:"varchar(2000) 'train_content'" json:"train_content" xml:"train_content"`
+	TrainContent null.String `xorm:"varchar(2000) 'train_content'" json:"train_content" form:"train_content" xml:"train_content"`
 	//
-	TrainDate null.Time `xorm:"datetime 'train_date'" json:"train_date" xml:"train_date"`
+	TrainDate null.Time `xorm:"datetime 'train_date'" json:"train_date" form:"train_date" xml:"train_date"`
 	//
-	TrainStartTime null.Time `xorm:"datetime 'train_start_time'" json:"train_start_time" xml:"train_start_time"`
+	TrainStartTime null.Time `xorm:"datetime 'train_start_time'" json:"train_start_time" form:"train_start_time" xml:"train_start_time"`
 	//
-	TrainEndTime null.Time `xorm:"datetime 'train_end_time'" json:"train_end_time" xml:"train_end_time"`
+	TrainEndTime null.Time `xorm:"datetime 'train_end_time'" json:"train_end_time" form:"train_end_time" xml:"train_end_time"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	TrainName null.String `xorm:"varchar(500) 'train_name'" json:"train_name" xml:"train_name"`
+	TrainName null.String `xorm:"varchar(500) 'train_name'" json:"train_name" form:"train_name" xml:"train_name"`
 	//
-	TrainingState null.Int `xorm:"int(11) 'training_state'" json:"training_state" xml:"training_state"`
+	TrainingState null.Int `xorm:"int(11) 'training_state'" json:"training_state" form:"training_state" xml:"training_state"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined UserTrainingTable

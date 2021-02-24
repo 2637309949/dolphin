@@ -19,6 +19,7 @@ func RecoveryWithWriter(f func(c *gin.Context, err interface{})) gin.HandlerFunc
 				httprequest, _ := httputil.DumpRequest(c.Request, false)
 				goErr := errors.Wrap(err, 3)
 				reset := string([]byte{27, 91, 48, 109})
+				fmt.Println(string(goErr.Stack()))
 				logrus.Errorf("[Nice Recovery] panic recovered:\n\n%s%s\n\n%s%s", httprequest, goErr.Error(), goErr.Stack(), reset)
 				f(c, err)
 			}

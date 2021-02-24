@@ -4,17 +4,34 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Loginlanguageset defined
 type Loginlanguageset struct {
 	//
-	T2240 null.Int `xorm:"int(11) pk notnull autoincr 't_224_0'" json:"t_224_0" xml:"t_224_0"`
+	T2240 null.Int `xorm:"int(11) pk notnull autoincr 't_224_0'" json:"t_224_0" form:"t_224_0" xml:"t_224_0"`
 	//
-	LanguageName null.String `xorm:"varchar(500) 'language_name'" json:"language_name" xml:"language_name"`
+	LanguageName null.String `xorm:"varchar(500) 'language_name'" json:"language_name" form:"language_name" xml:"language_name"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Loginlanguageset

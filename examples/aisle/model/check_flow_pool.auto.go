@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // CheckFlowPool defined
 type CheckFlowPool struct {
 	//
-	CFPId null.Int `xorm:"int(11) pk notnull autoincr 'c_f_p_id'" json:"c_f_p_id" xml:"c_f_p_id"`
+	CFPId null.Int `xorm:"int(11) pk notnull autoincr 'c_f_p_id'" json:"c_f_p_id" form:"c_f_p_id" xml:"c_f_p_id"`
 	//
-	FlowName null.String `xorm:"varchar(500) 'flow_name'" json:"flow_name" xml:"flow_name"`
+	FlowName null.String `xorm:"varchar(500) 'flow_name'" json:"flow_name" form:"flow_name" xml:"flow_name"`
 	//
-	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" xml:"zd_check_state"`
+	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" form:"zd_check_state" xml:"zd_check_state"`
 	//
-	PkCheckUser null.Int `xorm:"int(11) 'pk_check_user'" json:"pk_check_user" xml:"pk_check_user"`
+	PkCheckUser null.Int `xorm:"int(11) 'pk_check_user'" json:"pk_check_user" form:"pk_check_user" xml:"pk_check_user"`
 	//
-	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" xml:"check_date"`
+	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 	//
-	NowCheckUser null.String `xorm:"varchar(500) 'now_check_user'" json:"now_check_user" xml:"now_check_user"`
+	NowCheckUser null.String `xorm:"varchar(500) 'now_check_user'" json:"now_check_user" form:"now_check_user" xml:"now_check_user"`
 	//
-	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" xml:"now_floor"`
+	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" form:"now_floor" xml:"now_floor"`
 	//
-	TurnFloor null.Int `xorm:"int(11) 'turn_floor'" json:"turn_floor" xml:"turn_floor"`
+	TurnFloor null.Int `xorm:"int(11) 'turn_floor'" json:"turn_floor" form:"turn_floor" xml:"turn_floor"`
 	//
-	HistoryCheckUser null.String `xorm:"varchar(500) 'history_check_user'" json:"history_check_user" xml:"history_check_user"`
+	HistoryCheckUser null.String `xorm:"varchar(500) 'history_check_user'" json:"history_check_user" form:"history_check_user" xml:"history_check_user"`
 	//
-	PkFlowSet null.Int `xorm:"int(11) 'pk_flow_set'" json:"pk_flow_set" xml:"pk_flow_set"`
+	PkFlowSet null.Int `xorm:"int(11) 'pk_flow_set'" json:"pk_flow_set" form:"pk_flow_set" xml:"pk_flow_set"`
 	//
-	PkRefundId null.Int `xorm:"int(11) 'pk_refund_id'" json:"pk_refund_id" xml:"pk_refund_id"`
+	PkRefundId null.Int `xorm:"int(11) 'pk_refund_id'" json:"pk_refund_id" form:"pk_refund_id" xml:"pk_refund_id"`
 	//
-	PkDOId null.Int `xorm:"int(11) 'pk_d_o_id'" json:"pk_d_o_id" xml:"pk_d_o_id"`
+	PkDOId null.Int `xorm:"int(11) 'pk_d_o_id'" json:"pk_d_o_id" form:"pk_d_o_id" xml:"pk_d_o_id"`
 	//
-	PkTSCId null.Int `xorm:"int(11) 'pk_t_s_c_id'" json:"pk_t_s_c_id" xml:"pk_t_s_c_id"`
+	PkTSCId null.Int `xorm:"int(11) 'pk_t_s_c_id'" json:"pk_t_s_c_id" form:"pk_t_s_c_id" xml:"pk_t_s_c_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined CheckFlowPool

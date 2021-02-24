@@ -4,137 +4,154 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Deletestudentbackups defined
 type Deletestudentbackups struct {
 	//
-	StuLinkPerson null.String `xorm:"varchar(100) 'stu_link_person'" json:"stu_link_person" xml:"stu_link_person"`
+	StuLinkPerson null.String `xorm:"varchar(100) 'stu_link_person'" json:"stu_link_person" form:"stu_link_person" xml:"stu_link_person"`
 	//
-	Age null.Int `xorm:"int(11) 'age'" json:"age" xml:"age"`
+	Age null.Int `xorm:"int(11) 'age'" json:"age" form:"age" xml:"age"`
 	//
-	StuAddress null.String `xorm:"varchar(100) 'stu_address'" json:"stu_address" xml:"stu_address"`
+	StuAddress null.String `xorm:"varchar(100) 'stu_address'" json:"stu_address" form:"stu_address" xml:"stu_address"`
 	//
-	StuRemark null.String `xorm:"varchar(300) 'stu_remark'" json:"stu_remark" xml:"stu_remark"`
+	StuRemark null.String `xorm:"varchar(300) 'stu_remark'" json:"stu_remark" form:"stu_remark" xml:"stu_remark"`
 	//
-	RecommendStu null.Int `xorm:"int(11) 'recommend_stu'" json:"recommend_stu" xml:"recommend_stu"`
+	RecommendStu null.Int `xorm:"int(11) 'recommend_stu'" json:"recommend_stu" form:"recommend_stu" xml:"recommend_stu"`
 	//
-	StudentId null.Int `xorm:"int(11) pk notnull autoincr 'student_id'" json:"student_id" xml:"student_id"`
+	StudentId null.Int `xorm:"int(11) pk notnull autoincr 'student_id'" json:"student_id" form:"student_id" xml:"student_id"`
 	//
-	StuName null.String `xorm:"varchar(100) 'stu_name'" json:"stu_name" xml:"stu_name"`
+	StuName null.String `xorm:"varchar(100) 'stu_name'" json:"stu_name" form:"stu_name" xml:"stu_name"`
 	//
-	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" xml:"stu_phone"`
+	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	StuType null.Int `xorm:"int(11) 'stu_type'" json:"stu_type" xml:"stu_type"`
+	StuType null.Int `xorm:"int(11) 'stu_type'" json:"stu_type" form:"stu_type" xml:"stu_type"`
 	//
-	MaType null.Int `xorm:"int(11) 'ma_type'" json:"ma_type" xml:"ma_type"`
+	MaType null.Int `xorm:"int(11) 'ma_type'" json:"ma_type" form:"ma_type" xml:"ma_type"`
 	//
-	StuSysState null.Int `xorm:"int(11) 'stu_sys_state'" json:"stu_sys_state" xml:"stu_sys_state"`
+	StuSysState null.Int `xorm:"int(11) 'stu_sys_state'" json:"stu_sys_state" form:"stu_sys_state" xml:"stu_sys_state"`
 	//
-	StuEnName null.String `xorm:"varchar(100) 'stu_en_name'" json:"stu_en_name" xml:"stu_en_name"`
+	StuEnName null.String `xorm:"varchar(100) 'stu_en_name'" json:"stu_en_name" form:"stu_en_name" xml:"stu_en_name"`
 	//
-	StuBir null.Time `xorm:"datetime 'stu_bir'" json:"stu_bir" xml:"stu_bir"`
+	StuBir null.Time `xorm:"datetime 'stu_bir'" json:"stu_bir" form:"stu_bir" xml:"stu_bir"`
 	//
-	StuLoadSchool null.Int `xorm:"int(11) 'stu_load_school'" json:"stu_load_school" xml:"stu_load_school"`
+	StuLoadSchool null.Int `xorm:"int(11) 'stu_load_school'" json:"stu_load_school" form:"stu_load_school" xml:"stu_load_school"`
 	//
-	MaTypeRemark null.String `xorm:"varchar(200) 'ma_type_remark'" json:"ma_type_remark" xml:"ma_type_remark"`
+	MaTypeRemark null.String `xorm:"varchar(200) 'ma_type_remark'" json:"ma_type_remark" form:"ma_type_remark" xml:"ma_type_remark"`
 	//
-	LoadUser null.Int `xorm:"int(11) 'load_user'" json:"load_user" xml:"load_user"`
+	LoadUser null.Int `xorm:"int(11) 'load_user'" json:"load_user" form:"load_user" xml:"load_user"`
 	//
-	StuPwd null.String `xorm:"varchar(300) 'stu_pwd'" json:"stu_pwd" xml:"stu_pwd"`
+	StuPwd null.String `xorm:"varchar(300) 'stu_pwd'" json:"stu_pwd" form:"stu_pwd" xml:"stu_pwd"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	StuSex null.Int `xorm:"int(11) 'stu_sex'" json:"stu_sex" xml:"stu_sex"`
+	StuSex null.Int `xorm:"int(11) 'stu_sex'" json:"stu_sex" form:"stu_sex" xml:"stu_sex"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	StuZcMoney null.Float `xorm:"float(10,2) 'stu_zc_money'" json:"stu_zc_money" xml:"stu_zc_money"`
+	StuZcMoney null.Float `xorm:"float(10,2) 'stu_zc_money'" json:"stu_zc_money" form:"stu_zc_money" xml:"stu_zc_money"`
 	//
-	CallType null.Int `xorm:"int(11) 'call_type'" json:"call_type" xml:"call_type"`
+	CallType null.Int `xorm:"int(11) 'call_type'" json:"call_type" form:"call_type" xml:"call_type"`
 	//
-	StuLinkPerson2 null.String `xorm:"varchar(50) 'stu_link_person2'" json:"stu_link_person2" xml:"stu_link_person2"`
+	StuLinkPerson2 null.String `xorm:"varchar(50) 'stu_link_person2'" json:"stu_link_person2" form:"stu_link_person2" xml:"stu_link_person2"`
 	//
-	StuPhone2 null.String `xorm:"varchar(11) 'stu_phone2'" json:"stu_phone2" xml:"stu_phone2"`
+	StuPhone2 null.String `xorm:"varchar(11) 'stu_phone2'" json:"stu_phone2" form:"stu_phone2" xml:"stu_phone2"`
 	//
-	AttendSchool null.String `xorm:"varchar(200) 'attend_school'" json:"attend_school" xml:"attend_school"`
+	AttendSchool null.String `xorm:"varchar(200) 'attend_school'" json:"attend_school" form:"attend_school" xml:"attend_school"`
 	//
-	Wechatid null.String `xorm:"varchar(50) 'wechatid'" json:"wechatid" xml:"wechatid"`
+	Wechatid null.String `xorm:"varchar(50) 'wechatid'" json:"wechatid" form:"wechatid" xml:"wechatid"`
 	//
-	NetworkDetail null.Int `xorm:"int(11) 'network_detail'" json:"network_detail" xml:"network_detail"`
+	NetworkDetail null.Int `xorm:"int(11) 'network_detail'" json:"network_detail" form:"network_detail" xml:"network_detail"`
 	//
-	KhType null.Int `xorm:"int(11) 'kh_type'" json:"kh_type" xml:"kh_type"`
+	KhType null.Int `xorm:"int(11) 'kh_type'" json:"kh_type" form:"kh_type" xml:"kh_type"`
 	//
-	TimerVisitTime null.Time `xorm:"datetime 'timer_visit_time'" json:"timer_visit_time" xml:"timer_visit_time"`
+	TimerVisitTime null.Time `xorm:"datetime 'timer_visit_time'" json:"timer_visit_time" form:"timer_visit_time" xml:"timer_visit_time"`
 	//
-	StuDjMoney null.Float `xorm:"float(10,2) 'stu_dj_money'" json:"stu_dj_money" xml:"stu_dj_money"`
+	StuDjMoney null.Float `xorm:"float(10,2) 'stu_dj_money'" json:"stu_dj_money" form:"stu_dj_money" xml:"stu_dj_money"`
 	//
-	Relation1 null.Int `xorm:"int(11) 'relation1'" json:"relation1" xml:"relation1"`
+	Relation1 null.Int `xorm:"int(11) 'relation1'" json:"relation1" form:"relation1" xml:"relation1"`
 	//
-	Relation2 null.Int `xorm:"int(11) 'relation2'" json:"relation2" xml:"relation2"`
+	Relation2 null.Int `xorm:"int(11) 'relation2'" json:"relation2" form:"relation2" xml:"relation2"`
 	//
-	TjUser null.Int `xorm:"int(11) 'tj_user'" json:"tj_user" xml:"tj_user"`
+	TjUser null.Int `xorm:"int(11) 'tj_user'" json:"tj_user" form:"tj_user" xml:"tj_user"`
 	//
-	StuJifen null.Int `xorm:"int(11) 'stu_jifen'" json:"stu_jifen" xml:"stu_jifen"`
+	StuJifen null.Int `xorm:"int(11) 'stu_jifen'" json:"stu_jifen" form:"stu_jifen" xml:"stu_jifen"`
 	//
-	StuNumber null.String `xorm:"varchar(500) 'stu_number'" json:"stu_number" xml:"stu_number"`
+	StuNumber null.String `xorm:"varchar(500) 'stu_number'" json:"stu_number" form:"stu_number" xml:"stu_number"`
 	//
-	StuLevel null.Int `xorm:"int(11) 'stu_level'" json:"stu_level" xml:"stu_level"`
+	StuLevel null.Int `xorm:"int(11) 'stu_level'" json:"stu_level" form:"stu_level" xml:"stu_level"`
 	//
-	StuFollowUpMonthly null.Int `xorm:"int(11) 'stu_follow_up_monthly'" json:"stu_follow_up_monthly" xml:"stu_follow_up_monthly"`
+	StuFollowUpMonthly null.Int `xorm:"int(11) 'stu_follow_up_monthly'" json:"stu_follow_up_monthly" form:"stu_follow_up_monthly" xml:"stu_follow_up_monthly"`
 	//
-	BcId null.Int `xorm:"int(11) 'bc_id'" json:"bc_id" xml:"bc_id"`
+	BcId null.Int `xorm:"int(11) 'bc_id'" json:"bc_id" form:"bc_id" xml:"bc_id"`
 	//
-	BigCustomerType null.Int `xorm:"int(11) 'big_customer_type'" json:"big_customer_type" xml:"big_customer_type"`
+	BigCustomerType null.Int `xorm:"int(11) 'big_customer_type'" json:"big_customer_type" form:"big_customer_type" xml:"big_customer_type"`
 	//
-	OverseasStuFollowUpMonthly null.Int `xorm:"int(11) 'overseas_stu_follow_up_monthly'" json:"overseas_stu_follow_up_monthly" xml:"overseas_stu_follow_up_monthly"`
+	OverseasStuFollowUpMonthly null.Int `xorm:"int(11) 'overseas_stu_follow_up_monthly'" json:"overseas_stu_follow_up_monthly" form:"overseas_stu_follow_up_monthly" xml:"overseas_stu_follow_up_monthly"`
 	//
-	SportsStuFollowUpMonthly null.Int `xorm:"int(11) 'sports_stu_follow_up_monthly'" json:"sports_stu_follow_up_monthly" xml:"sports_stu_follow_up_monthly"`
+	SportsStuFollowUpMonthly null.Int `xorm:"int(11) 'sports_stu_follow_up_monthly'" json:"sports_stu_follow_up_monthly" form:"sports_stu_follow_up_monthly" xml:"sports_stu_follow_up_monthly"`
 	//
-	ArtStuFollowUpMonthly null.Int `xorm:"int(11) 'art_stu_follow_up_monthly'" json:"art_stu_follow_up_monthly" xml:"art_stu_follow_up_monthly"`
+	ArtStuFollowUpMonthly null.Int `xorm:"int(11) 'art_stu_follow_up_monthly'" json:"art_stu_follow_up_monthly" form:"art_stu_follow_up_monthly" xml:"art_stu_follow_up_monthly"`
 	//
-	BigClientStuFollowUpMonthly null.Int `xorm:"int(11) 'big_client_stu_follow_up_monthly'" json:"big_client_stu_follow_up_monthly" xml:"big_client_stu_follow_up_monthly"`
+	BigClientStuFollowUpMonthly null.Int `xorm:"int(11) 'big_client_stu_follow_up_monthly'" json:"big_client_stu_follow_up_monthly" form:"big_client_stu_follow_up_monthly" xml:"big_client_stu_follow_up_monthly"`
 	//
-	PtuserId null.Int `xorm:"int(11) 'ptuser_id'" json:"ptuser_id" xml:"ptuser_id"`
+	PtuserId null.Int `xorm:"int(11) 'ptuser_id'" json:"ptuser_id" form:"ptuser_id" xml:"ptuser_id"`
 	//
-	HwStuSysState null.Int `xorm:"int(11) 'hw_stu_sys_state'" json:"hw_stu_sys_state" xml:"hw_stu_sys_state"`
+	HwStuSysState null.Int `xorm:"int(11) 'hw_stu_sys_state'" json:"hw_stu_sys_state" form:"hw_stu_sys_state" xml:"hw_stu_sys_state"`
 	//
-	TyStuSysState null.Int `xorm:"int(11) 'ty_stu_sys_state'" json:"ty_stu_sys_state" xml:"ty_stu_sys_state"`
+	TyStuSysState null.Int `xorm:"int(11) 'ty_stu_sys_state'" json:"ty_stu_sys_state" form:"ty_stu_sys_state" xml:"ty_stu_sys_state"`
 	//
-	YsStuSysState null.Int `xorm:"int(11) 'ys_stu_sys_state'" json:"ys_stu_sys_state" xml:"ys_stu_sys_state"`
+	YsStuSysState null.Int `xorm:"int(11) 'ys_stu_sys_state'" json:"ys_stu_sys_state" form:"ys_stu_sys_state" xml:"ys_stu_sys_state"`
 	//
-	DkhStuSysState null.Int `xorm:"int(11) 'dkh_stu_sys_state'" json:"dkh_stu_sys_state" xml:"dkh_stu_sys_state"`
+	DkhStuSysState null.Int `xorm:"int(11) 'dkh_stu_sys_state'" json:"dkh_stu_sys_state" form:"dkh_stu_sys_state" xml:"dkh_stu_sys_state"`
 	//
-	HwStuType null.Int `xorm:"int(11) 'hw_stu_type'" json:"hw_stu_type" xml:"hw_stu_type"`
+	HwStuType null.Int `xorm:"int(11) 'hw_stu_type'" json:"hw_stu_type" form:"hw_stu_type" xml:"hw_stu_type"`
 	//
-	TyStuType null.Int `xorm:"int(11) 'ty_stu_type'" json:"ty_stu_type" xml:"ty_stu_type"`
+	TyStuType null.Int `xorm:"int(11) 'ty_stu_type'" json:"ty_stu_type" form:"ty_stu_type" xml:"ty_stu_type"`
 	//
-	YsStuType null.Int `xorm:"int(11) 'ys_stu_type'" json:"ys_stu_type" xml:"ys_stu_type"`
+	YsStuType null.Int `xorm:"int(11) 'ys_stu_type'" json:"ys_stu_type" form:"ys_stu_type" xml:"ys_stu_type"`
 	//
-	DkhStuType null.Int `xorm:"int(11) 'dkh_stu_type'" json:"dkh_stu_type" xml:"dkh_stu_type"`
+	DkhStuType null.Int `xorm:"int(11) 'dkh_stu_type'" json:"dkh_stu_type" form:"dkh_stu_type" xml:"dkh_stu_type"`
 	//
-	Plfpbz null.String `xorm:"varchar(2000) 'plfpbz'" json:"plfpbz" xml:"plfpbz"`
+	Plfpbz null.String `xorm:"varchar(2000) 'plfpbz'" json:"plfpbz" form:"plfpbz" xml:"plfpbz"`
 	//
-	UserLoginState null.Int `xorm:"int(11) 'user_login_state'" json:"user_login_state" xml:"user_login_state"`
+	UserLoginState null.Int `xorm:"int(11) 'user_login_state'" json:"user_login_state" form:"user_login_state" xml:"user_login_state"`
 	//
-	StuParentId null.Int `xorm:"int(11) 'stu_parent_id'" json:"stu_parent_id" xml:"stu_parent_id"`
+	StuParentId null.Int `xorm:"int(11) 'stu_parent_id'" json:"stu_parent_id" form:"stu_parent_id" xml:"stu_parent_id"`
 	//
-	AgeGroup null.Int `xorm:"int(11) 'age_group'" json:"age_group" xml:"age_group"`
+	AgeGroup null.Int `xorm:"int(11) 'age_group'" json:"age_group" form:"age_group" xml:"age_group"`
 	//
-	StuInvalidDate null.Time `xorm:"datetime 'stu_invalid_date'" json:"stu_invalid_date" xml:"stu_invalid_date"`
+	StuInvalidDate null.Time `xorm:"datetime 'stu_invalid_date'" json:"stu_invalid_date" form:"stu_invalid_date" xml:"stu_invalid_date"`
 	//
-	StuWxdqDate null.Time `xorm:"datetime 'stu_wxdq_date'" json:"stu_wxdq_date" xml:"stu_wxdq_date"`
+	StuWxdqDate null.Time `xorm:"datetime 'stu_wxdq_date'" json:"stu_wxdq_date" form:"stu_wxdq_date" xml:"stu_wxdq_date"`
 	//
-	HeadImage null.Int `xorm:"int(11) 'head_image'" json:"head_image" xml:"head_image"`
+	HeadImage null.Int `xorm:"int(11) 'head_image'" json:"head_image" form:"head_image" xml:"head_image"`
 	//
-	StuWxksDate null.Time `xorm:"datetime 'stu_wxks_date'" json:"stu_wxks_date" xml:"stu_wxks_date"`
+	StuWxksDate null.Time `xorm:"datetime 'stu_wxks_date'" json:"stu_wxks_date" form:"stu_wxks_date" xml:"stu_wxks_date"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Deletestudentbackups

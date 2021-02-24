@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // NetworkDetail defined
 type NetworkDetail struct {
 	//
-	NDId null.Int `xorm:"int(11) pk notnull autoincr 'n_d_id'" json:"n_d_id" xml:"n_d_id"`
+	NDId null.Int `xorm:"int(11) pk notnull autoincr 'n_d_id'" json:"n_d_id" form:"n_d_id" xml:"n_d_id"`
 	//
-	QdDetail null.String `xorm:"varchar(100) 'qd_detail'" json:"qd_detail" xml:"qd_detail"`
+	QdDetail null.String `xorm:"varchar(100) 'qd_detail'" json:"qd_detail" form:"qd_detail" xml:"qd_detail"`
 	//
-	Remake null.String `xorm:"varchar(500) 'remake'" json:"remake" xml:"remake"`
+	Remake null.String `xorm:"varchar(500) 'remake'" json:"remake" form:"remake" xml:"remake"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	Qudao null.Int `xorm:"int(11) 'qudao'" json:"qudao" xml:"qudao"`
+	Qudao null.Int `xorm:"int(11) 'qudao'" json:"qudao" form:"qudao" xml:"qudao"`
 	//
-	ChannelType null.Int `xorm:"int(11) 'channel_type'" json:"channel_type" xml:"channel_type"`
+	ChannelType null.Int `xorm:"int(11) 'channel_type'" json:"channel_type" form:"channel_type" xml:"channel_type"`
 	//
-	QueryType null.Int `xorm:"int(11) 'query_type'" json:"query_type" xml:"query_type"`
+	QueryType null.Int `xorm:"int(11) 'query_type'" json:"query_type" form:"query_type" xml:"query_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined NetworkDetail

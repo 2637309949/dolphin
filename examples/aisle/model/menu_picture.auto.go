@@ -4,21 +4,38 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // MenuPicture defined
 type MenuPicture struct {
 	//
-	T2850 null.Int `xorm:"int(11) pk notnull autoincr 't_285_0'" json:"t_285_0" xml:"t_285_0"`
+	T2850 null.Int `xorm:"int(11) pk notnull autoincr 't_285_0'" json:"t_285_0" form:"t_285_0" xml:"t_285_0"`
 	//
-	MenupicName null.String `xorm:"varchar(500) notnull 'menupic_name'" json:"menupic_name" xml:"menupic_name"`
+	MenupicName null.String `xorm:"varchar(500) notnull 'menupic_name'" json:"menupic_name" form:"menupic_name" xml:"menupic_name"`
 	//
-	MenupicPicture null.Int `xorm:"int(11) notnull 'menupic_picture'" json:"menupic_picture" xml:"menupic_picture"`
+	MenupicPicture null.Int `xorm:"int(11) notnull 'menupic_picture'" json:"menupic_picture" form:"menupic_picture" xml:"menupic_picture"`
 	//
-	ProId null.Int `xorm:"int(11) 'pro_id'" json:"pro_id" xml:"pro_id"`
+	ProId null.Int `xorm:"int(11) 'pro_id'" json:"pro_id" form:"pro_id" xml:"pro_id"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined MenuPicture

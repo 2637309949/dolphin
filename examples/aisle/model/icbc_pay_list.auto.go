@@ -4,50 +4,67 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // IcbcPayList defined
 type IcbcPayList struct {
 	//
-	IPLId null.Int `xorm:"int(11) pk notnull autoincr 'i_p_l_id'" json:"i_p_l_id" xml:"i_p_l_id"`
+	IPLId null.Int `xorm:"int(11) pk notnull autoincr 'i_p_l_id'" json:"i_p_l_id" form:"i_p_l_id" xml:"i_p_l_id"`
 	//
-	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" xml:"pk_stu"`
+	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
 	//
-	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" xml:"pk_sch"`
+	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ResponseCode null.String `xorm:"varchar(20) 'response_code'" json:"response_code" xml:"response_code"`
+	ResponseCode null.String `xorm:"varchar(20) 'response_code'" json:"response_code" form:"response_code" xml:"response_code"`
 	//
-	TransType null.Int `xorm:"int(11) 'trans_type'" json:"trans_type" xml:"trans_type"`
+	TransType null.Int `xorm:"int(11) 'trans_type'" json:"trans_type" form:"trans_type" xml:"trans_type"`
 	//
-	TerminalId null.String `xorm:"varchar(50) 'terminal_id'" json:"terminal_id" xml:"terminal_id"`
+	TerminalId null.String `xorm:"varchar(50) 'terminal_id'" json:"terminal_id" form:"terminal_id" xml:"terminal_id"`
 	//
-	Merchantid null.String `xorm:"varchar(50) 'merchantid'" json:"merchantid" xml:"merchantid"`
+	Merchantid null.String `xorm:"varchar(50) 'merchantid'" json:"merchantid" form:"merchantid" xml:"merchantid"`
 	//
-	ReferenceNo null.String `xorm:"varchar(50) 'reference_no'" json:"reference_no" xml:"reference_no"`
+	ReferenceNo null.String `xorm:"varchar(50) 'reference_no'" json:"reference_no" form:"reference_no" xml:"reference_no"`
 	//
-	CardNo null.String `xorm:"varchar(30) 'card_no'" json:"card_no" xml:"card_no"`
+	CardNo null.String `xorm:"varchar(30) 'card_no'" json:"card_no" form:"card_no" xml:"card_no"`
 	//
-	OrderId null.String `xorm:"varchar(30) 'order_id'" json:"order_id" xml:"order_id"`
+	OrderId null.String `xorm:"varchar(30) 'order_id'" json:"order_id" form:"order_id" xml:"order_id"`
 	//
-	ReceiptNo null.String `xorm:"varchar(30) 'receipt_no'" json:"receipt_no" xml:"receipt_no"`
+	ReceiptNo null.String `xorm:"varchar(30) 'receipt_no'" json:"receipt_no" form:"receipt_no" xml:"receipt_no"`
 	//
-	TransDate null.Time `xorm:"datetime 'trans_date'" json:"trans_date" xml:"trans_date"`
+	TransDate null.Time `xorm:"datetime 'trans_date'" json:"trans_date" form:"trans_date" xml:"trans_date"`
 	//
-	TransTime null.Time `xorm:"datetime 'trans_time'" json:"trans_time" xml:"trans_time"`
+	TransTime null.Time `xorm:"datetime 'trans_time'" json:"trans_time" form:"trans_time" xml:"trans_time"`
 	//
-	Amout decimal.Decimal `xorm:"decimal(50,3) 'amout'" json:"amout" xml:"amout"`
+	Amout decimal.Decimal `xorm:"decimal(50,3) 'amout'" json:"amout" form:"amout" xml:"amout"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined IcbcPayList

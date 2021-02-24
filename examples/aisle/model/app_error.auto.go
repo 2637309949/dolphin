@@ -4,31 +4,48 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // AppError defined
 type AppError struct {
 	//
-	AppErrorId null.Int `xorm:"int(11) pk notnull autoincr 'app_error_id'" json:"app_error_id" xml:"app_error_id"`
+	AppErrorId null.Int `xorm:"int(11) pk notnull autoincr 'app_error_id'" json:"app_error_id" form:"app_error_id" xml:"app_error_id"`
 	//
-	ErrorContent null.String `xorm:"varchar(2000) 'error_content'" json:"error_content" xml:"error_content"`
+	ErrorContent null.String `xorm:"varchar(2000) 'error_content'" json:"error_content" form:"error_content" xml:"error_content"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ErrorType null.Int `xorm:"int(11) 'error_type'" json:"error_type" xml:"error_type"`
+	ErrorType null.Int `xorm:"int(11) 'error_type'" json:"error_type" form:"error_type" xml:"error_type"`
 	//
-	StudentId null.Int `xorm:"int(11) 'student_id'" json:"student_id" xml:"student_id"`
+	StudentId null.Int `xorm:"int(11) 'student_id'" json:"student_id" form:"student_id" xml:"student_id"`
 	//
-	PersonId null.Int `xorm:"int(11) 'person_id'" json:"person_id" xml:"person_id"`
+	PersonId null.Int `xorm:"int(11) 'person_id'" json:"person_id" form:"person_id" xml:"person_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined AppError

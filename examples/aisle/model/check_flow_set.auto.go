@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // CheckFlowSet defined
 type CheckFlowSet struct {
 	//
-	CFSId null.Int `xorm:"int(11) pk notnull autoincr 'c_f_s_id'" json:"c_f_s_id" xml:"c_f_s_id"`
+	CFSId null.Int `xorm:"int(11) pk notnull autoincr 'c_f_s_id'" json:"c_f_s_id" form:"c_f_s_id" xml:"c_f_s_id"`
 	//
-	PkObject null.Int `xorm:"int(11) 'pk_object'" json:"pk_object" xml:"pk_object"`
+	PkObject null.Int `xorm:"int(11) 'pk_object'" json:"pk_object" form:"pk_object" xml:"pk_object"`
 	//
-	CfsName null.String `xorm:"varchar(100) 'cfs_name'" json:"cfs_name" xml:"cfs_name"`
+	CfsName null.String `xorm:"varchar(100) 'cfs_name'" json:"cfs_name" form:"cfs_name" xml:"cfs_name"`
 	//
-	MaxFloor null.Int `xorm:"int(11) 'max_floor'" json:"max_floor" xml:"max_floor"`
+	MaxFloor null.Int `xorm:"int(11) 'max_floor'" json:"max_floor" form:"max_floor" xml:"max_floor"`
 	//
-	Homesetid null.Int `xorm:"int(11) 'homesetid'" json:"homesetid" xml:"homesetid"`
+	Homesetid null.Int `xorm:"int(11) 'homesetid'" json:"homesetid" form:"homesetid" xml:"homesetid"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined CheckFlowSet

@@ -4,47 +4,64 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Temp20190330 defined
 type Temp20190330 struct {
 	//
-	OrderFormId null.Int `xorm:"int(11) notnull default(0) 'order_form_id'" json:"order_form_id" xml:"order_form_id"`
+	OrderFormId null.Int `xorm:"int(11) notnull default(0) 'order_form_id'" json:"order_form_id" form:"order_form_id" xml:"order_form_id"`
 	//
-	OfNumber null.String `xorm:"varchar(100) 'of_number'" json:"of_number" xml:"of_number"`
+	OfNumber null.String `xorm:"varchar(100) 'of_number'" json:"of_number" form:"of_number" xml:"of_number"`
 	//
-	TeachingMateriaAmount null.Float `xorm:"float(10,2) 'teaching_materia_amount'" json:"teaching_materia_amount" xml:"teaching_materia_amount"`
+	TeachingMateriaAmount null.Float `xorm:"float(10,2) 'teaching_materia_amount'" json:"teaching_materia_amount" form:"teaching_materia_amount" xml:"teaching_materia_amount"`
 	//
-	TotalAch null.Float `xorm:"double(19,2) 'total_ach'" json:"total_ach" xml:"total_ach"`
+	TotalAch null.Float `xorm:"double(19,2) 'total_ach'" json:"total_ach" form:"total_ach" xml:"total_ach"`
 	//
-	MustMoney null.Float `xorm:"float(10,2) 'must_money'" json:"must_money" xml:"must_money"`
+	MustMoney null.Float `xorm:"float(10,2) 'must_money'" json:"must_money" form:"must_money" xml:"must_money"`
 	//
-	GetMoney null.Float `xorm:"double(19,2) 'get_money'" json:"get_money" xml:"get_money"`
+	GetMoney null.Float `xorm:"double(19,2) 'get_money'" json:"get_money" form:"get_money" xml:"get_money"`
 	//
-	Danjia null.Float `xorm:"double(19,2) 'danjia'" json:"danjia" xml:"danjia"`
+	Danjia null.Float `xorm:"double(19,2) 'danjia'" json:"danjia" form:"danjia" xml:"danjia"`
 	//
-	SCTId null.Int `xorm:"int(11) notnull default(0) 's_c_t_id'" json:"s_c_t_id" xml:"s_c_t_id"`
+	SCTId null.Int `xorm:"int(11) notnull default(0) 's_c_t_id'" json:"s_c_t_id" form:"s_c_t_id" xml:"s_c_t_id"`
 	//
-	AllPrice null.Float `xorm:"float(11,2) 'all_price'" json:"all_price" xml:"all_price"`
+	AllPrice null.Float `xorm:"float(11,2) 'all_price'" json:"all_price" form:"all_price" xml:"all_price"`
 	//
-	OnePrice null.Float `xorm:"float(10,2) 'one_price'" json:"one_price" xml:"one_price"`
+	OnePrice null.Float `xorm:"float(10,2) 'one_price'" json:"one_price" form:"one_price" xml:"one_price"`
 	//
-	OsMoney null.Float `xorm:"float(10,2) 'os_money'" json:"os_money" xml:"os_money"`
+	OsMoney null.Float `xorm:"float(10,2) 'os_money'" json:"os_money" form:"os_money" xml:"os_money"`
 	//
-	FinalMoney null.Float `xorm:"float(10,2) 'final_money'" json:"final_money" xml:"final_money"`
+	FinalMoney null.Float `xorm:"float(10,2) 'final_money'" json:"final_money" form:"final_money" xml:"final_money"`
 	//
-	RefundOnePrice null.Float `xorm:"float(10,2) 'refund_one_price'" json:"refund_one_price" xml:"refund_one_price"`
+	RefundOnePrice null.Float `xorm:"float(10,2) 'refund_one_price'" json:"refund_one_price" form:"refund_one_price" xml:"refund_one_price"`
 	//
-	BuyHour null.Float `xorm:"float(11,2) 'buy_hour'" json:"buy_hour" xml:"buy_hour"`
+	BuyHour null.Float `xorm:"float(11,2) 'buy_hour'" json:"buy_hour" form:"buy_hour" xml:"buy_hour"`
 	//
-	UseHour null.Float `xorm:"float(10,2) 'use_hour'" json:"use_hour" xml:"use_hour"`
+	UseHour null.Float `xorm:"float(10,2) 'use_hour'" json:"use_hour" form:"use_hour" xml:"use_hour"`
 	//
-	SurplusHour null.Float `xorm:"float(10,2) 'surplus_hour'" json:"surplus_hour" xml:"surplus_hour"`
+	SurplusHour null.Float `xorm:"float(10,2) 'surplus_hour'" json:"surplus_hour" form:"surplus_hour" xml:"surplus_hour"`
 	//
-	WxhMoney null.Float `xorm:"float(10,2) 'wxh_money'" json:"wxh_money" xml:"wxh_money"`
+	WxhMoney null.Float `xorm:"float(10,2) 'wxh_money'" json:"wxh_money" form:"wxh_money" xml:"wxh_money"`
 	//
-	XhMoney null.Float `xorm:"float(10,2) 'xh_money'" json:"xh_money" xml:"xh_money"`
+	XhMoney null.Float `xorm:"float(10,2) 'xh_money'" json:"xh_money" form:"xh_money" xml:"xh_money"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Temp20190330

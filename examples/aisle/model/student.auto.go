@@ -4,181 +4,198 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Student defined
 type Student struct {
 	//
-	StuLinkPerson null.String `xorm:"varchar(100) 'stu_link_person'" json:"stu_link_person" xml:"stu_link_person"`
+	StuLinkPerson null.String `xorm:"varchar(100) 'stu_link_person'" json:"stu_link_person" form:"stu_link_person" xml:"stu_link_person"`
 	//
-	Age null.Int `xorm:"int(11) 'age'" json:"age" xml:"age"`
+	Age null.Int `xorm:"int(11) 'age'" json:"age" form:"age" xml:"age"`
 	//
-	StuAddress null.String `xorm:"varchar(100) 'stu_address'" json:"stu_address" xml:"stu_address"`
+	StuAddress null.String `xorm:"varchar(100) 'stu_address'" json:"stu_address" form:"stu_address" xml:"stu_address"`
 	//
-	StuRemark null.String `xorm:"varchar(300) 'stu_remark'" json:"stu_remark" xml:"stu_remark"`
+	StuRemark null.String `xorm:"varchar(300) 'stu_remark'" json:"stu_remark" form:"stu_remark" xml:"stu_remark"`
 	//
-	RecommendStu null.Int `xorm:"int(11) 'recommend_stu'" json:"recommend_stu" xml:"recommend_stu"`
+	RecommendStu null.Int `xorm:"int(11) 'recommend_stu'" json:"recommend_stu" form:"recommend_stu" xml:"recommend_stu"`
 	//
-	StudentId null.Int `xorm:"int(11) pk notnull autoincr 'student_id'" json:"student_id" xml:"student_id"`
+	StudentId null.Int `xorm:"int(11) pk notnull autoincr 'student_id'" json:"student_id" form:"student_id" xml:"student_id"`
 	//
-	StuName null.String `xorm:"varchar(100) 'stu_name'" json:"stu_name" xml:"stu_name"`
+	StuName null.String `xorm:"varchar(100) 'stu_name'" json:"stu_name" form:"stu_name" xml:"stu_name"`
 	//
-	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" xml:"stu_phone"`
+	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	StuType null.Int `xorm:"int(11) 'stu_type'" json:"stu_type" xml:"stu_type"`
+	StuType null.Int `xorm:"int(11) 'stu_type'" json:"stu_type" form:"stu_type" xml:"stu_type"`
 	//
-	MaType null.Int `xorm:"int(11) 'ma_type'" json:"ma_type" xml:"ma_type"`
+	MaType null.Int `xorm:"int(11) 'ma_type'" json:"ma_type" form:"ma_type" xml:"ma_type"`
 	//
-	StuSysState null.Int `xorm:"int(11) 'stu_sys_state'" json:"stu_sys_state" xml:"stu_sys_state"`
+	StuSysState null.Int `xorm:"int(11) 'stu_sys_state'" json:"stu_sys_state" form:"stu_sys_state" xml:"stu_sys_state"`
 	//
-	StuEnName null.String `xorm:"varchar(100) 'stu_en_name'" json:"stu_en_name" xml:"stu_en_name"`
+	StuEnName null.String `xorm:"varchar(100) 'stu_en_name'" json:"stu_en_name" form:"stu_en_name" xml:"stu_en_name"`
 	//
-	StuBir null.Time `xorm:"datetime 'stu_bir'" json:"stu_bir" xml:"stu_bir"`
+	StuBir null.Time `xorm:"datetime 'stu_bir'" json:"stu_bir" form:"stu_bir" xml:"stu_bir"`
 	//
-	StuLoadSchool null.Int `xorm:"int(11) 'stu_load_school'" json:"stu_load_school" xml:"stu_load_school"`
+	StuLoadSchool null.Int `xorm:"int(11) 'stu_load_school'" json:"stu_load_school" form:"stu_load_school" xml:"stu_load_school"`
 	//
-	MaTypeRemark null.String `xorm:"varchar(200) 'ma_type_remark'" json:"ma_type_remark" xml:"ma_type_remark"`
+	MaTypeRemark null.String `xorm:"varchar(200) 'ma_type_remark'" json:"ma_type_remark" form:"ma_type_remark" xml:"ma_type_remark"`
 	//
-	LoadUser null.Int `xorm:"int(11) 'load_user'" json:"load_user" xml:"load_user"`
+	LoadUser null.Int `xorm:"int(11) 'load_user'" json:"load_user" form:"load_user" xml:"load_user"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	StuSex null.Int `xorm:"int(11) 'stu_sex'" json:"stu_sex" xml:"stu_sex"`
+	StuSex null.Int `xorm:"int(11) 'stu_sex'" json:"stu_sex" form:"stu_sex" xml:"stu_sex"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	StuZcMoney null.Float `xorm:"float(10,2) 'stu_zc_money'" json:"stu_zc_money" xml:"stu_zc_money"`
+	StuZcMoney null.Float `xorm:"float(10,2) 'stu_zc_money'" json:"stu_zc_money" form:"stu_zc_money" xml:"stu_zc_money"`
 	//
-	CallType null.Int `xorm:"int(11) 'call_type'" json:"call_type" xml:"call_type"`
+	CallType null.Int `xorm:"int(11) 'call_type'" json:"call_type" form:"call_type" xml:"call_type"`
 	//
-	StuLinkPerson2 null.String `xorm:"varchar(50) 'stu_link_person2'" json:"stu_link_person2" xml:"stu_link_person2"`
+	StuLinkPerson2 null.String `xorm:"varchar(50) 'stu_link_person2'" json:"stu_link_person2" form:"stu_link_person2" xml:"stu_link_person2"`
 	//
-	StuPhone2 null.String `xorm:"varchar(11) 'stu_phone2'" json:"stu_phone2" xml:"stu_phone2"`
+	StuPhone2 null.String `xorm:"varchar(11) 'stu_phone2'" json:"stu_phone2" form:"stu_phone2" xml:"stu_phone2"`
 	//
-	AttendSchool null.String `xorm:"varchar(200) 'attend_school'" json:"attend_school" xml:"attend_school"`
+	AttendSchool null.String `xorm:"varchar(200) 'attend_school'" json:"attend_school" form:"attend_school" xml:"attend_school"`
 	//
-	Wechatid null.String `xorm:"varchar(50) 'wechatid'" json:"wechatid" xml:"wechatid"`
+	Wechatid null.String `xorm:"varchar(50) 'wechatid'" json:"wechatid" form:"wechatid" xml:"wechatid"`
 	//
-	NetworkDetail null.Int `xorm:"int(11) 'network_detail'" json:"network_detail" xml:"network_detail"`
+	NetworkDetail null.Int `xorm:"int(11) 'network_detail'" json:"network_detail" form:"network_detail" xml:"network_detail"`
 	//
-	KhType null.Int `xorm:"int(11) 'kh_type'" json:"kh_type" xml:"kh_type"`
+	KhType null.Int `xorm:"int(11) 'kh_type'" json:"kh_type" form:"kh_type" xml:"kh_type"`
 	//
-	TimerVisitTime null.Time `xorm:"datetime 'timer_visit_time'" json:"timer_visit_time" xml:"timer_visit_time"`
+	TimerVisitTime null.Time `xorm:"datetime 'timer_visit_time'" json:"timer_visit_time" form:"timer_visit_time" xml:"timer_visit_time"`
 	//
-	StuDjMoney null.Float `xorm:"float(10,2) 'stu_dj_money'" json:"stu_dj_money" xml:"stu_dj_money"`
+	StuDjMoney null.Float `xorm:"float(10,2) 'stu_dj_money'" json:"stu_dj_money" form:"stu_dj_money" xml:"stu_dj_money"`
 	//
-	Relation1 null.Int `xorm:"int(11) 'relation1'" json:"relation1" xml:"relation1"`
+	Relation1 null.Int `xorm:"int(11) 'relation1'" json:"relation1" form:"relation1" xml:"relation1"`
 	//
-	Relation2 null.Int `xorm:"int(11) 'relation2'" json:"relation2" xml:"relation2"`
+	Relation2 null.Int `xorm:"int(11) 'relation2'" json:"relation2" form:"relation2" xml:"relation2"`
 	//
-	TjUser null.Int `xorm:"int(11) 'tj_user'" json:"tj_user" xml:"tj_user"`
+	TjUser null.Int `xorm:"int(11) 'tj_user'" json:"tj_user" form:"tj_user" xml:"tj_user"`
 	//
-	StuJifen null.Float `xorm:"float(11,2) 'stu_jifen'" json:"stu_jifen" xml:"stu_jifen"`
+	StuJifen null.Float `xorm:"float(11,2) 'stu_jifen'" json:"stu_jifen" form:"stu_jifen" xml:"stu_jifen"`
 	//
-	StuLevel null.Int `xorm:"int(11) 'stu_level'" json:"stu_level" xml:"stu_level"`
+	StuLevel null.Int `xorm:"int(11) 'stu_level'" json:"stu_level" form:"stu_level" xml:"stu_level"`
 	//
-	StuFollowUpMonthly null.Int `xorm:"int(11) 'stu_follow_up_monthly'" json:"stu_follow_up_monthly" xml:"stu_follow_up_monthly"`
+	StuFollowUpMonthly null.Int `xorm:"int(11) 'stu_follow_up_monthly'" json:"stu_follow_up_monthly" form:"stu_follow_up_monthly" xml:"stu_follow_up_monthly"`
 	//
-	PtuserId null.Int `xorm:"int(11) 'ptuser_id'" json:"ptuser_id" xml:"ptuser_id"`
+	PtuserId null.Int `xorm:"int(11) 'ptuser_id'" json:"ptuser_id" form:"ptuser_id" xml:"ptuser_id"`
 	//
-	Plfpbz null.String `xorm:"varchar(2000) 'plfpbz'" json:"plfpbz" xml:"plfpbz"`
+	Plfpbz null.String `xorm:"varchar(2000) 'plfpbz'" json:"plfpbz" form:"plfpbz" xml:"plfpbz"`
 	//
-	UserLoginState null.Int `xorm:"int(11) 'user_login_state'" json:"user_login_state" xml:"user_login_state"`
+	UserLoginState null.Int `xorm:"int(11) 'user_login_state'" json:"user_login_state" form:"user_login_state" xml:"user_login_state"`
 	//
-	StuParentId null.Int `xorm:"int(11) 'stu_parent_id'" json:"stu_parent_id" xml:"stu_parent_id"`
+	StuParentId null.Int `xorm:"int(11) 'stu_parent_id'" json:"stu_parent_id" form:"stu_parent_id" xml:"stu_parent_id"`
 	//
-	AgeGroup null.Int `xorm:"int(11) 'age_group'" json:"age_group" xml:"age_group"`
+	AgeGroup null.Int `xorm:"int(11) 'age_group'" json:"age_group" form:"age_group" xml:"age_group"`
 	//
-	StuInvalidDate null.Time `xorm:"datetime 'stu_invalid_date'" json:"stu_invalid_date" xml:"stu_invalid_date"`
+	StuInvalidDate null.Time `xorm:"datetime 'stu_invalid_date'" json:"stu_invalid_date" form:"stu_invalid_date" xml:"stu_invalid_date"`
 	//
-	StuWxdqDate null.Time `xorm:"datetime 'stu_wxdq_date'" json:"stu_wxdq_date" xml:"stu_wxdq_date"`
+	StuWxdqDate null.Time `xorm:"datetime 'stu_wxdq_date'" json:"stu_wxdq_date" form:"stu_wxdq_date" xml:"stu_wxdq_date"`
 	//
-	HeadImage null.Int `xorm:"int(11) 'head_image'" json:"head_image" xml:"head_image"`
+	HeadImage null.Int `xorm:"int(11) 'head_image'" json:"head_image" form:"head_image" xml:"head_image"`
 	//
-	StuWxksDate null.Time `xorm:"datetime 'stu_wxks_date'" json:"stu_wxks_date" xml:"stu_wxks_date"`
+	StuWxksDate null.Time `xorm:"datetime 'stu_wxks_date'" json:"stu_wxks_date" form:"stu_wxks_date" xml:"stu_wxks_date"`
 	//
-	QuaoYji null.Int `xorm:"int(11) 'quao_yji'" json:"quao_yji" xml:"quao_yji"`
+	QuaoYji null.Int `xorm:"int(11) 'quao_yji'" json:"quao_yji" form:"quao_yji" xml:"quao_yji"`
 	//
-	Idcard null.String `xorm:"varchar(18) 'idcard'" json:"idcard" xml:"idcard"`
+	Idcard null.String `xorm:"varchar(18) 'idcard'" json:"idcard" form:"idcard" xml:"idcard"`
 	//
-	RecipientInfo null.Int `xorm:"int(11) 'recipient_info'" json:"recipient_info" xml:"recipient_info"`
+	RecipientInfo null.Int `xorm:"int(11) 'recipient_info'" json:"recipient_info" form:"recipient_info" xml:"recipient_info"`
 	//
-	NewVisitDate null.Time `xorm:"datetime 'new_visit_date'" json:"new_visit_date" xml:"new_visit_date"`
+	NewVisitDate null.Time `xorm:"datetime 'new_visit_date'" json:"new_visit_date" form:"new_visit_date" xml:"new_visit_date"`
 	//
-	NewAllotDate null.Time `xorm:"datetime 'new_allot_date'" json:"new_allot_date" xml:"new_allot_date"`
+	NewAllotDate null.Time `xorm:"datetime 'new_allot_date'" json:"new_allot_date" form:"new_allot_date" xml:"new_allot_date"`
 	//
-	NewPlanDate null.Time `xorm:"datetime 'new_plan_date'" json:"new_plan_date" xml:"new_plan_date"`
+	NewPlanDate null.Time `xorm:"datetime 'new_plan_date'" json:"new_plan_date" form:"new_plan_date" xml:"new_plan_date"`
 	//
-	ZzxsDate null.Time `xorm:"datetime 'zzxs_date'" json:"zzxs_date" xml:"zzxs_date"`
+	ZzxsDate null.Time `xorm:"datetime 'zzxs_date'" json:"zzxs_date" form:"zzxs_date" xml:"zzxs_date"`
 	//
-	Stuschcount null.Float `xorm:"float(50,2) default(0.00) 'stuschcount'" json:"stuschcount" xml:"stuschcount"`
+	Stuschcount null.Float `xorm:"float(50,2) default(0.00) 'stuschcount'" json:"stuschcount" form:"stuschcount" xml:"stuschcount"`
 	//
-	HfCs null.Float `xorm:"float(50,2) default(0.00) 'hf_cs'" json:"hf_cs" xml:"hf_cs"`
+	HfCs null.Float `xorm:"float(50,2) default(0.00) 'hf_cs'" json:"hf_cs" form:"hf_cs" xml:"hf_cs"`
 	//
-	PkCurrentPay null.Int `xorm:"int(11) 'pk_current_pay'" json:"pk_current_pay" xml:"pk_current_pay"`
+	PkCurrentPay null.Int `xorm:"int(11) 'pk_current_pay'" json:"pk_current_pay" form:"pk_current_pay" xml:"pk_current_pay"`
 	//
-	OrtherCard null.String `xorm:"varchar(100) 'orther_card'" json:"orther_card" xml:"orther_card"`
+	OrtherCard null.String `xorm:"varchar(100) 'orther_card'" json:"orther_card" form:"orther_card" xml:"orther_card"`
 	//
-	StuAllotTmkdate null.Time `xorm:"datetime 'stu_allot_tmkdate'" json:"stu_allot_tmkdate" xml:"stu_allot_tmkdate"`
+	StuAllotTmkdate null.Time `xorm:"datetime 'stu_allot_tmkdate'" json:"stu_allot_tmkdate" form:"stu_allot_tmkdate" xml:"stu_allot_tmkdate"`
 	//
-	StuCity null.String `xorm:"varchar(1000) 'stu_city'" json:"stu_city" xml:"stu_city"`
+	StuCity null.String `xorm:"varchar(1000) 'stu_city'" json:"stu_city" form:"stu_city" xml:"stu_city"`
 	//
-	StuSale null.String `xorm:"varchar(1000) 'stu_sale'" json:"stu_sale" xml:"stu_sale"`
+	StuSale null.String `xorm:"varchar(1000) 'stu_sale'" json:"stu_sale" form:"stu_sale" xml:"stu_sale"`
 	//
-	OsName null.String `xorm:"varchar(1000) 'os_name'" json:"os_name" xml:"os_name"`
+	OsName null.String `xorm:"varchar(1000) 'os_name'" json:"os_name" form:"os_name" xml:"os_name"`
 	//
-	EmployeeReferralArea null.String `xorm:"varchar(1000) 'employee_referral_area'" json:"employee_referral_area" xml:"employee_referral_area"`
+	EmployeeReferralArea null.String `xorm:"varchar(1000) 'employee_referral_area'" json:"employee_referral_area" form:"employee_referral_area" xml:"employee_referral_area"`
 	//
-	EmployeeReferralDepart null.String `xorm:"varchar(1000) 'employee_referral_depart'" json:"employee_referral_depart" xml:"employee_referral_depart"`
+	EmployeeReferralDepart null.String `xorm:"varchar(1000) 'employee_referral_depart'" json:"employee_referral_depart" form:"employee_referral_depart" xml:"employee_referral_depart"`
 	//
-	TmkZxsUsername null.String `xorm:"varchar(1000) 'tmk_zxs_username'" json:"tmk_zxs_username" xml:"tmk_zxs_username"`
+	TmkZxsUsername null.String `xorm:"varchar(1000) 'tmk_zxs_username'" json:"tmk_zxs_username" form:"tmk_zxs_username" xml:"tmk_zxs_username"`
 	//
-	TmkZxsDate null.Time `xorm:"datetime 'tmk_zxs_date'" json:"tmk_zxs_date" xml:"tmk_zxs_date"`
+	TmkZxsDate null.Time `xorm:"datetime 'tmk_zxs_date'" json:"tmk_zxs_date" form:"tmk_zxs_date" xml:"tmk_zxs_date"`
 	//
-	UselessRemark null.String `xorm:"varchar(200) 'useless_remark'" json:"useless_remark" xml:"useless_remark"`
+	UselessRemark null.String `xorm:"varchar(200) 'useless_remark'" json:"useless_remark" form:"useless_remark" xml:"useless_remark"`
 	//
-	TurnUserType null.String `xorm:"varchar(10) 'turn_user_type'" json:"turn_user_type" xml:"turn_user_type"`
+	TurnUserType null.String `xorm:"varchar(10) 'turn_user_type'" json:"turn_user_type" form:"turn_user_type" xml:"turn_user_type"`
 	//
-	StuMydType null.String `xorm:"varchar(300) 'stu_myd_type'" json:"stu_myd_type" xml:"stu_myd_type"`
+	StuMydType null.String `xorm:"varchar(300) 'stu_myd_type'" json:"stu_myd_type" form:"stu_myd_type" xml:"stu_myd_type"`
 	//
-	StuMydTypeMark null.String `xorm:"varchar(1000) 'stu_myd_type_mark'" json:"stu_myd_type_mark" xml:"stu_myd_type_mark"`
+	StuMydTypeMark null.String `xorm:"varchar(1000) 'stu_myd_type_mark'" json:"stu_myd_type_mark" form:"stu_myd_type_mark" xml:"stu_myd_type_mark"`
 	//
-	StuDkbTypeMark null.String `xorm:"varchar(200) 'stu_dkb_type_mark'" json:"stu_dkb_type_mark" xml:"stu_dkb_type_mark"`
+	StuDkbTypeMark null.String `xorm:"varchar(200) 'stu_dkb_type_mark'" json:"stu_dkb_type_mark" form:"stu_dkb_type_mark" xml:"stu_dkb_type_mark"`
 	//
-	StuDkbType null.Int `xorm:"int(11) 'stu_dkb_type'" json:"stu_dkb_type" xml:"stu_dkb_type"`
+	StuDkbType null.Int `xorm:"int(11) 'stu_dkb_type'" json:"stu_dkb_type" form:"stu_dkb_type" xml:"stu_dkb_type"`
 	//
-	I2careType null.Int `xorm:"int(11) 'i2care_type'" json:"i2care_type" xml:"i2care_type"`
+	I2careType null.Int `xorm:"int(11) 'i2care_type'" json:"i2care_type" form:"i2care_type" xml:"i2care_type"`
 	//
-	I2careTypeRemark null.String `xorm:"varchar(1000) 'i2care_type_remark'" json:"i2care_type_remark" xml:"i2care_type_remark"`
+	I2careTypeRemark null.String `xorm:"varchar(1000) 'i2care_type_remark'" json:"i2care_type_remark" form:"i2care_type_remark" xml:"i2care_type_remark"`
 	//
-	GdkbFile null.Int `xorm:"int(11) 'gdkb_file'" json:"gdkb_file" xml:"gdkb_file"`
+	GdkbFile null.Int `xorm:"int(11) 'gdkb_file'" json:"gdkb_file" form:"gdkb_file" xml:"gdkb_file"`
 	//
-	AgreementId null.Int `xorm:"int(11) 'agreement_id'" json:"agreement_id" xml:"agreement_id"`
+	AgreementId null.Int `xorm:"int(11) 'agreement_id'" json:"agreement_id" form:"agreement_id" xml:"agreement_id"`
 	//
-	ShifFou null.Int `xorm:"int(11) 'shif_fou'" json:"shif_fou" xml:"shif_fou"`
+	ShifFou null.Int `xorm:"int(11) 'shif_fou'" json:"shif_fou" form:"shif_fou" xml:"shif_fou"`
 	//
-	IfQz null.Int `xorm:"int(11) 'if_qz'" json:"if_qz" xml:"if_qz"`
+	IfQz null.Int `xorm:"int(11) 'if_qz'" json:"if_qz" form:"if_qz" xml:"if_qz"`
 	//
-	StuNowJc null.Int `xorm:"int(11) 'stu_now_jc'" json:"stu_now_jc" xml:"stu_now_jc"`
+	StuNowJc null.Int `xorm:"int(11) 'stu_now_jc'" json:"stu_now_jc" form:"stu_now_jc" xml:"stu_now_jc"`
 	//
-	StuJcStartDate null.Time `xorm:"datetime 'stu_jc_start_date'" json:"stu_jc_start_date" xml:"stu_jc_start_date"`
+	StuJcStartDate null.Time `xorm:"datetime 'stu_jc_start_date'" json:"stu_jc_start_date" form:"stu_jc_start_date" xml:"stu_jc_start_date"`
 	//
-	ParentAuthSign null.Int `xorm:"int(11) 'parent_auth_sign'" json:"parent_auth_sign" xml:"parent_auth_sign"`
+	ParentAuthSign null.Int `xorm:"int(11) 'parent_auth_sign'" json:"parent_auth_sign" form:"parent_auth_sign" xml:"parent_auth_sign"`
 	//
-	ParentAuthSignRemark null.String `xorm:"varchar(1000) 'parent_auth_sign_remark'" json:"parent_auth_sign_remark" xml:"parent_auth_sign_remark"`
+	ParentAuthSignRemark null.String `xorm:"varchar(1000) 'parent_auth_sign_remark'" json:"parent_auth_sign_remark" form:"parent_auth_sign_remark" xml:"parent_auth_sign_remark"`
 	//
-	IfOldStu null.Int `xorm:"int(11) 'if_old_stu'" json:"if_old_stu" xml:"if_old_stu"`
+	IfOldStu null.Int `xorm:"int(11) 'if_old_stu'" json:"if_old_stu" form:"if_old_stu" xml:"if_old_stu"`
 	//
-	ParentsProfession null.String `xorm:"varchar(200) 'parents_profession'" json:"parents_profession" xml:"parents_profession"`
+	ParentsProfession null.String `xorm:"varchar(200) 'parents_profession'" json:"parents_profession" form:"parents_profession" xml:"parents_profession"`
 	//
-	BfStuType null.Int `xorm:"int(11) 'bf_stu_type'" json:"bf_stu_type" xml:"bf_stu_type"`
+	BfStuType null.Int `xorm:"int(11) 'bf_stu_type'" json:"bf_stu_type" form:"bf_stu_type" xml:"bf_stu_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Student

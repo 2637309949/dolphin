@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Sheng defined
 type Sheng struct {
 	//
-	ShengId null.Int `xorm:"int(11) pk notnull autoincr 'sheng_id'" json:"sheng_id" xml:"sheng_id"`
+	ShengId null.Int `xorm:"int(11) pk notnull autoincr 'sheng_id'" json:"sheng_id" form:"sheng_id" xml:"sheng_id"`
 	//
-	ShengName null.String `xorm:"varchar(20) 'sheng_name'" json:"sheng_name" xml:"sheng_name"`
+	ShengName null.String `xorm:"varchar(20) 'sheng_name'" json:"sheng_name" form:"sheng_name" xml:"sheng_name"`
 	//
-	ShengCode null.String `xorm:"varchar(30) 'sheng_code'" json:"sheng_code" xml:"sheng_code"`
+	ShengCode null.String `xorm:"varchar(30) 'sheng_code'" json:"sheng_code" form:"sheng_code" xml:"sheng_code"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ShengArea null.Int `xorm:"int(11) 'sheng_area'" json:"sheng_area" xml:"sheng_area"`
+	ShengArea null.Int `xorm:"int(11) 'sheng_area'" json:"sheng_area" form:"sheng_area" xml:"sheng_area"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Sheng

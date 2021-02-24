@@ -4,47 +4,64 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TempStorageRz defined
 type TempStorageRz struct {
 	//
-	TSRId null.Int `xorm:"int(11) pk notnull autoincr 't_s_r_id'" json:"t_s_r_id" xml:"t_s_r_id"`
+	TSRId null.Int `xorm:"int(11) pk notnull autoincr 't_s_r_id'" json:"t_s_r_id" form:"t_s_r_id" xml:"t_s_r_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	TollMoney null.Float `xorm:"float(11,2) 'toll_money'" json:"toll_money" xml:"toll_money"`
+	TollMoney null.Float `xorm:"float(11,2) 'toll_money'" json:"toll_money" form:"toll_money" xml:"toll_money"`
 	//
-	FeeWay null.Int `xorm:"int(11) 'fee_way'" json:"fee_way" xml:"fee_way"`
+	FeeWay null.Int `xorm:"int(11) 'fee_way'" json:"fee_way" form:"fee_way" xml:"fee_way"`
 	//
-	ComeEnter null.Int `xorm:"int(11) 'come_enter'" json:"come_enter" xml:"come_enter"`
+	ComeEnter null.Int `xorm:"int(11) 'come_enter'" json:"come_enter" form:"come_enter" xml:"come_enter"`
 	//
-	TollDate null.Time `xorm:"datetime 'toll_date'" json:"toll_date" xml:"toll_date"`
+	TollDate null.Time `xorm:"datetime 'toll_date'" json:"toll_date" form:"toll_date" xml:"toll_date"`
 	//
-	Remark null.String `xorm:"varchar(500) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(500) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	TsrStuId null.Int `xorm:"int(11) 'tsr_stu_id'" json:"tsr_stu_id" xml:"tsr_stu_id"`
+	TsrStuId null.Int `xorm:"int(11) 'tsr_stu_id'" json:"tsr_stu_id" form:"tsr_stu_id" xml:"tsr_stu_id"`
 	//
-	RefId null.Int `xorm:"int(11) 'ref_id'" json:"ref_id" xml:"ref_id"`
+	RefId null.Int `xorm:"int(11) 'ref_id'" json:"ref_id" form:"ref_id" xml:"ref_id"`
 	//
-	ZcSource null.Int `xorm:"int(11) 'zc_source'" json:"zc_source" xml:"zc_source"`
+	ZcSource null.Int `xorm:"int(11) 'zc_source'" json:"zc_source" form:"zc_source" xml:"zc_source"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	RefRzOrderid null.Int `xorm:"int(11) 'ref_rz_orderid'" json:"ref_rz_orderid" xml:"ref_rz_orderid"`
+	RefRzOrderid null.Int `xorm:"int(11) 'ref_rz_orderid'" json:"ref_rz_orderid" form:"ref_rz_orderid" xml:"ref_rz_orderid"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TempStorageRz

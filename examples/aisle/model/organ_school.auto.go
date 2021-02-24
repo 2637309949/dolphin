@@ -4,75 +4,92 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // OrganSchool defined
 type OrganSchool struct {
 	//
-	OSId null.Int `xorm:"int(11) pk notnull autoincr 'o_s_id'" json:"o_s_id" xml:"o_s_id"`
+	OSId null.Int `xorm:"int(11) pk notnull autoincr 'o_s_id'" json:"o_s_id" form:"o_s_id" xml:"o_s_id"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	SchX null.Float `xorm:"float(11,2) 'sch_x'" json:"sch_x" xml:"sch_x"`
+	SchX null.Float `xorm:"float(11,2) 'sch_x'" json:"sch_x" form:"sch_x" xml:"sch_x"`
 	//
-	SchY null.Float `xorm:"float(11,2) 'sch_y'" json:"sch_y" xml:"sch_y"`
+	SchY null.Float `xorm:"float(11,2) 'sch_y'" json:"sch_y" form:"sch_y" xml:"sch_y"`
 	//
-	OsName null.String `xorm:"varchar(50) 'os_name'" json:"os_name" xml:"os_name"`
+	OsName null.String `xorm:"varchar(50) 'os_name'" json:"os_name" form:"os_name" xml:"os_name"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" xml:"organ_id"`
+	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" form:"organ_id" xml:"organ_id"`
 	//
-	OcNum null.String `xorm:"varchar(50) 'oc_num'" json:"oc_num" xml:"oc_num"`
+	OcNum null.String `xorm:"varchar(50) 'oc_num'" json:"oc_num" form:"oc_num" xml:"oc_num"`
 	//
-	SchTell null.String `xorm:"varchar(20) 'sch_tell'" json:"sch_tell" xml:"sch_tell"`
+	SchTell null.String `xorm:"varchar(20) 'sch_tell'" json:"sch_tell" form:"sch_tell" xml:"sch_tell"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	SchoolAddress null.String `xorm:"varchar(100) 'school_address'" json:"school_address" xml:"school_address"`
+	SchoolAddress null.String `xorm:"varchar(100) 'school_address'" json:"school_address" form:"school_address" xml:"school_address"`
 	//
-	SchoolMeasure null.String `xorm:"varchar(200) 'school_measure'" json:"school_measure" xml:"school_measure"`
+	SchoolMeasure null.String `xorm:"varchar(200) 'school_measure'" json:"school_measure" form:"school_measure" xml:"school_measure"`
 	//
-	OpeningTime null.Time `xorm:"datetime 'opening_time'" json:"opening_time" xml:"opening_time"`
+	OpeningTime null.Time `xorm:"datetime 'opening_time'" json:"opening_time" form:"opening_time" xml:"opening_time"`
 	//
-	SchoolCompany null.String `xorm:"varchar(100) 'school_company'" json:"school_company" xml:"school_company"`
+	SchoolCompany null.String `xorm:"varchar(100) 'school_company'" json:"school_company" form:"school_company" xml:"school_company"`
 	//
-	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" xml:"english_name"`
+	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" form:"english_name" xml:"english_name"`
 	//
-	OsEasnum null.String `xorm:"varchar(20) 'os_easnum'" json:"os_easnum" xml:"os_easnum"`
+	OsEasnum null.String `xorm:"varchar(20) 'os_easnum'" json:"os_easnum" form:"os_easnum" xml:"os_easnum"`
 	//
-	Onoff null.Int `xorm:"int(11) 'onoff'" json:"onoff" xml:"onoff"`
+	Onoff null.Int `xorm:"int(11) 'onoff'" json:"onoff" form:"onoff" xml:"onoff"`
 	//
-	CampusProperty null.Int `xorm:"int(11) 'campus_property'" json:"campus_property" xml:"campus_property"`
+	CampusProperty null.Int `xorm:"int(11) 'campus_property'" json:"campus_property" form:"campus_property" xml:"campus_property"`
 	//
-	OffDate null.Time `xorm:"datetime 'off_date'" json:"off_date" xml:"off_date"`
+	OffDate null.Time `xorm:"datetime 'off_date'" json:"off_date" form:"off_date" xml:"off_date"`
 	//
-	SchType null.Int `xorm:"int(11) 'sch_type'" json:"sch_type" xml:"sch_type"`
+	SchType null.Int `xorm:"int(11) 'sch_type'" json:"sch_type" form:"sch_type" xml:"sch_type"`
 	//
-	SchOfPicture null.Int `xorm:"int(11) 'sch_of_picture'" json:"sch_of_picture" xml:"sch_of_picture"`
+	SchOfPicture null.Int `xorm:"int(11) 'sch_of_picture'" json:"sch_of_picture" form:"sch_of_picture" xml:"sch_of_picture"`
 	//
-	FinancialInstrumentsFile null.Int `xorm:"int(11) 'financial_instruments_file'" json:"financial_instruments_file" xml:"financial_instruments_file"`
+	FinancialInstrumentsFile null.Int `xorm:"int(11) 'financial_instruments_file'" json:"financial_instruments_file" form:"financial_instruments_file" xml:"financial_instruments_file"`
 	//
-	BcId null.Int `xorm:"int(11) 'bc_id'" json:"bc_id" xml:"bc_id"`
+	BcId null.Int `xorm:"int(11) 'bc_id'" json:"bc_id" form:"bc_id" xml:"bc_id"`
 	//
-	AreaId null.Int `xorm:"int(11) 'area_id'" json:"area_id" xml:"area_id"`
+	AreaId null.Int `xorm:"int(11) 'area_id'" json:"area_id" form:"area_id" xml:"area_id"`
 	//
-	PosPassword null.String `xorm:"varchar(50) 'pos_password'" json:"pos_password" xml:"pos_password"`
+	PosPassword null.String `xorm:"varchar(50) 'pos_password'" json:"pos_password" form:"pos_password" xml:"pos_password"`
 	//
-	OsRoomNum1 null.Float `xorm:"float(50,2) 'os_room_num1'" json:"os_room_num1" xml:"os_room_num1"`
+	OsRoomNum1 null.Float `xorm:"float(50,2) 'os_room_num1'" json:"os_room_num1" form:"os_room_num1" xml:"os_room_num1"`
 	//
-	OsRoomNum2 null.Float `xorm:"float(50,2) 'os_room_num2'" json:"os_room_num2" xml:"os_room_num2"`
+	OsRoomNum2 null.Float `xorm:"float(50,2) 'os_room_num2'" json:"os_room_num2" form:"os_room_num2" xml:"os_room_num2"`
 	//
-	OsRoomNum3 null.Float `xorm:"float(50,2) 'os_room_num3'" json:"os_room_num3" xml:"os_room_num3"`
+	OsRoomNum3 null.Float `xorm:"float(50,2) 'os_room_num3'" json:"os_room_num3" form:"os_room_num3" xml:"os_room_num3"`
 	//
-	OsRoomNum4 null.Float `xorm:"float(50,2) 'os_room_num4'" json:"os_room_num4" xml:"os_room_num4"`
+	OsRoomNum4 null.Float `xorm:"float(50,2) 'os_room_num4'" json:"os_room_num4" form:"os_room_num4" xml:"os_room_num4"`
 	//
-	OsRoomNum null.Float `xorm:"float(50,2) 'os_room_num'" json:"os_room_num" xml:"os_room_num"`
+	OsRoomNum null.Float `xorm:"float(50,2) 'os_room_num'" json:"os_room_num" form:"os_room_num" xml:"os_room_num"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined OrganSchool

@@ -4,92 +4,109 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // YeepayReconciliationsRecord defined
 type YeepayReconciliationsRecord struct {
 	//
-	YRRId null.Int `xorm:"int(11) pk notnull autoincr 'y_r_r_id'" json:"y_r_r_id" xml:"y_r_r_id"`
+	YRRId null.Int `xorm:"int(11) pk notnull autoincr 'y_r_r_id'" json:"y_r_r_id" form:"y_r_r_id" xml:"y_r_r_id"`
 	//
-	ConsumerName null.String `xorm:"varchar(100) 'consumer_name'" json:"consumer_name" xml:"consumer_name"`
+	ConsumerName null.String `xorm:"varchar(100) 'consumer_name'" json:"consumer_name" form:"consumer_name" xml:"consumer_name"`
 	//
-	ConsumerNum null.String `xorm:"varchar(100) 'consumer_num'" json:"consumer_num" xml:"consumer_num"`
+	ConsumerNum null.String `xorm:"varchar(100) 'consumer_num'" json:"consumer_num" form:"consumer_num" xml:"consumer_num"`
 	//
-	NetConsumerNum null.String `xorm:"varchar(100) 'net_consumer_num'" json:"net_consumer_num" xml:"net_consumer_num"`
+	NetConsumerNum null.String `xorm:"varchar(100) 'net_consumer_num'" json:"net_consumer_num" form:"net_consumer_num" xml:"net_consumer_num"`
 	//
-	NetConsumerName null.String `xorm:"varchar(100) 'net_consumer_name'" json:"net_consumer_name" xml:"net_consumer_name"`
+	NetConsumerName null.String `xorm:"varchar(100) 'net_consumer_name'" json:"net_consumer_name" form:"net_consumer_name" xml:"net_consumer_name"`
 	//
-	OrderNum null.String `xorm:"varchar(100) 'order_num'" json:"order_num" xml:"order_num"`
+	OrderNum null.String `xorm:"varchar(100) 'order_num'" json:"order_num" form:"order_num" xml:"order_num"`
 	//
-	Yeepayorderno null.String `xorm:"varchar(100) 'yeepayorderno'" json:"yeepayorderno" xml:"yeepayorderno"`
+	Yeepayorderno null.String `xorm:"varchar(100) 'yeepayorderno'" json:"yeepayorderno" form:"yeepayorderno" xml:"yeepayorderno"`
 	//
-	TransactionType null.String `xorm:"varchar(100) 'transaction_type'" json:"transaction_type" xml:"transaction_type"`
+	TransactionType null.String `xorm:"varchar(100) 'transaction_type'" json:"transaction_type" form:"transaction_type" xml:"transaction_type"`
 	//
-	Amount decimal.Decimal `xorm:"decimal(11,2) 'amount'" json:"amount" xml:"amount"`
+	Amount decimal.Decimal `xorm:"decimal(11,2) 'amount'" json:"amount" form:"amount" xml:"amount"`
 	//
-	ServiceCharge decimal.Decimal `xorm:"decimal(11,2) 'service_charge'" json:"service_charge" xml:"service_charge"`
+	ServiceCharge decimal.Decimal `xorm:"decimal(11,2) 'service_charge'" json:"service_charge" form:"service_charge" xml:"service_charge"`
 	//
-	GetMoney decimal.Decimal `xorm:"decimal(11,2) 'get_money'" json:"get_money" xml:"get_money"`
+	GetMoney decimal.Decimal `xorm:"decimal(11,2) 'get_money'" json:"get_money" form:"get_money" xml:"get_money"`
 	//
-	PayState null.String `xorm:"varchar(10) 'pay_state'" json:"pay_state" xml:"pay_state"`
+	PayState null.String `xorm:"varchar(10) 'pay_state'" json:"pay_state" form:"pay_state" xml:"pay_state"`
 	//
-	RefundNum null.String `xorm:"varchar(100) 'refund_num'" json:"refund_num" xml:"refund_num"`
+	RefundNum null.String `xorm:"varchar(100) 'refund_num'" json:"refund_num" form:"refund_num" xml:"refund_num"`
 	//
-	ConsumerRefundNum null.String `xorm:"varchar(100) 'consumer_refund_num'" json:"consumer_refund_num" xml:"consumer_refund_num"`
+	ConsumerRefundNum null.String `xorm:"varchar(100) 'consumer_refund_num'" json:"consumer_refund_num" form:"consumer_refund_num" xml:"consumer_refund_num"`
 	//
-	RefundState null.String `xorm:"varchar(10) 'refund_state'" json:"refund_state" xml:"refund_state"`
+	RefundState null.String `xorm:"varchar(10) 'refund_state'" json:"refund_state" form:"refund_state" xml:"refund_state"`
 	//
-	RefundMoney decimal.Decimal `xorm:"decimal(11,2) 'refund_money'" json:"refund_money" xml:"refund_money"`
+	RefundMoney decimal.Decimal `xorm:"decimal(11,2) 'refund_money'" json:"refund_money" form:"refund_money" xml:"refund_money"`
 	//
-	PosTerminalNum null.String `xorm:"varchar(100) 'pos_terminal_num'" json:"pos_terminal_num" xml:"pos_terminal_num"`
+	PosTerminalNum null.String `xorm:"varchar(100) 'pos_terminal_num'" json:"pos_terminal_num" form:"pos_terminal_num" xml:"pos_terminal_num"`
 	//
-	PosNum null.String `xorm:"varchar(100) 'pos_num'" json:"pos_num" xml:"pos_num"`
+	PosNum null.String `xorm:"varchar(100) 'pos_num'" json:"pos_num" form:"pos_num" xml:"pos_num"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	PosSerialNum null.String `xorm:"varchar(50) 'pos_serial_num'" json:"pos_serial_num" xml:"pos_serial_num"`
+	PosSerialNum null.String `xorm:"varchar(50) 'pos_serial_num'" json:"pos_serial_num" form:"pos_serial_num" xml:"pos_serial_num"`
 	//
-	ChargeBatchNum null.String `xorm:"varchar(50) 'charge_batch_num'" json:"charge_batch_num" xml:"charge_batch_num"`
+	ChargeBatchNum null.String `xorm:"varchar(50) 'charge_batch_num'" json:"charge_batch_num" form:"charge_batch_num" xml:"charge_batch_num"`
 	//
-	Referno null.String `xorm:"varchar(50) 'referno'" json:"referno" xml:"referno"`
+	Referno null.String `xorm:"varchar(50) 'referno'" json:"referno" form:"referno" xml:"referno"`
 	//
-	AuthorizationNum null.String `xorm:"varchar(50) 'authorization_num'" json:"authorization_num" xml:"authorization_num"`
+	AuthorizationNum null.String `xorm:"varchar(50) 'authorization_num'" json:"authorization_num" form:"authorization_num" xml:"authorization_num"`
 	//
-	ChargeRequestDate null.Time `xorm:"datetime 'charge_request_date'" json:"charge_request_date" xml:"charge_request_date"`
+	ChargeRequestDate null.Time `xorm:"datetime 'charge_request_date'" json:"charge_request_date" form:"charge_request_date" xml:"charge_request_date"`
 	//
-	ChargeSuccessDate null.Time `xorm:"datetime 'charge_success_date'" json:"charge_success_date" xml:"charge_success_date"`
+	ChargeSuccessDate null.Time `xorm:"datetime 'charge_success_date'" json:"charge_success_date" form:"charge_success_date" xml:"charge_success_date"`
 	//
-	RefundRequestDate null.Time `xorm:"datetime 'refund_request_date'" json:"refund_request_date" xml:"refund_request_date"`
+	RefundRequestDate null.Time `xorm:"datetime 'refund_request_date'" json:"refund_request_date" form:"refund_request_date" xml:"refund_request_date"`
 	//
-	Bankcardno null.String `xorm:"varchar(20) 'bankcardno'" json:"bankcardno" xml:"bankcardno"`
+	Bankcardno null.String `xorm:"varchar(20) 'bankcardno'" json:"bankcardno" form:"bankcardno" xml:"bankcardno"`
 	//
-	Bankcardtype null.String `xorm:"varchar(10) 'bankcardtype'" json:"bankcardtype" xml:"bankcardtype"`
+	Bankcardtype null.String `xorm:"varchar(10) 'bankcardtype'" json:"bankcardtype" form:"bankcardtype" xml:"bankcardtype"`
 	//
-	Bankcardname null.String `xorm:"varchar(50) 'bankcardname'" json:"bankcardname" xml:"bankcardname"`
+	Bankcardname null.String `xorm:"varchar(50) 'bankcardname'" json:"bankcardname" form:"bankcardname" xml:"bankcardname"`
 	//
-	PayType null.String `xorm:"varchar(10) 'pay_type'" json:"pay_type" xml:"pay_type"`
+	PayType null.String `xorm:"varchar(10) 'pay_type'" json:"pay_type" form:"pay_type" xml:"pay_type"`
 	//
-	ReconciliationsState null.Int `xorm:"int(11) 'reconciliations_state'" json:"reconciliations_state" xml:"reconciliations_state"`
+	ReconciliationsState null.Int `xorm:"int(11) 'reconciliations_state'" json:"reconciliations_state" form:"reconciliations_state" xml:"reconciliations_state"`
 	//
-	ErrorMsg null.String `xorm:"varchar(500) 'error_msg'" json:"error_msg" xml:"error_msg"`
+	ErrorMsg null.String `xorm:"varchar(500) 'error_msg'" json:"error_msg" form:"error_msg" xml:"error_msg"`
 	//
-	PkYpfId null.Int `xorm:"int(11) 'pk_ypf_id'" json:"pk_ypf_id" xml:"pk_ypf_id"`
+	PkYpfId null.Int `xorm:"int(11) 'pk_ypf_id'" json:"pk_ypf_id" form:"pk_ypf_id" xml:"pk_ypf_id"`
 	//
-	AccountState null.Int `xorm:"int(11) 'account_state'" json:"account_state" xml:"account_state"`
+	AccountState null.Int `xorm:"int(11) 'account_state'" json:"account_state" form:"account_state" xml:"account_state"`
 	//
-	IfOwnRecon null.Int `xorm:"int(11) 'if_own_recon'" json:"if_own_recon" xml:"if_own_recon"`
+	IfOwnRecon null.Int `xorm:"int(11) 'if_own_recon'" json:"if_own_recon" form:"if_own_recon" xml:"if_own_recon"`
 	//
-	IfPerfect null.Int `xorm:"int(11) 'if_perfect'" json:"if_perfect" xml:"if_perfect"`
+	IfPerfect null.Int `xorm:"int(11) 'if_perfect'" json:"if_perfect" form:"if_perfect" xml:"if_perfect"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined YeepayReconciliationsRecord

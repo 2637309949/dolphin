@@ -4,55 +4,72 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // OtomSysSet defined
 type OtomSysSet struct {
 	//
-	OSSId null.Int `xorm:"int(11) pk notnull autoincr 'o_s_s_id'" json:"o_s_s_id" xml:"o_s_s_id"`
+	OSSId null.Int `xorm:"int(11) pk notnull autoincr 'o_s_s_id'" json:"o_s_s_id" form:"o_s_s_id" xml:"o_s_s_id"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	OtAppraise null.Int `xorm:"int(11) 'ot_appraise'" json:"ot_appraise" xml:"ot_appraise"`
+	OtAppraise null.Int `xorm:"int(11) 'ot_appraise'" json:"ot_appraise" form:"ot_appraise" xml:"ot_appraise"`
 	//
-	OtLateclass null.Int `xorm:"int(11) 'ot_lateclass'" json:"ot_lateclass" xml:"ot_lateclass"`
+	OtLateclass null.Int `xorm:"int(11) 'ot_lateclass'" json:"ot_lateclass" form:"ot_lateclass" xml:"ot_lateclass"`
 	//
-	OtAheadclass null.Int `xorm:"int(11) 'ot_aheadclass'" json:"ot_aheadclass" xml:"ot_aheadclass"`
+	OtAheadclass null.Int `xorm:"int(11) 'ot_aheadclass'" json:"ot_aheadclass" form:"ot_aheadclass" xml:"ot_aheadclass"`
 	//
-	OtDismissclass null.Int `xorm:"int(11) 'ot_dismissclass'" json:"ot_dismissclass" xml:"ot_dismissclass"`
+	OtDismissclass null.Int `xorm:"int(11) 'ot_dismissclass'" json:"ot_dismissclass" form:"ot_dismissclass" xml:"ot_dismissclass"`
 	//
-	OtExtendclass null.Int `xorm:"int(11) 'ot_extendclass'" json:"ot_extendclass" xml:"ot_extendclass"`
+	OtExtendclass null.Int `xorm:"int(11) 'ot_extendclass'" json:"ot_extendclass" form:"ot_extendclass" xml:"ot_extendclass"`
 	//
-	OtWelcome null.String `xorm:"varchar(200) 'ot_welcome'" json:"ot_welcome" xml:"ot_welcome"`
+	OtWelcome null.String `xorm:"varchar(200) 'ot_welcome'" json:"ot_welcome" form:"ot_welcome" xml:"ot_welcome"`
 	//
-	OtSaybye null.String `xorm:"varchar(200) 'ot_saybye'" json:"ot_saybye" xml:"ot_saybye"`
+	OtSaybye null.String `xorm:"varchar(200) 'ot_saybye'" json:"ot_saybye" form:"ot_saybye" xml:"ot_saybye"`
 	//
-	OtAutoCard null.Int `xorm:"int(11) 'ot_auto_card'" json:"ot_auto_card" xml:"ot_auto_card"`
+	OtAutoCard null.Int `xorm:"int(11) 'ot_auto_card'" json:"ot_auto_card" form:"ot_auto_card" xml:"ot_auto_card"`
 	//
-	OtImg null.String `xorm:"varchar(200) 'ot_img'" json:"ot_img" xml:"ot_img"`
+	OtImg null.String `xorm:"varchar(200) 'ot_img'" json:"ot_img" form:"ot_img" xml:"ot_img"`
 	//
-	OtCopyright null.String `xorm:"varchar(200) 'ot_copyright'" json:"ot_copyright" xml:"ot_copyright"`
+	OtCopyright null.String `xorm:"varchar(200) 'ot_copyright'" json:"ot_copyright" form:"ot_copyright" xml:"ot_copyright"`
 	//
-	OtLianxu null.Int `xorm:"int(11) 'ot_lianxu'" json:"ot_lianxu" xml:"ot_lianxu"`
+	OtLianxu null.Int `xorm:"int(11) 'ot_lianxu'" json:"ot_lianxu" form:"ot_lianxu" xml:"ot_lianxu"`
 	//
-	OtLessonItvl null.Int `xorm:"int(11) 'ot_lesson_itvl'" json:"ot_lesson_itvl" xml:"ot_lesson_itvl"`
+	OtLessonItvl null.Int `xorm:"int(11) 'ot_lesson_itvl'" json:"ot_lesson_itvl" form:"ot_lesson_itvl" xml:"ot_lesson_itvl"`
 	//
-	PrintTimes null.Int `xorm:"int(11) 'print_times'" json:"print_times" xml:"print_times"`
+	PrintTimes null.Int `xorm:"int(11) 'print_times'" json:"print_times" form:"print_times" xml:"print_times"`
 	//
-	OtAppraiseSeconds null.Int `xorm:"int(11) 'ot_appraise_seconds'" json:"ot_appraise_seconds" xml:"ot_appraise_seconds"`
+	OtAppraiseSeconds null.Int `xorm:"int(11) 'ot_appraise_seconds'" json:"ot_appraise_seconds" form:"ot_appraise_seconds" xml:"ot_appraise_seconds"`
 	//
-	OtTitle null.String `xorm:"varchar(200) 'ot_title'" json:"ot_title" xml:"ot_title"`
+	OtTitle null.String `xorm:"varchar(200) 'ot_title'" json:"ot_title" form:"ot_title" xml:"ot_title"`
 	//
-	SkTitle null.String `xorm:"varchar(200) 'sk_title'" json:"sk_title" xml:"sk_title"`
+	SkTitle null.String `xorm:"varchar(200) 'sk_title'" json:"sk_title" form:"sk_title" xml:"sk_title"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined OtomSysSet

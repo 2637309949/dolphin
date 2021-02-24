@@ -4,47 +4,64 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // CssCsTask defined
 type CssCsTask struct {
 	//
-	CCTId null.Int `xorm:"int(11) pk notnull autoincr 'c_c_t_id'" json:"c_c_t_id" xml:"c_c_t_id"`
+	CCTId null.Int `xorm:"int(11) pk notnull autoincr 'c_c_t_id'" json:"c_c_t_id" form:"c_c_t_id" xml:"c_c_t_id"`
 	//
-	TeaBzDesc null.String `xorm:"'tea_bz_desc'" json:"tea_bz_desc" xml:"tea_bz_desc"`
+	TeaBzDesc null.String `xorm:"'tea_bz_desc'" json:"tea_bz_desc" form:"tea_bz_desc" xml:"tea_bz_desc"`
 	//
-	TeaBzYqDesc null.String `xorm:"'tea_bz_yq_desc'" json:"tea_bz_yq_desc" xml:"tea_bz_yq_desc"`
+	TeaBzYqDesc null.String `xorm:"'tea_bz_yq_desc'" json:"tea_bz_yq_desc" form:"tea_bz_yq_desc" xml:"tea_bz_yq_desc"`
 	//
-	CsTaskId null.Int `xorm:"int(11) 'cs_task_id'" json:"cs_task_id" xml:"cs_task_id"`
+	CsTaskId null.Int `xorm:"int(11) 'cs_task_id'" json:"cs_task_id" form:"cs_task_id" xml:"cs_task_id"`
 	//
-	CsStuId null.Int `xorm:"int(11) 'cs_stu_id'" json:"cs_stu_id" xml:"cs_stu_id"`
+	CsStuId null.Int `xorm:"int(11) 'cs_stu_id'" json:"cs_stu_id" form:"cs_stu_id" xml:"cs_stu_id"`
 	//
-	StuFinishDesc null.String `xorm:"'stu_finish_desc'" json:"stu_finish_desc" xml:"stu_finish_desc"`
+	StuFinishDesc null.String `xorm:"'stu_finish_desc'" json:"stu_finish_desc" form:"stu_finish_desc" xml:"stu_finish_desc"`
 	//
-	TeaPgDesc null.String `xorm:"'tea_pg_desc'" json:"tea_pg_desc" xml:"tea_pg_desc"`
+	TeaPgDesc null.String `xorm:"'tea_pg_desc'" json:"tea_pg_desc" form:"tea_pg_desc" xml:"tea_pg_desc"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" xml:"scs_id"`
+	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 	//
-	LspgCheckstate null.Int `xorm:"int(11) 'lspg_checkstate'" json:"lspg_checkstate" xml:"lspg_checkstate"`
+	LspgCheckstate null.Int `xorm:"int(11) 'lspg_checkstate'" json:"lspg_checkstate" form:"lspg_checkstate" xml:"lspg_checkstate"`
 	//
-	LspgCheckuser null.Int `xorm:"int(11) 'lspg_checkuser'" json:"lspg_checkuser" xml:"lspg_checkuser"`
+	LspgCheckuser null.Int `xorm:"int(11) 'lspg_checkuser'" json:"lspg_checkuser" form:"lspg_checkuser" xml:"lspg_checkuser"`
 	//
-	LspgChecktime null.Time `xorm:"datetime 'lspg_checktime'" json:"lspg_checktime" xml:"lspg_checktime"`
+	LspgChecktime null.Time `xorm:"datetime 'lspg_checktime'" json:"lspg_checktime" form:"lspg_checktime" xml:"lspg_checktime"`
 	//
-	PgbtgReason null.String `xorm:"varchar(1500) 'pgbtg_reason'" json:"pgbtg_reason" xml:"pgbtg_reason"`
+	PgbtgReason null.String `xorm:"varchar(1500) 'pgbtg_reason'" json:"pgbtg_reason" form:"pgbtg_reason" xml:"pgbtg_reason"`
 	//
-	TeaPgPf null.Int `xorm:"int(11) 'tea_pg_pf'" json:"tea_pg_pf" xml:"tea_pg_pf"`
+	TeaPgPf null.Int `xorm:"int(11) 'tea_pg_pf'" json:"tea_pg_pf" form:"tea_pg_pf" xml:"tea_pg_pf"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined CssCsTask

@@ -4,53 +4,70 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentGift defined
 type StudentGift struct {
 	//
-	SGId null.Int `xorm:"int(11) pk notnull autoincr 's_g_id'" json:"s_g_id" xml:"s_g_id"`
+	SGId null.Int `xorm:"int(11) pk notnull autoincr 's_g_id'" json:"s_g_id" form:"s_g_id" xml:"s_g_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	GiftId null.Int `xorm:"int(11) 'gift_id'" json:"gift_id" xml:"gift_id"`
+	GiftId null.Int `xorm:"int(11) 'gift_id'" json:"gift_id" form:"gift_id" xml:"gift_id"`
 	//
-	BuyWay null.Int `xorm:"int(11) 'buy_way'" json:"buy_way" xml:"buy_way"`
+	BuyWay null.Int `xorm:"int(11) 'buy_way'" json:"buy_way" form:"buy_way" xml:"buy_way"`
 	//
-	ResourcePrice null.Float `xorm:"float(11,2) 'resource_price'" json:"resource_price" xml:"resource_price"`
+	ResourcePrice null.Float `xorm:"float(11,2) 'resource_price'" json:"resource_price" form:"resource_price" xml:"resource_price"`
 	//
-	BuyPrice null.Float `xorm:"float(11,2) 'buy_price'" json:"buy_price" xml:"buy_price"`
+	BuyPrice null.Float `xorm:"float(11,2) 'buy_price'" json:"buy_price" form:"buy_price" xml:"buy_price"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" xml:"of_id"`
+	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
 	//
-	RefundMoney null.Float `xorm:"float(10,2) 'refund_money'" json:"refund_money" xml:"refund_money"`
+	RefundMoney null.Float `xorm:"float(10,2) 'refund_money'" json:"refund_money" form:"refund_money" xml:"refund_money"`
 	//
-	RefundPrice null.Float `xorm:"float(10,2) 'refund_price'" json:"refund_price" xml:"refund_price"`
+	RefundPrice null.Float `xorm:"float(10,2) 'refund_price'" json:"refund_price" form:"refund_price" xml:"refund_price"`
 	//
-	SgNum null.Float `xorm:"float(10,2) 'sg_num'" json:"sg_num" xml:"sg_num"`
+	SgNum null.Float `xorm:"float(10,2) 'sg_num'" json:"sg_num" form:"sg_num" xml:"sg_num"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	GiftExchangeType null.Int `xorm:"int(11) 'gift_exchange_type'" json:"gift_exchange_type" xml:"gift_exchange_type"`
+	GiftExchangeType null.Int `xorm:"int(11) 'gift_exchange_type'" json:"gift_exchange_type" form:"gift_exchange_type" xml:"gift_exchange_type"`
 	//
-	OggId null.Int `xorm:"int(11) 'ogg_id'" json:"ogg_id" xml:"ogg_id"`
+	OggId null.Int `xorm:"int(11) 'ogg_id'" json:"ogg_id" form:"ogg_id" xml:"ogg_id"`
 	//
-	UsePoint null.Float `xorm:"float(10,2) 'use_point'" json:"use_point" xml:"use_point"`
+	UsePoint null.Float `xorm:"float(10,2) 'use_point'" json:"use_point" form:"use_point" xml:"use_point"`
 	//
-	StuExGift null.Int `xorm:"int(11) 'stu_ex_gift'" json:"stu_ex_gift" xml:"stu_ex_gift"`
+	StuExGift null.Int `xorm:"int(11) 'stu_ex_gift'" json:"stu_ex_gift" form:"stu_ex_gift" xml:"stu_ex_gift"`
 	//
-	ZsGiveMonth null.Time `xorm:"datetime 'zs_give_month'" json:"zs_give_month" xml:"zs_give_month"`
+	ZsGiveMonth null.Time `xorm:"datetime 'zs_give_month'" json:"zs_give_month" form:"zs_give_month" xml:"zs_give_month"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentGift

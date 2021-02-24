@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // FamilyShareNumbe defined
 type FamilyShareNumbe struct {
 	//
-	FSNId null.Int `xorm:"int(11) pk notnull autoincr 'f_s_n_id'" json:"f_s_n_id" xml:"f_s_n_id"`
+	FSNId null.Int `xorm:"int(11) pk notnull autoincr 'f_s_n_id'" json:"f_s_n_id" form:"f_s_n_id" xml:"f_s_n_id"`
 	//
-	FsNum null.String `xorm:"varchar(500) 'fs_num'" json:"fs_num" xml:"fs_num"`
+	FsNum null.String `xorm:"varchar(500) 'fs_num'" json:"fs_num" form:"fs_num" xml:"fs_num"`
 	//
-	FsYbNum null.Float `xorm:"float(10,2) 'fs_yb_num'" json:"fs_yb_num" xml:"fs_yb_num"`
+	FsYbNum null.Float `xorm:"float(10,2) 'fs_yb_num'" json:"fs_yb_num" form:"fs_yb_num" xml:"fs_yb_num"`
 	//
-	FsYbHour null.Float `xorm:"float(10,2) 'fs_yb_hour'" json:"fs_yb_hour" xml:"fs_yb_hour"`
+	FsYbHour null.Float `xorm:"float(10,2) 'fs_yb_hour'" json:"fs_yb_hour" form:"fs_yb_hour" xml:"fs_yb_hour"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined FamilyShareNumbe

@@ -4,35 +4,52 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // AddAgreementMb defined
 type AddAgreementMb struct {
 	//
-	AAMId null.Int `xorm:"int(11) pk notnull autoincr 'a_a_m_id'" json:"a_a_m_id" xml:"a_a_m_id"`
+	AAMId null.Int `xorm:"int(11) pk notnull autoincr 'a_a_m_id'" json:"a_a_m_id" form:"a_a_m_id" xml:"a_a_m_id"`
 	//
-	AamName null.String `xorm:"varchar(20) 'aam_name'" json:"aam_name" xml:"aam_name"`
+	AamName null.String `xorm:"varchar(20) 'aam_name'" json:"aam_name" form:"aam_name" xml:"aam_name"`
 	//
-	AamHead null.Int `xorm:"int(11) 'aam_head'" json:"aam_head" xml:"aam_head"`
+	AamHead null.Int `xorm:"int(11) 'aam_head'" json:"aam_head" form:"aam_head" xml:"aam_head"`
 	//
-	AamMidd null.Int `xorm:"int(11) 'aam_midd'" json:"aam_midd" xml:"aam_midd"`
+	AamMidd null.Int `xorm:"int(11) 'aam_midd'" json:"aam_midd" form:"aam_midd" xml:"aam_midd"`
 	//
-	AamLast null.Int `xorm:"int(11) 'aam_last'" json:"aam_last" xml:"aam_last"`
+	AamLast null.Int `xorm:"int(11) 'aam_last'" json:"aam_last" form:"aam_last" xml:"aam_last"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	AamTitle null.String `xorm:"varchar(500) 'aam_title'" json:"aam_title" xml:"aam_title"`
+	AamTitle null.String `xorm:"varchar(500) 'aam_title'" json:"aam_title" form:"aam_title" xml:"aam_title"`
 	//
-	OpenOrClose null.Int `xorm:"int(11) 'open_or_close'" json:"open_or_close" xml:"open_or_close"`
+	OpenOrClose null.Int `xorm:"int(11) 'open_or_close'" json:"open_or_close" form:"open_or_close" xml:"open_or_close"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined AddAgreementMb

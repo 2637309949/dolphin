@@ -4,55 +4,72 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ClassType defined
 type ClassType struct {
 	//
-	ClassTypeId null.Int `xorm:"int(11) pk notnull autoincr 'class_type_id'" json:"class_type_id" xml:"class_type_id"`
+	ClassTypeId null.Int `xorm:"int(11) pk notnull autoincr 'class_type_id'" json:"class_type_id" form:"class_type_id" xml:"class_type_id"`
 	//
-	CtName null.String `xorm:"varchar(50) 'ct_name'" json:"ct_name" xml:"ct_name"`
+	CtName null.String `xorm:"varchar(50) 'ct_name'" json:"ct_name" form:"ct_name" xml:"ct_name"`
 	//
-	CtRemark null.String `xorm:"varchar(100) 'ct_remark'" json:"ct_remark" xml:"ct_remark"`
+	CtRemark null.String `xorm:"varchar(100) 'ct_remark'" json:"ct_remark" form:"ct_remark" xml:"ct_remark"`
 	//
-	CtNumber null.Int `xorm:"int(11) 'ct_number'" json:"ct_number" xml:"ct_number"`
+	CtNumber null.Int `xorm:"int(11) 'ct_number'" json:"ct_number" form:"ct_number" xml:"ct_number"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	CtMoney null.Float `xorm:"float(50,2) 'ct_money'" json:"ct_money" xml:"ct_money"`
+	CtMoney null.Float `xorm:"float(50,2) 'ct_money'" json:"ct_money" form:"ct_money" xml:"ct_money"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CtType null.Int `xorm:"int(11) 'ct_type'" json:"ct_type" xml:"ct_type"`
+	CtType null.Int `xorm:"int(11) 'ct_type'" json:"ct_type" form:"ct_type" xml:"ct_type"`
 	//
-	CtOnePrice null.Float `xorm:"float(50,2) 'ct_one_price'" json:"ct_one_price" xml:"ct_one_price"`
+	CtOnePrice null.Float `xorm:"float(50,2) 'ct_one_price'" json:"ct_one_price" form:"ct_one_price" xml:"ct_one_price"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	CtSort null.Int `xorm:"int(11) 'ct_sort'" json:"ct_sort" xml:"ct_sort"`
+	CtSort null.Int `xorm:"int(11) 'ct_sort'" json:"ct_sort" form:"ct_sort" xml:"ct_sort"`
 	//
-	CtMinit null.Float `xorm:"float(10,2) 'ct_minit'" json:"ct_minit" xml:"ct_minit"`
+	CtMinit null.Float `xorm:"float(10,2) 'ct_minit'" json:"ct_minit" form:"ct_minit" xml:"ct_minit"`
 	//
-	OrgType null.Int `xorm:"int(11) 'org_type'" json:"org_type" xml:"org_type"`
+	OrgType null.Int `xorm:"int(11) 'org_type'" json:"org_type" form:"org_type" xml:"org_type"`
 	//
-	Ifmaincourse null.Int `xorm:"int(11) default(0) 'ifmaincourse'" json:"ifmaincourse" xml:"ifmaincourse"`
+	Ifmaincourse null.Int `xorm:"int(11) default(0) 'ifmaincourse'" json:"ifmaincourse" form:"ifmaincourse" xml:"ifmaincourse"`
 	//
-	CtCourseType null.Int `xorm:"int(11) 'ct_course_type'" json:"ct_course_type" xml:"ct_course_type"`
+	CtCourseType null.Int `xorm:"int(11) 'ct_course_type'" json:"ct_course_type" form:"ct_course_type" xml:"ct_course_type"`
 	//
-	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" xml:"english_name"`
+	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" form:"english_name" xml:"english_name"`
 	//
-	AchievementNum null.Float `xorm:"float(50,2) 'achievement_num'" json:"achievement_num" xml:"achievement_num"`
+	AchievementNum null.Float `xorm:"float(50,2) 'achievement_num'" json:"achievement_num" form:"achievement_num" xml:"achievement_num"`
 	//
-	OrderEdition null.Int `xorm:"int(11) 'order_edition'" json:"order_edition" xml:"order_edition"`
+	OrderEdition null.Int `xorm:"int(11) 'order_edition'" json:"order_edition" form:"order_edition" xml:"order_edition"`
 	//
-	Mzks null.Float `xorm:"float(50,2) 'mzks'" json:"mzks" xml:"mzks"`
+	Mzks null.Float `xorm:"float(50,2) 'mzks'" json:"mzks" form:"mzks" xml:"mzks"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ClassType

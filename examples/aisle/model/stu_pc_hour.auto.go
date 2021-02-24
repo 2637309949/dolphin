@@ -4,53 +4,70 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StuPcHour defined
 type StuPcHour struct {
 	//
-	SPHId null.Int `xorm:"int(11) pk notnull autoincr 's_p_h_id'" json:"s_p_h_id" xml:"s_p_h_id"`
+	SPHId null.Int `xorm:"int(11) pk notnull autoincr 's_p_h_id'" json:"s_p_h_id" form:"s_p_h_id" xml:"s_p_h_id"`
 	//
-	PcNumber null.Int `xorm:"int(11) 'pc_number'" json:"pc_number" xml:"pc_number"`
+	PcNumber null.Int `xorm:"int(11) 'pc_number'" json:"pc_number" form:"pc_number" xml:"pc_number"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	Notpblsyhour null.Float `xorm:"float(11,2) 'notpblsyhour'" json:"notpblsyhour" xml:"notpblsyhour"`
+	Notpblsyhour null.Float `xorm:"float(11,2) 'notpblsyhour'" json:"notpblsyhour" form:"notpblsyhour" xml:"notpblsyhour"`
 	//
-	Pblsyhour null.Float `xorm:"float(11,2) 'pblsyhour'" json:"pblsyhour" xml:"pblsyhour"`
+	Pblsyhour null.Float `xorm:"float(11,2) 'pblsyhour'" json:"pblsyhour" form:"pblsyhour" xml:"pblsyhour"`
 	//
-	Notpblgivesyhour null.Float `xorm:"float(11,2) 'notpblgivesyhour'" json:"notpblgivesyhour" xml:"notpblgivesyhour"`
+	Notpblgivesyhour null.Float `xorm:"float(11,2) 'notpblgivesyhour'" json:"notpblgivesyhour" form:"notpblgivesyhour" xml:"notpblgivesyhour"`
 	//
-	Pblgivesyhour null.Float `xorm:"float(11,2) 'pblgivesyhour'" json:"pblgivesyhour" xml:"pblgivesyhour"`
+	Pblgivesyhour null.Float `xorm:"float(11,2) 'pblgivesyhour'" json:"pblgivesyhour" form:"pblgivesyhour" xml:"pblgivesyhour"`
 	//
-	BlGiveHour null.Float `xorm:"float(11,2) 'bl_give_hour'" json:"bl_give_hour" xml:"bl_give_hour"`
+	BlGiveHour null.Float `xorm:"float(11,2) 'bl_give_hour'" json:"bl_give_hour" form:"bl_give_hour" xml:"bl_give_hour"`
 	//
-	Notpblwxhmoney null.Float `xorm:"float(11,2) 'notpblwxhmoney'" json:"notpblwxhmoney" xml:"notpblwxhmoney"`
+	Notpblwxhmoney null.Float `xorm:"float(11,2) 'notpblwxhmoney'" json:"notpblwxhmoney" form:"notpblwxhmoney" xml:"notpblwxhmoney"`
 	//
-	Pblwxhmoney null.Float `xorm:"float(11,2) 'pblwxhmoney'" json:"pblwxhmoney" xml:"pblwxhmoney"`
+	Pblwxhmoney null.Float `xorm:"float(11,2) 'pblwxhmoney'" json:"pblwxhmoney" form:"pblwxhmoney" xml:"pblwxhmoney"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	YessHour null.Float `xorm:"float(50,2) 'yess_hour'" json:"yess_hour" xml:"yess_hour"`
+	YessHour null.Float `xorm:"float(50,2) 'yess_hour'" json:"yess_hour" form:"yess_hour" xml:"yess_hour"`
 	//
-	YessGivehour null.Float `xorm:"float(50,2) 'yess_givehour'" json:"yess_givehour" xml:"yess_givehour"`
+	YessGivehour null.Float `xorm:"float(50,2) 'yess_givehour'" json:"yess_givehour" form:"yess_givehour" xml:"yess_givehour"`
 	//
-	YessMoney null.Float `xorm:"float(50,2) 'yess_money'" json:"yess_money" xml:"yess_money"`
+	YessMoney null.Float `xorm:"float(50,2) 'yess_money'" json:"yess_money" form:"yess_money" xml:"yess_money"`
 	//
-	PblZhuanYyhour null.Float `xorm:"float(50,2) 'pbl_zhuan_yyhour'" json:"pbl_zhuan_yyhour" xml:"pbl_zhuan_yyhour"`
+	PblZhuanYyhour null.Float `xorm:"float(50,2) 'pbl_zhuan_yyhour'" json:"pbl_zhuan_yyhour" form:"pbl_zhuan_yyhour" xml:"pbl_zhuan_yyhour"`
 	//
-	PcStateDate null.Time `xorm:"datetime 'pc_state_date'" json:"pc_state_date" xml:"pc_state_date"`
+	PcStateDate null.Time `xorm:"datetime 'pc_state_date'" json:"pc_state_date" form:"pc_state_date" xml:"pc_state_date"`
 	//
-	PcEndDate null.Time `xorm:"datetime 'pc_end_date'" json:"pc_end_date" xml:"pc_end_date"`
+	PcEndDate null.Time `xorm:"datetime 'pc_end_date'" json:"pc_end_date" form:"pc_end_date" xml:"pc_end_date"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StuPcHour

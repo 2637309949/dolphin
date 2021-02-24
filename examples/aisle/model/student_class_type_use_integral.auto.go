@@ -4,31 +4,48 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentClassTypeUseIntegral defined
 type StudentClassTypeUseIntegral struct {
 	//
-	SCTUIId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_u_i_id'" json:"s_c_t_u_i_id" xml:"s_c_t_u_i_id"`
+	SCTUIId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_u_i_id'" json:"s_c_t_u_i_id" form:"s_c_t_u_i_id" xml:"s_c_t_u_i_id"`
 	//
-	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" xml:"sct_id"`
+	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
 	//
-	UseIntegral null.Float `xorm:"float(11,2) 'use_integral'" json:"use_integral" xml:"use_integral"`
+	UseIntegral null.Float `xorm:"float(11,2) 'use_integral'" json:"use_integral" form:"use_integral" xml:"use_integral"`
 	//
-	DyMoney null.Float `xorm:"float(11,2) 'dy_money'" json:"dy_money" xml:"dy_money"`
+	DyMoney null.Float `xorm:"float(11,2) 'dy_money'" json:"dy_money" form:"dy_money" xml:"dy_money"`
 	//
-	StuIntegral null.Int `xorm:"int(11) 'stu_integral'" json:"stu_integral" xml:"stu_integral"`
+	StuIntegral null.Int `xorm:"int(11) 'stu_integral'" json:"stu_integral" form:"stu_integral" xml:"stu_integral"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentClassTypeUseIntegral

@@ -4,17 +4,34 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TempShaoerShow defined
 type TempShaoerShow struct {
 	//
-	UserName null.String `xorm:"varchar(255) 'user_name'" json:"user_name" xml:"user_name"`
+	UserName null.String `xorm:"varchar(255) 'user_name'" json:"user_name" form:"user_name" xml:"user_name"`
 	//
-	UserPhoneNum null.String `xorm:"varchar(255) 'user_phone_num'" json:"user_phone_num" xml:"user_phone_num"`
+	UserPhoneNum null.String `xorm:"varchar(255) 'user_phone_num'" json:"user_phone_num" form:"user_phone_num" xml:"user_phone_num"`
 	//
-	PhoneType null.String `xorm:"varchar(255) 'phone_type'" json:"phone_type" xml:"phone_type"`
+	PhoneType null.String `xorm:"varchar(255) 'phone_type'" json:"phone_type" form:"phone_type" xml:"phone_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TempShaoerShow

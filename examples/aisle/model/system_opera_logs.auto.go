@@ -4,35 +4,52 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // SystemOperaLogs defined
 type SystemOperaLogs struct {
 	//
-	T120 null.Int `xorm:"int(11) pk notnull autoincr 't_12_0'" json:"t_12_0" xml:"t_12_0"`
+	T120 null.Int `xorm:"int(11) pk notnull autoincr 't_12_0'" json:"t_12_0" form:"t_12_0" xml:"t_12_0"`
 	//
-	DataId null.Float `xorm:"float(11,2) 'data_id'" json:"data_id" xml:"data_id"`
+	DataId null.Float `xorm:"float(11,2) 'data_id'" json:"data_id" form:"data_id" xml:"data_id"`
 	//
-	DataName null.String `xorm:"varchar(2000) 'data_name'" json:"data_name" xml:"data_name"`
+	DataName null.String `xorm:"varchar(2000) 'data_name'" json:"data_name" form:"data_name" xml:"data_name"`
 	//
-	UserIp null.String `xorm:"varchar(2000) 'user_ip'" json:"user_ip" xml:"user_ip"`
+	UserIp null.String `xorm:"varchar(2000) 'user_ip'" json:"user_ip" form:"user_ip" xml:"user_ip"`
 	//
-	OperaObject null.String `xorm:"varchar(2000) 'opera_object'" json:"opera_object" xml:"opera_object"`
+	OperaObject null.String `xorm:"varchar(2000) 'opera_object'" json:"opera_object" form:"opera_object" xml:"opera_object"`
 	//
-	OperaType null.Int `xorm:"int(11) 'opera_type'" json:"opera_type" xml:"opera_type"`
+	OperaType null.Int `xorm:"int(11) 'opera_type'" json:"opera_type" form:"opera_type" xml:"opera_type"`
 	//
-	ProgramIp null.String `xorm:"varchar(500) 'program_ip'" json:"program_ip" xml:"program_ip"`
+	ProgramIp null.String `xorm:"varchar(500) 'program_ip'" json:"program_ip" form:"program_ip" xml:"program_ip"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined SystemOperaLogs

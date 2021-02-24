@@ -4,67 +4,84 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ClassManage defined
 type ClassManage struct {
 	//
-	CMId null.Int `xorm:"int(11) pk notnull autoincr 'c_m_id'" json:"c_m_id" xml:"c_m_id"`
+	CMId null.Int `xorm:"int(11) pk notnull autoincr 'c_m_id'" json:"c_m_id" form:"c_m_id" xml:"c_m_id"`
 	//
-	ClassContainStu null.Int `xorm:"int(11) 'class_contain_stu'" json:"class_contain_stu" xml:"class_contain_stu"`
+	ClassContainStu null.Int `xorm:"int(11) 'class_contain_stu'" json:"class_contain_stu" form:"class_contain_stu" xml:"class_contain_stu"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" xml:"os_id"`
+	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	//
-	ClassNumber null.String `xorm:"varchar(50) 'class_number'" json:"class_number" xml:"class_number"`
+	ClassNumber null.String `xorm:"varchar(50) 'class_number'" json:"class_number" form:"class_number" xml:"class_number"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CmState null.Int `xorm:"int(11) 'cm_state'" json:"cm_state" xml:"cm_state"`
+	CmState null.Int `xorm:"int(11) 'cm_state'" json:"cm_state" form:"cm_state" xml:"cm_state"`
 	//
-	KfId null.Int `xorm:"int(11) 'kf_id'" json:"kf_id" xml:"kf_id"`
+	KfId null.Int `xorm:"int(11) 'kf_id'" json:"kf_id" form:"kf_id" xml:"kf_id"`
 	//
-	Isornokf null.Int `xorm:"int(11) 'isornokf'" json:"isornokf" xml:"isornokf"`
+	Isornokf null.Int `xorm:"int(11) 'isornokf'" json:"isornokf" form:"isornokf" xml:"isornokf"`
 	//
-	BmType null.Int `xorm:"int(11) 'bm_type'" json:"bm_type" xml:"bm_type"`
+	BmType null.Int `xorm:"int(11) 'bm_type'" json:"bm_type" form:"bm_type" xml:"bm_type"`
 	//
-	Remark null.String `xorm:"varchar(2000) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(2000) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	CpcId null.Int `xorm:"int(11) 'cpc_id'" json:"cpc_id" xml:"cpc_id"`
+	CpcId null.Int `xorm:"int(11) 'cpc_id'" json:"cpc_id" form:"cpc_id" xml:"cpc_id"`
 	//
-	NowStucount null.Float `xorm:"float(50,2) 'now_stucount'" json:"now_stucount" xml:"now_stucount"`
+	NowStucount null.Float `xorm:"float(50,2) 'now_stucount'" json:"now_stucount" form:"now_stucount" xml:"now_stucount"`
 	//
-	ClassType null.Int `xorm:"int(11) 'class_type'" json:"class_type" xml:"class_type"`
+	ClassType null.Int `xorm:"int(11) 'class_type'" json:"class_type" form:"class_type" xml:"class_type"`
 	//
-	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" xml:"par_id"`
+	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" form:"par_id" xml:"par_id"`
 	//
-	IfAutoPk null.Int `xorm:"int(11) 'if_auto_pk'" json:"if_auto_pk" xml:"if_auto_pk"`
+	IfAutoPk null.Int `xorm:"int(11) 'if_auto_pk'" json:"if_auto_pk" form:"if_auto_pk" xml:"if_auto_pk"`
 	//
-	PkClassroom null.Int `xorm:"int(11) 'pk_classroom'" json:"pk_classroom" xml:"pk_classroom"`
+	PkClassroom null.Int `xorm:"int(11) 'pk_classroom'" json:"pk_classroom" form:"pk_classroom" xml:"pk_classroom"`
 	//
-	ClassName null.String `xorm:"varchar(500) 'class_name'" json:"class_name" xml:"class_name"`
+	ClassName null.String `xorm:"varchar(500) 'class_name'" json:"class_name" form:"class_name" xml:"class_name"`
 	//
-	Ifholiday null.Int `xorm:"int(11) 'ifholiday'" json:"ifholiday" xml:"ifholiday"`
+	Ifholiday null.Int `xorm:"int(11) 'ifholiday'" json:"ifholiday" form:"ifholiday" xml:"ifholiday"`
 	//
-	Shuzi null.Int `xorm:"int(11) 'shuzi'" json:"shuzi" xml:"shuzi"`
+	Shuzi null.Int `xorm:"int(11) 'shuzi'" json:"shuzi" form:"shuzi" xml:"shuzi"`
 	//
-	CmOpenDate null.Time `xorm:"datetime 'cm_open_date'" json:"cm_open_date" xml:"cm_open_date"`
+	CmOpenDate null.Time `xorm:"datetime 'cm_open_date'" json:"cm_open_date" form:"cm_open_date" xml:"cm_open_date"`
 	//
-	OpenUser null.String `xorm:"varchar(30) 'open_user'" json:"open_user" xml:"open_user"`
+	OpenUser null.String `xorm:"varchar(30) 'open_user'" json:"open_user" form:"open_user" xml:"open_user"`
 	//
-	IfClassType null.Int `xorm:"int(11) 'if_class_type'" json:"if_class_type" xml:"if_class_type"`
+	IfClassType null.Int `xorm:"int(11) 'if_class_type'" json:"if_class_type" form:"if_class_type" xml:"if_class_type"`
 	//
-	CmGdkbType null.Int `xorm:"int(11) 'cm_gdkb_type'" json:"cm_gdkb_type" xml:"cm_gdkb_type"`
+	CmGdkbType null.Int `xorm:"int(11) 'cm_gdkb_type'" json:"cm_gdkb_type" form:"cm_gdkb_type" xml:"cm_gdkb_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ClassManage

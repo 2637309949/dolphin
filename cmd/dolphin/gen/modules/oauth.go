@@ -39,13 +39,13 @@ func (oa *OAuth) Build(dir string, args []string, node *schema.Application) ([]*
 	affirmByte, _ := vfsutil.ReadFile(template.Assets, "static/web/affirm.html")
 	loginByte, _ := vfsutil.ReadFile(template.Assets, "static/web/login.html")
 	return []*pipe.TmplCfg{
-		&pipe.TmplCfg{
+		{
 			Text:     string(affirmByte),
 			FilePath: path.Join(dir, affirmPath+".html"),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
 		},
-		&pipe.TmplCfg{
+		{
 			Text:     string(loginByte),
 			FilePath: path.Join(dir, loginPath+".html"),
 			Data:     data,

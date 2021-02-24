@@ -4,42 +4,59 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // PeriodViolateAbnormalApply defined
 type PeriodViolateAbnormalApply struct {
 	//
-	PVAAId null.Int `xorm:"int(11) pk notnull autoincr 'p_v_a_a_id'" json:"p_v_a_a_id" xml:"p_v_a_a_id"`
+	PVAAId null.Int `xorm:"int(11) pk notnull autoincr 'p_v_a_a_id'" json:"p_v_a_a_id" form:"p_v_a_a_id" xml:"p_v_a_a_id"`
 	//
-	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" xml:"pk_of"`
+	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" form:"pk_of" xml:"pk_of"`
 	//
-	Period null.Int `xorm:"int(11) 'period'" json:"period" xml:"period"`
+	Period null.Int `xorm:"int(11) 'period'" json:"period" form:"period" xml:"period"`
 	//
-	ViolateDays null.Int `xorm:"int(11) 'violate_days'" json:"violate_days" xml:"violate_days"`
+	ViolateDays null.Int `xorm:"int(11) 'violate_days'" json:"violate_days" form:"violate_days" xml:"violate_days"`
 	//
-	ViolateMoney decimal.Decimal `xorm:"decimal(11,2) 'violate_money'" json:"violate_money" xml:"violate_money"`
+	ViolateMoney decimal.Decimal `xorm:"decimal(11,2) 'violate_money'" json:"violate_money" form:"violate_money" xml:"violate_money"`
 	//
-	ApplyReason null.String `xorm:"varchar(1000) 'apply_reason'" json:"apply_reason" xml:"apply_reason"`
+	ApplyReason null.String `xorm:"varchar(1000) 'apply_reason'" json:"apply_reason" form:"apply_reason" xml:"apply_reason"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	FinalMoney decimal.Decimal `xorm:"decimal(50,3) 'final_money'" json:"final_money" xml:"final_money"`
+	FinalMoney decimal.Decimal `xorm:"decimal(50,3) 'final_money'" json:"final_money" form:"final_money" xml:"final_money"`
 	//
-	CheckUser null.Int `xorm:"int(11) 'check_user'" json:"check_user" xml:"check_user"`
+	CheckUser null.Int `xorm:"int(11) 'check_user'" json:"check_user" form:"check_user" xml:"check_user"`
 	//
-	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" xml:"check_date"`
+	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined PeriodViolateAbnormalApply

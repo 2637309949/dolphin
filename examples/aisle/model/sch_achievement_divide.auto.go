@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // SchAchievementDivide defined
 type SchAchievementDivide struct {
 	//
-	SADId null.Int `xorm:"int(11) pk notnull autoincr 's_a_d_id'" json:"s_a_d_id" xml:"s_a_d_id"`
+	SADId null.Int `xorm:"int(11) pk notnull autoincr 's_a_d_id'" json:"s_a_d_id" form:"s_a_d_id" xml:"s_a_d_id"`
 	//
-	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" xml:"of_id"`
+	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
 	//
-	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" xml:"sch_id"`
+	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
 	//
-	JxMoney null.Float `xorm:"float(11,2) 'jx_money'" json:"jx_money" xml:"jx_money"`
+	JxMoney null.Float `xorm:"float(11,2) 'jx_money'" json:"jx_money" form:"jx_money" xml:"jx_money"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	Percent null.Float `xorm:"float(50,2) 'percent'" json:"percent" xml:"percent"`
+	Percent null.Float `xorm:"float(50,2) 'percent'" json:"percent" form:"percent" xml:"percent"`
 	//
-	PkFee null.Int `xorm:"int(11) 'pk_fee'" json:"pk_fee" xml:"pk_fee"`
+	PkFee null.Int `xorm:"int(11) 'pk_fee'" json:"pk_fee" form:"pk_fee" xml:"pk_fee"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined SchAchievementDivide

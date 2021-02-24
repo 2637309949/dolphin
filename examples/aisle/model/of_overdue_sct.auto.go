@@ -4,39 +4,56 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // OfOverdueSct defined
 type OfOverdueSct struct {
 	//
-	OOSId null.Int `xorm:"int(11) pk notnull autoincr 'o_o_s_id'" json:"o_o_s_id" xml:"o_o_s_id"`
+	OOSId null.Int `xorm:"int(11) pk notnull autoincr 'o_o_s_id'" json:"o_o_s_id" form:"o_o_s_id" xml:"o_o_s_id"`
 	//
-	OfOverdueId null.Int `xorm:"int(11) 'of_overdue_id'" json:"of_overdue_id" xml:"of_overdue_id"`
+	OfOverdueId null.Int `xorm:"int(11) 'of_overdue_id'" json:"of_overdue_id" form:"of_overdue_id" xml:"of_overdue_id"`
 	//
-	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" xml:"sct_id"`
+	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
 	//
-	OverdueHour null.Float `xorm:"float(11,2) 'overdue_hour'" json:"overdue_hour" xml:"overdue_hour"`
+	OverdueHour null.Float `xorm:"float(11,2) 'overdue_hour'" json:"overdue_hour" form:"overdue_hour" xml:"overdue_hour"`
 	//
-	OverdueMoney null.Float `xorm:"float(11,2) 'overdue_money'" json:"overdue_money" xml:"overdue_money"`
+	OverdueMoney null.Float `xorm:"float(11,2) 'overdue_money'" json:"overdue_money" form:"overdue_money" xml:"overdue_money"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	AccountDate null.Time `xorm:"datetime 'account_date'" json:"account_date" xml:"account_date"`
+	AccountDate null.Time `xorm:"datetime 'account_date'" json:"account_date" form:"account_date" xml:"account_date"`
 	//
-	AccountType null.Int `xorm:"int(11) 'account_type'" json:"account_type" xml:"account_type"`
+	AccountType null.Int `xorm:"int(11) 'account_type'" json:"account_type" form:"account_type" xml:"account_type"`
 	//
-	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" xml:"of_id"`
+	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
 	//
-	KfId null.Int `xorm:"int(11) 'kf_id'" json:"kf_id" xml:"kf_id"`
+	KfId null.Int `xorm:"int(11) 'kf_id'" json:"kf_id" form:"kf_id" xml:"kf_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined OfOverdueSct

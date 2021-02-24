@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TeachLog defined
 type TeachLog struct {
 	//
-	TeachLogId null.Int `xorm:"int(11) pk notnull autoincr 'teach_log_id'" json:"teach_log_id" xml:"teach_log_id"`
+	TeachLogId null.Int `xorm:"int(11) pk notnull autoincr 'teach_log_id'" json:"teach_log_id" form:"teach_log_id" xml:"teach_log_id"`
 	//
-	TlContent null.String `xorm:"varchar(500) 'tl_content'" json:"tl_content" xml:"tl_content"`
+	TlContent null.String `xorm:"varchar(500) 'tl_content'" json:"tl_content" form:"tl_content" xml:"tl_content"`
 	//
-	TlStuShow null.String `xorm:"varchar(500) 'tl_stu_show'" json:"tl_stu_show" xml:"tl_stu_show"`
+	TlStuShow null.String `xorm:"varchar(500) 'tl_stu_show'" json:"tl_stu_show" form:"tl_stu_show" xml:"tl_stu_show"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	TlType null.Int `xorm:"int(11) 'tl_type'" json:"tl_type" xml:"tl_type"`
+	TlType null.Int `xorm:"int(11) 'tl_type'" json:"tl_type" form:"tl_type" xml:"tl_type"`
 	//
-	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" xml:"cs_id"`
+	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
 	//
-	AppId null.Int `xorm:"int(11) 'app_id'" json:"app_id" xml:"app_id"`
+	AppId null.Int `xorm:"int(11) 'app_id'" json:"app_id" form:"app_id" xml:"app_id"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TeachLog

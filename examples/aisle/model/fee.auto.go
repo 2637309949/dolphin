@@ -4,78 +4,95 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Fee defined
 type Fee struct {
 	//
-	FeeId null.Int `xorm:"int(11) pk notnull autoincr 'fee_id'" json:"fee_id" xml:"fee_id"`
+	FeeId null.Int `xorm:"int(11) pk notnull autoincr 'fee_id'" json:"fee_id" form:"fee_id" xml:"fee_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	FeeWay null.Int `xorm:"int(11) 'fee_way'" json:"fee_way" xml:"fee_way"`
+	FeeWay null.Int `xorm:"int(11) 'fee_way'" json:"fee_way" form:"fee_way" xml:"fee_way"`
 	//
-	FeeTime null.Time `xorm:"datetime 'fee_time'" json:"fee_time" xml:"fee_time"`
+	FeeTime null.Time `xorm:"datetime 'fee_time'" json:"fee_time" form:"fee_time" xml:"fee_time"`
 	//
-	SaleMoney null.Float `xorm:"float(10,2) 'sale_money'" json:"sale_money" xml:"sale_money"`
+	SaleMoney null.Float `xorm:"float(10,2) 'sale_money'" json:"sale_money" form:"sale_money" xml:"sale_money"`
 	//
-	GetMoney null.Float `xorm:"float(11,2) 'get_money'" json:"get_money" xml:"get_money"`
+	GetMoney null.Float `xorm:"float(11,2) 'get_money'" json:"get_money" form:"get_money" xml:"get_money"`
 	//
-	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" xml:"of_id"`
+	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
 	//
-	YhCount null.String `xorm:"varchar(50) 'yh_count'" json:"yh_count" xml:"yh_count"`
+	YhCount null.String `xorm:"varchar(50) 'yh_count'" json:"yh_count" form:"yh_count" xml:"yh_count"`
 	//
-	YhName null.String `xorm:"varchar(50) 'yh_name'" json:"yh_name" xml:"yh_name"`
+	YhName null.String `xorm:"varchar(50) 'yh_name'" json:"yh_name" form:"yh_name" xml:"yh_name"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	FeeType null.Int `xorm:"int(11) 'fee_type'" json:"fee_type" xml:"fee_type"`
+	FeeType null.Int `xorm:"int(11) 'fee_type'" json:"fee_type" form:"fee_type" xml:"fee_type"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	CheckRemark null.String `xorm:"varchar(500) 'check_remark'" json:"check_remark" xml:"check_remark"`
+	CheckRemark null.String `xorm:"varchar(500) 'check_remark'" json:"check_remark" form:"check_remark" xml:"check_remark"`
 	//
-	ReceiptNum null.String `xorm:"varchar(50) 'receipt_num'" json:"receipt_num" xml:"receipt_num"`
+	ReceiptNum null.String `xorm:"varchar(50) 'receipt_num'" json:"receipt_num" form:"receipt_num" xml:"receipt_num"`
 	//
-	NextFeeDate null.Time `xorm:"datetime 'next_fee_date'" json:"next_fee_date" xml:"next_fee_date"`
+	NextFeeDate null.Time `xorm:"datetime 'next_fee_date'" json:"next_fee_date" form:"next_fee_date" xml:"next_fee_date"`
 	//
-	Payee null.String `xorm:"varchar(300) 'payee'" json:"payee" xml:"payee"`
+	Payee null.String `xorm:"varchar(300) 'payee'" json:"payee" form:"payee" xml:"payee"`
 	//
-	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" xml:"check_user_id"`
+	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" form:"check_user_id" xml:"check_user_id"`
 	//
-	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" xml:"check_time"`
+	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" form:"check_time" xml:"check_time"`
 	//
-	AccountOperator null.String `xorm:"varchar(50) 'account_operator'" json:"account_operator" xml:"account_operator"`
+	AccountOperator null.String `xorm:"varchar(50) 'account_operator'" json:"account_operator" form:"account_operator" xml:"account_operator"`
 	//
-	ActualChargeTime null.Time `xorm:"datetime 'actual_charge_time'" json:"actual_charge_time" xml:"actual_charge_time"`
+	ActualChargeTime null.Time `xorm:"datetime 'actual_charge_time'" json:"actual_charge_time" form:"actual_charge_time" xml:"actual_charge_time"`
 	//
-	FeeRemark null.String `xorm:"varchar(2000) 'fee_remark'" json:"fee_remark" xml:"fee_remark"`
+	FeeRemark null.String `xorm:"varchar(2000) 'fee_remark'" json:"fee_remark" form:"fee_remark" xml:"fee_remark"`
 	//
-	PosPayDetail null.Int `xorm:"int(11) 'pos_pay_detail'" json:"pos_pay_detail" xml:"pos_pay_detail"`
+	PosPayDetail null.Int `xorm:"int(11) 'pos_pay_detail'" json:"pos_pay_detail" form:"pos_pay_detail" xml:"pos_pay_detail"`
 	//
-	PkOdd null.Int `xorm:"int(11) 'pk_odd'" json:"pk_odd" xml:"pk_odd"`
+	PkOdd null.Int `xorm:"int(11) 'pk_odd'" json:"pk_odd" form:"pk_odd" xml:"pk_odd"`
 	//
-	OverdueDays null.Int `xorm:"int(11) 'overdue_days'" json:"overdue_days" xml:"overdue_days"`
+	OverdueDays null.Int `xorm:"int(11) 'overdue_days'" json:"overdue_days" form:"overdue_days" xml:"overdue_days"`
 	//
-	OverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'overdue_money'" json:"overdue_money" xml:"overdue_money"`
+	OverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'overdue_money'" json:"overdue_money" form:"overdue_money" xml:"overdue_money"`
 	//
-	PkPvaaId null.Int `xorm:"int(11) 'pk_pvaa_id'" json:"pk_pvaa_id" xml:"pk_pvaa_id"`
+	PkPvaaId null.Int `xorm:"int(11) 'pk_pvaa_id'" json:"pk_pvaa_id" form:"pk_pvaa_id" xml:"pk_pvaa_id"`
 	//
-	RealOverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'real_overdue_money'" json:"real_overdue_money" xml:"real_overdue_money"`
+	RealOverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'real_overdue_money'" json:"real_overdue_money" form:"real_overdue_money" xml:"real_overdue_money"`
 	//
-	PerformanceType null.Int `xorm:"int(11) 'performance_type'" json:"performance_type" xml:"performance_type"`
+	PerformanceType null.Int `xorm:"int(11) 'performance_type'" json:"performance_type" form:"performance_type" xml:"performance_type"`
 	//
-	YjuserId null.Int `xorm:"int(11) 'yjuser_id'" json:"yjuser_id" xml:"yjuser_id"`
+	YjuserId null.Int `xorm:"int(11) 'yjuser_id'" json:"yjuser_id" form:"yjuser_id" xml:"yjuser_id"`
 	//
-	BfFeeTime null.Time `xorm:"datetime 'bf_fee_time'" json:"bf_fee_time" xml:"bf_fee_time"`
+	BfFeeTime null.Time `xorm:"datetime 'bf_fee_time'" json:"bf_fee_time" form:"bf_fee_time" xml:"bf_fee_time"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Fee

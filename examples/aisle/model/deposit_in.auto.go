@@ -4,59 +4,76 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // DepositIn defined
 type DepositIn struct {
 	//
-	DepositInId null.Int `xorm:"int(11) pk notnull autoincr 'deposit_in_id'" json:"deposit_in_id" xml:"deposit_in_id"`
+	DepositInId null.Int `xorm:"int(11) pk notnull autoincr 'deposit_in_id'" json:"deposit_in_id" form:"deposit_in_id" xml:"deposit_in_id"`
 	//
-	DepositMoney null.Float `xorm:"float(10,2) 'deposit_money'" json:"deposit_money" xml:"deposit_money"`
+	DepositMoney null.Float `xorm:"float(10,2) 'deposit_money'" json:"deposit_money" form:"deposit_money" xml:"deposit_money"`
 	//
-	ReceiptNum null.String `xorm:"varchar(500) 'receipt_num'" json:"receipt_num" xml:"receipt_num"`
+	ReceiptNum null.String `xorm:"varchar(500) 'receipt_num'" json:"receipt_num" form:"receipt_num" xml:"receipt_num"`
 	//
-	FeeWay null.Int `xorm:"int(11) 'fee_way'" json:"fee_way" xml:"fee_way"`
+	FeeWay null.Int `xorm:"int(11) 'fee_way'" json:"fee_way" form:"fee_way" xml:"fee_way"`
 	//
-	Remark null.String `xorm:"varchar(2000) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(2000) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	BankAccount null.String `xorm:"varchar(50) 'bank_account'" json:"bank_account" xml:"bank_account"`
+	BankAccount null.String `xorm:"varchar(50) 'bank_account'" json:"bank_account" form:"bank_account" xml:"bank_account"`
 	//
-	BankName null.String `xorm:"varchar(50) 'bank_name'" json:"bank_name" xml:"bank_name"`
+	BankName null.String `xorm:"varchar(50) 'bank_name'" json:"bank_name" form:"bank_name" xml:"bank_name"`
 	//
-	Payee null.String `xorm:"varchar(200) 'payee'" json:"payee" xml:"payee"`
+	Payee null.String `xorm:"varchar(200) 'payee'" json:"payee" form:"payee" xml:"payee"`
 	//
-	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" xml:"check_user_id"`
+	CheckUserId null.Int `xorm:"int(11) 'check_user_id'" json:"check_user_id" form:"check_user_id" xml:"check_user_id"`
 	//
-	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" xml:"check_time"`
+	CheckTime null.Time `xorm:"datetime 'check_time'" json:"check_time" form:"check_time" xml:"check_time"`
 	//
-	AccountOperator null.String `xorm:"varchar(50) 'account_operator'" json:"account_operator" xml:"account_operator"`
+	AccountOperator null.String `xorm:"varchar(50) 'account_operator'" json:"account_operator" form:"account_operator" xml:"account_operator"`
 	//
-	ActualChargeTime null.Time `xorm:"datetime 'actual_charge_time'" json:"actual_charge_time" xml:"actual_charge_time"`
+	ActualChargeTime null.Time `xorm:"datetime 'actual_charge_time'" json:"actual_charge_time" form:"actual_charge_time" xml:"actual_charge_time"`
 	//
-	ChargeTime null.Time `xorm:"datetime 'charge_time'" json:"charge_time" xml:"charge_time"`
+	ChargeTime null.Time `xorm:"datetime 'charge_time'" json:"charge_time" form:"charge_time" xml:"charge_time"`
 	//
-	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" xml:"school_id"`
+	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" form:"school_id" xml:"school_id"`
 	//
-	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" xml:"pk_of"`
+	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" form:"pk_of" xml:"pk_of"`
 	//
-	CanRefundDate null.Time `xorm:"datetime 'can_refund_date'" json:"can_refund_date" xml:"can_refund_date"`
+	CanRefundDate null.Time `xorm:"datetime 'can_refund_date'" json:"can_refund_date" form:"can_refund_date" xml:"can_refund_date"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined DepositIn

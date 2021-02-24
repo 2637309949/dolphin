@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Department defined
 type Department struct {
 	//
-	DepartmentId null.Int `xorm:"int(11) pk notnull autoincr 'department_id'" json:"department_id" xml:"department_id"`
+	DepartmentId null.Int `xorm:"int(11) pk notnull autoincr 'department_id'" json:"department_id" form:"department_id" xml:"department_id"`
 	//
-	ParentId null.Int `xorm:"int(11) 'parent_id'" json:"parent_id" xml:"parent_id"`
+	ParentId null.Int `xorm:"int(11) 'parent_id'" json:"parent_id" form:"parent_id" xml:"parent_id"`
 	//
-	DepartmentName null.String `xorm:"varchar(100) 'department_name'" json:"department_name" xml:"department_name"`
+	DepartmentName null.String `xorm:"varchar(100) 'department_name'" json:"department_name" form:"department_name" xml:"department_name"`
 	//
-	DepartmentNumber null.String `xorm:"varchar(100) 'department_number'" json:"department_number" xml:"department_number"`
+	DepartmentNumber null.String `xorm:"varchar(100) 'department_number'" json:"department_number" form:"department_number" xml:"department_number"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" xml:"school_id"`
+	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" form:"school_id" xml:"school_id"`
 	//
-	DepCity null.Int `xorm:"int(11) 'dep_city'" json:"dep_city" xml:"dep_city"`
+	DepCity null.Int `xorm:"int(11) 'dep_city'" json:"dep_city" form:"dep_city" xml:"dep_city"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Department

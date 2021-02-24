@@ -4,103 +4,120 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentClassType defined
 type StudentClassType struct {
 	//
-	SCTId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_id'" json:"s_c_t_id" xml:"s_c_t_id"`
+	SCTId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_id'" json:"s_c_t_id" form:"s_c_t_id" xml:"s_c_t_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	CtId null.Int `xorm:"int(11) 'ct_id'" json:"ct_id" xml:"ct_id"`
+	CtId null.Int `xorm:"int(11) 'ct_id'" json:"ct_id" form:"ct_id" xml:"ct_id"`
 	//
-	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" xml:"of_id"`
+	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	SppId null.Int `xorm:"int(11) 'spp_id'" json:"spp_id" xml:"spp_id"`
+	SppId null.Int `xorm:"int(11) 'spp_id'" json:"spp_id" form:"spp_id" xml:"spp_id"`
 	//
-	AllPrice null.Float `xorm:"float(11,2) 'all_price'" json:"all_price" xml:"all_price"`
+	AllPrice null.Float `xorm:"float(11,2) 'all_price'" json:"all_price" form:"all_price" xml:"all_price"`
 	//
-	OnePrice null.Float `xorm:"float(10,2) 'one_price'" json:"one_price" xml:"one_price"`
+	OnePrice null.Float `xorm:"float(10,2) 'one_price'" json:"one_price" form:"one_price" xml:"one_price"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" xml:"os_id"`
+	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	//
-	OsMoney null.Float `xorm:"float(10,2) 'os_money'" json:"os_money" xml:"os_money"`
+	OsMoney null.Float `xorm:"float(10,2) 'os_money'" json:"os_money" form:"os_money" xml:"os_money"`
 	//
-	FinalMoney null.Float `xorm:"float(10,2) 'final_money'" json:"final_money" xml:"final_money"`
+	FinalMoney null.Float `xorm:"float(10,2) 'final_money'" json:"final_money" form:"final_money" xml:"final_money"`
 	//
-	RefundOnePrice null.Float `xorm:"float(10,2) 'refund_one_price'" json:"refund_one_price" xml:"refund_one_price"`
+	RefundOnePrice null.Float `xorm:"float(10,2) 'refund_one_price'" json:"refund_one_price" form:"refund_one_price" xml:"refund_one_price"`
 	//
-	FsId null.Int `xorm:"int(11) 'fs_id'" json:"fs_id" xml:"fs_id"`
+	FsId null.Int `xorm:"int(11) 'fs_id'" json:"fs_id" form:"fs_id" xml:"fs_id"`
 	//
-	BuyHour null.Float `xorm:"float(11,2) 'buy_hour'" json:"buy_hour" xml:"buy_hour"`
+	BuyHour null.Float `xorm:"float(11,2) 'buy_hour'" json:"buy_hour" form:"buy_hour" xml:"buy_hour"`
 	//
-	RefundHour null.Float `xorm:"float(50,2) 'refund_hour'" json:"refund_hour" xml:"refund_hour"`
+	RefundHour null.Float `xorm:"float(50,2) 'refund_hour'" json:"refund_hour" form:"refund_hour" xml:"refund_hour"`
 	//
-	UseHour null.Float `xorm:"float(10,2) 'use_hour'" json:"use_hour" xml:"use_hour"`
+	UseHour null.Float `xorm:"float(10,2) 'use_hour'" json:"use_hour" form:"use_hour" xml:"use_hour"`
 	//
-	YibaoHour null.Float `xorm:"float(10,2) 'yibao_hour'" json:"yibao_hour" xml:"yibao_hour"`
+	YibaoHour null.Float `xorm:"float(10,2) 'yibao_hour'" json:"yibao_hour" form:"yibao_hour" xml:"yibao_hour"`
 	//
-	SurplusHour null.Float `xorm:"float(10,2) 'surplus_hour'" json:"surplus_hour" xml:"surplus_hour"`
+	SurplusHour null.Float `xorm:"float(10,2) 'surplus_hour'" json:"surplus_hour" form:"surplus_hour" xml:"surplus_hour"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	WxhMoney null.Float `xorm:"float(10,2) 'wxh_money'" json:"wxh_money" xml:"wxh_money"`
+	WxhMoney null.Float `xorm:"float(10,2) 'wxh_money'" json:"wxh_money" form:"wxh_money" xml:"wxh_money"`
 	//
-	XhMoney null.Float `xorm:"float(10,2) 'xh_money'" json:"xh_money" xml:"xh_money"`
+	XhMoney null.Float `xorm:"float(10,2) 'xh_money'" json:"xh_money" form:"xh_money" xml:"xh_money"`
 	//
-	CwKxPrice null.Float `xorm:"float(10,2) 'cw_kx_price'" json:"cw_kx_price" xml:"cw_kx_price"`
+	CwKxPrice null.Float `xorm:"float(10,2) 'cw_kx_price'" json:"cw_kx_price" form:"cw_kx_price" xml:"cw_kx_price"`
 	//
-	GiveHour null.Int `xorm:"int(11) 'give_hour'" json:"give_hour" xml:"give_hour"`
+	GiveHour null.Int `xorm:"int(11) 'give_hour'" json:"give_hour" form:"give_hour" xml:"give_hour"`
 	//
-	ZxHour null.Float `xorm:"float(50,2) 'zx_hour'" json:"zx_hour" xml:"zx_hour"`
+	ZxHour null.Float `xorm:"float(50,2) 'zx_hour'" json:"zx_hour" form:"zx_hour" xml:"zx_hour"`
 	//
-	SctZxMoney null.Float `xorm:"float(50,2) 'sct_zx_money'" json:"sct_zx_money" xml:"sct_zx_money"`
+	SctZxMoney null.Float `xorm:"float(50,2) 'sct_zx_money'" json:"sct_zx_money" form:"sct_zx_money" xml:"sct_zx_money"`
 	//
-	TransferClasstypeHour null.Float `xorm:"float(50,2) 'transfer_classtype_hour'" json:"transfer_classtype_hour" xml:"transfer_classtype_hour"`
+	TransferClasstypeHour null.Float `xorm:"float(50,2) 'transfer_classtype_hour'" json:"transfer_classtype_hour" form:"transfer_classtype_hour" xml:"transfer_classtype_hour"`
 	//
-	TransferClasstypeMoney null.Float `xorm:"float(50,2) 'transfer_classtype_money'" json:"transfer_classtype_money" xml:"transfer_classtype_money"`
+	TransferClasstypeMoney null.Float `xorm:"float(50,2) 'transfer_classtype_money'" json:"transfer_classtype_money" form:"transfer_classtype_money" xml:"transfer_classtype_money"`
 	//
-	OrderAuditState null.Int `xorm:"int(11) 'order_audit_state'" json:"order_audit_state" xml:"order_audit_state"`
+	OrderAuditState null.Int `xorm:"int(11) 'order_audit_state'" json:"order_audit_state" form:"order_audit_state" xml:"order_audit_state"`
 	//
-	NowCustomer null.Int `xorm:"int(11) 'now_customer'" json:"now_customer" xml:"now_customer"`
+	NowCustomer null.Int `xorm:"int(11) 'now_customer'" json:"now_customer" form:"now_customer" xml:"now_customer"`
 	//
-	HisCustomer null.String `xorm:"varchar(100) 'his_customer'" json:"his_customer" xml:"his_customer"`
+	HisCustomer null.String `xorm:"varchar(100) 'his_customer'" json:"his_customer" form:"his_customer" xml:"his_customer"`
 	//
-	SbtId null.Int `xorm:"int(11) 'sbt_id'" json:"sbt_id" xml:"sbt_id"`
+	SbtId null.Int `xorm:"int(11) 'sbt_id'" json:"sbt_id" form:"sbt_id" xml:"sbt_id"`
 	//
-	GlgiveZsPrice null.Float `xorm:"float(50,2) 'glgive_zs_price'" json:"glgive_zs_price" xml:"glgive_zs_price"`
+	GlgiveZsPrice null.Float `xorm:"float(50,2) 'glgive_zs_price'" json:"glgive_zs_price" form:"glgive_zs_price" xml:"glgive_zs_price"`
 	//
-	SctNosyhourDate null.Time `xorm:"datetime 'sct_nosyhour_date'" json:"sct_nosyhour_date" xml:"sct_nosyhour_date"`
+	SctNosyhourDate null.Time `xorm:"datetime 'sct_nosyhour_date'" json:"sct_nosyhour_date" form:"sct_nosyhour_date" xml:"sct_nosyhour_date"`
 	//
-	RefMoney null.Float `xorm:"float(50,2) 'ref_money'" json:"ref_money" xml:"ref_money"`
+	RefMoney null.Float `xorm:"float(50,2) 'ref_money'" json:"ref_money" form:"ref_money" xml:"ref_money"`
 	//
-	NoKouHour null.Float `xorm:"float(50,2) 'no_kou_hour'" json:"no_kou_hour" xml:"no_kou_hour"`
+	NoKouHour null.Float `xorm:"float(50,2) 'no_kou_hour'" json:"no_kou_hour" form:"no_kou_hour" xml:"no_kou_hour"`
 	//
-	FirstClassDate null.Time `xorm:"datetime 'first_class_date'" json:"first_class_date" xml:"first_class_date"`
+	FirstClassDate null.Time `xorm:"datetime 'first_class_date'" json:"first_class_date" form:"first_class_date" xml:"first_class_date"`
 	//
-	OverdueHour null.Float `xorm:"float(50,2) 'overdue_hour'" json:"overdue_hour" xml:"overdue_hour"`
+	OverdueHour null.Float `xorm:"float(50,2) 'overdue_hour'" json:"overdue_hour" form:"overdue_hour" xml:"overdue_hour"`
 	//
-	OverdueMoney null.Float `xorm:"float(50,2) 'overdue_money'" json:"overdue_money" xml:"overdue_money"`
+	OverdueMoney null.Float `xorm:"float(50,2) 'overdue_money'" json:"overdue_money" form:"overdue_money" xml:"overdue_money"`
 	//
-	PblYuyan null.Int `xorm:"int(11) 'pbl_yuyan'" json:"pbl_yuyan" xml:"pbl_yuyan"`
+	PblYuyan null.Int `xorm:"int(11) 'pbl_yuyan'" json:"pbl_yuyan" form:"pbl_yuyan" xml:"pbl_yuyan"`
 	//
-	BplYuyanRemark null.String `xorm:"varchar(2000) 'bpl_yuyan_remark'" json:"bpl_yuyan_remark" xml:"bpl_yuyan_remark"`
+	BplYuyanRemark null.String `xorm:"varchar(2000) 'bpl_yuyan_remark'" json:"bpl_yuyan_remark" form:"bpl_yuyan_remark" xml:"bpl_yuyan_remark"`
 	//
-	FqRefhour null.Float `xorm:"float(50,2) 'fq_refhour'" json:"fq_refhour" xml:"fq_refhour"`
+	FqRefhour null.Float `xorm:"float(50,2) 'fq_refhour'" json:"fq_refhour" form:"fq_refhour" xml:"fq_refhour"`
 	//
-	FqRefmoney null.Float `xorm:"float(50,2) 'fq_refmoney'" json:"fq_refmoney" xml:"fq_refmoney"`
+	FqRefmoney null.Float `xorm:"float(50,2) 'fq_refmoney'" json:"fq_refmoney" form:"fq_refmoney" xml:"fq_refmoney"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentClassType

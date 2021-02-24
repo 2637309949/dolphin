@@ -4,43 +4,60 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ClassTimeResource defined
 type ClassTimeResource struct {
 	//
-	CTRId null.Int `xorm:"int(11) pk notnull autoincr 'c_t_r_id'" json:"c_t_r_id" xml:"c_t_r_id"`
+	CTRId null.Int `xorm:"int(11) pk notnull autoincr 'c_t_r_id'" json:"c_t_r_id" form:"c_t_r_id" xml:"c_t_r_id"`
 	//
-	DataId null.Float `xorm:"float(11,2) 'data_id'" json:"data_id" xml:"data_id"`
+	DataId null.Float `xorm:"float(11,2) 'data_id'" json:"data_id" form:"data_id" xml:"data_id"`
 	//
-	TableId null.Float `xorm:"float(11,2) 'table_id'" json:"table_id" xml:"table_id"`
+	TableId null.Float `xorm:"float(11,2) 'table_id'" json:"table_id" form:"table_id" xml:"table_id"`
 	//
-	MainDataId null.Float `xorm:"float(11,2) 'main_data_id'" json:"main_data_id" xml:"main_data_id"`
+	MainDataId null.Float `xorm:"float(11,2) 'main_data_id'" json:"main_data_id" form:"main_data_id" xml:"main_data_id"`
 	//
-	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" xml:"start_time"`
+	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
 	//
-	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" xml:"end_time"`
+	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
 	//
-	ConflictContent null.String `xorm:"varchar(500) 'conflict_content'" json:"conflict_content" xml:"conflict_content"`
+	ConflictContent null.String `xorm:"varchar(500) 'conflict_content'" json:"conflict_content" form:"conflict_content" xml:"conflict_content"`
 	//
-	ShowContent null.String `xorm:"varchar(500) 'show_content'" json:"show_content" xml:"show_content"`
+	ShowContent null.String `xorm:"varchar(500) 'show_content'" json:"show_content" form:"show_content" xml:"show_content"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CourseType null.Int `xorm:"int(11) 'course_type'" json:"course_type" xml:"course_type"`
+	CourseType null.Int `xorm:"int(11) 'course_type'" json:"course_type" form:"course_type" xml:"course_type"`
 	//
-	CourseState null.Int `xorm:"int(11) 'course_state'" json:"course_state" xml:"course_state"`
+	CourseState null.Int `xorm:"int(11) 'course_state'" json:"course_state" form:"course_state" xml:"course_state"`
 	//
-	Remark null.String `xorm:"varchar(100) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(100) 'remark'" json:"remark" form:"remark" xml:"remark"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ClassTimeResource

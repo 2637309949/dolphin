@@ -4,45 +4,62 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // FeeStandard defined
 type FeeStandard struct {
 	//
-	FSId null.Int `xorm:"int(11) pk notnull autoincr 'f_s_id'" json:"f_s_id" xml:"f_s_id"`
+	FSId null.Int `xorm:"int(11) pk notnull autoincr 'f_s_id'" json:"f_s_id" form:"f_s_id" xml:"f_s_id"`
 	//
-	FsName null.String `xorm:"varchar(50) 'fs_name'" json:"fs_name" xml:"fs_name"`
+	FsName null.String `xorm:"varchar(50) 'fs_name'" json:"fs_name" form:"fs_name" xml:"fs_name"`
 	//
-	FsPrice null.Float `xorm:"float(11,4) 'fs_price'" json:"fs_price" xml:"fs_price"`
+	FsPrice null.Float `xorm:"float(11,4) 'fs_price'" json:"fs_price" form:"fs_price" xml:"fs_price"`
 	//
-	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" xml:"organ_id"`
+	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" form:"organ_id" xml:"organ_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	FsType null.Int `xorm:"int(11) 'fs_type'" json:"fs_type" xml:"fs_type"`
+	FsType null.Int `xorm:"int(11) 'fs_type'" json:"fs_type" form:"fs_type" xml:"fs_type"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CtId null.Int `xorm:"int(11) 'ct_id'" json:"ct_id" xml:"ct_id"`
+	CtId null.Int `xorm:"int(11) 'ct_id'" json:"ct_id" form:"ct_id" xml:"ct_id"`
 	//
-	FsAllMoney null.Float `xorm:"float(10,2) 'fs_all_money'" json:"fs_all_money" xml:"fs_all_money"`
+	FsAllMoney null.Float `xorm:"float(10,2) 'fs_all_money'" json:"fs_all_money" form:"fs_all_money" xml:"fs_all_money"`
 	//
-	TravelRoutes null.Int `xorm:"int(11) 'travel_routes'" json:"travel_routes" xml:"travel_routes"`
+	TravelRoutes null.Int `xorm:"int(11) 'travel_routes'" json:"travel_routes" form:"travel_routes" xml:"travel_routes"`
 	//
-	StudyCountries null.Int `xorm:"int(11) 'study_countries'" json:"study_countries" xml:"study_countries"`
+	StudyCountries null.Int `xorm:"int(11) 'study_countries'" json:"study_countries" form:"study_countries" xml:"study_countries"`
 	//
-	BeginTime null.Time `xorm:"datetime 'begin_time'" json:"begin_time" xml:"begin_time"`
+	BeginTime null.Time `xorm:"datetime 'begin_time'" json:"begin_time" form:"begin_time" xml:"begin_time"`
 	//
-	BeginEndtime null.Time `xorm:"datetime 'begin_endtime'" json:"begin_endtime" xml:"begin_endtime"`
+	BeginEndtime null.Time `xorm:"datetime 'begin_endtime'" json:"begin_endtime" form:"begin_endtime" xml:"begin_endtime"`
 	//
-	FeeCourseType null.Int `xorm:"int(11) 'fee_course_type'" json:"fee_course_type" xml:"fee_course_type"`
+	FeeCourseType null.Int `xorm:"int(11) 'fee_course_type'" json:"fee_course_type" form:"fee_course_type" xml:"fee_course_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined FeeStandard

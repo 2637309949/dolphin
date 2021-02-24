@@ -4,43 +4,60 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StuClassFeedback defined
 type StuClassFeedback struct {
 	//
-	SCFId null.Int `xorm:"int(11) pk notnull autoincr 's_c_f_id'" json:"s_c_f_id" xml:"s_c_f_id"`
+	SCFId null.Int `xorm:"int(11) pk notnull autoincr 's_c_f_id'" json:"s_c_f_id" form:"s_c_f_id" xml:"s_c_f_id"`
 	//
-	CfContent null.String `xorm:"'cf_content'" json:"cf_content" xml:"cf_content"`
+	CfContent null.String `xorm:"'cf_content'" json:"cf_content" form:"cf_content" xml:"cf_content"`
 	//
-	CfId null.Int `xorm:"int(11) 'cf_id'" json:"cf_id" xml:"cf_id"`
+	CfId null.Int `xorm:"int(11) 'cf_id'" json:"cf_id" form:"cf_id" xml:"cf_id"`
 	//
-	CssId null.Int `xorm:"int(11) 'css_id'" json:"css_id" xml:"css_id"`
+	CssId null.Int `xorm:"int(11) 'css_id'" json:"css_id" form:"css_id" xml:"css_id"`
 	//
-	Hear null.Int `xorm:"int(11) 'hear'" json:"hear" xml:"hear"`
+	Hear null.Int `xorm:"int(11) 'hear'" json:"hear" form:"hear" xml:"hear"`
 	//
-	Say null.Int `xorm:"int(11) 'say'" json:"say" xml:"say"`
+	Say null.Int `xorm:"int(11) 'say'" json:"say" form:"say" xml:"say"`
 	//
-	CfRead null.Int `xorm:"int(11) 'cf_read'" json:"cf_read" xml:"cf_read"`
+	CfRead null.Int `xorm:"int(11) 'cf_read'" json:"cf_read" form:"cf_read" xml:"cf_read"`
 	//
-	CfWrite null.Int `xorm:"int(11) 'cf_write'" json:"cf_write" xml:"cf_write"`
+	CfWrite null.Int `xorm:"int(11) 'cf_write'" json:"cf_write" form:"cf_write" xml:"cf_write"`
 	//
-	CfZhnl null.Int `xorm:"int(11) 'cf_zhnl'" json:"cf_zhnl" xml:"cf_zhnl"`
+	CfZhnl null.Int `xorm:"int(11) 'cf_zhnl'" json:"cf_zhnl" form:"cf_zhnl" xml:"cf_zhnl"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" xml:"scs_id"`
+	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 	//
-	See null.Int `xorm:"int(11) 'see'" json:"see" xml:"see"`
+	See null.Int `xorm:"int(11) 'see'" json:"see" form:"see" xml:"see"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StuClassFeedback

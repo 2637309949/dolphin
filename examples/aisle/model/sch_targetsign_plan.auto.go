@@ -4,47 +4,64 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // SchTargetsignPlan defined
 type SchTargetsignPlan struct {
 	//
-	STPId null.Int `xorm:"int(11) pk notnull autoincr 's_t_p_id'" json:"s_t_p_id" xml:"s_t_p_id"`
+	STPId null.Int `xorm:"int(11) pk notnull autoincr 's_t_p_id'" json:"s_t_p_id" form:"s_t_p_id" xml:"s_t_p_id"`
 	//
-	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" xml:"sch_id"`
+	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
 	//
-	MarkInNum null.Float `xorm:"float(11,2) 'mark_in_num'" json:"mark_in_num" xml:"mark_in_num"`
+	MarkInNum null.Float `xorm:"float(11,2) 'mark_in_num'" json:"mark_in_num" form:"mark_in_num" xml:"mark_in_num"`
 	//
-	MarkOutNum null.Float `xorm:"float(50,2) 'mark_out_num'" json:"mark_out_num" xml:"mark_out_num"`
+	MarkOutNum null.Float `xorm:"float(50,2) 'mark_out_num'" json:"mark_out_num" form:"mark_out_num" xml:"mark_out_num"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	NetworkTargetsignNum null.Float `xorm:"float(50,2) 'network_targetsign_num'" json:"network_targetsign_num" xml:"network_targetsign_num"`
+	NetworkTargetsignNum null.Float `xorm:"float(50,2) 'network_targetsign_num'" json:"network_targetsign_num" form:"network_targetsign_num" xml:"network_targetsign_num"`
 	//
-	LtTargetsignNum null.Float `xorm:"float(50,2) 'lt_targetsign_num'" json:"lt_targetsign_num" xml:"lt_targetsign_num"`
+	LtTargetsignNum null.Float `xorm:"float(50,2) 'lt_targetsign_num'" json:"lt_targetsign_num" form:"lt_targetsign_num" xml:"lt_targetsign_num"`
 	//
-	PpTargetsignNum null.Float `xorm:"float(50,2) 'pp_targetsign_num'" json:"pp_targetsign_num" xml:"pp_targetsign_num"`
+	PpTargetsignNum null.Float `xorm:"float(50,2) 'pp_targetsign_num'" json:"pp_targetsign_num" form:"pp_targetsign_num" xml:"pp_targetsign_num"`
 	//
-	QdTargetsignNum null.Float `xorm:"float(50,2) 'qd_targetsign_num'" json:"qd_targetsign_num" xml:"qd_targetsign_num"`
+	QdTargetsignNum null.Float `xorm:"float(50,2) 'qd_targetsign_num'" json:"qd_targetsign_num" form:"qd_targetsign_num" xml:"qd_targetsign_num"`
 	//
-	QtTargetsignNum null.Float `xorm:"float(50,2) 'qt_targetsign_num'" json:"qt_targetsign_num" xml:"qt_targetsign_num"`
+	QtTargetsignNum null.Float `xorm:"float(50,2) 'qt_targetsign_num'" json:"qt_targetsign_num" form:"qt_targetsign_num" xml:"qt_targetsign_num"`
 	//
-	PlanMonth null.Time `xorm:"datetime 'plan_month'" json:"plan_month" xml:"plan_month"`
+	PlanMonth null.Time `xorm:"datetime 'plan_month'" json:"plan_month" form:"plan_month" xml:"plan_month"`
 	//
-	AllQdNum null.Float `xorm:"float(50,2) 'all_qd_num'" json:"all_qd_num" xml:"all_qd_num"`
+	AllQdNum null.Float `xorm:"float(50,2) 'all_qd_num'" json:"all_qd_num" form:"all_qd_num" xml:"all_qd_num"`
 	//
-	AllQdMoney null.Float `xorm:"float(50,2) 'all_qd_money'" json:"all_qd_money" xml:"all_qd_money"`
+	AllQdMoney null.Float `xorm:"float(50,2) 'all_qd_money'" json:"all_qd_money" form:"all_qd_money" xml:"all_qd_money"`
 	//
-	AllTzMoney null.Float `xorm:"float(50,2) 'all_tz_money'" json:"all_tz_money" xml:"all_tz_money"`
+	AllTzMoney null.Float `xorm:"float(50,2) 'all_tz_money'" json:"all_tz_money" form:"all_tz_money" xml:"all_tz_money"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined SchTargetsignPlan

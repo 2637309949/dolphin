@@ -4,35 +4,52 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ClassProductCategories defined
 type ClassProductCategories struct {
 	//
-	CPCId null.Int `xorm:"int(11) pk notnull autoincr 'c_p_c_id'" json:"c_p_c_id" xml:"c_p_c_id"`
+	CPCId null.Int `xorm:"int(11) pk notnull autoincr 'c_p_c_id'" json:"c_p_c_id" form:"c_p_c_id" xml:"c_p_c_id"`
 	//
-	CpcName null.String `xorm:"varchar(1000) 'cpc_name'" json:"cpc_name" xml:"cpc_name"`
+	CpcName null.String `xorm:"varchar(1000) 'cpc_name'" json:"cpc_name" form:"cpc_name" xml:"cpc_name"`
 	//
-	CpNumberType null.Int `xorm:"int(11) 'cp_number_type'" json:"cp_number_type" xml:"cp_number_type"`
+	CpNumberType null.Int `xorm:"int(11) 'cp_number_type'" json:"cp_number_type" form:"cp_number_type" xml:"cp_number_type"`
 	//
-	CpNumber null.Int `xorm:"int(11) 'cp_number'" json:"cp_number" xml:"cp_number"`
+	CpNumber null.Int `xorm:"int(11) 'cp_number'" json:"cp_number" form:"cp_number" xml:"cp_number"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	CourseId null.Int `xorm:"int(11) 'course_id'" json:"course_id" xml:"course_id"`
+	CourseId null.Int `xorm:"int(11) 'course_id'" json:"course_id" form:"course_id" xml:"course_id"`
 	//
-	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" xml:"english_name"`
+	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" form:"english_name" xml:"english_name"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ClassProductCategories

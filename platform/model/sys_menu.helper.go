@@ -10,24 +10,27 @@ import (
 // InitSysData defined inital system data
 func (m *SysMenu) InitSysData(s *xorm.Session) {
 	items := []*SysMenu{
-		&SysMenu{
-			ID:        null.StringFrom("7b8bf57f-76f6-49d9-8529-7690cf385219"),
-			Name:      null.StringFrom("Application"),
-			Code:      null.StringFrom("Application"),
-			URL:       null.StringFrom("application"),
-			Component: null.StringFrom("application/index"),
-			Type:      null.IntFrom(1),
-			Icon:      null.StringFrom("application"),
-			Order:     null.IntFrom(0),
-			Hidden:    null.IntFrom(0),
-
-			CreateBy:   DefaultAdmin.ID,
-			CreateTime: null.TimeFrom(time.Now()),
-			UpdateBy:   DefaultAdmin.ID,
-			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+		{
+			ID:          null.StringFrom("7b8bf57f-76f6-49d9-8529-7690cf385219"),
+			Name:        null.StringFrom("Application"),
+			Code:        null.StringFrom("Application"),
+			Parent:      null.String{},
+			Inheritance: null.String{},
+			URL:         null.StringFrom("application"),
+			Component:   null.StringFrom("application/index"),
+			Perms:       null.String{},
+			Type:        null.IntFrom(1),
+			Icon:        null.StringFrom("application"),
+			Order:       null.IntFrom(0),
+			Hidden:      null.IntFrom(0),
+			CreateBy:    DefaultAdmin.ID,
+			CreateTime:  null.TimeFrom(time.Now()),
+			UpdateBy:    DefaultAdmin.ID,
+			UpdateTime:  null.TimeFrom(time.Now()),
+			DelFlag:     null.IntFrom(0),
+			Remark:      null.String{},
 		},
-		&SysMenu{
+		{
 			ID:     null.StringFrom("0a8bc79f-76f6-49d9-8529-7690cf385212"),
 			Name:   null.StringFrom("Setting"),
 			Code:   null.StringFrom("Setting"),
@@ -43,7 +46,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32221"),
 			Name:        null.StringFrom("User"),
 			Code:        null.StringFrom("User"),
@@ -62,7 +65,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("53ceb683-e8a9-4e29-98d2-e0151df32277"),
 			Name:        null.StringFrom("Org"),
 			Code:        null.StringFrom("Org"),
@@ -81,7 +84,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("1da0a707-54c2-4289-97a3-5cdbdcf899e8"),
 			Name:        null.StringFrom("Role"),
 			Code:        null.StringFrom("Role"),
@@ -99,7 +102,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime:  null.TimeFrom(time.Now()),
 			DelFlag:     null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32218"),
 			Name:        null.StringFrom("OptionSet"),
 			Code:        null.StringFrom("OptionSet"),
@@ -118,7 +121,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32237"),
 			Name:        null.StringFrom("Menu"),
 			Code:        null.StringFrom("Menu"),
@@ -137,7 +140,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("36bfc673-e7a9-4e77-18d2-e0121df3b220"),
 			Name:        null.StringFrom("Scheduling"),
 			Code:        null.StringFrom("Scheduling"),
@@ -156,7 +159,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("26bfc673-ac79-4e77-18d2-e0121df3b220"),
 			Name:        null.StringFrom("Attachment"),
 			Code:        null.StringFrom("Attachment"),
@@ -175,7 +178,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("1b35a673-ac79-4e77-18d2-e0121df3b220"),
 			Name:        null.StringFrom("Table"),
 			Code:        null.StringFrom("Table"),
@@ -194,7 +197,7 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		&SysMenu{
+		{
 			ID:          null.StringFrom("33cec683-e7a9-4e29-98d2-e0151df32220"),
 			Name:        null.StringFrom("Tracker"),
 			Code:        null.StringFrom("Tracker"),

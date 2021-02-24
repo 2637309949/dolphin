@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ExamPaperIntroduction defined
 type ExamPaperIntroduction struct {
 	//
-	EPIId null.Int `xorm:"int(11) pk notnull autoincr 'e_p_i_id'" json:"e_p_i_id" xml:"e_p_i_id"`
+	EPIId null.Int `xorm:"int(11) pk notnull autoincr 'e_p_i_id'" json:"e_p_i_id" form:"e_p_i_id" xml:"e_p_i_id"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	EpId null.Int `xorm:"int(11) 'ep_id'" json:"ep_id" xml:"ep_id"`
+	EpId null.Int `xorm:"int(11) 'ep_id'" json:"ep_id" form:"ep_id" xml:"ep_id"`
 	//
-	EpiTitle null.String `xorm:"varchar(50) 'epi_title'" json:"epi_title" xml:"epi_title"`
+	EpiTitle null.String `xorm:"varchar(50) 'epi_title'" json:"epi_title" form:"epi_title" xml:"epi_title"`
 	//
-	EpiDetail null.Int `xorm:"int(11) 'epi_detail'" json:"epi_detail" xml:"epi_detail"`
+	EpiDetail null.Int `xorm:"int(11) 'epi_detail'" json:"epi_detail" form:"epi_detail" xml:"epi_detail"`
 	//
-	EpiKey null.String `xorm:"varchar(100) 'epi_key'" json:"epi_key" xml:"epi_key"`
+	EpiKey null.String `xorm:"varchar(100) 'epi_key'" json:"epi_key" form:"epi_key" xml:"epi_key"`
 	//
-	EpiOrder null.Int `xorm:"int(11) 'epi_order'" json:"epi_order" xml:"epi_order"`
+	EpiOrder null.Int `xorm:"int(11) 'epi_order'" json:"epi_order" form:"epi_order" xml:"epi_order"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ExamPaperIntroduction

@@ -4,42 +4,59 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentClassYpk31 defined
 type StudentClassYpk31 struct {
 	//
-	SCYId null.Int `xorm:"int(11) pk notnull autoincr 's_c_y_id'" json:"s_c_y_id" xml:"s_c_y_id"`
+	SCYId null.Int `xorm:"int(11) pk notnull autoincr 's_c_y_id'" json:"s_c_y_id" form:"s_c_y_id" xml:"s_c_y_id"`
 	//
-	PkYpk null.Int `xorm:"int(11) 'pk_ypk'" json:"pk_ypk" xml:"pk_ypk"`
+	PkYpk null.Int `xorm:"int(11) 'pk_ypk'" json:"pk_ypk" form:"pk_ypk" xml:"pk_ypk"`
 	//
-	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" xml:"pk_stu"`
+	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
 	//
-	Kc null.Float `xorm:"float(11,2) 'kc'" json:"kc" xml:"kc"`
+	Kc null.Float `xorm:"float(11,2) 'kc'" json:"kc" form:"kc" xml:"kc"`
 	//
-	OnePrice decimal.Decimal `xorm:"decimal(11,2) 'one_price'" json:"one_price" xml:"one_price"`
+	OnePrice decimal.Decimal `xorm:"decimal(11,2) 'one_price'" json:"one_price" form:"one_price" xml:"one_price"`
 	//
-	AllPrice decimal.Decimal `xorm:"decimal(11,2) 'all_price'" json:"all_price" xml:"all_price"`
+	AllPrice decimal.Decimal `xorm:"decimal(11,2) 'all_price'" json:"all_price" form:"all_price" xml:"all_price"`
 	//
-	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" xml:"pk_sch"`
+	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ClassDate null.Time `xorm:"datetime 'class_date'" json:"class_date" xml:"class_date"`
+	ClassDate null.Time `xorm:"datetime 'class_date'" json:"class_date" form:"class_date" xml:"class_date"`
 	//
-	PkSct null.Int `xorm:"int(11) 'pk_sct'" json:"pk_sct" xml:"pk_sct"`
+	PkSct null.Int `xorm:"int(11) 'pk_sct'" json:"pk_sct" form:"pk_sct" xml:"pk_sct"`
 	//
-	PkCt null.Int `xorm:"int(11) 'pk_ct'" json:"pk_ct" xml:"pk_ct"`
+	PkCt null.Int `xorm:"int(11) 'pk_ct'" json:"pk_ct" form:"pk_ct" xml:"pk_ct"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentClassYpk31

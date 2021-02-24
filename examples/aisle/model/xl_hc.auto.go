@@ -4,77 +4,94 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // XlHc defined
 type XlHc struct {
 	//
-	XlHcId null.Int `xorm:"int(11) pk notnull autoincr 'xl_hc_id'" json:"xl_hc_id" xml:"xl_hc_id"`
+	XlHcId null.Int `xorm:"int(11) pk notnull autoincr 'xl_hc_id'" json:"xl_hc_id" form:"xl_hc_id" xml:"xl_hc_id"`
 	//
-	XlUrl null.String `xorm:"varchar(1000) 'xl_url'" json:"xl_url" xml:"xl_url"`
+	XlUrl null.String `xorm:"varchar(1000) 'xl_url'" json:"xl_url" form:"xl_url" xml:"xl_url"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	OnlyId null.String `xorm:"varchar(1000) 'only_id'" json:"only_id" xml:"only_id"`
+	OnlyId null.String `xorm:"varchar(1000) 'only_id'" json:"only_id" form:"only_id" xml:"only_id"`
 	//
-	TaskId null.String `xorm:"varchar(1000) 'task_id'" json:"task_id" xml:"task_id"`
+	TaskId null.String `xorm:"varchar(1000) 'task_id'" json:"task_id" form:"task_id" xml:"task_id"`
 	//
-	TaskType null.Int `xorm:"int(11) 'task_type'" json:"task_type" xml:"task_type"`
+	TaskType null.Int `xorm:"int(11) 'task_type'" json:"task_type" form:"task_type" xml:"task_type"`
 	//
-	EmployeeId null.String `xorm:"varchar(1000) 'employee_id'" json:"employee_id" xml:"employee_id"`
+	EmployeeId null.String `xorm:"varchar(1000) 'employee_id'" json:"employee_id" form:"employee_id" xml:"employee_id"`
 	//
-	EmployeeUsername null.String `xorm:"varchar(1000) 'employee_username'" json:"employee_username" xml:"employee_username"`
+	EmployeeUsername null.String `xorm:"varchar(1000) 'employee_username'" json:"employee_username" form:"employee_username" xml:"employee_username"`
 	//
-	SvId null.Int `xorm:"int(11) 'sv_id'" json:"sv_id" xml:"sv_id"`
+	SvId null.Int `xorm:"int(11) 'sv_id'" json:"sv_id" form:"sv_id" xml:"sv_id"`
 	//
-	TaskResult null.String `xorm:"varchar(1000) 'task_result'" json:"task_result" xml:"task_result"`
+	TaskResult null.String `xorm:"varchar(1000) 'task_result'" json:"task_result" form:"task_result" xml:"task_result"`
 	//
-	CustomerPhone null.String `xorm:"varchar(1000) 'customer_phone'" json:"customer_phone" xml:"customer_phone"`
+	CustomerPhone null.String `xorm:"varchar(1000) 'customer_phone'" json:"customer_phone" form:"customer_phone" xml:"customer_phone"`
 	//
-	HangupCause null.String `xorm:"varchar(1000) 'hangup_cause'" json:"hangup_cause" xml:"hangup_cause"`
+	HangupCause null.String `xorm:"varchar(1000) 'hangup_cause'" json:"hangup_cause" form:"hangup_cause" xml:"hangup_cause"`
 	//
-	HangupCauseQ850 null.Int `xorm:"int(11) 'hangup_cause_q850'" json:"hangup_cause_q850" xml:"hangup_cause_q850"`
+	HangupCauseQ850 null.Int `xorm:"int(11) 'hangup_cause_q850'" json:"hangup_cause_q850" form:"hangup_cause_q850" xml:"hangup_cause_q850"`
 	//
-	Duration null.Float `xorm:"float(50,2) 'duration'" json:"duration" xml:"duration"`
+	Duration null.Float `xorm:"float(50,2) 'duration'" json:"duration" form:"duration" xml:"duration"`
 	//
-	Billsec null.Float `xorm:"float(50,2) 'billsec'" json:"billsec" xml:"billsec"`
+	Billsec null.Float `xorm:"float(50,2) 'billsec'" json:"billsec" form:"billsec" xml:"billsec"`
 	//
-	Waitsec null.Float `xorm:"float(50,2) 'waitsec'" json:"waitsec" xml:"waitsec"`
+	Waitsec null.Float `xorm:"float(50,2) 'waitsec'" json:"waitsec" form:"waitsec" xml:"waitsec"`
 	//
-	StartStamp null.Time `xorm:"datetime 'start_stamp'" json:"start_stamp" xml:"start_stamp"`
+	StartStamp null.Time `xorm:"datetime 'start_stamp'" json:"start_stamp" form:"start_stamp" xml:"start_stamp"`
 	//
-	BridgeStamp null.Time `xorm:"datetime 'bridge_stamp'" json:"bridge_stamp" xml:"bridge_stamp"`
+	BridgeStamp null.Time `xorm:"datetime 'bridge_stamp'" json:"bridge_stamp" form:"bridge_stamp" xml:"bridge_stamp"`
 	//
-	EndStamp null.Time `xorm:"datetime 'end_stamp'" json:"end_stamp" xml:"end_stamp"`
+	EndStamp null.Time `xorm:"datetime 'end_stamp'" json:"end_stamp" form:"end_stamp" xml:"end_stamp"`
 	//
-	AreaName null.String `xorm:"varchar(100) 'area_name'" json:"area_name" xml:"area_name"`
+	AreaName null.String `xorm:"varchar(100) 'area_name'" json:"area_name" form:"area_name" xml:"area_name"`
 	//
-	AreaCode null.Int `xorm:"int(11) 'area_code'" json:"area_code" xml:"area_code"`
+	AreaCode null.Int `xorm:"int(11) 'area_code'" json:"area_code" form:"area_code" xml:"area_code"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	GlHfId null.String `xorm:"varchar(10000) 'gl_hf_id'" json:"gl_hf_id" xml:"gl_hf_id"`
+	GlHfId null.String `xorm:"varchar(10000) 'gl_hf_id'" json:"gl_hf_id" form:"gl_hf_id" xml:"gl_hf_id"`
 	//
-	Context null.String `xorm:"varchar(1000) 'context'" json:"context" xml:"context"`
+	Context null.String `xorm:"varchar(1000) 'context'" json:"context" form:"context" xml:"context"`
 	//
-	Username null.String `xorm:"varchar(1000) 'username'" json:"username" xml:"username"`
+	Username null.String `xorm:"varchar(1000) 'username'" json:"username" form:"username" xml:"username"`
 	//
-	CallerIdName null.String `xorm:"varchar(1000) 'caller_id_name'" json:"caller_id_name" xml:"caller_id_name"`
+	CallerIdName null.String `xorm:"varchar(1000) 'caller_id_name'" json:"caller_id_name" form:"caller_id_name" xml:"caller_id_name"`
 	//
-	CallerIdNumber null.String `xorm:"varchar(100) 'caller_id_number'" json:"caller_id_number" xml:"caller_id_number"`
+	CallerIdNumber null.String `xorm:"varchar(100) 'caller_id_number'" json:"caller_id_number" form:"caller_id_number" xml:"caller_id_number"`
 	//
-	DestinationNumber null.String `xorm:"varchar(100) 'destination_number'" json:"destination_number" xml:"destination_number"`
+	DestinationNumber null.String `xorm:"varchar(100) 'destination_number'" json:"destination_number" form:"destination_number" xml:"destination_number"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined XlHc

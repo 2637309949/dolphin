@@ -4,69 +4,86 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudentVisit defined
 type StudentVisit struct {
 	//
-	SVId null.Int `xorm:"int(11) pk notnull autoincr 's_v_id'" json:"s_v_id" xml:"s_v_id"`
+	SVId null.Int `xorm:"int(11) pk notnull autoincr 's_v_id'" json:"s_v_id" form:"s_v_id" xml:"s_v_id"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	SvContent null.String `xorm:"varchar(1000) 'sv_content'" json:"sv_content" xml:"sv_content"`
+	SvContent null.String `xorm:"varchar(1000) 'sv_content'" json:"sv_content" form:"sv_content" xml:"sv_content"`
 	//
-	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" xml:"start_time"`
+	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
 	//
-	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" xml:"end_time"`
+	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
 	//
-	NextContent null.String `xorm:"varchar(1000) 'next_content'" json:"next_content" xml:"next_content"`
+	NextContent null.String `xorm:"varchar(1000) 'next_content'" json:"next_content" form:"next_content" xml:"next_content"`
 	//
-	NextTime null.Time `xorm:"datetime 'next_time'" json:"next_time" xml:"next_time"`
+	NextTime null.Time `xorm:"datetime 'next_time'" json:"next_time" form:"next_time" xml:"next_time"`
 	//
-	StudentType null.Int `xorm:"int(11) 'student_type'" json:"student_type" xml:"student_type"`
+	StudentType null.Int `xorm:"int(11) 'student_type'" json:"student_type" form:"student_type" xml:"student_type"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" xml:"sc_id"`
+	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" form:"sc_id" xml:"sc_id"`
 	//
-	StuOrder null.Float `xorm:"float(11,2) 'stu_order'" json:"stu_order" xml:"stu_order"`
+	StuOrder null.Float `xorm:"float(11,2) 'stu_order'" json:"stu_order" form:"stu_order" xml:"stu_order"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	RevivalDate null.Time `xorm:"datetime 'revival_date'" json:"revival_date" xml:"revival_date"`
+	RevivalDate null.Time `xorm:"datetime 'revival_date'" json:"revival_date" form:"revival_date" xml:"revival_date"`
 	//
-	KhType null.Int `xorm:"int(11) 'kh_type'" json:"kh_type" xml:"kh_type"`
+	KhType null.Int `xorm:"int(11) 'kh_type'" json:"kh_type" form:"kh_type" xml:"kh_type"`
 	//
-	StuSysStatus null.Int `xorm:"int(11) 'stu_sys_status'" json:"stu_sys_status" xml:"stu_sys_status"`
+	StuSysStatus null.Int `xorm:"int(11) 'stu_sys_status'" json:"stu_sys_status" form:"stu_sys_status" xml:"stu_sys_status"`
 	//
-	CallType null.Int `xorm:"int(11) 'call_type'" json:"call_type" xml:"call_type"`
+	CallType null.Int `xorm:"int(11) 'call_type'" json:"call_type" form:"call_type" xml:"call_type"`
 	//
-	MaType null.Int `xorm:"int(11) 'ma_type'" json:"ma_type" xml:"ma_type"`
+	MaType null.Int `xorm:"int(11) 'ma_type'" json:"ma_type" form:"ma_type" xml:"ma_type"`
 	//
-	NetworkDetailId null.Int `xorm:"int(11) 'network_detail_id'" json:"network_detail_id" xml:"network_detail_id"`
+	NetworkDetailId null.Int `xorm:"int(11) 'network_detail_id'" json:"network_detail_id" form:"network_detail_id" xml:"network_detail_id"`
 	//
-	SyId null.Int `xorm:"int(11) 'sy_id'" json:"sy_id" xml:"sy_id"`
+	SyId null.Int `xorm:"int(11) 'sy_id'" json:"sy_id" form:"sy_id" xml:"sy_id"`
 	//
-	SvuserId null.Int `xorm:"int(11) 'svuser_id'" json:"svuser_id" xml:"svuser_id"`
+	SvuserId null.Int `xorm:"int(11) 'svuser_id'" json:"svuser_id" form:"svuser_id" xml:"svuser_id"`
 	//
-	LeaderPostil null.String `xorm:"varchar(2000) 'leader_postil'" json:"leader_postil" xml:"leader_postil"`
+	LeaderPostil null.String `xorm:"varchar(2000) 'leader_postil'" json:"leader_postil" form:"leader_postil" xml:"leader_postil"`
 	//
-	LeaderPostilTime null.Time `xorm:"datetime 'leader_postil_time'" json:"leader_postil_time" xml:"leader_postil_time"`
+	LeaderPostilTime null.Time `xorm:"datetime 'leader_postil_time'" json:"leader_postil_time" form:"leader_postil_time" xml:"leader_postil_time"`
 	//
-	HfStuphone null.String `xorm:"varchar(11) 'hf_stuphone'" json:"hf_stuphone" xml:"hf_stuphone"`
+	HfStuphone null.String `xorm:"varchar(11) 'hf_stuphone'" json:"hf_stuphone" form:"hf_stuphone" xml:"hf_stuphone"`
 	//
-	OnlyId null.String `xorm:"varchar(10000) 'only_id'" json:"only_id" xml:"only_id"`
+	OnlyId null.String `xorm:"varchar(10000) 'only_id'" json:"only_id" form:"only_id" xml:"only_id"`
 	//
-	HfrType null.String `xorm:"varchar(1000) 'hfr_type'" json:"hfr_type" xml:"hfr_type"`
+	HfrType null.String `xorm:"varchar(1000) 'hfr_type'" json:"hfr_type" form:"hfr_type" xml:"hfr_type"`
 	//
-	TmkVisitStatus null.Int `xorm:"int(11) 'tmk_visit_status'" json:"tmk_visit_status" xml:"tmk_visit_status"`
+	TmkVisitStatus null.Int `xorm:"int(11) 'tmk_visit_status'" json:"tmk_visit_status" form:"tmk_visit_status" xml:"tmk_visit_status"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudentVisit

@@ -4,53 +4,70 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ActiveLesson defined
 type ActiveLesson struct {
 	//
-	ALId null.Int `xorm:"int(11) pk notnull autoincr 'a_l_id'" json:"a_l_id" xml:"a_l_id"`
+	ALId null.Int `xorm:"int(11) pk notnull autoincr 'a_l_id'" json:"a_l_id" form:"a_l_id" xml:"a_l_id"`
 	//
-	ActiveName null.String `xorm:"varchar(100) 'active_name'" json:"active_name" xml:"active_name"`
+	ActiveName null.String `xorm:"varchar(100) 'active_name'" json:"active_name" form:"active_name" xml:"active_name"`
 	//
-	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" xml:"start_time"`
+	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
 	//
-	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" xml:"end_time"`
+	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
 	//
-	ActiveState null.Int `xorm:"int(11) 'active_state'" json:"active_state" xml:"active_state"`
+	ActiveState null.Int `xorm:"int(11) 'active_state'" json:"active_state" form:"active_state" xml:"active_state"`
 	//
-	MaxNum null.Int `xorm:"int(11) 'max_num'" json:"max_num" xml:"max_num"`
+	MaxNum null.Int `xorm:"int(11) 'max_num'" json:"max_num" form:"max_num" xml:"max_num"`
 	//
-	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" xml:"tea_id"`
+	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" form:"tea_id" xml:"tea_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	TlDate null.Time `xorm:"datetime 'tl_date'" json:"tl_date" xml:"tl_date"`
+	TlDate null.Time `xorm:"datetime 'tl_date'" json:"tl_date" form:"tl_date" xml:"tl_date"`
 	//
-	RoomId null.Int `xorm:"int(11) 'room_id'" json:"room_id" xml:"room_id"`
+	RoomId null.Int `xorm:"int(11) 'room_id'" json:"room_id" form:"room_id" xml:"room_id"`
 	//
-	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" xml:"sch_id"`
+	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
 	//
-	ActiveType null.Int `xorm:"int(11) 'active_type'" json:"active_type" xml:"active_type"`
+	ActiveType null.Int `xorm:"int(11) 'active_type'" json:"active_type" form:"active_type" xml:"active_type"`
 	//
-	ReportedNumber null.Int `xorm:"int(11) 'reported_number'" json:"reported_number" xml:"reported_number"`
+	ReportedNumber null.Int `xorm:"int(11) 'reported_number'" json:"reported_number" form:"reported_number" xml:"reported_number"`
 	//
-	Note null.String `xorm:"varchar(200) 'note'" json:"note" xml:"note"`
+	Note null.String `xorm:"varchar(200) 'note'" json:"note" form:"note" xml:"note"`
 	//
-	AgeGroup null.Int `xorm:"int(11) 'age_group'" json:"age_group" xml:"age_group"`
+	AgeGroup null.Int `xorm:"int(11) 'age_group'" json:"age_group" form:"age_group" xml:"age_group"`
 	//
-	BeforeId null.Int `xorm:"int(11) 'before_id'" json:"before_id" xml:"before_id"`
+	BeforeId null.Int `xorm:"int(11) 'before_id'" json:"before_id" form:"before_id" xml:"before_id"`
 	//
-	TkType null.Int `xorm:"int(11) 'tk_type'" json:"tk_type" xml:"tk_type"`
+	TkType null.Int `xorm:"int(11) 'tk_type'" json:"tk_type" form:"tk_type" xml:"tk_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ActiveLesson

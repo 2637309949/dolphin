@@ -32,7 +32,7 @@ func (m *Main) Build(dir string, args []string, node *schema.Application) ([]*pi
 	}
 	mainByte, _ := vfsutil.ReadFile(template.Assets, "main.tmpl")
 	return []*pipe.TmplCfg{
-		&pipe.TmplCfg{
+		{
 			Text:     string(mainByte),
 			FilePath: path.Join(dir, "main.go"),
 			Data:     data,

@@ -34,7 +34,7 @@ func (app *App) Build(dir string, args []string, node *schema.Application) ([]*p
 
 	appByte, _ := vfsutil.ReadFile(template.Assets, "app.tmpl")
 	return []*pipe.TmplCfg{
-		&pipe.TmplCfg{
+		{
 			Text:     string(appByte),
 			FilePath: path.Join(dir, viper.GetString("dir.app"), "app.go"),
 			Data:     data,

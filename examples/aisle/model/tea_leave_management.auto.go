@@ -4,41 +4,58 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TeaLeaveManagement defined
 type TeaLeaveManagement struct {
 	//
-	TLMId null.Int `xorm:"int(11) pk notnull autoincr 't_l_m_id'" json:"t_l_m_id" xml:"t_l_m_id"`
+	TLMId null.Int `xorm:"int(11) pk notnull autoincr 't_l_m_id'" json:"t_l_m_id" form:"t_l_m_id" xml:"t_l_m_id"`
 	//
-	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" xml:"tea_id"`
+	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" form:"tea_id" xml:"tea_id"`
 	//
-	LeaveType null.Int `xorm:"int(11) 'leave_type'" json:"leave_type" xml:"leave_type"`
+	LeaveType null.Int `xorm:"int(11) 'leave_type'" json:"leave_type" form:"leave_type" xml:"leave_type"`
 	//
-	LeaveStartDate null.Time `xorm:"datetime 'leave_start_date'" json:"leave_start_date" xml:"leave_start_date"`
+	LeaveStartDate null.Time `xorm:"datetime 'leave_start_date'" json:"leave_start_date" form:"leave_start_date" xml:"leave_start_date"`
 	//
-	LeaveStartTime null.Time `xorm:"datetime 'leave_start_time'" json:"leave_start_time" xml:"leave_start_time"`
+	LeaveStartTime null.Time `xorm:"datetime 'leave_start_time'" json:"leave_start_time" form:"leave_start_time" xml:"leave_start_time"`
 	//
-	LeaveEndDate null.Time `xorm:"datetime 'leave_end_date'" json:"leave_end_date" xml:"leave_end_date"`
+	LeaveEndDate null.Time `xorm:"datetime 'leave_end_date'" json:"leave_end_date" form:"leave_end_date" xml:"leave_end_date"`
 	//
-	LeaveEndTime null.Time `xorm:"datetime 'leave_end_time'" json:"leave_end_time" xml:"leave_end_time"`
+	LeaveEndTime null.Time `xorm:"datetime 'leave_end_time'" json:"leave_end_time" form:"leave_end_time" xml:"leave_end_time"`
 	//
-	LeaveWordDay null.Float `xorm:"float(11,2) 'leave_word_day'" json:"leave_word_day" xml:"leave_word_day"`
+	LeaveWordDay null.Float `xorm:"float(11,2) 'leave_word_day'" json:"leave_word_day" form:"leave_word_day" xml:"leave_word_day"`
 	//
-	TeaStuNum null.Float `xorm:"float(11,2) 'tea_stu_num'" json:"tea_stu_num" xml:"tea_stu_num"`
+	TeaStuNum null.Float `xorm:"float(11,2) 'tea_stu_num'" json:"tea_stu_num" form:"tea_stu_num" xml:"tea_stu_num"`
 	//
-	Remark null.String `xorm:"varchar(1000) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(1000) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TeaLeaveManagement

@@ -4,34 +4,51 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StuMonthYpHour defined
 type StuMonthYpHour struct {
 	//
-	SMYHId null.Int `xorm:"int(11) pk notnull autoincr 's_m_y_h_id'" json:"s_m_y_h_id" xml:"s_m_y_h_id"`
+	SMYHId null.Int `xorm:"int(11) pk notnull autoincr 's_m_y_h_id'" json:"s_m_y_h_id" form:"s_m_y_h_id" xml:"s_m_y_h_id"`
 	//
-	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" xml:"pk_stu"`
+	PkStu null.Int `xorm:"int(11) 'pk_stu'" json:"pk_stu" form:"pk_stu" xml:"pk_stu"`
 	//
-	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" xml:"pk_sch"`
+	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
 	//
-	MonthHour null.Float `xorm:"float(11,2) 'month_hour'" json:"month_hour" xml:"month_hour"`
+	MonthHour null.Float `xorm:"float(11,2) 'month_hour'" json:"month_hour" form:"month_hour" xml:"month_hour"`
 	//
-	MonthMoney decimal.Decimal `xorm:"decimal(11,2) 'month_money'" json:"month_money" xml:"month_money"`
+	MonthMoney decimal.Decimal `xorm:"decimal(11,2) 'month_money'" json:"month_money" form:"month_money" xml:"month_money"`
 	//
-	MonthDate null.Time `xorm:"datetime 'month_date'" json:"month_date" xml:"month_date"`
+	MonthDate null.Time `xorm:"datetime 'month_date'" json:"month_date" form:"month_date" xml:"month_date"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StuMonthYpHour

@@ -4,31 +4,48 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // MarketExpend defined
 type MarketExpend struct {
 	//
-	MEId null.Int `xorm:"int(11) pk notnull autoincr 'm_e_id'" json:"m_e_id" xml:"m_e_id"`
+	MEId null.Int `xorm:"int(11) pk notnull autoincr 'm_e_id'" json:"m_e_id" form:"m_e_id" xml:"m_e_id"`
 	//
-	MarketId null.Int `xorm:"int(11) 'market_id'" json:"market_id" xml:"market_id"`
+	MarketId null.Int `xorm:"int(11) 'market_id'" json:"market_id" form:"market_id" xml:"market_id"`
 	//
-	ExpendMoney null.Float `xorm:"float(11,2) 'expend_money'" json:"expend_money" xml:"expend_money"`
+	ExpendMoney null.Float `xorm:"float(11,2) 'expend_money'" json:"expend_money" form:"expend_money" xml:"expend_money"`
 	//
-	Remake null.String `xorm:"varchar(2000) 'remake'" json:"remake" xml:"remake"`
+	Remake null.String `xorm:"varchar(2000) 'remake'" json:"remake" form:"remake" xml:"remake"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ExpendType null.Int `xorm:"int(11) 'expend_type'" json:"expend_type" xml:"expend_type"`
+	ExpendType null.Int `xorm:"int(11) 'expend_type'" json:"expend_type" form:"expend_type" xml:"expend_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined MarketExpend

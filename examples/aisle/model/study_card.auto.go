@@ -4,35 +4,52 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StudyCard defined
 type StudyCard struct {
 	//
-	StudyCardId null.Int `xorm:"int(11) pk notnull autoincr 'study_card_id'" json:"study_card_id" xml:"study_card_id"`
+	StudyCardId null.Int `xorm:"int(11) pk notnull autoincr 'study_card_id'" json:"study_card_id" form:"study_card_id" xml:"study_card_id"`
 	//
-	StudyCardnumber null.String `xorm:"varchar(100) 'study_cardnumber'" json:"study_cardnumber" xml:"study_cardnumber"`
+	StudyCardnumber null.String `xorm:"varchar(100) 'study_cardnumber'" json:"study_cardnumber" form:"study_cardnumber" xml:"study_cardnumber"`
 	//
-	ArrivedMoney null.Float `xorm:"float(50,2) 'arrived_money'" json:"arrived_money" xml:"arrived_money"`
+	ArrivedMoney null.Float `xorm:"float(50,2) 'arrived_money'" json:"arrived_money" form:"arrived_money" xml:"arrived_money"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ArrivedType null.Int `xorm:"int(11) 'arrived_type'" json:"arrived_type" xml:"arrived_type"`
+	ArrivedType null.Int `xorm:"int(11) 'arrived_type'" json:"arrived_type" form:"arrived_type" xml:"arrived_type"`
 	//
-	ArrivedDiscount null.Float `xorm:"float(50,2) 'arrived_discount'" json:"arrived_discount" xml:"arrived_discount"`
+	ArrivedDiscount null.Float `xorm:"float(50,2) 'arrived_discount'" json:"arrived_discount" form:"arrived_discount" xml:"arrived_discount"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	CardName null.String `xorm:"varchar(300) 'card_name'" json:"card_name" xml:"card_name"`
+	CardName null.String `xorm:"varchar(300) 'card_name'" json:"card_name" form:"card_name" xml:"card_name"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StudyCard

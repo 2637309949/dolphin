@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TrialLessonStudent defined
 type TrialLessonStudent struct {
 	//
-	TLSId null.Int `xorm:"int(11) pk notnull autoincr 't_l_s_id'" json:"t_l_s_id" xml:"t_l_s_id"`
+	TLSId null.Int `xorm:"int(11) pk notnull autoincr 't_l_s_id'" json:"t_l_s_id" form:"t_l_s_id" xml:"t_l_s_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	TlId null.Int `xorm:"int(11) 'tl_id'" json:"tl_id" xml:"tl_id"`
+	TlId null.Int `xorm:"int(11) 'tl_id'" json:"tl_id" form:"tl_id" xml:"tl_id"`
 	//
-	TlsState null.Int `xorm:"int(11) 'tls_state'" json:"tls_state" xml:"tls_state"`
+	TlsState null.Int `xorm:"int(11) 'tls_state'" json:"tls_state" form:"tls_state" xml:"tls_state"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	SvId null.Int `xorm:"int(11) 'sv_id'" json:"sv_id" xml:"sv_id"`
+	SvId null.Int `xorm:"int(11) 'sv_id'" json:"sv_id" form:"sv_id" xml:"sv_id"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	TlDate null.Time `xorm:"datetime 'tl_date'" json:"tl_date" xml:"tl_date"`
+	TlDate null.Time `xorm:"datetime 'tl_date'" json:"tl_date" form:"tl_date" xml:"tl_date"`
 	//
-	IvId null.Int `xorm:"int(11) 'iv_id'" json:"iv_id" xml:"iv_id"`
+	IvId null.Int `xorm:"int(11) 'iv_id'" json:"iv_id" form:"iv_id" xml:"iv_id"`
 	//
-	YjQdDate null.Time `xorm:"datetime 'yj_qd_date'" json:"yj_qd_date" xml:"yj_qd_date"`
+	YjQdDate null.Time `xorm:"datetime 'yj_qd_date'" json:"yj_qd_date" form:"yj_qd_date" xml:"yj_qd_date"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TrialLessonStudent

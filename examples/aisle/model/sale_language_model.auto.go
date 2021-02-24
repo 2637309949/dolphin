@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // SaleLanguageModel defined
 type SaleLanguageModel struct {
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	BusinessType null.Int `xorm:"int(11) 'business_type'" json:"business_type" xml:"business_type"`
+	BusinessType null.Int `xorm:"int(11) 'business_type'" json:"business_type" form:"business_type" xml:"business_type"`
 	//
-	SLMId null.Int `xorm:"int(11) pk notnull autoincr 's_l_m_id'" json:"s_l_m_id" xml:"s_l_m_id"`
+	SLMId null.Int `xorm:"int(11) pk notnull autoincr 's_l_m_id'" json:"s_l_m_id" form:"s_l_m_id" xml:"s_l_m_id"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	PtId null.Int `xorm:"int(11) 'pt_id'" json:"pt_id" xml:"pt_id"`
+	PtId null.Int `xorm:"int(11) 'pt_id'" json:"pt_id" form:"pt_id" xml:"pt_id"`
 	//
-	SlmName null.String `xorm:"varchar(50) 'slm_name'" json:"slm_name" xml:"slm_name"`
+	SlmName null.String `xorm:"varchar(50) 'slm_name'" json:"slm_name" form:"slm_name" xml:"slm_name"`
 	//
-	SlmContent null.String `xorm:"varchar(500) 'slm_content'" json:"slm_content" xml:"slm_content"`
+	SlmContent null.String `xorm:"varchar(500) 'slm_content'" json:"slm_content" form:"slm_content" xml:"slm_content"`
 	//
-	VisitStage null.Int `xorm:"int(11) 'visit_stage'" json:"visit_stage" xml:"visit_stage"`
+	VisitStage null.Int `xorm:"int(11) 'visit_stage'" json:"visit_stage" form:"visit_stage" xml:"visit_stage"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	SlmType null.Int `xorm:"int(11) 'slm_type'" json:"slm_type" xml:"slm_type"`
+	SlmType null.Int `xorm:"int(11) 'slm_type'" json:"slm_type" form:"slm_type" xml:"slm_type"`
 	//
-	StuSystemSta null.Int `xorm:"int(11) 'stu_system_sta'" json:"stu_system_sta" xml:"stu_system_sta"`
+	StuSystemSta null.Int `xorm:"int(11) 'stu_system_sta'" json:"stu_system_sta" form:"stu_system_sta" xml:"stu_system_sta"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined SaleLanguageModel

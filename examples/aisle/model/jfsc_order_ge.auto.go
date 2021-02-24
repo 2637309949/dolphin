@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // JfscOrderGe defined
 type JfscOrderGe struct {
 	//
-	JOGId null.Int `xorm:"int(11) pk notnull autoincr 'j_o_g_id'" json:"j_o_g_id" xml:"j_o_g_id"`
+	JOGId null.Int `xorm:"int(11) pk notnull autoincr 'j_o_g_id'" json:"j_o_g_id" form:"j_o_g_id" xml:"j_o_g_id"`
 	//
-	JfscOrderid null.Int `xorm:"int(11) 'jfsc_orderid'" json:"jfsc_orderid" xml:"jfsc_orderid"`
+	JfscOrderid null.Int `xorm:"int(11) 'jfsc_orderid'" json:"jfsc_orderid" form:"jfsc_orderid" xml:"jfsc_orderid"`
 	//
-	GeId null.Int `xorm:"int(11) 'ge_id'" json:"ge_id" xml:"ge_id"`
+	GeId null.Int `xorm:"int(11) 'ge_id'" json:"ge_id" form:"ge_id" xml:"ge_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	TacheckState null.Int `xorm:"int(11) 'tacheck_state'" json:"tacheck_state" xml:"tacheck_state"`
+	TacheckState null.Int `xorm:"int(11) 'tacheck_state'" json:"tacheck_state" form:"tacheck_state" xml:"tacheck_state"`
 	//
-	TacheckDesc null.String `xorm:"varchar(1000) 'tacheck_desc'" json:"tacheck_desc" xml:"tacheck_desc"`
+	TacheckDesc null.String `xorm:"varchar(1000) 'tacheck_desc'" json:"tacheck_desc" form:"tacheck_desc" xml:"tacheck_desc"`
 	//
-	ZbcheckState null.Int `xorm:"int(11) 'zbcheck_state'" json:"zbcheck_state" xml:"zbcheck_state"`
+	ZbcheckState null.Int `xorm:"int(11) 'zbcheck_state'" json:"zbcheck_state" form:"zbcheck_state" xml:"zbcheck_state"`
 	//
-	ZbcheckDesc null.String `xorm:"varchar(1000) 'zbcheck_desc'" json:"zbcheck_desc" xml:"zbcheck_desc"`
+	ZbcheckDesc null.String `xorm:"varchar(1000) 'zbcheck_desc'" json:"zbcheck_desc" form:"zbcheck_desc" xml:"zbcheck_desc"`
 	//
-	JfscddxState null.Int `xorm:"int(11) default(1562) 'jfscddx_state'" json:"jfscddx_state" xml:"jfscddx_state"`
+	JfscddxState null.Int `xorm:"int(11) default(1562) 'jfscddx_state'" json:"jfscddx_state" form:"jfscddx_state" xml:"jfscddx_state"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined JfscOrderGe

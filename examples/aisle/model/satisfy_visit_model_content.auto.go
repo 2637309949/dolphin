@@ -4,33 +4,50 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // SatisfyVisitModelContent defined
 type SatisfyVisitModelContent struct {
 	//
-	SVMCId null.Int `xorm:"int(11) pk notnull autoincr 's_v_m_c_id'" json:"s_v_m_c_id" xml:"s_v_m_c_id"`
+	SVMCId null.Int `xorm:"int(11) pk notnull autoincr 's_v_m_c_id'" json:"s_v_m_c_id" form:"s_v_m_c_id" xml:"s_v_m_c_id"`
 	//
-	SatisfyVisitCustomerType null.Int `xorm:"int(11) 'satisfy_visit_customer_type'" json:"satisfy_visit_customer_type" xml:"satisfy_visit_customer_type"`
+	SatisfyVisitCustomerType null.Int `xorm:"int(11) 'satisfy_visit_customer_type'" json:"satisfy_visit_customer_type" form:"satisfy_visit_customer_type" xml:"satisfy_visit_customer_type"`
 	//
-	SatisfyVisitType null.Int `xorm:"int(11) 'satisfy_visit_type'" json:"satisfy_visit_type" xml:"satisfy_visit_type"`
+	SatisfyVisitType null.Int `xorm:"int(11) 'satisfy_visit_type'" json:"satisfy_visit_type" form:"satisfy_visit_type" xml:"satisfy_visit_type"`
 	//
-	Content null.String `xorm:"varchar(500) 'content'" json:"content" xml:"content"`
+	Content null.String `xorm:"varchar(500) 'content'" json:"content" form:"content" xml:"content"`
 	//
-	SvmId null.Int `xorm:"int(11) 'svm_id'" json:"svm_id" xml:"svm_id"`
+	SvmId null.Int `xorm:"int(11) 'svm_id'" json:"svm_id" form:"svm_id" xml:"svm_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	Fraction null.Int `xorm:"int(11) 'fraction'" json:"fraction" xml:"fraction"`
+	Fraction null.Int `xorm:"int(11) 'fraction'" json:"fraction" form:"fraction" xml:"fraction"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined SatisfyVisitModelContent

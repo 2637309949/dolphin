@@ -4,63 +4,80 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ScClassTea defined
 type ScClassTea struct {
 	//
-	SCTId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_id'" json:"s_c_t_id" xml:"s_c_t_id"`
+	SCTId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_id'" json:"s_c_t_id" form:"s_c_t_id" xml:"s_c_t_id"`
 	//
-	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" xml:"tea_id"`
+	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" form:"tea_id" xml:"tea_id"`
 	//
-	TeaStartDate null.Time `xorm:"datetime 'tea_start_date'" json:"tea_start_date" xml:"tea_start_date"`
+	TeaStartDate null.Time `xorm:"datetime 'tea_start_date'" json:"tea_start_date" form:"tea_start_date" xml:"tea_start_date"`
 	//
-	TeaEndDate null.Time `xorm:"datetime 'tea_end_date'" json:"tea_end_date" xml:"tea_end_date"`
+	TeaEndDate null.Time `xorm:"datetime 'tea_end_date'" json:"tea_end_date" form:"tea_end_date" xml:"tea_end_date"`
 	//
-	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" xml:"sc_id"`
+	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" form:"sc_id" xml:"sc_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	SctState null.Int `xorm:"int(11) 'sct_state'" json:"sct_state" xml:"sct_state"`
+	SctState null.Int `xorm:"int(11) 'sct_state'" json:"sct_state" form:"sct_state" xml:"sct_state"`
 	//
-	LeaveNotes null.String `xorm:"varchar(500) 'leave_notes'" json:"leave_notes" xml:"leave_notes"`
+	LeaveNotes null.String `xorm:"varchar(500) 'leave_notes'" json:"leave_notes" form:"leave_notes" xml:"leave_notes"`
 	//
-	IfCountHour null.Int `xorm:"int(11) 'if_count_hour'" json:"if_count_hour" xml:"if_count_hour"`
+	IfCountHour null.Int `xorm:"int(11) 'if_count_hour'" json:"if_count_hour" form:"if_count_hour" xml:"if_count_hour"`
 	//
-	NotCountReason null.String `xorm:"varchar(1000) 'not_count_reason'" json:"not_count_reason" xml:"not_count_reason"`
+	NotCountReason null.String `xorm:"varchar(1000) 'not_count_reason'" json:"not_count_reason" form:"not_count_reason" xml:"not_count_reason"`
 	//
-	KqHour null.Float `xorm:"float(10,2) 'kq_hour'" json:"kq_hour" xml:"kq_hour"`
+	KqHour null.Float `xorm:"float(10,2) 'kq_hour'" json:"kq_hour" form:"kq_hour" xml:"kq_hour"`
 	//
-	QjType null.Int `xorm:"int(11) 'qj_type'" json:"qj_type" xml:"qj_type"`
+	QjType null.Int `xorm:"int(11) 'qj_type'" json:"qj_type" form:"qj_type" xml:"qj_type"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	ShenhePerson null.Int `xorm:"int(11) 'shenhe_person'" json:"shenhe_person" xml:"shenhe_person"`
+	ShenhePerson null.Int `xorm:"int(11) 'shenhe_person'" json:"shenhe_person" form:"shenhe_person" xml:"shenhe_person"`
 	//
-	KqKc null.Float `xorm:"float(50,2) 'kq_kc'" json:"kq_kc" xml:"kq_kc"`
+	KqKc null.Float `xorm:"float(50,2) 'kq_kc'" json:"kq_kc" form:"kq_kc" xml:"kq_kc"`
 	//
-	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" xml:"par_id"`
+	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" form:"par_id" xml:"par_id"`
 	//
-	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" xml:"pk_class"`
+	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" form:"pk_class" xml:"pk_class"`
 	//
-	ChangeTeaId null.Int `xorm:"int(11) 'change_tea_id'" json:"change_tea_id" xml:"change_tea_id"`
+	ChangeTeaId null.Int `xorm:"int(11) 'change_tea_id'" json:"change_tea_id" form:"change_tea_id" xml:"change_tea_id"`
 	//
-	RealKc null.Float `xorm:"float(50,2) 'real_kc'" json:"real_kc" xml:"real_kc"`
+	RealKc null.Float `xorm:"float(50,2) 'real_kc'" json:"real_kc" form:"real_kc" xml:"real_kc"`
 	//
-	Remark null.String `xorm:"varchar(100) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(100) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	//
-	ZdNotReason null.Int `xorm:"int(11) 'zd_not_reason'" json:"zd_not_reason" xml:"zd_not_reason"`
+	ZdNotReason null.Int `xorm:"int(11) 'zd_not_reason'" json:"zd_not_reason" form:"zd_not_reason" xml:"zd_not_reason"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ScClassTea

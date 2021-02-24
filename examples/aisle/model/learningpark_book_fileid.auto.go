@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // LearningparkBookFileid defined
 type LearningparkBookFileid struct {
 	//
-	LBFId null.Int `xorm:"int(11) pk notnull autoincr 'l_b_f_id'" json:"l_b_f_id" xml:"l_b_f_id"`
+	LBFId null.Int `xorm:"int(11) pk notnull autoincr 'l_b_f_id'" json:"l_b_f_id" form:"l_b_f_id" xml:"l_b_f_id"`
 	//
-	UnitId null.Int `xorm:"int(11) 'unit_id'" json:"unit_id" xml:"unit_id"`
+	UnitId null.Int `xorm:"int(11) 'unit_id'" json:"unit_id" form:"unit_id" xml:"unit_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	VideoFiled null.Int `xorm:"int(11) 'video_filed'" json:"video_filed" xml:"video_filed"`
+	VideoFiled null.Int `xorm:"int(11) 'video_filed'" json:"video_filed" form:"video_filed" xml:"video_filed"`
 	//
-	LbId null.Int `xorm:"int(11) 'lb_id'" json:"lb_id" xml:"lb_id"`
+	LbId null.Int `xorm:"int(11) 'lb_id'" json:"lb_id" form:"lb_id" xml:"lb_id"`
 	//
-	CoursesName null.String `xorm:"varchar(100) 'courses_name'" json:"courses_name" xml:"courses_name"`
+	CoursesName null.String `xorm:"varchar(100) 'courses_name'" json:"courses_name" form:"courses_name" xml:"courses_name"`
 	//
-	BrowsingVolume null.Float `xorm:"float(50,2) 'browsing_volume'" json:"browsing_volume" xml:"browsing_volume"`
+	BrowsingVolume null.Float `xorm:"float(50,2) 'browsing_volume'" json:"browsing_volume" form:"browsing_volume" xml:"browsing_volume"`
 	//
-	PkSl null.Int `xorm:"int(11) 'pk_sl'" json:"pk_sl" xml:"pk_sl"`
+	PkSl null.Int `xorm:"int(11) 'pk_sl'" json:"pk_sl" form:"pk_sl" xml:"pk_sl"`
 	//
-	SpsltFiled null.Int `xorm:"int(11) 'spslt_filed'" json:"spslt_filed" xml:"spslt_filed"`
+	SpsltFiled null.Int `xorm:"int(11) 'spslt_filed'" json:"spslt_filed" form:"spslt_filed" xml:"spslt_filed"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined LearningparkBookFileid

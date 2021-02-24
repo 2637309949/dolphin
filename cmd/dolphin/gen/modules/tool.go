@@ -32,7 +32,7 @@ func (tool *Tool) Build(dir string, args []string, node *schema.Application) ([]
 	}
 	toolByte, _ := vfsutil.ReadFile(template.Assets, "tool.tmpl")
 	return []*pipe.TmplCfg{
-		&pipe.TmplCfg{
+		{
 			Text:     string(toolByte),
 			FilePath: path.Join(dir, viper.GetString("dir.util"), "common.go"),
 			Data:     data,

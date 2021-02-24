@@ -4,35 +4,52 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ProtocolType defined
 type ProtocolType struct {
 	//
-	PTId null.Int `xorm:"int(11) pk notnull autoincr 'p_t_id'" json:"p_t_id" xml:"p_t_id"`
+	PTId null.Int `xorm:"int(11) pk notnull autoincr 'p_t_id'" json:"p_t_id" form:"p_t_id" xml:"p_t_id"`
 	//
-	CourseName null.String `xorm:"varchar(100) 'course_name'" json:"course_name" xml:"course_name"`
+	CourseName null.String `xorm:"varchar(100) 'course_name'" json:"course_name" form:"course_name" xml:"course_name"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	PtState null.Int `xorm:"int(11) 'pt_state'" json:"pt_state" xml:"pt_state"`
+	PtState null.Int `xorm:"int(11) 'pt_state'" json:"pt_state" form:"pt_state" xml:"pt_state"`
 	//
-	PtDescribe null.Int `xorm:"int(11) 'pt_describe'" json:"pt_describe" xml:"pt_describe"`
+	PtDescribe null.Int `xorm:"int(11) 'pt_describe'" json:"pt_describe" form:"pt_describe" xml:"pt_describe"`
 	//
-	PtLevel null.Int `xorm:"int(11) 'pt_level'" json:"pt_level" xml:"pt_level"`
+	PtLevel null.Int `xorm:"int(11) 'pt_level'" json:"pt_level" form:"pt_level" xml:"pt_level"`
 	//
-	TypeName null.String `xorm:"varchar(50) 'type_name'" json:"type_name" xml:"type_name"`
+	TypeName null.String `xorm:"varchar(50) 'type_name'" json:"type_name" form:"type_name" xml:"type_name"`
 	//
-	PtContent null.Int `xorm:"int(11) 'pt_content'" json:"pt_content" xml:"pt_content"`
+	PtContent null.Int `xorm:"int(11) 'pt_content'" json:"pt_content" form:"pt_content" xml:"pt_content"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ProtocolType

@@ -4,30 +4,47 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // DegreeDeposit defined
 type DegreeDeposit struct {
 	//
-	DDId null.Int `xorm:"int(11) pk notnull autoincr 'd_d_id'" json:"d_d_id" xml:"d_d_id"`
+	DDId null.Int `xorm:"int(11) pk notnull autoincr 'd_d_id'" json:"d_d_id" form:"d_d_id" xml:"d_d_id"`
 	//
-	DdName null.String `xorm:"varchar(10) 'dd_name'" json:"dd_name" xml:"dd_name"`
+	DdName null.String `xorm:"varchar(10) 'dd_name'" json:"dd_name" form:"dd_name" xml:"dd_name"`
 	//
-	DdMoney decimal.Decimal `xorm:"decimal(11,2) 'dd_money'" json:"dd_money" xml:"dd_money"`
+	DdMoney decimal.Decimal `xorm:"decimal(11,2) 'dd_money'" json:"dd_money" form:"dd_money" xml:"dd_money"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	DdState null.Int `xorm:"int(11) 'dd_state'" json:"dd_state" xml:"dd_state"`
+	DdState null.Int `xorm:"int(11) 'dd_state'" json:"dd_state" form:"dd_state" xml:"dd_state"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined DegreeDeposit

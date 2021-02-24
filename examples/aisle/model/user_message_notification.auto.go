@@ -4,53 +4,70 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // UserMessageNotification defined
 type UserMessageNotification struct {
 	//
-	UMNId null.Int `xorm:"int(11) pk notnull autoincr 'u_m_n_id'" json:"u_m_n_id" xml:"u_m_n_id"`
+	UMNId null.Int `xorm:"int(11) pk notnull autoincr 'u_m_n_id'" json:"u_m_n_id" form:"u_m_n_id" xml:"u_m_n_id"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	NoticeDate null.Time `xorm:"datetime 'notice_date'" json:"notice_date" xml:"notice_date"`
+	NoticeDate null.Time `xorm:"datetime 'notice_date'" json:"notice_date" form:"notice_date" xml:"notice_date"`
 	//
-	MessageType null.Int `xorm:"int(11) 'message_type'" json:"message_type" xml:"message_type"`
+	MessageType null.Int `xorm:"int(11) 'message_type'" json:"message_type" form:"message_type" xml:"message_type"`
 	//
-	MessageContent null.String `xorm:"varchar(10000) 'message_content'" json:"message_content" xml:"message_content"`
+	MessageContent null.String `xorm:"varchar(10000) 'message_content'" json:"message_content" form:"message_content" xml:"message_content"`
 	//
-	IfRead null.Int `xorm:"int(11) 'if_read'" json:"if_read" xml:"if_read"`
+	IfRead null.Int `xorm:"int(11) 'if_read'" json:"if_read" form:"if_read" xml:"if_read"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	OpsId null.Int `xorm:"int(11) 'ops_id'" json:"ops_id" xml:"ops_id"`
+	OpsId null.Int `xorm:"int(11) 'ops_id'" json:"ops_id" form:"ops_id" xml:"ops_id"`
 	//
-	CctId null.Int `xorm:"int(11) 'cct_id'" json:"cct_id" xml:"cct_id"`
+	CctId null.Int `xorm:"int(11) 'cct_id'" json:"cct_id" form:"cct_id" xml:"cct_id"`
 	//
-	PeId null.Int `xorm:"int(11) 'pe_id'" json:"pe_id" xml:"pe_id"`
+	PeId null.Int `xorm:"int(11) 'pe_id'" json:"pe_id" form:"pe_id" xml:"pe_id"`
 	//
-	IfSend null.Int `xorm:"int(11) 'if_send'" json:"if_send" xml:"if_send"`
+	IfSend null.Int `xorm:"int(11) 'if_send'" json:"if_send" form:"if_send" xml:"if_send"`
 	//
-	CssId null.Int `xorm:"int(11) 'css_id'" json:"css_id" xml:"css_id"`
+	CssId null.Int `xorm:"int(11) 'css_id'" json:"css_id" form:"css_id" xml:"css_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" xml:"scs_id"`
+	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 	//
-	LanguageType null.Int `xorm:"int(11) 'language_type'" json:"language_type" xml:"language_type"`
+	LanguageType null.Int `xorm:"int(11) 'language_type'" json:"language_type" form:"language_type" xml:"language_type"`
 	//
-	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" xml:"cs_id"`
+	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
 	//
-	PacsId null.Int `xorm:"int(11) 'pacs_id'" json:"pacs_id" xml:"pacs_id"`
+	PacsId null.Int `xorm:"int(11) 'pacs_id'" json:"pacs_id" form:"pacs_id" xml:"pacs_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined UserMessageNotification

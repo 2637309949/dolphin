@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ActiveTeacher defined
 type ActiveTeacher struct {
 	//
-	ATId null.Int `xorm:"int(11) pk notnull autoincr 'a_t_id'" json:"a_t_id" xml:"a_t_id"`
+	ATId null.Int `xorm:"int(11) pk notnull autoincr 'a_t_id'" json:"a_t_id" form:"a_t_id" xml:"a_t_id"`
 	//
-	ActiveId null.Int `xorm:"int(11) 'active_id'" json:"active_id" xml:"active_id"`
+	ActiveId null.Int `xorm:"int(11) 'active_id'" json:"active_id" form:"active_id" xml:"active_id"`
 	//
-	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" xml:"tea_id"`
+	TeaId null.Int `xorm:"int(11) 'tea_id'" json:"tea_id" form:"tea_id" xml:"tea_id"`
 	//
-	AttendDate null.Time `xorm:"datetime 'attend_date'" json:"attend_date" xml:"attend_date"`
+	AttendDate null.Time `xorm:"datetime 'attend_date'" json:"attend_date" form:"attend_date" xml:"attend_date"`
 	//
-	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" xml:"start_time"`
+	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
 	//
-	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" xml:"end_time"`
+	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	IfKouHour null.Int `xorm:"int(11) 'if_kou_hour'" json:"if_kou_hour" xml:"if_kou_hour"`
+	IfKouHour null.Int `xorm:"int(11) 'if_kou_hour'" json:"if_kou_hour" form:"if_kou_hour" xml:"if_kou_hour"`
 	//
-	ClassHour null.Float `xorm:"float(50,2) 'class_hour'" json:"class_hour" xml:"class_hour"`
+	ClassHour null.Float `xorm:"float(50,2) 'class_hour'" json:"class_hour" form:"class_hour" xml:"class_hour"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ActiveTeacher

@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // PartTimeUser defined
 type PartTimeUser struct {
 	//
-	PTUId null.Int `xorm:"int(11) pk notnull autoincr 'p_t_u_id'" json:"p_t_u_id" xml:"p_t_u_id"`
+	PTUId null.Int `xorm:"int(11) pk notnull autoincr 'p_t_u_id'" json:"p_t_u_id" form:"p_t_u_id" xml:"p_t_u_id"`
 	//
-	Name null.String `xorm:"varchar(50) 'name'" json:"name" xml:"name"`
+	Name null.String `xorm:"varchar(50) 'name'" json:"name" form:"name" xml:"name"`
 	//
-	IponeNumber null.String `xorm:"varchar(11) 'ipone_number'" json:"ipone_number" xml:"ipone_number"`
+	IponeNumber null.String `xorm:"varchar(11) 'ipone_number'" json:"ipone_number" form:"ipone_number" xml:"ipone_number"`
 	//
-	Sex null.Int `xorm:"int(11) 'sex'" json:"sex" xml:"sex"`
+	Sex null.Int `xorm:"int(11) 'sex'" json:"sex" form:"sex" xml:"sex"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined PartTimeUser

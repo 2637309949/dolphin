@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // RefundFlow defined
 type RefundFlow struct {
 	//
-	CFlowId null.Int `xorm:"int(11) pk notnull autoincr 'c_flow_id'" json:"c_flow_id" xml:"c_flow_id"`
+	CFlowId null.Int `xorm:"int(11) pk notnull autoincr 'c_flow_id'" json:"c_flow_id" form:"c_flow_id" xml:"c_flow_id"`
 	//
-	PkRefundId null.Int `xorm:"int(11) 'pk_refund_id'" json:"pk_refund_id" xml:"pk_refund_id"`
+	PkRefundId null.Int `xorm:"int(11) 'pk_refund_id'" json:"pk_refund_id" form:"pk_refund_id" xml:"pk_refund_id"`
 	//
-	PkCfs null.Int `xorm:"int(11) 'pk_cfs'" json:"pk_cfs" xml:"pk_cfs"`
+	PkCfs null.Int `xorm:"int(11) 'pk_cfs'" json:"pk_cfs" form:"pk_cfs" xml:"pk_cfs"`
 	//
-	PkUser null.Int `xorm:"int(11) 'pk_user'" json:"pk_user" xml:"pk_user"`
+	PkUser null.Int `xorm:"int(11) 'pk_user'" json:"pk_user" form:"pk_user" xml:"pk_user"`
 	//
-	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" xml:"zd_check_state"`
+	ZdCheckState null.Int `xorm:"int(11) 'zd_check_state'" json:"zd_check_state" form:"zd_check_state" xml:"zd_check_state"`
 	//
-	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" xml:"check_date"`
+	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 	//
-	CheckRemark null.String `xorm:"varchar(500) 'check_remark'" json:"check_remark" xml:"check_remark"`
+	CheckRemark null.String `xorm:"varchar(500) 'check_remark'" json:"check_remark" form:"check_remark" xml:"check_remark"`
 	//
-	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" xml:"now_floor"`
+	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" form:"now_floor" xml:"now_floor"`
 	//
-	PkCfPool null.Int `xorm:"int(11) 'pk_cf_pool'" json:"pk_cf_pool" xml:"pk_cf_pool"`
+	PkCfPool null.Int `xorm:"int(11) 'pk_cf_pool'" json:"pk_cf_pool" form:"pk_cf_pool" xml:"pk_cf_pool"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined RefundFlow

@@ -4,49 +4,66 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // PcSctGiveMx defined
 type PcSctGiveMx struct {
 	//
-	PSGMId null.Int `xorm:"int(11) pk notnull autoincr 'p_s_g_m_id'" json:"p_s_g_m_id" xml:"p_s_g_m_id"`
+	PSGMId null.Int `xorm:"int(11) pk notnull autoincr 'p_s_g_m_id'" json:"p_s_g_m_id" form:"p_s_g_m_id" xml:"p_s_g_m_id"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" xml:"sct_id"`
+	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
 	//
-	SfSurplusHour null.Float `xorm:"float(50,2) 'sf_surplus_hour'" json:"sf_surplus_hour" xml:"sf_surplus_hour"`
+	SfSurplusHour null.Float `xorm:"float(50,2) 'sf_surplus_hour'" json:"sf_surplus_hour" form:"sf_surplus_hour" xml:"sf_surplus_hour"`
 	//
-	YuanGiveHour null.Float `xorm:"float(11,2) 'yuan_give_hour'" json:"yuan_give_hour" xml:"yuan_give_hour"`
+	YuanGiveHour null.Float `xorm:"float(11,2) 'yuan_give_hour'" json:"yuan_give_hour" form:"yuan_give_hour" xml:"yuan_give_hour"`
 	//
-	ZsBl null.Float `xorm:"float(11,2) 'zs_bl'" json:"zs_bl" xml:"zs_bl"`
+	ZsBl null.Float `xorm:"float(11,2) 'zs_bl'" json:"zs_bl" form:"zs_bl" xml:"zs_bl"`
 	//
-	BlGiveHour null.Float `xorm:"float(11,2) 'bl_give_hour'" json:"bl_give_hour" xml:"bl_give_hour"`
+	BlGiveHour null.Float `xorm:"float(11,2) 'bl_give_hour'" json:"bl_give_hour" form:"bl_give_hour" xml:"bl_give_hour"`
 	//
-	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" xml:"of_id"`
+	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
 	//
-	PcNumber null.Float `xorm:"float(11,2) 'pc_number'" json:"pc_number" xml:"pc_number"`
+	PcNumber null.Float `xorm:"float(11,2) 'pc_number'" json:"pc_number" form:"pc_number" xml:"pc_number"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	BxType null.Int `xorm:"int(11) 'bx_type'" json:"bx_type" xml:"bx_type"`
+	BxType null.Int `xorm:"int(11) 'bx_type'" json:"bx_type" form:"bx_type" xml:"bx_type"`
 	//
-	WxhMoney null.Float `xorm:"float(50,2) 'wxh_money'" json:"wxh_money" xml:"wxh_money"`
+	WxhMoney null.Float `xorm:"float(50,2) 'wxh_money'" json:"wxh_money" form:"wxh_money" xml:"wxh_money"`
 	//
-	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" xml:"organ_id"`
+	OrganId null.Int `xorm:"int(11) 'organ_id'" json:"organ_id" form:"organ_id" xml:"organ_id"`
 	//
-	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" xml:"sch_id"`
+	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
 	//
-	ClassCourseType null.Int `xorm:"int(11) 'class_course_type'" json:"class_course_type" xml:"class_course_type"`
+	ClassCourseType null.Int `xorm:"int(11) 'class_course_type'" json:"class_course_type" form:"class_course_type" xml:"class_course_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined PcSctGiveMx

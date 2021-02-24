@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ParticipantEvaluateInfo defined
 type ParticipantEvaluateInfo struct {
 	//
-	PEIId null.Int `xorm:"int(11) pk notnull autoincr 'p_e_i_id'" json:"p_e_i_id" xml:"p_e_i_id"`
+	PEIId null.Int `xorm:"int(11) pk notnull autoincr 'p_e_i_id'" json:"p_e_i_id" form:"p_e_i_id" xml:"p_e_i_id"`
 	//
-	PtiId null.Int `xorm:"int(11) 'pti_id'" json:"pti_id" xml:"pti_id"`
+	PtiId null.Int `xorm:"int(11) 'pti_id'" json:"pti_id" form:"pti_id" xml:"pti_id"`
 	//
-	Remark null.String `xorm:"varchar(2000) 'remark'" json:"remark" xml:"remark"`
+	Remark null.String `xorm:"varchar(2000) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	//
-	TpeId null.Int `xorm:"int(11) 'tpe_id'" json:"tpe_id" xml:"tpe_id"`
+	TpeId null.Int `xorm:"int(11) 'tpe_id'" json:"tpe_id" form:"tpe_id" xml:"tpe_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ParticipantEvaluateInfo

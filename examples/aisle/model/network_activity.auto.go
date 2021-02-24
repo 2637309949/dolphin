@@ -4,41 +4,58 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // NetworkActivity defined
 type NetworkActivity struct {
 	//
-	NAId null.Int `xorm:"int(11) pk notnull autoincr 'n_a_id'" json:"n_a_id" xml:"n_a_id"`
+	NAId null.Int `xorm:"int(11) pk notnull autoincr 'n_a_id'" json:"n_a_id" form:"n_a_id" xml:"n_a_id"`
 	//
-	ActivityName null.String `xorm:"varchar(50) 'activity_name'" json:"activity_name" xml:"activity_name"`
+	ActivityName null.String `xorm:"varchar(50) 'activity_name'" json:"activity_name" form:"activity_name" xml:"activity_name"`
 	//
-	NdId null.Int `xorm:"int(11) 'nd_id'" json:"nd_id" xml:"nd_id"`
+	NdId null.Int `xorm:"int(11) 'nd_id'" json:"nd_id" form:"nd_id" xml:"nd_id"`
 	//
-	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" xml:"start_time"`
+	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
 	//
-	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" xml:"end_time"`
+	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
 	//
-	MaUseMoney null.Float `xorm:"float(11,2) 'ma_use_money'" json:"ma_use_money" xml:"ma_use_money"`
+	MaUseMoney null.Float `xorm:"float(11,2) 'ma_use_money'" json:"ma_use_money" form:"ma_use_money" xml:"ma_use_money"`
 	//
-	ActivityExposure null.Float `xorm:"float(11,2) 'activity_exposure'" json:"activity_exposure" xml:"activity_exposure"`
+	ActivityExposure null.Float `xorm:"float(11,2) 'activity_exposure'" json:"activity_exposure" form:"activity_exposure" xml:"activity_exposure"`
 	//
-	ActivityContent null.String `xorm:"varchar(500) 'activity_content'" json:"activity_content" xml:"activity_content"`
+	ActivityContent null.String `xorm:"varchar(500) 'activity_content'" json:"activity_content" form:"activity_content" xml:"activity_content"`
 	//
-	ActivityDesc null.String `xorm:"varchar(500) 'activity_desc'" json:"activity_desc" xml:"activity_desc"`
+	ActivityDesc null.String `xorm:"varchar(500) 'activity_desc'" json:"activity_desc" form:"activity_desc" xml:"activity_desc"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ActivityEstimateIncome null.Float `xorm:"float(10,2) 'activity_estimate_income'" json:"activity_estimate_income" xml:"activity_estimate_income"`
+	ActivityEstimateIncome null.Float `xorm:"float(10,2) 'activity_estimate_income'" json:"activity_estimate_income" form:"activity_estimate_income" xml:"activity_estimate_income"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined NetworkActivity

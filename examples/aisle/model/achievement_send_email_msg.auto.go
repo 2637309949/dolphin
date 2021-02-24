@@ -4,39 +4,56 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // AchievementSendEmailMsg defined
 type AchievementSendEmailMsg struct {
 	//
-	ASEMId null.Int `xorm:"int(11) pk notnull autoincr 'a_s_e_m_id'" json:"a_s_e_m_id" xml:"a_s_e_m_id"`
+	ASEMId null.Int `xorm:"int(11) pk notnull autoincr 'a_s_e_m_id'" json:"a_s_e_m_id" form:"a_s_e_m_id" xml:"a_s_e_m_id"`
 	//
-	SendHead null.String `xorm:"varchar(20) 'send_head'" json:"send_head" xml:"send_head"`
+	SendHead null.String `xorm:"varchar(20) 'send_head'" json:"send_head" form:"send_head" xml:"send_head"`
 	//
-	SendContent null.String `xorm:"varchar(4000) 'send_content'" json:"send_content" xml:"send_content"`
+	SendContent null.String `xorm:"varchar(4000) 'send_content'" json:"send_content" form:"send_content" xml:"send_content"`
 	//
-	SendTime null.Time `xorm:"datetime 'send_time'" json:"send_time" xml:"send_time"`
+	SendTime null.Time `xorm:"datetime 'send_time'" json:"send_time" form:"send_time" xml:"send_time"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	PkGoal null.Int `xorm:"int(11) 'pk_goal'" json:"pk_goal" xml:"pk_goal"`
+	PkGoal null.Int `xorm:"int(11) 'pk_goal'" json:"pk_goal" form:"pk_goal" xml:"pk_goal"`
 	//
-	GoalName null.String `xorm:"varchar(10) 'goal_name'" json:"goal_name" xml:"goal_name"`
+	GoalName null.String `xorm:"varchar(10) 'goal_name'" json:"goal_name" form:"goal_name" xml:"goal_name"`
 	//
-	SendState null.Int `xorm:"int(11) 'send_state'" json:"send_state" xml:"send_state"`
+	SendState null.Int `xorm:"int(11) 'send_state'" json:"send_state" form:"send_state" xml:"send_state"`
 	//
-	RecipientMailbox null.String `xorm:"varchar(100) 'recipient_mailbox'" json:"recipient_mailbox" xml:"recipient_mailbox"`
+	RecipientMailbox null.String `xorm:"varchar(100) 'recipient_mailbox'" json:"recipient_mailbox" form:"recipient_mailbox" xml:"recipient_mailbox"`
 	//
-	ReceiverPhone null.String `xorm:"varchar(20) 'receiver_phone'" json:"receiver_phone" xml:"receiver_phone"`
+	ReceiverPhone null.String `xorm:"varchar(20) 'receiver_phone'" json:"receiver_phone" form:"receiver_phone" xml:"receiver_phone"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined AchievementSendEmailMsg

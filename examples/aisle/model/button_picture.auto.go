@@ -4,23 +4,40 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ButtonPicture defined
 type ButtonPicture struct {
 	//
-	T2230 null.Int `xorm:"int(11) pk notnull autoincr 't_223_0'" json:"t_223_0" xml:"t_223_0"`
+	T2230 null.Int `xorm:"int(11) pk notnull autoincr 't_223_0'" json:"t_223_0" form:"t_223_0" xml:"t_223_0"`
 	//
-	BtnpicName null.String `xorm:"varchar(500) notnull 'btnpic_name'" json:"btnpic_name" xml:"btnpic_name"`
+	BtnpicName null.String `xorm:"varchar(500) notnull 'btnpic_name'" json:"btnpic_name" form:"btnpic_name" xml:"btnpic_name"`
 	//
-	BtnpicType null.Float `xorm:"float(11,2) notnull 'btnpic_type'" json:"btnpic_type" xml:"btnpic_type"`
+	BtnpicType null.Float `xorm:"float(11,2) notnull 'btnpic_type'" json:"btnpic_type" form:"btnpic_type" xml:"btnpic_type"`
 	//
-	BtnpicPicture null.Int `xorm:"int(11) notnull 'btnpic_picture'" json:"btnpic_picture" xml:"btnpic_picture"`
+	BtnpicPicture null.Int `xorm:"int(11) notnull 'btnpic_picture'" json:"btnpic_picture" form:"btnpic_picture" xml:"btnpic_picture"`
 	//
-	ProId null.Int `xorm:"int(11) 'pro_id'" json:"pro_id" xml:"pro_id"`
+	ProId null.Int `xorm:"int(11) 'pro_id'" json:"pro_id" form:"pro_id" xml:"pro_id"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ButtonPicture

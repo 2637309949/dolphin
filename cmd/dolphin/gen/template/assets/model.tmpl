@@ -3,7 +3,7 @@
 
 package model
 
-{{.Table.Import .Table.Packages}}
+{{.Table.Import .Table.Packages "reflect,github.com/2637309949/dolphin/packages/xormplus/xorm,github.com/2637309949/dolphin/packages/xormplus/xorm/tags,github.com/2637309949/dolphin/packages/xormplus/xorm/caches,github.com/2637309949/dolphin/packages/xormplus/xorm"}}
 
 // {{.Table.ToUpperCase .Table.Name}} defined {{.Table.Desc}} 
 type {{.Table.ToUpperCase .Table.Name}} struct {
@@ -11,6 +11,18 @@ type {{.Table.ToUpperCase .Table.Name}} struct {
 	// {{.Desc}}
 	{{.ToUpperCase .Name}} {{.SRef .Type}} `xorm:"{{- if ne .Xorm ""}}{{.Xorm}} {{end}}{{- if ne .Desc ""}}comment('{{.Desc}}') {{end}}'{{.Name}}'" json:"{{- if ne .JSON ""}}{{.JSON}}{{- else}}{{.Name}}{{- end}}" form:"{{- if ne .Form ""}}{{.Form}}{{- else}}{{.Name}}{{- end}}" xml:"{{.Name}}"{{- if ne .Example ""}} example:"{{.Example}}"{{- end}}`
 	{{- end}}
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined {{.Table.ToUpperCase .Table.Name}}

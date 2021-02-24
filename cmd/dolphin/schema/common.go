@@ -22,7 +22,8 @@ type Common struct {
 }
 
 // Import packages
-func (c *Common) Import(pkg string) template.HTML {
+func (c *Common) Import(pkgs ...string) template.HTML {
+	pkg := strings.Join(pkgs, ",")
 	if len(pkg) > 0 {
 		packages := strings.Split(pkg, ",")
 		for i, v := range packages {
@@ -266,4 +267,23 @@ func (c *Common) SplitExtends(parent string) []string {
 	return funk.Map(strings.Split(parent, ","), func(p string) string {
 		return strings.ReplaceAll(c.Ref(p), "model.", "")
 	}).([]string)
+}
+
+// TableNameOfType defined
+func (c *Common) TableNameOfType(t string) string {
+	return strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(t, "[]", ""), "$", ""), "model.", "")
+}
+
+// AutoIncr defined
+func (c *Common) AutoIncr(tables []*Table, tableName string) (fields []string) {
+	for i := range tables {
+		if tables[i].Name == tableName {
+			for c := range tables[i].Columns {
+				if strings.Contains(tables[i].Columns[c].Xorm, "pk") && !strings.Contains(tables[i].Columns[c].Xorm, "autoincr") {
+					fields = append(fields, tables[i].Columns[c].ToUpperCase(tables[i].Columns[c].Name))
+				}
+			}
+		}
+	}
+	return fields
 }

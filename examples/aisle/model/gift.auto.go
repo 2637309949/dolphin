@@ -4,51 +4,68 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Gift defined
 type Gift struct {
 	//
-	GiftId null.Int `xorm:"int(11) pk notnull autoincr 'gift_id'" json:"gift_id" xml:"gift_id"`
+	GiftId null.Int `xorm:"int(11) pk notnull autoincr 'gift_id'" json:"gift_id" form:"gift_id" xml:"gift_id"`
 	//
-	GiftName null.String `xorm:"varchar(100) 'gift_name'" json:"gift_name" xml:"gift_name"`
+	GiftName null.String `xorm:"varchar(100) 'gift_name'" json:"gift_name" form:"gift_name" xml:"gift_name"`
 	//
-	GiftNum null.Int `xorm:"int(11) 'gift_num'" json:"gift_num" xml:"gift_num"`
+	GiftNum null.Int `xorm:"int(11) 'gift_num'" json:"gift_num" form:"gift_num" xml:"gift_num"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	Price null.Float `xorm:"float(50,2) 'price'" json:"price" xml:"price"`
+	Price null.Float `xorm:"float(50,2) 'price'" json:"price" form:"price" xml:"price"`
 	//
-	NeedIntegral null.Float `xorm:"float(50,2) 'need_integral'" json:"need_integral" xml:"need_integral"`
+	NeedIntegral null.Float `xorm:"float(50,2) 'need_integral'" json:"need_integral" form:"need_integral" xml:"need_integral"`
 	//
-	GiftType null.Int `xorm:"int(11) 'gift_type'" json:"gift_type" xml:"gift_type"`
+	GiftType null.Int `xorm:"int(11) 'gift_type'" json:"gift_type" form:"gift_type" xml:"gift_type"`
 	//
-	GiftMonth null.Time `xorm:"datetime 'gift_month'" json:"gift_month" xml:"gift_month"`
+	GiftMonth null.Time `xorm:"datetime 'gift_month'" json:"gift_month" form:"gift_month" xml:"gift_month"`
 	//
-	GiftEndMonth null.Time `xorm:"datetime 'gift_end_month'" json:"gift_end_month" xml:"gift_end_month"`
+	GiftEndMonth null.Time `xorm:"datetime 'gift_end_month'" json:"gift_end_month" form:"gift_end_month" xml:"gift_end_month"`
 	//
-	OrderType null.Int `xorm:"int(11) 'order_type'" json:"order_type" xml:"order_type"`
+	OrderType null.Int `xorm:"int(11) 'order_type'" json:"order_type" form:"order_type" xml:"order_type"`
 	//
-	QyState null.Int `xorm:"int(11) 'qy_state'" json:"qy_state" xml:"qy_state"`
+	QyState null.Int `xorm:"int(11) 'qy_state'" json:"qy_state" form:"qy_state" xml:"qy_state"`
 	//
-	GiftFiled null.Int `xorm:"int(11) 'gift_filed'" json:"gift_filed" xml:"gift_filed"`
+	GiftFiled null.Int `xorm:"int(11) 'gift_filed'" json:"gift_filed" form:"gift_filed" xml:"gift_filed"`
 	//
-	PubCompany null.String `xorm:"varchar(200) 'pub_company'" json:"pub_company" xml:"pub_company"`
+	PubCompany null.String `xorm:"varchar(200) 'pub_company'" json:"pub_company" form:"pub_company" xml:"pub_company"`
 	//
-	Introduction null.String `xorm:"varchar(2000) 'introduction'" json:"introduction" xml:"introduction"`
+	Introduction null.String `xorm:"varchar(2000) 'introduction'" json:"introduction" form:"introduction" xml:"introduction"`
 	//
-	Conditions null.String `xorm:"varchar(2000) 'conditions'" json:"conditions" xml:"conditions"`
+	Conditions null.String `xorm:"varchar(2000) 'conditions'" json:"conditions" form:"conditions" xml:"conditions"`
 	//
-	Introduction2 null.String `xorm:"varchar(100) 'introduction2'" json:"introduction2" xml:"introduction2"`
+	Introduction2 null.String `xorm:"varchar(100) 'introduction2'" json:"introduction2" form:"introduction2" xml:"introduction2"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Gift

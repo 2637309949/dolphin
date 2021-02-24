@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // FqorderZx defined
 type FqorderZx struct {
 	//
-	FqorderZxId null.Int `xorm:"int(11) pk notnull autoincr 'fqorder_zx_id'" json:"fqorder_zx_id" xml:"fqorder_zx_id"`
+	FqorderZxId null.Int `xorm:"int(11) pk notnull autoincr 'fqorder_zx_id'" json:"fqorder_zx_id" form:"fqorder_zx_id" xml:"fqorder_zx_id"`
 	//
-	OrderId null.Int `xorm:"int(11) 'order_id'" json:"order_id" xml:"order_id"`
+	OrderId null.Int `xorm:"int(11) 'order_id'" json:"order_id" form:"order_id" xml:"order_id"`
 	//
-	ZcSchid null.Int `xorm:"int(11) 'zc_schid'" json:"zc_schid" xml:"zc_schid"`
+	ZcSchid null.Int `xorm:"int(11) 'zc_schid'" json:"zc_schid" form:"zc_schid" xml:"zc_schid"`
 	//
-	ZrSchid null.Int `xorm:"int(11) 'zr_schid'" json:"zr_schid" xml:"zr_schid"`
+	ZrSchid null.Int `xorm:"int(11) 'zr_schid'" json:"zr_schid" form:"zr_schid" xml:"zr_schid"`
 	//
-	ZxDesc null.String `xorm:"varchar(1000) 'zx_desc'" json:"zx_desc" xml:"zx_desc"`
+	ZxDesc null.String `xorm:"varchar(1000) 'zx_desc'" json:"zx_desc" form:"zx_desc" xml:"zx_desc"`
 	//
-	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" xml:"check_state"`
+	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	//
-	CheckUser null.Int `xorm:"int(11) 'check_user'" json:"check_user" xml:"check_user"`
+	CheckUser null.Int `xorm:"int(11) 'check_user'" json:"check_user" form:"check_user" xml:"check_user"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	AllotTa null.Int `xorm:"int(11) 'allot_ta'" json:"allot_ta" xml:"allot_ta"`
+	AllotTa null.Int `xorm:"int(11) 'allot_ta'" json:"allot_ta" form:"allot_ta" xml:"allot_ta"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined FqorderZx

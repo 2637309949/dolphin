@@ -4,51 +4,68 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // MessageNotice defined
 type MessageNotice struct {
 	//
-	MNId null.Int `xorm:"int(11) pk notnull autoincr 'm_n_id'" json:"m_n_id" xml:"m_n_id"`
+	MNId null.Int `xorm:"int(11) pk notnull autoincr 'm_n_id'" json:"m_n_id" form:"m_n_id" xml:"m_n_id"`
 	//
-	MessageContent null.String `xorm:"varchar(10000) 'message_content'" json:"message_content" xml:"message_content"`
+	MessageContent null.String `xorm:"varchar(10000) 'message_content'" json:"message_content" form:"message_content" xml:"message_content"`
 	//
-	NoticeDate null.Time `xorm:"datetime 'notice_date'" json:"notice_date" xml:"notice_date"`
+	NoticeDate null.Time `xorm:"datetime 'notice_date'" json:"notice_date" form:"notice_date" xml:"notice_date"`
 	//
-	SpId null.Int `xorm:"int(11) 'sp_id'" json:"sp_id" xml:"sp_id"`
+	SpId null.Int `xorm:"int(11) 'sp_id'" json:"sp_id" form:"sp_id" xml:"sp_id"`
 	//
-	IfRead null.Int `xorm:"int(11) 'if_read'" json:"if_read" xml:"if_read"`
+	IfRead null.Int `xorm:"int(11) 'if_read'" json:"if_read" form:"if_read" xml:"if_read"`
 	//
-	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" xml:"scs_id"`
+	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" xml:"cs_id"`
+	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
 	//
-	CctId null.Int `xorm:"int(11) 'cct_id'" json:"cct_id" xml:"cct_id"`
+	CctId null.Int `xorm:"int(11) 'cct_id'" json:"cct_id" form:"cct_id" xml:"cct_id"`
 	//
-	ScfId null.Int `xorm:"int(11) 'scf_id'" json:"scf_id" xml:"scf_id"`
+	ScfId null.Int `xorm:"int(11) 'scf_id'" json:"scf_id" form:"scf_id" xml:"scf_id"`
 	//
-	MessageType null.Int `xorm:"int(11) 'message_type'" json:"message_type" xml:"message_type"`
+	MessageType null.Int `xorm:"int(11) 'message_type'" json:"message_type" form:"message_type" xml:"message_type"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	AmnId null.Int `xorm:"int(11) 'amn_id'" json:"amn_id" xml:"amn_id"`
+	AmnId null.Int `xorm:"int(11) 'amn_id'" json:"amn_id" form:"amn_id" xml:"amn_id"`
 	//
-	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" xml:"par_id"`
+	ParId null.Int `xorm:"int(11) 'par_id'" json:"par_id" form:"par_id" xml:"par_id"`
 	//
-	IfSend null.Int `xorm:"int(11) 'if_send'" json:"if_send" xml:"if_send"`
+	IfSend null.Int `xorm:"int(11) 'if_send'" json:"if_send" form:"if_send" xml:"if_send"`
 	//
-	SaaId null.Int `xorm:"int(11) 'saa_id'" json:"saa_id" xml:"saa_id"`
+	SaaId null.Int `xorm:"int(11) 'saa_id'" json:"saa_id" form:"saa_id" xml:"saa_id"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined MessageNotice

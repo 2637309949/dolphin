@@ -4,35 +4,52 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // FreezeOffApply defined
 type FreezeOffApply struct {
 	//
-	FOAId null.Int `xorm:"int(11) pk notnull autoincr 'f_o_a_id'" json:"f_o_a_id" xml:"f_o_a_id"`
+	FOAId null.Int `xorm:"int(11) pk notnull autoincr 'f_o_a_id'" json:"f_o_a_id" form:"f_o_a_id" xml:"f_o_a_id"`
 	//
-	FreezeOffDesc null.String `xorm:"varchar(500) 'freeze_off_desc'" json:"freeze_off_desc" xml:"freeze_off_desc"`
+	FreezeOffDesc null.String `xorm:"varchar(500) 'freeze_off_desc'" json:"freeze_off_desc" form:"freeze_off_desc" xml:"freeze_off_desc"`
 	//
-	FreezeOffTime null.Time `xorm:"datetime 'freeze_off_time'" json:"freeze_off_time" xml:"freeze_off_time"`
+	FreezeOffTime null.Time `xorm:"datetime 'freeze_off_time'" json:"freeze_off_time" form:"freeze_off_time" xml:"freeze_off_time"`
 	//
-	FreezeOffAuditing null.Int `xorm:"int(11) 'freeze_off_auditing'" json:"freeze_off_auditing" xml:"freeze_off_auditing"`
+	FreezeOffAuditing null.Int `xorm:"int(11) 'freeze_off_auditing'" json:"freeze_off_auditing" form:"freeze_off_auditing" xml:"freeze_off_auditing"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	ShenhePerson null.Int `xorm:"int(11) 'shenhe_person'" json:"shenhe_person" xml:"shenhe_person"`
+	ShenhePerson null.Int `xorm:"int(11) 'shenhe_person'" json:"shenhe_person" form:"shenhe_person" xml:"shenhe_person"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined FreezeOffApply

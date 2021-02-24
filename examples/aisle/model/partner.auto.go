@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Partner defined
 type Partner struct {
 	//
-	PartnerId null.Int `xorm:"int(11) pk notnull autoincr 'partner_id'" json:"partner_id" xml:"partner_id"`
+	PartnerId null.Int `xorm:"int(11) pk notnull autoincr 'partner_id'" json:"partner_id" form:"partner_id" xml:"partner_id"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	PrName null.String `xorm:"varchar(100) 'pr_name'" json:"pr_name" xml:"pr_name"`
+	PrName null.String `xorm:"varchar(100) 'pr_name'" json:"pr_name" form:"pr_name" xml:"pr_name"`
 	//
-	PrRemark null.String `xorm:"varchar(500) 'pr_remark'" json:"pr_remark" xml:"pr_remark"`
+	PrRemark null.String `xorm:"varchar(500) 'pr_remark'" json:"pr_remark" form:"pr_remark" xml:"pr_remark"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	PartnerType null.Int `xorm:"int(11) 'partner_type'" json:"partner_type" xml:"partner_type"`
+	PartnerType null.Int `xorm:"int(11) 'partner_type'" json:"partner_type" form:"partner_type" xml:"partner_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Partner

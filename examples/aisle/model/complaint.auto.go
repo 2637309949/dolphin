@@ -4,57 +4,74 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // Complaint defined
 type Complaint struct {
 	//
-	ComplaintId null.Int `xorm:"int(11) pk notnull autoincr 'complaint_id'" json:"complaint_id" xml:"complaint_id"`
+	ComplaintId null.Int `xorm:"int(11) pk notnull autoincr 'complaint_id'" json:"complaint_id" form:"complaint_id" xml:"complaint_id"`
 	//
-	StudentId null.Int `xorm:"int(11) 'student_id'" json:"student_id" xml:"student_id"`
+	StudentId null.Int `xorm:"int(11) 'student_id'" json:"student_id" form:"student_id" xml:"student_id"`
 	//
-	ComplaintReason null.String `xorm:"varchar(500) 'complaint_reason'" json:"complaint_reason" xml:"complaint_reason"`
+	ComplaintReason null.String `xorm:"varchar(500) 'complaint_reason'" json:"complaint_reason" form:"complaint_reason" xml:"complaint_reason"`
 	//
-	ComplaintDate null.Time `xorm:"datetime 'complaint_date'" json:"complaint_date" xml:"complaint_date"`
+	ComplaintDate null.Time `xorm:"datetime 'complaint_date'" json:"complaint_date" form:"complaint_date" xml:"complaint_date"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	IfSolve null.Int `xorm:"int(11) 'if_solve'" json:"if_solve" xml:"if_solve"`
+	IfSolve null.Int `xorm:"int(11) 'if_solve'" json:"if_solve" form:"if_solve" xml:"if_solve"`
 	//
-	Solution null.String `xorm:"varchar(500) 'solution'" json:"solution" xml:"solution"`
+	Solution null.String `xorm:"varchar(500) 'solution'" json:"solution" form:"solution" xml:"solution"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	SolveResult null.Int `xorm:"int(11) 'solve_result'" json:"solve_result" xml:"solve_result"`
+	SolveResult null.Int `xorm:"int(11) 'solve_result'" json:"solve_result" form:"solve_result" xml:"solve_result"`
 	//
-	SolutionDate null.Time `xorm:"datetime 'solution_date'" json:"solution_date" xml:"solution_date"`
+	SolutionDate null.Time `xorm:"datetime 'solution_date'" json:"solution_date" form:"solution_date" xml:"solution_date"`
 	//
-	ReceiveUser null.Int `xorm:"int(11) 'receive_user'" json:"receive_user" xml:"receive_user"`
+	ReceiveUser null.Int `xorm:"int(11) 'receive_user'" json:"receive_user" form:"receive_user" xml:"receive_user"`
 	//
-	ComState null.Int `xorm:"int(11) 'com_state'" json:"com_state" xml:"com_state"`
+	ComState null.Int `xorm:"int(11) 'com_state'" json:"com_state" form:"com_state" xml:"com_state"`
 	//
-	ComType null.Int `xorm:"int(11) 'com_type'" json:"com_type" xml:"com_type"`
+	ComType null.Int `xorm:"int(11) 'com_type'" json:"com_type" form:"com_type" xml:"com_type"`
 	//
-	ContentType null.Int `xorm:"int(11) 'content_type'" json:"content_type" xml:"content_type"`
+	ContentType null.Int `xorm:"int(11) 'content_type'" json:"content_type" form:"content_type" xml:"content_type"`
 	//
-	ParentalFeedback null.String `xorm:"varchar(2000) 'parental_feedback'" json:"parental_feedback" xml:"parental_feedback"`
+	ParentalFeedback null.String `xorm:"varchar(2000) 'parental_feedback'" json:"parental_feedback" form:"parental_feedback" xml:"parental_feedback"`
 	//
-	ComplaintSchool null.Int `xorm:"int(11) 'complaint_school'" json:"complaint_school" xml:"complaint_school"`
+	ComplaintSchool null.Int `xorm:"int(11) 'complaint_school'" json:"complaint_school" form:"complaint_school" xml:"complaint_school"`
 	//
-	Complaint null.String `xorm:"varchar(500) 'complaint'" json:"complaint" xml:"complaint"`
+	Complaint null.String `xorm:"varchar(500) 'complaint'" json:"complaint" form:"complaint" xml:"complaint"`
 	//
-	ComplaintPhone null.String `xorm:"varchar(200) 'complaint_phone'" json:"complaint_phone" xml:"complaint_phone"`
+	ComplaintPhone null.String `xorm:"varchar(200) 'complaint_phone'" json:"complaint_phone" form:"complaint_phone" xml:"complaint_phone"`
 	//
-	ComplaintForm null.Int `xorm:"int(11) 'complaint_form'" json:"complaint_form" xml:"complaint_form"`
+	ComplaintForm null.Int `xorm:"int(11) 'complaint_form'" json:"complaint_form" form:"complaint_form" xml:"complaint_form"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined Complaint

@@ -82,9 +82,12 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
+	{{- $tbName := .TableNameOfType $bp.Type }}
 	{{- if .ISArray $bp.Type}}
 	for i := range payload {
-		payload[i].ID = null.StringFromUUID()
+		{{- range $i, $v := $bp.AutoIncr $.Tables $tbName }}
+		payload.{{- $v}} = null.StringFromUUID()
+		{{- end }}
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
 		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
@@ -92,7 +95,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		payload[i].DelFlag = null.IntFrom(0)
 	}
 	{{- else}}
-	payload.ID = null.StringFromUUID()
+	{{- range $i, $v := $bp.AutoIncr $.Tables $tbName }}
+	payload.{{- $v}} = null.StringFromUUID()
+	{{- end }}
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())

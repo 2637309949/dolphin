@@ -225,7 +225,8 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysArea:
@@ -564,7 +565,8 @@ definitions:
         description: 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
+          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysNotification:
@@ -1174,7 +1176,6 @@ definitions:
       user:
         $ref: '#/definitions/model.SysUser'
         description: 用户
-        type: object
     type: object
 host: localhost:8082
 info:
@@ -1185,36 +1186,6 @@ info:
   title: blogger
   version: "1.0"
 paths:
-  /api/sys/app/fun/add:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: APP功能信息
-        in: body
-        name: user
-        schema:
-          $ref: '#/definitions/model.SysAppFun'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: 添加APP功能
-      tags:
-      - APP功能
   /api/sys/app/fun/del:
     delete:
       consumes:
@@ -5801,4 +5772,5 @@ securityDefinitions:
       write: Grants write access
     tokenUrl: http://localhost:8088/api/sys/cas/token
     type: oauth2
+    x-tokenName: Authorization
 swagger: "2.0"

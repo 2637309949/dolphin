@@ -4,45 +4,62 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // StuClassTypeTextbook defined
 type StuClassTypeTextbook struct {
 	//
-	SCTTId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_t_id'" json:"s_c_t_t_id" xml:"s_c_t_t_id"`
+	SCTTId null.Int `xorm:"int(11) pk notnull autoincr 's_c_t_t_id'" json:"s_c_t_t_id" form:"s_c_t_t_id" xml:"s_c_t_t_id"`
 	//
-	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" xml:"sct_id"`
+	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
 	//
-	TbId null.Int `xorm:"int(11) 'tb_id'" json:"tb_id" xml:"tb_id"`
+	TbId null.Int `xorm:"int(11) 'tb_id'" json:"tb_id" form:"tb_id" xml:"tb_id"`
 	//
-	TbSource null.Int `xorm:"int(11) 'tb_source'" json:"tb_source" xml:"tb_source"`
+	TbSource null.Int `xorm:"int(11) 'tb_source'" json:"tb_source" form:"tb_source" xml:"tb_source"`
 	//
-	IfReceive null.Int `xorm:"int(11) 'if_receive'" json:"if_receive" xml:"if_receive"`
+	IfReceive null.Int `xorm:"int(11) 'if_receive'" json:"if_receive" form:"if_receive" xml:"if_receive"`
 	//
-	StbPrice null.Float `xorm:"float(10,2) 'stb_price'" json:"stb_price" xml:"stb_price"`
+	StbPrice null.Float `xorm:"float(10,2) 'stb_price'" json:"stb_price" form:"stb_price" xml:"stb_price"`
 	//
-	RefPrice null.Float `xorm:"float(10,2) 'ref_price'" json:"ref_price" xml:"ref_price"`
+	RefPrice null.Float `xorm:"float(10,2) 'ref_price'" json:"ref_price" form:"ref_price" xml:"ref_price"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	RefMoney null.Float `xorm:"float(10,2) 'ref_money'" json:"ref_money" xml:"ref_money"`
+	RefMoney null.Float `xorm:"float(10,2) 'ref_money'" json:"ref_money" form:"ref_money" xml:"ref_money"`
 	//
-	BuyNum null.Float `xorm:"float(10,2) 'buy_num'" json:"buy_num" xml:"buy_num"`
+	BuyNum null.Float `xorm:"float(10,2) 'buy_num'" json:"buy_num" form:"buy_num" xml:"buy_num"`
 	//
-	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" xml:"stu_id"`
+	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	//
-	OrderId null.Int `xorm:"int(11) 'order_id'" json:"order_id" xml:"order_id"`
+	OrderId null.Int `xorm:"int(11) 'order_id'" json:"order_id" form:"order_id" xml:"order_id"`
 	//
-	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" xml:"buss_type"`
+	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined StuClassTypeTextbook

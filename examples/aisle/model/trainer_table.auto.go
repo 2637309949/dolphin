@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // TrainerTable defined
 type TrainerTable struct {
 	//
-	TTId null.Int `xorm:"int(11) pk notnull autoincr 't_t_id'" json:"t_t_id" xml:"t_t_id"`
+	TTId null.Int `xorm:"int(11) pk notnull autoincr 't_t_id'" json:"t_t_id" form:"t_t_id" xml:"t_t_id"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	TrainId null.Int `xorm:"int(11) 'train_id'" json:"train_id" xml:"train_id"`
+	TrainId null.Int `xorm:"int(11) 'train_id'" json:"train_id" form:"train_id" xml:"train_id"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	CppDesc null.String `xorm:"varchar(500) 'cpp_desc'" json:"cpp_desc" xml:"cpp_desc"`
+	CppDesc null.String `xorm:"varchar(500) 'cpp_desc'" json:"cpp_desc" form:"cpp_desc" xml:"cpp_desc"`
 	//
-	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" xml:"start_time"`
+	StartTime null.Time `xorm:"datetime 'start_time'" json:"start_time" form:"start_time" xml:"start_time"`
 	//
-	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" xml:"end_time"`
+	EndTime null.Time `xorm:"datetime 'end_time'" json:"end_time" form:"end_time" xml:"end_time"`
 	//
-	TrainingState null.Int `xorm:"int(11) 'training_state'" json:"training_state" xml:"training_state"`
+	TrainingState null.Int `xorm:"int(11) 'training_state'" json:"training_state" form:"training_state" xml:"training_state"`
 	//
-	EvaluteRemark null.String `xorm:"varchar(300) 'evalute_remark'" json:"evalute_remark" xml:"evalute_remark"`
+	EvaluteRemark null.String `xorm:"varchar(300) 'evalute_remark'" json:"evalute_remark" form:"evalute_remark" xml:"evalute_remark"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined TrainerTable

@@ -4,54 +4,71 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // OfDepositDetail defined
 type OfDepositDetail struct {
 	//
-	ODDId null.Int `xorm:"int(11) pk notnull autoincr 'o_d_d_id'" json:"o_d_d_id" xml:"o_d_d_id"`
+	ODDId null.Int `xorm:"int(11) pk notnull autoincr 'o_d_d_id'" json:"o_d_d_id" form:"o_d_d_id" xml:"o_d_d_id"`
 	//
-	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" xml:"pk_of"`
+	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" form:"pk_of" xml:"pk_of"`
 	//
-	AllMoney decimal.Decimal `xorm:"decimal(11,2) 'all_money'" json:"all_money" xml:"all_money"`
+	AllMoney decimal.Decimal `xorm:"decimal(11,2) 'all_money'" json:"all_money" form:"all_money" xml:"all_money"`
 	//
-	StudyMoney decimal.Decimal `xorm:"decimal(11,2) 'study_money'" json:"study_money" xml:"study_money"`
+	StudyMoney decimal.Decimal `xorm:"decimal(11,2) 'study_money'" json:"study_money" form:"study_money" xml:"study_money"`
 	//
-	HostStartHour null.Float `xorm:"float(11,2) 'host_start_hour'" json:"host_start_hour" xml:"host_start_hour"`
+	HostStartHour null.Float `xorm:"float(11,2) 'host_start_hour'" json:"host_start_hour" form:"host_start_hour" xml:"host_start_hour"`
 	//
-	HostEndHour null.Float `xorm:"float(11,2) 'host_end_hour'" json:"host_end_hour" xml:"host_end_hour"`
+	HostEndHour null.Float `xorm:"float(11,2) 'host_end_hour'" json:"host_end_hour" form:"host_end_hour" xml:"host_end_hour"`
 	//
-	MinorStartHour null.Float `xorm:"float(11,2) 'minor_start_hour'" json:"minor_start_hour" xml:"minor_start_hour"`
+	MinorStartHour null.Float `xorm:"float(11,2) 'minor_start_hour'" json:"minor_start_hour" form:"minor_start_hour" xml:"minor_start_hour"`
 	//
-	MinorEndHour null.Float `xorm:"float(11,2) 'minor_end_hour'" json:"minor_end_hour" xml:"minor_end_hour"`
+	MinorEndHour null.Float `xorm:"float(11,2) 'minor_end_hour'" json:"minor_end_hour" form:"minor_end_hour" xml:"minor_end_hour"`
 	//
-	PeriodStartDate null.Time `xorm:"datetime 'period_start_date'" json:"period_start_date" xml:"period_start_date"`
+	PeriodStartDate null.Time `xorm:"datetime 'period_start_date'" json:"period_start_date" form:"period_start_date" xml:"period_start_date"`
 	//
-	PeriodEndDate null.Time `xorm:"datetime 'period_end_date'" json:"period_end_date" xml:"period_end_date"`
+	PeriodEndDate null.Time `xorm:"datetime 'period_end_date'" json:"period_end_date" form:"period_end_date" xml:"period_end_date"`
 	//
-	OverdueDays null.Float `xorm:"float(50,2) 'overdue_days'" json:"overdue_days" xml:"overdue_days"`
+	OverdueDays null.Float `xorm:"float(50,2) 'overdue_days'" json:"overdue_days" form:"overdue_days" xml:"overdue_days"`
 	//
-	OverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'overdue_money'" json:"overdue_money" xml:"overdue_money"`
+	OverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'overdue_money'" json:"overdue_money" form:"overdue_money" xml:"overdue_money"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	ZdPeriodNum null.Int `xorm:"int(11) 'zd_period_num'" json:"zd_period_num" xml:"zd_period_num"`
+	ZdPeriodNum null.Int `xorm:"int(11) 'zd_period_num'" json:"zd_period_num" form:"zd_period_num" xml:"zd_period_num"`
 	//
-	PkPvaaId null.Int `xorm:"int(11) 'pk_pvaa_id'" json:"pk_pvaa_id" xml:"pk_pvaa_id"`
+	PkPvaaId null.Int `xorm:"int(11) 'pk_pvaa_id'" json:"pk_pvaa_id" form:"pk_pvaa_id" xml:"pk_pvaa_id"`
 	//
-	RealOverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'real_overdue_money'" json:"real_overdue_money" xml:"real_overdue_money"`
+	RealOverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'real_overdue_money'" json:"real_overdue_money" form:"real_overdue_money" xml:"real_overdue_money"`
 	//
-	GetMoney decimal.Decimal `xorm:"decimal(50,3) 'get_money'" json:"get_money" xml:"get_money"`
+	GetMoney decimal.Decimal `xorm:"decimal(50,3) 'get_money'" json:"get_money" form:"get_money" xml:"get_money"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined OfDepositDetail

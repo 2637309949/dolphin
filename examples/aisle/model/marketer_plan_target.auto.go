@@ -4,37 +4,54 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // MarketerPlanTarget defined
 type MarketerPlanTarget struct {
 	//
-	MPTId null.Int `xorm:"int(11) pk notnull autoincr 'm_p_t_id'" json:"m_p_t_id" xml:"m_p_t_id"`
+	MPTId null.Int `xorm:"int(11) pk notnull autoincr 'm_p_t_id'" json:"m_p_t_id" form:"m_p_t_id" xml:"m_p_t_id"`
 	//
-	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	//
-	InPlan null.Float `xorm:"float(11,2) 'in_plan'" json:"in_plan" xml:"in_plan"`
+	InPlan null.Float `xorm:"float(11,2) 'in_plan'" json:"in_plan" form:"in_plan" xml:"in_plan"`
 	//
-	OutPlan null.Float `xorm:"float(11,2) 'out_plan'" json:"out_plan" xml:"out_plan"`
+	OutPlan null.Float `xorm:"float(11,2) 'out_plan'" json:"out_plan" form:"out_plan" xml:"out_plan"`
 	//
-	DemoPlan null.Float `xorm:"float(11,2) 'demo_plan'" json:"demo_plan" xml:"demo_plan"`
+	DemoPlan null.Float `xorm:"float(11,2) 'demo_plan'" json:"demo_plan" form:"demo_plan" xml:"demo_plan"`
 	//
-	AchievementPlan null.Float `xorm:"float(11,2) 'achievement_plan'" json:"achievement_plan" xml:"achievement_plan"`
+	AchievementPlan null.Float `xorm:"float(11,2) 'achievement_plan'" json:"achievement_plan" form:"achievement_plan" xml:"achievement_plan"`
 	//
-	PlanMonth null.Time `xorm:"datetime notnull default('1970-01-01 00:00:00') 'plan_month'" json:"plan_month" xml:"plan_month"`
+	PlanMonth null.Time `xorm:"datetime notnull default('1970-01-01 00:00:00') 'plan_month'" json:"plan_month" form:"plan_month" xml:"plan_month"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime notnull default('1970-01-01 00:00:00') 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime notnull default('1970-01-01 00:00:00') 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime notnull default('1970-01-01 00:00:00') 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime notnull default('1970-01-01 00:00:00') 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	//
-	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" xml:"pk_sch"`
+	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined MarketerPlanTarget

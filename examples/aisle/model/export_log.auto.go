@@ -4,29 +4,46 @@
 package model
 
 import (
+	"reflect"
+
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ExportLog defined
 type ExportLog struct {
 	//
-	ExportLogId null.Int `xorm:"int(11) pk notnull autoincr 'export_log_id'" json:"export_log_id" xml:"export_log_id"`
+	ExportLogId null.Int `xorm:"int(11) pk notnull autoincr 'export_log_id'" json:"export_log_id" form:"export_log_id" xml:"export_log_id"`
 	//
-	ExportUser null.Int `xorm:"int(11) 'export_user'" json:"export_user" xml:"export_user"`
+	ExportUser null.Int `xorm:"int(11) 'export_user'" json:"export_user" form:"export_user" xml:"export_user"`
 	//
-	ExportIp null.String `xorm:"varchar(100) 'export_ip'" json:"export_ip" xml:"export_ip"`
+	ExportIp null.String `xorm:"varchar(100) 'export_ip'" json:"export_ip" form:"export_ip" xml:"export_ip"`
 	//
-	ExportTime null.Time `xorm:"datetime 'export_time'" json:"export_time" xml:"export_time"`
+	ExportTime null.Time `xorm:"datetime 'export_time'" json:"export_time" form:"export_time" xml:"export_time"`
 	//
-	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	//
-	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" xml:"create_date"`
+	CreateDate null.Time `xorm:"datetime 'create_date'" json:"create_date" form:"create_date" xml:"create_date"`
 	//
-	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	//
-	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" xml:"update_date"`
+	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	//
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" xml:"isdelete"`
+	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+}
+
+// Parser defined
+func (m *SysCommentReply) Parser(db *xorm.Engine) *tags.Parser {
+	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+}
+
+// PrimaryKeys defined
+func (m *SysCommentReply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
+	v := reflect.Indirect(reflect.ValueOf(m))
+	table, err := m.Parser(db).Parse(v)
+	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ExportLog
