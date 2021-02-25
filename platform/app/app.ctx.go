@@ -9,7 +9,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -17,6 +19,7 @@ import (
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/2637309949/dolphin/packages/mustache"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
@@ -394,6 +397,59 @@ func (ctx *Context) Remove(db *xorm.Engine, ids ...string) (int64, error) {
 // RemoveFile defined
 func (ctx *Context) RemoveFile(db *xorm.Engine, cb func([]model.SysAttachment) error, ids ...string) (int64, error) {
 	return new(model.SysAttachment).RemoveFile(db, cb, ids...)
+}
+
+// RenderString defined
+func (ctx *Context) String(code int, data string, context ...interface{}) {
+	ctx.Context.String(code, mustache.Render(data, context...))
+}
+
+// RenderFile defined
+func (ctx *Context) RenderFile(filepath string, filename string, context ...interface{}) {
+	ctx.Writer.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
+	file, err := ioutil.TempFile("", "*")
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	defer os.Remove(file.Name())
+	bte, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
+}
+
+// RenderHTML defined
+func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
+	ctx.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
+	file, err := ioutil.TempFile("", "*")
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	defer os.Remove(file.Name())
+	bte, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
 }
 
 // Handle overwrite RouterGroup.Handle

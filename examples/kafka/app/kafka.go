@@ -4,13 +4,11 @@
 package app
 
 import (
-	"fmt"
 	"kafka/model"
 	"kafka/srv"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/logrus"
-	pModel "github.com/2637309949/dolphin/platform/model"
 )
 
 // KafkaAdd api implementation
@@ -54,9 +52,6 @@ func KafkaGet(ctx *Context) {
 	q.Value()
 	ctx.Persist(ctx.DB, "0586e250-5b6c-4a79-9f4a-767a742b7890")
 	ctx.Remove(ctx.DB, "6ebce24f-6887-4d6d-a62a-2a706fcf1c3f")
-	k, err := new(pModel.SysMenu).PrimaryKeys(ctx.DB)
-	fmt.Println(err)
-	fmt.Println(k)
 	ret, err := srv.KafkaConsumer(ctx.Raw(), ctx.DB, q.Value())
 	if err != nil {
 		logrus.Error(err)

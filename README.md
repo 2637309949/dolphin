@@ -72,6 +72,9 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [File processing](#file-processing)
             - [Upload File](#upload-file)
             - [Persist File or Remove File](#persist-file-or-remove-file)
+        - [Template processing](#template-processing)
+            - [RenderFile](#renderfile)
+            - [RenderHTML](#renderhtml)
         - [Queue processing](#queue-processing)
             - [Base on Redis](#base-on-redis)
             - [Base on Kafka](#base-on-kafka)
@@ -1615,6 +1618,45 @@ func KafkaGet(ctx *Context) {
 }
 ```
 
+### Template processing
+#### RenderFile
+
+```go
+// KafkaGet api implementation
+// @Summary Get kafka info
+// @Tags Kafka controller
+// @Param Authorization header string false "认证令牌"
+// @Param id  query  string false "kafka id"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/kafka/get [get]
+func KafkaGet(ctx *Context) {
+	ctx.RenderFile("examples/kafka/static/files/5066.tmpl", "test.txt", 
+	map[string]interface{
+		"test": 100,
+	})
+}
+```
+#### RenderHTML
+
+```go
+// KafkaGet api implementation
+// @Summary Get kafka info
+// @Tags Kafka controller
+// @Param Authorization header string false "认证令牌"
+// @Param id  query  string false "kafka id"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/kafka/get [get]
+func KafkaGet(ctx *Context) {
+	ctx.RenderHTML("examples/kafka/static/files/5066.tmpl",
+	map[string]interface{
+		"test": 100,
+	})
+}
+```
 ### Queue processing
 
 #### Base on Redis 

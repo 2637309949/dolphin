@@ -29,7 +29,7 @@ func NewKafka() *Kafka {
 func KafkaRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/kafka/add", Auth, KafkaInstance.Add)
-	group.Handle("GET", "/kafka/get", Auth, KafkaInstance.Get)
+	group.Handle("GET", "/kafka/get", KafkaInstance.Get)
 }
 
 // KafkaInstance defined
