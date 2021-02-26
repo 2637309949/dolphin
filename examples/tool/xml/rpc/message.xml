@@ -1,0 +1,6 @@
+<service name="message_srv" desc="消息服务">
+    <rpc name="send_mail" desc="发送邮件">
+        <request type="$message_mail" desc="邮件"/>
+        <reply type="$message_reply" desc="反馈"/>
+    </rpc>
+</service>

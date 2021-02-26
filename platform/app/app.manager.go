@@ -61,23 +61,9 @@ type DefaultCron struct {
 }
 
 // AddFunc defined
-func (d *DefaultCron) AddFunc(spec string, cmd func()) (id int, err error) {
-	var entry cron.EntryID
-	entry, err = d.cron.AddFunc(spec, func() {
-		iEntry := entry
-		defer func() {
-			if err1 := recover(); err1 != nil {
-				err = fmt.Errorf("%v", err1)
-			}
-			// only valid ouput, just for RefreshFunc wrap
-			if d.cron.Entry(iEntry).Valid() {
-				fmt.Println(int(iEntry), err)
-			}
-		}()
-		cmd()
-	})
-	id = int(entry)
-	return int(id), err
+func (d *DefaultCron) AddFunc(spec string, cmd func()) (int, error) {
+	entry, err := d.cron.AddFunc(spec, cmd)
+	return int(entry), err
 }
 
 // RefreshFunc defined
@@ -91,19 +77,7 @@ func (d *DefaultCron) RefreshFunc(id int, spec string) (int, error) {
 		return 0, errors.Errorf("invalid entry#%v", id)
 	}
 	job := d.cron.Entry(cron.EntryID(id)).Job
-	entry = d.cron.Schedule(s, cron.FuncJob(func() {
-		iEntry := entry
-		defer func() {
-			if err1 := recover(); err1 != nil {
-				err = fmt.Errorf("%v", err1)
-			}
-			// only valid ouput, just for RefreshFunc wrap
-			if d.cron.Entry(iEntry).Valid() {
-				fmt.Println(int(iEntry), err)
-			}
-		}()
-		job.Run()
-	}))
+	entry = d.cron.Schedule(s, job)
 	d.cron.Remove(cron.EntryID(id))
 	return int(entry), nil
 }
