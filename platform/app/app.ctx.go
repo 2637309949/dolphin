@@ -452,6 +452,30 @@ func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
 	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
 }
 
+// RenderXML defined
+func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
+	ctx.Writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
+	file, err := ioutil.TempFile("", "*")
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	defer os.Remove(file.Name())
+	bte, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
+}
+
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
 	pAppHandlers := funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {

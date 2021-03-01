@@ -11,4 +11,10 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="xml" method="get" desc="XML显示" auth="false">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
 </controller>

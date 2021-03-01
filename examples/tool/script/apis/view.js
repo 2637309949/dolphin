@@ -27,3 +27,16 @@ module.exports.hTML = (data = {}, opt = {}) => {
   })
 }
 
+// xML XML显示
+module.exports.xML = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/view/xml?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
+  return axios({
+    url: url,
+    method: 'get',
+    ...opt
+  })
+}
+

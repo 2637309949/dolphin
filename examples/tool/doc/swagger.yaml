@@ -5810,6 +5810,24 @@ paths:
       summary: HTML显示
       tags:
       - 视图
+  /api/view/xml:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: XML显示
+      tags:
+      - 视图
 securityDefinitions:
   OAuth2AccessCode:
     authorizationUrl: http://localhost:8088/api/sys/cas/authorize

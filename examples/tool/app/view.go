@@ -26,3 +26,14 @@ func ViewFile(ctx *Context) {
 func ViewHTML(ctx *Context) {
 	ctx.RenderHTML("static/file/view.tmpl", map[string]interface{}{"app": 100})
 }
+
+// ViewXML api implementation
+// @Summary XML显示
+// @Tags 视图
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/view/xml [get]
+func ViewXML(ctx *Context) {
+	ctx.RenderXML("static/file/view.tmpl", map[string]interface{}{"app": 100})
+}
