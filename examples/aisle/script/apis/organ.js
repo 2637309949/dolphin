@@ -64,7 +64,7 @@ module.exports.update = (data = {}, opt = {}) => {
   })
 }
 
-// page Article page query
+// page Organ page query
 module.exports.page = (data = {}, opt = {}) => {
   let url = opt.url || '/api/organ/page?'
   for (var key in data) {

@@ -36,11 +36,11 @@ func NewOrgan() *Organ {
 // OrganRoutes defined
 func OrganRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/organ/add", Auth, OrganInstance.Add)
-	group.Handle("DELETE", "/organ/del", Auth, OrganInstance.Del)
-	group.Handle("PUT", "/organ/update", Auth, OrganInstance.Update)
-	group.Handle("GET", "/organ/page", Auth, OrganInstance.Page)
-	group.Handle("GET", "/organ/get", Auth, OrganInstance.Get)
+	group.Handle("POST", "/organ/add", Auth("token"), OrganInstance.Add)
+	group.Handle("DELETE", "/organ/del", Auth("token"), OrganInstance.Del)
+	group.Handle("PUT", "/organ/update", Auth("token"), OrganInstance.Update)
+	group.Handle("GET", "/organ/page", Auth("token"), OrganInstance.Page)
+	group.Handle("GET", "/organ/get", Auth("token"), OrganInstance.Get)
 }
 
 // OrganInstance defined

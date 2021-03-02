@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -38,6 +39,16 @@ type WastageFollowupRecord struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
+}
+
+// Marshal defined
+func (m *WastageFollowupRecord) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *WastageFollowupRecord) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

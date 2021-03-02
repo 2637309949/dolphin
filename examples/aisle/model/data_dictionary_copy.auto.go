@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type DataDictionaryCopy struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
+}
+
+// Marshal defined
+func (m *DataDictionaryCopy) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *DataDictionaryCopy) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

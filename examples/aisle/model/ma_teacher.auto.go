@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type MaTeacher struct {
 	IfKouHour null.Int `xorm:"int(11) 'if_kou_hour'" json:"if_kou_hour" form:"if_kou_hour" xml:"if_kou_hour"`
 	// ClassHour defined
 	ClassHour null.Float `xorm:"float(50,2) 'class_hour'" json:"class_hour" form:"class_hour" xml:"class_hour"`
+}
+
+// Marshal defined
+func (m *MaTeacher) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *MaTeacher) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

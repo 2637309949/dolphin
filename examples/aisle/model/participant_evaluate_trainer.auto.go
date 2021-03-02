@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -30,6 +31,16 @@ type ParticipantEvaluateTrainer struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// EvaluateRemark defined
 	EvaluateRemark null.String `xorm:"varchar(500) 'evaluate_remark'" json:"evaluate_remark" form:"evaluate_remark" xml:"evaluate_remark"`
+}
+
+// Marshal defined
+func (m *ParticipantEvaluateTrainer) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ParticipantEvaluateTrainer) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

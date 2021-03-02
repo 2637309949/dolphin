@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -38,6 +39,16 @@ type ComplaintDeal struct {
 	CdDeal null.Int `xorm:"int(11) 'cd_deal'" json:"cd_deal" form:"cd_deal" xml:"cd_deal"`
 	// CpId defined
 	CpId null.Int `xorm:"int(11) 'cp_id'" json:"cp_id" form:"cp_id" xml:"cp_id"`
+}
+
+// Marshal defined
+func (m *ComplaintDeal) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ComplaintDeal) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

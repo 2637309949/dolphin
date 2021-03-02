@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type StuLaostuGift struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// GiveMonth defined
 	GiveMonth null.Time `xorm:"datetime 'give_month'" json:"give_month" form:"give_month" xml:"give_month"`
+}
+
+// Marshal defined
+func (m *StuLaostuGift) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuLaostuGift) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

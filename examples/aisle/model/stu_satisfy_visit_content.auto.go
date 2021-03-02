@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -38,6 +39,16 @@ type StuSatisfyVisitContent struct {
 	SaleId null.Int `xorm:"int(11) 'sale_id'" json:"sale_id" form:"sale_id" xml:"sale_id"`
 	// TeacherId defined
 	TeacherId null.Int `xorm:"int(11) 'teacher_id'" json:"teacher_id" form:"teacher_id" xml:"teacher_id"`
+}
+
+// Marshal defined
+func (m *StuSatisfyVisitContent) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuSatisfyVisitContent) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

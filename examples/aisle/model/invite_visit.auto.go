@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -46,6 +47,16 @@ type InviteVisit struct {
 	IvType null.Int `xorm:"int(11) 'iv_type'" json:"iv_type" form:"iv_type" xml:"iv_type"`
 	// StuDepartment defined
 	StuDepartment null.Int `xorm:"int(11) 'stu_department'" json:"stu_department" form:"stu_department" xml:"stu_department"`
+}
+
+// Marshal defined
+func (m *InviteVisit) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *InviteVisit) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

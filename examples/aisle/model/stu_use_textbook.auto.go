@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type StuUseTextbook struct {
 	PkTm null.Int `xorm:"int(11) 'pk_tm'" json:"pk_tm" form:"pk_tm" xml:"pk_tm"`
 	// PkLevel defined
 	PkLevel null.Int `xorm:"int(11) 'pk_level'" json:"pk_level" form:"pk_level" xml:"pk_level"`
+}
+
+// Marshal defined
+func (m *StuUseTextbook) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuUseTextbook) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

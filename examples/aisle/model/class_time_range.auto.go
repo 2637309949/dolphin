@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -48,6 +49,16 @@ type ClassTimeRange struct {
 	IsThereATimeCourse null.Int `xorm:"int(11) 'is_there_a_time_course'" json:"is_there_a_time_course" form:"is_there_a_time_course" xml:"is_there_a_time_course"`
 	// PkPkTime defined
 	PkPkTime null.Int `xorm:"int(11) 'pk_pk_time'" json:"pk_pk_time" form:"pk_pk_time" xml:"pk_pk_time"`
+}
+
+// Marshal defined
+func (m *ClassTimeRange) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassTimeRange) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

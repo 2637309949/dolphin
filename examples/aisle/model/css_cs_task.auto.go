@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -50,6 +51,16 @@ type CssCsTask struct {
 	PgbtgReason null.String `xorm:"varchar(1500) 'pgbtg_reason'" json:"pgbtg_reason" form:"pgbtg_reason" xml:"pgbtg_reason"`
 	// TeaPgPf defined
 	TeaPgPf null.Int `xorm:"int(11) 'tea_pg_pf'" json:"tea_pg_pf" form:"tea_pg_pf" xml:"tea_pg_pf"`
+}
+
+// Marshal defined
+func (m *CssCsTask) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *CssCsTask) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

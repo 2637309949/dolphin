@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -62,6 +63,16 @@ type DepositIn struct {
 	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" form:"pk_of" xml:"pk_of"`
 	// CanRefundDate defined
 	CanRefundDate null.Time `xorm:"datetime 'can_refund_date'" json:"can_refund_date" form:"can_refund_date" xml:"can_refund_date"`
+}
+
+// Marshal defined
+func (m *DepositIn) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *DepositIn) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

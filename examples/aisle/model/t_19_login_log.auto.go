@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -26,6 +27,16 @@ type T19LoginLog struct {
 	LoginHour null.Float `xorm:"float(11,2) 'login_hour'" json:"login_hour" form:"login_hour" xml:"login_hour"`
 	// LoginIp defined
 	LoginIp null.String `xorm:"varchar(100) 'login_ip'" json:"login_ip" form:"login_ip" xml:"login_ip"`
+}
+
+// Marshal defined
+func (m *T19LoginLog) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *T19LoginLog) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

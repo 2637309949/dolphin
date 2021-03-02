@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -44,6 +45,16 @@ type StudentCustomer struct {
 	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	// IfPl defined
 	IfPl null.Int `xorm:"int(11) 'if_pl'" json:"if_pl" form:"if_pl" xml:"if_pl"`
+}
+
+// Marshal defined
+func (m *StudentCustomer) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentCustomer) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

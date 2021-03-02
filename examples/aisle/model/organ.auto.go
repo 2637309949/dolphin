@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type Organ struct {
 	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// ShengId defined
 	ShengId null.Int `xorm:"int(11) 'sheng_id'" json:"sheng_id" form:"sheng_id" xml:"sheng_id"`
+}
+
+// Marshal defined
+func (m *Organ) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Organ) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

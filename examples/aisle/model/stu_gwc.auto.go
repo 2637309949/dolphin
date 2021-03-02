@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type StuGwc struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// GwcPassword defined
 	GwcPassword null.String `xorm:"varchar(1000) 'gwc_password'" json:"gwc_password" form:"gwc_password" xml:"gwc_password"`
+}
+
+// Marshal defined
+func (m *StuGwc) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuGwc) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -54,6 +55,16 @@ type Gift struct {
 	Conditions null.String `xorm:"varchar(2000) 'conditions'" json:"conditions" form:"conditions" xml:"conditions"`
 	// Introduction2 defined
 	Introduction2 null.String `xorm:"varchar(100) 'introduction2'" json:"introduction2" form:"introduction2" xml:"introduction2"`
+}
+
+// Marshal defined
+func (m *Gift) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Gift) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

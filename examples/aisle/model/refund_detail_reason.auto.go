@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type RefundDetailReason struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// OnOff defined
 	OnOff null.Int `xorm:"int(11) 'on_off'" json:"on_off" form:"on_off" xml:"on_off"`
+}
+
+// Marshal defined
+func (m *RefundDetailReason) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *RefundDetailReason) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

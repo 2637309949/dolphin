@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -24,6 +25,16 @@ type TempStuJifenAdd struct {
 	ZjJifen null.Int `xorm:"int(11) 'zj_jifen'" json:"zj_jifen" form:"zj_jifen" xml:"zj_jifen"`
 	// Remark defined
 	Remark null.String `xorm:"varchar(255) 'remark'" json:"remark" form:"remark" xml:"remark"`
+}
+
+// Marshal defined
+func (m *TempStuJifenAdd) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *TempStuJifenAdd) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

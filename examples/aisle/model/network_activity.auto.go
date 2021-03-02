@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -44,6 +45,16 @@ type NetworkActivity struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// ActivityEstimateIncome defined
 	ActivityEstimateIncome null.Float `xorm:"float(10,2) 'activity_estimate_income'" json:"activity_estimate_income" form:"activity_estimate_income" xml:"activity_estimate_income"`
+}
+
+// Marshal defined
+func (m *NetworkActivity) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *NetworkActivity) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

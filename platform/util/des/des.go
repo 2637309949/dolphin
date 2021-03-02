@@ -12,7 +12,7 @@ func Encrypt(origData, key []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	origData = PKCS5Padding(origData, block.BlockSize())
+	origData = pkcs5Padding(origData, block.BlockSize())
 	blockMode := cipher.NewCBCEncrypter(block, key)
 	crypted := make([]byte, len(origData))
 	// 根据CryptBlocks方法的说明，如下方式初始化crypted也可以
@@ -31,20 +31,20 @@ func Decrypt(crypted, key []byte) ([]byte, error) {
 	origData := make([]byte, len(crypted))
 	// origData := crypted
 	blockMode.CryptBlocks(origData, crypted)
-	origData = PKCS5UnPadding(origData)
+	origData = pkcs5UnPadding(origData)
 	// origData = ZeroUnPadding(origData)
 	return origData, nil
 }
 
-// PKCS5Padding padding ciphertext
-func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
+// pkcs5Padding padding ciphertext
+func pkcs5Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
 // PKCS5UnPadding unpadding ciphertext
-func PKCS5UnPadding(origData []byte) []byte {
+func pkcs5UnPadding(origData []byte) []byte {
 	length := len(origData)
 	// 去掉最后一个字节 unpadding 次
 	unpadding := int(origData[length-1])

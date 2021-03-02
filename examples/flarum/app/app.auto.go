@@ -6,7 +6,6 @@ package app
 import (
 	"flarum/model"
 
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/util"
 )
@@ -127,6 +126,6 @@ var Executor = util.NewExecutor(SyncModel, SyncCtr, SyncService)
 
 func init() {
 	if err := Executor.Execute(); err != nil {
-		logrus.Fatal(err)
+		panic(err)
 	}
 }

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type HolidaySet struct {
 	HisStartDate null.Time `xorm:"datetime 'his_start_date'" json:"his_start_date" form:"his_start_date" xml:"his_start_date"`
 	// HisEndDate defined
 	HisEndDate null.Time `xorm:"datetime 'his_end_date'" json:"his_end_date" form:"his_end_date" xml:"his_end_date"`
+}
+
+// Marshal defined
+func (m *HolidaySet) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *HolidaySet) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

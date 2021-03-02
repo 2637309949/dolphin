@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -91,6 +92,16 @@ type YbPayFlowing struct {
 	UpdateStuybzfDesc null.String `xorm:"varchar(1000) 'update_stuybzf_desc'" json:"update_stuybzf_desc" form:"update_stuybzf_desc" xml:"update_stuybzf_desc"`
 	// YpfId defined
 	YpfId null.Int `xorm:"int(11) 'ypf_id'" json:"ypf_id" form:"ypf_id" xml:"ypf_id"`
+}
+
+// Marshal defined
+func (m *YbPayFlowing) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *YbPayFlowing) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

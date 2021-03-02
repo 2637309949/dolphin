@@ -28,7 +28,7 @@ type (
 		*pApp.RouterGroup
 		engine *Engine
 	}
-	// HandlerFunc defines the handler used by gin middleware as return value.
+	// HandlerFunc defines the handler used by gin middleware as return value
 	HandlerFunc func(*Context)
 )
 
@@ -61,8 +61,10 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 }
 
 // Auth middles
-func Auth(ctx *Context) {
-	pApp.Auth(ctx.Context)
+func Auth(auth ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		pApp.Auth(auth...)(ctx.Context)
+	}
 }
 
 // Roles middles

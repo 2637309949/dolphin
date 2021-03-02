@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -92,6 +93,16 @@ type StudentClassSchedule struct {
 	ChangeStuId null.Int `xorm:"int(11) 'change_stu_id'" json:"change_stu_id" form:"change_stu_id" xml:"change_stu_id"`
 	// Remark defined
 	Remark null.String `xorm:"varchar(100) 'remark'" json:"remark" form:"remark" xml:"remark"`
+}
+
+// Marshal defined
+func (m *StudentClassSchedule) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentClassSchedule) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

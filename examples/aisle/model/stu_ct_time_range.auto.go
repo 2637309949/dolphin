@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -44,6 +45,16 @@ type StuCtTimeRange struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// TimeRemark defined
 	TimeRemark null.String `xorm:"varchar(500) 'time_remark'" json:"time_remark" form:"time_remark" xml:"time_remark"`
+}
+
+// Marshal defined
+func (m *StuCtTimeRange) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuCtTimeRange) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

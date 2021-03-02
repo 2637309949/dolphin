@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type MaterialApply struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// MbId defined
 	MbId null.Int `xorm:"int(11) 'mb_id'" json:"mb_id" form:"mb_id" xml:"mb_id"`
+}
+
+// Marshal defined
+func (m *MaterialApply) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *MaterialApply) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

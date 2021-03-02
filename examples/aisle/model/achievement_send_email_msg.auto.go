@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -42,6 +43,16 @@ type AchievementSendEmailMsg struct {
 	RecipientMailbox null.String `xorm:"varchar(100) 'recipient_mailbox'" json:"recipient_mailbox" form:"recipient_mailbox" xml:"recipient_mailbox"`
 	// ReceiverPhone defined
 	ReceiverPhone null.String `xorm:"varchar(20) 'receiver_phone'" json:"receiver_phone" form:"receiver_phone" xml:"receiver_phone"`
+}
+
+// Marshal defined
+func (m *AchievementSendEmailMsg) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *AchievementSendEmailMsg) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

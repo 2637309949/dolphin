@@ -1,17 +1,17 @@
 <controller name="view" desc="视图">
-    <api name="file" method="get" desc="文件下载" auth="false">
+    <api name="file" method="get" desc="文件下载" auth="never">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="html" method="get" desc="HTML显示" auth="false">
+    <api name="html" method="get" desc="HTML显示" auth="never">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="xml" method="get" desc="XML显示" auth="false">
+    <api name="xml" method="get" desc="XML显示" auth="never">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

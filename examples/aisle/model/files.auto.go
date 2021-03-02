@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -42,6 +43,16 @@ type Files struct {
 	SpBfhour null.String `xorm:"varchar(100) 'sp_bfhour'" json:"sp_bfhour" form:"sp_bfhour" xml:"sp_bfhour"`
 	// IfZm defined
 	IfZm null.String `xorm:"varchar(10) default('1') 'if_zm'" json:"if_zm" form:"if_zm" xml:"if_zm"`
+}
+
+// Marshal defined
+func (m *Files) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Files) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

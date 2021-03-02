@@ -5,12 +5,16 @@
 package app
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"regexp"
+	"sort"
+	"strconv"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/gin/binding"
 	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
@@ -20,6 +24,8 @@ import (
 	"github.com/2637309949/dolphin/packages/xoauth2"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/des"
+	"github.com/2637309949/dolphin/platform/util/slice"
 )
 
 // TokenExpiryDelta determines how earlier a token should be considered
@@ -51,7 +57,82 @@ var TokenkeyNamespace = "dolphin:token:"
 // AuthInfo defined
 type AuthInfo interface {
 	GetToken() TokenInfo
-	Auth(*http.Request) bool
+	AuthToken(*http.Request) bool
+	AuthEncrypt(*http.Request) (bool, error)
+}
+
+// EncryptForm defines Common request parameter
+type EncryptForm struct {
+	AppID      string `form:"app_id" json:"app_id" xml:"app_id" binding:"required"`
+	Sign       string `form:"sign" json:"sign" xml:"sign" binding:"required"`
+	TimeStamp  string `form:"timestamp" json:"timestamp" xml:"timestamp" binding:"required"`
+	BizContent string `form:"biz_content" json:"biz_content" xml:"biz_content" binding:"required"`
+}
+
+// ParseForm defined
+func (ec *EncryptForm) ParseForm(req *http.Request) (*EncryptForm, error) {
+	puData := EncryptForm{}
+	if req.Method != "POST" {
+		if err := binding.Query.Bind(req, &puData); err != nil {
+			return nil, err
+		}
+	} else {
+		if err := binding.JSON.Bind(req, &puData); err != nil {
+			return nil, err
+		}
+	}
+	return &puData, nil
+}
+
+// form2Uri defined
+func (ec *EncryptForm) form2Uri() string {
+	var puJSON map[string]string
+	var puKeys = make([]string, 0, len(puJSON))
+	puByte, _ := json.Marshal(ec)
+	json.Unmarshal(puByte, &puJSON)
+	for k := range puJSON {
+		if k != "sign" {
+			puKeys = append(puKeys, k)
+		}
+	}
+	sort.Strings(puKeys)
+	var signString = ""
+	for _, k := range puKeys {
+		if signString != "" {
+			signString = signString + "&" + k + "=" + puJSON[k]
+		} else {
+			signString = signString + k + "=" + puJSON[k]
+		}
+	}
+	return signString
+}
+
+func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
+	uri := ec.form2Uri()
+	ecyt, err := des.Encrypt([]byte(uri), []byte(cli.GetSecret()))
+	if err != nil {
+		logrus.Error(err)
+		return []byte{}, err
+	}
+	return ecyt, nil
+}
+
+// Verify defined
+func (ec *EncryptForm) Verify(cli oauth2.ClientInfo) (bool, error) {
+	timestamp := time.Now().Unix()
+	tsInt, _ := strconv.ParseInt(ec.TimeStamp, 10, 64)
+	if tsInt > timestamp || timestamp-tsInt >= 60 {
+		return false, errors.New("timestamp error")
+	}
+	sn, err := ec.sign(cli)
+	if err != nil {
+		logrus.Error(err)
+		return false, err
+	}
+	if string(sn) != ec.Sign {
+		return false, errors.New("sign error")
+	}
+	return true, nil
 }
 
 // AuthOAuth2 deifned
@@ -80,8 +161,8 @@ func (auth *AuthOAuth2) parseToken(t oauth2.TokenInfo) TokenInfo {
 	return auth.token
 }
 
-// Auth defined
-func (auth *AuthOAuth2) Auth(req *http.Request) bool {
+// AuthToken defined
+func (auth *AuthOAuth2) AuthToken(req *http.Request) bool {
 	if bearer, ok := auth.server.BearerAuth(req); ok {
 		accessToken, err := auth.server.Manager.LoadAccessToken(bearer)
 		if err != nil {
@@ -95,6 +176,26 @@ func (auth *AuthOAuth2) Auth(req *http.Request) bool {
 			After(time.Now())
 	}
 	return false
+}
+
+// AuthEncrypt defined
+func (auth *AuthOAuth2) AuthEncrypt(req *http.Request) (bool, error) {
+	parseForm, err := new(EncryptForm).ParseForm(req)
+	if err != nil {
+		logrus.Error(err)
+		return false, err
+	}
+	cli, err := new(ClientStore).GetByID(parseForm.AppID)
+	if err != nil {
+		logrus.Error(err)
+		return false, err
+	}
+	valid, err := parseForm.Verify(cli)
+	if err != nil {
+		logrus.Error(err)
+		return false, err
+	}
+	return valid, nil
 }
 
 // GetToken defined
@@ -114,12 +215,12 @@ type ClientStore struct {
 // GetByID according to the ID for the client information
 func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 	cli := model.SysClient{}
-	ext, err := App.PlatformDB.Where("client=?", id).Get(&cli)
-	if err != nil || !ext {
-		if !ext {
-			err = errors.New("the record does not exist")
-		}
+	exist, err := App.PlatformDB.Where("client=?", id).Get(&cli)
+	if err != nil {
 		return nil, err
+	}
+	if !exist {
+		return nil, errors.New("the record does not exist")
 	}
 	return &models.Client{
 		ID:     cli.Client.String,
@@ -164,9 +265,9 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 	return nil
 }
 
-// Auth middles
-func Auth(ctx *Context) {
-	if !ctx.Auth(ctx.Request) {
+// AuthToken defined
+func AuthToken(ctx *Context) {
+	if !ctx.AuthToken(ctx.Request) {
 		ctx.Fail(util.ErrInvalidAccessToken, 401)
 		ctx.Abort()
 		return
@@ -179,6 +280,33 @@ func Auth(ctx *Context) {
 	ctx.Set("DB", ctx.DB)
 	ctx.Set("AuthInfo", ctx.AuthInfo)
 	ctx.Next()
+}
+
+// AuthEncrypt defined
+func AuthEncrypt(ctx *Context) {
+	valid, err := ctx.AuthEncrypt(ctx.Request)
+	if err != nil || !valid {
+		ctx.Fail(err, 401)
+		ctx.Abort()
+		return
+	}
+	ctx.Next()
+}
+
+// Auth middles
+func Auth(auth ...string) func(ctx *Context) {
+	middles := []func(ctx *Context){}
+	if slice.StrSliceContains(auth, "token") {
+		middles = append(middles, AuthToken)
+	}
+	if slice.StrSliceContains(auth, "encrypt") {
+		middles = append(middles, AuthEncrypt)
+	}
+	return func(ctx *Context) {
+		for i := range middles {
+			middles[i](ctx)
+		}
+	}
 }
 
 // Roles middles

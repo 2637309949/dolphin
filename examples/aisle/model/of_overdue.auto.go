@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -30,6 +31,16 @@ type OfOverdue struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// OverdueDesc defined
 	OverdueDesc null.String `xorm:"varchar(500) 'overdue_desc'" json:"overdue_desc" form:"overdue_desc" xml:"overdue_desc"`
+}
+
+// Marshal defined
+func (m *OfOverdue) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *OfOverdue) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

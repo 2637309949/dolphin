@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -42,6 +43,16 @@ type StuAllotTmk struct {
 	AllotDesc null.String `xorm:"varchar(5000) 'allot_desc'" json:"allot_desc" form:"allot_desc" xml:"allot_desc"`
 	// IfPl defined
 	IfPl null.Int `xorm:"int(11) 'if_pl'" json:"if_pl" form:"if_pl" xml:"if_pl"`
+}
+
+// Marshal defined
+func (m *StuAllotTmk) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuAllotTmk) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

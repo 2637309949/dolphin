@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type ViolateRatioManage struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// IfOpen defined
 	IfOpen null.Int `xorm:"int(11) 'if_open'" json:"if_open" form:"if_open" xml:"if_open"`
+}
+
+// Marshal defined
+func (m *ViolateRatioManage) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ViolateRatioManage) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

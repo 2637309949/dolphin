@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type StudentDeleteLog struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// StuPhone defined
 	StuPhone null.String `xorm:"varchar(20) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
+}
+
+// Marshal defined
+func (m *StudentDeleteLog) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentDeleteLog) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

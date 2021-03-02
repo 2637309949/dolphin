@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type YbzfPos struct {
 	YbzfDesc null.String `xorm:"varchar(1000) 'ybzf_desc'" json:"ybzf_desc" form:"ybzf_desc" xml:"ybzf_desc"`
 	// SchId defined
 	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
+}
+
+// Marshal defined
+func (m *YbzfPos) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *YbzfPos) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

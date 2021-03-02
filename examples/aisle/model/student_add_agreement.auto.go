@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -64,6 +65,16 @@ type StudentAddAgreement struct {
 	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 	// ShifouUpdate defined
 	ShifouUpdate null.Int `xorm:"int(11) 'shifou_update'" json:"shifou_update" form:"shifou_update" xml:"shifou_update"`
+}
+
+// Marshal defined
+func (m *StudentAddAgreement) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentAddAgreement) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

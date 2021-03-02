@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type StuclasstypeExtrafee struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// OrderExtraId defined
 	OrderExtraId null.Int `xorm:"int(11) 'order_extra_id'" json:"order_extra_id" form:"order_extra_id" xml:"order_extra_id"`
+}
+
+// Marshal defined
+func (m *StuclasstypeExtrafee) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuclasstypeExtrafee) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

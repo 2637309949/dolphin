@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -54,6 +55,16 @@ type MessageNotice struct {
 	IfSend null.Int `xorm:"int(11) 'if_send'" json:"if_send" form:"if_send" xml:"if_send"`
 	// SaaId defined
 	SaaId null.Int `xorm:"int(11) 'saa_id'" json:"saa_id" form:"saa_id" xml:"saa_id"`
+}
+
+// Marshal defined
+func (m *MessageNotice) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *MessageNotice) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

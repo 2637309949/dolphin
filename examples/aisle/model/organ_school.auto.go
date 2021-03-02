@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -78,6 +79,16 @@ type OrganSchool struct {
 	OsRoomNum4 null.Float `xorm:"float(50,2) 'os_room_num4'" json:"os_room_num4" form:"os_room_num4" xml:"os_room_num4"`
 	// OsRoomNum defined
 	OsRoomNum null.Float `xorm:"float(50,2) 'os_room_num'" json:"os_room_num" form:"os_room_num" xml:"os_room_num"`
+}
+
+// Marshal defined
+func (m *OrganSchool) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *OrganSchool) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

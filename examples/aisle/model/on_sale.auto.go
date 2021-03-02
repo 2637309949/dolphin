@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -56,6 +57,16 @@ type OnSale struct {
 	OsBigType null.Int `xorm:"int(11) 'os_big_type'" json:"os_big_type" form:"os_big_type" xml:"os_big_type"`
 	// SaleJxType defined
 	SaleJxType null.Int `xorm:"int(11) 'sale_jx_type'" json:"sale_jx_type" form:"sale_jx_type" xml:"sale_jx_type"`
+}
+
+// Marshal defined
+func (m *OnSale) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *OnSale) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

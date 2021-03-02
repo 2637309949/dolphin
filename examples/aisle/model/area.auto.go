@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type Area struct {
 	AreaCode null.String `xorm:"varchar(30) 'area_code'" json:"area_code" form:"area_code" xml:"area_code"`
 	// WcId defined
 	WcId null.Int `xorm:"int(11) 'wc_id'" json:"wc_id" form:"wc_id" xml:"wc_id"`
+}
+
+// Marshal defined
+func (m *Area) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Area) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

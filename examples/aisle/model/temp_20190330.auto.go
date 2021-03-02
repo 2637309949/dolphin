@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -50,6 +51,16 @@ type Temp20190330 struct {
 	WxhMoney null.Float `xorm:"float(10,2) 'wxh_money'" json:"wxh_money" form:"wxh_money" xml:"wxh_money"`
 	// XhMoney defined
 	XhMoney null.Float `xorm:"float(10,2) 'xh_money'" json:"xh_money" form:"xh_money" xml:"xh_money"`
+}
+
+// Marshal defined
+func (m *Temp20190330) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Temp20190330) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

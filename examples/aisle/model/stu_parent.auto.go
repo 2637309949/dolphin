@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -44,6 +45,16 @@ type StuParent struct {
 	ParAppneedupdate null.Int `xorm:"int(11) 'par_appneedupdate'" json:"par_appneedupdate" form:"par_appneedupdate" xml:"par_appneedupdate"`
 	// IdentificationNumber defined
 	IdentificationNumber null.String `xorm:"varchar(1000) 'identification_number'" json:"identification_number" form:"identification_number" xml:"identification_number"`
+}
+
+// Marshal defined
+func (m *StuParent) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuParent) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

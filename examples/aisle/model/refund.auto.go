@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -146,6 +147,16 @@ type Refund struct {
 	MzCheckLevel null.Int `xorm:"int(11) 'mz_check_level'" json:"mz_check_level" form:"mz_check_level" xml:"mz_check_level"`
 	// Version defined
 	Version null.Int `xorm:"int(11) 'version'" json:"version" form:"version" xml:"version"`
+}
+
+// Marshal defined
+func (m *Refund) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Refund) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

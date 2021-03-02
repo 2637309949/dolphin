@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type Invoice struct {
 	BillType null.Int `xorm:"int(11) 'bill_type'" json:"bill_type" form:"bill_type" xml:"bill_type"`
 	// OrId defined
 	OrId null.Int `xorm:"int(11) 'or_id'" json:"or_id" form:"or_id" xml:"or_id"`
+}
+
+// Marshal defined
+func (m *Invoice) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Invoice) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

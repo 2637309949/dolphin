@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -57,6 +58,16 @@ type OfDepositDetail struct {
 	RealOverdueMoney decimal.Decimal `xorm:"decimal(50,3) 'real_overdue_money'" json:"real_overdue_money" form:"real_overdue_money" xml:"real_overdue_money"`
 	// GetMoney defined
 	GetMoney decimal.Decimal `xorm:"decimal(50,3) 'get_money'" json:"get_money" form:"get_money" xml:"get_money"`
+}
+
+// Marshal defined
+func (m *OfDepositDetail) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *OfDepositDetail) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

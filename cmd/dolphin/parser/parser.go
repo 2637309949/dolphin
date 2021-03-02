@@ -53,7 +53,7 @@ func (parser *AppParser) parseController(xmlPath string, attr []xml.Attr) *schem
 }
 
 func (parser *AppParser) parseAPI(xmlPath string, attr []xml.Attr) *schema.API {
-	api := &schema.API{Auth: true, Return: &schema.Return{Success: &schema.Success{}, Failure: &schema.Failure{}}}
+	api := &schema.API{Auth: []string{"token"}, Return: &schema.Return{Success: &schema.Success{}, Failure: &schema.Failure{}}}
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -89,11 +89,17 @@ func (parser *AppParser) parseAPI(xmlPath string, attr []xml.Attr) *schema.API {
 			}
 			api.Cache = sed
 		case attrName == "auth":
-			ret, err := strconv.ParseBool(strings.TrimSpace(attrValue))
-			if err != nil {
-				panic(err)
+			api.Auth = strings.Split(attrValue, ",")
+			keys := map[string]interface{}{}
+			for i := range api.Auth {
+				keys[api.Auth[i]] = ""
 			}
-			api.Auth = ret
+			api.Auth = []string{}
+			for k := range keys {
+				if k != "" && k != "never" {
+					api.Auth = append(api.Auth, k)
+				}
+			}
 		}
 	}
 	return api

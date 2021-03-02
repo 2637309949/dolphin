@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -38,6 +39,16 @@ type AddAgreementMb struct {
 	AamTitle null.String `xorm:"varchar(500) 'aam_title'" json:"aam_title" form:"aam_title" xml:"aam_title"`
 	// OpenOrClose defined
 	OpenOrClose null.Int `xorm:"int(11) 'open_or_close'" json:"open_or_close" form:"open_or_close" xml:"open_or_close"`
+}
+
+// Marshal defined
+func (m *AddAgreementMb) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *AddAgreementMb) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

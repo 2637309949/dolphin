@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -108,6 +109,16 @@ type ClassScheduleStudent struct {
 	TurnInSch null.Int `xorm:"int(11) 'turn_in_sch'" json:"turn_in_sch" form:"turn_in_sch" xml:"turn_in_sch"`
 	// NextCssId defined
 	NextCssId null.Int `xorm:"int(11) 'next_css_id'" json:"next_css_id" form:"next_css_id" xml:"next_css_id"`
+}
+
+// Marshal defined
+func (m *ClassScheduleStudent) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassScheduleStudent) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

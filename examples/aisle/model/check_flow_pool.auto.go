@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type CheckFlowPool struct {
 	PkDOId null.Int `xorm:"int(11) 'pk_d_o_id'" json:"pk_d_o_id" form:"pk_d_o_id" xml:"pk_d_o_id"`
 	// PkTSCId defined
 	PkTSCId null.Int `xorm:"int(11) 'pk_t_s_c_id'" json:"pk_t_s_c_id" form:"pk_t_s_c_id" xml:"pk_t_s_c_id"`
+}
+
+// Marshal defined
+func (m *CheckFlowPool) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *CheckFlowPool) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

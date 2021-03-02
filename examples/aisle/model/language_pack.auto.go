@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -44,6 +45,16 @@ type LanguagePack struct {
 	OrderEdition null.Int `xorm:"int(11) 'order_edition'" json:"order_edition" form:"order_edition" xml:"order_edition"`
 	// ZdAgreeLife defined
 	ZdAgreeLife null.Int `xorm:"int(11) 'zd_agree_life'" json:"zd_agree_life" form:"zd_agree_life" xml:"zd_agree_life"`
+}
+
+// Marshal defined
+func (m *LanguagePack) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *LanguagePack) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

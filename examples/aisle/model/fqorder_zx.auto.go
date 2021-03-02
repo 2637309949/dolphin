@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type FqorderZx struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// AllotTa defined
 	AllotTa null.Int `xorm:"int(11) 'allot_ta'" json:"allot_ta" form:"allot_ta" xml:"allot_ta"`
+}
+
+// Marshal defined
+func (m *FqorderZx) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *FqorderZx) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -39,7 +39,7 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 func {{.ToUpperCase .Name}}Routes(engine *Engine) {
 	group := engine.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}})
 	{{- range .APIS}}
-	group.Handle("{{.ToUpper .Method}}", "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"{{- if .Auth}}, Auth{{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, {{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}})
+	group.Handle("{{.ToUpper .Method}}", "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, {{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}})
 	{{- end}}
 }
 

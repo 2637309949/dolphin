@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type CsVisit struct {
 	BussType null.Int `xorm:"int(11) 'buss_type'" json:"buss_type" form:"buss_type" xml:"buss_type"`
 	// VisituserId defined
 	VisituserId null.Int `xorm:"int(11) 'visituser_id'" json:"visituser_id" form:"visituser_id" xml:"visituser_id"`
+}
+
+// Marshal defined
+func (m *CsVisit) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *CsVisit) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

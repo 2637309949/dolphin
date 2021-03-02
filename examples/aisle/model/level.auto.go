@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -30,6 +31,16 @@ type Level struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// LevelDesc defined
 	LevelDesc null.String `xorm:"varchar(1000) 'level_desc'" json:"level_desc" form:"level_desc" xml:"level_desc"`
+}
+
+// Marshal defined
+func (m *Level) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Level) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

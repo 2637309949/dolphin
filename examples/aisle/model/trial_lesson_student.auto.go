@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type TrialLessonStudent struct {
 	IvId null.Int `xorm:"int(11) 'iv_id'" json:"iv_id" form:"iv_id" xml:"iv_id"`
 	// YjQdDate defined
 	YjQdDate null.Time `xorm:"datetime 'yj_qd_date'" json:"yj_qd_date" form:"yj_qd_date" xml:"yj_qd_date"`
+}
+
+// Marshal defined
+func (m *TrialLessonStudent) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *TrialLessonStudent) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

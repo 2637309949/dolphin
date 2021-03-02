@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -14,32 +15,42 @@ import (
 
 // SysCommentReply defined 评论回复表
 type SysCommentReply struct {
-	// 主键
+	// ID defined 主键
 	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
-	// 评论id
+	// CommentId defined 评论id
 	CommentId null.String `xorm:"varchar(36) notnull comment('评论id') 'comment_id'" json:"comment_id" form:"comment_id" xml:"comment_id"`
-	// 回复目标id
+	// ReplyId defined 回复目标id
 	ReplyId null.String `xorm:"varchar(36) notnull comment('回复目标id') 'reply_id'" json:"reply_id" form:"reply_id" xml:"reply_id"`
-	// 回复类型
+	// ReplyType defined 回复类型
 	ReplyType null.Int `xorm:"notnull comment('回复类型') 'reply_type'" json:"reply_type" form:"reply_type" xml:"reply_type"`
-	// 回复内容
+	// Content defined 回复内容
 	Content null.String `xorm:"varchar(36) comment('回复内容') 'content'" json:"content" form:"content" xml:"content"`
-	// 评论用户id
+	// FromUid defined 评论用户id
 	FromUid null.String `xorm:"varchar(36) notnull comment('评论用户id') 'from_uid'" json:"from_uid" form:"from_uid" xml:"from_uid"`
-	// 目标用户id
+	// ToUid defined 目标用户id
 	ToUid null.String `xorm:"varchar(36) notnull comment('目标用户id') 'to_uid'" json:"to_uid" form:"to_uid" xml:"to_uid"`
-	// 创建人
+	// CreateBy defined 创建人
 	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" form:"create_by" xml:"create_by"`
-	// 创建时间
+	// CreateTime defined 创建时间
 	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
-	// 最后更新人
+	// UpdateBy defined 最后更新人
 	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" form:"update_by" xml:"update_by"`
-	// 最后更新时间
+	// UpdateTime defined 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
-	// 删除标记
+	// DelFlag defined 删除标记
 	DelFlag null.Int `xorm:"notnull comment('删除标记') 'del_flag'" json:"del_flag" form:"del_flag" xml:"del_flag"`
-	// 备注
+	// Remark defined 备注
 	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" form:"remark" xml:"remark"`
+}
+
+// Marshal defined
+func (m *SysCommentReply) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *SysCommentReply) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

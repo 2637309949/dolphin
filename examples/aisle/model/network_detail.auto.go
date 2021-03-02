@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type NetworkDetail struct {
 	ChannelType null.Int `xorm:"int(11) 'channel_type'" json:"channel_type" form:"channel_type" xml:"channel_type"`
 	// QueryType defined
 	QueryType null.Int `xorm:"int(11) 'query_type'" json:"query_type" form:"query_type" xml:"query_type"`
+}
+
+// Marshal defined
+func (m *NetworkDetail) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *NetworkDetail) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

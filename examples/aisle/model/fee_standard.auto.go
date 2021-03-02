@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -48,6 +49,16 @@ type FeeStandard struct {
 	BeginEndtime null.Time `xorm:"datetime 'begin_endtime'" json:"begin_endtime" form:"begin_endtime" xml:"begin_endtime"`
 	// FeeCourseType defined
 	FeeCourseType null.Int `xorm:"int(11) 'fee_course_type'" json:"fee_course_type" form:"fee_course_type" xml:"fee_course_type"`
+}
+
+// Marshal defined
+func (m *FeeStandard) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *FeeStandard) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type EcUserTargetplan struct {
 	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	// MonthTask defined
 	MonthTask null.Float `xorm:"float(50,2) 'month_task'" json:"month_task" form:"month_task" xml:"month_task"`
+}
+
+// Marshal defined
+func (m *EcUserTargetplan) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *EcUserTargetplan) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

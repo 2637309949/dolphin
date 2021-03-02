@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type CustomerServiceProcess struct {
 	CpcId null.Int `xorm:"int(11) 'cpc_id'" json:"cpc_id" form:"cpc_id" xml:"cpc_id"`
 	// CspNumber defined
 	CspNumber null.Int `xorm:"int(11) 'csp_number'" json:"csp_number" form:"csp_number" xml:"csp_number"`
+}
+
+// Marshal defined
+func (m *CustomerServiceProcess) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *CustomerServiceProcess) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type ClassTypeStageCourse struct {
 	AllPrice null.Float `xorm:"float(10,2) 'all_price'" json:"all_price" form:"all_price" xml:"all_price"`
 	// CtId defined
 	CtId null.Int `xorm:"int(11) 'ct_id'" json:"ct_id" form:"ct_id" xml:"ct_id"`
+}
+
+// Marshal defined
+func (m *ClassTypeStageCourse) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassTypeStageCourse) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -140,6 +141,16 @@ type Deletestudentbackups struct {
 	HeadImage null.Int `xorm:"int(11) 'head_image'" json:"head_image" form:"head_image" xml:"head_image"`
 	// StuWxksDate defined
 	StuWxksDate null.Time `xorm:"datetime 'stu_wxks_date'" json:"stu_wxks_date" form:"stu_wxks_date" xml:"stu_wxks_date"`
+}
+
+// Marshal defined
+func (m *Deletestudentbackups) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Deletestudentbackups) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

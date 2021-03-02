@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -59,6 +60,16 @@ type StudentUseHourDetail struct {
 	KqDate null.Time `xorm:"datetime 'kq_date'" json:"kq_date" form:"kq_date" xml:"kq_date"`
 	// Remark defined
 	Remark null.String `xorm:"varchar(20) 'remark'" json:"remark" form:"remark" xml:"remark"`
+}
+
+// Marshal defined
+func (m *StudentUseHourDetail) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentUseHourDetail) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

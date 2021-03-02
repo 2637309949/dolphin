@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -72,6 +73,16 @@ type MarketActivity struct {
 	PmdId null.Int `xorm:"int(11) 'pmd_id'" json:"pmd_id" form:"pmd_id" xml:"pmd_id"`
 	// OmdId defined
 	OmdId null.Int `xorm:"int(11) 'omd_id'" json:"omd_id" form:"omd_id" xml:"omd_id"`
+}
+
+// Marshal defined
+func (m *MarketActivity) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *MarketActivity) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

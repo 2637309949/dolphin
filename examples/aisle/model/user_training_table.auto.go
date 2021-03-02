@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -42,6 +43,16 @@ type UserTrainingTable struct {
 	TrainingState null.Int `xorm:"int(11) 'training_state'" json:"training_state" form:"training_state" xml:"training_state"`
 	// UserId defined
 	UserId null.Int `xorm:"int(11) 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
+}
+
+// Marshal defined
+func (m *UserTrainingTable) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *UserTrainingTable) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

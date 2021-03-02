@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -52,6 +53,16 @@ type PcSctGiveMx struct {
 	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
 	// ClassCourseType defined
 	ClassCourseType null.Int `xorm:"int(11) 'class_course_type'" json:"class_course_type" form:"class_course_type" xml:"class_course_type"`
+}
+
+// Marshal defined
+func (m *PcSctGiveMx) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *PcSctGiveMx) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

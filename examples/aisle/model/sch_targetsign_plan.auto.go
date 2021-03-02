@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -50,6 +51,16 @@ type SchTargetsignPlan struct {
 	AllQdMoney null.Float `xorm:"float(50,2) 'all_qd_money'" json:"all_qd_money" form:"all_qd_money" xml:"all_qd_money"`
 	// AllTzMoney defined
 	AllTzMoney null.Float `xorm:"float(50,2) 'all_tz_money'" json:"all_tz_money" form:"all_tz_money" xml:"all_tz_money"`
+}
+
+// Marshal defined
+func (m *SchTargetsignPlan) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *SchTargetsignPlan) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type DateTable struct {
 	Week null.Int `xorm:"int(11) 'week'" json:"week" form:"week" xml:"week"`
 	// Isholiday defined
 	Isholiday null.Int `xorm:"int(11) 'isholiday'" json:"isholiday" form:"isholiday" xml:"isholiday"`
+}
+
+// Marshal defined
+func (m *DateTable) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *DateTable) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

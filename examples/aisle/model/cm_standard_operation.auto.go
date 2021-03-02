@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type CmStandardOperation struct {
 	TmLevelId null.Int `xorm:"int(11) 'tm_level_id'" json:"tm_level_id" form:"tm_level_id" xml:"tm_level_id"`
 	// CmSOContent defined
 	CmSOContent null.Int `xorm:"int(11) 'cm_s_o_content'" json:"cm_s_o_content" form:"cm_s_o_content" xml:"cm_s_o_content"`
+}
+
+// Marshal defined
+func (m *CmStandardOperation) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *CmStandardOperation) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

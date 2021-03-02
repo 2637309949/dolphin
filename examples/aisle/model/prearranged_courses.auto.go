@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -45,6 +46,16 @@ type PrearrangedCourses struct {
 	ClassEndTime null.Time `xorm:"datetime 'class_end_time'" json:"class_end_time" form:"class_end_time" xml:"class_end_time"`
 	// PkClass defined
 	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" form:"pk_class" xml:"pk_class"`
+}
+
+// Marshal defined
+func (m *PrearrangedCourses) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *PrearrangedCourses) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

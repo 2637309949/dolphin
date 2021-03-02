@@ -19,7 +19,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="export" method="get" auth="false" desc="附件导出">
+    <api name="export" method="get" auth="never" desc="附件导出">
         <param name="file_name" type="string" desc="附件名称" />
         <param name="file_id" type="string" desc="附件ID" />
         <return>

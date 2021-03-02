@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -81,6 +82,16 @@ type Fee struct {
 	YjuserId null.Int `xorm:"int(11) 'yjuser_id'" json:"yjuser_id" form:"yjuser_id" xml:"yjuser_id"`
 	// BfFeeTime defined
 	BfFeeTime null.Time `xorm:"datetime 'bf_fee_time'" json:"bf_fee_time" form:"bf_fee_time" xml:"bf_fee_time"`
+}
+
+// Marshal defined
+func (m *Fee) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Fee) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

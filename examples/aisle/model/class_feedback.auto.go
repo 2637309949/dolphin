@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -58,6 +59,16 @@ type ClassFeedback struct {
 	See null.Int `xorm:"int(11) 'see'" json:"see" form:"see" xml:"see"`
 	// IfSendStu defined
 	IfSendStu null.Int `xorm:"int(11) default(3) 'if_send_stu'" json:"if_send_stu" form:"if_send_stu" xml:"if_send_stu"`
+}
+
+// Marshal defined
+func (m *ClassFeedback) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassFeedback) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

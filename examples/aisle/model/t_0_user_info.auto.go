@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -110,6 +111,16 @@ type T0UserInfo struct {
 	OfHourType null.Int `xorm:"int(11) 'of_hour_type'" json:"of_hour_type" form:"of_hour_type" xml:"of_hour_type"`
 	// IfShow defined
 	IfShow null.Int `xorm:"int(11) 'if_show'" json:"if_show" form:"if_show" xml:"if_show"`
+}
+
+// Marshal defined
+func (m *T0UserInfo) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *T0UserInfo) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

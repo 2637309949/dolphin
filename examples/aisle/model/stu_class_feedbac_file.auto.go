@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type StuClassFeedbacFile struct {
 	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
 	// CcsId defined
 	CcsId null.Int `xorm:"int(11) 'ccs_id'" json:"ccs_id" form:"ccs_id" xml:"ccs_id"`
+}
+
+// Marshal defined
+func (m *StuClassFeedbacFile) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuClassFeedbacFile) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

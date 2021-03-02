@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -66,6 +67,16 @@ type ScClassTea struct {
 	Remark null.String `xorm:"varchar(100) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	// ZdNotReason defined
 	ZdNotReason null.Int `xorm:"int(11) 'zd_not_reason'" json:"zd_not_reason" form:"zd_not_reason" xml:"zd_not_reason"`
+}
+
+// Marshal defined
+func (m *ScClassTea) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ScClassTea) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

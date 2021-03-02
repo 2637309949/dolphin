@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type LevelUnit struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// UnitTotalScore defined
 	UnitTotalScore null.Float `xorm:"float(50,2) 'unit_total_score'" json:"unit_total_score" form:"unit_total_score" xml:"unit_total_score"`
+}
+
+// Marshal defined
+func (m *LevelUnit) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *LevelUnit) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

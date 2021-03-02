@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -46,6 +47,16 @@ type StuClassFeedback struct {
 	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 	// See defined
 	See null.Int `xorm:"int(11) 'see'" json:"see" form:"see" xml:"see"`
+}
+
+// Marshal defined
+func (m *StuClassFeedback) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuClassFeedback) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

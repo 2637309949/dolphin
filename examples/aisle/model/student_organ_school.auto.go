@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type StudentOrganSchool struct {
 	StuGxYy null.Int `xorm:"int(11) 'stu_gx_yy'" json:"stu_gx_yy" form:"stu_gx_yy" xml:"stu_gx_yy"`
 	// SfPlzx defined
 	SfPlzx null.Int `xorm:"int(11) 'sf_plzx'" json:"sf_plzx" form:"sf_plzx" xml:"sf_plzx"`
+}
+
+// Marshal defined
+func (m *StudentOrganSchool) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentOrganSchool) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

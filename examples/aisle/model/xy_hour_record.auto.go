@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -49,6 +50,16 @@ type XyHourRecord struct {
 	PkOf null.Int `xorm:"int(11) 'pk_of'" json:"pk_of" form:"pk_of" xml:"pk_of"`
 	// SctIds defined
 	SctIds null.String `xorm:"varchar(500) 'sct_ids'" json:"sct_ids" form:"sct_ids" xml:"sct_ids"`
+}
+
+// Marshal defined
+func (m *XyHourRecord) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *XyHourRecord) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

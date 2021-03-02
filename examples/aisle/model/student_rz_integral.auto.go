@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -46,6 +47,16 @@ type StudentRzIntegral struct {
 	FeeId null.Int `xorm:"int(11) 'fee_id'" json:"fee_id" form:"fee_id" xml:"fee_id"`
 	// PkOdd defined
 	PkOdd null.Int `xorm:"int(11) 'pk_odd'" json:"pk_odd" form:"pk_odd" xml:"pk_odd"`
+}
+
+// Marshal defined
+func (m *StudentRzIntegral) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentRzIntegral) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

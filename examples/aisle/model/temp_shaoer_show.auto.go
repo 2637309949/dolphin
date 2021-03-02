@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -20,6 +21,16 @@ type TempShaoerShow struct {
 	UserPhoneNum null.String `xorm:"varchar(255) 'user_phone_num'" json:"user_phone_num" form:"user_phone_num" xml:"user_phone_num"`
 	// PhoneType defined
 	PhoneType null.String `xorm:"varchar(255) 'phone_type'" json:"phone_type" form:"phone_type" xml:"phone_type"`
+}
+
+// Marshal defined
+func (m *TempShaoerShow) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *TempShaoerShow) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -46,6 +47,16 @@ type ClassScheduleTask struct {
 	IfSendStu null.Int `xorm:"int(11) default(3) 'if_send_stu'" json:"if_send_stu" form:"if_send_stu" xml:"if_send_stu"`
 	// IfSendTa defined
 	IfSendTa null.Int `xorm:"int(11) default(3) 'if_send_ta'" json:"if_send_ta" form:"if_send_ta" xml:"if_send_ta"`
+}
+
+// Marshal defined
+func (m *ClassScheduleTask) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassScheduleTask) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

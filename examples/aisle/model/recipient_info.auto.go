@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -42,6 +43,16 @@ type RecipientInfo struct {
 	RecipientRegion null.String `xorm:"varchar(100) 'recipient_region'" json:"recipient_region" form:"recipient_region" xml:"recipient_region"`
 	// IfDefault defined
 	IfDefault null.Int `xorm:"int(11) 'if_default'" json:"if_default" form:"if_default" xml:"if_default"`
+}
+
+// Marshal defined
+func (m *RecipientInfo) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *RecipientInfo) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

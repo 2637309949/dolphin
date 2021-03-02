@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type TeacherServiceProcess struct {
 	CpcId null.Int `xorm:"int(11) 'cpc_id'" json:"cpc_id" form:"cpc_id" xml:"cpc_id"`
 	// TspNumber defined
 	TspNumber null.Int `xorm:"int(11) 'tsp_number'" json:"tsp_number" form:"tsp_number" xml:"tsp_number"`
+}
+
+// Marshal defined
+func (m *TeacherServiceProcess) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *TeacherServiceProcess) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

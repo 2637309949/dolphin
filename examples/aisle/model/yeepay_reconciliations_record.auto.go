@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -95,6 +96,16 @@ type YeepayReconciliationsRecord struct {
 	IfOwnRecon null.Int `xorm:"int(11) 'if_own_recon'" json:"if_own_recon" form:"if_own_recon" xml:"if_own_recon"`
 	// IfPerfect defined
 	IfPerfect null.Int `xorm:"int(11) 'if_perfect'" json:"if_perfect" form:"if_perfect" xml:"if_perfect"`
+}
+
+// Marshal defined
+func (m *YeepayReconciliationsRecord) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *YeepayReconciliationsRecord) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -106,6 +107,16 @@ type StudentClassType struct {
 	FqRefhour null.Float `xorm:"float(50,2) 'fq_refhour'" json:"fq_refhour" form:"fq_refhour" xml:"fq_refhour"`
 	// FqRefmoney defined
 	FqRefmoney null.Float `xorm:"float(50,2) 'fq_refmoney'" json:"fq_refmoney" form:"fq_refmoney" xml:"fq_refmoney"`
+}
+
+// Marshal defined
+func (m *StudentClassType) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentClassType) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

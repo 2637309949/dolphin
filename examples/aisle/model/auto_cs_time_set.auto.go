@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type AutoCsTimeSet struct {
 	StartTimeStr null.String `xorm:"varchar(5) 'start_time_str'" json:"start_time_str" form:"start_time_str" xml:"start_time_str"`
 	// EndTimeStr defined
 	EndTimeStr null.String `xorm:"varchar(5) 'end_time_str'" json:"end_time_str" form:"end_time_str" xml:"end_time_str"`
+}
+
+// Marshal defined
+func (m *AutoCsTimeSet) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *AutoCsTimeSet) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

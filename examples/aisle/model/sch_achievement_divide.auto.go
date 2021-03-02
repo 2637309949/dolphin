@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type SchAchievementDivide struct {
 	Percent null.Float `xorm:"float(50,2) 'percent'" json:"percent" form:"percent" xml:"percent"`
 	// PkFee defined
 	PkFee null.Int `xorm:"int(11) 'pk_fee'" json:"pk_fee" form:"pk_fee" xml:"pk_fee"`
+}
+
+// Marshal defined
+func (m *SchAchievementDivide) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *SchAchievementDivide) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -62,6 +63,16 @@ type StudentClass struct {
 	OutDate null.Time `xorm:"datetime 'out_date'" json:"out_date" form:"out_date" xml:"out_date"`
 	// Remark defined
 	Remark null.String `xorm:"varchar(100) 'remark'" json:"remark" form:"remark" xml:"remark"`
+}
+
+// Marshal defined
+func (m *StudentClass) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentClass) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

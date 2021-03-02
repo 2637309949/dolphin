@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type GjssAppIntroduction struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// StuTeaDic defined
 	StuTeaDic null.Int `xorm:"int(11) 'stu_tea_dic'" json:"stu_tea_dic" form:"stu_tea_dic" xml:"stu_tea_dic"`
+}
+
+// Marshal defined
+func (m *GjssAppIntroduction) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *GjssAppIntroduction) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

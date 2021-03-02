@@ -46,15 +46,15 @@ func NewSysAppFun() *SysAppFun {
 // SysAppFunRoutes defined
 func SysAppFunRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/app/fun/add", Auth, SysAppFunInstance.Add)
-	group.Handle("POST", "/sys/app/fun/batch_add", Auth, SysAppFunInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/app/fun/del", Auth, SysAppFunInstance.Del)
-	group.Handle("DELETE", "/sys/app/fun/batch_del", Auth, SysAppFunInstance.BatchDel)
-	group.Handle("PUT", "/sys/app/fun/update", Auth, SysAppFunInstance.Update)
-	group.Handle("PUT", "/sys/app/fun/batch_update", Auth, SysAppFunInstance.BatchUpdate)
-	group.Handle("GET", "/sys/app/fun/page", Auth, SysAppFunInstance.Page)
-	group.Handle("GET", "/sys/app/fun/tree", Auth, SysAppFunInstance.Tree)
-	group.Handle("GET", "/sys/app/fun/get", Auth, SysAppFunInstance.Get)
+	group.Handle("POST", "/sys/app/fun/add", Auth("token"), SysAppFunInstance.Add)
+	group.Handle("POST", "/sys/app/fun/batch_add", Auth("token"), SysAppFunInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/app/fun/del", Auth("token"), SysAppFunInstance.Del)
+	group.Handle("DELETE", "/sys/app/fun/batch_del", Auth("token"), SysAppFunInstance.BatchDel)
+	group.Handle("PUT", "/sys/app/fun/update", Auth("token"), SysAppFunInstance.Update)
+	group.Handle("PUT", "/sys/app/fun/batch_update", Auth("token"), SysAppFunInstance.BatchUpdate)
+	group.Handle("GET", "/sys/app/fun/page", Auth("token"), SysAppFunInstance.Page)
+	group.Handle("GET", "/sys/app/fun/tree", Auth("token"), SysAppFunInstance.Tree)
+	group.Handle("GET", "/sys/app/fun/get", Auth("token"), SysAppFunInstance.Get)
 }
 
 // SysAppFunInstance defined
@@ -89,14 +89,14 @@ func NewSysArea() *SysArea {
 // SysAreaRoutes defined
 func SysAreaRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/area/add", Auth, SysAreaInstance.Add)
-	group.Handle("POST", "/sys/area/batch_add", Auth, SysAreaInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/area/del", Auth, SysAreaInstance.Del)
-	group.Handle("DELETE", "/sys/area/batch_del", Auth, SysAreaInstance.BatchDel)
-	group.Handle("PUT", "/sys/area/update", Auth, SysAreaInstance.Update)
-	group.Handle("PUT", "/sys/area/batch_update", Auth, SysAreaInstance.BatchUpdate)
-	group.Handle("GET", "/sys/area/page", Auth, SysAreaInstance.Page)
-	group.Handle("GET", "/sys/area/get", Auth, SysAreaInstance.Get)
+	group.Handle("POST", "/sys/area/add", Auth("token"), SysAreaInstance.Add)
+	group.Handle("POST", "/sys/area/batch_add", Auth("token"), SysAreaInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/area/del", Auth("token"), SysAreaInstance.Del)
+	group.Handle("DELETE", "/sys/area/batch_del", Auth("token"), SysAreaInstance.BatchDel)
+	group.Handle("PUT", "/sys/area/update", Auth("token"), SysAreaInstance.Update)
+	group.Handle("PUT", "/sys/area/batch_update", Auth("token"), SysAreaInstance.BatchUpdate)
+	group.Handle("GET", "/sys/area/page", Auth("token"), SysAreaInstance.Page)
+	group.Handle("GET", "/sys/area/get", Auth("token"), SysAreaInstance.Get)
 }
 
 // SysAreaInstance defined
@@ -135,16 +135,16 @@ func NewSysAttachment() *SysAttachment {
 // SysAttachmentRoutes defined
 func SysAttachmentRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/attachment/add", Auth, SysAttachmentInstance.Add)
-	group.Handle("POST", "/sys/attachment/batch_add", Auth, SysAttachmentInstance.BatchAdd)
-	group.Handle("POST", "/sys/attachment/upload", Auth, SysAttachmentInstance.Upload)
+	group.Handle("POST", "/sys/attachment/add", Auth("token"), SysAttachmentInstance.Add)
+	group.Handle("POST", "/sys/attachment/batch_add", Auth("token"), SysAttachmentInstance.BatchAdd)
+	group.Handle("POST", "/sys/attachment/upload", Auth("token"), SysAttachmentInstance.Upload)
 	group.Handle("GET", "/sys/attachment/export", SysAttachmentInstance.Export)
-	group.Handle("DELETE", "/sys/attachment/del", Auth, SysAttachmentInstance.Del)
-	group.Handle("POST", "/sys/attachment/batch_del", Auth, SysAttachmentInstance.BatchDel)
-	group.Handle("PUT", "/sys/attachment/update", Auth, SysAttachmentInstance.Update)
-	group.Handle("POST", "/sys/attachment/batch_update", Auth, SysAttachmentInstance.BatchUpdate)
-	group.Handle("GET", "/sys/attachment/page", Auth, SysAttachmentInstance.Page)
-	group.Handle("GET", "/sys/attachment/get", Auth, SysAttachmentInstance.Get)
+	group.Handle("DELETE", "/sys/attachment/del", Auth("token"), SysAttachmentInstance.Del)
+	group.Handle("POST", "/sys/attachment/batch_del", Auth("token"), SysAttachmentInstance.BatchDel)
+	group.Handle("PUT", "/sys/attachment/update", Auth("token"), SysAttachmentInstance.Update)
+	group.Handle("POST", "/sys/attachment/batch_update", Auth("token"), SysAttachmentInstance.BatchUpdate)
+	group.Handle("GET", "/sys/attachment/page", Auth("token"), SysAttachmentInstance.Page)
+	group.Handle("GET", "/sys/attachment/get", Auth("token"), SysAttachmentInstance.Get)
 }
 
 // SysAttachmentInstance defined
@@ -194,7 +194,7 @@ func SysCasRoutes(engine *Engine) {
 	group.Handle("GET", "/sys/cas/oauth2", SysCasInstance.Oauth2)
 	group.Handle("GET", "/sys/cas/refresh", SysCasInstance.Refresh)
 	group.Handle("GET", "/sys/cas/check", SysCasInstance.Check)
-	group.Handle("GET", "/sys/cas/profile", Auth, SysCasInstance.Profile)
+	group.Handle("GET", "/sys/cas/profile", Auth("token"), SysCasInstance.Profile)
 	group.Handle("GET", "/sys/cas/qrcode", SysCasInstance.Qrcode)
 }
 
@@ -230,14 +230,14 @@ func NewSysClient() *SysClient {
 // SysClientRoutes defined
 func SysClientRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/client/add", Auth, SysClientInstance.Add)
-	group.Handle("POST", "/sys/client/batch_add", Auth, SysClientInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/client/del", Auth, SysClientInstance.Del)
-	group.Handle("DELETE", "/sys/client/batch_del", Auth, SysClientInstance.BatchDel)
-	group.Handle("PUT", "/sys/client/update", Auth, SysClientInstance.Update)
-	group.Handle("PUT", "/sys/client/batch_update", Auth, SysClientInstance.BatchUpdate)
-	group.Handle("GET", "/sys/client/page", Auth, SysClientInstance.Page)
-	group.Handle("GET", "/sys/client/get", Auth, SysClientInstance.Get)
+	group.Handle("POST", "/sys/client/add", Auth("token"), SysClientInstance.Add)
+	group.Handle("POST", "/sys/client/batch_add", Auth("token"), SysClientInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/client/del", Auth("token"), SysClientInstance.Del)
+	group.Handle("DELETE", "/sys/client/batch_del", Auth("token"), SysClientInstance.BatchDel)
+	group.Handle("PUT", "/sys/client/update", Auth("token"), SysClientInstance.Update)
+	group.Handle("PUT", "/sys/client/batch_update", Auth("token"), SysClientInstance.BatchUpdate)
+	group.Handle("GET", "/sys/client/page", Auth("token"), SysClientInstance.Page)
+	group.Handle("GET", "/sys/client/get", Auth("token"), SysClientInstance.Get)
 }
 
 // SysClientInstance defined
@@ -272,14 +272,14 @@ func NewSysComment() *SysComment {
 // SysCommentRoutes defined
 func SysCommentRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/comment/add", Auth, SysCommentInstance.Add)
-	group.Handle("POST", "/sys/comment/batch_add", Auth, SysCommentInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/comment/del", Auth, SysCommentInstance.Del)
-	group.Handle("DELETE", "/sys/comment/batch_del", Auth, SysCommentInstance.BatchDel)
-	group.Handle("PUT", "/sys/comment/update", Auth, SysCommentInstance.Update)
-	group.Handle("PUT", "/sys/comment/batch_update", Auth, SysCommentInstance.BatchUpdate)
-	group.Handle("GET", "/sys/comment/page", Auth, SysCommentInstance.Page)
-	group.Handle("GET", "/sys/comment/get", Auth, SysCommentInstance.Get)
+	group.Handle("POST", "/sys/comment/add", Auth("token"), SysCommentInstance.Add)
+	group.Handle("POST", "/sys/comment/batch_add", Auth("token"), SysCommentInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/comment/del", Auth("token"), SysCommentInstance.Del)
+	group.Handle("DELETE", "/sys/comment/batch_del", Auth("token"), SysCommentInstance.BatchDel)
+	group.Handle("PUT", "/sys/comment/update", Auth("token"), SysCommentInstance.Update)
+	group.Handle("PUT", "/sys/comment/batch_update", Auth("token"), SysCommentInstance.BatchUpdate)
+	group.Handle("GET", "/sys/comment/page", Auth("token"), SysCommentInstance.Page)
+	group.Handle("GET", "/sys/comment/get", Auth("token"), SysCommentInstance.Get)
 }
 
 // SysCommentInstance defined
@@ -314,14 +314,14 @@ func NewSysDataPermission() *SysDataPermission {
 // SysDataPermissionRoutes defined
 func SysDataPermissionRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/data/permission/add", Auth, SysDataPermissionInstance.Add)
-	group.Handle("POST", "/sys/data/permission/batch_add", Auth, SysDataPermissionInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/data/permission/del", Auth, SysDataPermissionInstance.Del)
-	group.Handle("DELETE", "/sys/data/permission/batch_del", Auth, SysDataPermissionInstance.BatchDel)
-	group.Handle("PUT", "/sys/data/permission/update", Auth, SysDataPermissionInstance.Update)
-	group.Handle("PUT", "/sys/data/permission/batch_update", Auth, SysDataPermissionInstance.BatchUpdate)
-	group.Handle("GET", "/sys/data/permission/page", Auth, SysDataPermissionInstance.Page)
-	group.Handle("GET", "/sys/data/permission/get", Auth, SysDataPermissionInstance.Get)
+	group.Handle("POST", "/sys/data/permission/add", Auth("token"), SysDataPermissionInstance.Add)
+	group.Handle("POST", "/sys/data/permission/batch_add", Auth("token"), SysDataPermissionInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/data/permission/del", Auth("token"), SysDataPermissionInstance.Del)
+	group.Handle("DELETE", "/sys/data/permission/batch_del", Auth("token"), SysDataPermissionInstance.BatchDel)
+	group.Handle("PUT", "/sys/data/permission/update", Auth("token"), SysDataPermissionInstance.Update)
+	group.Handle("PUT", "/sys/data/permission/batch_update", Auth("token"), SysDataPermissionInstance.BatchUpdate)
+	group.Handle("GET", "/sys/data/permission/page", Auth("token"), SysDataPermissionInstance.Page)
+	group.Handle("GET", "/sys/data/permission/get", Auth("token"), SysDataPermissionInstance.Get)
 }
 
 // SysDataPermissionInstance defined
@@ -362,17 +362,17 @@ func NewDebug() *Debug {
 // DebugRoutes defined
 func DebugRoutes(engine *Engine) {
 	group := engine.Group("/debug")
-	group.Handle("GET", "/pprof/", Auth, Roles("X8e6D3y60K"), DebugInstance.Pprof)
-	group.Handle("GET", "/pprof/heap", Auth, Roles("X8e6D3y60K"), DebugInstance.Heap)
-	group.Handle("GET", "/pprof/goroutine", Auth, Roles("X8e6D3y60K"), DebugInstance.Goroutine)
-	group.Handle("GET", "/pprof/allocs", Auth, Roles("X8e6D3y60K"), DebugInstance.Allocs)
-	group.Handle("GET", "/pprof/block", Auth, Roles("X8e6D3y60K"), DebugInstance.Block)
-	group.Handle("GET", "/pprof/threadcreate", Auth, Roles("X8e6D3y60K"), DebugInstance.Threadcreate)
-	group.Handle("GET", "/pprof/cmdline", Auth, Roles("X8e6D3y60K"), DebugInstance.Cmdline)
-	group.Handle("GET", "/pprof/profile", Auth, Roles("X8e6D3y60K"), DebugInstance.Profile)
-	group.Handle("GET,POST", "/pprof/symbol", Auth, Roles("X8e6D3y60K"), DebugInstance.Symbol)
-	group.Handle("GET", "/pprof/trace", Auth, Roles("X8e6D3y60K"), DebugInstance.Trace)
-	group.Handle("GET", "/pprof/mutex", Auth, Roles("X8e6D3y60K"), DebugInstance.Mutex)
+	group.Handle("GET", "/pprof/", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Pprof)
+	group.Handle("GET", "/pprof/heap", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Heap)
+	group.Handle("GET", "/pprof/goroutine", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Goroutine)
+	group.Handle("GET", "/pprof/allocs", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Allocs)
+	group.Handle("GET", "/pprof/block", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Block)
+	group.Handle("GET", "/pprof/threadcreate", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Threadcreate)
+	group.Handle("GET", "/pprof/cmdline", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Cmdline)
+	group.Handle("GET", "/pprof/profile", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Profile)
+	group.Handle("GET,POST", "/pprof/symbol", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Symbol)
+	group.Handle("GET", "/pprof/trace", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Trace)
+	group.Handle("GET", "/pprof/mutex", Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Mutex)
 }
 
 // DebugInstance defined
@@ -428,14 +428,14 @@ func NewSysDomain() *SysDomain {
 // SysDomainRoutes defined
 func SysDomainRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/domain/add", Auth, SysDomainInstance.Add)
-	group.Handle("POST", "/sys/domain/batch_add", Auth, SysDomainInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/domain/del", Auth, SysDomainInstance.Del)
-	group.Handle("DELETE", "/sys/domain/batch_del", Auth, SysDomainInstance.BatchDel)
-	group.Handle("PUT", "/sys/domain/update", Auth, SysDomainInstance.Update)
-	group.Handle("PUT", "/sys/domain/batch_update", Auth, SysDomainInstance.BatchUpdate)
-	group.Handle("GET", "/sys/domain/page", Auth, SysDomainInstance.Page)
-	group.Handle("GET", "/sys/domain/get", Auth, SysDomainInstance.Get)
+	group.Handle("POST", "/sys/domain/add", Auth("token"), SysDomainInstance.Add)
+	group.Handle("POST", "/sys/domain/batch_add", Auth("token"), SysDomainInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/domain/del", Auth("token"), SysDomainInstance.Del)
+	group.Handle("DELETE", "/sys/domain/batch_del", Auth("token"), SysDomainInstance.BatchDel)
+	group.Handle("PUT", "/sys/domain/update", Auth("token"), SysDomainInstance.Update)
+	group.Handle("PUT", "/sys/domain/batch_update", Auth("token"), SysDomainInstance.BatchUpdate)
+	group.Handle("GET", "/sys/domain/page", Auth("token"), SysDomainInstance.Page)
+	group.Handle("GET", "/sys/domain/get", Auth("token"), SysDomainInstance.Get)
 }
 
 // SysDomainInstance defined
@@ -474,16 +474,16 @@ func NewSysMenu() *SysMenu {
 // SysMenuRoutes defined
 func SysMenuRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/menu/add", Auth, SysMenuInstance.Add)
-	group.Handle("POST", "/sys/menu/batch_add", Auth, SysMenuInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/menu/del", Auth, SysMenuInstance.Del)
-	group.Handle("DELETE", "/sys/menu/batch_del", Auth, SysMenuInstance.BatchDel)
-	group.Handle("PUT", "/sys/menu/update", Auth, SysMenuInstance.Update)
-	group.Handle("PUT", "/sys/menu/batch_update", Auth, SysMenuInstance.BatchUpdate)
-	group.Handle("GET", "/sys/menu/sidebar", Auth, SysMenuInstance.Sidebar)
-	group.Handle("GET", "/sys/menu/page", Auth, SysMenuInstance.Page)
-	group.Handle("GET", "/sys/menu/tree", Auth, SysMenuInstance.Tree)
-	group.Handle("GET", "/sys/menu/get", Auth, SysMenuInstance.Get)
+	group.Handle("POST", "/sys/menu/add", Auth("token"), SysMenuInstance.Add)
+	group.Handle("POST", "/sys/menu/batch_add", Auth("token"), SysMenuInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/menu/del", Auth("token"), SysMenuInstance.Del)
+	group.Handle("DELETE", "/sys/menu/batch_del", Auth("token"), SysMenuInstance.BatchDel)
+	group.Handle("PUT", "/sys/menu/update", Auth("token"), SysMenuInstance.Update)
+	group.Handle("PUT", "/sys/menu/batch_update", Auth("token"), SysMenuInstance.BatchUpdate)
+	group.Handle("GET", "/sys/menu/sidebar", Auth("token"), SysMenuInstance.Sidebar)
+	group.Handle("GET", "/sys/menu/page", Auth("token"), SysMenuInstance.Page)
+	group.Handle("GET", "/sys/menu/tree", Auth("token"), SysMenuInstance.Tree)
+	group.Handle("GET", "/sys/menu/get", Auth("token"), SysMenuInstance.Get)
 }
 
 // SysMenuInstance defined
@@ -518,14 +518,14 @@ func NewSysNotification() *SysNotification {
 // SysNotificationRoutes defined
 func SysNotificationRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/notification/add", Auth, SysNotificationInstance.Add)
-	group.Handle("POST", "/sys/notification/batch_add", Auth, SysNotificationInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/notification/del", Auth, SysNotificationInstance.Del)
-	group.Handle("DELETE", "/sys/notification/batch_del", Auth, SysNotificationInstance.BatchDel)
-	group.Handle("PUT", "/sys/notification/update", Auth, SysNotificationInstance.Update)
-	group.Handle("PUT", "/sys/notification/batch_update", Auth, SysNotificationInstance.BatchUpdate)
-	group.Handle("GET", "/sys/notification/page", Auth, SysNotificationInstance.Page)
-	group.Handle("GET", "/sys/notification/get", Auth, SysNotificationInstance.Get)
+	group.Handle("POST", "/sys/notification/add", Auth("token"), SysNotificationInstance.Add)
+	group.Handle("POST", "/sys/notification/batch_add", Auth("token"), SysNotificationInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/notification/del", Auth("token"), SysNotificationInstance.Del)
+	group.Handle("DELETE", "/sys/notification/batch_del", Auth("token"), SysNotificationInstance.BatchDel)
+	group.Handle("PUT", "/sys/notification/update", Auth("token"), SysNotificationInstance.Update)
+	group.Handle("PUT", "/sys/notification/batch_update", Auth("token"), SysNotificationInstance.BatchUpdate)
+	group.Handle("GET", "/sys/notification/page", Auth("token"), SysNotificationInstance.Page)
+	group.Handle("GET", "/sys/notification/get", Auth("token"), SysNotificationInstance.Get)
 }
 
 // SysNotificationInstance defined
@@ -560,14 +560,14 @@ func NewSysOptionset() *SysOptionset {
 // SysOptionsetRoutes defined
 func SysOptionsetRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/optionset/add", Auth, SysOptionsetInstance.Add)
-	group.Handle("POST", "/sys/optionset/batch_add", Auth, SysOptionsetInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/optionset/del", Auth, SysOptionsetInstance.Del)
-	group.Handle("DELETE", "/sys/optionset/batch_del", Auth, SysOptionsetInstance.BatchDel)
-	group.Handle("PUT", "/sys/optionset/update", Auth, SysOptionsetInstance.Update)
-	group.Handle("PUT", "/sys/optionset/batch_update", Auth, SysOptionsetInstance.BatchUpdate)
-	group.Handle("GET", "/sys/optionset/page", Auth, SysOptionsetInstance.Page)
-	group.Handle("GET", "/sys/optionset/get", Auth, SysOptionsetInstance.Get)
+	group.Handle("POST", "/sys/optionset/add", Auth("token"), SysOptionsetInstance.Add)
+	group.Handle("POST", "/sys/optionset/batch_add", Auth("token"), SysOptionsetInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/optionset/del", Auth("token"), SysOptionsetInstance.Del)
+	group.Handle("DELETE", "/sys/optionset/batch_del", Auth("token"), SysOptionsetInstance.BatchDel)
+	group.Handle("PUT", "/sys/optionset/update", Auth("token"), SysOptionsetInstance.Update)
+	group.Handle("PUT", "/sys/optionset/batch_update", Auth("token"), SysOptionsetInstance.BatchUpdate)
+	group.Handle("GET", "/sys/optionset/page", Auth("token"), SysOptionsetInstance.Page)
+	group.Handle("GET", "/sys/optionset/get", Auth("token"), SysOptionsetInstance.Get)
 }
 
 // SysOptionsetInstance defined
@@ -604,15 +604,15 @@ func NewSysOrg() *SysOrg {
 // SysOrgRoutes defined
 func SysOrgRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/org/add", Auth, SysOrgInstance.Add)
-	group.Handle("POST", "/sys/org/batch_add", Auth, SysOrgInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/org/del", Auth, SysOrgInstance.Del)
-	group.Handle("DELETE", "/sys/org/batch_del", Auth, SysOrgInstance.BatchDel)
-	group.Handle("PUT", "/sys/org/update", Auth, SysOrgInstance.Update)
-	group.Handle("PUT", "/sys/org/batch_update", Auth, SysOrgInstance.BatchUpdate)
-	group.Handle("GET", "/sys/org/page", Auth, SysOrgInstance.Page)
-	group.Handle("GET", "/sys/org/tree", Auth, SysOrgInstance.Tree)
-	group.Handle("GET", "/sys/org/get", Auth, SysOrgInstance.Get)
+	group.Handle("POST", "/sys/org/add", Auth("token"), SysOrgInstance.Add)
+	group.Handle("POST", "/sys/org/batch_add", Auth("token"), SysOrgInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/org/del", Auth("token"), SysOrgInstance.Del)
+	group.Handle("DELETE", "/sys/org/batch_del", Auth("token"), SysOrgInstance.BatchDel)
+	group.Handle("PUT", "/sys/org/update", Auth("token"), SysOrgInstance.Update)
+	group.Handle("PUT", "/sys/org/batch_update", Auth("token"), SysOrgInstance.BatchUpdate)
+	group.Handle("GET", "/sys/org/page", Auth("token"), SysOrgInstance.Page)
+	group.Handle("GET", "/sys/org/tree", Auth("token"), SysOrgInstance.Tree)
+	group.Handle("GET", "/sys/org/get", Auth("token"), SysOrgInstance.Get)
 }
 
 // SysOrgInstance defined
@@ -647,14 +647,14 @@ func NewSysPermission() *SysPermission {
 // SysPermissionRoutes defined
 func SysPermissionRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/permission/add", Auth, SysPermissionInstance.Add)
-	group.Handle("POST", "/sys/permission/batch_add", Auth, SysPermissionInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/permission/del", Auth, SysPermissionInstance.Del)
-	group.Handle("DELETE", "/sys/permission/batch_del", Auth, SysPermissionInstance.BatchDel)
-	group.Handle("PUT", "/sys/permission/update", Auth, SysPermissionInstance.Update)
-	group.Handle("PUT", "/sys/permission/batch_update", Auth, SysPermissionInstance.BatchUpdate)
-	group.Handle("GET", "/sys/permission/page", Auth, SysPermissionInstance.Page)
-	group.Handle("GET", "/sys/permission/get", Auth, SysPermissionInstance.Get)
+	group.Handle("POST", "/sys/permission/add", Auth("token"), SysPermissionInstance.Add)
+	group.Handle("POST", "/sys/permission/batch_add", Auth("token"), SysPermissionInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/permission/del", Auth("token"), SysPermissionInstance.Del)
+	group.Handle("DELETE", "/sys/permission/batch_del", Auth("token"), SysPermissionInstance.BatchDel)
+	group.Handle("PUT", "/sys/permission/update", Auth("token"), SysPermissionInstance.Update)
+	group.Handle("PUT", "/sys/permission/batch_update", Auth("token"), SysPermissionInstance.BatchUpdate)
+	group.Handle("GET", "/sys/permission/page", Auth("token"), SysPermissionInstance.Page)
+	group.Handle("GET", "/sys/permission/get", Auth("token"), SysPermissionInstance.Get)
 }
 
 // SysPermissionInstance defined
@@ -693,16 +693,16 @@ func NewSysRole() *SysRole {
 // SysRoleRoutes defined
 func SysRoleRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/role/add", Auth, SysRoleInstance.Add)
-	group.Handle("POST", "/sys/role/batch_add", Auth, SysRoleInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/role/del", Auth, SysRoleInstance.Del)
-	group.Handle("DELETE", "/sys/role/batch_del", Auth, SysRoleInstance.BatchDel)
-	group.Handle("PUT", "/sys/role/update", Auth, SysRoleInstance.Update)
-	group.Handle("POST", "/sys/role/batch_update", Auth, SysRoleInstance.BatchUpdate)
-	group.Handle("GET", "/sys/role/page", Auth, SysRoleInstance.Page)
-	group.Handle("GET", "/sys/role/role_menu_tree", Auth, SysRoleInstance.RoleMenuTree)
-	group.Handle("GET", "/sys/role/role_app_fun_tree", Auth, SysRoleInstance.RoleAppFunTree)
-	group.Handle("GET", "/sys/role/get", Auth, SysRoleInstance.Get)
+	group.Handle("POST", "/sys/role/add", Auth("token"), SysRoleInstance.Add)
+	group.Handle("POST", "/sys/role/batch_add", Auth("token"), SysRoleInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/role/del", Auth("token"), SysRoleInstance.Del)
+	group.Handle("DELETE", "/sys/role/batch_del", Auth("token"), SysRoleInstance.BatchDel)
+	group.Handle("PUT", "/sys/role/update", Auth("token"), SysRoleInstance.Update)
+	group.Handle("POST", "/sys/role/batch_update", Auth("token"), SysRoleInstance.BatchUpdate)
+	group.Handle("GET", "/sys/role/page", Auth("token"), SysRoleInstance.Page)
+	group.Handle("GET", "/sys/role/role_menu_tree", Auth("token"), SysRoleInstance.RoleMenuTree)
+	group.Handle("GET", "/sys/role/role_app_fun_tree", Auth("token"), SysRoleInstance.RoleAppFunTree)
+	group.Handle("GET", "/sys/role/get", Auth("token"), SysRoleInstance.Get)
 }
 
 // SysRoleInstance defined
@@ -737,14 +737,14 @@ func NewSysRoleMenu() *SysRoleMenu {
 // SysRoleMenuRoutes defined
 func SysRoleMenuRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/role/menu/add", Auth, SysRoleMenuInstance.Add)
-	group.Handle("POST", "/sys/role/menu/batch_add", Auth, SysRoleMenuInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/role/menu/del", Auth, SysRoleMenuInstance.Del)
-	group.Handle("DELETE", "/sys/role/menu/batch_del", Auth, SysRoleMenuInstance.BatchDel)
-	group.Handle("PUT", "/sys/role/menu/update", Auth, SysRoleMenuInstance.Update)
-	group.Handle("PUT", "/sys/role/menu/batch_update", Auth, SysRoleMenuInstance.BatchUpdate)
-	group.Handle("GET", "/sys/role/menu/page", Auth, SysRoleMenuInstance.Page)
-	group.Handle("GET", "/sys/role/menu/get", Auth, SysRoleMenuInstance.Get)
+	group.Handle("POST", "/sys/role/menu/add", Auth("token"), SysRoleMenuInstance.Add)
+	group.Handle("POST", "/sys/role/menu/batch_add", Auth("token"), SysRoleMenuInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/role/menu/del", Auth("token"), SysRoleMenuInstance.Del)
+	group.Handle("DELETE", "/sys/role/menu/batch_del", Auth("token"), SysRoleMenuInstance.BatchDel)
+	group.Handle("PUT", "/sys/role/menu/update", Auth("token"), SysRoleMenuInstance.Update)
+	group.Handle("PUT", "/sys/role/menu/batch_update", Auth("token"), SysRoleMenuInstance.BatchUpdate)
+	group.Handle("GET", "/sys/role/menu/page", Auth("token"), SysRoleMenuInstance.Page)
+	group.Handle("GET", "/sys/role/menu/get", Auth("token"), SysRoleMenuInstance.Get)
 }
 
 // SysRoleMenuInstance defined
@@ -779,14 +779,14 @@ func NewSysSchedule() *SysSchedule {
 // SysScheduleRoutes defined
 func SysScheduleRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/schedule/add", Auth, SysScheduleInstance.Add)
-	group.Handle("POST", "/sys/schedule/batch_add", Auth, SysScheduleInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/schedule/del", Auth, SysScheduleInstance.Del)
-	group.Handle("DELETE", "/sys/schedule/batch_del", Auth, SysScheduleInstance.BatchDel)
-	group.Handle("PUT", "/sys/schedule/update", Auth, SysScheduleInstance.Update)
-	group.Handle("POST", "/sys/schedule/batch_update", Auth, SysScheduleInstance.BatchUpdate)
-	group.Handle("GET", "/sys/schedule/page", Auth, SysScheduleInstance.Page)
-	group.Handle("GET", "/sys/schedule/get", Auth, SysScheduleInstance.Get)
+	group.Handle("POST", "/sys/schedule/add", Auth("token"), SysScheduleInstance.Add)
+	group.Handle("POST", "/sys/schedule/batch_add", Auth("token"), SysScheduleInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/schedule/del", Auth("token"), SysScheduleInstance.Del)
+	group.Handle("DELETE", "/sys/schedule/batch_del", Auth("token"), SysScheduleInstance.BatchDel)
+	group.Handle("PUT", "/sys/schedule/update", Auth("token"), SysScheduleInstance.Update)
+	group.Handle("POST", "/sys/schedule/batch_update", Auth("token"), SysScheduleInstance.BatchUpdate)
+	group.Handle("GET", "/sys/schedule/page", Auth("token"), SysScheduleInstance.Page)
+	group.Handle("GET", "/sys/schedule/get", Auth("token"), SysScheduleInstance.Get)
 }
 
 // SysScheduleInstance defined
@@ -807,7 +807,7 @@ func NewSysScheduleHistory() *SysScheduleHistory {
 // SysScheduleHistoryRoutes defined
 func SysScheduleHistoryRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("GET", "/sys/schedule/history/page", Auth, SysScheduleHistoryInstance.Page)
+	group.Handle("GET", "/sys/schedule/history/page", Auth("token"), SysScheduleHistoryInstance.Page)
 }
 
 // SysScheduleHistoryInstance defined
@@ -836,11 +836,11 @@ func NewSysScheduling() *SysScheduling {
 // SysSchedulingRoutes defined
 func SysSchedulingRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/scheduling/add", Auth, SysSchedulingInstance.Add)
-	group.Handle("DELETE", "/sys/scheduling/del", Auth, SysSchedulingInstance.Del)
-	group.Handle("PUT", "/sys/scheduling/update", Auth, SysSchedulingInstance.Update)
-	group.Handle("GET", "/sys/scheduling/page", Auth, SysSchedulingInstance.Page)
-	group.Handle("GET", "/sys/scheduling/get", Auth, SysSchedulingInstance.Get)
+	group.Handle("POST", "/sys/scheduling/add", Auth("token"), SysSchedulingInstance.Add)
+	group.Handle("DELETE", "/sys/scheduling/del", Auth("token"), SysSchedulingInstance.Del)
+	group.Handle("PUT", "/sys/scheduling/update", Auth("token"), SysSchedulingInstance.Update)
+	group.Handle("GET", "/sys/scheduling/page", Auth("token"), SysSchedulingInstance.Page)
+	group.Handle("GET", "/sys/scheduling/get", Auth("token"), SysSchedulingInstance.Get)
 }
 
 // SysSchedulingInstance defined
@@ -875,14 +875,14 @@ func NewSysSetting() *SysSetting {
 // SysSettingRoutes defined
 func SysSettingRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/setting/add", Auth, SysSettingInstance.Add)
-	group.Handle("POST", "/sys/setting/batch_add", Auth, SysSettingInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/setting/del", Auth, SysSettingInstance.Del)
-	group.Handle("DELETE", "/sys/setting/batch_del", Auth, SysSettingInstance.BatchDel)
-	group.Handle("PUT", "/sys/setting/update", Auth, SysSettingInstance.Update)
-	group.Handle("PUT", "/sys/setting/batch_update", Auth, SysSettingInstance.BatchUpdate)
-	group.Handle("GET", "/sys/setting/page", Auth, SysSettingInstance.Page)
-	group.Handle("GET", "/sys/setting/get", Auth, SysSettingInstance.Get)
+	group.Handle("POST", "/sys/setting/add", Auth("token"), SysSettingInstance.Add)
+	group.Handle("POST", "/sys/setting/batch_add", Auth("token"), SysSettingInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/setting/del", Auth("token"), SysSettingInstance.Del)
+	group.Handle("DELETE", "/sys/setting/batch_del", Auth("token"), SysSettingInstance.BatchDel)
+	group.Handle("PUT", "/sys/setting/update", Auth("token"), SysSettingInstance.Update)
+	group.Handle("PUT", "/sys/setting/batch_update", Auth("token"), SysSettingInstance.BatchUpdate)
+	group.Handle("GET", "/sys/setting/page", Auth("token"), SysSettingInstance.Page)
+	group.Handle("GET", "/sys/setting/get", Auth("token"), SysSettingInstance.Get)
 }
 
 // SysSettingInstance defined
@@ -917,14 +917,14 @@ func NewSysTable() *SysTable {
 // SysTableRoutes defined
 func SysTableRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/table/add", Auth, SysTableInstance.Add)
-	group.Handle("POST", "/sys/table/batch_add", Auth, SysTableInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/table/del", Auth, SysTableInstance.Del)
-	group.Handle("DELETE", "/sys/table/batch_del", Auth, SysTableInstance.BatchDel)
-	group.Handle("PUT", "/sys/table/update", Auth, SysTableInstance.Update)
-	group.Handle("PUT", "/sys/table/batch_update", Auth, SysTableInstance.BatchUpdate)
-	group.Handle("GET", "/sys/table/page", Auth, SysTableInstance.Page)
-	group.Handle("GET", "/sys/table/get", Auth, SysTableInstance.Get)
+	group.Handle("POST", "/sys/table/add", Auth("token"), SysTableInstance.Add)
+	group.Handle("POST", "/sys/table/batch_add", Auth("token"), SysTableInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/table/del", Auth("token"), SysTableInstance.Del)
+	group.Handle("DELETE", "/sys/table/batch_del", Auth("token"), SysTableInstance.BatchDel)
+	group.Handle("PUT", "/sys/table/update", Auth("token"), SysTableInstance.Update)
+	group.Handle("PUT", "/sys/table/batch_update", Auth("token"), SysTableInstance.BatchUpdate)
+	group.Handle("GET", "/sys/table/page", Auth("token"), SysTableInstance.Page)
+	group.Handle("GET", "/sys/table/get", Auth("token"), SysTableInstance.Get)
 }
 
 // SysTableInstance defined
@@ -959,14 +959,14 @@ func NewSysTableColumn() *SysTableColumn {
 // SysTableColumnRoutes defined
 func SysTableColumnRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/table/column/add", Auth, SysTableColumnInstance.Add)
-	group.Handle("POST", "/sys/table/column/batch_add", Auth, SysTableColumnInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/table/column/del", Auth, SysTableColumnInstance.Del)
-	group.Handle("DELETE", "/sys/table/column/batch_del", Auth, SysTableColumnInstance.BatchDel)
-	group.Handle("PUT", "/sys/table/column/update", Auth, SysTableColumnInstance.Update)
-	group.Handle("PUT", "/sys/table/column/batch_update", Auth, SysTableColumnInstance.BatchUpdate)
-	group.Handle("GET", "/sys/table/column/page", Auth, SysTableColumnInstance.Page)
-	group.Handle("GET", "/sys/table/column/get", Auth, SysTableColumnInstance.Get)
+	group.Handle("POST", "/sys/table/column/add", Auth("token"), SysTableColumnInstance.Add)
+	group.Handle("POST", "/sys/table/column/batch_add", Auth("token"), SysTableColumnInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/table/column/del", Auth("token"), SysTableColumnInstance.Del)
+	group.Handle("DELETE", "/sys/table/column/batch_del", Auth("token"), SysTableColumnInstance.BatchDel)
+	group.Handle("PUT", "/sys/table/column/update", Auth("token"), SysTableColumnInstance.Update)
+	group.Handle("PUT", "/sys/table/column/batch_update", Auth("token"), SysTableColumnInstance.BatchUpdate)
+	group.Handle("GET", "/sys/table/column/page", Auth("token"), SysTableColumnInstance.Page)
+	group.Handle("GET", "/sys/table/column/get", Auth("token"), SysTableColumnInstance.Get)
 }
 
 // SysTableColumnInstance defined
@@ -1001,14 +1001,14 @@ func NewSysTag() *SysTag {
 // SysTagRoutes defined
 func SysTagRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/tag/add", Auth, SysTagInstance.Add)
-	group.Handle("POST", "/sys/tag/batch_add", Auth, SysTagInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/tag/del", Auth, SysTagInstance.Del)
-	group.Handle("DELETE", "/sys/tag/batch_del", Auth, SysTagInstance.BatchDel)
-	group.Handle("PUT", "/sys/tag/update", Auth, SysTagInstance.Update)
-	group.Handle("PUT", "/sys/tag/batch_update", Auth, SysTagInstance.BatchUpdate)
-	group.Handle("GET", "/sys/tag/page", Auth, SysTagInstance.Page)
-	group.Handle("GET", "/sys/tag/get", Auth, SysTagInstance.Get)
+	group.Handle("POST", "/sys/tag/add", Auth("token"), SysTagInstance.Add)
+	group.Handle("POST", "/sys/tag/batch_add", Auth("token"), SysTagInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/tag/del", Auth("token"), SysTagInstance.Del)
+	group.Handle("DELETE", "/sys/tag/batch_del", Auth("token"), SysTagInstance.BatchDel)
+	group.Handle("PUT", "/sys/tag/update", Auth("token"), SysTagInstance.Update)
+	group.Handle("PUT", "/sys/tag/batch_update", Auth("token"), SysTagInstance.BatchUpdate)
+	group.Handle("GET", "/sys/tag/page", Auth("token"), SysTagInstance.Page)
+	group.Handle("GET", "/sys/tag/get", Auth("token"), SysTagInstance.Get)
 }
 
 // SysTagInstance defined
@@ -1043,14 +1043,14 @@ func NewSysTagGroup() *SysTagGroup {
 // SysTagGroupRoutes defined
 func SysTagGroupRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/tag/group/add", Auth, SysTagGroupInstance.Add)
-	group.Handle("POST", "/sys/tag/group/batch_add", Auth, SysTagGroupInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/tag/group/del", Auth, SysTagGroupInstance.Del)
-	group.Handle("DELETE", "/sys/tag/group/batch_del", Auth, SysTagGroupInstance.BatchDel)
-	group.Handle("PUT", "/sys/tag/group/update", Auth, SysTagGroupInstance.Update)
-	group.Handle("PUT", "/sys/tag/group/batch_update", Auth, SysTagGroupInstance.BatchUpdate)
-	group.Handle("GET", "/sys/tag/group/page", Auth, SysTagGroupInstance.Page)
-	group.Handle("GET", "/sys/tag/group/get", Auth, SysTagGroupInstance.Get)
+	group.Handle("POST", "/sys/tag/group/add", Auth("token"), SysTagGroupInstance.Add)
+	group.Handle("POST", "/sys/tag/group/batch_add", Auth("token"), SysTagGroupInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/tag/group/del", Auth("token"), SysTagGroupInstance.Del)
+	group.Handle("DELETE", "/sys/tag/group/batch_del", Auth("token"), SysTagGroupInstance.BatchDel)
+	group.Handle("PUT", "/sys/tag/group/update", Auth("token"), SysTagGroupInstance.Update)
+	group.Handle("PUT", "/sys/tag/group/batch_update", Auth("token"), SysTagGroupInstance.BatchUpdate)
+	group.Handle("GET", "/sys/tag/group/page", Auth("token"), SysTagGroupInstance.Page)
+	group.Handle("GET", "/sys/tag/group/get", Auth("token"), SysTagGroupInstance.Get)
 }
 
 // SysTagGroupInstance defined
@@ -1073,8 +1073,8 @@ func NewSysTracker() *SysTracker {
 // SysTrackerRoutes defined
 func SysTrackerRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("GET", "/sys/tracker/page", Auth, SysTrackerInstance.Page)
-	group.Handle("GET", "/sys/tracker/get", Auth, SysTrackerInstance.Get)
+	group.Handle("GET", "/sys/tracker/page", Auth("token"), SysTrackerInstance.Page)
+	group.Handle("GET", "/sys/tracker/get", Auth("token"), SysTrackerInstance.Get)
 }
 
 // SysTrackerInstance defined
@@ -1113,16 +1113,16 @@ func NewSysUser() *SysUser {
 // SysUserRoutes defined
 func SysUserRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/user/add", Auth, Roles("X8e6D3y60K"), SysUserInstance.Add)
-	group.Handle("POST", "/sys/user/batch_add", Auth, Roles("X8e6D3y60K"), SysUserInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/user/del", Auth, Roles("X8e6D3y60K"), SysUserInstance.Del)
-	group.Handle("DELETE", "/sys/user/batch_del", Auth, Roles("X8e6D3y60K"), SysUserInstance.BatchDel)
-	group.Handle("PUT", "/sys/user/update", Auth, Roles("X8e6D3y60K"), SysUserInstance.Update)
-	group.Handle("PUT", "/sys/user/batch_update", Auth, Roles("X8e6D3y60K"), SysUserInstance.BatchUpdate)
-	group.Handle("GET", "/sys/user/page", Auth, SysUserInstance.Page)
-	group.Handle("GET", "/sys/user/get", Auth, SysUserInstance.Get)
+	group.Handle("POST", "/sys/user/add", Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.Add)
+	group.Handle("POST", "/sys/user/batch_add", Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/user/del", Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.Del)
+	group.Handle("DELETE", "/sys/user/batch_del", Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.BatchDel)
+	group.Handle("PUT", "/sys/user/update", Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.Update)
+	group.Handle("PUT", "/sys/user/batch_update", Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.BatchUpdate)
+	group.Handle("GET", "/sys/user/page", Auth("token"), SysUserInstance.Page)
+	group.Handle("GET", "/sys/user/get", Auth("token"), SysUserInstance.Get)
 	group.Handle("POST", "/sys/user/login", SysUserInstance.Login)
-	group.Handle("GET", "/sys/user/logout", Auth, SysUserInstance.Logout)
+	group.Handle("GET", "/sys/user/logout", Auth("token"), SysUserInstance.Logout)
 }
 
 // SysUserInstance defined
@@ -1157,14 +1157,14 @@ func NewSysUserTemplate() *SysUserTemplate {
 // SysUserTemplateRoutes defined
 func SysUserTemplateRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/user/template/add", Auth, SysUserTemplateInstance.Add)
-	group.Handle("POST", "/sys/user/template/batch_add", Auth, SysUserTemplateInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/user/template/del", Auth, SysUserTemplateInstance.Del)
-	group.Handle("DELETE", "/sys/user/template/batch_del", Auth, SysUserTemplateInstance.BatchDel)
-	group.Handle("PUT", "/sys/user/template/update", Auth, SysUserTemplateInstance.Update)
-	group.Handle("PUT", "/sys/user/template/batch_update", Auth, SysUserTemplateInstance.BatchUpdate)
-	group.Handle("GET", "/sys/user/template/page", Auth, SysUserTemplateInstance.Page)
-	group.Handle("GET", "/sys/user/template/get", Auth, SysUserTemplateInstance.Get)
+	group.Handle("POST", "/sys/user/template/add", Auth("token"), SysUserTemplateInstance.Add)
+	group.Handle("POST", "/sys/user/template/batch_add", Auth("token"), SysUserTemplateInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/user/template/del", Auth("token"), SysUserTemplateInstance.Del)
+	group.Handle("DELETE", "/sys/user/template/batch_del", Auth("token"), SysUserTemplateInstance.BatchDel)
+	group.Handle("PUT", "/sys/user/template/update", Auth("token"), SysUserTemplateInstance.Update)
+	group.Handle("PUT", "/sys/user/template/batch_update", Auth("token"), SysUserTemplateInstance.BatchUpdate)
+	group.Handle("GET", "/sys/user/template/page", Auth("token"), SysUserTemplateInstance.Page)
+	group.Handle("GET", "/sys/user/template/get", Auth("token"), SysUserTemplateInstance.Get)
 }
 
 // SysUserTemplateInstance defined
@@ -1199,14 +1199,14 @@ func NewSysUserTemplateDetail() *SysUserTemplateDetail {
 // SysUserTemplateDetailRoutes defined
 func SysUserTemplateDetailRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/user/template/detail/add", Auth, SysUserTemplateDetailInstance.Add)
-	group.Handle("POST", "/sys/user/template/detail/batch_add", Auth, SysUserTemplateDetailInstance.BatchAdd)
-	group.Handle("DELETE", "/sys/user/template/detail/del", Auth, SysUserTemplateDetailInstance.Del)
-	group.Handle("DELETE", "/sys/user/template/detail/batch_del", Auth, SysUserTemplateDetailInstance.BatchDel)
-	group.Handle("PUT", "/sys/user/template/detail/update", Auth, SysUserTemplateDetailInstance.Update)
-	group.Handle("PUT", "/sys/user/template/detail/batch_update", Auth, SysUserTemplateDetailInstance.BatchUpdate)
-	group.Handle("GET", "/sys/user/template/detail/page", Auth, SysUserTemplateDetailInstance.Page)
-	group.Handle("GET", "/sys/user/template/detail/get", Auth, SysUserTemplateDetailInstance.Get)
+	group.Handle("POST", "/sys/user/template/detail/add", Auth("token"), SysUserTemplateDetailInstance.Add)
+	group.Handle("POST", "/sys/user/template/detail/batch_add", Auth("token"), SysUserTemplateDetailInstance.BatchAdd)
+	group.Handle("DELETE", "/sys/user/template/detail/del", Auth("token"), SysUserTemplateDetailInstance.Del)
+	group.Handle("DELETE", "/sys/user/template/detail/batch_del", Auth("token"), SysUserTemplateDetailInstance.BatchDel)
+	group.Handle("PUT", "/sys/user/template/detail/update", Auth("token"), SysUserTemplateDetailInstance.Update)
+	group.Handle("PUT", "/sys/user/template/detail/batch_update", Auth("token"), SysUserTemplateDetailInstance.BatchUpdate)
+	group.Handle("GET", "/sys/user/template/detail/page", Auth("token"), SysUserTemplateDetailInstance.Page)
+	group.Handle("GET", "/sys/user/template/detail/get", Auth("token"), SysUserTemplateDetailInstance.Get)
 }
 
 // SysUserTemplateDetailInstance defined
@@ -1250,8 +1250,8 @@ func NewSysWorker() *SysWorker {
 // SysWorkerRoutes defined
 func SysWorkerRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/sys/worker/add", Auth, SysWorkerInstance.Add)
-	group.Handle("GET", "/sys/worker/get", Auth, SysWorkerInstance.Get)
+	group.Handle("POST", "/sys/worker/add", Auth("token"), SysWorkerInstance.Add)
+	group.Handle("GET", "/sys/worker/get", Auth("token"), SysWorkerInstance.Get)
 }
 
 // SysWorkerInstance defined

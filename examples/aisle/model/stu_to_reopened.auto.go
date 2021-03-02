@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -34,6 +35,16 @@ type StuToReopened struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// StrBussType defined
 	StrBussType null.Int `xorm:"int(11) 'str_buss_type'" json:"str_buss_type" form:"str_buss_type" xml:"str_buss_type"`
+}
+
+// Marshal defined
+func (m *StuToReopened) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuToReopened) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

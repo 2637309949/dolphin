@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -58,6 +59,16 @@ type ClassType struct {
 	OrderEdition null.Int `xorm:"int(11) 'order_edition'" json:"order_edition" form:"order_edition" xml:"order_edition"`
 	// Mzks defined
 	Mzks null.Float `xorm:"float(50,2) 'mzks'" json:"mzks" form:"mzks" xml:"mzks"`
+}
+
+// Marshal defined
+func (m *ClassType) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassType) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

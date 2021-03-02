@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -72,6 +73,16 @@ type StudentVisit struct {
 	HfrType null.String `xorm:"varchar(1000) 'hfr_type'" json:"hfr_type" form:"hfr_type" xml:"hfr_type"`
 	// TmkVisitStatus defined
 	TmkVisitStatus null.Int `xorm:"int(11) 'tmk_visit_status'" json:"tmk_visit_status" form:"tmk_visit_status" xml:"tmk_visit_status"`
+}
+
+// Marshal defined
+func (m *StudentVisit) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentVisit) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -28,8 +28,8 @@ func NewAmi() *Ami {
 // AmiRoutes defined
 func AmiRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/ami/add", Auth, AmiInstance.Add)
-	group.Handle("GET", "/ami/get", Auth, AmiInstance.Get)
+	group.Handle("POST", "/ami/add", Auth("token"), AmiInstance.Add)
+	group.Handle("GET", "/ami/get", Auth("token"), AmiInstance.Get)
 }
 
 // AmiInstance defined

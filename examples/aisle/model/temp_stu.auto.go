@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -20,6 +21,16 @@ type TempStu struct {
 	StuName null.String `xorm:"varchar(255) 'stu_name'" json:"stu_name" form:"stu_name" xml:"stu_name"`
 	// StuPhone defined
 	StuPhone null.String `xorm:"varchar(255) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
+}
+
+// Marshal defined
+func (m *TempStu) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *TempStu) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

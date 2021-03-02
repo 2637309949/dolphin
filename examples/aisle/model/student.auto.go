@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -184,6 +185,16 @@ type Student struct {
 	ParentsProfession null.String `xorm:"varchar(200) 'parents_profession'" json:"parents_profession" form:"parents_profession" xml:"parents_profession"`
 	// BfStuType defined
 	BfStuType null.Int `xorm:"int(11) 'bf_stu_type'" json:"bf_stu_type" form:"bf_stu_type" xml:"bf_stu_type"`
+}
+
+// Marshal defined
+func (m *Student) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Student) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

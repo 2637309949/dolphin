@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -54,6 +55,16 @@ type TaTargetPlan struct {
 	TqxMoenyTarget null.Float `xorm:"float(50,2) 'tqx_moeny_target'" json:"tqx_moeny_target" form:"tqx_moeny_target" xml:"tqx_moeny_target"`
 	// LtMoenyTarget defined
 	LtMoenyTarget null.Float `xorm:"float(50,2) 'lt_moeny_target'" json:"lt_moeny_target" form:"lt_moeny_target" xml:"lt_moeny_target"`
+}
+
+// Marshal defined
+func (m *TaTargetPlan) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *TaTargetPlan) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

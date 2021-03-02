@@ -46,7 +46,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
-	{{- if $api.Auth}}
+	{{- if .Contains $api.Auth "token"}}
 	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
 	{{- end}}
 	q.SetTags()
@@ -63,7 +63,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
-	{{- if $api.Auth}}
+	{{- if .Contains $api.Auth "token"}}
 	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
 	{{- end}}
 	q.SetTags()

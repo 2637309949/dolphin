@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -40,6 +41,16 @@ type StudentCzIntegral struct {
 	YhjfOrderid null.Int `xorm:"int(11) 'yhjf_orderid'" json:"yhjf_orderid" form:"yhjf_orderid" xml:"yhjf_orderid"`
 	// SctId defined
 	SctId null.Int `xorm:"int(11) 'sct_id'" json:"sct_id" form:"sct_id" xml:"sct_id"`
+}
+
+// Marshal defined
+func (m *StudentCzIntegral) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StudentCzIntegral) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

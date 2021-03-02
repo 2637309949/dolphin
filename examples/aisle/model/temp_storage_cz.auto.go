@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -100,6 +101,16 @@ type TempStorageCz struct {
 	NextCheckname null.String `xorm:"varchar(100) 'next_checkname'" json:"next_checkname" form:"next_checkname" xml:"next_checkname"`
 	// RdrId defined
 	RdrId null.Int `xorm:"int(11) 'rdr_id'" json:"rdr_id" form:"rdr_id" xml:"rdr_id"`
+}
+
+// Marshal defined
+func (m *TempStorageCz) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *TempStorageCz) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

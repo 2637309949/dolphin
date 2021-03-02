@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -70,6 +71,16 @@ type ClassManage struct {
 	IfClassType null.Int `xorm:"int(11) 'if_class_type'" json:"if_class_type" form:"if_class_type" xml:"if_class_type"`
 	// CmGdkbType defined
 	CmGdkbType null.Int `xorm:"int(11) 'cm_gdkb_type'" json:"cm_gdkb_type" form:"cm_gdkb_type" xml:"cm_gdkb_type"`
+}
+
+// Marshal defined
+func (m *ClassManage) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassManage) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

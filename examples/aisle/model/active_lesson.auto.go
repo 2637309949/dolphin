@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -56,6 +57,16 @@ type ActiveLesson struct {
 	BeforeId null.Int `xorm:"int(11) 'before_id'" json:"before_id" form:"before_id" xml:"before_id"`
 	// TkType defined
 	TkType null.Int `xorm:"int(11) 'tk_type'" json:"tk_type" form:"tk_type" xml:"tk_type"`
+}
+
+// Marshal defined
+func (m *ActiveLesson) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ActiveLesson) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

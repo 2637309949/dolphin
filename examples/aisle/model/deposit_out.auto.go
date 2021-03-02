@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -94,6 +95,16 @@ type DepositOut struct {
 	NextCheckid null.String `xorm:"varchar(100) 'next_checkid'" json:"next_checkid" form:"next_checkid" xml:"next_checkid"`
 	// NextCheckname defined
 	NextCheckname null.String `xorm:"varchar(100) 'next_checkname'" json:"next_checkname" form:"next_checkname" xml:"next_checkname"`
+}
+
+// Marshal defined
+func (m *DepositOut) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *DepositOut) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -80,6 +81,16 @@ type XlHc struct {
 	CallerIdNumber null.String `xorm:"varchar(100) 'caller_id_number'" json:"caller_id_number" form:"caller_id_number" xml:"caller_id_number"`
 	// DestinationNumber defined
 	DestinationNumber null.String `xorm:"varchar(100) 'destination_number'" json:"destination_number" form:"destination_number" xml:"destination_number"`
+}
+
+// Marshal defined
+func (m *XlHc) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *XlHc) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

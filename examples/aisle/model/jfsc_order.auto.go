@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type JfscOrder struct {
 	RecipientInfoId null.Int `xorm:"int(11) 'recipient_info_id'" json:"recipient_info_id" form:"recipient_info_id" xml:"recipient_info_id"`
 	// DingdanState defined
 	DingdanState null.Int `xorm:"int(11) 'dingdan_state'" json:"dingdan_state" form:"dingdan_state" xml:"dingdan_state"`
+}
+
+// Marshal defined
+func (m *JfscOrder) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *JfscOrder) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

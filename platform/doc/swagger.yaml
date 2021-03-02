@@ -44,978 +44,978 @@ definitions:
   model.SysAppFun:
     properties:
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       hidden:
-        description: 是否隐藏
+        description: Hidden defined 是否隐藏
         type: number
       icon:
-        description: 菜单图标
+        description: Icon defined 菜单图标
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       image:
-        description: 图片
+        description: Image defined 图片
         type: string
       inheritance:
-        description: 继承关系
+        description: Inheritance defined 继承关系
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       order:
-        description: 排序
+        description: Order defined 排序
         type: number
       parent:
-        description: 父菜单ID，一级菜单为null
+        description: Parent defined 父菜单ID，一级菜单为null
         type: string
       perms:
-        description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       type:
-        description: 类型 0：目录 1：菜单 2：按钮
+        description: Type defined 类型 0：目录 1：菜单 2：按钮
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
-          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
+          3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysArea:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       inheritance:
-        description: 继承关系
+        description: Inheritance defined 继承关系
         type: string
       manager:
-        description: 负责人
+        description: Manager defined 负责人
         type: string
       name:
-        description: 区域名称
+        description: Name defined 区域名称
         type: string
       org_id:
-        description: 组织ID
+        description: OrgId defined 组织ID
         type: string
       parent:
-        description: 父节点
+        description: Parent defined 父节点
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       temp_id:
-        description: 模板ID
+        description: TempId defined 模板ID
         type: string
       temp_value:
-        description: 模板内容
+        description: TempValue defined 模板内容
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysAttachment:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       durable:
-        description: 是否持久化 0：否 1：是
+        description: Durable defined 是否持久化 0：否 1：是
         type: number
       ext:
-        description: ext
+        description: Ext defined ext
         type: string
       hash:
-        description: hash
+        description: Hash defined hash
         type: string
       icon:
-        description: 图标
+        description: Icon defined 图标
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       path:
-        description: path
+        description: Path defined path
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       size:
-        description: 大小
+        description: Size defined 大小
         type: number
       type:
-        description: 类型
+        description: Type defined 类型
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
       url:
-        description: url
+        description: URL defined url
         type: string
       uuid:
-        description: uuid
+        description: UUID defined uuid
         type: string
     type: object
   model.SysClient:
     properties:
       app_name:
-        description: 应用归属
+        description: AppName defined 应用归属
         type: string
       client:
-        description: 应用
+        description: Client defined 应用
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       domain:
-        description: 域
+        description: Domain defined 域
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       secret:
-        description: 密钥
+        description: Secret defined 密钥
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysComment:
     properties:
       content:
-        description: 评论内容
+        description: Content defined 评论内容
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       from_uid:
-        description: 评论用户id
+        description: FromUid defined 评论用户id
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       topic_id:
-        description: 主题ID
+        description: TopicId defined 主题ID
         type: string
       topic_type:
-        description: 主题类型
+        description: TopicType defined 主题类型
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysDataPermission:
     properties:
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysDomain:
     properties:
       api_url:
-        description: 请求地址
+        description: ApiUrl defined 请求地址
         type: string
       app_name:
-        description: 应用归属
+        description: AppName defined 应用归属
         type: string
       auth_mode:
-        description: 认证模式 0：集成登录 1：单点登录
+        description: AuthMode defined 认证模式 0：集成登录 1：单点登录
         type: number
       contact_email:
-        description: 负责人邮箱
+        description: ContactEmail defined 负责人邮箱
         type: string
       contact_mobile:
-        description: 负责人电话
+        description: ContactMobile defined 负责人电话
         type: string
       contact_name:
-        description: 负责人
+        description: ContactName defined 负责人
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       data_source:
-        description: 数据库链接串
+        description: DataSource defined 数据库链接串
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       domain:
-        description: 域
+        description: Domain defined 域
         type: string
       domain_url:
-        description: 域绑定
+        description: DomainUrl defined 域绑定
         type: string
       driver_name:
-        description: 驱动名称
+        description: DriverName defined 驱动名称
         type: string
       full_name:
-        description: 全名
+        description: FullName defined 全名
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       login_url:
-        description: 登录地址
+        description: LoginUrl defined 登录地址
         type: string
       name:
-        description: 名字
+        description: Name defined 名字
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       static_url:
-        description: 静态地址
+        description: StaticUrl defined 静态地址
         type: string
       status:
-        description: 状态 0：禁用 1：正常
+        description: Status defined 状态 0：禁用 1：正常
         type: number
       sync_flag:
-        description: 是否同步了数据库标志
+        description: SyncFlag defined 是否同步了数据库标志
         type: number
       theme:
-        description: 样式
+        description: Theme defined 样式
         type: string
       type:
-        description: 域类型
+        description: Type defined 域类型
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysMenu:
     properties:
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       component:
-        description: 菜单组件
+        description: Component defined 菜单组件
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       hidden:
-        description: 是否隐藏
+        description: Hidden defined 是否隐藏
         type: number
       icon:
-        description: 菜单图标
+        description: Icon defined 菜单图标
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       inheritance:
-        description: 继承关系
+        description: Inheritance defined 继承关系
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       order:
-        description: 排序
+        description: Order defined 排序
         type: number
       parent:
-        description: 父菜单ID，一级菜单为null
+        description: Parent defined 父菜单ID，一级菜单为null
         type: string
       perms:
-        description: 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       type:
-        description: 类型 0：目录 1：菜单 2：按钮
+        description: Type defined 类型 0：目录 1：菜单 2：按钮
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
       url:
-        description: 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控，
-          iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
+          3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
         type: string
     type: object
   model.SysNotification:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       from_uid:
-        description: 发送者
+        description: FromUid defined 发送者
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       is_read:
-        description: 是否已读
+        description: IsRead defined 是否已读
         type: number
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       to_uid:
-        description: 接受者
+        description: ToUid defined 接受者
         type: string
       topic_id:
-        description: 主题ID
+        description: TopicId defined 主题ID
         type: string
       topic_type:
-        description: 主题类型
+        description: TopicType defined 主题类型
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysOptionset:
     properties:
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
       value:
-        description: 值
+        description: Value defined 值
         type: string
     type: object
   model.SysOrg:
     properties:
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       full_name:
-        description: 全名
+        description: FullName defined 全名
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       inheritance:
-        description: 继承关系
+        description: Inheritance defined 继承关系
         type: string
       leader:
-        description: 领导人
+        description: Leader defined 领导人
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       order:
-        description: 排序
+        description: Order defined 排序
         type: number
       parent:
-        description: 上级组织
+        description: Parent defined 上级组织
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       status:
-        description: 状态 0：禁用 1：正常
+        description: Status defined 状态 0：禁用 1：正常
         type: number
       type:
-        description: 组织类型
+        description: Type defined 组织类型
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysPermission:
     properties:
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysRole:
     properties:
       admin_index:
-        description: 角色进入后台首页组件
+        description: AdminIndex defined 角色进入后台首页组件
         type: string
       app_index:
-        description: 角色app首页url
+        description: AppIndex defined 角色app首页url
         type: string
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       status:
-        description: 状态 0：禁用 1：正常
+        description: Status defined 状态 0：禁用 1：正常
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysRoleMenu:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       menu_id:
-        description: 菜单ID
+        description: MenuId defined 菜单ID
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       role_id:
-        description: 用户ID
+        description: RoleId defined 用户ID
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysSchedule:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysSetting:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       key:
-        description: 键
+        description: Key defined 键
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
       value:
-        description: 值
+        description: Value defined 值
         type: string
     type: object
   model.SysTable:
     properties:
       auto_increment:
-        description: 自增
+        description: AutoIncrement defined 自增
         type: string
       charset:
-        description: 字符集
+        description: Charset defined 字符集
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       desc:
-        description: 描述
+        description: Desc defined 描述
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 表名
+        description: Name defined 表名
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       store_engine:
-        description: 存储引擎
+        description: StoreEngine defined 存储引擎
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysTableColumn:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       default:
-        description: 默认值
+        description: Default defined 默认值
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       desc:
-        description: 描述
+        description: Desc defined 描述
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       is_primary_key:
-        description: 是否主键
+        description: IsPrimaryKey defined 是否主键
         type: boolean
       name:
-        description: 表名
+        description: Name defined 表名
         type: string
       nullable:
-        description: 是否为空
+        description: Nullable defined 是否为空
         type: boolean
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       tb_id:
-        description: 表ID
+        description: TbId defined 表ID
         type: string
       type:
-        description: 类型
+        description: Type defined 类型
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysTag:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       group_id:
-        description: 分组ID
+        description: GroupId defined 分组ID
         type: string
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysTagGroup:
     properties:
       code:
-        description: 编码
+        description: Code defined 编码
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysUser:
     properties:
       address:
-        description: 地址
+        description: Address defined 地址
         type: string
       avatar:
-        description: 头像
+        description: Avatar defined 头像
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       domain:
-        description: 域
+        description: Domain defined 域
         type: string
       email:
-        description: 邮箱
+        description: Email defined 邮箱
         type: string
       full_name:
-        description: 全名
+        description: FullName defined 全名
         type: string
       gender:
-        description: 性别(0：女,1：男)
+        description: Gender defined 性别(0：女,1：男)
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       intro:
-        description: 简介
+        description: Intro defined 简介
         type: string
       is_email_confirmed:
-        description: 是否邮件确认(0：尚未,1：确认)
+        description: IsEmailConfirmed defined 是否邮件确认(0：尚未,1：确认)
         type: number
       marked_all_as_read_at:
-        description: 标记所有已读时间
+        description: MarkedAllAsReadAt defined 标记所有已读时间
         type: string
       mobile:
-        description: 电话
+        description: Mobile defined 电话
         type: string
       name:
-        description: 名字
+        description: Name defined 名字
         type: string
       nickname:
-        description: 昵称
+        description: Nickname defined 昵称
         type: string
       org_id:
-        description: 组织ID
+        description: OrgId defined 组织ID
         type: string
       password:
-        description: 密码
+        description: Password defined 密码
         type: string
       read_notifications_at:
-        description: 标记读取消息时间
+        description: ReadNotificationsAt defined 标记读取消息时间
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       salt:
-        description: 盐噪点
+        description: Salt defined 盐噪点
         type: string
       status:
-        description: 状态(0：禁用,1：正常)
+        description: Status defined 状态(0：禁用,1：正常)
         type: number
       temp_id:
-        description: 模板ID
+        description: TempId defined 模板ID
         type: string
       temp_value:
-        description: 模板值
+        description: TempValue defined 模板值
         type: string
       type:
-        description: 用户类型
+        description: Type defined 用户类型
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysUserTemplate:
     properties:
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       default:
-        description: 是否默认 1：是 0：否
+        description: Default defined 是否默认 1：是 0：否
         type: number
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 模板名称
+        description: Name defined 模板名称
         type: string
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       type:
-        description: 模板类型
+        description: Type defined 模板类型
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
     type: object
   model.SysUserTemplateDetail:
     properties:
       content:
-        description: 名称
+        description: Content defined 名称
         type: string
       create_by:
-        description: 创建人
+        description: CreateBy defined 创建人
         type: string
       create_time:
-        description: 创建时间
+        description: CreateTime defined 创建时间
         type: string
       del_flag:
-        description: 删除标记
+        description: DelFlag defined 删除标记
         type: number
       id:
-        description: 主键
+        description: ID defined 主键
         type: string
       name:
-        description: 名称
+        description: Name defined 名称
         type: string
       priority:
-        description: 优先级
+        description: Priority defined 优先级
         type: number
       remark:
-        description: 备注
+        description: Remark defined 备注
         type: string
       temp_id:
-        description: 模板ID
+        description: TempId defined 模板ID
         type: string
       type:
-        description: 模板类型 0:数值项 1:单选项 2:文字项 3:列表项
+        description: Type defined 模板类型 0:数值项 1:单选项 2:文字项 3:列表项
         type: number
       update_by:
-        description: 最后更新人
+        description: UpdateBy defined 最后更新人
         type: string
       update_time:
-        description: 最后更新时间
+        description: UpdateTime defined 最后更新时间
         type: string
       value:
-        description: 值
+        description: Value defined 值
         type: string
     type: object
   model.Worker:

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -94,6 +95,16 @@ type ClassSchedule struct {
 	Remark null.String `xorm:"varchar(50) 'remark'" json:"remark" form:"remark" xml:"remark"`
 	// PkCtr defined
 	PkCtr null.Int `xorm:"int(11) 'pk_ctr'" json:"pk_ctr" form:"pk_ctr" xml:"pk_ctr"`
+}
+
+// Marshal defined
+func (m *ClassSchedule) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *ClassSchedule) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

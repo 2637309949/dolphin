@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -44,6 +45,16 @@ type CssChageStudent struct {
 	IfMz null.Int `xorm:"int(11) 'if_mz'" json:"if_mz" form:"if_mz" xml:"if_mz"`
 	// OldScsId defined
 	OldScsId null.Int `xorm:"int(11) 'old_scs_id'" json:"old_scs_id" form:"old_scs_id" xml:"old_scs_id"`
+}
+
+// Marshal defined
+func (m *CssChageStudent) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *CssChageStudent) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

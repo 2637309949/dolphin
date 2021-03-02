@@ -166,6 +166,16 @@ func (c *Common) UcFirst(str string) string {
 	return ""
 }
 
+// Contains defined
+func (c *Common) Contains(args []string, s string) bool {
+	for _, v := range args {
+		if v == s {
+			return true
+		}
+	}
+	return false
+}
+
 // FormatString defined
 func (c *Common) FormatString(args []string, segm string) template.HTML {
 	strs := []string{}

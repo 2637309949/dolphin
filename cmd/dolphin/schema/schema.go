@@ -34,7 +34,7 @@ type Param struct {
 type API struct {
 	Common
 	Roles   []string
-	Auth    bool
+	Auth    []string
 	Version string
 	Path    string
 	Func    string

@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -53,6 +54,16 @@ type IcbcPayList struct {
 	TransTime null.Time `xorm:"datetime 'trans_time'" json:"trans_time" form:"trans_time" xml:"trans_time"`
 	// Amout defined
 	Amout decimal.Decimal `xorm:"decimal(50,3) 'amout'" json:"amout" form:"amout" xml:"amout"`
+}
+
+// Marshal defined
+func (m *IcbcPayList) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *IcbcPayList) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

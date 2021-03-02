@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -62,6 +63,16 @@ type NewStuTransition struct {
 	StuPromiseInfo null.String `xorm:"varchar(1000) 'stu_promise_info'" json:"stu_promise_info" form:"stu_promise_info" xml:"stu_promise_info"`
 	// StuTransitionType defined
 	StuTransitionType null.Int `xorm:"int(11) 'stu_transition_type'" json:"stu_transition_type" form:"stu_transition_type" xml:"stu_transition_type"`
+}
+
+// Marshal defined
+func (m *NewStuTransition) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *NewStuTransition) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

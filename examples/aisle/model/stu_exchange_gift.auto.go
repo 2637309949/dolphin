@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -32,6 +33,16 @@ type StuExchangeGift struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// UseTotalPoint defined
 	UseTotalPoint null.Float `xorm:"float(10,2) 'use_total_point'" json:"use_total_point" form:"use_total_point" xml:"use_total_point"`
+}
+
+// Marshal defined
+func (m *StuExchangeGift) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuExchangeGift) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

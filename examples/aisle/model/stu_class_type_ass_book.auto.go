@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -44,6 +45,16 @@ type StuClassTypeAssBook struct {
 	BuyNum null.Float `xorm:"float(10,2) 'buy_num'" json:"buy_num" form:"buy_num" xml:"buy_num"`
 	// OfId defined
 	OfId null.Int `xorm:"int(11) 'of_id'" json:"of_id" form:"of_id" xml:"of_id"`
+}
+
+// Marshal defined
+func (m *StuClassTypeAssBook) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *StuClassTypeAssBook) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

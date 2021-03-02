@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -60,6 +61,16 @@ type Complaint struct {
 	ComplaintPhone null.String `xorm:"varchar(200) 'complaint_phone'" json:"complaint_phone" form:"complaint_phone" xml:"complaint_phone"`
 	// ComplaintForm defined
 	ComplaintForm null.Int `xorm:"int(11) 'complaint_form'" json:"complaint_form" form:"complaint_form" xml:"complaint_form"`
+}
+
+// Marshal defined
+func (m *Complaint) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *Complaint) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined

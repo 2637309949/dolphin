@@ -4,6 +4,7 @@
 package model
 
 import (
+	"encoding/json"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -36,6 +37,16 @@ type HourAllotRatio struct {
 	EndMolecule null.Int `xorm:"int(11) 'end_molecule'" json:"end_molecule" form:"end_molecule" xml:"end_molecule"`
 	// StartMolecule defined
 	StartMolecule null.Int `xorm:"int(11) 'start_molecule'" json:"start_molecule" form:"start_molecule" xml:"start_molecule"`
+}
+
+// Marshal defined
+func (m *HourAllotRatio) Marshal() ([]byte, error) {
+	return json.Marshal(m)
+}
+
+// Unmarshal defined
+func (m *HourAllotRatio) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, m)
 }
 
 // Parser defined
