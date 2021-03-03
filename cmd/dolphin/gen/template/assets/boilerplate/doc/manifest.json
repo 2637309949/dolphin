@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "name": "winter-swagger-ui",
+  "description": "winter-swagger-ui chrome plugin",
+  "icons": {
+    "16": "chrome-icon.png",
+    "128": "chrome-icon.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "chrome-icon.png",
+      "38": "chrome-icon.png"
+    },
+    "default_title": "winter-swagger-ui",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "storage",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "background": {
+    "persistent": true,
+    "page": "index.html"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
