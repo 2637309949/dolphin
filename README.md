@@ -1893,9 +1893,9 @@ curl -X POST \
   -H 'content-type: application/json' \
   -H 'postman-token: 458a9045-f7bb-01e1-8369-afb4dd303607' \
   -d '{
-	"app_id": "Y76U9344RABF4",
-	"timestamp": 1614734783,
-	"biz_content": "a=1&b=2",
-	"sign": "b26sMTyLgK5IaPq0LYBYkPPWmz8BCovGiMfCH1sMZPudS9TFILB7O5eT924s60ALPINHRrSoyuo6rOHNXz0LJA=="
+   "app_id": "Y76U9344RABF4",
+   "timestamp": 1614734783,
+   "biz_content": "a=1&b=2",
+   "sign": "b26sMTyLgK5IaPq0LYBYkPPWmz8BCovGiMfCH1sMZPudS9TFILB7O5eT924s60ALPINHRrSoyuo6rOHNXz0LJA=="
 }'
 ```
