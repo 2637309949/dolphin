@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"regexp"
 	"sort"
-	"strconv"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
@@ -24,7 +23,7 @@ import (
 	"github.com/2637309949/dolphin/packages/xoauth2"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
-	"github.com/2637309949/dolphin/platform/util/des"
+	"github.com/2637309949/dolphin/platform/util/encrypt"
 	"github.com/2637309949/dolphin/platform/util/slice"
 )
 
@@ -57,27 +56,27 @@ var TokenkeyNamespace = "dolphin:token:"
 // AuthInfo defined
 type AuthInfo interface {
 	GetToken() TokenInfo
-	AuthToken(*http.Request) bool
-	AuthEncrypt(*http.Request) (bool, error)
+	AuthToken(*Context) bool
+	AuthEncrypt(*Context) (bool, error)
 }
 
 // EncryptForm defines Common request parameter
 type EncryptForm struct {
 	AppID      string `form:"app_id" json:"app_id" xml:"app_id" binding:"required"`
 	Sign       string `form:"sign" json:"sign" xml:"sign" binding:"required"`
-	TimeStamp  string `form:"timestamp" json:"timestamp" xml:"timestamp" binding:"required"`
+	TimeStamp  int64  `form:"timestamp" json:"timestamp" xml:"timestamp" binding:"required"`
 	BizContent string `form:"biz_content" json:"biz_content" xml:"biz_content" binding:"required"`
 }
 
 // ParseForm defined
-func (ec *EncryptForm) ParseForm(req *http.Request) (*EncryptForm, error) {
+func (ec *EncryptForm) ParseForm(ctx *Context) (*EncryptForm, error) {
 	puData := EncryptForm{}
-	if req.Method != "POST" {
-		if err := binding.Query.Bind(req, &puData); err != nil {
+	if ctx.Request.Method != "POST" {
+		if err := ctx.BindQuery(&puData); err != nil {
 			return nil, err
 		}
 	} else {
-		if err := binding.JSON.Bind(req, &puData); err != nil {
+		if err := ctx.ShouldBindBodyWith(&puData, binding.JSON); err != nil {
 			return nil, err
 		}
 	}
@@ -109,7 +108,7 @@ func (ec *EncryptForm) form2Uri() string {
 
 func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
 	uri := ec.form2Uri()
-	ecyt, err := des.Encrypt([]byte(uri), []byte(cli.GetSecret()))
+	ecyt, err := encrypt.AesEncrypt([]byte(uri), []byte(cli.GetSecret()))
 	if err != nil {
 		logrus.Error(err)
 		return []byte{}, err
@@ -119,11 +118,11 @@ func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
 
 // Verify defined
 func (ec *EncryptForm) Verify(cli oauth2.ClientInfo) (bool, error) {
-	timestamp := time.Now().Unix()
-	tsInt, _ := strconv.ParseInt(ec.TimeStamp, 10, 64)
-	if tsInt > timestamp || timestamp-tsInt >= 60 {
-		return false, errors.New("timestamp error")
-	}
+	// nowTs := time.Now().Unix()
+	// ts := ec.TimeStamp
+	// if ts > nowTs || nowTs-ts >= 60 {
+	// 	return false, errors.New("timestamp error")
+	// }
 	sn, err := ec.sign(cli)
 	if err != nil {
 		logrus.Error(err)
@@ -162,8 +161,8 @@ func (auth *AuthOAuth2) parseToken(t oauth2.TokenInfo) TokenInfo {
 }
 
 // AuthToken defined
-func (auth *AuthOAuth2) AuthToken(req *http.Request) bool {
-	if bearer, ok := auth.server.BearerAuth(req); ok {
+func (auth *AuthOAuth2) AuthToken(ctx *Context) bool {
+	if bearer, ok := auth.server.BearerAuth(ctx.Request); ok {
 		accessToken, err := auth.server.Manager.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.Error(err)
@@ -179,8 +178,8 @@ func (auth *AuthOAuth2) AuthToken(req *http.Request) bool {
 }
 
 // AuthEncrypt defined
-func (auth *AuthOAuth2) AuthEncrypt(req *http.Request) (bool, error) {
-	parseForm, err := new(EncryptForm).ParseForm(req)
+func (auth *AuthOAuth2) AuthEncrypt(ctx *Context) (bool, error) {
+	parseForm, err := new(EncryptForm).ParseForm(ctx)
 	if err != nil {
 		logrus.Error(err)
 		return false, err
@@ -215,7 +214,7 @@ type ClientStore struct {
 // GetByID according to the ID for the client information
 func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 	cli := model.SysClient{}
-	exist, err := App.PlatformDB.Where("client=?", id).Get(&cli)
+	exist, err := App.PlatformDB.Where("client=?", id).Cols("client", "domain", "secret").Get(&cli)
 	if err != nil {
 		return nil, err
 	}
@@ -267,7 +266,7 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 
 // AuthToken defined
 func AuthToken(ctx *Context) {
-	if !ctx.AuthToken(ctx.Request) {
+	if !ctx.AuthToken(ctx) {
 		ctx.Fail(util.ErrInvalidAccessToken, 401)
 		ctx.Abort()
 		return
@@ -284,7 +283,7 @@ func AuthToken(ctx *Context) {
 
 // AuthEncrypt defined
 func AuthEncrypt(ctx *Context) {
-	valid, err := ctx.AuthEncrypt(ctx.Request)
+	valid, err := ctx.AuthEncrypt(ctx)
 	if err != nil || !valid {
 		ctx.Fail(err, 401)
 		ctx.Abort()

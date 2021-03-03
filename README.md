@@ -78,6 +78,9 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [Queue processing](#queue-processing)
             - [Base on Redis](#base-on-redis)
             - [Base on Kafka](#base-on-kafka)
+        - [Interface authentication](#interface-authentication)
+            - [Token authentication](#token-authentication)
+            - [Encrypt authentication](#encrypt-authentication)
 
 <!-- /TOC -->
 
@@ -1821,4 +1824,78 @@ func KafkaConsumer(ctx *gin.Context,
 	return items, nil
 }
 
+```
+
+
+### Interface authentication
+
+#### Token authentication
+
+The default for all interfaces is token authentication  
+
+```xml
+<api name="add" func="add" table="article" method="post" desc="添加文章">
+	<param name="article" type="$article" desc="文章信息"/>
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
+
+```go
+// ArticleRoutes defined
+func ArticleRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/article/add", Auth("token"), ArticleInstance.Add)
+}
+```
+
+```sh
+curl -X POST \
+  http://127.0.0.1:8081/api/article/add \
+  -H 'authorization: Bearer MAGFJEYNMPI9XAIK8GQKLA' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 458a9045-f7bb-01e1-8369-afb4dd303607' \
+  -d '{
+	"name": "info",
+}'
+```
+
+#### Encrypt authentication
+
+In addition to token authentication, a symmetrical encryption is built in
+
+```xml
+<api name="add" desc="Add Encrypt" method="post" auth="encrypt">
+	<param name="encrypt_info" type="$encrypt_info" desc="Encrypt info" />
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
+
+```go
+// EncryptRoutes defined
+func EncryptRoutes(engine *Engine) {
+	group := engine.Group(viper.GetString("http.prefix"))
+	group.Handle("POST", "/encrypt/add", Auth("encrypt"), EncryptInstance.Add)
+}
+```
+
+```sh
+curl -X POST \
+  'http://localhost:8082/api/encrypt/add?age=3' \
+  -H 'authorization: Bearer ZH6_VZQBNTUPYSXR88AZXA' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -H 'postman-token: 458a9045-f7bb-01e1-8369-afb4dd303607' \
+  -d '{
+	"app_id": "Y76U9344RABF4",
+	"timestamp": 1614734783,
+	"biz_content": "a=1&b=2",
+	"sign": "b26sMTyLgK5IaPq0LYBYkPPWmz8BCovGiMfCH1sMZPudS9TFILB7O5eT924s60ALPINHRrSoyuo6rOHNXz0LJA=="
+}'
 ```

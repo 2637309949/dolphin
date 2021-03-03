@@ -140,6 +140,21 @@ definitions:
         description: 地址
         type: string
     type: object
+  model.EncryptInfo:
+    properties:
+      app_id:
+        description: 应用ID
+        type: string
+      biz_content:
+        description: 请求参数
+        type: string
+      sign:
+        description: 签名数据
+        type: string
+      timestamp:
+        description: 时间戳
+        type: number
+    type: object
   model.Fail:
     properties:
       code:
@@ -1263,6 +1278,36 @@ paths:
       summary: Get ami info
       tags:
       - Ami controller
+  /api/encrypt/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: Encrypt info
+        in: body
+        name: encrypt_info
+        schema:
+          $ref: '#/definitions/model.EncryptInfo'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Add Encrypt
+      tags:
+      - Encrypt controller
   /api/kafka/add:
     post:
       consumes:

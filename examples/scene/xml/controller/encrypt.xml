@@ -1,0 +1,9 @@
+<controller name="encrypt" desc="Encrypt controller">
+    <api name="add" desc="Add Encrypt" method="post" auth="encrypt">
+        <param name="encrypt_info" type="$encrypt_info" desc="Encrypt info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

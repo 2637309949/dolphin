@@ -3,6 +3,8 @@
 module.exports.ami = require('./ami')
 // article 文章
 module.exports.article = require('./article')
+// encrypt Encrypt controller
+module.exports.encrypt = require('./encrypt')
 // kafka Kafka controller
 module.exports.kafka = require('./kafka')
 // view 视图

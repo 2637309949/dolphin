@@ -1,0 +1,6 @@
+<bean name="encrypt_info" desc="文章信息" packages="github.com/2637309949/dolphin/packages/null" extends="$encrypt_info">
+    <prop name="app_id" desc="应用ID" type="null.String" />
+    <prop name="sign" desc="签名数据" type="null.String" />
+    <prop name="timestamp" desc="时间戳" type="null.Int" />
+    <prop name="biz_content" desc="请求参数" type="null.String" />
+</bean>
