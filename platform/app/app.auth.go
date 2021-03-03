@@ -118,11 +118,11 @@ func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
 
 // Verify defined
 func (ec *EncryptForm) Verify(cli oauth2.ClientInfo) (bool, error) {
-	// nowTs := time.Now().Unix()
-	// ts := ec.TimeStamp
-	// if ts > nowTs || nowTs-ts >= 60 {
-	// 	return false, errors.New("timestamp error")
-	// }
+	nowTs := time.Now().Unix()
+	ts := ec.TimeStamp
+	if ts > nowTs || nowTs-ts >= 60 {
+		return false, errors.New("timestamp error")
+	}
 	sn, err := ec.sign(cli)
 	if err != nil {
 		logrus.Error(err)
