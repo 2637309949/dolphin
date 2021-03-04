@@ -71,6 +71,7 @@ Dolphin是一个使用Golang代码生成工具, 用于避免日常代码增删�
     - [Debug pprof](#debug-pprof)
         - [ModHeader](#modheader)
         - [Debug](#debug)
+- [MIT License](#mit-license)
 
 <!-- /TOC -->
 ## 快速入手
@@ -1567,3 +1568,13 @@ trace: A trace of execution of the current program. You can specify the duration
 seconds GET parameter. After you get the trace file, use the go tool trace command to 
 investigate the trace.
 ```
+
+# MIT License
+
+Copyright (c) 2018-2022 Double
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
