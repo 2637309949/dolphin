@@ -3,7 +3,7 @@
 
 package model
 
-{{.Table.Import .Table.Packages "reflect,github.com/2637309949/dolphin/packages/xormplus/xorm,github.com/2637309949/dolphin/packages/xormplus/xorm/tags,github.com/2637309949/dolphin/packages/xormplus/xorm/caches,github.com/2637309949/dolphin/packages/xormplus/xorm"}}
+{{.Table.Import .Table.Packages "reflect,encoding/json,github.com/2637309949/dolphin/packages/xormplus/xorm,github.com/2637309949/dolphin/packages/xormplus/xorm/tags,github.com/2637309949/dolphin/packages/xormplus/xorm/caches,github.com/2637309949/dolphin/packages/xormplus/xorm"}}
 
 // {{.Table.ToUpperCase .Table.Name}} defined {{.Table.Desc}} 
 type {{.Table.ToUpperCase .Table.Name}} struct {
@@ -21,6 +21,27 @@ func (m *{{.Table.ToUpperCase .Table.Name}}) Marshal() ([]byte, error) {
 // Unmarshal defined
 func (m *{{.Table.ToUpperCase .Table.Name}}) Unmarshal(data []byte) error {
 	return json.Unmarshal(data, m)
+}
+
+// ToMap defined
+func (m *{{.Table.ToUpperCase .Table.Name}}) ToMap()(map[string]interface{}, error) {
+	byt, err := m.Marshal()
+	if err != nil {
+		return nil, err
+	}
+	itf := map[string]interface{}{}
+	err = json.Unmarshal(byt, &itf)
+	return itf, err
+}
+
+// FromMap defined
+func (m *{{.Table.ToUpperCase .Table.Name}}) FromMap(fm map[string]interface{}) error {
+	byt, err := json.Marshal(fm)
+	if err != nil {
+		return err
+	}
+	err = m.Unmarshal(byt)
+	return err
 }
 
 // Parser defined
