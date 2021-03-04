@@ -1,4 +1,8 @@
 # Dolphin, Go code generate Framework
+[![2637309949](https://circleci.com/gh/2637309949/dolphin.svg?style=shield)](https://circleci.com/gh/2637309949/dolphin)
+[![2637309949](https://img.shields.io/github/release/2637309949/dolphin.svg?style=flat-square)](https://github.com/2637309949/dolphin/releases)
+[![GoDoc](https://pkg.go.dev/badge/github.com/2637309949/dolphin?status.svg)](https://pkg.go.dev/github.com/2637309949/dolphin?tab=doc)
+[![Go Report Card](https://goreportcard.com/badge/github.com/2637309949/dolphin)](https://goreportcard.com/report/github.com/2637309949/dolphin)
 
 <img align="right" width="159px" src="./assets/dolphin.jpeg">
 
