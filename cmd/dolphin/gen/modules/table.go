@@ -49,7 +49,7 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 		return tmplCfgs, err
 	}
 	if len(dataSources) == 0 {
-		logrus.Infoln("Not found any datasource in app_name:%v", viper.GetString("app.name"))
+		logrus.Infof("Not found any datasource in app_name:%v", viper.GetString("app.name"))
 		return tmplCfgs, nil
 	}
 	for _, ds := range dataSources {

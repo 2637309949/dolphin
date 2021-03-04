@@ -43,6 +43,27 @@ func (m *OrganSchoolBussType) Unmarshal(data []byte) error {
 	return json.Unmarshal(data, m)
 }
 
+// ToMap defined
+func (m *OrganSchoolBussType) ToMap() (map[string]interface{}, error) {
+	byt, err := m.Marshal()
+	if err != nil {
+		return nil, err
+	}
+	itf := map[string]interface{}{}
+	err = json.Unmarshal(byt, &itf)
+	return itf, err
+}
+
+// FromMap defined
+func (m *OrganSchoolBussType) FromMap(fm map[string]interface{}) error {
+	byt, err := json.Marshal(fm)
+	if err != nil {
+		return err
+	}
+	err = m.Unmarshal(byt)
+	return err
+}
+
 // Parser defined
 func (m *OrganSchoolBussType) Parser(db *xorm.Engine) *tags.Parser {
 	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
