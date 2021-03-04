@@ -16,12 +16,13 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.1
 	github.com/clbanning/mxj v1.8.4 // indirect
 	github.com/coreos/bbolt v1.3.2 // indirect
-	github.com/coreos/etcd v3.3.10+incompatible // indirect
+	github.com/coreos/etcd v3.3.25+incompatible // indirect
 	github.com/coreos/go-semver v0.2.0 // indirect
 	github.com/coreos/go-systemd v0.0.0-20190321100706-95778dfbb74e // indirect
 	github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
+	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
@@ -37,6 +38,7 @@ require (
 	github.com/golang/protobuf v1.4.2
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/google/btree v1.0.0 // indirect
+	github.com/google/uuid v1.2.0 // indirect
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/websocket v1.4.0 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0 // indirect
@@ -104,4 +106,5 @@ require (
 	gopkg.in/go-playground/validator.v9 v9.31.0
 	gopkg.in/ini.v1 v1.62.0
 	gopkg.in/yaml.v2 v2.4.0
+	sigs.k8s.io/yaml v1.2.0 // indirect
 )

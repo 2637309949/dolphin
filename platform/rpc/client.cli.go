@@ -18,7 +18,7 @@ func init() {
 	opt := grpc.WithInsecure()
 	conn, err := grpc.Dial(viper.GetString("rpc.client_srv"), opt)
 	if err != nil {
-		logrus.Error("grpc dial failed: %v", err)
+		logrus.Errorf("grpc dial failed: %v", err)
 	}
 	ClientSrvClient = proto.NewClientSrvClient(conn)
 }
