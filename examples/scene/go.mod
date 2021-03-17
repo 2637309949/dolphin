@@ -23,7 +23,7 @@ require (
 	github.com/tidwall/btree v0.4.2 // indirect
 	github.com/tidwall/buntdb v1.2.0 // indirect
 	github.com/tidwall/pretty v1.1.0 // indirect
-	github.com/ugorji/go/codec v1.2.4 // indirect
+	github.com/ugorji/go v1.2.4 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83 // indirect
 	golang.org/x/net v0.0.0-20210224082022-3d97a244fca7
