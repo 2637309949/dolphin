@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,6 +38,21 @@ type SchAchievementDivide struct {
 	Percent null.Float `xorm:"float(50,2) 'percent'" json:"percent" form:"percent" xml:"percent"`
 	// PkFee defined
 	PkFee null.Int `xorm:"int(11) 'pk_fee'" json:"pk_fee" form:"pk_fee" xml:"pk_fee"`
+}
+
+// Marshal defined
+func (m *SchAchievementDivide) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

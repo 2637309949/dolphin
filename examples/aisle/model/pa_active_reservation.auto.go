@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -51,6 +52,21 @@ type PaActiveReservation struct {
 	KqState null.Int `xorm:"int(11) 'kq_state'" json:"kq_state" form:"kq_state" xml:"kq_state"`
 	// PaReservation defined
 	PaReservation null.String `xorm:"varchar(1000) 'pa_reservation'" json:"pa_reservation" form:"pa_reservation" xml:"pa_reservation"`
+}
+
+// Marshal defined
+func (m *PaActiveReservation) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

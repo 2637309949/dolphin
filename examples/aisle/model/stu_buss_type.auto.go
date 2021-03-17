@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -35,6 +36,21 @@ type StuBussType struct {
 	StuSurplusHour null.Float `xorm:"float(50,2) 'stu_surplus_hour'" json:"stu_surplus_hour" form:"stu_surplus_hour" xml:"stu_surplus_hour"`
 	// StuSurplusMoney defined
 	StuSurplusMoney null.Float `xorm:"float(50,2) 'stu_surplus_money'" json:"stu_surplus_money" form:"stu_surplus_money" xml:"stu_surplus_money"`
+}
+
+// Marshal defined
+func (m *StuBussType) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

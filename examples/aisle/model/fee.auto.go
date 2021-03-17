@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -82,6 +83,21 @@ type Fee struct {
 	YjuserId null.Int `xorm:"int(11) 'yjuser_id'" json:"yjuser_id" form:"yjuser_id" xml:"yjuser_id"`
 	// BfFeeTime defined
 	BfFeeTime null.Time `xorm:"datetime 'bf_fee_time'" json:"bf_fee_time" form:"bf_fee_time" xml:"bf_fee_time"`
+}
+
+// Marshal defined
+func (m *Fee) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,6 +38,21 @@ type AboutUs struct {
 	AboutUsCntitle null.String `xorm:"varchar(1000) 'about_us_cntitle'" json:"about_us_cntitle" form:"about_us_cntitle" xml:"about_us_cntitle"`
 	// AboutUsEntitle defined
 	AboutUsEntitle null.String `xorm:"varchar(1000) 'about_us_entitle'" json:"about_us_entitle" form:"about_us_entitle" xml:"about_us_entitle"`
+}
+
+// Marshal defined
+func (m *AboutUs) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

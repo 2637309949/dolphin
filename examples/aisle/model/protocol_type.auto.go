@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -39,6 +40,21 @@ type ProtocolType struct {
 	TypeName null.String `xorm:"varchar(50) 'type_name'" json:"type_name" form:"type_name" xml:"type_name"`
 	// PtContent defined
 	PtContent null.Int `xorm:"int(11) 'pt_content'" json:"pt_content" form:"pt_content" xml:"pt_content"`
+}
+
+// Marshal defined
+func (m *ProtocolType) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

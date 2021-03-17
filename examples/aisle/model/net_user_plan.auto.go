@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -42,6 +43,21 @@ type NetUserPlan struct {
 	AchievementPlan decimal.Decimal `xorm:"decimal(50,3) 'achievement_plan'" json:"achievement_plan" form:"achievement_plan" xml:"achievement_plan"`
 	// PlanMonth defined
 	PlanMonth null.Time `xorm:"datetime 'plan_month'" json:"plan_month" form:"plan_month" xml:"plan_month"`
+}
+
+// Marshal defined
+func (m *NetUserPlan) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

@@ -7,5 +7,7 @@ module.exports.article = require('./article')
 module.exports.encrypt = require('./encrypt')
 // kafka Kafka controller
 module.exports.kafka = require('./kafka')
+// sqlmap SQL集合
+module.exports.sqlmap = require('./sqlmap')
 // view 视图
 module.exports.view = require('./view')

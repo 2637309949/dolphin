@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -45,6 +46,21 @@ type NetworkActivity struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 	// ActivityEstimateIncome defined
 	ActivityEstimateIncome null.Float `xorm:"float(10,2) 'activity_estimate_income'" json:"activity_estimate_income" form:"activity_estimate_income" xml:"activity_estimate_income"`
+}
+
+// Marshal defined
+func (m *NetworkActivity) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

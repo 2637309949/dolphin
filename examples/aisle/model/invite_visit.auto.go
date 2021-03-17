@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -47,6 +48,21 @@ type InviteVisit struct {
 	IvType null.Int `xorm:"int(11) 'iv_type'" json:"iv_type" form:"iv_type" xml:"iv_type"`
 	// StuDepartment defined
 	StuDepartment null.Int `xorm:"int(11) 'stu_department'" json:"stu_department" form:"stu_department" xml:"stu_department"`
+}
+
+// Marshal defined
+func (m *InviteVisit) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

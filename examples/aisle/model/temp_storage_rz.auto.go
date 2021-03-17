@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -51,6 +52,21 @@ type TempStorageRz struct {
 	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	// RefRzOrderid defined
 	RefRzOrderid null.Int `xorm:"int(11) 'ref_rz_orderid'" json:"ref_rz_orderid" form:"ref_rz_orderid" xml:"ref_rz_orderid"`
+}
+
+// Marshal defined
+func (m *TempStorageRz) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

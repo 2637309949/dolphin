@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -41,6 +42,21 @@ type AutoCsTimeSet struct {
 	StartTimeStr null.String `xorm:"varchar(5) 'start_time_str'" json:"start_time_str" form:"start_time_str" xml:"start_time_str"`
 	// EndTimeStr defined
 	EndTimeStr null.String `xorm:"varchar(5) 'end_time_str'" json:"end_time_str" form:"end_time_str" xml:"end_time_str"`
+}
+
+// Marshal defined
+func (m *AutoCsTimeSet) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

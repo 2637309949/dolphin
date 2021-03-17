@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -41,6 +42,21 @@ type Invoice struct {
 	BillType null.Int `xorm:"int(11) 'bill_type'" json:"bill_type" form:"bill_type" xml:"bill_type"`
 	// OrId defined
 	OrId null.Int `xorm:"int(11) 'or_id'" json:"or_id" form:"or_id" xml:"or_id"`
+}
+
+// Marshal defined
+func (m *Invoice) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

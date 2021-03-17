@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -47,6 +48,21 @@ type StudentSale struct {
 	YesornoBatchAllocation null.Int `xorm:"int(11) 'yesorno_batch_allocation'" json:"yesorno_batch_allocation" form:"yesorno_batch_allocation" xml:"yesorno_batch_allocation"`
 	// History defined
 	History null.Int `xorm:"int(11) 'history'" json:"history" form:"history" xml:"history"`
+}
+
+// Marshal defined
+func (m *StudentSale) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

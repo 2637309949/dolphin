@@ -1,0 +1,8 @@
+<controller name="sqlmap" desc="SQL集合">
+    <api name="selectone" method="get" desc="测试selectone" auth="never">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

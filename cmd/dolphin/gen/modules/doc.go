@@ -32,6 +32,6 @@ func (m *Doc) Build(dir string, args []string, node *schema.Application) ([]*pip
 		OutputDir:          path.Join(dir, viper.GetString("dir.doc")),
 		ParseVendor:        true,
 		ParseDependency:    true,
-		ParseDepth:         2,
+		// ParseDepth:         2,
 	})
 }

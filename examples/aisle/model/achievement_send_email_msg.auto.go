@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -43,6 +44,21 @@ type AchievementSendEmailMsg struct {
 	RecipientMailbox null.String `xorm:"varchar(100) 'recipient_mailbox'" json:"recipient_mailbox" form:"recipient_mailbox" xml:"recipient_mailbox"`
 	// ReceiverPhone defined
 	ReceiverPhone null.String `xorm:"varchar(20) 'receiver_phone'" json:"receiver_phone" form:"receiver_phone" xml:"receiver_phone"`
+}
+
+// Marshal defined
+func (m *AchievementSendEmailMsg) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

@@ -1361,6 +1361,24 @@ paths:
       summary: Get kafka info
       tags:
       - Kafka controller
+  /api/sqlmap/selectone:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 测试selectone
+      tags:
+      - SQL集合
   /api/sys/app/fun/del:
     delete:
       consumes:

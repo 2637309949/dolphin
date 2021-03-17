@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -45,6 +46,21 @@ type LanguagePack struct {
 	OrderEdition null.Int `xorm:"int(11) 'order_edition'" json:"order_edition" form:"order_edition" xml:"order_edition"`
 	// ZdAgreeLife defined
 	ZdAgreeLife null.Int `xorm:"int(11) 'zd_agree_life'" json:"zd_agree_life" form:"zd_agree_life" xml:"zd_agree_life"`
+}
+
+// Marshal defined
+func (m *LanguagePack) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

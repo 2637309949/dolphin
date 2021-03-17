@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -33,6 +34,21 @@ type MaterialBudget struct {
 	TotalMoney null.Float `xorm:"float(10,2) 'total_money'" json:"total_money" form:"total_money" xml:"total_money"`
 	// MbName defined
 	MbName null.String `xorm:"varchar(500) 'mb_name'" json:"mb_name" form:"mb_name" xml:"mb_name"`
+}
+
+// Marshal defined
+func (m *MaterialBudget) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

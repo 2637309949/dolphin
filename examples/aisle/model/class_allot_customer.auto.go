@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -39,6 +40,21 @@ type ClassAllotCustomer struct {
 	HiscustomerId null.Int `xorm:"int(11) 'hiscustomer_id'" json:"hiscustomer_id" form:"hiscustomer_id" xml:"hiscustomer_id"`
 	// CacDesc defined
 	CacDesc null.String `xorm:"varchar(500) 'cac_desc'" json:"cac_desc" form:"cac_desc" xml:"cac_desc"`
+}
+
+// Marshal defined
+func (m *ClassAllotCustomer) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

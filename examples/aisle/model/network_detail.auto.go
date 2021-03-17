@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,6 +38,21 @@ type NetworkDetail struct {
 	ChannelType null.Int `xorm:"int(11) 'channel_type'" json:"channel_type" form:"channel_type" xml:"channel_type"`
 	// QueryType defined
 	QueryType null.Int `xorm:"int(11) 'query_type'" json:"query_type" form:"query_type" xml:"query_type"`
+}
+
+// Marshal defined
+func (m *NetworkDetail) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

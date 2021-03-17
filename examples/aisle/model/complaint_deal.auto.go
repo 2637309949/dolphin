@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -39,6 +40,21 @@ type ComplaintDeal struct {
 	CdDeal null.Int `xorm:"int(11) 'cd_deal'" json:"cd_deal" form:"cd_deal" xml:"cd_deal"`
 	// CpId defined
 	CpId null.Int `xorm:"int(11) 'cp_id'" json:"cp_id" form:"cp_id" xml:"cp_id"`
+}
+
+// Marshal defined
+func (m *ComplaintDeal) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

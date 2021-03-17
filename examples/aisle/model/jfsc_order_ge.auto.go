@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -41,6 +42,21 @@ type JfscOrderGe struct {
 	ZbcheckDesc null.String `xorm:"varchar(1000) 'zbcheck_desc'" json:"zbcheck_desc" form:"zbcheck_desc" xml:"zbcheck_desc"`
 	// JfscddxState defined
 	JfscddxState null.Int `xorm:"int(11) default(1562) 'jfscddx_state'" json:"jfscddx_state" form:"jfscddx_state" xml:"jfscddx_state"`
+}
+
+// Marshal defined
+func (m *JfscOrderGe) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

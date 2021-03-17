@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -57,6 +58,21 @@ type StuPcHour struct {
 	PcStateDate null.Time `xorm:"datetime 'pc_state_date'" json:"pc_state_date" form:"pc_state_date" xml:"pc_state_date"`
 	// PcEndDate defined
 	PcEndDate null.Time `xorm:"datetime 'pc_end_date'" json:"pc_end_date" form:"pc_end_date" xml:"pc_end_date"`
+}
+
+// Marshal defined
+func (m *StuPcHour) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

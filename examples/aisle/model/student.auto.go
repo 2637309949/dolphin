@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -185,6 +186,21 @@ type Student struct {
 	ParentsProfession null.String `xorm:"varchar(200) 'parents_profession'" json:"parents_profession" form:"parents_profession" xml:"parents_profession"`
 	// BfStuType defined
 	BfStuType null.Int `xorm:"int(11) 'bf_stu_type'" json:"bf_stu_type" form:"bf_stu_type" xml:"bf_stu_type"`
+}
+
+// Marshal defined
+func (m *Student) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

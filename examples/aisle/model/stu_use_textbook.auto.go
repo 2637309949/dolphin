@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,6 +38,21 @@ type StuUseTextbook struct {
 	PkTm null.Int `xorm:"int(11) 'pk_tm'" json:"pk_tm" form:"pk_tm" xml:"pk_tm"`
 	// PkLevel defined
 	PkLevel null.Int `xorm:"int(11) 'pk_level'" json:"pk_level" form:"pk_level" xml:"pk_level"`
+}
+
+// Marshal defined
+func (m *StuUseTextbook) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

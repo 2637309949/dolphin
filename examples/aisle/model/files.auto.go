@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -43,6 +44,21 @@ type Files struct {
 	SpBfhour null.String `xorm:"varchar(100) 'sp_bfhour'" json:"sp_bfhour" form:"sp_bfhour" xml:"sp_bfhour"`
 	// IfZm defined
 	IfZm null.String `xorm:"varchar(10) default('1') 'if_zm'" json:"if_zm" form:"if_zm" xml:"if_zm"`
+}
+
+// Marshal defined
+func (m *Files) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

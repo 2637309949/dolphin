@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/decimal"
@@ -214,6 +215,21 @@ type OrderForm struct {
 	OfBatch null.Int `xorm:"int(11) 'of_batch'" json:"of_batch" form:"of_batch" xml:"of_batch"`
 	// IfPartXy defined
 	IfPartXy null.Int `xorm:"int(11) 'if_part_xy'" json:"if_part_xy" form:"if_part_xy" xml:"if_part_xy"`
+}
+
+// Marshal defined
+func (m *OrderForm) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined

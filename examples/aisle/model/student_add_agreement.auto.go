@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -65,6 +66,21 @@ type StudentAddAgreement struct {
 	CheckDate null.Time `xorm:"datetime 'check_date'" json:"check_date" form:"check_date" xml:"check_date"`
 	// ShifouUpdate defined
 	ShifouUpdate null.Int `xorm:"int(11) 'shifou_update'" json:"shifou_update" form:"shifou_update" xml:"shifou_update"`
+}
+
+// Marshal defined
+func (m *StudentAddAgreement) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
