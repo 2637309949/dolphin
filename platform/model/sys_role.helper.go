@@ -23,7 +23,7 @@ var AdminRole = SysRole{
 
 var roles = []SysRole{
 	AdminRole,
-	SysRole{
+	{
 		ID:         null.StringFrom("3b18ee66-a5e6-40a3-b190-86d115bae3e2"),
 		Name:       null.StringFrom("test"),
 		Code:       null.StringFrom("A5b6D3y20Y"),

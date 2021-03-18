@@ -24,7 +24,7 @@ func (m *SysDomain) Ensure(db *xorm.Engine) {
 // InitSysData defined inital system data
 func (m *SysDomain) InitSysData(s *xorm.Session) {
 	domains := []SysDomain{
-		SysDomain{
+		{
 			ID:         null.StringFrom("5ba2b810-9dad-11d1-80b4-00c04fd430c1"),
 			Name:       null.StringFrom("localhost"),
 			FullName:   null.StringFrom("localhost"),

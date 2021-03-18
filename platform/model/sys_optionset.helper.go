@@ -24,7 +24,7 @@ func (m *SysOptionset) Values() []struct {
 // InitSysData defined
 func (m *SysOptionset) InitSysData(s *xorm.Session) {
 	options := []SysOptionset{
-		SysOptionset{
+		{
 			ID:         null.StringFrom("c6a7bt50-7dad-31d1-81b5-10c34fd460e2"),
 			Name:       null.StringFrom("域名启用状态"),
 			Code:       null.StringFrom("sys_domain_status"),
@@ -35,7 +35,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		SysOptionset{
+		{
 			ID:         null.StringFrom("b6a7ct5q-2dad-31d1-81b5-10c34fd460c3"),
 			Name:       null.StringFrom("域名认证模式"),
 			Code:       null.StringFrom("sys_domain_auth_mode"),
@@ -46,7 +46,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		SysOptionset{
+		{
 			ID:         null.StringFrom("c6a7bt50-7dad-31d1-81b5-10c34fd460c2"),
 			Name:       null.StringFrom("域名数据库标志"),
 			Code:       null.StringFrom("sys_domain_sync_flag"),
@@ -57,7 +57,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		SysOptionset{
+		{
 			ID:         null.StringFrom("b4a7bt50-7dad-12d1-81b5-10c34fd460e4"),
 			Name:       null.StringFrom("帐号启用状态"),
 			Code:       null.StringFrom("sys_user_status"),
@@ -68,7 +68,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		SysOptionset{
+		{
 			ID:         null.StringFrom("a1b7b150-6dad-12d1-81b5-10c34fd460e5"),
 			Name:       null.StringFrom("菜单类型"),
 			Code:       null.StringFrom("sys_menu_type"),
@@ -79,7 +79,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			UpdateTime: null.TimeFrom(time.Now()),
 			DelFlag:    null.IntFrom(0),
 		},
-		SysOptionset{
+		{
 			ID:         null.StringFrom("c2b5b260-7jad-12d1-81b5-10c34fd460e6"),
 			Name:       null.StringFrom("持久类型"),
 			Code:       null.StringFrom("sys_attachment_durable"),
