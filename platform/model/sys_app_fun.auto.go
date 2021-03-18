@@ -54,7 +54,7 @@ type SysAppFun struct {
 	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" form:"remark" xml:"remark"`
 }
 
-// Marshal defined
+// With defined
 func (m *SysAppFun) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
