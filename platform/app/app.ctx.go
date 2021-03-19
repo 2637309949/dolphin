@@ -364,7 +364,10 @@ func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
 	if ctx.QueryString("__columns__") != "" {
 		cstr := ctx.QueryString("__columns__")
 		columns := []map[string]interface{}{}
-		json.Unmarshal([]byte(cstr), &columns)
+		err := json.Unmarshal([]byte(cstr), &columns)
+		if err != nil {
+			logrus.Error(err)
+		}
 		cfg.Header = columns
 	}
 	excelInfo, err := BuildExcel(cfg)
