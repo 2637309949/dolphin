@@ -36,7 +36,7 @@ type StuScoreItem struct {
 	Score null.Float `xorm:"float(50,2) 'score'" json:"score" form:"score" xml:"score"`
 }
 
-// Marshal defined
+// With defined
 func (m *StuScoreItem) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *StuScoreItem) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StuScoreItem) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

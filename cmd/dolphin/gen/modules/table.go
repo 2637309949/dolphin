@@ -97,32 +97,37 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				switch col.SQLType.Name {
 				case "VARCHAR", "TEXT":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-					if col.SQLType.DefaultLength != 0 {
-						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
-					}
+					c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
 				case "DATETIME":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 				case "ENUM", "INT", "BIGINT":
-					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 					if col.SQLType.Name == "ENUM" {
 						c.Xorm = fmt.Sprintf("int(%v)", 10)
-					} else if col.SQLType.DefaultLength != 0 {
-						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+					} else {
+						c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
+						if col.SQLType.DefaultLength != 0 {
+							c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+						}
 					}
 				case "BOOLEAN":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 				case "MEDIUMBLOB", "BLOB":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
+					if col.SQLType.DefaultLength != 0 {
+						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+					}
 				case "FLOAT", "DOUBLE":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
 					if col.SQLType.DefaultLength != 0 {
-						c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
+						if col.SQLType.DefaultLength2 != 0 {
+							c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
+						} else {
+							c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+						}
 					}
 				case "DECIMAL":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-					if col.SQLType.DefaultLength != 0 {
-						c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
-					}
+					c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
 				}
 				if col.IsPrimaryKey {
 					c.Xorm = fmt.Sprintf("%v %v", c.Xorm, "pk")

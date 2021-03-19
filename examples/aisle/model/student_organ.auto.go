@@ -36,7 +36,7 @@ type StudentOrgan struct {
 	StuGxYy null.Int `xorm:"int(11) 'stu_gx_yy'" json:"stu_gx_yy" form:"stu_gx_yy" xml:"stu_gx_yy"`
 }
 
-// Marshal defined
+// With defined
 func (m *StudentOrgan) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *StudentOrgan) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StudentOrgan) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

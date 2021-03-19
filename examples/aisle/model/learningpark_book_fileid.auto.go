@@ -44,7 +44,7 @@ type LearningparkBookFileid struct {
 	SpsltFiled null.Int `xorm:"int(11) 'spslt_filed'" json:"spslt_filed" form:"spslt_filed" xml:"spslt_filed"`
 }
 
-// Marshal defined
+// With defined
 func (m *LearningparkBookFileid) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -92,7 +92,8 @@ func (m *LearningparkBookFileid) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *LearningparkBookFileid) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

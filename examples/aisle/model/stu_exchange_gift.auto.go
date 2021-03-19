@@ -36,7 +36,7 @@ type StuExchangeGift struct {
 	UseTotalPoint null.Float `xorm:"float(10,2) 'use_total_point'" json:"use_total_point" form:"use_total_point" xml:"use_total_point"`
 }
 
-// Marshal defined
+// With defined
 func (m *StuExchangeGift) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *StuExchangeGift) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StuExchangeGift) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

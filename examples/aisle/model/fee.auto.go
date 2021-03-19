@@ -85,7 +85,7 @@ type Fee struct {
 	BfFeeTime null.Time `xorm:"datetime 'bf_fee_time'" json:"bf_fee_time" form:"bf_fee_time" xml:"bf_fee_time"`
 }
 
-// Marshal defined
+// With defined
 func (m *Fee) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -133,7 +133,8 @@ func (m *Fee) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Fee) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -58,7 +58,7 @@ type MessageNotice struct {
 	SaaId null.Int `xorm:"int(11) 'saa_id'" json:"saa_id" form:"saa_id" xml:"saa_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *MessageNotice) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -106,7 +106,8 @@ func (m *MessageNotice) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *MessageNotice) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -40,7 +40,7 @@ type HolidaySet struct {
 	HisEndDate null.Time `xorm:"datetime 'his_end_date'" json:"his_end_date" form:"his_end_date" xml:"his_end_date"`
 }
 
-// Marshal defined
+// With defined
 func (m *HolidaySet) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -88,7 +88,8 @@ func (m *HolidaySet) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *HolidaySet) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

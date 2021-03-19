@@ -36,7 +36,7 @@ type LgClasstype struct {
 	FsId null.Int `xorm:"int(11) 'fs_id'" json:"fs_id" form:"fs_id" xml:"fs_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *LgClasstype) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *LgClasstype) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *LgClasstype) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

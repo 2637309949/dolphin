@@ -24,7 +24,7 @@ type TempStu struct {
 	StuPhone null.String `xorm:"varchar(255) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
 }
 
-// Marshal defined
+// With defined
 func (m *TempStu) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -72,7 +72,8 @@ func (m *TempStu) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TempStu) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

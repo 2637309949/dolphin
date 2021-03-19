@@ -45,7 +45,7 @@ type SchoolOfLimit struct {
 	PkYyb null.Int `xorm:"int(11) 'pk_yyb'" json:"pk_yyb" form:"pk_yyb" xml:"pk_yyb"`
 }
 
-// Marshal defined
+// With defined
 func (m *SchoolOfLimit) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -93,7 +93,8 @@ func (m *SchoolOfLimit) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *SchoolOfLimit) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

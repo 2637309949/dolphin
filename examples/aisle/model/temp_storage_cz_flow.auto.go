@@ -36,7 +36,7 @@ type TempStorageCzFlow struct {
 	PkCfPool null.Int `xorm:"int(11) 'pk_cf_pool'" json:"pk_cf_pool" form:"pk_cf_pool" xml:"pk_cf_pool"`
 }
 
-// Marshal defined
+// With defined
 func (m *TempStorageCzFlow) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *TempStorageCzFlow) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TempStorageCzFlow) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -54,7 +54,7 @@ type SchTargetsignPlan struct {
 	AllTzMoney null.Float `xorm:"float(50,2) 'all_tz_money'" json:"all_tz_money" form:"all_tz_money" xml:"all_tz_money"`
 }
 
-// Marshal defined
+// With defined
 func (m *SchTargetsignPlan) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -102,7 +102,8 @@ func (m *SchTargetsignPlan) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *SchTargetsignPlan) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

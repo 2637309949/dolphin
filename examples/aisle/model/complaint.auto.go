@@ -64,7 +64,7 @@ type Complaint struct {
 	ComplaintForm null.Int `xorm:"int(11) 'complaint_form'" json:"complaint_form" form:"complaint_form" xml:"complaint_form"`
 }
 
-// Marshal defined
+// With defined
 func (m *Complaint) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -112,7 +112,8 @@ func (m *Complaint) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Complaint) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

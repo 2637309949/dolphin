@@ -44,7 +44,7 @@ type AutoCsTimeSet struct {
 	EndTimeStr null.String `xorm:"varchar(5) 'end_time_str'" json:"end_time_str" form:"end_time_str" xml:"end_time_str"`
 }
 
-// Marshal defined
+// With defined
 func (m *AutoCsTimeSet) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -92,7 +92,8 @@ func (m *AutoCsTimeSet) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *AutoCsTimeSet) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

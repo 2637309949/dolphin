@@ -57,7 +57,7 @@ type IcbcPayList struct {
 	Amout decimal.Decimal `xorm:"decimal(50,3) 'amout'" json:"amout" form:"amout" xml:"amout"`
 }
 
-// Marshal defined
+// With defined
 func (m *IcbcPayList) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -105,7 +105,8 @@ func (m *IcbcPayList) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *IcbcPayList) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

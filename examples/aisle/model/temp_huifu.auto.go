@@ -32,7 +32,7 @@ type TempHuifu struct {
 	OfNumber null.String `xorm:"varchar(255) 'of_number'" json:"of_number" form:"of_number" xml:"of_number"`
 }
 
-// Marshal defined
+// With defined
 func (m *TempHuifu) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -80,7 +80,8 @@ func (m *TempHuifu) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TempHuifu) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

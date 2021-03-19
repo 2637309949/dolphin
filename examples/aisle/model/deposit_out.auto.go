@@ -98,7 +98,7 @@ type DepositOut struct {
 	NextCheckname null.String `xorm:"varchar(100) 'next_checkname'" json:"next_checkname" form:"next_checkname" xml:"next_checkname"`
 }
 
-// Marshal defined
+// With defined
 func (m *DepositOut) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -146,7 +146,8 @@ func (m *DepositOut) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *DepositOut) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -42,7 +42,7 @@ type StudentTypeJournal struct {
 	OldStuTypeName null.String `xorm:"varchar(1000) 'old_stu_type_name'" json:"old_stu_type_name" form:"old_stu_type_name" xml:"old_stu_type_name"`
 }
 
-// Marshal defined
+// With defined
 func (m *StudentTypeJournal) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -90,7 +90,8 @@ func (m *StudentTypeJournal) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StudentTypeJournal) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

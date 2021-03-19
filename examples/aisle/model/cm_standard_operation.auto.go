@@ -40,7 +40,7 @@ type CmStandardOperation struct {
 	CmSOContent null.Int `xorm:"int(11) 'cm_s_o_content'" json:"cm_s_o_content" form:"cm_s_o_content" xml:"cm_s_o_content"`
 }
 
-// Marshal defined
+// With defined
 func (m *CmStandardOperation) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -88,7 +88,8 @@ func (m *CmStandardOperation) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *CmStandardOperation) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

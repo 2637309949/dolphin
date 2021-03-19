@@ -44,7 +44,7 @@ type Organ struct {
 	ShengId null.Int `xorm:"int(11) 'sheng_id'" json:"sheng_id" form:"sheng_id" xml:"sheng_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *Organ) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -92,7 +92,8 @@ func (m *Organ) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Organ) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -36,7 +36,7 @@ type StuclasstypeExtrafee struct {
 	OrderExtraId null.Int `xorm:"int(11) 'order_extra_id'" json:"order_extra_id" form:"order_extra_id" xml:"order_extra_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *StuclasstypeExtrafee) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *StuclasstypeExtrafee) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StuclasstypeExtrafee) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

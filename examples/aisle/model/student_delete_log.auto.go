@@ -38,7 +38,7 @@ type StudentDeleteLog struct {
 	StuPhone null.String `xorm:"varchar(20) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
 }
 
-// Marshal defined
+// With defined
 func (m *StudentDeleteLog) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -86,7 +86,8 @@ func (m *StudentDeleteLog) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StudentDeleteLog) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -60,7 +60,7 @@ type StuPcHour struct {
 	PcEndDate null.Time `xorm:"datetime 'pc_end_date'" json:"pc_end_date" form:"pc_end_date" xml:"pc_end_date"`
 }
 
-// Marshal defined
+// With defined
 func (m *StuPcHour) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -108,7 +108,8 @@ func (m *StuPcHour) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StuPcHour) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

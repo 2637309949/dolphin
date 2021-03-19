@@ -76,7 +76,7 @@ type MarketActivity struct {
 	OmdId null.Int `xorm:"int(11) 'omd_id'" json:"omd_id" form:"omd_id" xml:"omd_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *MarketActivity) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -124,7 +124,8 @@ func (m *MarketActivity) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *MarketActivity) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

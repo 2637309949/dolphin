@@ -44,7 +44,7 @@ type OrderDeleteLog struct {
 	OfState null.Int `xorm:"int(11) 'of_state'" json:"of_state" form:"of_state" xml:"of_state"`
 }
 
-// Marshal defined
+// With defined
 func (m *OrderDeleteLog) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -92,7 +92,8 @@ func (m *OrderDeleteLog) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *OrderDeleteLog) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

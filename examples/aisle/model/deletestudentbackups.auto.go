@@ -144,7 +144,7 @@ type Deletestudentbackups struct {
 	StuWxksDate null.Time `xorm:"datetime 'stu_wxks_date'" json:"stu_wxks_date" form:"stu_wxks_date" xml:"stu_wxks_date"`
 }
 
-// Marshal defined
+// With defined
 func (m *Deletestudentbackups) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -192,7 +192,8 @@ func (m *Deletestudentbackups) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Deletestudentbackups) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

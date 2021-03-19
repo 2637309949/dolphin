@@ -58,7 +58,7 @@ type Gift struct {
 	Introduction2 null.String `xorm:"varchar(100) 'introduction2'" json:"introduction2" form:"introduction2" xml:"introduction2"`
 }
 
-// Marshal defined
+// With defined
 func (m *Gift) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -106,7 +106,8 @@ func (m *Gift) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Gift) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -54,7 +54,7 @@ type PaActiveReservation struct {
 	PaReservation null.String `xorm:"varchar(1000) 'pa_reservation'" json:"pa_reservation" form:"pa_reservation" xml:"pa_reservation"`
 }
 
-// Marshal defined
+// With defined
 func (m *PaActiveReservation) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -102,7 +102,8 @@ func (m *PaActiveReservation) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *PaActiveReservation) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

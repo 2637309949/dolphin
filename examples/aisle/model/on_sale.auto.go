@@ -60,7 +60,7 @@ type OnSale struct {
 	SaleJxType null.Int `xorm:"int(11) 'sale_jx_type'" json:"sale_jx_type" form:"sale_jx_type" xml:"sale_jx_type"`
 }
 
-// Marshal defined
+// With defined
 func (m *OnSale) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -108,7 +108,8 @@ func (m *OnSale) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *OnSale) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -30,7 +30,7 @@ type T2LoginLog struct {
 	LoginIp null.String `xorm:"varchar(100) 'login_ip'" json:"login_ip" form:"login_ip" xml:"login_ip"`
 }
 
-// Marshal defined
+// With defined
 func (m *T2LoginLog) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -78,7 +78,8 @@ func (m *T2LoginLog) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *T2LoginLog) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

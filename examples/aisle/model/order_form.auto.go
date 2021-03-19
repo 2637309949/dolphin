@@ -217,7 +217,7 @@ type OrderForm struct {
 	IfPartXy null.Int `xorm:"int(11) 'if_part_xy'" json:"if_part_xy" form:"if_part_xy" xml:"if_part_xy"`
 }
 
-// Marshal defined
+// With defined
 func (m *OrderForm) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -265,7 +265,8 @@ func (m *OrderForm) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *OrderForm) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

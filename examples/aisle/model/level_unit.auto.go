@@ -36,7 +36,7 @@ type LevelUnit struct {
 	UnitTotalScore null.Float `xorm:"float(50,2) 'unit_total_score'" json:"unit_total_score" form:"unit_total_score" xml:"unit_total_score"`
 }
 
-// Marshal defined
+// With defined
 func (m *LevelUnit) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *LevelUnit) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *LevelUnit) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

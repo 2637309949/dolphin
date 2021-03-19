@@ -44,7 +44,7 @@ type JfscOrderGe struct {
 	JfscddxState null.Int `xorm:"int(11) default(1562) 'jfscddx_state'" json:"jfscddx_state" form:"jfscddx_state" xml:"jfscddx_state"`
 }
 
-// Marshal defined
+// With defined
 func (m *JfscOrderGe) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -92,7 +92,8 @@ func (m *JfscOrderGe) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *JfscOrderGe) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

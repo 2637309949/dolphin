@@ -95,7 +95,7 @@ type YbPayFlowing struct {
 	YpfId null.Int `xorm:"int(11) 'ypf_id'" json:"ypf_id" form:"ypf_id" xml:"ypf_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *YbPayFlowing) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -143,7 +143,8 @@ func (m *YbPayFlowing) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *YbPayFlowing) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

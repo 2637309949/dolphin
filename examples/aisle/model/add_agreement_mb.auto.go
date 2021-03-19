@@ -42,7 +42,7 @@ type AddAgreementMb struct {
 	OpenOrClose null.Int `xorm:"int(11) 'open_or_close'" json:"open_or_close" form:"open_or_close" xml:"open_or_close"`
 }
 
-// Marshal defined
+// With defined
 func (m *AddAgreementMb) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -90,7 +90,8 @@ func (m *AddAgreementMb) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *AddAgreementMb) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

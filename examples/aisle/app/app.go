@@ -28,7 +28,7 @@ type (
 		*pApp.RouterGroup
 		engine *Engine
 	}
-	// HandlerFunc defines the handler used by gin middleware as return value.
+	// HandlerFunc defines the handler used by gin middleware as return value
 	HandlerFunc func(*Context)
 )
 
@@ -53,18 +53,18 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	rh := rg.RouterGroup.Handle(
-		httpMethod,
-		relativePath,
-		funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
-			return rg.engine.HandlerFunc(h)
-		}).([]pApp.HandlerFunc)...)
+	pAppHandlers := funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
+		return rg.engine.HandlerFunc(h)
+	}).([]pApp.HandlerFunc)
+	rh := rg.RouterGroup.Handle(httpMethod, relativePath, pAppHandlers...)
 	return rh
 }
 
 // Auth middles
-func Auth(ctx *Context) {
-	pApp.Auth(ctx.Context)
+func Auth(auth ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		pApp.Auth(auth...)(ctx.Context)
+	}
 }
 
 // Roles middles
@@ -95,6 +95,8 @@ func buildEngine() *Engine {
 func Run() {
 	App.Run()
 }
+
+var _ *Engine = &Engine{}
 
 // App instance
 var App = buildEngine()

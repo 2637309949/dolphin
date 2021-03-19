@@ -42,7 +42,7 @@ type CustomerServiceProcessVisit struct {
 	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
 }
 
-// Marshal defined
+// With defined
 func (m *CustomerServiceProcessVisit) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -90,7 +90,8 @@ func (m *CustomerServiceProcessVisit) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *CustomerServiceProcessVisit) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -38,7 +38,7 @@ type StuToReopened struct {
 	StrBussType null.Int `xorm:"int(11) 'str_buss_type'" json:"str_buss_type" form:"str_buss_type" xml:"str_buss_type"`
 }
 
-// Marshal defined
+// With defined
 func (m *StuToReopened) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -86,7 +86,8 @@ func (m *StuToReopened) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StuToReopened) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

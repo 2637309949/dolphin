@@ -112,7 +112,7 @@ type ClassScheduleStudent struct {
 	NextCssId null.Int `xorm:"int(11) 'next_css_id'" json:"next_css_id" form:"next_css_id" xml:"next_css_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *ClassScheduleStudent) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -160,7 +160,8 @@ func (m *ClassScheduleStudent) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *ClassScheduleStudent) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

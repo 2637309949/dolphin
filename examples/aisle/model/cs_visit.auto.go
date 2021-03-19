@@ -44,7 +44,7 @@ type CsVisit struct {
 	VisituserId null.Int `xorm:"int(11) 'visituser_id'" json:"visituser_id" form:"visituser_id" xml:"visituser_id"`
 }
 
-// Marshal defined
+// With defined
 func (m *CsVisit) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -92,7 +92,8 @@ func (m *CsVisit) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *CsVisit) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

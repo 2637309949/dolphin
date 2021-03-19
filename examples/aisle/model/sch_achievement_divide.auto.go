@@ -40,7 +40,7 @@ type SchAchievementDivide struct {
 	PkFee null.Int `xorm:"int(11) 'pk_fee'" json:"pk_fee" form:"pk_fee" xml:"pk_fee"`
 }
 
-// Marshal defined
+// With defined
 func (m *SchAchievementDivide) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -88,7 +88,8 @@ func (m *SchAchievementDivide) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *SchAchievementDivide) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

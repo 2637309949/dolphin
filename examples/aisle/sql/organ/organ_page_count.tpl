@@ -6,9 +6,19 @@ select
 from
 	organ
 where
-	organ.id {{.ne}} ""
-	and
-	organ.del_flag {{.ne}} 1
-{{if ne .role_rule ""}}
+	organ.isdelete={{.del_flag}}
+{{if .create_by}}
+	and organ.create_by='{{.create_by}}'
+{{end}}
+{{if .update_by}}
+	and organ.update_by='{{.update_by}}'
+{{end}}
+{{if and .create_time_start .create_time_end}}
+	and organ.create_date between '{{.create_time_start}}' and '{{.create_time_end}}'
+{{end}}
+{{if and .update_time_start .update_time_end}}
+	and organ.update_date between '{{.update_time_start}}' and '{{.update_time_end}}'
+{{end}}
+{{if .role_rule}}
 	and {{.role_rule}}
 {{end}}

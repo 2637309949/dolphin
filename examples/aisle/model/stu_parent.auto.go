@@ -48,7 +48,7 @@ type StuParent struct {
 	IdentificationNumber null.String `xorm:"varchar(1000) 'identification_number'" json:"identification_number" form:"identification_number" xml:"identification_number"`
 }
 
-// Marshal defined
+// With defined
 func (m *StuParent) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -96,7 +96,8 @@ func (m *StuParent) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StuParent) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

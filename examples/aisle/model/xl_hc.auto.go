@@ -84,7 +84,7 @@ type XlHc struct {
 	DestinationNumber null.String `xorm:"varchar(100) 'destination_number'" json:"destination_number" form:"destination_number" xml:"destination_number"`
 }
 
-// Marshal defined
+// With defined
 func (m *XlHc) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -132,7 +132,8 @@ func (m *XlHc) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *XlHc) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

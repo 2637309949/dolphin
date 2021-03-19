@@ -49,7 +49,7 @@ type PrearrangedCourses struct {
 	PkClass null.Int `xorm:"int(11) 'pk_class'" json:"pk_class" form:"pk_class" xml:"pk_class"`
 }
 
-// Marshal defined
+// With defined
 func (m *PrearrangedCourses) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -97,7 +97,8 @@ func (m *PrearrangedCourses) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *PrearrangedCourses) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -9,7 +9,7 @@ import (
 
 // OrganInfo defined Organ info
 type OrganInfo struct {
-	*Article
+	*Organ
 	// Content
 	Content null.String `json:"content" xml:"content"`
 	// Title

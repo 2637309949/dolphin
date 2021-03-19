@@ -10,3 +10,18 @@ where
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
+{{if ne .del_flag ""}}
+	and sys_table.del_flag={{.del_flag}}
+{{end}}
+{{if ne .create_by ""}}
+	and sys_table.create_by="{{.create_by}}"
+{{end}}
+{{if ne .update_by ""}}
+	and sys_table.update_by="{{.update_by}}"
+{{end}}
+{{if and (ne .create_time_start "") (ne .create_time_end "")}}
+	and sys_table.create_time BETWEEN '{{.create_time_start}}' AND '{{.create_time_end}}'
+{{end}}
+{{if and (ne .update_time_start "") (ne .update_time_end "")}}
+	and sys_table.update_time BETWEEN '{{.update_time_start}}' AND '{{.update_time_end}}'
+{{end}}

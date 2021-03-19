@@ -188,7 +188,7 @@ type Student struct {
 	BfStuType null.Int `xorm:"int(11) 'bf_stu_type'" json:"bf_stu_type" form:"bf_stu_type" xml:"bf_stu_type"`
 }
 
-// Marshal defined
+// With defined
 func (m *Student) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -236,7 +236,8 @@ func (m *Student) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Student) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

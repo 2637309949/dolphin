@@ -24,7 +24,7 @@ type TempShaoerShow struct {
 	PhoneType null.String `xorm:"varchar(255) 'phone_type'" json:"phone_type" form:"phone_type" xml:"phone_type"`
 }
 
-// Marshal defined
+// With defined
 func (m *TempShaoerShow) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -72,7 +72,8 @@ func (m *TempShaoerShow) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TempShaoerShow) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

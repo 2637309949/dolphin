@@ -66,7 +66,7 @@ type DepositIn struct {
 	CanRefundDate null.Time `xorm:"datetime 'can_refund_date'" json:"can_refund_date" form:"can_refund_date" xml:"can_refund_date"`
 }
 
-// Marshal defined
+// With defined
 func (m *DepositIn) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -114,7 +114,8 @@ func (m *DepositIn) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *DepositIn) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

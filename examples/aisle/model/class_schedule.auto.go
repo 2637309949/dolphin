@@ -98,7 +98,7 @@ type ClassSchedule struct {
 	PkCtr null.Int `xorm:"int(11) 'pk_ctr'" json:"pk_ctr" form:"pk_ctr" xml:"pk_ctr"`
 }
 
-// Marshal defined
+// With defined
 func (m *ClassSchedule) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -146,7 +146,8 @@ func (m *ClassSchedule) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *ClassSchedule) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

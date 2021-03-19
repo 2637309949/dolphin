@@ -31,6 +31,7 @@ import (
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/http"
+	"github.com/2637309949/dolphin/platform/util/slice"
 	"google.golang.org/grpc"
 )
 
@@ -78,6 +79,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	tables := []model.SysTable{}
 	columns := []model.SysTableColumn{}
 	session := db.NewSession()
+	session.Begin()
 	defer session.Close()
 	defer func() {
 		if err := recover(); err != nil {
@@ -87,6 +89,11 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	}()
 	util.Ensure(db.Sync2(new(model.SysTable), new(model.SysTableColumn)))
 	e.Manager.MSet().ForEach(func(n string, m interface{}) {
+		if mode := viper.GetString("app.mode"); mode == "debug" {
+			if tbn, ok := m.(interface{ TableName() string }); ok {
+				logrus.Infof("Sync Model:%v", tbn.TableName())
+			}
+		}
 		util.Ensure(db.Sync2(m))
 		tableInfo := util.EnsureLeft(db.TableInfo(m)).(*schemas.Table)
 		colsInfo := tableInfo.Columns()
@@ -99,8 +106,14 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	}, name)
 	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTable).TableName())))
 	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTableColumn).TableName())))
-	util.EnsureLeft(session.Insert(tables))
-	util.EnsureLeft(session.Insert(columns))
+	stb, stc := slice.Chunk(tables, 50).([][]model.SysTable), slice.Chunk(columns, 50).([][]model.SysTableColumn)
+	for i := range stb {
+		util.EnsureLeft(session.Insert(stb[i]))
+	}
+	for i := range stc {
+		util.EnsureLeft(session.Insert(stc[i]))
+
+	}
 	session.Commit()
 }
 

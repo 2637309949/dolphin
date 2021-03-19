@@ -36,7 +36,7 @@ type MaterialBudget struct {
 	MbName null.String `xorm:"varchar(500) 'mb_name'" json:"mb_name" form:"mb_name" xml:"mb_name"`
 }
 
-// Marshal defined
+// With defined
 func (m *MaterialBudget) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -84,7 +84,8 @@ func (m *MaterialBudget) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *MaterialBudget) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined
