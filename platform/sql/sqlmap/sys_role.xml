@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_role">
         insert into sys_role
-		(`id`,`name`,`code`,`status`,`app_index`,`admin_index`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
+		(`id`,`name`,`code`,`status`,`app_index`,`admin_index`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?name,?code,?status,?app_index,?admin_index,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
+		(?id,?name,?code,?status,?app_index,?admin_index,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_role">
-        update sys_role set `id`=?id,`name`=?name,`code`=?code,`status`=?status,`app_index`=?app_index,`admin_index`=?admin_index,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+        update sys_role set `id`=?id,`name`=?name,`code`=?code,`status`=?status,`app_index`=?app_index,`admin_index`=?admin_index,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_role">
         delete from sys_role where id =?id
     </sql>
     <sql id="selectone_sys_role">
-        select `id`,`name`,`code`,`status`,`app_index`,`admin_index`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_role where  id =?id
+        select `id`,`name`,`code`,`status`,`app_index`,`admin_index`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_role where  id =?id
     </sql>
     <sql id="selectall_sys_role">
-        select `id`,`name`,`code`,`status`,`app_index`,`admin_index`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_role
+        select `id`,`name`,`code`,`status`,`app_index`,`admin_index`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_role
     </sql>
 </sqlMap>

@@ -34,9 +34,9 @@ func SysRoleAdd(ctx *Context) {
 	}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -67,9 +67,9 @@ func SysRoleBatchAdd(ctx *Context) {
 	for i := range payload {
 		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
@@ -100,7 +100,7 @@ func SysRoleDel(ctx *Context) {
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysRole{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -134,7 +134,7 @@ func SysRoleBatchDel(ctx *Context) {
 	})
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysRole{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -162,7 +162,7 @@ func SysRoleUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
@@ -196,7 +196,7 @@ func SysRoleBatchUpdate(ctx *Context) {
 	s := ctx.DB.NewSession()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
 		ret = append(ret, r)
 	}

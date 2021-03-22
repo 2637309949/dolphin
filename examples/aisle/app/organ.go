@@ -90,7 +90,7 @@ func OrganUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	// payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	// payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateDate = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.OrganId.Int64).Update(&payload)
 	if err != nil {

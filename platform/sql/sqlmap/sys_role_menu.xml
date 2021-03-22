@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_role_menu">
         insert into sys_role_menu
-		(`id`,`role_id`,`menu_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
+		(`id`,`role_id`,`menu_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?role_id,?menu_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
+		(?id,?role_id,?menu_id,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_role_menu">
-        update sys_role_menu set `id`=?id,`role_id`=?role_id,`menu_id`=?menu_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+        update sys_role_menu set `id`=?id,`role_id`=?role_id,`menu_id`=?menu_id,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_role_menu">
         delete from sys_role_menu where id =?id
     </sql>
     <sql id="selectone_sys_role_menu">
-        select `id`,`role_id`,`menu_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_role_menu where  id =?id
+        select `id`,`role_id`,`menu_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_role_menu where  id =?id
     </sql>
     <sql id="selectall_sys_role_menu">
-        select `id`,`role_id`,`menu_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_role_menu
+        select `id`,`role_id`,`menu_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_role_menu
     </sql>
 </sqlMap>

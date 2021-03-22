@@ -7,11 +7,11 @@ from
 	organ
 where
 	organ.isdelete={{.is_delete}}
-{{if .create_by}}
-	and organ.create_by='{{.create_by}}'
+{{if .creater}}
+	and organ.creater='{{.creater}}'
 {{end}}
-{{if .update_by}}
-	and organ.update_by='{{.update_by}}'
+{{if .updater}}
+	and organ.updater='{{.updater}}'
 {{end}}
 {{if and .create_time_start .create_time_end}}
 	and organ.create_date between '{{.create_time_start}}' and '{{.create_time_end}}'

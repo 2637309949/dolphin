@@ -380,9 +380,9 @@ func SysClientAdd(ctx *Context) {
 	}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
@@ -432,9 +432,9 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 	funk.ForEach(payload, func(form *model.SysRoleMenu) {
 		form.ID = null.StringFromUUID()
 		form.CreateTime = null.TimeFrom(time.Now().Value())
-		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.IsDelete = null.IntFrom(0)
 	})
 	payload = funk.Filter(payload, func(form *model.SysRoleMenu) bool {
@@ -490,7 +490,7 @@ func SysClientDel(ctx *Context) {
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:   null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
@@ -541,7 +541,7 @@ func SysOptionsetBatchDel(ctx *Context) {
 	})
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysOptionset{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:   null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
@@ -589,7 +589,7 @@ func SysClientUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
@@ -639,7 +639,7 @@ func ArticleBatchUpdate(ctx *Context) {
 	}
 	s := ctx.DB.NewSession()
 	funk.ForEach(payload, func(form model.Article) {
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
 		r, err = s.ID(form.ID.String).Update(&form)
 		ret = append(ret, r)
@@ -878,9 +878,9 @@ Example:
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="type" desc="类别" type="null.String" xorm="varchar(36)" />
 
-	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36)" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
-	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36)" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
 	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
@@ -906,11 +906,11 @@ type Article struct {
 	Type null.String `xorm:"varchar(36) 'type'" json:"type" xml:"type"`
 	
 	// 创建人
-	CreateBy null.String `xorm:"varchar(36) 'create_by'" json:"create_by" xml:"create_by"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
 	// 创建时间
 	CreateTime null.Time `xorm:"datetime 'create_time'" json:"create_time" xml:"create_time"`
 	// 最后更新人
-	UpdateBy null.String `xorm:"varchar(36) 'update_by'" json:"update_by" xml:"update_by"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
 	// 最后更新时间
 	UpdateTime null.Time `xorm:"datetime 'update_time'" json:"update_time" xml:"update_time"`
 	// 删除标记
@@ -939,9 +939,9 @@ func (m *Article) TableName() string {
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
 
-	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36)" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
-	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36)" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
 	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
@@ -1124,9 +1124,9 @@ The quasi-directory structure of the rpc is shown below:
 	<column name="auth_mode" type="null.Int" xorm="notnull" />
 	<column name="sync_flag" type="null.Int" xorm="notnull" />
 
-	<column name="create_by" type="null.String" xorm="varchar(36) notnull" />
+	<column name="creater" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" type="null.Time" xorm="datetime notnull" />
-	<column name="update_by" type="null.String" xorm="varchar(36) notnull" />
+	<column name="updater" type="null.String" xorm="varchar(36) notnull" />
 	<column name="update_time" type="null.Time" xorm="datetime notnull" />
 	<column name="is_delete" type="null.Int" xorm="notnull" />
 	<column name="remark" type="null.String" xorm="varchar(200)" />

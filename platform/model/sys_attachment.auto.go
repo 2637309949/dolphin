@@ -38,12 +38,12 @@ type SysAttachment struct {
 	URL null.String `xorm:"varchar(300) comment('url') 'url'" json:"url" form:"url" xml:"url"`
 	// Durable defined 是否持久化 0：否 1：是
 	Durable null.Int `xorm:"notnull comment('是否持久化 0：否 1：是') 'durable'" json:"durable" form:"durable" xml:"durable"`
-	// CreateBy defined 创建人
-	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" form:"create_by" xml:"create_by"`
+	// Creater defined 创建人
+	Creater null.String `xorm:"varchar(36) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// CreateTime defined 创建时间
 	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
-	// UpdateBy defined 最后更新人
-	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" form:"update_by" xml:"update_by"`
+	// Updater defined 最后更新人
+	Updater null.String `xorm:"varchar(36) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateTime defined 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
 	// IsDelete defined 删除标记

@@ -13,11 +13,11 @@ where
 {{if ne .is_delete ""}}
 	and sys_table.is_delete={{.is_delete}}
 {{end}}
-{{if ne .create_by ""}}
-	and sys_table.create_by="{{.create_by}}"
+{{if ne .creater ""}}
+	and sys_table.creater="{{.creater}}"
 {{end}}
-{{if ne .update_by ""}}
-	and sys_table.update_by="{{.update_by}}"
+{{if ne .updater ""}}
+	and sys_table.updater="{{.updater}}"
 {{end}}
 {{if and (ne .create_time_start "") (ne .create_time_end "")}}
 	and sys_table.create_time BETWEEN '{{.create_time_start}}' AND '{{.create_time_end}}'

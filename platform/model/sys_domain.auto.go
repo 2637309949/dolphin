@@ -54,12 +54,12 @@ type SysDomain struct {
 	AuthMode null.Int `xorm:"notnull comment('认证模式 0：集成登录 1：单点登录') 'auth_mode'" json:"auth_mode" form:"auth_mode" xml:"auth_mode"`
 	// SyncFlag defined 是否同步了数据库标志
 	SyncFlag null.Int `xorm:"notnull comment('是否同步了数据库标志') 'sync_flag'" json:"sync_flag" form:"sync_flag" xml:"sync_flag"`
-	// CreateBy defined 创建人
-	CreateBy null.String `xorm:"varchar(36) notnull comment('创建人') 'create_by'" json:"create_by" form:"create_by" xml:"create_by"`
+	// Creater defined 创建人
+	Creater null.String `xorm:"varchar(36) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// CreateTime defined 创建时间
 	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
-	// UpdateBy defined 最后更新人
-	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" form:"update_by" xml:"update_by"`
+	// Updater defined 最后更新人
+	Updater null.String `xorm:"varchar(36) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateTime defined 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
 	// IsDelete defined 删除标记

@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_comment">
         insert into sys_comment
-		(`id`,`topic_id`,`topic_type`,`content`,`from_uid`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
+		(`id`,`topic_id`,`topic_type`,`content`,`from_uid`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?topic_id,?topic_type,?content,?from_uid,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
+		(?id,?topic_id,?topic_type,?content,?from_uid,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_comment">
-        update sys_comment set `id`=?id,`topic_id`=?topic_id,`topic_type`=?topic_type,`content`=?content,`from_uid`=?from_uid,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+        update sys_comment set `id`=?id,`topic_id`=?topic_id,`topic_type`=?topic_type,`content`=?content,`from_uid`=?from_uid,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_comment">
         delete from sys_comment where id =?id
     </sql>
     <sql id="selectone_sys_comment">
-        select `id`,`topic_id`,`topic_type`,`content`,`from_uid`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_comment where  id =?id
+        select `id`,`topic_id`,`topic_type`,`content`,`from_uid`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_comment where  id =?id
     </sql>
     <sql id="selectall_sys_comment">
-        select `id`,`topic_id`,`topic_type`,`content`,`from_uid`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_comment
+        select `id`,`topic_id`,`topic_type`,`content`,`from_uid`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_comment
     </sql>
 </sqlMap>

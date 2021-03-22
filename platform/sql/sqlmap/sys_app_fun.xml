@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_app_fun">
         insert into sys_app_fun
-		(`id`,`name`,`code`,`parent`,`inheritance`,`url`,`perms`,`type`,`image`,`icon`,`order`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
+		(`id`,`name`,`code`,`parent`,`inheritance`,`url`,`perms`,`type`,`image`,`icon`,`order`,`hidden`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?name,?code,?parent,?inheritance,?url,?perms,?type,?image,?icon,?order,?hidden,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
+		(?id,?name,?code,?parent,?inheritance,?url,?perms,?type,?image,?icon,?order,?hidden,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_app_fun">
-        update sys_app_fun set `id`=?id,`name`=?name,`code`=?code,`parent`=?parent,`inheritance`=?inheritance,`url`=?url,`perms`=?perms,`type`=?type,`image`=?image,`icon`=?icon,`order`=?order,`hidden`=?hidden,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+        update sys_app_fun set `id`=?id,`name`=?name,`code`=?code,`parent`=?parent,`inheritance`=?inheritance,`url`=?url,`perms`=?perms,`type`=?type,`image`=?image,`icon`=?icon,`order`=?order,`hidden`=?hidden,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_app_fun">
         delete from sys_app_fun where id =?id
     </sql>
     <sql id="selectone_sys_app_fun">
-        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`perms`,`type`,`image`,`icon`,`order`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_app_fun where  id =?id
+        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`perms`,`type`,`image`,`icon`,`order`,`hidden`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_app_fun where  id =?id
     </sql>
     <sql id="selectall_sys_app_fun">
-        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`perms`,`type`,`image`,`icon`,`order`,`hidden`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_app_fun
+        select `id`,`name`,`code`,`parent`,`inheritance`,`url`,`perms`,`type`,`image`,`icon`,`order`,`hidden`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_app_fun
     </sql>
 </sqlMap>

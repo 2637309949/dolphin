@@ -41,9 +41,9 @@ func SysUserAdd(ctx *Context) {
 	payload.ID = null.StringFromUUID()
 	payload.Domain = null.StringFrom(ctx.GetToken().GetDomain())
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	if payload.Avatar.IsZero() {
 		payload.Avatar = null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg?imageView2/1/w/80/h/80")
@@ -78,9 +78,9 @@ func SysUserBatchAdd(ctx *Context) {
 	for i := range payload {
 		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
@@ -111,7 +111,7 @@ func SysUserDel(ctx *Context) {
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysUser{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -145,7 +145,7 @@ func SysUserBatchDel(ctx *Context) {
 	})
 	ret, err := ctx.PlatformDB.In("id", ids).Update(&model.SysUser{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -176,7 +176,7 @@ func SysUserUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
@@ -208,9 +208,9 @@ func SysUserUpdate(ctx *Context) {
 			UserId:     payload.ID,
 			RoleId:     null.StringFrom(role),
 			CreateTime: null.TimeFrom(time.Now().Value()),
-			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			Creater:    null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
-			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
 			IsDelete:   null.IntFrom(0),
 		}
 	}).([]model.SysRoleUser)
@@ -264,7 +264,7 @@ func SysUserBatchUpdate(ctx *Context) {
 	s := ctx.DB.NewSession()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
 		ret = append(ret, r)
 	}

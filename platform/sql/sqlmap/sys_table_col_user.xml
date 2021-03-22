@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_table_col_user">
         insert into sys_table_col_user
-		(`id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
+		(`id`,`code`,`value`,`user_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?code,?value,?user_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
+		(?id,?code,?value,?user_id,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_table_col_user">
-        update sys_table_col_user set `id`=?id,`code`=?code,`value`=?value,`user_id`=?user_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+        update sys_table_col_user set `id`=?id,`code`=?code,`value`=?value,`user_id`=?user_id,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_table_col_user">
         delete from sys_table_col_user where id =?id
     </sql>
     <sql id="selectone_sys_table_col_user">
-        select `id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_table_col_user where  id =?id
+        select `id`,`code`,`value`,`user_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_table_col_user where  id =?id
     </sql>
     <sql id="selectall_sys_table_col_user">
-        select `id`,`code`,`value`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_table_col_user
+        select `id`,`code`,`value`,`user_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_table_col_user
     </sql>
 </sqlMap>

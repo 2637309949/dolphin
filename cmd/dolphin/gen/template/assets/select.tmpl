@@ -7,11 +7,11 @@ from
 	{{.Api.Table}}
 where
 	{{.Api.Table}}.is_delete={{.Application.Unescaped "{{"}}.is_delete{{.Application.Unescaped "}}"}}
-{{.Application.Unescaped "{{"}}if .create_by{{.Application.Unescaped "}}"}}
-	and {{.Api.Table}}.create_by='{{.Application.Unescaped "{{"}}.create_by{{.Application.Unescaped "}}"}}'
+{{.Application.Unescaped "{{"}}if .creater{{.Application.Unescaped "}}"}}
+	and {{.Api.Table}}.creater='{{.Application.Unescaped "{{"}}.creater{{.Application.Unescaped "}}"}}'
 {{.Application.Unescaped "{{"}}end{{.Application.Unescaped "}}"}}
-{{.Application.Unescaped "{{"}}if .update_by{{.Application.Unescaped "}}"}}
-	and {{.Api.Table}}.update_by='{{.Application.Unescaped "{{"}}.update_by{{.Application.Unescaped "}}"}}'
+{{.Application.Unescaped "{{"}}if .updater{{.Application.Unescaped "}}"}}
+	and {{.Api.Table}}.updater='{{.Application.Unescaped "{{"}}.updater{{.Application.Unescaped "}}"}}'
 {{.Application.Unescaped "{{"}}end{{.Application.Unescaped "}}"}}
 {{.Application.Unescaped "{{"}}if and .create_time_start .create_time_end{{.Application.Unescaped "}}"}}
 	and {{.Api.Table}}.create_time between '{{.Application.Unescaped "{{"}}.create_time_start{{.Application.Unescaped "}}"}}' and '{{.Application.Unescaped "{{"}}.create_time_end{{.Application.Unescaped "}}"}}'

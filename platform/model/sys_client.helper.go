@@ -16,9 +16,9 @@ var DefaultClient = SysClient{
 	AppName:    null.StringFrom(viper.GetString("app.name")),
 	Secret:     null.StringFrom("98UYO6FVB865"),
 	Domain:     null.StringFrom("localhost"),
-	CreateBy:   DefaultAdmin.ID,
+	Creater:    DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
-	UpdateBy:   DefaultAdmin.ID,
+	Updater:    DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
 	IsDelete:   null.IntFrom(0),
 }

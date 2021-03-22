@@ -88,8 +88,8 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -130,8 +130,8 @@ definitions:
       type:
         description: Type defined 类型 0：目录 1：菜单 2：按钮
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -143,8 +143,8 @@ definitions:
     type: object
   model.SysArea:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -179,8 +179,8 @@ definitions:
       temp_value:
         description: TempValue defined 模板内容
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -188,8 +188,8 @@ definitions:
     type: object
   model.SysAttachment:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -227,8 +227,8 @@ definitions:
       type:
         description: Type defined 类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -248,8 +248,8 @@ definitions:
       client:
         description: Client defined 应用
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -272,8 +272,8 @@ definitions:
       secret:
         description: Secret defined 密钥
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -284,8 +284,8 @@ definitions:
       content:
         description: Content defined 评论内容
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -308,8 +308,8 @@ definitions:
       topic_type:
         description: TopicType defined 主题类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -320,8 +320,8 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -338,8 +338,8 @@ definitions:
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -365,8 +365,8 @@ definitions:
       contact_name:
         description: ContactName defined 负责人
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -416,8 +416,8 @@ definitions:
       type:
         description: Type defined 域类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -431,8 +431,8 @@ definitions:
       component:
         description: Component defined 菜单组件
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -470,8 +470,8 @@ definitions:
       type:
         description: Type defined 类型 0：目录 1：菜单 2：按钮
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -483,8 +483,8 @@ definitions:
     type: object
   model.SysNotification:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -513,8 +513,8 @@ definitions:
       topic_type:
         description: TopicType defined 主题类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -525,8 +525,8 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -543,8 +543,8 @@ definitions:
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -558,8 +558,8 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -597,8 +597,8 @@ definitions:
       type:
         description: Type defined 组织类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -609,8 +609,8 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -627,8 +627,8 @@ definitions:
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -645,8 +645,8 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -666,8 +666,8 @@ definitions:
       status:
         description: Status defined 状态 0：禁用 1：正常
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -675,8 +675,8 @@ definitions:
     type: object
   model.SysRoleMenu:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -696,8 +696,8 @@ definitions:
       role_id:
         description: RoleId defined 用户ID
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -705,8 +705,8 @@ definitions:
     type: object
   model.SysSchedule:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -720,8 +720,8 @@ definitions:
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -729,8 +729,8 @@ definitions:
     type: object
   model.SysSetting:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -747,8 +747,8 @@ definitions:
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -765,8 +765,8 @@ definitions:
       charset:
         description: Charset defined 字符集
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -789,8 +789,8 @@ definitions:
       store_engine:
         description: StoreEngine defined 存储引擎
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -798,8 +798,8 @@ definitions:
     type: object
   model.SysTableColumn:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -834,8 +834,8 @@ definitions:
       type:
         description: Type defined 类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -843,8 +843,8 @@ definitions:
     type: object
   model.SysTag:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -864,8 +864,8 @@ definitions:
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -876,8 +876,8 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -894,8 +894,8 @@ definitions:
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -909,8 +909,8 @@ definitions:
       avatar:
         description: Avatar defined 头像
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -978,8 +978,8 @@ definitions:
       type:
         description: Type defined 用户类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -987,8 +987,8 @@ definitions:
     type: object
   model.SysUserTemplate:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -1011,8 +1011,8 @@ definitions:
       type:
         description: Type defined 模板类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
@@ -1023,8 +1023,8 @@ definitions:
       content:
         description: Content defined 名称
         type: string
-      create_by:
-        description: CreateBy defined 创建人
+      creater:
+        description: Creater defined 创建人
         type: string
       create_time:
         description: CreateTime defined 创建时间
@@ -1050,8 +1050,8 @@ definitions:
       type:
         description: Type defined 模板类型 0:数值项 1:单选项 2:文字项 3:列表项
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
+      updater:
+        description: Updater defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间

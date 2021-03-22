@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_schedule_history">
         insert into sys_schedule_history
-		(`id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
+		(`id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
+		(?id,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_schedule_history">
-        update sys_schedule_history set `id`=?id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+        update sys_schedule_history set `id`=?id,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_schedule_history">
         delete from sys_schedule_history where id =?id
     </sql>
     <sql id="selectone_sys_schedule_history">
-        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_schedule_history where  id =?id
+        select `id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_schedule_history where  id =?id
     </sql>
     <sql id="selectall_sys_schedule_history">
-        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_schedule_history
+        select `id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_schedule_history
     </sql>
 </sqlMap>
