@@ -7,7 +7,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="fee_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="check_state" desc="" type="null.Int" xorm="int(11) default(54)" />
 	<column name="ybout_desc" desc="" type="null.String" xorm="varchar(1000)" />

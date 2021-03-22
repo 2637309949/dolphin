@@ -10,6 +10,6 @@
 	<column name="parent_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="if_buy_online" desc="" type="null.Int" xorm="int(11)" />
 	<column name="organ_tell" desc="" type="null.String" xorm="varchar(20)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="sheng_id" desc="" type="null.Int" xorm="int(11)" />
 </table>

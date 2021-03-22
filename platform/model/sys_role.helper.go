@@ -18,7 +18,7 @@ var AdminRole = SysRole{
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
-	DelFlag:    null.IntFrom(0),
+	IsDelete:   null.IntFrom(0),
 }
 
 var roles = []SysRole{
@@ -32,7 +32,7 @@ var roles = []SysRole{
 		CreateTime: null.TimeFrom(time.Now()),
 		UpdateBy:   DefaultAdmin.ID,
 		UpdateTime: null.TimeFrom(time.Now()),
-		DelFlag:    null.IntFrom(0),
+		IsDelete:   null.IntFrom(0),
 	},
 }
 

@@ -9,7 +9,7 @@
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="check_state" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="check_two_state" desc="" type="null.Int" xorm="int(11)" />
 	<column name="fail_time" desc="" type="null.Time" xorm="datetime" />
 	<column name="check_remark" desc="" type="null.String" xorm="varchar(300)" />

@@ -13,7 +13,7 @@
 	<column name="zc_class" desc="" type="null.Int" xorm="int(11)" />
 	<column name="sc_price" desc="" type="null.Int" xorm="int(11)" />
 	<column name="join_source" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="os_money" desc="" type="null.Float" xorm="float(10,2)" />
 	<column name="final_money" desc="" type="null.Float" xorm="float(10,2)" />

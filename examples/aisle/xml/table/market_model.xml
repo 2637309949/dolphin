@@ -8,5 +8,5 @@
 	<column name="mm_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="ts_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="school_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

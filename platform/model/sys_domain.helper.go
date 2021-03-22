@@ -43,7 +43,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			CreateTime: null.TimeFrom(time.Now()),
 			UpdateBy:   DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 	}
 	for _, domain := range domains {

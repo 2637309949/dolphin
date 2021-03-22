@@ -7,7 +7,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="refund_hour" desc="" type="null.Float" xorm="float(10,2)" />
 	<column name="ref_unitprice" desc="" type="null.Float" xorm="float(10,2)" />
 	<column name="rst_invoice_fee" desc="" type="null.Float" xorm="float(50,2)" />

@@ -6,7 +6,7 @@ select
 from
 	{{.Api.Table}}
 where
-	{{.Api.Table}}.del_flag={{.Application.Unescaped "{{"}}.del_flag{{.Application.Unescaped "}}"}}
+	{{.Api.Table}}.is_delete={{.Application.Unescaped "{{"}}.is_delete{{.Application.Unescaped "}}"}}
 {{.Application.Unescaped "{{"}}if .create_by{{.Application.Unescaped "}}"}}
 	and {{.Api.Table}}.create_by='{{.Application.Unescaped "{{"}}.create_by{{.Application.Unescaped "}}"}}'
 {{.Application.Unescaped "{{"}}end{{.Application.Unescaped "}}"}}

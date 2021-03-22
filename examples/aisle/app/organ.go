@@ -115,7 +115,7 @@ func OrganPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
-	q.SetInt("del_flag", 0)
+	q.SetInt("is_delete", 0)
 	q.SetRule("organ_page")
 	q.SetRange("create_time")
 	q.SetTags()

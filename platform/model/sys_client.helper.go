@@ -20,7 +20,7 @@ var DefaultClient = SysClient{
 	CreateTime: null.TimeFrom(time.Now()),
 	UpdateBy:   DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
-	DelFlag:    null.IntFrom(0),
+	IsDelete:   null.IntFrom(0),
 }
 
 // InitSysData defined inital system data

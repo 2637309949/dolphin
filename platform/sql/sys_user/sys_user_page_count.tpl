@@ -5,7 +5,7 @@ from
 where
 	sys_user.id {{.ne}} ""
 	and
-	sys_user.del_flag {{.ne}} 1
+	sys_user.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

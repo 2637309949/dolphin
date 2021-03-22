@@ -14,7 +14,7 @@
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="study_state" desc="" type="null.Int" xorm="int(11)" />
 	<column name="classroom_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="kf_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="buss_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="cancel_reason" desc="" type="null.String" xorm="varchar(500)" />

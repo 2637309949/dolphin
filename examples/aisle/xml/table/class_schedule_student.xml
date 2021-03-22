@@ -10,7 +10,7 @@
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="cs_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="kq_type" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="scs_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="if_kou_hour" desc="" type="null.Int" xorm="int(11)" />
 	<column name="not_kou_reason" desc="" type="null.String" xorm="varchar(1000)" />

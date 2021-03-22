@@ -44,7 +44,7 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 	if err != nil {
 		return tmplCfgs, err
 	}
-	err = engine.SQL("select data_source, driver_name from sys_domain where del_flag=0 and status=1 and app_name=?", viper.GetString("app.name")).Find(&dataSources)
+	err = engine.SQL("select data_source, driver_name from sys_domain where is_delete=0 and status=1 and app_name=?", viper.GetString("app.name")).Find(&dataSources)
 	if err != nil {
 		return tmplCfgs, err
 	}

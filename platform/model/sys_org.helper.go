@@ -21,7 +21,7 @@ func (m *SysOrg) InitSysData(s *xorm.Session) {
 			CreateTime:  null.TimeFrom(time.Now()),
 			UpdateBy:    DefaultAdmin.ID,
 			UpdateTime:  null.TimeFrom(time.Now()),
-			DelFlag:     null.IntFrom(0),
+			IsDelete:    null.IntFrom(0),
 		},
 		{
 			ID:          null.StringFrom("c637bt50-7dad-31d1-81b5-10c34fd460e1"),
@@ -35,7 +35,7 @@ func (m *SysOrg) InitSysData(s *xorm.Session) {
 			CreateTime:  null.TimeFrom(time.Now()),
 			UpdateBy:    DefaultAdmin.ID,
 			UpdateTime:  null.TimeFrom(time.Now()),
-			DelFlag:     null.IntFrom(0),
+			IsDelete:    null.IntFrom(0),
 		},
 		{
 			ID:          null.StringFrom("5637bt50-7dad-31d1-81b5-10c34fd460e1"),
@@ -49,7 +49,7 @@ func (m *SysOrg) InitSysData(s *xorm.Session) {
 			CreateTime:  null.TimeFrom(time.Now()),
 			UpdateBy:    DefaultAdmin.ID,
 			UpdateTime:  null.TimeFrom(time.Now()),
-			DelFlag:     null.IntFrom(0),
+			IsDelete:    null.IntFrom(0),
 		},
 	}
 	for _, org := range orgs {

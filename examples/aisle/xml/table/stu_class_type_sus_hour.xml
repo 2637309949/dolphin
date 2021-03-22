@@ -9,7 +9,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="one_price" desc="" type="decimal.Decimal" xorm="decimal(50,3)" />
 	<column name="yp_hour" desc="" type="null.Float" xorm="float(50,2)" />
 	<column name="use_hour" desc="" type="null.Float" xorm="float(50,2)" />

@@ -36,7 +36,7 @@ func SysDataPermissionAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -69,7 +69,7 @@ func SysDataPermissionBatchAdd(ctx *Context) {
 		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
 		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		payload[i].DelFlag = null.IntFrom(0)
+		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -100,7 +100,7 @@ func SysDataPermissionDel(ctx *Context) {
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysDataPermission{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -131,7 +131,7 @@ func SysDataPermissionBatchDel(ctx *Context) {
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysDataPermission{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)

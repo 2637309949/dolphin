@@ -20,6 +20,6 @@ func (m *SysTable) TableInfo(info *schemas.Table) SysTable {
 		CreateBy:      DefaultAdmin.ID,
 		UpdateTime:    null.TimeFrom(time.Now()),
 		UpdateBy:      DefaultAdmin.ID,
-		DelFlag:       null.IntFrom(0),
+		IsDelete:      null.IntFrom(0),
 	}
 }

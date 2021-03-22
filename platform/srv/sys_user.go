@@ -22,7 +22,7 @@ func SysUserGetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error)
 	idst := struct {
 		IDS string `xorm:"ids"`
 	}{}
-	_, err := db.SQL(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, del_flag from sys_org where del_flag=0 and inheritance like "%v" group by del_flag`, "%"+cn+"%")).Get(&idst)
+	_, err := db.SQL(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, is_delete from sys_org where is_delete=0 and inheritance like "%v" group by is_delete`, "%"+cn+"%")).Get(&idst)
 	if err != nil {
 		return nil, err
 	}

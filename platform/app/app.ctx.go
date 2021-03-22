@@ -88,7 +88,7 @@ func (ctx *Context) InRole(role ...string) bool {
 func (ctx *Context) InAdmin(idn ...string) bool {
 	roles := []string{model.AdminRole.ID.String}
 	roles = append(roles, idn...)
-	exit, err := ctx.DB.In("role_id", roles).Where(`user_id = ? and del_flag != 1`, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
+	exit, err := ctx.DB.In("role_id", roles).Where(`user_id = ? and is_delete != 1`, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
 	if err != nil {
 		logrus.Error(err)
 		return false
@@ -247,7 +247,7 @@ func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[
 		Text  string      `json:"text"`
 	}
 	var optSets []model.SysOptionset
-	if err := db.Where("del_flag = 0").In("code", keys).Find(&optSets); err != nil {
+	if err := db.Where("is_delete = 0").In("code", keys).Find(&optSets); err != nil {
 		return nil, err
 	}
 

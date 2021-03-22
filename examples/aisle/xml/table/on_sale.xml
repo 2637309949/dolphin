@@ -13,7 +13,7 @@
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="os_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="os_way" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="ma_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="na_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="os_check" desc="" type="null.Int" xorm="int(11)" />

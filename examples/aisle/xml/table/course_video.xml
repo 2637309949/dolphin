@@ -6,5 +6,5 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Float" xorm="float(11,2) pk notnull default(0.00)" />
+	<column name="is_delete" desc="" type="null.Float" xorm="float(11,2) pk notnull default(0.00)" />
 </table>

@@ -9,7 +9,7 @@ from
 	sys_org
 where
 	sys_org.id {{.ne}} ""
-    and del_flag = 0
+    and is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

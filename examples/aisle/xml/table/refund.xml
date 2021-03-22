@@ -8,7 +8,7 @@
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="ref_way" desc="" type="null.Int" xorm="int(11)" />
 	<column name="ref_reason" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="check_state" desc="" type="null.Int" xorm="int(11)" />
 	<column name="check_renmark" desc="" type="null.String" xorm="varchar(500)" />
 	<column name="ref_remark" desc="" type="null.String" xorm="varchar(500)" />

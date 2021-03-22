@@ -7,7 +7,7 @@
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="class_number" desc="" type="null.String" xorm="varchar(50)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="cm_state" desc="" type="null.Int" xorm="int(11)" />
 	<column name="kf_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="isornokf" desc="" type="null.Int" xorm="int(11)" />

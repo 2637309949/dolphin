@@ -5,4 +5,4 @@ from
 where
 	{{.Api.Table}}.id {{.Application.Unescaped "{{.ne}}"}} ""
 	and
-	{{.Api.Table}}.del_flag {{.Application.Unescaped "{{.ne}}"}} 1
+	{{.Api.Table}}.is_delete {{.Application.Unescaped "{{.ne}}"}} 1

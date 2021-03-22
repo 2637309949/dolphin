@@ -9,5 +9,5 @@
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="add_reason" desc="" type="null.Int" xorm="int(11)" />
 	<column name="add_object" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

@@ -10,6 +10,6 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime notnull default('1970-01-01 00:00:00')" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime notnull default('1970-01-01 00:00:00')" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="pk_sch" desc="" type="null.Int" xorm="int(11)" />
 </table>

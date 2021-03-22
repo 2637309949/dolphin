@@ -6,7 +6,7 @@
 	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="sy_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="stu_gx_yy" desc="" type="null.Int" xorm="int(11)" />
 	<column name="sf_plzx" desc="" type="null.Int" xorm="int(11)" />

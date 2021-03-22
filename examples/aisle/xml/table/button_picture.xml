@@ -4,5 +4,5 @@
 	<column name="btnpic_type" desc="" type="null.Float" xorm="float(11,2) notnull" />
 	<column name="btnpic_picture" desc="" type="null.Int" xorm="int(11) notnull" />
 	<column name="pro_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

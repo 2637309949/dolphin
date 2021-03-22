@@ -16,6 +16,6 @@ reply_id：   表示回复目标的id，如果reply_type是comment的话，那�
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
-	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
 </table>

@@ -73,7 +73,7 @@ func SysCasLogin(ctx *Context) {
 		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
 		account.Domain = null.StringFrom(base[0][2])
 	}
-	ext, err := ctx.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
+	ext, err := ctx.PlatformDB.Where("is_delete = 0 and status = 1").Get(&account)
 
 	if err != nil {
 		logrus.Errorf("SysCasLogin/Where:%v", err)

@@ -10,7 +10,7 @@
 	<column name="organ_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="oc_num" desc="" type="null.String" xorm="varchar(50)" />
 	<column name="sch_tell" desc="" type="null.String" xorm="varchar(20)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="school_address" desc="" type="null.String" xorm="varchar(100)" />
 	<column name="school_measure" desc="" type="null.String" xorm="varchar(200)" />
 	<column name="opening_time" desc="" type="null.Time" xorm="datetime" />

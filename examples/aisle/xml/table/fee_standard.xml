@@ -8,7 +8,7 @@
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="fs_type" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="ct_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="fs_all_money" desc="" type="null.Float" xorm="float(10,2)" />
 	<column name="travel_routes" desc="" type="null.Int" xorm="int(11)" />

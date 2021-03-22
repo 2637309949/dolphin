@@ -136,7 +136,7 @@ func (e *Engine) database() {
 
 	// initBusinessDB
 	domains := []model.SysDomain{}
-	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and del_flag = 0", viper.GetString("app.name")).Find(&domains))
+	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete = 0", viper.GetString("app.name")).Find(&domains))
 	funk.ForEach(domains, func(domain model.SysDomain) {
 		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
 		uri := util.EnsureLeft(http.Parse(domain.DataSource.String)).(*http.URI)

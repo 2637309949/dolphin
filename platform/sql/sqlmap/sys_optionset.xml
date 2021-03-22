@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_optionset">
         insert into sys_optionset
-		(`id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?name,?code,?value,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?value,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_optionset">
-        update sys_optionset set `id`=?id,`name`=?name,`code`=?code,`value`=?value,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_optionset set `id`=?id,`name`=?name,`code`=?code,`value`=?value,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_optionset">
         delete from sys_optionset where id =?id
     </sql>
     <sql id="selectone_sys_optionset">
-        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_optionset where  id =?id
+        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_optionset where  id =?id
     </sql>
     <sql id="selectall_sys_optionset">
-        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_optionset
+        select `id`,`name`,`code`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_optionset
     </sql>
 </sqlMap>

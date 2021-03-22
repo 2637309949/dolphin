@@ -11,7 +11,7 @@ from
 	sys_app_fun
 where
 	sys_app_fun.id {{.ne}} ""
-    and del_flag = 0
+    and is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

@@ -2,12 +2,12 @@
 <sqlMap>
     <sql id="insert_article">
         insert into article
-		(`id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_article">
-        update article set `id`=?id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update article set `id`=?id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_article">
@@ -15,10 +15,10 @@
 		where id =?id
     </sql>
     <sql id="selectone_article">
-        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from article
+        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from article
 		where  id =?id
     </sql>
     <sql id="selectall_article">
-        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from article
+        select `id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from article
     </sql>
 </sqlMap>

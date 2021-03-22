@@ -9,5 +9,5 @@
 	<column name="tl_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="cs_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="app_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

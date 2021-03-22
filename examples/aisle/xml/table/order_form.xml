@@ -17,7 +17,7 @@
 	<column name="of_number" desc="" type="null.String" xorm="varchar(100)" />
 	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="refund_money" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="of_start_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="of_end_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="of_remark" desc="" type="null.String" xorm="varchar(500)" />

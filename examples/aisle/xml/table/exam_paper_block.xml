@@ -11,5 +11,5 @@
 	<column name="block_remark" desc="" type="null.String" xorm="varchar(200)" />
 	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

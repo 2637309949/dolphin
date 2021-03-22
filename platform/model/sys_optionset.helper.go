@@ -33,7 +33,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			CreateTime: null.TimeFrom(time.Now()),
 			UpdateBy:   DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 		{
 			ID:         null.StringFrom("b6a7ct5q-2dad-31d1-81b5-10c34fd460c3"),
@@ -44,7 +44,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			CreateTime: null.TimeFrom(time.Now()),
 			UpdateBy:   DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 		{
 			ID:         null.StringFrom("c6a7bt50-7dad-31d1-81b5-10c34fd460c2"),
@@ -55,7 +55,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			CreateTime: null.TimeFrom(time.Now()),
 			UpdateBy:   DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 		{
 			ID:         null.StringFrom("b4a7bt50-7dad-12d1-81b5-10c34fd460e4"),
@@ -66,7 +66,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			CreateTime: null.TimeFrom(time.Now()),
 			UpdateBy:   DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 		{
 			ID:         null.StringFrom("a1b7b150-6dad-12d1-81b5-10c34fd460e5"),
@@ -77,7 +77,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			CreateTime: null.TimeFrom(time.Now()),
 			UpdateBy:   DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 		{
 			ID:         null.StringFrom("c2b5b260-7jad-12d1-81b5-10c34fd460e6"),
@@ -88,7 +88,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			CreateTime: null.TimeFrom(time.Now()),
 			UpdateBy:   DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 	}
 	for _, option := range options {

@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_email_token">
         insert into sys_email_token
-		(`id`,`token`,`email`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`token`,`email`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?token,?email,?user_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?token,?email,?user_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_email_token">
-        update sys_email_token set `id`=?id,`token`=?token,`email`=?email,`user_id`=?user_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_email_token set `id`=?id,`token`=?token,`email`=?email,`user_id`=?user_id,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_email_token">
         delete from sys_email_token where id =?id
     </sql>
     <sql id="selectone_sys_email_token">
-        select `id`,`token`,`email`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_email_token where  id =?id
+        select `id`,`token`,`email`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_email_token where  id =?id
     </sql>
     <sql id="selectall_sys_email_token">
-        select `id`,`token`,`email`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_email_token
+        select `id`,`token`,`email`,`user_id`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_email_token
     </sql>
 </sqlMap>

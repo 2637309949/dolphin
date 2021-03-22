@@ -50,7 +50,7 @@ func (m *SysAttachment) PersistFile(db *xorm.Engine, cb func([]SysAttachment) er
 // Remove table name of defined SysAttachment
 func (m *SysAttachment) Remove(db *xorm.Engine, ids ...string) (int64, error) {
 	return db.In("id", ids).Update(&SysAttachment{
-		DelFlag: null.IntFrom(1),
+		IsDelete: null.IntFrom(1),
 	})
 }
 
@@ -81,7 +81,7 @@ func (m *SysAttachment) RemoveFile(db *xorm.Engine, cb func([]SysAttachment) err
 		return 0, err
 	}
 	cnt, err := sess.In("id", ids).Update(&SysAttachment{
-		DelFlag: null.IntFrom(1),
+		IsDelete: null.IntFrom(1),
 	})
 	if err != nil {
 		sess.Rollback()

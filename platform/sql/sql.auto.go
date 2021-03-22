@@ -8,421 +8,421 @@ var SQLTPL = map[string]string{}
 func init() {
 	SQLTPL["insert_sys_app_fun"] = `
         insert into sys_app_fun
-		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?code,?parent,?inheritance,?url,?perms,?type,?image,?icon,?order,?hidden,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?parent,?inheritance,?url,?perms,?type,?image,?icon,?order,?hidden,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_app_fun"] = `
-        update sys_app_fun set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`url`" + `=?url,` + "`perms`" + `=?perms,` + "`type`" + `=?type,` + "`image`" + `=?image,` + "`icon`" + `=?icon,` + "`order`" + `=?order,` + "`hidden`" + `=?hidden,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_app_fun set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`url`" + `=?url,` + "`perms`" + `=?perms,` + "`type`" + `=?type,` + "`image`" + `=?image,` + "`icon`" + `=?icon,` + "`order`" + `=?order,` + "`hidden`" + `=?hidden,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_app_fun"] = `
         delete from sys_app_fun where id =?id
     `
 	SQLTPL["selectone_sys_app_fun"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_app_fun where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_app_fun where  id =?id
     `
 	SQLTPL["selectall_sys_app_fun"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_app_fun
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_app_fun
     `
 	SQLTPL["insert_sys_area"] = `
         insert into sys_area
-		(` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?parent,?inheritance,?org_id,?temp_id,?temp_value,?manager,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?parent,?inheritance,?org_id,?temp_id,?temp_value,?manager,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_area"] = `
-        update sys_area set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`org_id`" + `=?org_id,` + "`temp_id`" + `=?temp_id,` + "`temp_value`" + `=?temp_value,` + "`manager`" + `=?manager,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_area set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`org_id`" + `=?org_id,` + "`temp_id`" + `=?temp_id,` + "`temp_value`" + `=?temp_value,` + "`manager`" + `=?manager,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_area"] = `
         delete from sys_area where id =?id
     `
 	SQLTPL["selectone_sys_area"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_area where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area where  id =?id
     `
 	SQLTPL["selectall_sys_area"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_area
+        select ` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area
     `
 	SQLTPL["insert_sys_area_template"] = `
         insert into sys_area_template
-		(` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_area_template"] = `
-        update sys_area_template set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`type`" + `=?type,` + "`default`" + `=?default,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_area_template set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`type`" + `=?type,` + "`default`" + `=?default,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_area_template"] = `
         delete from sys_area_template where id =?id
     `
 	SQLTPL["selectone_sys_area_template"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_area_template where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template where  id =?id
     `
 	SQLTPL["selectall_sys_area_template"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_area_template
+        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template
     `
 	SQLTPL["insert_sys_area_template_detail"] = `
         insert into sys_area_template_detail
-		(` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?temp_id,?value,?type,?priority,?content,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?temp_id,?value,?type,?priority,?content,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_area_template_detail"] = `
-        update sys_area_template_detail set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`temp_id`" + `=?temp_id,` + "`value`" + `=?value,` + "`type`" + `=?type,` + "`priority`" + `=?priority,` + "`content`" + `=?content,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_area_template_detail set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`temp_id`" + `=?temp_id,` + "`value`" + `=?value,` + "`type`" + `=?type,` + "`priority`" + `=?priority,` + "`content`" + `=?content,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_area_template_detail"] = `
         delete from sys_area_template_detail where id =?id
     `
 	SQLTPL["selectone_sys_area_template_detail"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_area_template_detail where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template_detail where  id =?id
     `
 	SQLTPL["selectall_sys_area_template_detail"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_area_template_detail
+        select ` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template_detail
     `
 	SQLTPL["insert_sys_attachment"] = `
         insert into sys_attachment
-		(` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?icon,?uuid,?size,?type,?ext,?hash,?path,?url,?durable,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?icon,?uuid,?size,?type,?ext,?hash,?path,?url,?durable,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_attachment"] = `
-        update sys_attachment set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`icon`" + `=?icon,` + "`uuid`" + `=?uuid,` + "`size`" + `=?size,` + "`type`" + `=?type,` + "`ext`" + `=?ext,` + "`hash`" + `=?hash,` + "`path`" + `=?path,` + "`url`" + `=?url,` + "`durable`" + `=?durable,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_attachment set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`icon`" + `=?icon,` + "`uuid`" + `=?uuid,` + "`size`" + `=?size,` + "`type`" + `=?type,` + "`ext`" + `=?ext,` + "`hash`" + `=?hash,` + "`path`" + `=?path,` + "`url`" + `=?url,` + "`durable`" + `=?durable,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_attachment"] = `
         delete from sys_attachment where id =?id
     `
 	SQLTPL["selectone_sys_attachment"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_attachment where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_attachment where  id =?id
     `
 	SQLTPL["selectall_sys_attachment"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_attachment
+        select ` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_attachment
     `
 	SQLTPL["insert_sys_client"] = `
         insert into sys_client
-		(` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?app_name,?domain,?client,?secret,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?app_name,?domain,?client,?secret,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_client"] = `
-        update sys_client set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`app_name`" + `=?app_name,` + "`domain`" + `=?domain,` + "`client`" + `=?client,` + "`secret`" + `=?secret,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_client set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`app_name`" + `=?app_name,` + "`domain`" + `=?domain,` + "`client`" + `=?client,` + "`secret`" + `=?secret,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_client"] = `
         delete from sys_client where id =?id
     `
 	SQLTPL["selectone_sys_client"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_client where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_client where  id =?id
     `
 	SQLTPL["selectall_sys_client"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_client
+        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_client
     `
 	SQLTPL["insert_sys_comment"] = `
         insert into sys_comment
-		(` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?topic_id,?topic_type,?content,?from_uid,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?topic_id,?topic_type,?content,?from_uid,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_comment"] = `
-        update sys_comment set ` + "`id`" + `=?id,` + "`topic_id`" + `=?topic_id,` + "`topic_type`" + `=?topic_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_comment set ` + "`id`" + `=?id,` + "`topic_id`" + `=?topic_id,` + "`topic_type`" + `=?topic_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_comment"] = `
         delete from sys_comment where id =?id
     `
 	SQLTPL["selectone_sys_comment"] = `
-        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment where  id =?id
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment where  id =?id
     `
 	SQLTPL["selectall_sys_comment"] = `
-        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment
     `
 	SQLTPL["insert_sys_comment_reply"] = `
         insert into sys_comment_reply
-		(` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?comment_id,?reply_id,?reply_type,?content,?from_uid,?to_uid,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?comment_id,?reply_id,?reply_type,?content,?from_uid,?to_uid,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_comment_reply"] = `
-        update sys_comment_reply set ` + "`id`" + `=?id,` + "`comment_id`" + `=?comment_id,` + "`reply_id`" + `=?reply_id,` + "`reply_type`" + `=?reply_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`to_uid`" + `=?to_uid,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_comment_reply set ` + "`id`" + `=?id,` + "`comment_id`" + `=?comment_id,` + "`reply_id`" + `=?reply_id,` + "`reply_type`" + `=?reply_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`to_uid`" + `=?to_uid,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_comment_reply"] = `
         delete from sys_comment_reply where id =?id
     `
 	SQLTPL["selectone_sys_comment_reply"] = `
-        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment_reply where  id =?id
+        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment_reply where  id =?id
     `
 	SQLTPL["selectall_sys_comment_reply"] = `
-        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_comment_reply
+        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment_reply
     `
 	SQLTPL["insert_sys_data_permission"] = `
         insert into sys_data_permission
-		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_data_permission"] = `
-        update sys_data_permission set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_data_permission set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_data_permission"] = `
         delete from sys_data_permission where id =?id
     `
 	SQLTPL["selectone_sys_data_permission"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_data_permission where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission where  id =?id
     `
 	SQLTPL["selectall_sys_data_permission"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_data_permission
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission
     `
 	SQLTPL["insert_sys_data_permission_detail"] = `
         insert into sys_data_permission_detail
-		(` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?data_permission_id,?role_id,?rule,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?data_permission_id,?role_id,?rule,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_data_permission_detail"] = `
-        update sys_data_permission_detail set ` + "`id`" + `=?id,` + "`data_permission_id`" + `=?data_permission_id,` + "`role_id`" + `=?role_id,` + "`rule`" + `=?rule,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_data_permission_detail set ` + "`id`" + `=?id,` + "`data_permission_id`" + `=?data_permission_id,` + "`role_id`" + `=?role_id,` + "`rule`" + `=?rule,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_data_permission_detail"] = `
         delete from sys_data_permission_detail where id =?id
     `
 	SQLTPL["selectone_sys_data_permission_detail"] = `
-        select ` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_data_permission_detail where  id =?id
+        select ` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission_detail where  id =?id
     `
 	SQLTPL["selectall_sys_data_permission_detail"] = `
-        select ` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_data_permission_detail
+        select ` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission_detail
     `
 	SQLTPL["insert_sys_domain"] = `
         insert into sys_domain
-		(` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`sync_flag`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`sync_flag`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?app_name,?domain,?domain_url,?full_name,?contact_name,?contact_email,?contact_mobile,?data_source,?driver_name,?login_url,?api_url,?static_url,?theme,?type,?status,?auth_mode,?sync_flag,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?app_name,?domain,?domain_url,?full_name,?contact_name,?contact_email,?contact_mobile,?data_source,?driver_name,?login_url,?api_url,?static_url,?theme,?type,?status,?auth_mode,?sync_flag,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_domain"] = `
-        update sys_domain set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`app_name`" + `=?app_name,` + "`domain`" + `=?domain,` + "`domain_url`" + `=?domain_url,` + "`full_name`" + `=?full_name,` + "`contact_name`" + `=?contact_name,` + "`contact_email`" + `=?contact_email,` + "`contact_mobile`" + `=?contact_mobile,` + "`data_source`" + `=?data_source,` + "`driver_name`" + `=?driver_name,` + "`login_url`" + `=?login_url,` + "`api_url`" + `=?api_url,` + "`static_url`" + `=?static_url,` + "`theme`" + `=?theme,` + "`type`" + `=?type,` + "`status`" + `=?status,` + "`auth_mode`" + `=?auth_mode,` + "`sync_flag`" + `=?sync_flag,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_domain set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`app_name`" + `=?app_name,` + "`domain`" + `=?domain,` + "`domain_url`" + `=?domain_url,` + "`full_name`" + `=?full_name,` + "`contact_name`" + `=?contact_name,` + "`contact_email`" + `=?contact_email,` + "`contact_mobile`" + `=?contact_mobile,` + "`data_source`" + `=?data_source,` + "`driver_name`" + `=?driver_name,` + "`login_url`" + `=?login_url,` + "`api_url`" + `=?api_url,` + "`static_url`" + `=?static_url,` + "`theme`" + `=?theme,` + "`type`" + `=?type,` + "`status`" + `=?status,` + "`auth_mode`" + `=?auth_mode,` + "`sync_flag`" + `=?sync_flag,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_domain"] = `
         delete from sys_domain where id =?id
     `
 	SQLTPL["selectone_sys_domain"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`sync_flag`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_domain where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`sync_flag`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_domain where  id =?id
     `
 	SQLTPL["selectall_sys_domain"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`sync_flag`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_domain
+        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`sync_flag`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_domain
     `
 	SQLTPL["insert_sys_email_token"] = `
         insert into sys_email_token
-		(` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?token,?email,?user_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?token,?email,?user_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_email_token"] = `
-        update sys_email_token set ` + "`id`" + `=?id,` + "`token`" + `=?token,` + "`email`" + `=?email,` + "`user_id`" + `=?user_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_email_token set ` + "`id`" + `=?id,` + "`token`" + `=?token,` + "`email`" + `=?email,` + "`user_id`" + `=?user_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_email_token"] = `
         delete from sys_email_token where id =?id
     `
 	SQLTPL["selectone_sys_email_token"] = `
-        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_email_token where  id =?id
+        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_email_token where  id =?id
     `
 	SQLTPL["selectall_sys_email_token"] = `
-        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_email_token
+        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_email_token
     `
 	SQLTPL["insert_sys_menu"] = `
         insert into sys_menu
-		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?code,?parent,?inheritance,?url,?component,?perms,?type,?icon,?order,?hidden,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?parent,?inheritance,?url,?component,?perms,?type,?icon,?order,?hidden,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_menu"] = `
-        update sys_menu set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`url`" + `=?url,` + "`component`" + `=?component,` + "`perms`" + `=?perms,` + "`type`" + `=?type,` + "`icon`" + `=?icon,` + "`order`" + `=?order,` + "`hidden`" + `=?hidden,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_menu set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`url`" + `=?url,` + "`component`" + `=?component,` + "`perms`" + `=?perms,` + "`type`" + `=?type,` + "`icon`" + `=?icon,` + "`order`" + `=?order,` + "`hidden`" + `=?hidden,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_menu"] = `
         delete from sys_menu where id =?id
     `
 	SQLTPL["selectone_sys_menu"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_menu where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_menu where  id =?id
     `
 	SQLTPL["selectall_sys_menu"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_menu
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_menu
     `
 	SQLTPL["insert_sys_notification"] = `
         insert into sys_notification
-		(` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?topic_id,?topic_type,?to_uid,?from_uid,?is_read,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?topic_id,?topic_type,?to_uid,?from_uid,?is_read,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_notification"] = `
-        update sys_notification set ` + "`id`" + `=?id,` + "`topic_id`" + `=?topic_id,` + "`topic_type`" + `=?topic_type,` + "`to_uid`" + `=?to_uid,` + "`from_uid`" + `=?from_uid,` + "`is_read`" + `=?is_read,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_notification set ` + "`id`" + `=?id,` + "`topic_id`" + `=?topic_id,` + "`topic_type`" + `=?topic_type,` + "`to_uid`" + `=?to_uid,` + "`from_uid`" + `=?from_uid,` + "`is_read`" + `=?is_read,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_notification"] = `
         delete from sys_notification where id =?id
     `
 	SQLTPL["selectone_sys_notification"] = `
-        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_notification where  id =?id
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_notification where  id =?id
     `
 	SQLTPL["selectall_sys_notification"] = `
-        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_notification
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_notification
     `
 	SQLTPL["insert_sys_optionset"] = `
         insert into sys_optionset
-		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?code,?value,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?value,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_optionset"] = `
-        update sys_optionset set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`value`" + `=?value,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_optionset set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`value`" + `=?value,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_optionset"] = `
         delete from sys_optionset where id =?id
     `
 	SQLTPL["selectone_sys_optionset"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_optionset where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_optionset where  id =?id
     `
 	SQLTPL["selectall_sys_optionset"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_optionset
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_optionset
     `
 	SQLTPL["insert_sys_org"] = `
         insert into sys_org
-		(` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?parent,?inheritance,?name,?full_name,?leader,?code,?type,?order,?status,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?parent,?inheritance,?name,?full_name,?leader,?code,?type,?order,?status,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_org"] = `
-        update sys_org set ` + "`id`" + `=?id,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`name`" + `=?name,` + "`full_name`" + `=?full_name,` + "`leader`" + `=?leader,` + "`code`" + `=?code,` + "`type`" + `=?type,` + "`order`" + `=?order,` + "`status`" + `=?status,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_org set ` + "`id`" + `=?id,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`name`" + `=?name,` + "`full_name`" + `=?full_name,` + "`leader`" + `=?leader,` + "`code`" + `=?code,` + "`type`" + `=?type,` + "`order`" + `=?order,` + "`status`" + `=?status,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_org"] = `
         delete from sys_org where id =?id
     `
 	SQLTPL["selectone_sys_org"] = `
-        select ` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_org where  id =?id
+        select ` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_org where  id =?id
     `
 	SQLTPL["selectall_sys_org"] = `
-        select ` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_org
+        select ` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_org
     `
 	SQLTPL["insert_sys_permission"] = `
         insert into sys_permission
-		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_permission"] = `
-        update sys_permission set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_permission set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_permission"] = `
         delete from sys_permission where id =?id
     `
 	SQLTPL["selectone_sys_permission"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_permission where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_permission where  id =?id
     `
 	SQLTPL["selectall_sys_permission"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_permission
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_permission
     `
 	SQLTPL["insert_sys_role"] = `
         insert into sys_role
-		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?code,?status,?app_index,?admin_index,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?status,?app_index,?admin_index,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_role"] = `
-        update sys_role set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`status`" + `=?status,` + "`app_index`" + `=?app_index,` + "`admin_index`" + `=?admin_index,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_role set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`status`" + `=?status,` + "`app_index`" + `=?app_index,` + "`admin_index`" + `=?admin_index,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_role"] = `
         delete from sys_role where id =?id
     `
 	SQLTPL["selectone_sys_role"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role where  id =?id
     `
 	SQLTPL["selectall_sys_role"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role
     `
 	SQLTPL["insert_sys_role_app_fun"] = `
         insert into sys_role_app_fun
-		(` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?role_id,?app_fun_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?role_id,?app_fun_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_role_app_fun"] = `
-        update sys_role_app_fun set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`app_fun_id`" + `=?app_fun_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_role_app_fun set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`app_fun_id`" + `=?app_fun_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_role_app_fun"] = `
         delete from sys_role_app_fun where id =?id
     `
 	SQLTPL["selectone_sys_role_app_fun"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_app_fun where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_app_fun where  id =?id
     `
 	SQLTPL["selectall_sys_role_app_fun"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_app_fun
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_app_fun
     `
 	SQLTPL["insert_sys_role_data_permission"] = `
         insert into sys_role_data_permission
-		(` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?role_id,?data_permission_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?role_id,?data_permission_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_role_data_permission"] = `
-        update sys_role_data_permission set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`data_permission_id`" + `=?data_permission_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_role_data_permission set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`data_permission_id`" + `=?data_permission_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_role_data_permission"] = `
         delete from sys_role_data_permission where id =?id
     `
 	SQLTPL["selectone_sys_role_data_permission"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_data_permission where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_data_permission where  id =?id
     `
 	SQLTPL["selectall_sys_role_data_permission"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_data_permission
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_data_permission
     `
 	SQLTPL["insert_sys_role_menu"] = `
         insert into sys_role_menu
-		(` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?role_id,?menu_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?role_id,?menu_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_role_menu"] = `
-        update sys_role_menu set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`menu_id`" + `=?menu_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_role_menu set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`menu_id`" + `=?menu_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_role_menu"] = `
         delete from sys_role_menu where id =?id
     `
 	SQLTPL["selectone_sys_role_menu"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_menu where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_menu where  id =?id
     `
 	SQLTPL["selectall_sys_role_menu"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_menu
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_menu
     `
 	SQLTPL["insert_sys_role_permission"] = `
         insert into sys_role_permission
-		(` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?role_id,?permission_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?role_id,?permission_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_role_permission"] = `
-        update sys_role_permission set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`permission_id`" + `=?permission_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_role_permission set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`permission_id`" + `=?permission_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_role_permission"] = `
         delete from sys_role_permission where id =?id
     `
 	SQLTPL["selectone_sys_role_permission"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_permission where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_permission where  id =?id
     `
 	SQLTPL["selectall_sys_role_permission"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_permission
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_permission
     `
 	SQLTPL["get_user_rule_by_code"] = `
         select
@@ -432,294 +432,294 @@ func init() {
         where
             sys_data_permission.id = sys_data_permission_detail.data_permission_id
             and sys_role_user.role_id = sys_data_permission_detail.role_id
-            and sys_data_permission_detail.del_flag = 0
+            and sys_data_permission_detail.is_delete = 0
             and sys_data_permission.code = ?
             and sys_role_user.user_id = ?
     `
 	SQLTPL["insert_sys_role_user"] = `
         insert into sys_role_user
-		(` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?user_id,?role_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?user_id,?role_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_role_user"] = `
-        update sys_role_user set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`role_id`" + `=?role_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_role_user set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`role_id`" + `=?role_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_role_user"] = `
         delete from sys_role_user where id =?id
     `
 	SQLTPL["selectone_sys_role_user"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_user where  id =?id
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_user where  id =?id
     `
 	SQLTPL["selectall_sys_role_user"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_role_user
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_user
     `
 	SQLTPL["insert_sys_schedule"] = `
         insert into sys_schedule
-		(` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_schedule"] = `
-        update sys_schedule set ` + "`id`" + `=?id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_schedule set ` + "`id`" + `=?id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_schedule"] = `
         delete from sys_schedule where id =?id
     `
 	SQLTPL["selectone_sys_schedule"] = `
-        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule where  id =?id
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule where  id =?id
     `
 	SQLTPL["selectall_sys_schedule"] = `
-        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule
     `
 	SQLTPL["insert_sys_schedule_history"] = `
         insert into sys_schedule_history
-		(` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_schedule_history"] = `
-        update sys_schedule_history set ` + "`id`" + `=?id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_schedule_history set ` + "`id`" + `=?id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_schedule_history"] = `
         delete from sys_schedule_history where id =?id
     `
 	SQLTPL["selectone_sys_schedule_history"] = `
-        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule_history where  id =?id
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule_history where  id =?id
     `
 	SQLTPL["selectall_sys_schedule_history"] = `
-        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_schedule_history
+        select ` + "`id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule_history
     `
 	SQLTPL["insert_sys_setting"] = `
         insert into sys_setting
-		(` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?key,?value,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?key,?value,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_setting"] = `
-        update sys_setting set ` + "`id`" + `=?id,` + "`key`" + `=?key,` + "`value`" + `=?value,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_setting set ` + "`id`" + `=?id,` + "`key`" + `=?key,` + "`value`" + `=?value,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_setting"] = `
         delete from sys_setting where id =?id
     `
 	SQLTPL["selectone_sys_setting"] = `
-        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_setting where  id =?id
+        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_setting where  id =?id
     `
 	SQLTPL["selectall_sys_setting"] = `
-        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_setting
+        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_setting
     `
 	SQLTPL["insert_sys_table"] = `
         insert into sys_table
-		(` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?desc,?charset,?auto_increment,?store_engine,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?desc,?charset,?auto_increment,?store_engine,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_table"] = `
-        update sys_table set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`desc`" + `=?desc,` + "`charset`" + `=?charset,` + "`auto_increment`" + `=?auto_increment,` + "`store_engine`" + `=?store_engine,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_table set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`desc`" + `=?desc,` + "`charset`" + `=?charset,` + "`auto_increment`" + `=?auto_increment,` + "`store_engine`" + `=?store_engine,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_table"] = `
         delete from sys_table where id =?id
     `
 	SQLTPL["selectone_sys_table"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_table where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table where  id =?id
     `
 	SQLTPL["selectall_sys_table"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_table
+        select ` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table
     `
 	SQLTPL["insert_sys_table_col_user"] = `
         insert into sys_table_col_user
-		(` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?code,?value,?user_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?code,?value,?user_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_table_col_user"] = `
-        update sys_table_col_user set ` + "`id`" + `=?id,` + "`code`" + `=?code,` + "`value`" + `=?value,` + "`user_id`" + `=?user_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_table_col_user set ` + "`id`" + `=?id,` + "`code`" + `=?code,` + "`value`" + `=?value,` + "`user_id`" + `=?user_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_table_col_user"] = `
         delete from sys_table_col_user where id =?id
     `
 	SQLTPL["selectone_sys_table_col_user"] = `
-        select ` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_table_col_user where  id =?id
+        select ` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_col_user where  id =?id
     `
 	SQLTPL["selectall_sys_table_col_user"] = `
-        select ` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_table_col_user
+        select ` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_col_user
     `
 	SQLTPL["insert_sys_table_column"] = `
         insert into sys_table_column
-		(` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?tb_id,?name,?desc,?is_primary_key,?type,?nullable,?default,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?tb_id,?name,?desc,?is_primary_key,?type,?nullable,?default,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_table_column"] = `
-        update sys_table_column set ` + "`id`" + `=?id,` + "`tb_id`" + `=?tb_id,` + "`name`" + `=?name,` + "`desc`" + `=?desc,` + "`is_primary_key`" + `=?is_primary_key,` + "`type`" + `=?type,` + "`nullable`" + `=?nullable,` + "`default`" + `=?default,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_table_column set ` + "`id`" + `=?id,` + "`tb_id`" + `=?tb_id,` + "`name`" + `=?name,` + "`desc`" + `=?desc,` + "`is_primary_key`" + `=?is_primary_key,` + "`type`" + `=?type,` + "`nullable`" + `=?nullable,` + "`default`" + `=?default,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_table_column"] = `
         delete from sys_table_column where id =?id
     `
 	SQLTPL["selectone_sys_table_column"] = `
-        select ` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_table_column where  id =?id
+        select ` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_column where  id =?id
     `
 	SQLTPL["selectall_sys_table_column"] = `
-        select ` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_table_column
+        select ` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_column
     `
 	SQLTPL["insert_sys_tag"] = `
         insert into sys_tag
-		(` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?group_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?group_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_tag"] = `
-        update sys_tag set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`group_id`" + `=?group_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_tag set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`group_id`" + `=?group_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_tag"] = `
         delete from sys_tag where id =?id
     `
 	SQLTPL["selectone_sys_tag"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_tag where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag where  id =?id
     `
 	SQLTPL["selectall_sys_tag"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_tag
+        select ` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag
     `
 	SQLTPL["insert_sys_tag_group"] = `
         insert into sys_tag_group
-		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_tag_group"] = `
-        update sys_tag_group set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_tag_group set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_tag_group"] = `
         delete from sys_tag_group where id =?id
     `
 	SQLTPL["selectone_sys_tag_group"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_tag_group where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag_group where  id =?id
     `
 	SQLTPL["selectall_sys_tag_group"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_tag_group
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag_group
     `
 	SQLTPL["insert_sys_tracker"] = `
         insert into sys_tracker
-		(` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?token,?user_id,?status_code,?latency,?client_ip,?method,?path,?header,?req_body,?res_body,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?token,?user_id,?status_code,?latency,?client_ip,?method,?path,?header,?req_body,?res_body,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_tracker"] = `
-        update sys_tracker set ` + "`id`" + `=?id,` + "`token`" + `=?token,` + "`user_id`" + `=?user_id,` + "`status_code`" + `=?status_code,` + "`latency`" + `=?latency,` + "`client_ip`" + `=?client_ip,` + "`method`" + `=?method,` + "`path`" + `=?path,` + "`header`" + `=?header,` + "`req_body`" + `=?req_body,` + "`res_body`" + `=?res_body,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_tracker set ` + "`id`" + `=?id,` + "`token`" + `=?token,` + "`user_id`" + `=?user_id,` + "`status_code`" + `=?status_code,` + "`latency`" + `=?latency,` + "`client_ip`" + `=?client_ip,` + "`method`" + `=?method,` + "`path`" + `=?path,` + "`header`" + `=?header,` + "`req_body`" + `=?req_body,` + "`res_body`" + `=?res_body,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_tracker"] = `
         delete from sys_tracker where id =?id
     `
 	SQLTPL["selectone_sys_tracker"] = `
-        select ` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_tracker where  id =?id
+        select ` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tracker where  id =?id
     `
 	SQLTPL["selectall_sys_tracker"] = `
-        select ` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_tracker
+        select ` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tracker
     `
 	SQLTPL["insert_sys_user"] = `
         insert into sys_user
-		(` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?password,?salt,?name,?full_name,?nickname,?intro,?address,?mobile,?email,?is_email_confirmed,?org_id,?gender,?type,?status,?avatar,?marked_all_as_read_at,?read_notifications_at,?temp_id,?temp_value,?domain,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?password,?salt,?name,?full_name,?nickname,?intro,?address,?mobile,?email,?is_email_confirmed,?org_id,?gender,?type,?status,?avatar,?marked_all_as_read_at,?read_notifications_at,?temp_id,?temp_value,?domain,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_user"] = `
-        update sys_user set ` + "`id`" + `=?id,` + "`password`" + `=?password,` + "`salt`" + `=?salt,` + "`name`" + `=?name,` + "`full_name`" + `=?full_name,` + "`nickname`" + `=?nickname,` + "`intro`" + `=?intro,` + "`address`" + `=?address,` + "`mobile`" + `=?mobile,` + "`email`" + `=?email,` + "`is_email_confirmed`" + `=?is_email_confirmed,` + "`org_id`" + `=?org_id,` + "`gender`" + `=?gender,` + "`type`" + `=?type,` + "`status`" + `=?status,` + "`avatar`" + `=?avatar,` + "`marked_all_as_read_at`" + `=?marked_all_as_read_at,` + "`read_notifications_at`" + `=?read_notifications_at,` + "`temp_id`" + `=?temp_id,` + "`temp_value`" + `=?temp_value,` + "`domain`" + `=?domain,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_user set ` + "`id`" + `=?id,` + "`password`" + `=?password,` + "`salt`" + `=?salt,` + "`name`" + `=?name,` + "`full_name`" + `=?full_name,` + "`nickname`" + `=?nickname,` + "`intro`" + `=?intro,` + "`address`" + `=?address,` + "`mobile`" + `=?mobile,` + "`email`" + `=?email,` + "`is_email_confirmed`" + `=?is_email_confirmed,` + "`org_id`" + `=?org_id,` + "`gender`" + `=?gender,` + "`type`" + `=?type,` + "`status`" + `=?status,` + "`avatar`" + `=?avatar,` + "`marked_all_as_read_at`" + `=?marked_all_as_read_at,` + "`read_notifications_at`" + `=?read_notifications_at,` + "`temp_id`" + `=?temp_id,` + "`temp_value`" + `=?temp_value,` + "`domain`" + `=?domain,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_user"] = `
         delete from sys_user where id =?id
     `
 	SQLTPL["selectone_sys_user"] = `
-        select ` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user where  id =?id
+        select ` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user where  id =?id
     `
 	SQLTPL["selectall_sys_user"] = `
-        select ` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user
+        select ` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user
     `
 	SQLTPL["insert_sys_user_binding"] = `
         insert into sys_user_binding
-		(` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?user_id,?open_id,?union_id,?type,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?user_id,?open_id,?union_id,?type,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_user_binding"] = `
-        update sys_user_binding set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`open_id`" + `=?open_id,` + "`union_id`" + `=?union_id,` + "`type`" + `=?type,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_user_binding set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`open_id`" + `=?open_id,` + "`union_id`" + `=?union_id,` + "`type`" + `=?type,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_user_binding"] = `
         delete from sys_user_binding where id =?id
     `
 	SQLTPL["selectone_sys_user_binding"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_binding where  id =?id
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_binding where  id =?id
     `
 	SQLTPL["selectall_sys_user_binding"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_binding
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_binding
     `
 	SQLTPL["insert_sys_user_tag"] = `
         insert into sys_user_tag
-		(` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?user_id,?tag_id,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?user_id,?tag_id,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_user_tag"] = `
-        update sys_user_tag set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`tag_id`" + `=?tag_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_user_tag set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`tag_id`" + `=?tag_id,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_user_tag"] = `
         delete from sys_user_tag where id =?id
     `
 	SQLTPL["selectone_sys_user_tag"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_tag where  id =?id
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_tag where  id =?id
     `
 	SQLTPL["selectall_sys_user_tag"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_tag
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_tag
     `
 	SQLTPL["insert_sys_user_template"] = `
         insert into sys_user_template
-		(` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_user_template"] = `
-        update sys_user_template set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`type`" + `=?type,` + "`default`" + `=?default,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_user_template set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`type`" + `=?type,` + "`default`" + `=?default,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_user_template"] = `
         delete from sys_user_template where id =?id
     `
 	SQLTPL["selectone_sys_user_template"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_template where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template where  id =?id
     `
 	SQLTPL["selectall_sys_user_template"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_template
+        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template
     `
 	SQLTPL["insert_sys_user_template_detail"] = `
         insert into sys_user_template_detail
-		(` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + `)
+		(` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + `)
 		values
-		(?id,?temp_id,?name,?value,?type,?content,?priority,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?temp_id,?name,?value,?type,?content,?priority,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     `
 	SQLTPL["update_sys_user_template_detail"] = `
-        update sys_user_template_detail set ` + "`id`" + `=?id,` + "`temp_id`" + `=?temp_id,` + "`name`" + `=?name,` + "`value`" + `=?value,` + "`type`" + `=?type,` + "`content`" + `=?content,` + "`priority`" + `=?priority,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`del_flag`" + `=?del_flag,` + "`remark`" + `=?remark
+        update sys_user_template_detail set ` + "`id`" + `=?id,` + "`temp_id`" + `=?temp_id,` + "`name`" + `=?name,` + "`value`" + `=?value,` + "`type`" + `=?type,` + "`content`" + `=?content,` + "`priority`" + `=?priority,` + "`create_by`" + `=?create_by,` + "`create_time`" + `=?create_time,` + "`update_by`" + `=?update_by,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
 		where  id =?id
     `
 	SQLTPL["delete_sys_user_template_detail"] = `
         delete from sys_user_template_detail where id =?id
     `
 	SQLTPL["selectone_sys_user_template_detail"] = `
-        select ` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_template_detail where  id =?id
+        select ` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template_detail where  id =?id
     `
 	SQLTPL["selectall_sys_user_template_detail"] = `
-        select ` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`del_flag`" + `,` + "`remark`" + ` from sys_user_template_detail
+        select ` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`create_by`" + `,` + "`create_time`" + `,` + "`update_by`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template_detail
     `
 	SQLTPL["sys_app_fun_page_count.tpl"] = `select
     count(*) records
@@ -728,7 +728,7 @@ from
 where
 	sys_app_fun.id {{.ne}} ""
 	and
-	sys_app_fun.del_flag {{.ne}} 1
+	sys_app_fun.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -739,7 +739,7 @@ from
 where
 	sys_app_fun.id {{.ne}} ""
 	and
-	sys_app_fun.del_flag {{.ne}} 1
+	sys_app_fun.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -758,7 +758,7 @@ from
 	sys_app_fun
 where
 	sys_app_fun.id {{.ne}} ""
-    and del_flag = 0
+    and is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -766,7 +766,7 @@ where
     and sys_app_fun.name = "{{.name}}"
     {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_area_page_count.tpl"] = `select
     count(*) records
@@ -775,7 +775,7 @@ from
 where
 	sys_area.id {{.ne}} ""
 	and
-	sys_area.del_flag {{.ne}} 1
+	sys_area.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -786,7 +786,7 @@ from
 where
 	sys_area.id {{.ne}} ""
 	and
-	sys_area.del_flag {{.ne}} 1
+	sys_area.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -799,7 +799,7 @@ from
 where
 	sys_attachment.id {{.ne}} ""
 	and
-	sys_attachment.del_flag {{.ne}} 1
+	sys_attachment.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -811,7 +811,7 @@ from
 where
 	sys_attachment.id {{.ne}} ""
 	and
-	sys_attachment.del_flag {{.ne}} 1
+	sys_attachment.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -829,7 +829,7 @@ from
 where
 	sys_client.id {{.ne}} ""
 	and
-	sys_client.del_flag {{.ne}} 1
+	sys_client.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -840,7 +840,7 @@ from
 where
 	sys_client.id {{.ne}} ""
 	and
-	sys_client.del_flag {{.ne}} 1
+	sys_client.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -854,7 +854,7 @@ from
 where
 	sys_comment.id {{.ne}} ""
 	and
-	sys_comment.del_flag {{.ne}} 1
+	sys_comment.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -867,7 +867,7 @@ from
 where
 	sys_comment.id {{.ne}} ""
 	and
-	sys_comment.del_flag {{.ne}} 1
+	sys_comment.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -880,7 +880,7 @@ from
 where
 	sys_data_permission.id {{.ne}} ""
 	and
-	sys_data_permission.del_flag {{.ne}} 1
+	sys_data_permission.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -891,7 +891,7 @@ from
 where
 	sys_data_permission.id {{.ne}} ""
 	and
-	sys_data_permission.del_flag {{.ne}} 1
+	sys_data_permission.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -900,11 +900,11 @@ LIMIT {{.size}} OFFSET {{.offset}}
 	SQLTPL["sys_data_permission_rule.tpl"] = `select
     sys_data_permission_detail.*
 from
-    `+"`sys_data_permission`"+`, `+"`sys_data_permission_detail`"+`,`+"`sys_role_user`"+`
+    ` + "`sys_data_permission`" + `, ` + "`sys_data_permission_detail`" + `,` + "`sys_role_user`" + `
 where
     sys_data_permission.id = sys_data_permission_detail.data_permission_id
     and sys_role_user.role_id = sys_data_permission_detail.role_id
-    and sys_data_permission_detail.del_flag = 0
+    and sys_data_permission_detail.is_delete = 0
     and sys_data_permission.code = "{{.code}}"
     and sys_role_user.user_id = "{{.user_id}}"`
 	SQLTPL["sys_domain_page_count.tpl"] = `select
@@ -914,7 +914,7 @@ from
 where
 	sys_domain.id {{.ne}} ""
 	and
-	sys_domain.del_flag {{.ne}} 1
+	sys_domain.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -925,7 +925,7 @@ from
 where
 	sys_domain.id {{.ne}} ""
 	and
-	sys_domain.del_flag {{.ne}} 1
+	sys_domain.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -938,7 +938,7 @@ from
 where
 	sys_menu.id {{.ne}} ""
 	and
-	sys_menu.del_flag {{.ne}} 1
+	sys_menu.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -964,7 +964,7 @@ where
     and sys_menu.code like "%{{.code}}%"
 {{end}}
 	and
-	sys_menu.del_flag {{.ne}} 1
+	sys_menu.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -982,13 +982,13 @@ inner join sys_role_user on sys_role_menu.role_id = sys_role_user.role_id and sy
 where
 	sys_menu.id {{.ne}} ""
 	and
-    sys_menu.del_flag = 0
+    sys_menu.is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
 	and
 	sys_menu.hidden = 0
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_menu_tree.tpl"] = `select
     sys_menu.id,
@@ -1003,7 +1003,7 @@ from
 	sys_menu
 where
 	sys_menu.id {{.ne}} ""
-    and del_flag = 0
+    and is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1011,7 +1011,7 @@ where
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_notification_page_count.tpl"] = `select
     count(*) records
@@ -1020,7 +1020,7 @@ from
 where
 	sys_notification.id {{.ne}} ""
 	and
-	sys_notification.del_flag {{.ne}} 1
+	sys_notification.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1031,7 +1031,7 @@ from
 where
 	sys_notification.id {{.ne}} ""
 	and
-	sys_notification.del_flag {{.ne}} 1
+	sys_notification.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1044,7 +1044,7 @@ from
 where
 	sys_optionset.id {{.ne}} ""
 	and
-	sys_optionset.del_flag {{.ne}} 1
+	sys_optionset.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1059,7 +1059,7 @@ from
 where
 	sys_optionset.id {{.ne}} ""
 	and
-	sys_optionset.del_flag {{.ne}} 1
+	sys_optionset.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1072,7 +1072,7 @@ from
 where
 	sys_org.id {{.ne}} ""
 	and
-	sys_org.del_flag {{.ne}} 1
+	sys_org.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1088,7 +1088,7 @@ from
 where
 	sys_org.id {{.ne}} ""
 	and
-	sys_org.del_flag {{.ne}} 1
+	sys_org.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1105,7 +1105,7 @@ from
 	sys_org
 where
 	sys_org.id {{.ne}} ""
-    and del_flag = 0
+    and is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1113,7 +1113,7 @@ where
     and sys_org.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_permission_page_count.tpl"] = `select
     count(*) records
@@ -1122,7 +1122,7 @@ from
 where
 	sys_permission.id {{.ne}} ""
 	and
-	sys_permission.del_flag {{.ne}} 1
+	sys_permission.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1133,7 +1133,7 @@ from
 where
 	sys_permission.id {{.ne}} ""
 	and
-	sys_permission.del_flag {{.ne}} 1
+	sys_permission.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1157,7 +1157,7 @@ where
     and sys_app_fun.id = sys_role_app_fun.app_fun_id
     and sys_role_app_fun.role_id = "{{.role_id}}"
 {{end}}
-    and sys_app_fun.del_flag = 0
+    and sys_app_fun.is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1165,13 +1165,13 @@ where
     and sys_app_fun.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_role_in_role_cnt.tpl"] = `select
     count(distinct(role_id))
 from sys_role_user
 where
-role_id in (select id from sys_role where code in ({{.roles}})) and user_id = "{{.uid}}" and del_flag != 1`
+role_id in (select id from sys_role where code in ({{.roles}})) and user_id = "{{.uid}}" and is_delete != 1`
 	SQLTPL["sys_role_menu_tree.tpl"] = `select
     distinct
     sys_menu.id,
@@ -1190,7 +1190,7 @@ where
     and sys_menu.id = sys_role_menu.menu_id
     and sys_role_menu.role_id = "{{.role_id}}"
 {{end}}
-    and sys_menu.del_flag = 0
+    and sys_menu.is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1198,7 +1198,7 @@ where
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by `+"`order`"+`
+order by ` + "`order`" + `
 `
 	SQLTPL["sys_role_page_count.tpl"] = `select
     count(*) records
@@ -1207,7 +1207,7 @@ from
 where
 	sys_role.id {{.ne}} ""
 	and
-	sys_role.del_flag {{.ne}} 1
+	sys_role.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1223,7 +1223,7 @@ from
 where
 	sys_role.id {{.ne}} ""
 	and
-	sys_role.del_flag {{.ne}} 1
+	sys_role.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1238,7 +1238,7 @@ from
 left join
     sys_role
 on sys_role.id = sys_role_user.role_id
-where sys_role_user.del_flag=0
+where sys_role_user.is_delete=0
 {{if ne .uids ""}}
     and sys_role_user.user_id in ({{.uids}})
 {{end}}
@@ -1255,7 +1255,7 @@ from
 where
 	sys_role_menu.id {{.ne}} ""
 	and
-	sys_role_menu.del_flag {{.ne}} 1
+	sys_role_menu.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1268,7 +1268,7 @@ from
 where
 	sys_role_menu.id {{.ne}} ""
 	and
-	sys_role_menu.del_flag {{.ne}} 1
+	sys_role_menu.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1282,7 +1282,7 @@ from
 where
 	sys_schedule.id {{.ne}} ""
 	and
-	sys_schedule.del_flag {{.ne}} 1
+	sys_schedule.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1295,7 +1295,7 @@ from
 where
 	sys_schedule.id {{.ne}} ""
 	and
-	sys_schedule.del_flag {{.ne}} 1
+	sys_schedule.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1309,7 +1309,7 @@ from
 where
 	sys_schedule.id {{.ne}} ""
 	and
-	sys_schedule.del_flag {{.ne}} 1
+	sys_schedule.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1322,7 +1322,7 @@ from
 where
 	sys_schedule.id {{.ne}} ""
 	and
-	sys_schedule.del_flag {{.ne}} 1
+	sys_schedule.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1336,7 +1336,7 @@ from
 where
 	sys_setting.id {{.ne}} ""
 	and
-	sys_setting.del_flag {{.ne}} 1
+	sys_setting.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1349,7 +1349,7 @@ from
 where
 	sys_setting.id {{.ne}} ""
 	and
-	sys_setting.del_flag {{.ne}} 1
+	sys_setting.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1363,7 +1363,7 @@ from
 where
 	sys_table.id {{.ne}} ""
 	and
-	sys_table.del_flag {{.ne}} 1
+	sys_table.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1381,7 +1381,7 @@ from
 where
 	sys_table.id {{.ne}} ""
 	and
-	sys_table.del_flag {{.ne}} 1
+	sys_table.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1395,7 +1395,7 @@ from
 where
 	sys_table_column.id {{.ne}} ""
 	and
-	sys_table_column.del_flag {{.ne}} 1
+	sys_table_column.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1414,7 +1414,7 @@ from
 where
 	sys_table_column.id {{.ne}} ""
 	and
-	sys_table_column.del_flag {{.ne}} 1
+	sys_table_column.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1427,7 +1427,7 @@ from
 where
 	sys_tag.id {{.ne}} ""
 	and
-	sys_tag.del_flag {{.ne}} 1
+	sys_tag.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1438,7 +1438,7 @@ from
 where
 	sys_tag.id {{.ne}} ""
 	and
-	sys_tag.del_flag {{.ne}} 1
+	sys_tag.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1451,7 +1451,7 @@ from
 where
 	sys_tag_group.id {{.ne}} ""
 	and
-	sys_tag_group.del_flag {{.ne}} 1
+	sys_tag_group.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1462,7 +1462,7 @@ from
 where
 	sys_tag_group.id {{.ne}} ""
 	and
-	sys_tag_group.del_flag {{.ne}} 1
+	sys_tag_group.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1474,7 +1474,7 @@ from
 	sys_tracker
 where
 	sys_tracker.id {{.ne}} ""
-	and sys_tracker.del_flag {{.ne}} 1
+	and sys_tracker.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1492,7 +1492,7 @@ from
 	sys_tracker
 where
 	sys_tracker.id {{.ne}} ""
-	and sys_tracker.del_flag {{.ne}} 1
+	and sys_tracker.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1508,7 +1508,7 @@ sys_org.name name,
 sys_org.id id
 from
     sys_org
-where del_flag {{.ne}} 1
+where is_delete {{.ne}} 1
 {{if ne .oids ""}}
     and sys_org.id in ({{.oids}})
 {{else}}
@@ -1521,7 +1521,7 @@ from
 where
 	sys_user.id {{.ne}} ""
 	and
-	sys_user.del_flag {{.ne}} 1
+	sys_user.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1551,7 +1551,7 @@ from
 	sys_user
 where
 	sys_user.id {{.ne}} ""
-	and sys_user.del_flag {{.ne}} 1
+	and sys_user.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1576,7 +1576,7 @@ from
 where
 	sys_user_template.id {{.ne}} ""
 	and
-	sys_user_template.del_flag {{.ne}} 1
+	sys_user_template.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}`
@@ -1590,7 +1590,7 @@ from
 where
 	sys_user_template.id {{.ne}} ""
 	and
-	sys_user_template.del_flag {{.ne}} 1
+	sys_user_template.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1604,7 +1604,7 @@ from
 where
 	sys_user_template_detail.id {{.ne}} ""
 	and
-	sys_user_template_detail.del_flag {{.ne}} 1
+	sys_user_template_detail.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}
@@ -1624,7 +1624,7 @@ from
 where
 	sys_user_template_detail.id {{.ne}} ""
 	and
-	sys_user_template_detail.del_flag {{.ne}} 1
+	sys_user_template_detail.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

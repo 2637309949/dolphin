@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_setting">
         insert into sys_setting
-		(`id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?key,?value,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?key,?value,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_setting">
-        update sys_setting set `id`=?id,`key`=?key,`value`=?value,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_setting set `id`=?id,`key`=?key,`value`=?value,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_setting">
         delete from sys_setting where id =?id
     </sql>
     <sql id="selectone_sys_setting">
-        select `id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_setting where  id =?id
+        select `id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_setting where  id =?id
     </sql>
     <sql id="selectall_sys_setting">
-        select `id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_setting
+        select `id`,`key`,`value`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_setting
     </sql>
 </sqlMap>

@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_table_column">
         insert into sys_table_column
-		(`id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?tb_id,?name,?desc,?is_primary_key,?type,?nullable,?default,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?tb_id,?name,?desc,?is_primary_key,?type,?nullable,?default,?create_by,?create_time,?update_by,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_table_column">
-        update sys_table_column set `id`=?id,`tb_id`=?tb_id,`name`=?name,`desc`=?desc,`is_primary_key`=?is_primary_key,`type`=?type,`nullable`=?nullable,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_table_column set `id`=?id,`tb_id`=?tb_id,`name`=?name,`desc`=?desc,`is_primary_key`=?is_primary_key,`type`=?type,`nullable`=?nullable,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_table_column">
         delete from sys_table_column where id =?id
     </sql>
     <sql id="selectone_sys_table_column">
-        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table_column where  id =?id
+        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_table_column where  id =?id
     </sql>
     <sql id="selectall_sys_table_column">
-        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_table_column
+        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`is_delete`,`remark` from sys_table_column
     </sql>
 </sqlMap>

@@ -7,6 +7,6 @@
 	<column name="school_remark" desc="" type="null.String" xorm="varchar(2000)" />
 	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="organ_id" desc="" type="null.Int" xorm="int(11)" />
 </table>

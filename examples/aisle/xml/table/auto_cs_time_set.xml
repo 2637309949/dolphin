@@ -6,7 +6,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="set_minute" desc="" type="null.Int" xorm="int(11)" />
 	<column name="if_open" desc="" type="null.Int" xorm="int(11)" />
 	<column name="time_name" desc="" type="null.String" xorm="varchar(20)" />

@@ -9,7 +9,7 @@ inner join sys_role_user on sys_role_menu.role_id = sys_role_user.role_id and sy
 where
 	sys_menu.id {{.ne}} ""
 	and
-    sys_menu.del_flag = 0
+    sys_menu.is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

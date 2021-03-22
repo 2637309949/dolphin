@@ -24,7 +24,7 @@ var sysUserTemplateDetails = []SysUserTemplateDetail{
 		CreateTime: null.TimeFrom(time.Now()),
 		UpdateBy:   DefaultAdmin.ID,
 		UpdateTime: null.TimeFrom(time.Now()),
-		DelFlag:    null.IntFrom(0),
+		IsDelete:   null.IntFrom(0),
 	},
 }
 

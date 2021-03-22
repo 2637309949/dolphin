@@ -12,7 +12,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="time_remark" desc="" type="null.String" xorm="varchar(200)" />
 	<column name="is_there_a_time_course" desc="" type="null.Int" xorm="int(11)" />
 	<column name="pk_pk_time" desc="" type="null.Int" xorm="int(11)" />

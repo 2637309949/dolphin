@@ -43,7 +43,7 @@ func SysAttachmentAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -76,7 +76,7 @@ func SysAttachmentBatchAdd(ctx *Context) {
 		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
 		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		payload[i].DelFlag = null.IntFrom(0)
+		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -135,7 +135,7 @@ func SysAttachmentUpload(ctx *Context) {
 			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
 			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		}
 		attachments = append(attachments, item)
 		attachs = append(attachs, model.Attach{
@@ -192,7 +192,7 @@ func SysAttachmentDel(ctx *Context) {
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysAttachment{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -223,7 +223,7 @@ func SysAttachmentBatchDel(ctx *Context) {
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysAttachment{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)

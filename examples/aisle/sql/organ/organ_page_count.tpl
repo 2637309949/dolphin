@@ -6,7 +6,7 @@ select
 from
 	organ
 where
-	organ.isdelete={{.del_flag}}
+	organ.isdelete={{.is_delete}}
 {{if .create_by}}
 	and organ.create_by='{{.create_by}}'
 {{end}}

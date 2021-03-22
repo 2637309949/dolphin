@@ -7,5 +7,5 @@
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="business_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="parent_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

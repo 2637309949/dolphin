@@ -12,7 +12,7 @@
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="tl_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="room_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="sch_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="lesson_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="now_num" desc="" type="null.Float" xorm="float(10,2)" />

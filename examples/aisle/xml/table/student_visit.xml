@@ -13,7 +13,7 @@
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="sc_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="stu_order" desc="" type="null.Float" xorm="float(11,2)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="revival_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="kh_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="stu_sys_status" desc="" type="null.Int" xorm="int(11)" />

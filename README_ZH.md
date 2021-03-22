@@ -383,7 +383,7 @@ func SysClientAdd(ctx *Context) {
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
@@ -435,7 +435,7 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
 		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.DelFlag = null.IntFrom(0)
+		form.IsDelete = null.IntFrom(0)
 	})
 	payload = funk.Filter(payload, func(form *model.SysRoleMenu) bool {
 		ext, _ := ctx.DB.Where("role_id=? and menu_id=?", form.RoleId.String, 
@@ -491,7 +491,7 @@ func SysClientDel(ctx *Context) {
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -542,7 +542,7 @@ func SysOptionsetBatchDel(ctx *Context) {
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysOptionset{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -882,7 +882,7 @@ Example:
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
-	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
 </table>
 ```
@@ -914,7 +914,7 @@ type Article struct {
 	// 最后更新时间
 	UpdateTime null.Time `xorm:"datetime 'update_time'" json:"update_time" xml:"update_time"`
 	// 删除标记
-	DelFlag null.Int `xorm:"notnull 'del_flag'" json:"del_flag" xml:"del_flag"`
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" xml:"is_delete"`
 	// 备注
 	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" xml:"remark"`
 }
@@ -943,7 +943,7 @@ func (m *Article) TableName() string {
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
 	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
-	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
 </table>
 ```
@@ -1128,7 +1128,7 @@ The quasi-directory structure of the rpc is shown below:
 	<column name="create_time" type="null.Time" xorm="datetime notnull" />
 	<column name="update_by" type="null.String" xorm="varchar(36) notnull" />
 	<column name="update_time" type="null.Time" xorm="datetime notnull" />
-	<column name="del_flag" type="null.Int" xorm="notnull" />
+	<column name="is_delete" type="null.Int" xorm="notnull" />
 	<column name="remark" type="null.String" xorm="varchar(200)" />
 </table>
 ```

@@ -130,7 +130,7 @@ func initTracker() {
 							CreateBy:   model.DefaultAdmin.ID,
 							UpdateTime: null.TimeFrom(time.Now()),
 							UpdateBy:   model.DefaultAdmin.ID,
-							DelFlag:    null.IntFrom(0),
+							IsDelete:   null.IntFrom(0),
 						},
 						Domain: null.StringFrom(item.Domain),
 					}

@@ -5,6 +5,6 @@
     <column name="create_time" desc="Creation time" type="null.Time" xorm="datetime" />
     <column name="update_by" desc="Last updated by" type="null.String" xorm="varchar(36)" />
     <column name="update_time" desc="Last update time" type="null.Time" xorm="datetime" />
-    <column name="del_flag" desc="Delete tag" type="null.Int" xorm="notnull" />
+    <column name="is_delete" desc="Delete tag" type="null.Int" xorm="notnull" />
     <column name="remark" desc="Remark" type="null.String" xorm="varchar(200)" />
 </table>

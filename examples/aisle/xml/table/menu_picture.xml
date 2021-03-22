@@ -3,5 +3,5 @@
 	<column name="menupic_name" desc="" type="null.String" xorm="varchar(500) notnull" />
 	<column name="menupic_picture" desc="" type="null.Int" xorm="int(11) notnull" />
 	<column name="pro_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

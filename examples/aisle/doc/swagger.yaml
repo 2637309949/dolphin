@@ -94,8 +94,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       hidden:
         description: Hidden defined 是否隐藏
@@ -149,8 +149,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -194,8 +194,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       durable:
         description: Durable defined 是否持久化 0：否 1：是
@@ -254,8 +254,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       domain:
         description: Domain defined 域
@@ -290,8 +290,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       from_uid:
         description: FromUid defined 评论用户id
@@ -326,8 +326,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -374,8 +374,8 @@ definitions:
       data_source:
         description: DataSource defined 数据库链接串
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       domain:
         description: Domain defined 域
@@ -437,8 +437,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       hidden:
         description: Hidden defined 是否隐藏
@@ -489,8 +489,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       from_uid:
         description: FromUid defined 发送者
@@ -531,8 +531,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -564,8 +564,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       full_name:
         description: FullName defined 全名
@@ -615,8 +615,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -651,8 +651,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -681,8 +681,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -711,8 +711,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -735,8 +735,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -771,8 +771,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       desc:
         description: Desc defined 描述
@@ -807,8 +807,8 @@ definitions:
       default:
         description: Default defined 默认值
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       desc:
         description: Desc defined 描述
@@ -849,8 +849,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       group_id:
         description: GroupId defined 分组ID
@@ -882,8 +882,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -915,8 +915,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       domain:
         description: Domain defined 域
@@ -996,8 +996,8 @@ definitions:
       default:
         description: Default defined 是否默认 1：是 0：否
         type: number
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键
@@ -1029,8 +1029,8 @@ definitions:
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
+      is_delete:
+        description: IsDelete defined 删除标记
         type: number
       id:
         description: ID defined 主键

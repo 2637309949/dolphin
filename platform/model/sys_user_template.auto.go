@@ -32,13 +32,13 @@ type SysUserTemplate struct {
 	UpdateBy null.String `xorm:"varchar(36) notnull comment('最后更新人') 'update_by'" json:"update_by" form:"update_by" xml:"update_by"`
 	// UpdateTime defined 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
-	// DelFlag defined 删除标记
-	DelFlag null.Int `xorm:"notnull comment('删除标记') 'del_flag'" json:"del_flag" form:"del_flag" xml:"del_flag"`
+	// IsDelete defined 删除标记
+	IsDelete null.Int `xorm:"notnull comment('删除标记') 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// Remark defined 备注
 	Remark null.String `xorm:"varchar(200) comment('备注') 'remark'" json:"remark" form:"remark" xml:"remark"`
 }
 
-// Marshal defined
+// With defined
 func (m *SysUserTemplate) With(s interface{}) (interface{}, error) {
 	if reflect.ValueOf(s).Kind() != reflect.Ptr {
 		return nil, errors.New("ptr required")
@@ -86,7 +86,8 @@ func (m *SysUserTemplate) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *SysUserTemplate) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

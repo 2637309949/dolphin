@@ -49,7 +49,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- if .Contains $api.Auth "token"}}
 	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
 	{{- end}}
-	q.SetInt("del_flag", 0)()
+	q.SetInt("is_delete", 0)()
 	q.SetString("create_by")
 	q.SetRange("create_time")
 	q.SetString("update_by")
@@ -71,7 +71,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- if .Contains $api.Auth "token"}}
 	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
 	{{- end}}
-	q.SetInt("del_flag", 0)()
+	q.SetInt("is_delete", 0)()
 	q.SetString("create_by")
 	q.SetRange("create_time")
 	q.SetString("update_by")
@@ -102,7 +102,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
 		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		payload[i].DelFlag = null.IntFrom(0)
+		payload[i].IsDelete = null.IntFrom(0)
 	}
 	{{- else}}
 	{{- range $i, $v := $bp.AutoIncr $.Tables $tbName }}
@@ -112,7 +112,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.IsDelete = null.IntFrom(0)
 	{{- end}}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -134,7 +134,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -146,7 +146,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)

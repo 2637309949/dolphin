@@ -10,7 +10,7 @@
 	<column name="m_a_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="activity_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="activity_exposure" desc="" type="null.Float" xorm="float(10,2)" />
 	<column name="activity_place" desc="" type="null.String" xorm="varchar(200)" />
