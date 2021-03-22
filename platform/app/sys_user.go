@@ -302,6 +302,11 @@ func SysUserPage(ctx *Context) {
 	q.SetString("name")
 	q.SetString("cn_org_id")
 	q.SetRule("sys_user_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	if q.GetString("cn_org_id") != "" {
 		ids, err := srv.SysUserGetOrgsFromInheritance(ctx.DB, q.GetString("cn_org_id"))

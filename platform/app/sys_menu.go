@@ -285,6 +285,11 @@ func SysMenuPage(ctx *Context) {
 	q.SetString("code")
 	q.SetString("sort", "`order`")
 	q.SetRule("sys_menu_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {

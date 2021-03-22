@@ -230,6 +230,11 @@ func SysRolePage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
 	q.SetRule("sys_role_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())
 	if err != nil {

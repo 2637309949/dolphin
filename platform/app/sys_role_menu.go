@@ -233,6 +233,11 @@ func SysRoleMenuPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
 	q.SetRule("sys_role_menu_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role_menu", "page", "sys_role_menu", q.Value())
 	if err != nil {

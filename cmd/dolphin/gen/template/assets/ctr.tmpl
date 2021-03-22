@@ -49,11 +49,11 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- if .Contains $api.Auth "token"}}
 	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
 	{{- end}}
-	q.SetInt("is_delete", 0)()
 	q.SetString("creater")
-	q.SetRange("create_time")
 	q.SetString("updater")
+	q.SetRange("create_time")
 	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
@@ -71,11 +71,11 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- if .Contains $api.Auth "token"}}
 	q.SetRule("{{$.Controller.Name}}_{{.Name}}")
 	{{- end}}
-	q.SetInt("is_delete", 0)()
 	q.SetString("creater")
-	q.SetRange("create_time")
 	q.SetString("updater")
+	q.SetRange("create_time")
 	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {

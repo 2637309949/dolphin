@@ -229,6 +229,11 @@ func SysSchedulePage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
 	q.SetRule("sys_schedule_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_schedule", "page", "sys_schedule", q.Value())
 	if err != nil {

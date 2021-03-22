@@ -229,6 +229,11 @@ func SysTagPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
 	q.SetRule("sys_tag_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_tag", "page", "sys_tag", q.Value())
 	if err != nil {

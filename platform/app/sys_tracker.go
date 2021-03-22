@@ -27,6 +27,11 @@ func SysTrackerPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetString("sort", "sys_tracker.update_time desc")
 	q.SetRule("sys_tracker_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_tracker", "page", "sys_tracker", q.Value())
 	if err != nil {
