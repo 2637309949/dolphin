@@ -28,9 +28,10 @@ func (m *Doc) Build(dir string, args []string, node *schema.Application) ([]*pip
 		SearchDir:          dir,
 		MainAPIFile:        "main.go",
 		PropNamingStrategy: "camelcase",
+		MarkdownFilesDir:   "",
 		OutputDir:          path.Join(dir, viper.GetString("dir.doc")),
 		ParseVendor:        true,
 		ParseDependency:    true,
-		MarkdownFilesDir:   "",
+		ParseDepth:         2,
 	})
 }

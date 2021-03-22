@@ -7,11 +7,14 @@ package parser
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/pkg/errors"
 	"gopkg.in/go-playground/validator.v9"
 )
 
@@ -45,8 +48,9 @@ func NewTpl(name string, pkg string) *AppParser {
 
 // Parse defined parse xml to Application
 func (parser *AppParser) parse(xmlPath string) error {
-	reader, err := os.Open(xmlPath)
-	if err != nil {
+	var reader *os.File
+	var err error
+	if reader, err = os.Open(xmlPath); err != nil {
 		return err
 	}
 	decoder := xml.NewDecoder(reader)
@@ -60,7 +64,8 @@ func (parser *AppParser) parse(xmlPath string) error {
 
 	var service *schema.Service
 	var rpc *schema.RPC
-	for t, err := decoder.Token(); err == nil; t, err = decoder.Token() {
+	var t xml.Token
+	for t, err = decoder.Token(); err == nil; t, err = decoder.Token() {
 		switch token := t.(type) {
 		case xml.StartElement:
 			switch true {
@@ -121,6 +126,9 @@ func (parser *AppParser) parse(xmlPath string) error {
 			// 	}
 			// default:
 		}
+	}
+	if err != io.EOF {
+		return errors.WithMessage(err, fmt.Sprintf("xmlPath:%v", xmlPath))
 	}
 	return nil
 }
