@@ -41,8 +41,8 @@ type Fee struct {
 	YhCount null.String `xorm:"varchar(50) 'yh_count'" json:"yh_count" form:"yh_count" xml:"yh_count"`
 	// YhName defined
 	YhName null.String `xorm:"varchar(50) 'yh_name'" json:"yh_name" form:"yh_name" xml:"yh_name"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// FeeType defined
 	FeeType null.Int `xorm:"int(11) 'fee_type'" json:"fee_type" form:"fee_type" xml:"fee_type"`
 	// CheckState defined

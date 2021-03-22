@@ -32,8 +32,8 @@ type ProductType struct {
 	BusinessType null.Int `xorm:"int(11) 'business_type'" json:"business_type" form:"business_type" xml:"business_type"`
 	// ParentId defined
 	ParentId null.Int `xorm:"int(11) 'parent_id'" json:"parent_id" form:"parent_id" xml:"parent_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

@@ -32,8 +32,8 @@ type ClassManage struct {
 	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	// ClassNumber defined
 	ClassNumber null.String `xorm:"varchar(50) 'class_number'" json:"class_number" form:"class_number" xml:"class_number"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CmState defined
 	CmState null.Int `xorm:"int(11) 'cm_state'" json:"cm_state" form:"cm_state" xml:"cm_state"`
 	// KfId defined

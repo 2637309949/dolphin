@@ -36,8 +36,8 @@ type MaterielMinus struct {
 	MinusReason null.Int `xorm:"int(11) 'minus_reason'" json:"minus_reason" form:"minus_reason" xml:"minus_reason"`
 	// MinusObject defined
 	MinusObject null.Int `xorm:"int(11) 'minus_object'" json:"minus_object" form:"minus_object" xml:"minus_object"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

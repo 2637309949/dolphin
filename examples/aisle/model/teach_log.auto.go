@@ -36,8 +36,8 @@ type TeachLog struct {
 	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
 	// AppId defined
 	AppId null.Int `xorm:"int(11) 'app_id'" json:"app_id" form:"app_id" xml:"app_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

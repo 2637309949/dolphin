@@ -28,8 +28,8 @@ type TimeTrigger struct {
 	ExeBetweentime null.String `xorm:"varchar(500) notnull 'exe_betweentime'" json:"exe_betweentime" form:"exe_betweentime" xml:"exe_betweentime"`
 	// ExeTime defined
 	ExeTime null.String `xorm:"varchar(500) notnull 'exe_time'" json:"exe_time" form:"exe_time" xml:"exe_time"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

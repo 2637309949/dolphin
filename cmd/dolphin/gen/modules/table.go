@@ -52,31 +52,32 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 		logrus.Infof("Not found any datasource in app_name:%v", viper.GetString("app.name"))
 		return tmplCfgs, nil
 	}
-	for _, ds := range dataSources {
-		engine, err := xorm.NewEngine(ds.DriverName, ds.DataSource)
+	for i := range dataSources {
+		engine, err := xorm.NewEngine(dataSources[i].DriverName, dataSources[i].DataSource)
 		if err != nil {
 			return tmplCfgs, err
 		}
 		engines = append(engines, engine)
 	}
-	for _, engine := range engines {
-		tables, err := engine.DBMetas()
+	for i1 := range engines {
+		tables, err := engines[i1].DBMetas()
 		if err != nil {
 			return tmplCfgs, err
 		}
-		for _, tb := range tables {
-			logrus.Infoln(tb.Name)
+		for i2 := range tables {
+			logrus.Infoln(tables[i2].Name)
 			meta := schema.Table{}
-			meta.Name = tb.Name
-			meta.Desc = tb.Comment
+			meta.Name = tables[i2].Name
+			meta.Desc = tables[i2].Comment
 			meta.Columns = []*schema.Column{}
-			for _, col := range tb.Columns() {
+			cols := tables[i2].Columns()
+			for i3 := range cols {
 				c := schema.Column{}
-				c.Name = strings.ToLower(col.Name)
-				c.Desc = col.Comment
+				c.Name = strings.ToLower(cols[i3].Name)
+				c.Desc = cols[i3].Comment
 
 				// convert golang type
-				switch col.SQLType.Name {
+				switch cols[i3].SQLType.Name {
 				case "VARCHAR", "TEXT", "LONGTEXT":
 					c.Type = "null.String"
 				case "DATETIME":
@@ -94,52 +95,52 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				}
 
 				// convert sql type
-				switch col.SQLType.Name {
+				switch cols[i3].SQLType.Name {
 				case "VARCHAR", "TEXT":
-					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-					c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
+					c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, cols[i3].SQLType.DefaultLength)
 				case "DATETIME":
-					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
 				case "ENUM", "INT", "BIGINT":
-					if col.SQLType.Name == "ENUM" {
+					if cols[i3].SQLType.Name == "ENUM" {
 						c.Xorm = fmt.Sprintf("int(%v)", 10)
 					} else {
-						c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-						if col.SQLType.DefaultLength != 0 {
-							c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+						c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
+						if cols[i3].SQLType.DefaultLength != 0 {
+							c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, cols[i3].SQLType.DefaultLength)
 						}
 					}
 				case "BOOLEAN":
-					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
 				case "MEDIUMBLOB", "BLOB":
-					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-					if col.SQLType.DefaultLength != 0 {
-						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
+					if cols[i3].SQLType.DefaultLength != 0 {
+						c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, cols[i3].SQLType.DefaultLength)
 					}
 				case "FLOAT", "DOUBLE":
-					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-					if col.SQLType.DefaultLength != 0 {
-						if col.SQLType.DefaultLength2 != 0 {
-							c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
+					if cols[i3].SQLType.DefaultLength != 0 {
+						if cols[i3].SQLType.DefaultLength2 != 0 {
+							c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, cols[i3].SQLType.DefaultLength, cols[i3].SQLType.DefaultLength2)
 						} else {
-							c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, col.SQLType.DefaultLength)
+							c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, cols[i3].SQLType.DefaultLength)
 						}
 					}
 				case "DECIMAL":
-					c.Xorm = fmt.Sprintf("%v", strings.ToLower(col.SQLType.Name))
-					c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, col.SQLType.DefaultLength, col.SQLType.DefaultLength2)
+					c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
+					c.Xorm = fmt.Sprintf("%v(%v,%v)", c.Xorm, cols[i3].SQLType.DefaultLength, cols[i3].SQLType.DefaultLength2)
 				}
-				if col.IsPrimaryKey {
+				if cols[i3].IsPrimaryKey {
 					c.Xorm = fmt.Sprintf("%v %v", c.Xorm, "pk")
 				}
-				if !col.Nullable {
+				if !cols[i3].Nullable {
 					c.Xorm = fmt.Sprintf("%v %v", c.Xorm, "notnull")
 				}
-				if col.IsAutoIncrement {
+				if cols[i3].IsAutoIncrement {
 					c.Xorm = fmt.Sprintf("%v %v", c.Xorm, "autoincr")
 				}
-				if col.Default != "" {
-					c.Xorm = fmt.Sprintf(`%v default(%v)`, c.Xorm, col.Default)
+				if cols[i3].Default != "" {
+					c.Xorm = fmt.Sprintf(`%v default(%v)`, c.Xorm, cols[i3].Default)
 				}
 				c.Xorm = fmt.Sprintf("%v", c.Xorm)
 				meta.Columns = append(meta.Columns, &c)

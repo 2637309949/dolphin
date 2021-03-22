@@ -53,8 +53,8 @@ type OrderForm struct {
 	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	// RefundMoney defined
 	RefundMoney null.Int `xorm:"int(11) 'refund_money'" json:"refund_money" form:"refund_money" xml:"refund_money"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// OfStartDate defined
 	OfStartDate null.Time `xorm:"datetime 'of_start_date'" json:"of_start_date" form:"of_start_date" xml:"of_start_date"`
 	// OfEndDate defined

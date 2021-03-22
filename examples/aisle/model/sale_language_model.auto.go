@@ -36,8 +36,8 @@ type SaleLanguageModel struct {
 	SlmContent null.String `xorm:"varchar(500) 'slm_content'" json:"slm_content" form:"slm_content" xml:"slm_content"`
 	// VisitStage defined
 	VisitStage null.Int `xorm:"int(11) 'visit_stage'" json:"visit_stage" form:"visit_stage" xml:"visit_stage"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// SlmType defined
 	SlmType null.Int `xorm:"int(11) 'slm_type'" json:"slm_type" form:"slm_type" xml:"slm_type"`
 	// StuSystemSta defined

@@ -36,8 +36,8 @@ type FailApply struct {
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	// CheckState defined
 	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CheckTwoState defined
 	CheckTwoState null.Int `xorm:"int(11) 'check_two_state'" json:"check_two_state" form:"check_two_state" xml:"check_two_state"`
 	// FailTime defined

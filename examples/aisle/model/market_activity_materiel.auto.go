@@ -38,8 +38,8 @@ type MarketActivityMateriel struct {
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	// MAMId defined
 	MAMId null.Int `xorm:"int(11) pk notnull autoincr 'm_a_m_id'" json:"m_a_m_id" form:"m_a_m_id" xml:"m_a_m_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

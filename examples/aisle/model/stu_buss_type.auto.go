@@ -30,8 +30,8 @@ type StuBussType struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// StuSurplusHour defined
 	StuSurplusHour null.Float `xorm:"float(50,2) 'stu_surplus_hour'" json:"stu_surplus_hour" form:"stu_surplus_hour" xml:"stu_surplus_hour"`
 	// StuSurplusMoney defined

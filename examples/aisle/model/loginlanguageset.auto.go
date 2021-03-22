@@ -20,8 +20,8 @@ type Loginlanguageset struct {
 	T2240 null.Int `xorm:"int(11) pk notnull autoincr 't_224_0'" json:"t_224_0" form:"t_224_0" xml:"t_224_0"`
 	// LanguageName defined
 	LanguageName null.String `xorm:"varchar(500) 'language_name'" json:"language_name" form:"language_name" xml:"language_name"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

@@ -58,8 +58,8 @@ type Student struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// StuSex defined
 	StuSex null.Int `xorm:"int(11) 'stu_sex'" json:"stu_sex" form:"stu_sex" xml:"stu_sex"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// StuZcMoney defined
 	StuZcMoney null.Float `xorm:"float(10,2) 'stu_zc_money'" json:"stu_zc_money" form:"stu_zc_money" xml:"stu_zc_money"`
 	// CallType defined

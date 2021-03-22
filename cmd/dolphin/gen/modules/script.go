@@ -51,13 +51,13 @@ func (app *Script) Build(dir string, args []string, node *schema.Application) ([
 	})
 
 	apisByte, _ := vfsutil.ReadFile(template.Assets, "apis.tmpl")
-	for _, c := range node.Controllers {
-		filename := utils.FileNameTrimSuffix(c.Path)
-		for _, api := range c.APIS {
+	for i := range node.Controllers {
+		filename := utils.FileNameTrimSuffix(node.Controllers[i].Path)
+		for _, api := range node.Controllers[i].APIS {
 			data := map[string]interface{}{
 				"PackageName": node.PackageName,
 				"Name":        node.Name,
-				"Controller":  c,
+				"Controller":  node.Controllers[i],
 				"Application": node,
 				"Api":         api,
 				"Viper":       viper.GetViper(),

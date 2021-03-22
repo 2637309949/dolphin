@@ -36,8 +36,8 @@ type MaterielAdd struct {
 	AddReason null.Int `xorm:"int(11) 'add_reason'" json:"add_reason" form:"add_reason" xml:"add_reason"`
 	// AddObject defined
 	AddObject null.Int `xorm:"int(11) 'add_object'" json:"add_object" form:"add_object" xml:"add_object"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

@@ -34,8 +34,8 @@ type ClassType struct {
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	// CtMoney defined
 	CtMoney null.Float `xorm:"float(50,2) 'ct_money'" json:"ct_money" form:"ct_money" xml:"ct_money"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CtType defined
 	CtType null.Int `xorm:"int(11) 'ct_type'" json:"ct_type" form:"ct_type" xml:"ct_type"`
 	// CtOnePrice defined

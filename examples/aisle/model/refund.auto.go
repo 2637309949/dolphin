@@ -34,8 +34,8 @@ type Refund struct {
 	RefWay null.Int `xorm:"int(11) 'ref_way'" json:"ref_way" form:"ref_way" xml:"ref_way"`
 	// RefReason defined
 	RefReason null.Int `xorm:"int(11) 'ref_reason'" json:"ref_reason" form:"ref_reason" xml:"ref_reason"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CheckState defined
 	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	// CheckRenmark defined

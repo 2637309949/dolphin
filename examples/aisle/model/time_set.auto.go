@@ -22,8 +22,8 @@ type TimeSet struct {
 	TimeName null.String `xorm:"varchar(500) notnull 'time_name'" json:"time_name" form:"time_name" xml:"time_name"`
 	// TimeCode defined
 	TimeCode null.String `xorm:"varchar(500) notnull 'time_code'" json:"time_code" form:"time_code" xml:"time_code"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

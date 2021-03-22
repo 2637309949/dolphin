@@ -32,8 +32,8 @@ type OtmClassroom struct {
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	// ClassroomContain defined
 	ClassroomContain null.Float `xorm:"float(11,2) 'classroom_contain'" json:"classroom_contain" form:"classroom_contain" xml:"classroom_contain"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// Remarke defined
 	Remarke null.String `xorm:"varchar(2000) 'remarke'" json:"remarke" form:"remarke" xml:"remarke"`
 	// EnglishName defined

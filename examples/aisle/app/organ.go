@@ -33,7 +33,7 @@ func OrganAdd(ctx *Context) {
 	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateDate = null.TimeFrom(time.Now().Value())
 	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.Isdelete = null.IntFrom(0)
+	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -63,7 +63,7 @@ func OrganDel(ctx *Context) {
 	ret, err := ctx.DB.In("organ_id", payload.OrganId.Int64).Update(&model.Organ{
 		UpdateDate: null.TimeFrom(time.Now().Value()),
 		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
-		Isdelete:   null.IntFrom(1),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)

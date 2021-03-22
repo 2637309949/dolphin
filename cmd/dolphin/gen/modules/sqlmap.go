@@ -28,15 +28,15 @@ func (app *SQLMap) Name() string {
 func (app *SQLMap) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	sqlmapByte, _ := vfsutil.ReadFile(template.Assets, "sqlmap.tmpl")
-	for _, t := range node.Tables {
+	for i := range node.Tables {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
 			"Application": node,
-			"Table":       t,
+			"Table":       node.Tables[i],
 			"Viper":       viper.GetViper(),
 		}
-		filename := utils.FileNameTrimSuffix(t.Path)
+		filename := utils.FileNameTrimSuffix(node.Tables[i].Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(sqlmapByte),
 			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sqlmap"), filename+".xml"),

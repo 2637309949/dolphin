@@ -38,8 +38,8 @@ type TempStorageCz struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CzTStorage defined
 	CzTStorage null.Int `xorm:"int(11) 'cz_t_storage'" json:"cz_t_storage" form:"cz_t_storage" xml:"cz_t_storage"`
 	// FeeId defined

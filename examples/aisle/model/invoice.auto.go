@@ -36,8 +36,8 @@ type Invoice struct {
 	InvoiceType null.Int `xorm:"int(11) 'invoice_type'" json:"invoice_type" form:"invoice_type" xml:"invoice_type"`
 	// FeeId defined
 	FeeId null.Int `xorm:"int(11) 'fee_id'" json:"fee_id" form:"fee_id" xml:"fee_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// BillType defined
 	BillType null.Int `xorm:"int(11) 'bill_type'" json:"bill_type" form:"bill_type" xml:"bill_type"`
 	// OrId defined

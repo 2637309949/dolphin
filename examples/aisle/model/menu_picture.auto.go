@@ -24,8 +24,8 @@ type MenuPicture struct {
 	MenupicPicture null.Int `xorm:"int(11) notnull 'menupic_picture'" json:"menupic_picture" form:"menupic_picture" xml:"menupic_picture"`
 	// ProId defined
 	ProId null.Int `xorm:"int(11) 'pro_id'" json:"pro_id" form:"pro_id" xml:"pro_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

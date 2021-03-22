@@ -38,8 +38,8 @@ type OrganSchool struct {
 	OcNum null.String `xorm:"varchar(50) 'oc_num'" json:"oc_num" form:"oc_num" xml:"oc_num"`
 	// SchTell defined
 	SchTell null.String `xorm:"varchar(20) 'sch_tell'" json:"sch_tell" form:"sch_tell" xml:"sch_tell"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// SchoolAddress defined
 	SchoolAddress null.String `xorm:"varchar(100) 'school_address'" json:"school_address" form:"school_address" xml:"school_address"`
 	// SchoolMeasure defined

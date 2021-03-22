@@ -46,8 +46,8 @@ type ClassSchedule struct {
 	StudyState null.Int `xorm:"int(11) 'study_state'" json:"study_state" form:"study_state" xml:"study_state"`
 	// ClassroomId defined
 	ClassroomId null.Int `xorm:"int(11) 'classroom_id'" json:"classroom_id" form:"classroom_id" xml:"classroom_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// KfId defined
 	KfId null.Int `xorm:"int(11) 'kf_id'" json:"kf_id" form:"kf_id" xml:"kf_id"`
 	// BussType defined

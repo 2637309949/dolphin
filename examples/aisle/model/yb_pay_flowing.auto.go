@@ -33,8 +33,8 @@ type YbPayFlowing struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// YbFlowNumber defined
 	YbFlowNumber null.String `xorm:"varchar(1000) 'yb_flow_number'" json:"yb_flow_number" form:"yb_flow_number" xml:"yb_flow_number"`
 	// SuccessFailure defined

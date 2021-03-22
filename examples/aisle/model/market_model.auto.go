@@ -34,8 +34,8 @@ type MarketModel struct {
 	TsId null.Int `xorm:"int(11) 'ts_id'" json:"ts_id" form:"ts_id" xml:"ts_id"`
 	// SchoolId defined
 	SchoolId null.Int `xorm:"int(11) 'school_id'" json:"school_id" form:"school_id" xml:"school_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 }
 
 // With defined

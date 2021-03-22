@@ -38,8 +38,8 @@ type Organ struct {
 	IfBuyOnline null.Int `xorm:"int(11) 'if_buy_online'" json:"if_buy_online" form:"if_buy_online" xml:"if_buy_online"`
 	// OrganTell defined
 	OrganTell null.String `xorm:"varchar(20) 'organ_tell'" json:"organ_tell" form:"organ_tell" xml:"organ_tell"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// ShengId defined
 	ShengId null.Int `xorm:"int(11) 'sheng_id'" json:"sheng_id" form:"sheng_id" xml:"sheng_id"`
 }

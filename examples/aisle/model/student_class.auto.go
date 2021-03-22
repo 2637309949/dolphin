@@ -44,8 +44,8 @@ type StudentClass struct {
 	ScPrice null.Int `xorm:"int(11) 'sc_price'" json:"sc_price" form:"sc_price" xml:"sc_price"`
 	// JoinSource defined
 	JoinSource null.Int `xorm:"int(11) 'join_source'" json:"join_source" form:"join_source" xml:"join_source"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// OsId defined
 	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	// OsMoney defined

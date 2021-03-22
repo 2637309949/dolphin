@@ -32,8 +32,8 @@ type StudentSale struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// AllotSourse defined
 	AllotSourse null.Int `xorm:"int(11) 'allot_sourse'" json:"allot_sourse" form:"allot_sourse" xml:"allot_sourse"`
 	// AllotDate defined

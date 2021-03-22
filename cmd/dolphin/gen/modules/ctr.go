@@ -28,15 +28,15 @@ func (ctr *Ctr) Name() string {
 func (ctr *Ctr) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	ctrByte, _ := vfsutil.ReadFile(template.Assets, "ctr.tmpl")
-	for _, c := range node.Controllers {
+	for i := range node.Controllers {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Tables":      node.Tables,
 			"Name":        node.Name,
-			"Controller":  c,
+			"Controller":  node.Controllers[i],
 			"Viper":       viper.GetViper(),
 		}
-		filename := utils.FileNameTrimSuffix(c.Path)
+		filename := utils.FileNameTrimSuffix(node.Controllers[i].Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(ctrByte),
 			FilePath: path.Join(dir, viper.GetString("dir.app"), filename+".go"),

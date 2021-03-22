@@ -44,8 +44,8 @@ type StudentVisit struct {
 	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" form:"sc_id" xml:"sc_id"`
 	// StuOrder defined
 	StuOrder null.Float `xorm:"float(11,2) 'stu_order'" json:"stu_order" form:"stu_order" xml:"stu_order"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// RevivalDate defined
 	RevivalDate null.Time `xorm:"datetime 'revival_date'" json:"revival_date" form:"revival_date" xml:"revival_date"`
 	// KhType defined

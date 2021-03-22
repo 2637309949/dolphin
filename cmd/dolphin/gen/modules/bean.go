@@ -28,14 +28,14 @@ func (m *Bean) Name() string {
 func (m *Bean) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	beanByte, _ := vfsutil.ReadFile(template.Assets, "bean.tmpl")
-	for _, bean := range node.Beans {
+	for i := range node.Beans {
 		data := map[string]interface{}{
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
-			"Bean":        bean,
+			"Bean":        node.Beans[i],
 			"Viper":       viper.GetViper(),
 		}
-		filename := utils.FileNameTrimSuffix(bean.Path)
+		filename := utils.FileNameTrimSuffix(node.Beans[i].Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(beanByte),
 			FilePath: path.Join(dir, viper.GetString("dir.model"), filename+".auto.go"),

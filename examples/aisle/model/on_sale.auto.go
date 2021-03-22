@@ -44,8 +44,8 @@ type OnSale struct {
 	OsType null.Int `xorm:"int(11) 'os_type'" json:"os_type" form:"os_type" xml:"os_type"`
 	// OsWay defined
 	OsWay null.Int `xorm:"int(11) 'os_way'" json:"os_way" form:"os_way" xml:"os_way"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// MaId defined
 	MaId null.Int `xorm:"int(11) 'ma_id'" json:"ma_id" form:"ma_id" xml:"ma_id"`
 	// NaId defined

@@ -38,8 +38,8 @@ type TempStorageRz struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// TsrStuId defined
 	TsrStuId null.Int `xorm:"int(11) 'tsr_stu_id'" json:"tsr_stu_id" form:"tsr_stu_id" xml:"tsr_stu_id"`
 	// RefId defined
