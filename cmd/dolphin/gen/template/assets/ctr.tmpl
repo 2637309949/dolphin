@@ -224,6 +224,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- $tv := .ToTypeValue .Type .Value}}
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
+	q.Value()
 	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}Action(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)

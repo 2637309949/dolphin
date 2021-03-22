@@ -22,3 +22,16 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
+// info skip auth
+module.exports.info = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/encrypt/info?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
+  return axios({
+    url: url,
+    method: 'get',
+    ...opt
+  })
+}
+
