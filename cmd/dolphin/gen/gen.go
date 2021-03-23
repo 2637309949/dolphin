@@ -137,12 +137,18 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 		return err
 	}
 	if cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" {
+		if err := utils.InstallPackages("golang.org/x/tools/cmd/goimports"); err != nil {
+			logrus.Error(err)
+		}
 		cmd := exec.Command("goimports", "-w", cfg.FilePath)
 		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
 			logrus.Error(err)
 		}
 	}
 	if cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" {
+		if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
+			logrus.Error(err)
+		}
 		cmd := exec.Command("protoc", "-I", path.Dir(cfg.FilePath), cfg.FilePath, "--go_out=plugins=grpc:"+path.Dir(cfg.FilePath))
 		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
 			logrus.Error(err)

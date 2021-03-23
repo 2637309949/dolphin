@@ -2,6 +2,7 @@ package utils
 
 import (
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
 	"reflect"
@@ -93,4 +94,15 @@ func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
 		return nil, err
 	}
 	return os.OpenFile(name, flag, perm)
+}
+
+// InstallPackages defined
+func InstallPackages(pkgs ...string) error {
+	for i := range pkgs {
+		if err := exec.Command("go", "get", pkgs[i]).Run(); err != nil && err != exec.ErrNotFound {
+			logrus.Error(err)
+			return err
+		}
+	}
+	return nil
 }
