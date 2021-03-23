@@ -91,7 +91,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	e.Manager.MSet().ForEach(func(n string, m interface{}) {
 		if mode := viper.GetString("app.mode"); mode == "debug" {
 			if tbn, ok := m.(interface{ TableName() string }); ok {
-				logrus.Infof("Sync Model:%v", tbn.TableName())
+				logrus.Infof("Sync Model[%v]:%v", n, tbn.TableName())
 			}
 		}
 		util.Ensure(db.Sync2(m))
@@ -136,7 +136,8 @@ func (e *Engine) database() {
 
 	// initBusinessDB
 	domains := []model.SysDomain{}
-	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete = 0", viper.GetString("app.name")).Find(&domains))
+	asyncOnce := sync.Once{}
+	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains))
 	funk.ForEach(domains, func(domain model.SysDomain) {
 		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
 		uri := util.EnsureLeft(http.Parse(domain.DataSource.String)).(*http.URI)
@@ -151,47 +152,34 @@ func (e *Engine) database() {
 		e.Manager.AddBusinessDB(domain.Domain.String, db)
 	})
 
-	// migration db
-	zmap := map[string]*xorm.Engine{}
-	if util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Count(new(model.SysDomain))).(int64) > 0 {
-		nset := e.Manager.MSet().Name(func(n string) bool {
-			return n != Name
-		})
-		for _, v := range e.Manager.GetBusinessDBSet() {
-			zmap[v.DataSourceName()] = v
-		}
+	// fetch all not bind in PlatformDB
+	platBindModelNames := e.Manager.MSet().Name(func(name string) bool { return name != Name })
+	funk.ForEach(funk.Filter(domains, func(domain model.SysDomain) bool { return domain.SyncFlag.Int64 != 1 }), func(domain model.SysDomain) {
+		// obtain BusinessDB
+		db := e.Manager.GetBusinessDB(domain.Domain.String)
 		// migration PlatformDB
-		e.migration(Name, e.PlatformDB)
-		// migration BusinessDBSet
-		funk.ForEach(nset, func(n string) {
-			for _, v := range zmap {
-				e.migration(n, v)
-			}
+		asyncOnce.Do(func() {
+			e.migration(Name, e.PlatformDB)
+			new(model.SysClient).InitSysData(e.PlatformDB.NewSession())
+			new(model.SysUser).InitSysData(e.PlatformDB.NewSession())
 		})
-
+		// migration BusinessDBSet
+		funk.ForEach(platBindModelNames, func(n string) {
+			e.migration(n, db)
+		})
+		// initialize BusinessDBSet data
+		new(model.SysRole).InitSysData(db.NewSession())
+		new(model.SysOrg).InitSysData(db.NewSession())
+		new(model.SysRoleUser).InitSysData(db.NewSession())
+		new(model.SysMenu).InitSysData(db.NewSession())
+		new(model.SysOptionset).InitSysData(db.NewSession())
+		new(model.SysUserTemplate).InitSysData(db.NewSession())
+		new(model.SysUserTemplateDetail).InitSysData(db.NewSession())
 		// ensure sync_flag
-		util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
-		e.Manager.MSet().Release()
-	}
-
-	// initialize PlatformDB data
-	{
-		(new(model.SysClient)).InitSysData(e.PlatformDB.NewSession())
-		(new(model.SysUser)).InitSysData(e.PlatformDB.NewSession())
-	}
-
-	// initialize BusinessDBSet data
-	for k := range zmap {
-		{
-			(new(model.SysRole)).InitSysData(zmap[k].NewSession())
-			(new(model.SysOrg)).InitSysData(zmap[k].NewSession())
-			(new(model.SysRoleUser)).InitSysData(zmap[k].NewSession())
-			(new(model.SysMenu)).InitSysData(zmap[k].NewSession())
-			(new(model.SysOptionset)).InitSysData(zmap[k].NewSession())
-			(new(model.SysUserTemplate)).InitSysData(zmap[k].NewSession())
-			(new(model.SysUserTemplateDetail)).InitSysData(zmap[k].NewSession())
-		}
-	}
+		util.EnsureLeft(e.PlatformDB.ID(domain.ID.String).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
+	})
+	// release model sets
+	e.Manager.MSet().Release()
 }
 
 // RegisterSQLMap defined sql

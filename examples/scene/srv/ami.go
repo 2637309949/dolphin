@@ -50,7 +50,6 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-
 	AmiConsumerConn, err = ami.NewConsumer(
 		ami.ConsumerOptions{
 			Name:              "ami",
