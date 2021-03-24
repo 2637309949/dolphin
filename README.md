@@ -83,6 +83,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
             - [Base on Redis](#base-on-redis)
             - [Base on Kafka](#base-on-kafka)
         - [Interface authentication](#interface-authentication)
+            - [Never authentication](#never-authentication)
             - [Token authentication](#token-authentication)
             - [Encrypt authentication](#encrypt-authentication)
 - [MIT License](#mit-license)
@@ -1833,6 +1834,17 @@ func KafkaConsumer(ctx *gin.Context,
 
 
 ### Interface authentication
+
+#### Never authentication
+
+```xml
+<api name="xml" method="get" desc="XML显示" auth="never">
+	<return>
+		<success type="$success"/>
+		<failure type="$fail"/>
+	</return>
+</api>
+```
 
 #### Token authentication
 
