@@ -120,7 +120,7 @@ func OrganPage(ctx *Context) {
 	q.SetString("updater")
 	q.SetRange("create_time")
 	q.SetRange("update_time")
-	q.SetInt("is_delete", 0)
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "organ", "page", "organ", q.Value())
 	if err != nil {
