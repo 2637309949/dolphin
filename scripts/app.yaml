@@ -1,0 +1,110 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: arch-aisle
+  name: arch-aisle
+  namespace: dolphin
+binaryData:
+data:
+  app.properties: |-
+    app.name = aisle
+    app.mode = release
+    db.datasource = root:111111@tcp(172.16.10.191:3306)/dolphin?charset=utf8&parseTime=True&loc=Local
+    http.port = 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arch-aisle
+  namespace: dolphin
+spec:
+  selector:
+    matchLabels:
+      app: arch-aisle
+  template:
+    metadata:
+      labels:
+        app: arch-aisle
+    spec:
+      containers:
+      - name: arch-aisle
+        image: registry.cn-qingdao.aliyuncs.com/docker_hosted/aisle:master-5
+        volumeMounts:
+          - name: config
+            mountPath: /app/app.properties
+            subPath: app.properties
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "10Mi"
+            cpu: "11m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: arch-registry
+      volumes:
+        - name: config
+          configMap:
+            name: arch-aisle
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: arch-aisle
+  namespace: dolphin
+spec:
+  ports:
+  - name: aisle
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: arch-aisle
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: arch-aisle
+  namespace: dolphin
+  annotations:
+    kubernetes.io/ingress.class: kong
+spec:
+  rules:
+    - host: aisle.cn.utools.club
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: arch-aisle
+                port:
+                  number: 80
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: admin
+  annotations:
+    rbac.authorization.kubernetes.io/autoupdate: "true"
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: admin
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin
+  namespace: kube-system
+  labels:
+    kubernetes.io/cluster-service: "true"
+    addonmanager.kubernetes.io/mode: Reconcile
