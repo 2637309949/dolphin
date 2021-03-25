@@ -92,7 +92,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
 
 ## Quick start
 
-<img width="580px" src="./assets/dolphin.gif">      
+<img width="580px" src="./assets/dolphin.gif">
 
 1. The first need [Go](https://golang.org/) installed, then you can use the below Go command to install Dolphin.
 ```sh
@@ -208,6 +208,26 @@ time="2020/06/13 11:55:58" level=info msg="http listen on port:8082"
 ```
 
 ## CMD
+
+Command options
+
+```sh
+dolphin, a cli tools for generate golang code
+
+Usage:
+  dolphin [command]
+
+Available Commands:
+  build       Build project from xml
+  clean       Removing intermediate files
+  help        Help about any command
+  init        Initialize a empty project
+
+Flags:
+  -h, --help   help for dolphin
+
+Use "dolphin [command] --help" for more information about a command.
+```
 
 ### build
 The build command generates the preset function by executing the built-in Pipeline function, You can specify that only a pipeline will be executed via the @ symbol
