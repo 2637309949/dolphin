@@ -16,8 +16,11 @@ var Name = "aisle"
 // Organ defined
 type Organ struct {
 	Add,
+	BatchAdd,
 	Del,
+	BatchDel,
 	Update,
+	BatchUpdate,
 	Page,
 	Get func(ctx *Context)
 }
@@ -26,8 +29,11 @@ type Organ struct {
 func NewOrgan() *Organ {
 	ctr := &Organ{}
 	ctr.Add = OrganAdd
+	ctr.BatchAdd = OrganBatchAdd
 	ctr.Del = OrganDel
+	ctr.BatchDel = OrganBatchDel
 	ctr.Update = OrganUpdate
+	ctr.BatchUpdate = OrganBatchUpdate
 	ctr.Page = OrganPage
 	ctr.Get = OrganGet
 	return ctr
@@ -37,8 +43,11 @@ func NewOrgan() *Organ {
 func OrganRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
 	group.Handle("POST", "/organ/add", Auth("token"), OrganInstance.Add)
+	group.Handle("POST", "/organ/batch_add", Auth("token"), OrganInstance.BatchAdd)
 	group.Handle("DELETE", "/organ/del", Auth("token"), OrganInstance.Del)
+	group.Handle("PUT", "/organ/batch_del", Auth("token"), OrganInstance.BatchDel)
 	group.Handle("PUT", "/organ/update", Auth("token"), OrganInstance.Update)
+	group.Handle("PUT", "/organ/batch_update", Auth("token"), OrganInstance.BatchUpdate)
 	group.Handle("GET", "/organ/page", Auth("token"), OrganInstance.Page)
 	group.Handle("GET", "/organ/get", Auth("token"), OrganInstance.Get)
 }

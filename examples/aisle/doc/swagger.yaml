@@ -1107,37 +1107,7 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Article info
-        in: body
-        name: user
-        schema:
-          $ref: '#/definitions/model.Organ'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: Add organ
-      tags:
-      - Organ controller
-  /api/organ/del:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: organ
+      - description: 城市信息
         in: body
         name: organ
         schema:
@@ -1155,9 +1125,135 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Delete organ
+      summary: 添加城市
       tags:
-      - Organ controller
+      - 城市
+  /api/organ/batch_add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市信息
+        in: body
+        name: organ
+        schema:
+          items:
+            $ref: '#/definitions/model.Organ'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加城市
+      tags:
+      - 城市
+  /api/organ/batch_del:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市信息
+        in: body
+        name: organ
+        schema:
+          items:
+            $ref: '#/definitions/model.Organ'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除城市
+      tags:
+      - 城市
+  /api/organ/batch_update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市信息
+        in: body
+        name: organ
+        schema:
+          items:
+            $ref: '#/definitions/model.Organ'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新城市
+      tags:
+      - 城市
+  /api/organ/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市
+        in: body
+        name: organ
+        schema:
+          $ref: '#/definitions/model.Organ'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除城市
+      tags:
+      - 城市
   /api/organ/get:
     get:
       parameters:
@@ -1165,7 +1261,7 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Article id
+      - description: 城市id
         in: query
         name: id
         type: string
@@ -1182,9 +1278,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Get organ info
+      summary: 获取城市信息
       tags:
-      - Organ controller
+      - 城市
   /api/organ/page:
     get:
       parameters:
@@ -1192,11 +1288,11 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Page number
+      - description: 页码
         in: query
         name: page
         type: integer
-      - description: Page size
+      - description: 单页数
         in: query
         name: size
         type: integer
@@ -1213,9 +1309,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Article page query
+      summary: 城市分页查询
       tags:
-      - Organ controller
+      - 城市
   /api/organ/update:
     put:
       consumes:
@@ -1225,9 +1321,9 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Article info
+      - description: 城市信息
         in: body
-        name: user
+        name: organ
         schema:
           $ref: '#/definitions/model.Organ'
       responses:
@@ -1243,9 +1339,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Update organ
+      summary: 更新城市
       tags:
-      - Organ controller
+      - 城市
   /api/sys/app/fun/del:
     delete:
       consumes:
