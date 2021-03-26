@@ -4,7 +4,7 @@ const axios = require('../request').default
 // add 添加调度
 module.exports.add = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/scheduling/add'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -25,7 +25,7 @@ module.exports.add = (data = {}, opt = {}) => {
 // del 删除调度
 module.exports.del = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/scheduling/del'
-  if ((opt.url || 'delete') === 'get') {
+  if ((opt.method || 'delete') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -46,7 +46,7 @@ module.exports.del = (data = {}, opt = {}) => {
 // update 更新调度
 module.exports.update = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/scheduling/update'
-  if ((opt.url || 'put') === 'get') {
+  if ((opt.method || 'put') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }

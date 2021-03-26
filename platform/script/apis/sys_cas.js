@@ -4,7 +4,7 @@ const axios = require('../request').default
 // login 用户认证
 module.exports.login = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/cas/login'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -38,7 +38,7 @@ module.exports.logout = (data = {}, opt = {}) => {
 // affirm 用户授权
 module.exports.affirm = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/cas/affirm'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -72,7 +72,7 @@ module.exports.authorize = (data = {}, opt = {}) => {
 // token 获取令牌
 module.exports.token = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/cas/token'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }

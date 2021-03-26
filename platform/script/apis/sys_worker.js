@@ -4,7 +4,7 @@ const axios = require('../request').default
 // add 添加worker
 module.exports.add = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/worker/add'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
