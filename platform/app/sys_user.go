@@ -266,6 +266,12 @@ func SysUserBatchUpdate(ctx *Context) {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
 		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		if err != nil {
+			s.Rollback()
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 		ret = append(ret, r)
 	}
 	if err != nil {
