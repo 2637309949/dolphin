@@ -49,7 +49,7 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 		{
 			ID:         null.StringFrom("c6a7bt50-7dad-31d1-81b5-10c34fd460c2"),
 			Name:       null.StringFrom("域名数据库标志"),
-			Code:       null.StringFrom("sys_domain_sync_flag"),
+			Code:       null.StringFrom("sys_domain_is_sync"),
 			Value:      null.StringFrom(`[{"text":"未同步","value":0},{"text":"已同步","value":1}]`),
 			Creater:    DefaultAdmin.ID,
 			CreateTime: null.TimeFrom(time.Now()),

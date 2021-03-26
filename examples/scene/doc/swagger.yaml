@@ -530,8 +530,8 @@ definitions:
       status:
         description: Status defined 状态 0：禁用 1：正常
         type: number
-      sync_flag:
-        description: SyncFlag defined 是否同步了数据库标志
+      is_sync:
+        description: IsSync defined 是否同步了数据库标志
         type: number
       theme:
         description: Theme defined 样式

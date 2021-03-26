@@ -153,10 +153,10 @@ func (e *Engine) database() {
 
 	// fetch all not bind in PlatformDB
 	platBindModelNames := e.Manager.MSet().Name(func(name string) bool { return name != Name })
-	funk.ForEach(funk.Filter(domains, func(domain model.SysDomain) bool { return domain.SyncFlag.Int64 != 1 }), func(domain model.SysDomain) {
+	funk.ForEach(funk.Filter(domains, func(domain model.SysDomain) bool { return domain.IsSync.Int64 != 1 }), func(domain model.SysDomain) {
 		// obtain BusinessDB
 		db := e.Manager.GetBusinessDB(domain.Domain.String)
-		// migration PlatformDB, ensure domain.SyncFlag.Int64 != 1
+		// migration PlatformDB, ensure domain.IsSync.Int64 != 1
 		asyncOnce.Do(func() {
 			e.migration(Name, e.PlatformDB)
 			new(model.SysClient).InitSysData(e.PlatformDB.NewSession())
@@ -172,8 +172,8 @@ func (e *Engine) database() {
 		new(model.SysOptionset).InitSysData(db.NewSession())
 		new(model.SysUserTemplate).InitSysData(db.NewSession())
 		new(model.SysUserTemplateDetail).InitSysData(db.NewSession())
-		// ensure sync_flag
-		util.EnsureLeft(e.PlatformDB.ID(domain.ID.String).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
+		// ensure is_sync
+		util.EnsureLeft(e.PlatformDB.ID(domain.ID.String).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)}))
 	})
 	// release model sets
 	e.Manager.MSet().Release()

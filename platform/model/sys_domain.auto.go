@@ -52,8 +52,8 @@ type SysDomain struct {
 	Status null.Int `xorm:"notnull comment('状态 0：禁用 1：正常') 'status'" json:"status" form:"status" xml:"status"`
 	// AuthMode defined 认证模式 0：集成登录 1：单点登录
 	AuthMode null.Int `xorm:"notnull comment('认证模式 0：集成登录 1：单点登录') 'auth_mode'" json:"auth_mode" form:"auth_mode" xml:"auth_mode"`
-	// SyncFlag defined 是否同步了数据库标志
-	SyncFlag null.Int `xorm:"notnull comment('是否同步了数据库标志') 'sync_flag'" json:"sync_flag" form:"sync_flag" xml:"sync_flag"`
+	// IsSync defined 是否同步了数据库标志
+	IsSync null.Int `xorm:"notnull comment('是否同步了数据库标志') 'is_sync'" json:"is_sync" form:"is_sync" xml:"is_sync"`
 	// Creater defined 创建人
 	Creater null.String `xorm:"varchar(36) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// CreateTime defined 创建时间

@@ -1122,7 +1122,7 @@ The quasi-directory structure of the rpc is shown below:
 	<column name="type" type="null.Int" xorm="notnull" />
 	<column name="status" type="null.Int" xorm="notnull" />
 	<column name="auth_mode" type="null.Int" xorm="notnull" />
-	<column name="sync_flag" type="null.Int" xorm="notnull" />
+	<column name="is_sync" type="null.Int" xorm="notnull" />
 
 	<column name="creater" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" type="null.Time" xorm="datetime notnull" />
