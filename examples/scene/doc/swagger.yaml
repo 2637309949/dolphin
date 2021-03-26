@@ -515,6 +515,9 @@ definitions:
       is_delete:
         description: IsDelete defined 删除标记
         type: number
+      is_sync:
+        description: IsSync defined 是否同步了数据库标志
+        type: number
       login_url:
         description: LoginUrl defined 登录地址
         type: string
@@ -529,9 +532,6 @@ definitions:
         type: string
       status:
         description: Status defined 状态 0：禁用 1：正常
-        type: number
-      is_sync:
-        description: IsSync defined 是否同步了数据库标志
         type: number
       theme:
         description: Theme defined 样式
