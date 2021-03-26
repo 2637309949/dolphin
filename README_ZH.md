@@ -638,6 +638,8 @@ func ArticleBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+    s.Begin()
+    defer s.Close()
 	funk.ForEach(payload, func(form model.Article) {
 		form.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())

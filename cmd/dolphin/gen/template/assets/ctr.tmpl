@@ -170,6 +170,8 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	{{- if .ISArray $bp.Type}}
 	s := ctx.DB.NewSession()
+s.Begin()
+defer s.Close()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {

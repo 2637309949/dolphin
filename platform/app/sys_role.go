@@ -194,6 +194,8 @@ func SysRoleBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+	s.Begin()
+	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
 		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
