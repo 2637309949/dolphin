@@ -119,8 +119,8 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 
 func (e *Engine) database() {
 	// initPlatformDB
-	xlogger := createXLogger()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
+	xlogger := createXLogger()
 	e.PlatformDB = util.EnsureLeft(xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))).(*xorm.Engine)
 	util.Ensure(e.PlatformDB.Ping())
 	e.PlatformDB.SetLogger(xlogger)
@@ -129,14 +129,11 @@ func (e *Engine) database() {
 	e.PlatformDB.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
 	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
 	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
-	{
-		(new(model.SysDomain)).Ensure(e.PlatformDB)
-		(new(model.SysDomain)).InitSysData(e.PlatformDB.NewSession())
-	}
+	new(model.SysDomain).Ensure(e.PlatformDB)
+	new(model.SysDomain).InitSysData(e.PlatformDB.NewSession())
 
 	// initBusinessDB
-	domains := []model.SysDomain{}
-	asyncOnce := sync.Once{}
+	asyncOnce, domains := sync.Once{}, []model.SysDomain{}
 	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains))
 	funk.ForEach(domains, func(domain model.SysDomain) {
 		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
@@ -157,16 +154,14 @@ func (e *Engine) database() {
 	funk.ForEach(funk.Filter(domains, func(domain model.SysDomain) bool { return domain.SyncFlag.Int64 != 1 }), func(domain model.SysDomain) {
 		// obtain BusinessDB
 		db := e.Manager.GetBusinessDB(domain.Domain.String)
-		// migration PlatformDB
+		// migration PlatformDB, ensure domain.SyncFlag.Int64 != 1
 		asyncOnce.Do(func() {
 			e.migration(Name, e.PlatformDB)
 			new(model.SysClient).InitSysData(e.PlatformDB.NewSession())
 			new(model.SysUser).InitSysData(e.PlatformDB.NewSession())
 		})
 		// migration BusinessDBSet
-		funk.ForEach(platBindModelNames, func(n string) {
-			e.migration(n, db)
-		})
+		funk.ForEach(platBindModelNames, func(n string) { e.migration(n, db) })
 		// initialize BusinessDBSet data
 		new(model.SysRole).InitSysData(db.NewSession())
 		new(model.SysOrg).InitSysData(db.NewSession())
