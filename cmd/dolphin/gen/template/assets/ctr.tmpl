@@ -107,7 +107,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	{{- else}}
 	{{- range $i, $v := $bp.AutoIncr $.Tables $tbName }}
 	payload.{{- $v}} = null.StringFromUUID()
-	{{- end }}
+	{{- end}}
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
 	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
@@ -170,8 +170,8 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	{{- if .ISArray $bp.Type}}
 	s := ctx.DB.NewSession()
-s.Begin()
-defer s.Close()
+	s.Begin()
+	defer s.Close()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
