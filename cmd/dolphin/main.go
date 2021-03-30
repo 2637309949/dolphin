@@ -43,7 +43,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("http.temp", "temp")
 	viper.SetDefault("grpc.port", "9081")
 	viper.SetDefault("oauth.id", "Y76U9344RABF4")
-	viper.SetDefault("oauth.secret", "98UYO6FVB865")
+	viper.SetDefault("oauth.secret", "8UYO6FVB8UYO6FVB")
 	viper.SetDefault("oauth.login", "/static/web/login.html")
 	viper.SetDefault("oauth.affirm", "/static/web/affirm.html")
 	viper.SetDefault("db.driver", "mysql")
