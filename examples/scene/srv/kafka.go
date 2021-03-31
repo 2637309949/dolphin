@@ -7,8 +7,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
 	"scene/model"
 	"time"
 
@@ -47,7 +45,7 @@ func init() {
 		MaxBytes:    1e6,
 		MaxWait:     3 * time.Second,
 		StartOffset: kafka.LastOffset,
-		Logger:      log.New(os.Stdout, "kafka reader: ", 0),
+		// Logger:      log.New(os.Stdout, "kafka reader: ", 0),
 	})
 	go KafkaConsumer(context.Background())
 }

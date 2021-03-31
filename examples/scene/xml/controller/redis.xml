@@ -1,0 +1,16 @@
+<controller name="redis" desc="redis controller">
+    <api name="lock" desc="Add lock" method="get">
+        <param name="id" type="string" desc="redis info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="unlock" desc="del lock" method="get">
+        <param name="id" type="string" desc="redis info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>
