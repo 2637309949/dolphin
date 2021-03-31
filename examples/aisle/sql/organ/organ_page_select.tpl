@@ -2,7 +2,18 @@
 -- 1. You must specify the appropriate field name, instead of the *, field can be referenced in sql/sqlmap/.xml.
 -- 2. You must load user information from the code level if you need, because the user information is present in another table.
 select
-    organ.organ_id
+	organ_id,
+    organ_name,
+    create_date,
+    update_date,
+    organ_pinyin,
+    organ_number,
+    creater,
+    updater,
+    parent_id,
+    if_buy_online,
+    organ_tell,
+    sheng_id
 from
 	organ
 where
@@ -22,4 +33,5 @@ where
 {{if .role_rule}}
 	and {{.role_rule}}
 {{end}}
+	order by organ.update_date desc
 	limit {{.size}} offset {{.offset}}
