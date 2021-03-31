@@ -22,4 +22,7 @@ where
 {{.Application.Unescaped "{{"}}if .role_rule{{.Application.Unescaped "}}"}}
 	and {{.Application.Unescaped "{{"}}.role_rule{{.Application.Unescaped "}}"}}
 {{.Application.Unescaped "{{"}}end{{.Application.Unescaped "}}"}}
+{{.Application.Unescaped "{{"}}if .sort{{.Application.Unescaped "}}"}}
+	order by {{.Api.Table}}.{{.Application.Unescaped "{{"}}.sort{{.Application.Unescaped "}}"}}
+{{.Application.Unescaped "{{"}}end{{.Application.Unescaped "}}"}}
 	limit {{.Application.Unescaped "{{"}}.size{{.Application.Unescaped "}}"}} offset {{.Application.Unescaped "{{"}}.offset{{.Application.Unescaped "}}"}}
