@@ -78,17 +78,34 @@ func (gen *Gen) AddPipe(modules ...pipe.Pipe) {
 }
 
 // BuildWithDir defined
-func (gen *Gen) BuildWithDir(dir string, args []string) error {
-	for _, pipe := range gen.Pipes {
-		cfgs, err := pipe.Build(dir, args, gen.App)
+func (gen *Gen) BuildWithDir(dir string, args []string) (err error) {
+	defer func() {
+		if rErr := recover(); rErr != nil {
+			err = fmt.Errorf("%v", rErr)
+		}
+	}()
+	var pipeChan chan bool
+	var pipeCnt int
+	for i := range gen.Pipes {
+		cfgs, err := gen.Pipes[i].Build(dir, args, gen.App)
 		if err != nil {
 			return err
 		}
-		for _, cfg := range cfgs {
-			err = gen.BuildWithCfg(cfg)
-			if err != nil {
-				return err
-			}
+		if len(cfgs) > 5 {
+			pipeCnt = 5
+		} else {
+			pipeCnt = 1
+		}
+		pipeChan = make(chan bool, pipeCnt)
+		for j := range cfgs {
+			pipeChan <- true
+			go func(cfg *pipe.TmplCfg) {
+				err = gen.BuildWithCfg(cfg)
+				if err != nil {
+					panic(err)
+				}
+				<-pipeChan
+			}(cfgs[j])
 		}
 	}
 	return nil
