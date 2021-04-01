@@ -382,6 +382,11 @@ func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
 	ctx.Success(excelInfo)
 }
 
+// BusinessDB defined
+func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
+	return ctx.engine.Manager.GetBusinessDB(domain)
+}
+
 // Persist defined
 func (ctx *Context) Persist(db *xorm.Engine, ids ...string) (int64, error) {
 	return new(model.SysAttachment).Persist(db, ids...)
