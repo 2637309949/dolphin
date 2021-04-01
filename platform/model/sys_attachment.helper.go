@@ -10,54 +10,49 @@ import (
 )
 
 // Persist table name of defined SysAttachment
-func (m *SysAttachment) Persist(db *xorm.Engine, ids ...string) (int64, error) {
+func (m *SysAttachment) Persist(db *xorm.Session, ids ...string) (int64, error) {
 	return db.In("id", ids).Update(&SysAttachment{
 		Durable: null.IntFrom(1),
 	})
 }
 
 // PersistFile table name of defined SysAttachment
-func (m *SysAttachment) PersistFile(db *xorm.Engine, cb func([]SysAttachment) error, ids ...string) (int64, error) {
-	sess := db.NewSession()
-	defer sess.Close()
+func (m *SysAttachment) PersistFile(db *xorm.Session, cb func([]SysAttachment) error, ids ...string) (int64, error) {
 	var files []SysAttachment
 	if cb == nil {
 		cb = func(files []SysAttachment) error {
 			return nil
 		}
 	}
-	err := sess.In("id", ids).Find(&files)
+	err := db.In("id", ids).Find(&files)
 	if err != nil {
-		sess.Rollback()
+		db.Rollback()
 		return 0, err
 	}
 	err = cb(files)
 	if err != nil {
-		sess.Rollback()
+		db.Rollback()
 		return 0, err
 	}
-	cnt, err := sess.In("id", ids).Update(&SysAttachment{
+	cnt, err := db.In("id", ids).Update(&SysAttachment{
 		Durable: null.IntFrom(1),
 	})
 	if err != nil {
-		sess.Rollback()
+		db.Rollback()
 		return 0, err
 	}
-	sess.Commit()
 	return cnt, err
 }
 
 // Remove table name of defined SysAttachment
-func (m *SysAttachment) Remove(db *xorm.Engine, ids ...string) (int64, error) {
+func (m *SysAttachment) Remove(db *xorm.Session, ids ...string) (int64, error) {
 	return db.In("id", ids).Update(&SysAttachment{
 		IsDelete: null.IntFrom(1),
 	})
 }
 
 // RemoveFile table name of defined SysAttachment
-func (m *SysAttachment) RemoveFile(db *xorm.Engine, cb func([]SysAttachment) error, ids ...string) (int64, error) {
-	sess := db.NewSession()
-	defer sess.Close()
+func (m *SysAttachment) RemoveFile(db *xorm.Session, cb func([]SysAttachment) error, ids ...string) (int64, error) {
 	var files []SysAttachment
 	if cb == nil {
 		cb = func(files []SysAttachment) error {
@@ -70,23 +65,22 @@ func (m *SysAttachment) RemoveFile(db *xorm.Engine, cb func([]SysAttachment) err
 			return nil
 		}
 	}
-	err := sess.In("id", ids).Find(&files)
+	err := db.In("id", ids).Find(&files)
 	if err != nil {
-		sess.Rollback()
+		db.Rollback()
 		return 0, err
 	}
 	err = cb(files)
 	if err != nil {
-		sess.Rollback()
+		db.Rollback()
 		return 0, err
 	}
-	cnt, err := sess.In("id", ids).Update(&SysAttachment{
+	cnt, err := db.In("id", ids).Update(&SysAttachment{
 		IsDelete: null.IntFrom(1),
 	})
 	if err != nil {
-		sess.Rollback()
+		db.Rollback()
 		return 0, err
 	}
-	sess.Commit()
 	return cnt, err
 }
