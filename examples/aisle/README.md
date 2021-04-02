@@ -1,5 +1,1 @@
-## Quick start
-
-```sh
-$ go mod tidy && dolphin build && go run main
-```
+## Large application migration case
