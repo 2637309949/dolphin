@@ -6,6 +6,7 @@ package rpc
 import (
 	"scene/rpc/proto"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"golang.org/x/net/context"
 )
 
@@ -14,5 +15,6 @@ type MessageSrv struct{}
 
 // SendMail defined
 func (srv *MessageSrv) SendMail(ctx context.Context, in *proto.MessageMail) (*proto.MessageReply, error) {
+	logrus.Infoln("MessageSrv:SendMail")
 	return &proto.MessageReply{}, nil
 }

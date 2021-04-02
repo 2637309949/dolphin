@@ -9,6 +9,8 @@ module.exports.encrypt = require('./encrypt')
 module.exports.kafka = require('./kafka')
 // redis redis controller
 module.exports.redis = require('./redis')
+// rPC rpc controller
+module.exports.rPC = require('./rpc')
 // sqlmap SQL集合
 module.exports.sqlmap = require('./sqlmap')
 // view 视图
