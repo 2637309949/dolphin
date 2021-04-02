@@ -1,0 +1,8 @@
+<controller name="user" desc="用户信息">
+    <api name="info" method="get" desc="">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

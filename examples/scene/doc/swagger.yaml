@@ -6328,6 +6328,28 @@ paths:
       summary: 获取worker信息
       tags:
       - worker
+  /api/user/info:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      tags:
+      - 用户信息
   /api/view/file:
     get:
       parameters:

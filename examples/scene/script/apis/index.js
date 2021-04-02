@@ -13,5 +13,7 @@ module.exports.redis = require('./redis')
 module.exports.rPC = require('./rpc')
 // sqlmap SQL集合
 module.exports.sqlmap = require('./sqlmap')
+// user 用户信息
+module.exports.user = require('./user')
 // view 视图
 module.exports.view = require('./view')
