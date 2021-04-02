@@ -84,28 +84,16 @@ func (gen *Gen) BuildWithDir(dir string, args []string) (err error) {
 			err = fmt.Errorf("%v", rErr)
 		}
 	}()
-	var pipeChan chan bool
-	var pipeCnt int
 	for i := range gen.Pipes {
 		cfgs, err := gen.Pipes[i].Build(dir, args, gen.App)
 		if err != nil {
 			return err
 		}
-		if len(cfgs) > 5 {
-			pipeCnt = 5
-		} else {
-			pipeCnt = 1
-		}
-		pipeChan = make(chan bool, pipeCnt)
 		for j := range cfgs {
-			pipeChan <- true
-			go func(cfg *pipe.TmplCfg) {
-				err = gen.BuildWithCfg(cfg)
-				if err != nil {
-					panic(err)
-				}
-				<-pipeChan
-			}(cfgs[j])
+			err = gen.BuildWithCfg(cfgs[j])
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 	return nil

@@ -60,7 +60,7 @@ func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 				c.AuthInfo = t
 			}
 		}
-		h(c)
+		h.Handler(c)
 		e.pool.Put(c)
 	})
 }

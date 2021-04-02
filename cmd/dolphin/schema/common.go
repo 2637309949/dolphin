@@ -150,6 +150,11 @@ func (c *Common) ToUpperCase(name string) string {
 	return newName
 }
 
+// Title first word
+func (c *Common) Title(str string) string {
+	return strings.Title(strings.ToLower(str))
+}
+
 // LcFirst first word
 func (c *Common) LcFirst(str string) string {
 	for i, v := range str {

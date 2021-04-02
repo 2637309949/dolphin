@@ -22,34 +22,50 @@ type Organ struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get func(ctx *Context)
+	Get HandlerFunc
 }
 
 // NewOrgan defined
 func NewOrgan() *Organ {
 	ctr := &Organ{}
-	ctr.Add = OrganAdd
-	ctr.BatchAdd = OrganBatchAdd
-	ctr.Del = OrganDel
-	ctr.BatchDel = OrganBatchDel
-	ctr.Update = OrganUpdate
-	ctr.BatchUpdate = OrganBatchUpdate
-	ctr.Page = OrganPage
-	ctr.Get = OrganGet
+	ctr.Add.Method = "POST"
+	ctr.Add.RelativePath = "/organ/add"
+	ctr.Add.Handler = OrganAdd
+	ctr.BatchAdd.Method = "POST"
+	ctr.BatchAdd.RelativePath = "/organ/batch_add"
+	ctr.BatchAdd.Handler = OrganBatchAdd
+	ctr.Del.Method = "DELETE"
+	ctr.Del.RelativePath = "/organ/del"
+	ctr.Del.Handler = OrganDel
+	ctr.BatchDel.Method = "PUT"
+	ctr.BatchDel.RelativePath = "/organ/batch_del"
+	ctr.BatchDel.Handler = OrganBatchDel
+	ctr.Update.Method = "PUT"
+	ctr.Update.RelativePath = "/organ/update"
+	ctr.Update.Handler = OrganUpdate
+	ctr.BatchUpdate.Method = "PUT"
+	ctr.BatchUpdate.RelativePath = "/organ/batch_update"
+	ctr.BatchUpdate.Handler = OrganBatchUpdate
+	ctr.Page.Method = "GET"
+	ctr.Page.RelativePath = "/organ/page"
+	ctr.Page.Handler = OrganPage
+	ctr.Get.Method = "GET"
+	ctr.Get.RelativePath = "/organ/get"
+	ctr.Get.Handler = OrganGet
 	return ctr
 }
 
 // OrganRoutes defined
 func OrganRoutes(engine *Engine) {
 	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle("POST", "/organ/add", Auth("token"), OrganInstance.Add)
-	group.Handle("POST", "/organ/batch_add", Auth("token"), OrganInstance.BatchAdd)
-	group.Handle("DELETE", "/organ/del", Auth("token"), OrganInstance.Del)
-	group.Handle("PUT", "/organ/batch_del", Auth("token"), OrganInstance.BatchDel)
-	group.Handle("PUT", "/organ/update", Auth("token"), OrganInstance.Update)
-	group.Handle("PUT", "/organ/batch_update", Auth("token"), OrganInstance.BatchUpdate)
-	group.Handle("GET", "/organ/page", Auth("token"), OrganInstance.Page)
-	group.Handle("GET", "/organ/get", Auth("token"), OrganInstance.Get)
+	group.Handle(OrganInstance.Add.Method, OrganInstance.Add.RelativePath, Auth("token"), OrganInstance.Add)
+	group.Handle(OrganInstance.BatchAdd.Method, OrganInstance.BatchAdd.RelativePath, Auth("token"), OrganInstance.BatchAdd)
+	group.Handle(OrganInstance.Del.Method, OrganInstance.Del.RelativePath, Auth("token"), OrganInstance.Del)
+	group.Handle(OrganInstance.BatchDel.Method, OrganInstance.BatchDel.RelativePath, Auth("token"), OrganInstance.BatchDel)
+	group.Handle(OrganInstance.Update.Method, OrganInstance.Update.RelativePath, Auth("token"), OrganInstance.Update)
+	group.Handle(OrganInstance.BatchUpdate.Method, OrganInstance.BatchUpdate.RelativePath, Auth("token"), OrganInstance.BatchUpdate)
+	group.Handle(OrganInstance.Page.Method, OrganInstance.Page.RelativePath, Auth("token"), OrganInstance.Page)
+	group.Handle(OrganInstance.Get.Method, OrganInstance.Get.RelativePath, Auth("token"), OrganInstance.Get)
 }
 
 // OrganInstance defined

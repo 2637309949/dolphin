@@ -42,13 +42,23 @@ type (
 		engine     *Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value
-	HandlerFunc func(*Context)
+	HandlerFunc struct {
+		Method       string
+		RelativePath string
+		Handler      func(ctx *Context)
+	}
+
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
 		*gin.RouterGroup
 		engine *Engine
 	}
 )
+
+// HF2Handler defined
+func HF2Handler(h func(ctx *Context)) HandlerFunc {
+	return HandlerFunc{Handler: h}
+}
 
 // Raw defined
 func (ctx *Context) Raw() *gin.Context {

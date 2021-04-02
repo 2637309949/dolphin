@@ -12,7 +12,7 @@ import (
 // @Summary
 // @Tags 用户信息
 // @Param Authorization header string false "认证令牌"
-// @Failure 403 {object} model.FailTable
+// @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/user/info [get]

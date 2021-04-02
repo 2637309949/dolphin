@@ -216,10 +216,10 @@ func NewDefaultManager() Manager {
 }
 
 // Cache middles
-func Cache(time time.Duration) func(ctx *Context) {
-	return func(ctx *Context) {
+func Cache(time time.Duration) HandlerFunc {
+	return HF2Handler(func(ctx *Context) {
 		cache.CachePage(CacheStore, time)(ctx.Context)
-	}
+	})
 }
 
 // MaxWorkers defined

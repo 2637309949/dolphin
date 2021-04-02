@@ -29,8 +29,17 @@ type (
 		engine *Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value
-	HandlerFunc func(*Context)
+	HandlerFunc struct {
+		Method       string
+		RelativePath string
+		Handler      func(ctx *Context)
+	}
 )
+
+// HF2Handler defined
+func HF2Handler(h func(ctx *Context)) HandlerFunc {
+	return HandlerFunc{Handler: h}
+}
 
 func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e}
@@ -43,10 +52,10 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 
 // HandlerFunc convert to pApp.HandlerFunc
 func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
-	return pApp.HandlerFunc(func(ctx *pApp.Context) {
+	return pApp.HF2Handler(func(ctx *pApp.Context) {
 		c := e.pool.Get().(*Context)
 		c.Context = ctx
-		h(c)
+		h.Handler(c)
 		e.pool.Put(c)
 	})
 }
@@ -61,24 +70,24 @@ func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Handl
 }
 
 // Auth middles
-func Auth(auth ...string) func(ctx *Context) {
-	return func(ctx *Context) {
-		pApp.Auth(auth...)(ctx.Context)
-	}
+func Auth(auth ...string) HandlerFunc {
+	return HF2Handler(func(ctx *Context) {
+		pApp.Auth(auth...).Handler(ctx.Context)
+	})
 }
 
 // Roles middles
-func Roles(roles ...string) func(ctx *Context) {
-	return func(ctx *Context) {
-		pApp.Roles(roles...)(ctx.Context)
-	}
+func Roles(roles ...string) HandlerFunc {
+	return HF2Handler(func(ctx *Context) {
+		pApp.Roles(roles...).Handler(ctx.Context)
+	})
 }
 
 // Cache middles
-func Cache(time time.Duration) func(ctx *Context) {
-	return func(ctx *Context) {
-		pApp.Cache(time)(ctx.Context)
-	}
+func Cache(time time.Duration) HandlerFunc {
+	return HF2Handler(func(ctx *Context) {
+		pApp.Cache(time).Handler(ctx.Context)
+	})
 }
 
 // buildEngine defined init engine you can custom engine

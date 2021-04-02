@@ -293,7 +293,7 @@ func AuthEncrypt(ctx *Context) {
 }
 
 // Auth middles
-func Auth(auth ...string) func(ctx *Context) {
+func Auth(auth ...string) HandlerFunc {
 	middles := []func(ctx *Context){}
 	if slice.StrSliceContains(auth, "token") {
 		middles = append(middles, AuthToken)
@@ -301,21 +301,21 @@ func Auth(auth ...string) func(ctx *Context) {
 	if slice.StrSliceContains(auth, "encrypt") {
 		middles = append(middles, AuthEncrypt)
 	}
-	return func(ctx *Context) {
+	return HF2Handler(func(ctx *Context) {
 		for i := range middles {
 			middles[i](ctx)
 		}
-	}
+	})
 }
 
 // Roles middles
-func Roles(roles ...string) func(ctx *Context) {
-	return func(ctx *Context) {
+func Roles(roles ...string) HandlerFunc {
+	return HF2Handler(func(ctx *Context) {
 		if !ctx.InRole(roles...) {
 			ctx.Fail(util.ErrAccessDenied, 403)
 			ctx.Abort()
 			return
 		}
 		ctx.Next()
-	}
+	})
 }
