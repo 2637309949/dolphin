@@ -1817,9 +1817,3 @@ func SyncService() error {
 
 // Executor defined
 var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)
-
-func init() {
-	if err := Executor.Execute(); err != nil {
-		panic(err)
-	}
-}

@@ -15,6 +15,7 @@ var Name = "aisle"
 
 // Organ defined
 type Organ struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -27,7 +28,7 @@ type Organ struct {
 
 // NewOrgan defined
 func NewOrgan() *Organ {
-	ctr := &Organ{}
+	ctr := &Organ{Name: "organ"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/organ/add"
 	ctr.Add.Handler = OrganAdd
@@ -500,9 +501,3 @@ func SyncService() error {
 
 // Executor defined
 var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)
-
-func init() {
-	if err := Executor.Execute(); err != nil {
-		panic(err)
-	}
-}

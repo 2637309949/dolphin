@@ -45,6 +45,7 @@ type (
 	HandlerFunc struct {
 		Method       string
 		RelativePath string
+		Interceptor  []HandlerFunc
 		Handler      func(ctx *Context)
 	}
 
@@ -496,9 +497,12 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	pAppHandlers := funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
-		return rg.engine.HandlerFunc(h)
-	}).([]gin.HandlerFunc)
+	ginHandlers := funk.Map(handlers, func(h HandlerFunc) []gin.HandlerFunc {
+		ic := funk.Map(h.Interceptor, func(h HandlerFunc) gin.HandlerFunc { return rg.engine.HandlerFunc(h) }).([]gin.HandlerFunc)
+		middles := append(ic, rg.engine.HandlerFunc(h))
+		return middles
+	}).([][]gin.HandlerFunc)
+	pAppHandlers := funk.FlattenDeep(ginHandlers).([]gin.HandlerFunc)
 	return funk.Map(strings.Split(httpMethod, ","), func(method string) gin.IRoutes {
 		return rg.RouterGroup.Handle(method, relativePath, pAppHandlers...)
 	}).([]gin.IRoutes)

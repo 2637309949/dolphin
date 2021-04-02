@@ -9,6 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/logrus"
 	pApp "github.com/2637309949/dolphin/platform/app"
 )
 
@@ -32,6 +33,7 @@ type (
 	HandlerFunc struct {
 		Method       string
 		RelativePath string
+		Interceptor  []HandlerFunc
 		Handler      func(ctx *Context)
 	}
 )
@@ -62,9 +64,12 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	pAppHandlers := funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
-		return rg.engine.HandlerFunc(h)
-	}).([]pApp.HandlerFunc)
+	ginHandlers := funk.Map(handlers, func(h HandlerFunc) []pApp.HandlerFunc {
+		ic := funk.Map(h.Interceptor, func(h HandlerFunc) pApp.HandlerFunc { return rg.engine.HandlerFunc(h) }).([]pApp.HandlerFunc)
+		middles := append(ic, rg.engine.HandlerFunc(h))
+		return middles
+	}).([][]pApp.HandlerFunc)
+	pAppHandlers := funk.FlattenDeep(ginHandlers).([]pApp.HandlerFunc)
 	rh := rg.RouterGroup.Handle(httpMethod, relativePath, pAppHandlers...)
 	return rh
 }
@@ -109,3 +114,14 @@ var _ *Engine = &Engine{}
 
 // App instance
 var App = buildEngine()
+
+func init() {
+	OrganInstance.Page.Interceptor = []HandlerFunc{HF2Handler(func(ctx *Context) {
+		logrus.Infoln("OrganInstance.Page.Before")
+		ctx.Next()
+		logrus.Infoln("OrganInstance.Page.After")
+	})}
+	if err := Executor.Execute(); err != nil {
+		panic(err)
+	}
+}

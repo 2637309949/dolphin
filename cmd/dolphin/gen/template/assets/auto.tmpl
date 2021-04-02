@@ -19,6 +19,7 @@ var Name = "{{.Name}}"
 {{- $ctr := .}}
 // {{.ToUpperCase .Name}} defined
 type {{.ToUpperCase .Name}} struct {
+	Name string
 	{{- $APIS := .APIS}}
 	{{- range $index, $api := .APIS}}
 	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} HandlerFunc{{- else}},{{- end}}
@@ -27,7 +28,7 @@ type {{.ToUpperCase .Name}} struct {
 
 // New{{.ToUpperCase .Name}} defined
 func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
-	ctr := &{{.ToUpperCase .Name}}{}
+	ctr := &{{.ToUpperCase .Name}}{Name: "{{.Name}}"}
 	{{- range .APIS}}
 	ctr.{{.ToUpperCase .Name}}.Method = "{{.ToUpper .Method}}"
 	ctr.{{.ToUpperCase .Name}}.RelativePath = "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"
