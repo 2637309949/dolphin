@@ -115,13 +115,18 @@ var _ *Engine = &Engine{}
 // App instance
 var App = buildEngine()
 
-func init() {
-	OrganInstance.Page.Interceptor = []HandlerFunc{HF2Handler(func(ctx *Context) {
-		logrus.Infoln("OrganInstance.Page.Before")
+// SyncMiddle defined
+func SyncMiddle() {
+	OrganInstance.Page.Interceptor = append(OrganInstance.Page.Interceptor, HF2Handler(func(ctx *Context) {
+		logrus.Infoln("pApp.SysUserInstance.Page.Before")
 		ctx.Next()
-		logrus.Infoln("OrganInstance.Page.After")
-	})}
-	if err := Executor.Execute(); err != nil {
-		panic(err)
-	}
+		logrus.Infoln("pApp.SysUserInstance.Page.After")
+	}))
+}
+
+func init() {
+	SyncMiddle()
+	SyncModel()
+	SyncController()
+	SyncService()
 }

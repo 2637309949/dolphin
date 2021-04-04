@@ -116,8 +116,13 @@ var _ *Engine = &Engine{}
 // App instance
 var App = buildEngine()
 
+// SyncMiddle defined
+func SyncMiddle() {
+}
+
 func init() {
-	if err := Executor.Execute(); err != nil {
-		panic(err)
-	}
+    SyncMiddle()
+	SyncModel()
+	SyncController()
+	SyncService()
 }

@@ -7,7 +7,6 @@ import (
 	"aisle/model"
 
 	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/platform/util"
 )
 
 // Name project
@@ -498,6 +497,3 @@ func SyncController() error {
 func SyncService() error {
 	return nil
 }
-
-// Executor defined
-var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)

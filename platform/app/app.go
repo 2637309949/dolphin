@@ -77,7 +77,7 @@ func init() {
 	OA2Cfg.Endpoint.TokenURL = AuthServerURL + "/api/sys/cas/token"
 	HTTPServer = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	RPCListener = util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
-	if err := Executor.Execute(); err != nil {
-		panic(err)
-	}
+	SyncModel()
+	SyncController()
+	SyncService()
 }

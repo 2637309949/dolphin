@@ -9,7 +9,6 @@ import (
 	"github.com/2637309949/dolphin/platform/rpc/proto"
 
 	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/platform/util"
 )
 
 // Name project
@@ -1814,6 +1813,3 @@ func SyncService() error {
 	UserSrvService(App)
 	return nil
 }
-
-// Executor defined
-var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)
