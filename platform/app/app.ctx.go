@@ -142,8 +142,8 @@ func (ctx *Context) TypeQuery() *Query {
 
 // PageSearch defined
 func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (*model.PageList, error) {
-	page := q["page"].(int)
-	size := q["size"].(int)
+	page, _ := q["page"].(int)
+	size, _ := q["size"].(int)
 	q["offset"] = (page - 1) * size
 	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_select.tpl", controller, api), &q).Query().List()
 	if err != nil {
@@ -154,11 +154,11 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 		return nil, err
 	}
 	var plt model.PageList
-	if rowsSet == nil || len(rowsSet) == 0 {
+	if len(rowsSet) == 0 {
 		plt.Data = []map[string]interface{}{}
 		return &plt, nil
 	}
-	records := cntSet[0]["records"].(int64)
+	records, _ := cntSet[0]["records"].(int64)
 	var totalpages int64 = 0
 	if records < int64(size) {
 		totalpages = 1
