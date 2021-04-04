@@ -100,9 +100,7 @@ func Cache(time time.Duration) HandlerFunc {
 // if you need
 func buildEngine() *Engine {
 	e := &Engine{Engine: pApp.App}
-	e.pool.New = func() interface{} {
-		return e.allocateContext()
-	}
+	e.pool.New = func() interface{} { return e.allocateContext() }
 	return e
 }
 

@@ -30,7 +30,11 @@ import (
 // TokenExpiryDelta determines how earlier a token should be considered
 // expired than its actual expiration time. It is used to avoid late
 // expirations due to client-server time mismatches.
-const TokenExpiryDelta = 10 * time.Second
+const (
+	TokenExpiryDelta = 10 * time.Second
+	TokenType        = "token"
+	EncryptType      = "encrypt"
+)
 
 // var defined
 var (
@@ -254,7 +258,7 @@ var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid
 
 // ValidateURIHandler defined
 var ValidateURIHandler = func(baseURI string, redirectURI string) error {
-	reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+	reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
 	base := reg.FindAllStringSubmatch(baseURI, -1)
 	redirect := reg.FindAllStringSubmatch(redirectURI, -1)
 	if base[0][2] != redirect[0][2] {
@@ -295,10 +299,10 @@ func AuthEncrypt(ctx *Context) {
 // Auth middles
 func Auth(auth ...string) HandlerFunc {
 	middles := []func(ctx *Context){}
-	if slice.StrSliceContains(auth, "token") {
+	if slice.StrSliceContains(auth, TokenType) {
 		middles = append(middles, AuthToken)
 	}
-	if slice.StrSliceContains(auth, "encrypt") {
+	if slice.StrSliceContains(auth, EncryptType) {
 		middles = append(middles, AuthEncrypt)
 	}
 	return HF2Handler(func(ctx *Context) {

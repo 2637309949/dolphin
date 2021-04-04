@@ -255,9 +255,7 @@ func buildEngine() *Engine {
 	e.GRPC = grpc.NewServer()
 	e.Gin = NewGin()
 	e.Gin.Use(plugin.Tracker(Tracker(e)))
-	e.pool.New = func() interface{} {
-		return e.allocateContext()
-	}
+	e.pool.New = func() interface{} { return e.allocateContext() }
 	e.lifecycle.Append(NewLifeHook(e))
 	return e
 }
