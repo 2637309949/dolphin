@@ -9,6 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/2637309949/dolphin/packages/logrus"
 	pApp "github.com/2637309949/dolphin/platform/app"
 )
 
@@ -32,6 +33,7 @@ type (
 	HandlerFunc struct {
 		Method       string
 		RelativePath string
+		Interceptor  []HandlerFunc
 		Handler      func(ctx *Context)
 	}
 )
@@ -109,3 +111,19 @@ var _ *Engine = &Engine{}
 
 // App instance
 var App = buildEngine()
+
+// SyncMiddle defined
+func SyncMiddle() {
+	KafkaInstance.Add.Interceptor = append(KafkaInstance.Add.Interceptor, HF2Handler(func(ctx *Context) {
+		logrus.Infoln("pApp.SysUserInstance.Page.Before")
+		ctx.Next()
+		logrus.Infoln("pApp.SysUserInstance.Page.After")
+	}))
+}
+
+func init() {
+	SyncMiddle()
+	SyncModel()
+	SyncController()
+	SyncService()
+}
