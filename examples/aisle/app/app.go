@@ -108,10 +108,15 @@ func Run() {
 	App.Run()
 }
 
-var _ *Engine = &Engine{}
-
-// App instance
-var App = buildEngine()
+var (
+	_ *Engine = &Engine{}
+	// App instance
+	App = buildEngine()
+	// AuthToken by token
+	AuthToken = Auth("token")
+	// AuthEncrypt by encrypt
+	AuthEncrypt = Auth("encrypt")
+)
 
 // SyncMiddle defined
 func SyncMiddle() {
