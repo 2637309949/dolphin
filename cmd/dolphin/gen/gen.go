@@ -77,22 +77,51 @@ func (gen *Gen) AddPipe(modules ...pipe.Pipe) {
 	gen.Pipes = append(gen.Pipes, modules...)
 }
 
-// BuildWithDir defined
-func (gen *Gen) BuildWithDir(dir string, args []string) (err error) {
+// BuildDir defined
+func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	defer func() {
 		if rErr := recover(); rErr != nil {
 			err = fmt.Errorf("%v", rErr)
 		}
 	}()
+	// generate code
+	cfgs := []*pipe.TmplCfg{}
 	for i := range gen.Pipes {
-		cfgs, err := gen.Pipes[i].Build(dir, args, gen.App)
+		items, err := gen.Pipes[i].Build(dir, args, gen.App)
+		cfgs = append(cfgs, items...)
 		if err != nil {
 			return err
 		}
-		for j := range cfgs {
-			err = gen.BuildWithCfg(cfgs[j])
+		for j := range items {
+			err = gen.Build(cfgs[j])
 			if err != nil {
 				panic(err)
+			}
+		}
+	}
+	// fmt code
+	filePaths := funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *pipe.TmplCfg) bool { return cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" }), func(cfg *pipe.TmplCfg) (string, string) { return path.Dir(cfg.FilePath), path.Dir(cfg.FilePath) })).([]string)
+	if len(filePaths) > 0 {
+		if err := utils.InstallPackages("golang.org/x/tools/cmd/goimports"); err != nil {
+			logrus.Error(err)
+		}
+		for i := range filePaths {
+			cmd := exec.Command("goimports", "-w", filePaths[i])
+			if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
+				logrus.Error(err)
+			}
+		}
+	}
+	// rpc code
+	filePaths = funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *pipe.TmplCfg) bool { return cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" }), func(cfg *pipe.TmplCfg) (string, string) { return cfg.FilePath, cfg.FilePath })).([]string)
+	if len(filePaths) > 0 {
+		if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
+			logrus.Error(err)
+		}
+		for i := range filePaths {
+			cmd := exec.Command("protoc", "-I", path.Dir(filePaths[i]), filePaths[i], "--go_out=plugins=grpc:"+path.Dir(filePaths[i]))
+			if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
+				logrus.Error(err)
 			}
 		}
 	}
@@ -100,7 +129,7 @@ func (gen *Gen) BuildWithDir(dir string, args []string) (err error) {
 }
 
 // BuildWithCfg defined
-func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
+func (gen *Gen) Build(cfg *pipe.TmplCfg) error {
 	var err error
 	var tpl *template.Template
 	tpl = template.New("template")
@@ -135,29 +164,11 @@ func (gen *Gen) BuildWithCfg(cfg *pipe.TmplCfg) error {
 	if err = tpl.Execute(bfw, cfg.Data); err != nil {
 		return err
 	}
-	sbt := string(bf.Bytes())
+	sbt := bf.String()
 	sbt = strings.ReplaceAll(sbt, "&#39;", "'")
 	_, err = w.WriteString(sbt)
 	if err != nil {
 		return err
-	}
-	if cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" {
-		if err := utils.InstallPackages("golang.org/x/tools/cmd/goimports"); err != nil {
-			logrus.Error(err)
-		}
-		cmd := exec.Command("goimports", "-w", cfg.FilePath)
-		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
-			logrus.Error(err)
-		}
-	}
-	if cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" {
-		if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
-			logrus.Error(err)
-		}
-		cmd := exec.Command("protoc", "-I", path.Dir(cfg.FilePath), cfg.FilePath, "--go_out=plugins=grpc:"+path.Dir(cfg.FilePath))
-		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
-			logrus.Error(err)
-		}
 	}
 	return nil
 }

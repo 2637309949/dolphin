@@ -119,7 +119,7 @@ var (
 			}
 			g := gen.New(p.Application)
 			g.AddPipe(gen.GetPipesByName(pipes...)...)
-			err = g.BuildWithDir(wd, args)
+			err = g.BuildDir(wd, args)
 			return err
 		},
 	}
@@ -150,7 +150,7 @@ var (
 				}
 				g := gen.New(p.Application)
 				g.AddPipe(gen.GetPipesByName("boilerplate")...)
-				return g.BuildWithDir(wd, args)
+				return g.BuildDir(wd, args)
 			}
 			logrus.Warn("It is not allowed to initialize a non-empty project")
 			return nil
