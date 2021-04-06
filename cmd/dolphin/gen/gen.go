@@ -93,7 +93,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 			return err
 		}
 		for j := range items {
-			err = gen.Build(cfgs[j])
+			err = gen.Build(items[j])
 			if err != nil {
 				panic(err)
 			}
