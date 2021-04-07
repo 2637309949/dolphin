@@ -3,6 +3,8 @@
 module.exports.ami = require('./ami')
 // article 文章
 module.exports.article = require('./article')
+// iCache cache controller
+module.exports.iCache = require('./i_cache')
 // encrypt Encrypt controller
 module.exports.encrypt = require('./encrypt')
 // kafka Kafka controller
