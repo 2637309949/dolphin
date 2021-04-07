@@ -4,6 +4,10 @@
 package srv
 
 import (
+	"errors"
+	"log"
+	"sync"
+
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -12,5 +16,46 @@ import (
 // ICacheAction defined srv
 func ICacheAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	logrus.Infoln("ICacheAction")
+	fatalErrors := make(chan error)
+	wgDone := make(chan bool)
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	go func() {
+		log.Println("Waitgroup 1")
+		// Do Something...
+		wg.Done()
+	}()
+	go func() {
+		log.Println("Waitgroup 2")
+		// Example function which returns an error
+		err := ReturnsError()
+		if err != nil {
+			fatalErrors <- err
+		}
+		wg.Done()
+	}()
+
+	// Important final goroutine to wait until WaitGroup is done
+	go func() {
+		wg.Wait()
+		close(wgDone)
+	}()
+
+	// Wait until either WaitGroup is done or an error is received through the channel
+	select {
+	case <-wgDone:
+		// carry on
+		break
+	case err := <-fatalErrors:
+		close(fatalErrors)
+		return nil, err
+	}
+	log.Println("Program executed successfully")
 	return 100, nil
+}
+
+func ReturnsError() error {
+	return errors.New("example error")
 }
