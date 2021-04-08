@@ -65,14 +65,10 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	ginHandlers := funk.Map(handlers, func(h HandlerFunc) []pApp.HandlerFunc {
-		ic := funk.Map(h.Interceptor, func(h HandlerFunc) pApp.HandlerFunc { return rg.engine.HandlerFunc(h) }).([]pApp.HandlerFunc)
-		middles := append(ic, rg.engine.HandlerFunc(h))
-		return middles
-	}).([][]pApp.HandlerFunc)
-	pAppHandlers := funk.FlattenDeep(ginHandlers).([]pApp.HandlerFunc)
-	rh := rg.RouterGroup.Handle(httpMethod, relativePath, pAppHandlers...)
-	return rh
+	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Chain(handlers).Map(func(h HandlerFunc) []pApp.HandlerFunc {
+		ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) pApp.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]pApp.HandlerFunc)
+		return append(ic, rg.engine.HandlerFunc(h))
+	}).FlattenDeep().Value().([]pApp.HandlerFunc)...)
 }
 
 // Auth middles

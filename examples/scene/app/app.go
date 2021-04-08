@@ -9,7 +9,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
 	pApp "github.com/2637309949/dolphin/platform/app"
 )
 
@@ -64,11 +63,10 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	pAppHandlers := funk.Map(handlers, func(h HandlerFunc) pApp.HandlerFunc {
-		return rg.engine.HandlerFunc(h)
-	}).([]pApp.HandlerFunc)
-	rh := rg.RouterGroup.Handle(httpMethod, relativePath, pAppHandlers...)
-	return rh
+	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Chain(handlers).Map(func(h HandlerFunc) []pApp.HandlerFunc {
+		ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) pApp.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]pApp.HandlerFunc)
+		return append(ic, rg.engine.HandlerFunc(h))
+	}).FlattenDeep().Value().([]pApp.HandlerFunc)...)
 }
 
 // Auth middles
@@ -96,9 +94,7 @@ func Cache(time time.Duration) HandlerFunc {
 // if you need
 func buildEngine() *Engine {
 	e := &Engine{Engine: pApp.App}
-	e.pool.New = func() interface{} {
-		return e.allocateContext()
-	}
+	e.pool.New = func() interface{} { return e.allocateContext() }
 	return e
 }
 
@@ -107,18 +103,18 @@ func Run() {
 	App.Run()
 }
 
-var _ *Engine = &Engine{}
-
-// App instance
-var App = buildEngine()
+var (
+	_ *Engine = &Engine{}
+	// App instance
+	App = buildEngine()
+	// AuthToken by token
+	AuthToken = Auth("token")
+	// AuthEncrypt by encrypt
+	AuthEncrypt = Auth("encrypt")
+)
 
 // SyncMiddle defined
 func SyncMiddle() {
-	KafkaInstance.Add.Interceptor = append(KafkaInstance.Add.Interceptor, HF2Handler(func(ctx *Context) {
-		logrus.Infoln("pApp.SysUserInstance.Page.Before")
-		ctx.Next()
-		logrus.Infoln("pApp.SysUserInstance.Page.After")
-	}))
 }
 
 func init() {
