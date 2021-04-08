@@ -13,7 +13,7 @@ import (
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/go-errors/errors"
-	kafka "github.com/segmentio/kafka-go"
+	"github.com/segmentio/kafka-go"
 )
 
 var Writer *kafka.Writer
@@ -69,6 +69,8 @@ func KafkaConsumer(ctx context.Context) {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
 			fmt.Print(string(goErr.Stack()))
+		} else {
+			close(WokerCntChannel)
 		}
 	}()
 	for {
