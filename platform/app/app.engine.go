@@ -248,7 +248,7 @@ func (e *Engine) Run() {
 	e.lifeCycle()
 }
 
-func buildEngine() *Engine {
+func NewEngine() *Engine {
 	e := &Engine{}
 	e.Manager = NewDefaultManager()
 	e.lifecycle = &lifecycleWrapper{}
@@ -262,7 +262,7 @@ func buildEngine() *Engine {
 
 var (
 	// App defined
-	App = buildEngine()
+	App = NewEngine()
 	// Run defined
 	Run = App.Run
 )

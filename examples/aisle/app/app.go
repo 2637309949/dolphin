@@ -31,10 +31,9 @@ type (
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value
 	HandlerFunc struct {
-		Method       string
-		RelativePath string
-		Interceptor  []HandlerFunc
-		Handler      func(ctx *Context)
+		Method, RelativePath string
+		Interceptor          []HandlerFunc
+		Handler              func(ctx *Context)
 	}
 )
 
@@ -64,14 +63,10 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	ginHandlers := funk.Map(handlers, func(h HandlerFunc) []app.HandlerFunc {
-		ic := funk.Map(h.Interceptor, func(h HandlerFunc) app.HandlerFunc { return rg.engine.HandlerFunc(h) }).([]app.HandlerFunc)
-		middles := append(ic, rg.engine.HandlerFunc(h))
-		return middles
-	}).([][]app.HandlerFunc)
-	appHandlers := funk.FlattenDeep(ginHandlers).([]app.HandlerFunc)
-	rh := rg.RouterGroup.Handle(httpMethod, relativePath, appHandlers...)
-	return rh
+	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Chain(handlers).Map(func(h HandlerFunc) []app.HandlerFunc {
+		ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) app.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]app.HandlerFunc)
+		return append(ic, rg.engine.HandlerFunc(h))
+	}).FlattenDeep().Value().([]app.HandlerFunc)...)
 }
 
 // Auth middles
@@ -95,9 +90,9 @@ func Cache(time time.Duration) HandlerFunc {
 	})
 }
 
-// buildEngine defined init engine you can custom engine
+// NewEngine defined init engine you can custom engine
 // if you need
-func buildEngine() *Engine {
+func NewEngine() *Engine {
 	e := &Engine{Engine: app.App}
 	e.pool.New = func() interface{} { return e.allocateContext() }
 	return e
@@ -108,15 +103,8 @@ func Run() {
 	App.Run()
 }
 
-var (
-	_ *Engine = &Engine{}
-	// App instance
-	App = buildEngine()
-	// AuthToken by token
-	AuthToken = Auth("token")
-	// AuthEncrypt by encrypt
-	AuthEncrypt = Auth("encrypt")
-)
+// App defined
+var App = NewEngine()
 
 // SyncMiddle defined
 func SyncMiddle() {

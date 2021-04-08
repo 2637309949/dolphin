@@ -89,9 +89,9 @@ func Cache(time time.Duration) HandlerFunc {
 	})
 }
 
-// buildEngine defined init engine you can custom engine
+// NewEngine defined init engine you can custom engine
 // if you need
-func buildEngine() *Engine {
+func NewEngine() *Engine {
 	e := &Engine{Engine: app.App}
 	e.pool.New = func() interface{} { return e.allocateContext() }
 	return e
@@ -99,7 +99,7 @@ func buildEngine() *Engine {
 
 var (
 	// App instance
-	App = buildEngine()
+	App = NewEngine()
 	// Run defined
 	Run = App.Run
 )
