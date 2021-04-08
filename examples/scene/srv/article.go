@@ -9,23 +9,23 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	pApp "github.com/2637309949/dolphin/platform/app"
-	pModel "github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/app"
+	"github.com/2637309949/dolphin/platform/model"
 )
 
 // ArticleAction defined srv
 func ArticleAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
-	return nil, errors.New("No implementation found")
+	return nil, errors.New("no implementation found")
 }
 
 func init() {
-	id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+	id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 		fmt.Println("hello")
 	})
 
-	entry, _ := pApp.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
-	pApp.App.Manager.Cron().TryFunc(entry)
-	pApp.App.Manager.Worker().AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
+	entry, _ := app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+	app.App.Manager.Cron().TryFunc(entry)
+	app.App.Manager.Worker().AddJobHandler("hello", func(args model.Worker) (interface{}, error) {
 		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
 		return map[string]interface{}{
 			"score": 99,

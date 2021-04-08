@@ -13,12 +13,12 @@ import (
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/redislock"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	pApp "github.com/2637309949/dolphin/platform/app"
+	"github.com/2637309949/dolphin/platform/app"
 )
 
 // RedisAction defined srv
 func RedisAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
-	locker := redislock.New(pApp.RedisClient)
+	locker := redislock.New(app.RedisClient)
 	// Try to obtain lock.
 	lock, err := locker.Obtain(context.Background(), "/redis/lock/RedisAction", 100*time.Millisecond, nil)
 	if err == redislock.ErrNotObtained {

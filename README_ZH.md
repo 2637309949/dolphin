@@ -1323,7 +1323,7 @@ demo/srv/article.go
 ```go
 func init() {
 	// add hello topic handler
-	pApp.App.Manager
+	app.App.Manager
 	.Worker()
 	.AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
 		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
@@ -1432,7 +1432,7 @@ AddFunc(string, func()) (int, error)
 ```
 
 ```go
-pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 ```
@@ -1446,10 +1446,10 @@ RefreshFunc(int, string) (int, error)
 ```
 
 ```go
-id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-pApp.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
 ```
 
 ### Del Func
@@ -1461,11 +1461,11 @@ DelFunc(int) error
 ```
 
 ```go
-id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 
-pApp.App.Manager.Cron().DelFunc(id)
+app.App.Manager.Cron().DelFunc(id)
 ```
 
 ### Try Func
@@ -1477,10 +1477,10 @@ TryFunc(int) error
 ```
 
 ```go
-id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-pApp.App.Manager.Cron().TryFunc(id)
+app.App.Manager.Cron().TryFunc(id)
 ```
 
 ## Load User Info

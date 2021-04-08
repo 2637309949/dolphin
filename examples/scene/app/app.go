@@ -9,31 +9,30 @@ import (
 
 	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/go-funk"
-	pApp "github.com/2637309949/dolphin/platform/app"
+	"github.com/2637309949/dolphin/platform/app"
 )
 
 type (
 	// Engine defined parse app engine
 	Engine struct {
-		*pApp.Engine
+		*app.Engine
 		pool sync.Pool
 	}
 	// Context defined http handle hook context
 	Context struct {
-		*pApp.Context
+		*app.Context
 		engine *Engine
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		*pApp.RouterGroup
+		*app.RouterGroup
 		engine *Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value
 	HandlerFunc struct {
-		Method       string
-		RelativePath string
-		Interceptor  []HandlerFunc
-		Handler      func(ctx *Context)
+		Method, RelativePath string
+		Interceptor          []HandlerFunc
+		Handler              func(ctx *Context)
 	}
 )
 
@@ -51,9 +50,9 @@ func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *Router
 	return &RouterGroup{engine: e, RouterGroup: e.Engine.Group(relativePath, handlers...)}
 }
 
-// HandlerFunc convert to pApp.HandlerFunc
-func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
-	return pApp.HF2Handler(func(ctx *pApp.Context) {
+// HandlerFunc convert to app.HandlerFunc
+func (e *Engine) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
+	return app.HF2Handler(func(ctx *app.Context) {
 		c := e.pool.Get().(*Context)
 		c.Context = ctx
 		h.Handler(c)
@@ -63,54 +62,46 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf pApp.HandlerFunc) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Chain(handlers).Map(func(h HandlerFunc) []pApp.HandlerFunc {
-		ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) pApp.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]pApp.HandlerFunc)
+	return rg.RouterGroup.Handle(httpMethod, relativePath, funk.Chain(handlers).Map(func(h HandlerFunc) []app.HandlerFunc {
+		ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) app.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]app.HandlerFunc)
 		return append(ic, rg.engine.HandlerFunc(h))
-	}).FlattenDeep().Value().([]pApp.HandlerFunc)...)
+	}).FlattenDeep().Value().([]app.HandlerFunc)...)
 }
 
 // Auth middles
 func Auth(auth ...string) HandlerFunc {
 	return HF2Handler(func(ctx *Context) {
-		pApp.Auth(auth...).Handler(ctx.Context)
+		app.Auth(auth...).Handler(ctx.Context)
 	})
 }
 
 // Roles middles
 func Roles(roles ...string) HandlerFunc {
 	return HF2Handler(func(ctx *Context) {
-		pApp.Roles(roles...).Handler(ctx.Context)
+		app.Roles(roles...).Handler(ctx.Context)
 	})
 }
 
 // Cache middles
 func Cache(time time.Duration) HandlerFunc {
 	return HF2Handler(func(ctx *Context) {
-		pApp.Cache(time).Handler(ctx.Context)
+		app.Cache(time).Handler(ctx.Context)
 	})
 }
 
 // buildEngine defined init engine you can custom engine
 // if you need
 func buildEngine() *Engine {
-	e := &Engine{Engine: pApp.App}
+	e := &Engine{Engine: app.App}
 	e.pool.New = func() interface{} { return e.allocateContext() }
 	return e
 }
 
-// Run app
-func Run() {
-	App.Run()
-}
-
 var (
-	_ *Engine = &Engine{}
 	// App instance
 	App = buildEngine()
-	// AuthToken by token
-	AuthToken = Auth("token")
-	// AuthEncrypt by encrypt
-	AuthEncrypt = Auth("encrypt")
+	// Run defined
+	Run = App.Run
 )
 
 // SyncMiddle defined
