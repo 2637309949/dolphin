@@ -19,3 +19,5 @@ module.exports.sqlmap = require('./sqlmap')
 module.exports.user = require('./user')
 // view 视图
 module.exports.view = require('./view')
+// vote vote controller
+module.exports.vote = require('./vote')

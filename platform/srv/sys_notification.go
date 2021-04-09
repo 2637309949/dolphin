@@ -12,5 +12,5 @@ import (
 
 // SysNotificationAction defined srv
 func SysNotificationAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
-	return nil, errors.New("No implementation found")
+	return nil, errors.New("no implementation found")
 }

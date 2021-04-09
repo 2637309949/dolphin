@@ -43,3 +43,9 @@ func (t Time) StartOfMonth() time.Time {
 func (t Time) EndOfMonth() time.Time {
 	return time.Date(t.Year(), t.Month()+1, 1, 0, 0, 0, 0, time.Local).AddDate(0, 0, -1)
 }
+
+// Parse defined
+func Parse(layout string, value string) (Time, error) {
+	te, err := time.Parse(layout, value)
+	return Time{te}, err
+}

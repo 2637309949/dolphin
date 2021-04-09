@@ -1183,6 +1183,15 @@ definitions:
         description: Value defined 值
         type: string
     type: object
+  model.VoteInfo:
+    properties:
+      post_id:
+        description: post id
+        type: string
+      user_id:
+        description: user id
+        type: string
+    type: object
   model.Worker:
     properties:
       code:
@@ -6432,15 +6441,45 @@ paths:
       summary: XML显示
       tags:
       - 视图
+  /api/vote/like:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: like id
+        in: body
+        name: id
+        schema:
+          $ref: '#/definitions/model.VoteInfo'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: like article
+      tags:
+      - vote controller
 securityDefinitions:
   OAuth2AccessCode:
-    authorizationUrl: http://localhost:8088/api/sys/cas/authorize
+    authorizationUrl: http://localhost:8082/api/sys/cas/authorize
     flow: accessCode
     scopes:
       admin: Grants read and write access to administrative information
       read: Grants read access
       write: Grants write access
-    tokenUrl: http://localhost:8088/api/sys/cas/token
+    tokenUrl: http://localhost:8082/api/sys/cas/token
     type: oauth2
     x-tokenName: Authorization
 swagger: "2.0"

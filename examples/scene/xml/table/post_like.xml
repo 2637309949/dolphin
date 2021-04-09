@@ -1,0 +1,12 @@
+<table name="post_like" desc="点赞文章" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+    <column name="count" desc="点赞总数" type="null.Int" />
+    <column name="post_id" desc="文章ID" type="null.String" xorm="varchar(36)" />
+
+	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>

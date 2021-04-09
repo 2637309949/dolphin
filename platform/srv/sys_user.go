@@ -14,7 +14,7 @@ import (
 
 // SysUserAction defined srv
 func SysUserAction(v interface{}) (interface{}, error) {
-	return nil, errors.New("No implementation found")
+	return nil, errors.New("no implementation found")
 }
 
 // SysUserGetOrgsFromInheritance defined srv
