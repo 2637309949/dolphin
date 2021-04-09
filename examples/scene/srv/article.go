@@ -22,7 +22,6 @@ func init() {
 	id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 		fmt.Println("hello")
 	})
-
 	entry, _ := app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
 	app.App.Manager.Cron().TryFunc(entry)
 	app.App.Manager.Worker().AddJobHandler("hello", func(args model.Worker) (interface{}, error) {
