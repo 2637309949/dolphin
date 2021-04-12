@@ -4,6 +4,7 @@
 package app
 
 import (
+	"context"
 	"scene/srv"
 
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -19,7 +20,7 @@ import (
 func ICacheInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := srv.ICacheAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.ICacheTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

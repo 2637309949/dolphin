@@ -278,7 +278,7 @@ func SysCasRefresh(ctx *Context) {
 func SysCasCheck(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("openid")
-	ret, err := srv.SysCasAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysCasTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

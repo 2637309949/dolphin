@@ -4,6 +4,7 @@
 package app
 
 import (
+	"context"
 	"scene/srv"
 
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -22,7 +23,7 @@ func RPCMessage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RPCAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.RPCTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

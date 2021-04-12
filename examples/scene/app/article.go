@@ -4,6 +4,7 @@
 package app
 
 import (
+	"context"
 	"errors"
 	"scene/model"
 	"scene/srv"
@@ -295,7 +296,7 @@ func ArticlePayment(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.ArticleAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.ArticleTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

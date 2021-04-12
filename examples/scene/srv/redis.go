@@ -16,8 +16,8 @@ import (
 	"github.com/2637309949/dolphin/platform/app"
 )
 
-// RedisAction defined srv
-func RedisAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+// RedisTODO defined srv
+func RedisTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
 	locker := redislock.New(app.RedisClient)
 	// Try to obtain lock.
 	lock, err := locker.Obtain(context.Background(), "/redis/lock/RedisAction", 100*time.Millisecond, nil)
