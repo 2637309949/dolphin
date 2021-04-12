@@ -423,7 +423,7 @@ func SysUserLogin(ctx *Context) {
 		return
 	}
 	if payload.Domain.String == "" {
-		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+		reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
 		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
 		payload.Domain = null.StringFrom(base[0][2])
 	}
@@ -432,7 +432,7 @@ func SysUserLogin(ctx *Context) {
 	ext, err := ctx.PlatformDB.Where("is_delete = 0 and status = 1").Get(&account)
 	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
 		if err == nil {
-			err = errors.New("Account doesn't exist or password error")
+			err = errors.New("account doesn't exist or password error")
 		}
 		logrus.Errorf("SysUserLogin/ValidPassword:%v", err)
 		ctx.Fail(err)

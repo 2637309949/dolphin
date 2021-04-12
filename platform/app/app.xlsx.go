@@ -43,15 +43,13 @@ func DefaultFormat(interface{}) func(interface{}) interface{} {
 // OptionsetsFormat defiend
 func OptionsetsFormat(db *xorm.Engine) func(interface{}) func(interface{}) interface{} {
 	return func(format interface{}) func(source interface{}) interface{} {
-		optionsets, err := (&Context{}).GetOptions(db, fmt.Sprintf("%v", format))
+		optionsets, err := new(Context).GetOptions(db, fmt.Sprintf("%v", format))
 		return func(source interface{}) interface{} {
 			if err == nil {
 				target := optionsets[fmt.Sprintf("%v", format)]
-				if target != nil {
-					for k, v := range target {
-						if fmt.Sprintf("%v", source) == fmt.Sprintf("%v", v) {
-							return k
-						}
+				for k, v := range target {
+					if fmt.Sprintf("%v", source) == fmt.Sprintf("%v", v) {
+						return k
 					}
 				}
 			}
