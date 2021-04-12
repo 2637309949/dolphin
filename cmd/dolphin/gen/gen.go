@@ -19,8 +19,8 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/thoas/go-funk"
 )
 
 var lines = []pipe.Pipe{

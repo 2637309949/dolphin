@@ -16,7 +16,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2/errors"
@@ -32,6 +31,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/thoas/go-funk"
 	"google.golang.org/grpc"
 )
 

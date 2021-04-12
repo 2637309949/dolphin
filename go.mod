@@ -81,6 +81,7 @@ require (
 	github.com/syndtr/goleveldb v1.0.0
 	github.com/tealeg/xlsx v1.0.5 // indirect
 	github.com/tebeka/strftime v0.1.3 // indirect
+	github.com/thoas/go-funk v0.8.0
 	github.com/tidwall/buntdb v1.1.2
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5 // indirect
 	github.com/ugorji/go/codec v1.1.7

@@ -14,7 +14,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/go-session/cookie"
 	"github.com/2637309949/dolphin/packages/go-session/session"
 	"github.com/2637309949/dolphin/packages/logrus"
@@ -24,6 +23,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/thoas/go-funk"
 )
 
 func init() {

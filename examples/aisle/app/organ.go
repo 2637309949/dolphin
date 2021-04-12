@@ -8,10 +8,10 @@ import (
 	"errors"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/thoas/go-funk"
 )
 
 // OrganAdd api implementation

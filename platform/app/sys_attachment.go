@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 
 	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
@@ -19,6 +18,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util/encode"
 	"github.com/2637309949/dolphin/platform/util/file"
+	"github.com/thoas/go-funk"
 )
 
 // SysAttachmentAdd api implementation

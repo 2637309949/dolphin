@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrotate"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
@@ -22,6 +21,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/pkg/errors"
+	"github.com/thoas/go-funk"
 	"golang.org/x/sys/unix"
 	"golang.org/x/term"
 )

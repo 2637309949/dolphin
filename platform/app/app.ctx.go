@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/mustache"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
@@ -25,6 +24,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/thoas/go-funk"
 )
 
 type (

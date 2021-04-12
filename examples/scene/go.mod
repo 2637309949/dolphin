@@ -20,6 +20,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/segmentio/kafka-go v0.4.10
 	github.com/smartystreets/assertions v1.2.0 // indirect
+	github.com/thoas/go-funk v0.8.0
 	github.com/tidwall/btree v0.4.2 // indirect
 	github.com/tidwall/buntdb v1.2.0 // indirect
 	github.com/tidwall/pretty v1.1.0 // indirect

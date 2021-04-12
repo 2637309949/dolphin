@@ -11,9 +11,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/thoas/go-funk"
 )
 
 // Query defined parse struct from query
