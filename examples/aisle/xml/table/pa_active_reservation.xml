@@ -1,4 +1,4 @@
-<table name="pa_active_reservation" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="pa_active_reservation" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="p_a_r_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="active_theme" desc="" type="null.String" xorm="varchar(500)" />
 	<column name="active_begin_date" desc="" type="null.Time" xorm="datetime" />

@@ -1,4 +1,4 @@
-<table name="trial_lesson" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="trial_lesson" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="t_l_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="tl_name" desc="" type="null.String" xorm="varchar(50)" />
 	<column name="start_time" desc="" type="null.Time" xorm="datetime" />

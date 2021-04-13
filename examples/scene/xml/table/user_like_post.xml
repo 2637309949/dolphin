@@ -1,4 +1,4 @@
-<table name="user_like_post" desc="用户点赞同记录" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="user_like_post" desc="用户点赞同记录" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
     <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
     <column name="user_id" desc="用户ID" type="null.String" xorm="varchar(36)" />
     <column name="post_id" desc="文章ID" type="null.String" xorm="varchar(36)" />

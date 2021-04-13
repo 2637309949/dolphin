@@ -6,7 +6,7 @@ package rpc
 import (
 	"scene/rpc/proto"
 
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 )
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/redis"
+	"github.com/go-redis/redis/v8"
 )
 
 func newClient(opt clientOptions) (*client, error) {

@@ -6,9 +6,9 @@ package app
 import (
 	"errors"
 
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/sirupsen/logrus"
 )
 
 // SysTrackerPage api implementation

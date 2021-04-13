@@ -7,10 +7,10 @@ import (
 
 	errs "errors"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/errors"
-	"github.com/2637309949/dolphin/packages/uuid"
+	"github.com/dgrijalva/jwt-go"
+	uuid "github.com/google/uuid"
 )
 
 // JWTAccessClaims jwt claims
@@ -77,7 +77,7 @@ func (a *JWTAccessGenerate) Token(data *oauth2.GenerateBasic, isGenRefresh bool)
 	refresh := ""
 
 	if isGenRefresh {
-		refresh = base64.URLEncoding.EncodeToString(uuid.NewSHA1(uuid.Must(uuid.NewRandom()), []byte(access)).Bytes())
+		refresh = base64.URLEncoding.EncodeToString([]byte(uuid.NewSHA1(uuid.Must(uuid.NewRandom()), []byte(access)).String()))
 		refresh = strings.ToUpper(strings.TrimRight(refresh, "="))
 	}
 

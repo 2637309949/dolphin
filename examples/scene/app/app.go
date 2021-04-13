@@ -7,8 +7,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/platform/app"
+	"github.com/gin-gonic/gin"
 	"github.com/thoas/go-funk"
 )
 

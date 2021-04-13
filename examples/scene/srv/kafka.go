@@ -10,10 +10,10 @@ import (
 	"scene/model"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/go-errors/errors"
 	"github.com/segmentio/kafka-go"
+	"github.com/sirupsen/logrus"
 )
 
 var Writer *kafka.Writer

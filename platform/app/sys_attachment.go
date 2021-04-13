@@ -9,15 +9,15 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
-	"github.com/2637309949/dolphin/packages/uuid"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util/encode"
 	"github.com/2637309949/dolphin/platform/util/file"
+	"github.com/gin-gonic/gin/binding"
+	uuid "github.com/google/uuid"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
 
@@ -113,7 +113,7 @@ func SysAttachmentUpload(ctx *Context) {
 	file.EnsureDir(path.Join(viper.GetString("http.static"), "files"))
 	for _, f := range files {
 		filename := filepath.Base(f.Filename)
-		uuid := uuid.MustString()
+		uuid := uuid.New().String()
 		filePath := path.Join(viper.GetString("http.static"), "files", uuid+filepath.Ext(filename))
 		if err := ctx.SaveUploadedFile(f, filePath); err != nil {
 			ctx.Fail(err)

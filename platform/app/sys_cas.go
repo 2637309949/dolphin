@@ -14,16 +14,16 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/go-session/cookie"
-	"github.com/2637309949/dolphin/packages/go-session/session"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/packages/xoauth2"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/go-session/cookie"
+	"github.com/go-session/session"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
+	xoauth2 "golang.org/x/oauth2"
 )
 
 func init() {

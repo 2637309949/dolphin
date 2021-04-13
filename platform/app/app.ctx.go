@@ -16,14 +16,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/mustache"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/eriklott/mustache"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -419,8 +419,13 @@ func (ctx *Context) RemoveFile(db *xorm.Session, cb func([]model.SysAttachment) 
 }
 
 // RenderString defined
-func (ctx *Context) String(code int, data string, context ...interface{}) {
-	ctx.Context.String(code, mustache.Render(data, context...))
+func (ctx *Context) String(code int, data string, context ...interface{}) error {
+	str, err := mustache.NewTemplate().Render(data, context...)
+	if err != nil {
+		return err
+	}
+	ctx.Context.String(code, str)
+	return nil
 }
 
 // RenderFile defined
@@ -439,7 +444,13 @@ func (ctx *Context) RenderFile(filepath string, filename string, context ...inte
 		ctx.Fail(err)
 		return
 	}
-	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -463,7 +474,13 @@ func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
 		ctx.Fail(err)
 		return
 	}
-	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -487,7 +504,13 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 		ctx.Fail(err)
 		return
 	}
-	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

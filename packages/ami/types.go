@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/redis"
+	"github.com/go-redis/redis/v8"
 )
 
 // Message from queue

@@ -12,8 +12,8 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/ghodss/yaml"
+	"github.com/sirupsen/logrus"
 
 	"github.com/go-openapi/spec"
 

@@ -12,10 +12,10 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 // Table struct

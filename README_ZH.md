@@ -937,7 +937,7 @@ func (m *Article) TableName() string {
 	name="article" 
 	desc="文章" 
 	packages="github.com/2637309949/dolphin/packages/null,
-	github.com/2637309949/dolphin/packages/decimal">
+	github.com/shopspring/decimal">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
 
@@ -1058,8 +1058,8 @@ package rpc
 import (
 	"demo/rpc/proto"
 
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 )
 

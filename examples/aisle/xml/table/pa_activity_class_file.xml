@@ -1,4 +1,4 @@
-<table name="pa_activity_class_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="pa_activity_class_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="p_a_c_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="file_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="pacf_desc" desc="" type="null.String" xorm="varchar(500)" />

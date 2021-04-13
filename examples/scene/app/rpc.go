@@ -7,7 +7,7 @@ import (
 	"context"
 	"scene/srv"
 
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 // RPCMessage api implementation

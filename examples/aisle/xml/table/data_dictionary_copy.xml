@@ -1,4 +1,4 @@
-<table name="data_dictionary_copy" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="data_dictionary_copy" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="dic_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="dic_parent" desc="" type="null.Float" xorm="float(11,2)" />
 	<column name="dic_shortname" desc="" type="null.String" xorm="varchar(100)" />

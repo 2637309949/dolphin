@@ -1,7 +1,7 @@
 package plugin
 
 import (
-	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/gin-gonic/gin"
 )
 
 // CORS defined cors middles

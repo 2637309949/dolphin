@@ -1,4 +1,4 @@
-<table name="marketing_activities_city" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="marketing_activities_city" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="m_a_c_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="ma_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="org_id" desc="" type="null.Int" xorm="int(11)" />

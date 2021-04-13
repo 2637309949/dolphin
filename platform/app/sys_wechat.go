@@ -6,8 +6,8 @@ package app
 import (
 	"context"
 
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/srv"
+	"github.com/sirupsen/logrus"
 )
 
 // SysWechatOauth2 api implementation

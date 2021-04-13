@@ -3,7 +3,7 @@ package plugin
 import (
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/gin-gonic/gin"
 )
 
 // Override defined

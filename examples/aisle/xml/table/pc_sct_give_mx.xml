@@ -1,4 +1,4 @@
-<table name="pc_sct_give_mx" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="pc_sct_give_mx" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="p_s_g_m_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="sct_id" desc="" type="null.Int" xorm="int(11)" />

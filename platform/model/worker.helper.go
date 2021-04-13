@@ -5,7 +5,7 @@ package model
 
 import (
 	"encoding/json"
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 const (

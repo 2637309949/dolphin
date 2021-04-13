@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/cache/persistence"
-	"github.com/2637309949/dolphin/packages/gin"
+	"github.com/gin-gonic/gin"
 )
 
 const (

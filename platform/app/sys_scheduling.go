@@ -6,10 +6,10 @@ package app
 import (
 	"context"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
 )
 
 // SysSchedulingAdd api implementation

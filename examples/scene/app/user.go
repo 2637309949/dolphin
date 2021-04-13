@@ -4,8 +4,8 @@
 package app
 
 import (
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/sirupsen/logrus"
 )
 
 // UserInfo api implementation

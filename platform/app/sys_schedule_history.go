@@ -4,7 +4,7 @@
 package app
 
 import (
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 // SysScheduleHistoryPage api implementation

@@ -6,7 +6,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
-	"github.com/2637309949/dolphin/packages/uuid"
+	uuid "github.com/google/uuid"
 	"github.com/tidwall/buntdb"
 )
 
@@ -43,7 +43,7 @@ func (ts *MemStore) Create(info oauth2.TokenInfo) error {
 			return err
 		}
 
-		basicID := uuid.MustString()
+		basicID := uuid.New().String()
 		aexp := info.GetAccessExpiresIn()
 		rexp := aexp
 		expires := true

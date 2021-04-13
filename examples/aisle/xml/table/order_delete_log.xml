@@ -1,4 +1,4 @@
-<table name="order_delete_log" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="order_delete_log" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="o_d_l_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="order_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="delete_time" desc="" type="null.Time" xorm="datetime" />

@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/ami"
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/redis"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
+	"github.com/go-redis/redis/v8"
+	"github.com/sirupsen/logrus"
 )
 
 type errorLogger struct{}

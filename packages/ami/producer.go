@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/redis"
+	"github.com/go-redis/redis/v8"
 	"github.com/imdario/mergo"
 	"github.com/ssgreg/repeat"
 )

@@ -6,7 +6,7 @@ package app
 import (
 	"aisle/model"
 
-	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/spf13/viper"
 )
 
 // Name project

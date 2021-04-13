@@ -8,8 +8,8 @@ import (
 	"scene/model"
 	"scene/srv"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
 )
 
 // KafkaAdd api implementation

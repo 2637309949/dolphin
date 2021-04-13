@@ -10,17 +10,17 @@ import (
 	"path"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/logrotate"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/log"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/gin-gonic/gin"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 	"golang.org/x/sys/unix"
 	"golang.org/x/term"
@@ -177,10 +177,10 @@ func init() {
 		writer = os.Stdout
 	}
 	dir := path.Join(viper.GetString("dir.log"), viper.GetString("app.name"))
-	logf, err := logrotate.New(
+	logf, err := rotatelogs.New(
 		dir+".%Y%m%d%H",
-		logrotate.WithMaxAge(24*time.Hour),
-		logrotate.WithRotationTime(24*time.Hour),
+		rotatelogs.WithMaxAge(24*time.Hour),
+		rotatelogs.WithRotationTime(24*time.Hour),
 	)
 	if err != nil {
 		logrus.Printf("failed to create rotatelogs: %s", err)

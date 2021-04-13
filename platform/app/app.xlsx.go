@@ -7,11 +7,11 @@ import (
 	"path"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/excelize"
-	"github.com/2637309949/dolphin/packages/uuid"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/360EntSecGroup-Skylar/excelize"
+	uuid "github.com/google/uuid"
+	"github.com/spf13/viper"
 )
 
 // ExcelConfig defined
@@ -95,7 +95,7 @@ func NewParseExcelConfig(file io.Reader, sheet interface{}, header ...[]map[stri
 // BuildExcel defined
 func BuildExcel(cfg ExcelConfig) (model.ExportInfo, error) {
 	f := excelize.NewFile()
-	uuid := uuid.MustString()
+	uuid := uuid.New().String()
 	index := f.NewSheet("Sheet1")
 	filePath := path.Join(cfg.TmplPath, fmt.Sprintf("%v.xlsx", uuid))
 	f.SetActiveSheet(index)
@@ -170,10 +170,7 @@ func ParseExcel(cfg ExcelConfig) ([]map[string]string, error) {
 	case string:
 		sheetName = sn
 	}
-	rows, err := eFile.GetRows(sheetName)
-	if err != nil {
-		return nil, err
-	}
+	rows := eFile.GetRows(sheetName)
 
 	data := []map[string]string{}
 	iTitle := map[int]string{}

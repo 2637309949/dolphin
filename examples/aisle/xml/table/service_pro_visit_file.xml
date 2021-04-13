@@ -1,4 +1,4 @@
-<table name="service_pro_visit_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="service_pro_visit_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="s_p_v_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="spv_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="files" desc="" type="null.Int" xorm="int(11)" />

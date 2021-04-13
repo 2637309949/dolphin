@@ -1,4 +1,4 @@
-<table name="class_schedule_student" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="class_schedule_student" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="c_s_s_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="stu_start_date" desc="" type="null.Time" xorm="datetime" />

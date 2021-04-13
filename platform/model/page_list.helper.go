@@ -5,7 +5,7 @@ import (
 	"errors"
 	"reflect"
 
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 // With defined

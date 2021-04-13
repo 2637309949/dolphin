@@ -1,4 +1,4 @@
-<table name="user_onoff_rz" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="user_onoff_rz" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="u_o_r_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="now_state" desc="" type="null.Int" xorm="int(11)" />

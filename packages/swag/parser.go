@@ -20,9 +20,9 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/KyleBanks/depth"
 	"github.com/go-openapi/spec"
+	"github.com/spf13/viper"
 )
 
 const (

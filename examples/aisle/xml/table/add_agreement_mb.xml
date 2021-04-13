@@ -1,4 +1,4 @@
-<table name="add_agreement_mb" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="add_agreement_mb" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="a_a_m_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="aam_name" desc="" type="null.String" xorm="varchar(20)" />
 	<column name="aam_head" desc="" type="null.Int" xorm="int(11)" />
