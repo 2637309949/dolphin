@@ -72,8 +72,8 @@ func init() {
 	}
 }
 
-// AmiProducer defined srv
-func AmiProducer(ctx *gin.Context, db *xorm.Engine, params model.AmiInfo) (interface{}, error) {
+// Producer defined srv
+func Producer(ctx *gin.Context, db *xorm.Engine, params model.AmiInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
 		logrus.Error("failed to marshal:", err)
@@ -83,8 +83,8 @@ func AmiProducer(ctx *gin.Context, db *xorm.Engine, params model.AmiInfo) (inter
 	return nil, nil
 }
 
-// AmiConsumer defined srv
-func AmiConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+// Consumer defined srv
+func Consumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
