@@ -251,7 +251,7 @@ mkdir demo && cd demo && dolphin init
 
 > 一个与dolphin对接的ERP模板
 
-<img align="right" width="200px" src="./assets/dolphin-ui.png">
+<img align="right" width="200px" src="./assets/dolphin-ui.jpeg">
 
 你可以找到一系列已经准备好的demo [dolphin examples repository.](https://github.com/2637309949/dolphin-ui)
 

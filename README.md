@@ -277,7 +277,7 @@ mkdir demo && cd demo && dolphin init
 
 > An erp template that uses dolphin background support.
 
-<img align="right" width="200px" src="./assets/dolphin-ui.png">
+<img align="right" width="200px" src="./assets/dolphin-ui.jpeg">
 
 You can find a number of ready-to-run examples at [dolphin examples repository.](https://github.com/2637309949/dolphin-ui)
 
