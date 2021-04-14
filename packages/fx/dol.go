@@ -96,9 +96,3 @@ func New() *Dol {
 	dol.fx.provide(func() Lifecycle { return dol.fx.lifecycle })
 	return dol
 }
-
-var d *Dol
-
-func init() {
-	d = New()
-}

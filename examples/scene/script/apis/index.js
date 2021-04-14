@@ -7,8 +7,8 @@ module.exports.iCache = require('./i_cache')
 module.exports.encrypt = require('./encrypt')
 // kafka Kafka controller
 module.exports.kafka = require('./kafka')
-// redis redis controller
-module.exports.redis = require('./redis')
+// redisLock redis controller
+module.exports.redisLock = require('./redis_lock')
 // redisMq Ami controller
 module.exports.redisMq = require('./redis_mq')
 // rPC rpc controller

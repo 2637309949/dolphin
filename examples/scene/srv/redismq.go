@@ -24,15 +24,15 @@ func (l *errorLogger) AmiError(err error) {
 	println("Got error from Ami:", err.Error())
 }
 
-// AmiProducerConn defined
-var AmiProducerConn *redismq.Producer
+// RedisProducer defined
+var RedisProducer *redismq.Producer
 
-// AmiConsumerConn defined
-var AmiConsumerConn *redismq.Consumer
+// RedisConsumer defined
+var RedisConsumer *redismq.Consumer
 
 func init() {
 	var err error
-	AmiProducerConn, err = redismq.NewProducer(
+	RedisProducer, err = redismq.NewProducer(
 		redismq.ProducerOptions{
 			Name:              "ami",
 			ErrorNotifier:     &errorLogger{},
@@ -50,7 +50,7 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	AmiConsumerConn, err = redismq.NewConsumer(
+	RedisConsumer, err = redismq.NewConsumer(
 		redismq.ConsumerOptions{
 			Name:              "ami",
 			Consumer:          "ami",
@@ -79,7 +79,7 @@ func AmiProducer(ctx *gin.Context, db *xorm.Engine, params model.AmiInfo) (inter
 		logrus.Error("failed to marshal:", err)
 		return nil, err
 	}
-	AmiProducerConn.Send(string(aiStr))
+	RedisProducer.Send(string(aiStr))
 	return nil, nil
 }
 
@@ -92,7 +92,7 @@ func AmiConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{
 		}
 	}()
 	var items []model.AmiInfo
-	c := AmiConsumerConn.Start()
+	c := RedisConsumer.Start()
 	cwt, cancel := context.WithCancel(context.TODO())
 	go func(cwt context.Context) {
 		for {
@@ -102,7 +102,7 @@ func AmiConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{
 					cancel()
 					return
 				}
-				AmiConsumerConn.Ack(m)
+				RedisConsumer.Ack(m)
 				value := model.AmiInfo{}
 				if err := json.Unmarshal([]byte(m.Body), &value); err != nil {
 					logrus.Error("failed to unmarshal:", err)
@@ -115,6 +115,6 @@ func AmiConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{
 		}
 	}(cwt)
 	<-cwt.Done()
-	// AmiConsumerConn.Stop()
+	// RedisConsumer.Stop()
 	return items, nil
 }

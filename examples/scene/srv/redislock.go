@@ -16,8 +16,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// RedisTODO defined srv
-func RedisTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
+// RedisLockTODO defined srv
+func RedisLockTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
 	locker := redislock.New(app.RedisClient)
 	// Try to obtain lock.
 	lock, err := locker.Obtain(context.Background(), "/redis/lock/RedisAction", 100*time.Millisecond, nil)

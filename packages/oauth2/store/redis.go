@@ -8,7 +8,7 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/go-redis/redis/v8"
-	uuid "github.com/google/uuid"
+	"github.com/google/uuid"
 	jsoniter "github.com/json-iterator/go"
 )
 

@@ -15,3 +15,9 @@ func Provider(providers ...interface{}) error {
 	d.Use(ProviderOptions(providers...))
 	return nil
 }
+
+var d *Dol
+
+func init() {
+	d = New()
+}

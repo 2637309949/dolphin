@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// RedisLock api implementation
+// RedisLockLock api implementation
 // @Summary Add lock
 // @Tags redis controller
 // @Param Authorization header string false "认证令牌"
@@ -19,11 +19,11 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/redis/lock [get]
-func RedisLock(ctx *Context) {
+func RedisLockLock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RedisTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.RedisLockTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -32,7 +32,7 @@ func RedisLock(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// RedisUnlock api implementation
+// RedisLockUnlock api implementation
 // @Summary del lock
 // @Tags redis controller
 // @Param Authorization header string false "认证令牌"
@@ -41,11 +41,11 @@ func RedisLock(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/redis/unlock [get]
-func RedisUnlock(ctx *Context) {
+func RedisLockUnlock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RedisTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.RedisLockTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
