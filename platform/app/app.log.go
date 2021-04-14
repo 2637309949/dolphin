@@ -10,20 +10,20 @@ import (
 	"path"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrotate"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/log"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/gin-gonic/gin"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/pkg/errors"
-	"golang.org/x/crypto/ssh/terminal"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 	"golang.org/x/sys/unix"
+	"golang.org/x/term"
 )
 
 // XLogger defined
@@ -55,7 +55,6 @@ func (s *XLogger) Level() log.LogLevel {
 // SetLevel implement ILogger
 func (s *XLogger) SetLevel(l log.LogLevel) {
 	s.level = l
-	return
 }
 
 // TrackerStore store logs
@@ -88,6 +87,10 @@ func initTracker() {
 	TrackerStore = func(domain string, beans *[]model.SysTracker) error {
 		if db := App.Manager.GetBusinessDB(domain); db != nil {
 			db, err := db.Clone()
+			if err != nil {
+				logrus.Error(err)
+				return err
+			}
 			db.ShowSQL(false)
 			_, err = db.Insert(*beans)
 			if err != nil {
@@ -101,6 +104,7 @@ func initTracker() {
 	}
 	go func() {
 		var bucket slice.SyncSlice
+		var timer = time.NewTicker(5 * time.Second)
 		type SysTracker struct {
 			model.SysTracker
 			Domain null.String `xorm:"varchar(36) comment('域名') 'domain'" json:"domain" xml:"domain"`
@@ -108,7 +112,7 @@ func initTracker() {
 		for {
 			logWorkerPool <- logChannel
 			select {
-			case <-time.Tick(5 * time.Second):
+			case <-timer.C:
 				logs := bucket.Reset()
 				bmp := map[string][]model.SysTracker{}
 				beans := funk.Map(logs, func(entity interface{}) SysTracker {
@@ -127,10 +131,10 @@ func initTracker() {
 							ReqBody:    item.ReqBody,
 							ResBody:    item.ResBody,
 							CreateTime: null.TimeFrom(time.Now()),
-							CreateBy:   model.DefaultAdmin.ID,
+							Creater:    model.DefaultAdmin.ID,
 							UpdateTime: null.TimeFrom(time.Now()),
-							UpdateBy:   model.DefaultAdmin.ID,
-							DelFlag:    null.IntFrom(0),
+							Updater:    model.DefaultAdmin.ID,
+							IsDelete:   null.IntFrom(0),
 						},
 						Domain: null.StringFrom(item.Domain),
 					}
@@ -168,15 +172,15 @@ func createXLogger() interface{} {
 
 func init() {
 	var writer io.Writer
-	util.SetFormatter(terminal.IsTerminal(unix.Stdout))
-	if terminal.IsTerminal(unix.Stdout) {
+	util.SetFormatter(term.IsTerminal(unix.Stdout))
+	if term.IsTerminal(unix.Stdout) {
 		writer = os.Stdout
 	}
 	dir := path.Join(viper.GetString("dir.log"), viper.GetString("app.name"))
-	logf, err := logrotate.New(
+	logf, err := rotatelogs.New(
 		dir+".%Y%m%d%H",
-		logrotate.WithMaxAge(24*time.Hour),
-		logrotate.WithRotationTime(24*time.Hour),
+		rotatelogs.WithMaxAge(24*time.Hour),
+		rotatelogs.WithRotationTime(24*time.Hour),
 	)
 	if err != nil {
 		logrus.Printf("failed to create rotatelogs: %s", err)

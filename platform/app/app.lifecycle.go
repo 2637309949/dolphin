@@ -7,7 +7,7 @@ package app
 import (
 	"context"
 
-	"github.com/2637309949/dolphin/packages/multierr"
+	"go.uber.org/multierr"
 )
 
 // A Hook is a pair of start and stop callbacks, either of which can be nil,

@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -33,6 +34,21 @@ type DepositOutFlow struct {
 	NowFloor null.Int `xorm:"int(11) 'now_floor'" json:"now_floor" form:"now_floor" xml:"now_floor"`
 	// PkCfPool defined
 	PkCfPool null.Int `xorm:"int(11) 'pk_cf_pool'" json:"pk_cf_pool" form:"pk_cf_pool" xml:"pk_cf_pool"`
+}
+
+// With defined
+func (m *DepositOutFlow) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -68,7 +84,8 @@ func (m *DepositOutFlow) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *DepositOutFlow) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

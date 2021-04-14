@@ -5,13 +5,14 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
-	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
+	"github.com/shopspring/decimal"
 )
 
 // Fee defined
@@ -40,8 +41,8 @@ type Fee struct {
 	YhCount null.String `xorm:"varchar(50) 'yh_count'" json:"yh_count" form:"yh_count" xml:"yh_count"`
 	// YhName defined
 	YhName null.String `xorm:"varchar(50) 'yh_name'" json:"yh_name" form:"yh_name" xml:"yh_name"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// FeeType defined
 	FeeType null.Int `xorm:"int(11) 'fee_type'" json:"fee_type" form:"fee_type" xml:"fee_type"`
 	// CheckState defined
@@ -84,6 +85,21 @@ type Fee struct {
 	BfFeeTime null.Time `xorm:"datetime 'bf_fee_time'" json:"bf_fee_time" form:"bf_fee_time" xml:"bf_fee_time"`
 }
 
+// With defined
+func (m *Fee) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *Fee) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -117,7 +133,8 @@ func (m *Fee) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Fee) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

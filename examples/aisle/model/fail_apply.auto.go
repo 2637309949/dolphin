@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -35,8 +36,8 @@ type FailApply struct {
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	// CheckState defined
 	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CheckTwoState defined
 	CheckTwoState null.Int `xorm:"int(11) 'check_two_state'" json:"check_two_state" form:"check_two_state" xml:"check_two_state"`
 	// FailTime defined
@@ -75,6 +76,21 @@ type FailApply struct {
 	HjTmkjlCheckDesc null.String `xorm:"varchar(1000) 'hj_tmkjl_check_desc'" json:"hj_tmkjl_check_desc" form:"hj_tmkjl_check_desc" xml:"hj_tmkjl_check_desc"`
 }
 
+// With defined
+func (m *FailApply) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *FailApply) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -108,7 +124,8 @@ func (m *FailApply) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *FailApply) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

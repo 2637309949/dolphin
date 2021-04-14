@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -29,14 +30,29 @@ type StudentOrganSchool struct {
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// SyId defined
 	SyId null.Int `xorm:"int(11) 'sy_id'" json:"sy_id" form:"sy_id" xml:"sy_id"`
 	// StuGxYy defined
 	StuGxYy null.Int `xorm:"int(11) 'stu_gx_yy'" json:"stu_gx_yy" form:"stu_gx_yy" xml:"stu_gx_yy"`
 	// SfPlzx defined
 	SfPlzx null.Int `xorm:"int(11) 'sf_plzx'" json:"sf_plzx" form:"sf_plzx" xml:"sf_plzx"`
+}
+
+// With defined
+func (m *StudentOrganSchool) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -72,7 +88,8 @@ func (m *StudentOrganSchool) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StudentOrganSchool) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

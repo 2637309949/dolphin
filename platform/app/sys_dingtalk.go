@@ -4,8 +4,10 @@
 package app
 
 import (
-	"github.com/2637309949/dolphin/packages/logrus"
+	"context"
+
 	"github.com/2637309949/dolphin/platform/srv"
+	"github.com/sirupsen/logrus"
 )
 
 // SysDingtalkOauth2 api implementation
@@ -18,7 +20,7 @@ import (
 func SysDingtalkOauth2(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetUser()
-	ret, err := srv.SysDingtalkAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysDingtalkTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

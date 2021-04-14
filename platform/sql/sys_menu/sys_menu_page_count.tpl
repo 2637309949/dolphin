@@ -5,7 +5,7 @@ from
 where
 	sys_menu.id {{.ne}} ""
 	and
-	sys_menu.del_flag {{.ne}} 1
+	sys_menu.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

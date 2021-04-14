@@ -13,8 +13,8 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/shurcooL/httpfs/vfsutil"
+	"github.com/spf13/viper"
 )
 
 // SQL struct
@@ -33,18 +33,18 @@ func (app *SQL) Build(dir string, args []string, node *schema.Application) ([]*p
 	countByte, _ := vfsutil.ReadFile(template.Assets, "count.tmpl")
 	selectByte, _ := vfsutil.ReadFile(template.Assets, "select.tmpl")
 	treeByte, _ := vfsutil.ReadFile(template.Assets, "tree.tmpl")
-	for _, c := range node.Controllers {
-		for _, api := range c.APIS {
+	for i := range node.Controllers {
+		for _, api := range node.Controllers[i].APIS {
 			if strings.TrimSpace(api.Table) != "" && api.Func == "page" {
 				data := map[string]interface{}{
 					"PackageName": node.PackageName,
 					"Name":        node.Name,
-					"Controller":  c,
+					"Controller":  node.Controllers[i],
 					"Application": node,
 					"Api":         api,
 					"Viper":       viper.GetViper(),
 				}
-				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v.tpl", c.Name, api.Name, "count"))
+				cpath := path.Join(dir, viper.GetString("dir.sql"), node.Controllers[i].Name, fmt.Sprintf("%v_%v_%v.tpl", node.Controllers[i].Name, api.Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
 					tmplCfg := &pipe.TmplCfg{
 						Text:     string(countByte),
@@ -55,7 +55,7 @@ func (app *SQL) Build(dir string, args []string, node *schema.Application) ([]*p
 					tmplCfgs = append(tmplCfgs, tmplCfg)
 					tplCache[filepath.Base(cpath)] = true
 				}
-				spath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v_%v.tpl", c.Name, api.Name, "select"))
+				spath := path.Join(dir, viper.GetString("dir.sql"), node.Controllers[i].Name, fmt.Sprintf("%v_%v_%v.tpl", node.Controllers[i].Name, api.Name, "select"))
 				if _, ok := tplCache[filepath.Base(spath)]; !ok {
 					tmplCfg := &pipe.TmplCfg{
 						Text:     string(selectByte),
@@ -70,12 +70,12 @@ func (app *SQL) Build(dir string, args []string, node *schema.Application) ([]*p
 				data := map[string]interface{}{
 					"PackageName": node.PackageName,
 					"Name":        node.Name,
-					"Controller":  c,
+					"Controller":  node.Controllers[i],
 					"Application": node,
 					"Api":         api,
 					"Viper":       viper.GetViper(),
 				}
-				cpath := path.Join(dir, viper.GetString("dir.sql"), c.Name, fmt.Sprintf("%v_%v.tpl", c.Name, api.Name))
+				cpath := path.Join(dir, viper.GetString("dir.sql"), node.Controllers[i].Name, fmt.Sprintf("%v_%v.tpl", node.Controllers[i].Name, api.Name))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
 					tmplCfg := &pipe.TmplCfg{
 						Text:     string(treeByte),

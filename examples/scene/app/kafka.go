@@ -4,11 +4,12 @@
 package app
 
 import (
+	"context"
 	"scene/model"
 	"scene/srv"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
 )
 
 // KafkaAdd api implementation
@@ -28,13 +29,12 @@ func KafkaAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.KafkaProducer(ctx.Raw(), ctx.DB, payload)
-	if err != nil {
+	if err := srv.KafkaProducer(context.Background(), payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+	ctx.Success("ok")
 }
 
 // KafkaGet api implementation
@@ -49,13 +49,13 @@ func KafkaGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ctx.Persist(ctx.DB, "0586e250-5b6c-4a79-9f4a-767a742b7890")
-	ctx.Remove(ctx.DB, "6ebce24f-6887-4d6d-a62a-2a706fcf1c3f")
-	ret, err := srv.KafkaConsumer(ctx.Raw(), ctx.DB, q.Value())
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(ret)
+	// ctx.Persist(ctx.DB, "0586e250-5b6c-4a79-9f4a-767a742b7890")
+	// ctx.Remove(ctx.DB, "6ebce24f-6887-4d6d-a62a-2a706fcf1c3f")
+	// ret, err := srv.KafkaConsumer(context.Background(), q.Value())
+	// if err != nil {
+	// 	logrus.Error(err)
+	// 	ctx.Fail(err)
+	// 	return
+	// }
+	ctx.Success("ok")
 }

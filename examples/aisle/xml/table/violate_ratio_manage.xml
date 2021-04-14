@@ -1,4 +1,4 @@
-<table name="violate_ratio_manage" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="violate_ratio_manage" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="v_r_m_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="ratio_name" desc="" type="null.String" xorm="varchar(50)" />
 	<column name="ratio" desc="" type="null.String" xorm="varchar(20)" />
@@ -6,6 +6,6 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="if_open" desc="" type="null.Int" xorm="int(11)" />
 </table>

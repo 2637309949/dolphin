@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_client">
         insert into sys_client
-		(`id`,`name`,`app_name`,`domain`,`client`,`secret`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`name`,`app_name`,`domain`,`client`,`secret`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?name,?app_name,?domain,?client,?secret,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?app_name,?domain,?client,?secret,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_client">
-        update sys_client set `id`=?id,`name`=?name,`app_name`=?app_name,`domain`=?domain,`client`=?client,`secret`=?secret,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_client set `id`=?id,`name`=?name,`app_name`=?app_name,`domain`=?domain,`client`=?client,`secret`=?secret,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_client">
         delete from sys_client where id =?id
     </sql>
     <sql id="selectone_sys_client">
-        select `id`,`name`,`app_name`,`domain`,`client`,`secret`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_client where  id =?id
+        select `id`,`name`,`app_name`,`domain`,`client`,`secret`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_client where  id =?id
     </sql>
     <sql id="selectall_sys_client">
-        select `id`,`name`,`app_name`,`domain`,`client`,`secret`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_client
+        select `id`,`name`,`app_name`,`domain`,`client`,`secret`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_client
     </sql>
 </sqlMap>

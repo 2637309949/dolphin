@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,8 +38,8 @@ type ClassScheduleStudent struct {
 	CsId null.Int `xorm:"int(11) 'cs_id'" json:"cs_id" form:"cs_id" xml:"cs_id"`
 	// KqType defined
 	KqType null.Int `xorm:"int(11) 'kq_type'" json:"kq_type" form:"kq_type" xml:"kq_type"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// ScsId defined
 	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 	// IfKouHour defined
@@ -111,6 +112,21 @@ type ClassScheduleStudent struct {
 	NextCssId null.Int `xorm:"int(11) 'next_css_id'" json:"next_css_id" form:"next_css_id" xml:"next_css_id"`
 }
 
+// With defined
+func (m *ClassScheduleStudent) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *ClassScheduleStudent) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -144,7 +160,8 @@ func (m *ClassScheduleStudent) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *ClassScheduleStudent) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

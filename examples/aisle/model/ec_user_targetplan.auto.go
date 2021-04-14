@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -31,8 +32,8 @@ type EcUserTargetplan struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// UserName defined
 	UserName null.String `xorm:"varchar(100) 'user_name'" json:"user_name" form:"user_name" xml:"user_name"`
 	// UserPhone defined
@@ -41,6 +42,21 @@ type EcUserTargetplan struct {
 	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	// MonthTask defined
 	MonthTask null.Float `xorm:"float(50,2) 'month_task'" json:"month_task" form:"month_task" xml:"month_task"`
+}
+
+// With defined
+func (m *EcUserTargetplan) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -76,7 +92,8 @@ func (m *EcUserTargetplan) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *EcUserTargetplan) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

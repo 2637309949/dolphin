@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,10 +38,25 @@ type Organ struct {
 	IfBuyOnline null.Int `xorm:"int(11) 'if_buy_online'" json:"if_buy_online" form:"if_buy_online" xml:"if_buy_online"`
 	// OrganTell defined
 	OrganTell null.String `xorm:"varchar(20) 'organ_tell'" json:"organ_tell" form:"organ_tell" xml:"organ_tell"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// ShengId defined
 	ShengId null.Int `xorm:"int(11) 'sheng_id'" json:"sheng_id" form:"sheng_id" xml:"sheng_id"`
+}
+
+// With defined
+func (m *Organ) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -76,7 +92,8 @@ func (m *Organ) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Organ) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

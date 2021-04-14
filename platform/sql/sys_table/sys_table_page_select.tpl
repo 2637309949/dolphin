@@ -11,7 +11,7 @@ from
 where
 	sys_table.id {{.ne}} ""
 	and
-	sys_table.del_flag {{.ne}} 1
+	sys_table.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

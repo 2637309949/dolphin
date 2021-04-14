@@ -3,7 +3,7 @@
 
 package model
 
-{{.Table.Import .Table.Packages "reflect,encoding/json,github.com/2637309949/dolphin/packages/xormplus/xorm,github.com/2637309949/dolphin/packages/xormplus/xorm/tags,github.com/2637309949/dolphin/packages/xormplus/xorm/caches,github.com/2637309949/dolphin/packages/xormplus/xorm"}}
+{{.Table.Import .Table.Packages "errors,reflect,encoding/json,github.com/2637309949/dolphin/packages/xormplus/xorm/tags,github.com/2637309949/dolphin/packages/xormplus/xorm/caches,github.com/2637309949/dolphin/packages/xormplus/xorm"}}
 
 // {{.Table.ToUpperCase .Table.Name}} defined {{.Table.Desc}} 
 type {{.Table.ToUpperCase .Table.Name}} struct {
@@ -11,6 +11,21 @@ type {{.Table.ToUpperCase .Table.Name}} struct {
 	// {{.ToUpperCase .Name}} defined {{.Desc}}
 	{{.ToUpperCase .Name}} {{.SRef .Type}} `xorm:"{{- if ne .Xorm ""}}{{.Xorm}} {{end}}{{- if ne .Desc ""}}comment('{{.Desc}}') {{end}}'{{.Name}}'" json:"{{- if ne .JSON ""}}{{.JSON}}{{- else}}{{.Name}}{{- end}}" form:"{{- if ne .Form ""}}{{.Form}}{{- else}}{{.Name}}{{- end}}" xml:"{{.Name}}"{{- if ne .Example ""}} example:"{{.Example}}"{{- end}}`
 	{{- end}}
+}
+
+// With defined
+func (m *{{.Table.ToUpperCase .Table.Name}}) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -46,7 +61,8 @@ func (m *{{.Table.ToUpperCase .Table.Name}}) FromMap(fm map[string]interface{}) 
 
 // Parser defined
 func (m *{{.Table.ToUpperCase .Table.Name}}) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -35,8 +36,8 @@ type LanguagePack struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// AchievementNum defined
 	AchievementNum null.Float `xorm:"float(50,2) 'achievement_num'" json:"achievement_num" form:"achievement_num" xml:"achievement_num"`
 	// Mzks defined
@@ -45,6 +46,21 @@ type LanguagePack struct {
 	OrderEdition null.Int `xorm:"int(11) 'order_edition'" json:"order_edition" form:"order_edition" xml:"order_edition"`
 	// ZdAgreeLife defined
 	ZdAgreeLife null.Int `xorm:"int(11) 'zd_agree_life'" json:"zd_agree_life" form:"zd_agree_life" xml:"zd_agree_life"`
+}
+
+// With defined
+func (m *LanguagePack) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -80,7 +96,8 @@ func (m *LanguagePack) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *LanguagePack) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

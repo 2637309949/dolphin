@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -35,12 +36,27 @@ type SaleLanguageModel struct {
 	SlmContent null.String `xorm:"varchar(500) 'slm_content'" json:"slm_content" form:"slm_content" xml:"slm_content"`
 	// VisitStage defined
 	VisitStage null.Int `xorm:"int(11) 'visit_stage'" json:"visit_stage" form:"visit_stage" xml:"visit_stage"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// SlmType defined
 	SlmType null.Int `xorm:"int(11) 'slm_type'" json:"slm_type" form:"slm_type" xml:"slm_type"`
 	// StuSystemSta defined
 	StuSystemSta null.Int `xorm:"int(11) 'stu_system_sta'" json:"stu_system_sta" form:"stu_system_sta" xml:"stu_system_sta"`
+}
+
+// With defined
+func (m *SaleLanguageModel) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -76,7 +92,8 @@ func (m *SaleLanguageModel) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *SaleLanguageModel) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

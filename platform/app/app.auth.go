@@ -13,24 +13,28 @@ import (
 	"sort"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-session/session"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/packages/xoauth2"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/encrypt"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-session/session"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	xoauth2 "golang.org/x/oauth2"
 )
 
 // TokenExpiryDelta determines how earlier a token should be considered
 // expired than its actual expiration time. It is used to avoid late
 // expirations due to client-server time mismatches.
-const TokenExpiryDelta = 10 * time.Second
+const (
+	TokenExpiryDelta = 10 * time.Second
+	TokenType        = "token"
+	EncryptType      = "encrypt"
+)
 
 // var defined
 var (
@@ -254,7 +258,7 @@ var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid
 
 // ValidateURIHandler defined
 var ValidateURIHandler = func(baseURI string, redirectURI string) error {
-	reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+	reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
 	base := reg.FindAllStringSubmatch(baseURI, -1)
 	redirect := reg.FindAllStringSubmatch(redirectURI, -1)
 	if base[0][2] != redirect[0][2] {
@@ -293,29 +297,29 @@ func AuthEncrypt(ctx *Context) {
 }
 
 // Auth middles
-func Auth(auth ...string) func(ctx *Context) {
+func Auth(auth ...string) HandlerFunc {
 	middles := []func(ctx *Context){}
-	if slice.StrSliceContains(auth, "token") {
+	if slice.StrSliceContains(auth, TokenType) {
 		middles = append(middles, AuthToken)
 	}
-	if slice.StrSliceContains(auth, "encrypt") {
+	if slice.StrSliceContains(auth, EncryptType) {
 		middles = append(middles, AuthEncrypt)
 	}
-	return func(ctx *Context) {
+	return HF2Handler(func(ctx *Context) {
 		for i := range middles {
 			middles[i](ctx)
 		}
-	}
+	})
 }
 
 // Roles middles
-func Roles(roles ...string) func(ctx *Context) {
-	return func(ctx *Context) {
+func Roles(roles ...string) HandlerFunc {
+	return HF2Handler(func(ctx *Context) {
 		if !ctx.InRole(roles...) {
 			ctx.Fail(util.ErrAccessDenied, 403)
 			ctx.Abort()
 			return
 		}
 		ctx.Next()
-	}
+	})
 }

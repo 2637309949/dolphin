@@ -16,11 +16,11 @@ var DefaultUserTemplate = SysUserTemplate{
 	Name:       null.StringFrom("默认模板"),
 	Type:       null.IntFrom(0),
 	Default:    null.IntFrom(1),
-	CreateBy:   DefaultAdmin.ID,
+	Creater:    DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
-	UpdateBy:   DefaultAdmin.ID,
+	Updater:    DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
-	DelFlag:    null.IntFrom(0),
+	IsDelete:   null.IntFrom(0),
 }
 
 // InitSysData defined inital system data

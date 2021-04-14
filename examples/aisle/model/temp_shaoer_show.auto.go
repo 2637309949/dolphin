@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -21,6 +22,21 @@ type TempShaoerShow struct {
 	UserPhoneNum null.String `xorm:"varchar(255) 'user_phone_num'" json:"user_phone_num" form:"user_phone_num" xml:"user_phone_num"`
 	// PhoneType defined
 	PhoneType null.String `xorm:"varchar(255) 'phone_type'" json:"phone_type" form:"phone_type" xml:"phone_type"`
+}
+
+// With defined
+func (m *TempShaoerShow) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -56,7 +72,8 @@ func (m *TempShaoerShow) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TempShaoerShow) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

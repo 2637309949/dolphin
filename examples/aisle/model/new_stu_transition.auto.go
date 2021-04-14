@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -29,8 +30,8 @@ type NewStuTransition struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// StuParentName defined
 	StuParentName null.String `xorm:"varchar(100) 'stu_parent_name'" json:"stu_parent_name" form:"stu_parent_name" xml:"stu_parent_name"`
 	// StuParentPhone defined
@@ -63,6 +64,21 @@ type NewStuTransition struct {
 	StuPromiseInfo null.String `xorm:"varchar(1000) 'stu_promise_info'" json:"stu_promise_info" form:"stu_promise_info" xml:"stu_promise_info"`
 	// StuTransitionType defined
 	StuTransitionType null.Int `xorm:"int(11) 'stu_transition_type'" json:"stu_transition_type" form:"stu_transition_type" xml:"stu_transition_type"`
+}
+
+// With defined
+func (m *NewStuTransition) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -98,7 +114,8 @@ func (m *NewStuTransition) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *NewStuTransition) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

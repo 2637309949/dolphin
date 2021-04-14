@@ -5,19 +5,21 @@ package app
 
 import (
 	"aisle/model"
+	"errors"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
+	"github.com/thoas/go-funk"
 )
 
 // OrganAdd api implementation
-// @Summary Add organ
-// @Tags Organ controller
+// @Summary 添加城市
+// @Tags 城市
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.Organ false "Article info"
+// @Param organ body model.Organ false "城市信息"
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
@@ -33,7 +35,40 @@ func OrganAdd(ctx *Context) {
 	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateDate = null.TimeFrom(time.Now().Value())
 	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.Isdelete = null.IntFrom(0)
+	payload.IsDelete = null.IntFrom(0)
+	ret, err := ctx.DB.Insert(&payload)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// OrganBatchAdd api implementation
+// @Summary 添加城市
+// @Tags 城市
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param organ body []model.Organ false "城市信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/organ/batch_add [post]
+func OrganBatchAdd(ctx *Context) {
+	var payload []model.Organ
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	for i := range payload {
+		payload[i].CreateDate = null.TimeFrom(time.Now().Value())
+		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].UpdateDate = null.TimeFrom(time.Now().Value())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].IsDelete = null.IntFrom(0)
+	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -44,11 +79,11 @@ func OrganAdd(ctx *Context) {
 }
 
 // OrganDel api implementation
-// @Summary Delete organ
-// @Tags Organ controller
+// @Summary 删除城市
+// @Tags 城市
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param organ body model.Organ false "organ"
+// @Param organ body model.Organ false "城市"
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
@@ -63,7 +98,38 @@ func OrganDel(ctx *Context) {
 	ret, err := ctx.DB.In("organ_id", payload.OrganId.Int64).Update(&model.Organ{
 		UpdateDate: null.TimeFrom(time.Now().Value()),
 		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
-		Isdelete:   null.IntFrom(1),
+		IsDelete:   null.IntFrom(1),
+	})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// OrganBatchDel api implementation
+// @Summary 删除城市
+// @Tags 城市
+// @Accept application/json
+// @Param Authorization header string false "认证令牌"
+// @Param organ body []model.Organ false "城市信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/organ/batch_del [put]
+func OrganBatchDel(ctx *Context) {
+	var payload []model.Organ
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	var ids = funk.Map(payload, func(form model.Organ) int64 { return form.OrganId.Int64 }).([]int64)
+	ret, err := ctx.DB.In("organ_id", ids).Update(&model.Organ{
+		UpdateDate: null.TimeFrom(time.Now().Value()),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -74,11 +140,11 @@ func OrganDel(ctx *Context) {
 }
 
 // OrganUpdate api implementation
-// @Summary Update organ
-// @Tags Organ controller
+// @Summary 更新城市
+// @Tags 城市
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param user body model.Organ false "Article info"
+// @Param organ body model.Organ false "城市信息"
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
@@ -90,7 +156,7 @@ func OrganUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	// payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateDate = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.OrganId.Int64).Update(&payload)
 	if err != nil {
@@ -101,12 +167,56 @@ func OrganUpdate(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// OrganPage api implementation
-// @Summary Article page query
-// @Tags Organ controller
+// OrganBatchUpdate api implementation
+// @Summary 更新城市
+// @Tags 城市
+// @Accept application/json
 // @Param Authorization header string false "认证令牌"
-// @Param page  query  int false "Page number"
-// @Param size  query  int false "Page size"
+// @Param organ body []model.Organ false "城市信息"
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/organ/batch_update [put]
+func OrganBatchUpdate(ctx *Context) {
+	var payload []model.Organ
+	var err error
+	var ret []int64
+	var r int64
+	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	s := ctx.DB.NewSession()
+	s.Begin()
+	defer s.Close()
+	for i := range payload {
+		payload[i].UpdateDate = null.TimeFrom(time.Now().Value())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].OrganId.Int64).Update(&payload[i])
+		ret = append(ret, r)
+	}
+	if err != nil {
+		s.Rollback()
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	err = s.Commit()
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
+}
+
+// OrganPage api implementation
+// @Summary 城市分页查询
+// @Tags 城市
+// @Param Authorization header string false "认证令牌"
+// @Param page  query  int false "页码"
+// @Param size  query  int false "单页数"
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
@@ -114,8 +224,13 @@ func OrganUpdate(ctx *Context) {
 func OrganPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
-	q.SetInt("size", 10)
+	q.SetInt("size", 15)
 	q.SetRule("organ_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "organ", "page", "organ", q.Value())
 	if err != nil {
@@ -127,21 +242,28 @@ func OrganPage(ctx *Context) {
 }
 
 // OrganGet api implementation
-// @Summary Get organ info
-// @Tags Organ controller
+// @Summary 获取城市信息
+// @Tags 城市
 // @Param Authorization header string false "认证令牌"
-// @Param id  query  string false "Article id"
+// @Param id  query  string false "城市id"
 // @Failure 403 {object} model.Fail
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/get [get]
 func OrganGet(ctx *Context) {
 	var entity model.Organ
-	id := ctx.Query("id")
-	_, err := ctx.DB.ID(id).Get(&entity)
+	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
+		return
+	}
+	if ext, err := ctx.DB.Get(&entity); err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	} else if !ext {
+		ctx.Fail(errors.New("not found"))
 		return
 	}
 	ctx.Success(entity)

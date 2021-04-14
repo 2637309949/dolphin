@@ -4,7 +4,7 @@ const axios = require('../request').default
 // add 添加区域
 module.exports.add = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/area/add'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -25,7 +25,7 @@ module.exports.add = (data = {}, opt = {}) => {
 // batchAdd 添加区域
 module.exports.batchAdd = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/area/batch_add'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -46,7 +46,7 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
 // del 删除区域
 module.exports.del = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/area/del'
-  if ((opt.url || 'delete') === 'get') {
+  if ((opt.method || 'delete') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -67,7 +67,7 @@ module.exports.del = (data = {}, opt = {}) => {
 // batchDel 删除文章
 module.exports.batchDel = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/area/batch_del'
-  if ((opt.url || 'delete') === 'get') {
+  if ((opt.method || 'delete') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -88,7 +88,7 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 // update 更新区域
 module.exports.update = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/area/update'
-  if ((opt.url || 'put') === 'get') {
+  if ((opt.method || 'put') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -109,7 +109,7 @@ module.exports.update = (data = {}, opt = {}) => {
 // batchUpdate 更新文章
 module.exports.batchUpdate = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/sys/area/batch_update'
-  if ((opt.url || 'put') === 'get') {
+  if ((opt.method || 'put') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }

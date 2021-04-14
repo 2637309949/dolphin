@@ -15,11 +15,11 @@ var AdminRoleUser = SysRoleUser{
 	ID:         null.StringFrom("03eda436-2772-48da-86d8-97b2bd80e391"),
 	UserId:     DefaultAdmin.ID,
 	RoleId:     AdminRole.ID,
-	CreateBy:   DefaultAdmin.ID,
+	Creater:    DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
-	UpdateBy:   DefaultAdmin.ID,
+	Updater:    DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
-	DelFlag:    null.IntFrom(0),
+	IsDelete:   null.IntFrom(0),
 }
 
 // InitSysData defined inital system data

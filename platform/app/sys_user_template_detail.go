@@ -8,11 +8,11 @@ import (
 
 	"github.com/2637309949/dolphin/platform/model"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
+	"github.com/thoas/go-funk"
 )
 
 // SysUserTemplateDetailAdd api implementation
@@ -34,10 +34,10 @@ func SysUserTemplateDetailAdd(ctx *Context) {
 	}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -67,10 +67,10 @@ func SysUserTemplateDetailBatchAdd(ctx *Context) {
 	for i := range payload {
 		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		payload[i].DelFlag = null.IntFrom(0)
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -100,8 +100,8 @@ func SysUserTemplateDetailDel(ctx *Context) {
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysUserTemplateDetail{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -130,8 +130,8 @@ func SysUserTemplateDetailBatchDel(ctx *Context) {
 	var ids = funk.Map(payload, func(form model.SysUserTemplateDetail) string { return form.ID.String }).([]string)
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysUserTemplateDetail{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -158,7 +158,7 @@ func SysUserTemplateDetailUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
@@ -190,10 +190,18 @@ func SysUserTemplateDetailBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+	s.Begin()
+	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		if err != nil {
+			s.Rollback()
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -227,6 +235,11 @@ func SysUserTemplateDetailPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetString("temp_id")
 	q.SetRule("sys_user_template_detail_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_user_template_detail", "page", "sys_user_template_detail", q.Value())
 	if err != nil {

@@ -1,0 +1,16 @@
+<controller name="redis_mq" desc="Ami controller">
+    <api name="add" desc="Add ami" method="post">
+        <param name="ami_info" type="$ami_info" desc="Ami info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" desc="Get ami info" method="get">
+        <param name="id" type="string" desc="ami id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

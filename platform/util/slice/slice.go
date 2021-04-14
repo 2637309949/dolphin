@@ -167,3 +167,47 @@ func RemoveStringDuplicates(s []string) ([]string, []string) {
 	}
 	return result, duplicate
 }
+
+func redirectValue(value reflect.Value) reflect.Value {
+	for {
+		if !value.IsValid() || value.Kind() != reflect.Ptr {
+			return value
+		}
+
+		res := reflect.Indirect(value)
+
+		// Test for a circular type.
+		if res.Kind() == reflect.Ptr && value.Pointer() == res.Pointer() {
+			return value
+		}
+
+		value = res
+	}
+}
+
+func sliceElem(rtype reflect.Type) reflect.Type {
+	for {
+		if rtype.Kind() != reflect.Slice && rtype.Kind() != reflect.Array {
+			return rtype
+		}
+
+		rtype = rtype.Elem()
+	}
+}
+
+// Chunk defined
+func Chunk(slice interface{}, chunkSize int) interface{} {
+	arrValue := redirectValue(reflect.ValueOf(slice))
+	if !IsIteratee(arrValue.Interface()) {
+		panic("First parameter must be an iteratee")
+	}
+	accValue := reflect.MakeSlice(reflect.SliceOf(reflect.TypeOf(slice)), 0, 0)
+	for i := 0; i < arrValue.Len(); i += chunkSize {
+		end := i + chunkSize
+		if end > arrValue.Len() {
+			end = arrValue.Len()
+		}
+		accValue = reflect.Append(accValue, arrValue.Slice(i, end))
+	}
+	return accValue.Interface()
+}

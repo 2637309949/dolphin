@@ -3,11 +3,11 @@ package app
 import (
 	"path"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util/file"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 // NewGin defined
@@ -21,6 +21,6 @@ func NewGin() *gin.Engine {
 }
 
 func init() {
-	gin.DefaultWriter = logrus.GetOutput()
+	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.SetMode(viper.GetString("app.mode"))
 }

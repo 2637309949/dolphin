@@ -14,25 +14,25 @@ var AdminRole = SysRole{
 	Name:       null.StringFrom("admin"),
 	Code:       null.StringFrom("X8e6D3y60K"),
 	Status:     null.IntFrom(1),
-	CreateBy:   DefaultAdmin.ID,
+	Creater:    DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
-	UpdateBy:   DefaultAdmin.ID,
+	Updater:    DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
-	DelFlag:    null.IntFrom(0),
+	IsDelete:   null.IntFrom(0),
 }
 
 var roles = []SysRole{
 	AdminRole,
-	SysRole{
+	{
 		ID:         null.StringFrom("3b18ee66-a5e6-40a3-b190-86d115bae3e2"),
 		Name:       null.StringFrom("test"),
 		Code:       null.StringFrom("A5b6D3y20Y"),
 		Status:     null.IntFrom(1),
-		CreateBy:   DefaultAdmin.ID,
+		Creater:    DefaultAdmin.ID,
 		CreateTime: null.TimeFrom(time.Now()),
-		UpdateBy:   DefaultAdmin.ID,
+		Updater:    DefaultAdmin.ID,
 		UpdateTime: null.TimeFrom(time.Now()),
-		DelFlag:    null.IntFrom(0),
+		IsDelete:   null.IntFrom(0),
 	},
 }
 

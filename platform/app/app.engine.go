@@ -15,15 +15,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
 	"github.com/2637309949/dolphin/platform/model"
@@ -31,6 +27,11 @@ import (
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/http"
+	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 	"google.golang.org/grpc"
 )
 
@@ -59,7 +60,7 @@ func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 				c.AuthInfo = t
 			}
 		}
-		h(c)
+		h.Handler(c)
 		e.pool.Put(c)
 	})
 }
@@ -78,6 +79,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	tables := []model.SysTable{}
 	columns := []model.SysTableColumn{}
 	session := db.NewSession()
+	session.Begin()
 	defer session.Close()
 	defer func() {
 		if err := recover(); err != nil {
@@ -87,6 +89,11 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	}()
 	util.Ensure(db.Sync2(new(model.SysTable), new(model.SysTableColumn)))
 	e.Manager.MSet().ForEach(func(n string, m interface{}) {
+		if mode := viper.GetString("app.mode"); mode == "debug" {
+			if tbn, ok := m.(interface{ TableName() string }); ok {
+				logrus.Infof("Sync Model[%v]:%v", n, tbn.TableName())
+			}
+		}
 		util.Ensure(db.Sync2(m))
 		tableInfo := util.EnsureLeft(db.TableInfo(m)).(*schemas.Table)
 		colsInfo := tableInfo.Columns()
@@ -99,15 +106,21 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	}, name)
 	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTable).TableName())))
 	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTableColumn).TableName())))
-	util.EnsureLeft(session.Insert(tables))
-	util.EnsureLeft(session.Insert(columns))
+	stb, stc := slice.Chunk(tables, 50).([][]model.SysTable), slice.Chunk(columns, 50).([][]model.SysTableColumn)
+	for i := range stb {
+		util.EnsureLeft(session.Insert(stb[i]))
+	}
+	for i := range stc {
+		util.EnsureLeft(session.Insert(stc[i]))
+
+	}
 	session.Commit()
 }
 
 func (e *Engine) database() {
 	// initPlatformDB
-	xlogger := createXLogger()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
+	xlogger := createXLogger()
 	e.PlatformDB = util.EnsureLeft(xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))).(*xorm.Engine)
 	util.Ensure(e.PlatformDB.Ping())
 	e.PlatformDB.SetLogger(xlogger)
@@ -117,13 +130,13 @@ func (e *Engine) database() {
 	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
 	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
 	{
-		(new(model.SysDomain)).Ensure(e.PlatformDB)
-		(new(model.SysDomain)).InitSysData(e.PlatformDB.NewSession())
+		new(model.SysDomain).Ensure(e.PlatformDB)
+		new(model.SysDomain).InitSysData(e.PlatformDB.NewSession())
 	}
 
 	// initBusinessDB
-	domains := []model.SysDomain{}
-	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and del_flag = 0", viper.GetString("app.name")).Find(&domains))
+	asyncOnce, domains := sync.Once{}, []model.SysDomain{}
+	util.Ensure(e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains))
 	funk.ForEach(domains, func(domain model.SysDomain) {
 		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
 		uri := util.EnsureLeft(http.Parse(domain.DataSource.String)).(*http.URI)
@@ -138,47 +151,32 @@ func (e *Engine) database() {
 		e.Manager.AddBusinessDB(domain.Domain.String, db)
 	})
 
-	// migration db
-	zmap := map[string]*xorm.Engine{}
-	if util.EnsureLeft(e.PlatformDB.Where("sync_flag=0").Count(new(model.SysDomain))).(int64) > 0 {
-		nset := e.Manager.MSet().Name(func(n string) bool {
-			return n != Name
+	// fetch all not bind in PlatformDB
+	platBindModelNames := e.Manager.MSet().Name(func(name string) bool { return name != Name })
+	funk.ForEach(funk.Filter(domains, func(domain model.SysDomain) bool { return domain.IsSync.Int64 != 1 }), func(domain model.SysDomain) {
+		// obtain BusinessDB
+		db := e.Manager.GetBusinessDB(domain.Domain.String)
+		// migration PlatformDB, ensure domain.IsSync.Int64 != 1
+		asyncOnce.Do(func() {
+			e.migration(Name, e.PlatformDB)
+			new(model.SysClient).InitSysData(e.PlatformDB.NewSession())
+			new(model.SysUser).InitSysData(e.PlatformDB.NewSession())
 		})
-		for _, v := range e.Manager.GetBusinessDBSet() {
-			zmap[v.DataSourceName()] = v
-		}
-		// migration PlatformDB
-		e.migration(Name, e.PlatformDB)
 		// migration BusinessDBSet
-		funk.ForEach(nset, func(n string) {
-			for _, v := range zmap {
-				e.migration(n, v)
-			}
-		})
-
-		// ensure sync_flag
-		util.EnsureLeft(e.PlatformDB.Where("sync_flag=0 and app_name = ?", viper.GetString("app.name")).Cols("sync_flag").Update(&model.SysDomain{SyncFlag: null.IntFrom(1)}))
-		e.Manager.MSet().Release()
-	}
-
-	// initialize PlatformDB data
-	{
-		(new(model.SysClient)).InitSysData(e.PlatformDB.NewSession())
-		(new(model.SysUser)).InitSysData(e.PlatformDB.NewSession())
-	}
-
-	// initialize BusinessDBSet data
-	for k := range zmap {
-		{
-			(new(model.SysRole)).InitSysData(zmap[k].NewSession())
-			(new(model.SysOrg)).InitSysData(zmap[k].NewSession())
-			(new(model.SysRoleUser)).InitSysData(zmap[k].NewSession())
-			(new(model.SysMenu)).InitSysData(zmap[k].NewSession())
-			(new(model.SysOptionset)).InitSysData(zmap[k].NewSession())
-			(new(model.SysUserTemplate)).InitSysData(zmap[k].NewSession())
-			(new(model.SysUserTemplateDetail)).InitSysData(zmap[k].NewSession())
-		}
-	}
+		funk.ForEach(platBindModelNames, func(n string) { e.migration(n, db) })
+		// initialize BusinessDBSet data
+		new(model.SysRole).InitSysData(db.NewSession())
+		new(model.SysOrg).InitSysData(db.NewSession())
+		new(model.SysRoleUser).InitSysData(db.NewSession())
+		new(model.SysMenu).InitSysData(db.NewSession())
+		new(model.SysOptionset).InitSysData(db.NewSession())
+		new(model.SysUserTemplate).InitSysData(db.NewSession())
+		new(model.SysUserTemplateDetail).InitSysData(db.NewSession())
+		// ensure is_sync
+		util.EnsureLeft(e.PlatformDB.ID(domain.ID.String).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)}))
+	})
+	// release model sets
+	e.Manager.MSet().Release()
 }
 
 // RegisterSQLMap defined sql
@@ -250,24 +248,21 @@ func (e *Engine) Run() {
 	e.lifeCycle()
 }
 
-func buildEngine() *Engine {
+func NewEngine() *Engine {
 	e := &Engine{}
 	e.Manager = NewDefaultManager()
 	e.lifecycle = &lifecycleWrapper{}
 	e.GRPC = grpc.NewServer()
 	e.Gin = NewGin()
 	e.Gin.Use(plugin.Tracker(Tracker(e)))
-	e.pool.New = func() interface{} {
-		return e.allocateContext()
-	}
+	e.pool.New = func() interface{} { return e.allocateContext() }
 	e.lifecycle.Append(NewLifeHook(e))
 	return e
 }
 
-// Run app
-func Run() {
-	App.Run()
-}
-
-// App defined application
-var App = buildEngine()
+var (
+	// App defined
+	App = NewEngine()
+	// Run defined
+	Run = App.Run
+)

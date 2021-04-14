@@ -4,10 +4,12 @@
 package app
 
 import (
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
+	"context"
+
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
 )
 
 // SysSchedulingAdd api implementation
@@ -27,7 +29,7 @@ func SysSchedulingAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysSchedulingTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -53,7 +55,7 @@ func SysSchedulingDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysSchedulingTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -79,7 +81,7 @@ func SysSchedulingUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysSchedulingTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -102,7 +104,12 @@ func SysSchedulingPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
-	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
+	ret, err := srv.SysSchedulingTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -123,7 +130,7 @@ func SysSchedulingPage(ctx *Context) {
 func SysSchedulingGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
-	ret, err := srv.SysSchedulingAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysSchedulingTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -29,8 +30,8 @@ type StudentTypeJournal struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// StuTypeName defined
 	StuTypeName null.String `xorm:"varchar(100) 'stu_type_name'" json:"stu_type_name" form:"stu_type_name" xml:"stu_type_name"`
 	// Stutypedesc defined
@@ -39,6 +40,21 @@ type StudentTypeJournal struct {
 	OldStuType null.Int `xorm:"int(11) 'old_stu_type'" json:"old_stu_type" form:"old_stu_type" xml:"old_stu_type"`
 	// OldStuTypeName defined
 	OldStuTypeName null.String `xorm:"varchar(1000) 'old_stu_type_name'" json:"old_stu_type_name" form:"old_stu_type_name" xml:"old_stu_type_name"`
+}
+
+// With defined
+func (m *StudentTypeJournal) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -74,7 +90,8 @@ func (m *StudentTypeJournal) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StudentTypeJournal) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,8 +38,8 @@ type CssCsTask struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// ScsId defined
 	ScsId null.Int `xorm:"int(11) 'scs_id'" json:"scs_id" form:"scs_id" xml:"scs_id"`
 	// LspgCheckstate defined
@@ -51,6 +52,21 @@ type CssCsTask struct {
 	PgbtgReason null.String `xorm:"varchar(1500) 'pgbtg_reason'" json:"pgbtg_reason" form:"pgbtg_reason" xml:"pgbtg_reason"`
 	// TeaPgPf defined
 	TeaPgPf null.Int `xorm:"int(11) 'tea_pg_pf'" json:"tea_pg_pf" form:"tea_pg_pf" xml:"tea_pg_pf"`
+}
+
+// With defined
+func (m *CssCsTask) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -86,7 +102,8 @@ func (m *CssCsTask) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *CssCsTask) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -9,16 +9,16 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/time"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 )
 
 // SysUserAdd api implementation
@@ -41,10 +41,10 @@ func SysUserAdd(ctx *Context) {
 	payload.ID = null.StringFromUUID()
 	payload.Domain = null.StringFrom(ctx.GetToken().GetDomain())
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.IsDelete = null.IntFrom(0)
 	if payload.Avatar.IsZero() {
 		payload.Avatar = null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg?imageView2/1/w/80/h/80")
 	}
@@ -78,10 +78,10 @@ func SysUserBatchAdd(ctx *Context) {
 	for i := range payload {
 		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		payload[i].DelFlag = null.IntFrom(0)
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -111,8 +111,8 @@ func SysUserDel(ctx *Context) {
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysUser{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -145,8 +145,8 @@ func SysUserBatchDel(ctx *Context) {
 	})
 	ret, err := ctx.PlatformDB.In("id", ids).Update(&model.SysUser{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -176,7 +176,7 @@ func SysUserUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
@@ -208,10 +208,10 @@ func SysUserUpdate(ctx *Context) {
 			UserId:     payload.ID,
 			RoleId:     null.StringFrom(role),
 			CreateTime: null.TimeFrom(time.Now().Value()),
-			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			Creater:    null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
-			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-			DelFlag:    null.IntFrom(0),
+			Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+			IsDelete:   null.IntFrom(0),
 		}
 	}).([]model.SysRoleUser)
 	_, err = ds.Insert(&roleUsers)
@@ -262,10 +262,18 @@ func SysUserBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+	s.Begin()
+	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		if err != nil {
+			s.Rollback()
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -302,6 +310,11 @@ func SysUserPage(ctx *Context) {
 	q.SetString("name")
 	q.SetString("cn_org_id")
 	q.SetRule("sys_user_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	if q.GetString("cn_org_id") != "" {
 		ids, err := srv.SysUserGetOrgsFromInheritance(ctx.DB, q.GetString("cn_org_id"))
@@ -410,16 +423,16 @@ func SysUserLogin(ctx *Context) {
 		return
 	}
 	if payload.Domain.String == "" {
-		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+		reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
 		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
 		payload.Domain = null.StringFrom(base[0][2])
 	}
 	account.Domain = payload.Domain
 	account.Name = payload.Name
-	ext, err := ctx.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
+	ext, err := ctx.PlatformDB.Where("is_delete = 0 and status = 1").Get(&account)
 	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
 		if err == nil {
-			err = errors.New("Account doesn't exist or password error")
+			err = errors.New("account doesn't exist or password error")
 		}
 		logrus.Errorf("SysUserLogin/ValidPassword:%v", err)
 		ctx.Fail(err)

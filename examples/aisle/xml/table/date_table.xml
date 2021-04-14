@@ -1,4 +1,4 @@
-<table name="date_table" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="date_table" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="date_table_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="dt_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="dt_desc" desc="" type="null.String" xorm="varchar(1000)" />
@@ -6,7 +6,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="week" desc="" type="null.Int" xorm="int(11)" />
 	<column name="isholiday" desc="" type="null.Int" xorm="int(11)" />
 </table>

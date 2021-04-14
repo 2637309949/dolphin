@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
-	"github.com/2637309949/dolphin/packages/uuid"
+	uuid "github.com/google/uuid"
 )
 
 // NewAccessGenerate create to generate the access token instance
@@ -25,11 +25,11 @@ func (ag *AccessGenerate) Token(data *oauth2.GenerateBasic, isGenRefresh bool) (
 	buf.WriteString(data.UserID)
 	buf.WriteString(strconv.FormatInt(data.CreateAt.UnixNano(), 10))
 
-	access := base64.URLEncoding.EncodeToString(uuid.NewMD5(uuid.Must(uuid.NewRandom()), buf.Bytes()).Bytes())
+	access := base64.URLEncoding.EncodeToString([]byte(uuid.NewMD5(uuid.Must(uuid.NewUUID()), buf.Bytes()).String()))
 	access = strings.ToUpper(strings.TrimRight(access, "="))
 	refresh := ""
 	if isGenRefresh {
-		refresh = base64.URLEncoding.EncodeToString(uuid.NewSHA1(uuid.Must(uuid.NewRandom()), buf.Bytes()).Bytes())
+		refresh = base64.URLEncoding.EncodeToString([]byte(uuid.NewMD5(uuid.Must(uuid.NewUUID()), buf.Bytes()).String()))
 		refresh = strings.ToUpper(strings.TrimRight(refresh, "="))
 	}
 	return access, refresh, nil

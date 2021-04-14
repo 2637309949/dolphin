@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -25,14 +26,29 @@ type MaterialBudget struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// MbRemark defined
 	MbRemark null.String `xorm:"varchar(2000) 'mb_remark'" json:"mb_remark" form:"mb_remark" xml:"mb_remark"`
 	// TotalMoney defined
 	TotalMoney null.Float `xorm:"float(10,2) 'total_money'" json:"total_money" form:"total_money" xml:"total_money"`
 	// MbName defined
 	MbName null.String `xorm:"varchar(500) 'mb_name'" json:"mb_name" form:"mb_name" xml:"mb_name"`
+}
+
+// With defined
+func (m *MaterialBudget) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -68,7 +84,8 @@ func (m *MaterialBudget) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *MaterialBudget) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

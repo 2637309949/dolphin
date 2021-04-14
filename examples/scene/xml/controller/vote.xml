@@ -1,0 +1,9 @@
+<controller name="vote" desc="vote controller">
+    <api name="like" desc="like article" method="post">
+        <param name="id" type="$vote_info" desc="like id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

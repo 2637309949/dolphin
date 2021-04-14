@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_permission">
         insert into sys_permission
-		(`id`,`name`,`code`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`name`,`code`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?name,?code,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?code,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_permission">
-        update sys_permission set `id`=?id,`name`=?name,`code`=?code,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_permission set `id`=?id,`name`=?name,`code`=?code,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_permission">
         delete from sys_permission where id =?id
     </sql>
     <sql id="selectone_sys_permission">
-        select `id`,`name`,`code`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_permission where  id =?id
+        select `id`,`name`,`code`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_permission where  id =?id
     </sql>
     <sql id="selectall_sys_permission">
-        select `id`,`name`,`code`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_permission
+        select `id`,`name`,`code`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_permission
     </sql>
 </sqlMap>

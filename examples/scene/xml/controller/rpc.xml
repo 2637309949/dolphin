@@ -1,0 +1,9 @@
+<controller name="rpc" desc="rpc controller">
+    <api name="message" desc="Get message" method="get">
+        <param name="id" type="string" desc="rpc info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

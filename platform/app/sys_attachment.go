@@ -9,16 +9,16 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
-	"github.com/2637309949/dolphin/packages/uuid"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util/encode"
 	"github.com/2637309949/dolphin/platform/util/file"
+	"github.com/gin-gonic/gin/binding"
+	uuid "github.com/google/uuid"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 )
 
 // SysAttachmentAdd api implementation
@@ -40,10 +40,10 @@ func SysAttachmentAdd(ctx *Context) {
 	}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -73,10 +73,10 @@ func SysAttachmentBatchAdd(ctx *Context) {
 	for i := range payload {
 		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		payload[i].DelFlag = null.IntFrom(0)
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -113,7 +113,7 @@ func SysAttachmentUpload(ctx *Context) {
 	file.EnsureDir(path.Join(viper.GetString("http.static"), "files"))
 	for _, f := range files {
 		filename := filepath.Base(f.Filename)
-		uuid := uuid.MustString()
+		uuid := uuid.New().String()
 		filePath := path.Join(viper.GetString("http.static"), "files", uuid+filepath.Ext(filename))
 		if err := ctx.SaveUploadedFile(f, filePath); err != nil {
 			ctx.Fail(err)
@@ -132,10 +132,10 @@ func SysAttachmentUpload(ctx *Context) {
 			Type:       null.StringFrom(fileType),
 			Durable:    null.IntFrom(0),
 			CreateTime: null.TimeFrom(time.Now().Value()),
-			CreateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
+			Creater:    null.StringFrom(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
-			UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-			DelFlag:    null.IntFrom(0),
+			Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+			IsDelete:   null.IntFrom(0),
 		}
 		attachments = append(attachments, item)
 		attachs = append(attachs, model.Attach{
@@ -191,8 +191,8 @@ func SysAttachmentDel(ctx *Context) {
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysAttachment{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -222,8 +222,8 @@ func SysAttachmentBatchDel(ctx *Context) {
 	var ids = funk.Map(payload, func(form model.SysAttachment) string { return form.ID.String }).([]string)
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysAttachment{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -250,7 +250,7 @@ func SysAttachmentUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
@@ -282,10 +282,18 @@ func SysAttachmentBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+	s.Begin()
+	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		if err != nil {
+			s.Rollback()
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -317,6 +325,11 @@ func SysAttachmentPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetRule("sys_attachment_page")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_attachment", "page", "sys_attachment", q.Value())

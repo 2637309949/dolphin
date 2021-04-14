@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/spf13/viper"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -24,7 +24,7 @@ func (m *SysDomain) Ensure(db *xorm.Engine) {
 // InitSysData defined inital system data
 func (m *SysDomain) InitSysData(s *xorm.Session) {
 	domains := []SysDomain{
-		SysDomain{
+		{
 			ID:         null.StringFrom("5ba2b810-9dad-11d1-80b4-00c04fd430c1"),
 			Name:       null.StringFrom("localhost"),
 			FullName:   null.StringFrom("localhost"),
@@ -34,16 +34,16 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			LoginUrl:   null.StringFrom("localhost"),
 			Type:       null.IntFrom(0),
 			Status:     null.IntFrom(1),
-			SyncFlag:   null.IntFrom(0),
+			IsSync:     null.IntFrom(0),
 			AuthMode:   null.IntFrom(1),
 			Domain:     null.StringFrom("localhost"),
 			DomainUrl:  null.StringFrom("localhost"),
 			ApiUrl:     null.StringFrom("http://localhost:8082"),
-			CreateBy:   DefaultAdmin.ID,
+			Creater:    DefaultAdmin.ID,
 			CreateTime: null.TimeFrom(time.Now()),
-			UpdateBy:   DefaultAdmin.ID,
+			Updater:    DefaultAdmin.ID,
 			UpdateTime: null.TimeFrom(time.Now()),
-			DelFlag:    null.IntFrom(0),
+			IsDelete:   null.IntFrom(0),
 		},
 	}
 	for _, domain := range domains {

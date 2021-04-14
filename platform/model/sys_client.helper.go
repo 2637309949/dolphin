@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/spf13/viper"
 )
 
 // DefaultClient default client
@@ -14,13 +14,13 @@ var DefaultClient = SysClient{
 	Client:     null.StringFrom("Y76U9344RABF4"),
 	Name:       null.StringFrom("default"),
 	AppName:    null.StringFrom(viper.GetString("app.name")),
-	Secret:     null.StringFrom("98UYO6FVB865"),
+	Secret:     null.StringFrom("8UYO6FVB8UYO6FVB"),
 	Domain:     null.StringFrom("localhost"),
-	CreateBy:   DefaultAdmin.ID,
+	Creater:    DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
-	UpdateBy:   DefaultAdmin.ID,
+	Updater:    DefaultAdmin.ID,
 	UpdateTime: null.TimeFrom(time.Now()),
-	DelFlag:    null.IntFrom(0),
+	IsDelete:   null.IntFrom(0),
 }
 
 // InitSysData defined inital system data

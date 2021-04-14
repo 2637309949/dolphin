@@ -251,7 +251,7 @@ mkdir demo && cd demo && dolphin init
 
 > 一个与dolphin对接的ERP模板
 
-<img align="right" width="200px" src="./assets/dolphin-ui.png">
+<img align="right" width="200px" src="./assets/dolphin-ui.jpeg">
 
 你可以找到一系列已经准备好的demo [dolphin examples repository.](https://github.com/2637309949/dolphin-ui)
 
@@ -380,10 +380,10 @@ func SysClientAdd(ctx *Context) {
 	}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
@@ -432,10 +432,10 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 	funk.ForEach(payload, func(form *model.SysRoleMenu) {
 		form.ID = null.StringFromUUID()
 		form.CreateTime = null.TimeFrom(time.Now().Value())
-		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.DelFlag = null.IntFrom(0)
+		form.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		form.IsDelete = null.IntFrom(0)
 	})
 	payload = funk.Filter(payload, func(form *model.SysRoleMenu) bool {
 		ext, _ := ctx.DB.Where("role_id=? and menu_id=?", form.RoleId.String, 
@@ -490,8 +490,8 @@ func SysClientDel(ctx *Context) {
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:   null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -541,8 +541,8 @@ func SysOptionsetBatchDel(ctx *Context) {
 	})
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysOptionset{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:   null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -589,7 +589,7 @@ func SysClientUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
@@ -638,8 +638,10 @@ func ArticleBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+    s.Begin()
+    defer s.Close()
 	funk.ForEach(payload, func(form model.Article) {
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
 		r, err = s.ID(form.ID.String).Update(&form)
 		ret = append(ret, r)
@@ -878,11 +880,11 @@ Example:
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="type" desc="类别" type="null.String" xorm="varchar(36)" />
 
-	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36)" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
-	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36)" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
-	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
 </table>
 ```
@@ -906,15 +908,15 @@ type Article struct {
 	Type null.String `xorm:"varchar(36) 'type'" json:"type" xml:"type"`
 	
 	// 创建人
-	CreateBy null.String `xorm:"varchar(36) 'create_by'" json:"create_by" xml:"create_by"`
+	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" xml:"creater"`
 	// 创建时间
 	CreateTime null.Time `xorm:"datetime 'create_time'" json:"create_time" xml:"create_time"`
 	// 最后更新人
-	UpdateBy null.String `xorm:"varchar(36) 'update_by'" json:"update_by" xml:"update_by"`
+	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" xml:"updater"`
 	// 最后更新时间
 	UpdateTime null.Time `xorm:"datetime 'update_time'" json:"update_time" xml:"update_time"`
 	// 删除标记
-	DelFlag null.Int `xorm:"notnull 'del_flag'" json:"del_flag" xml:"del_flag"`
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" xml:"is_delete"`
 	// 备注
 	Remark null.String `xorm:"varchar(200) 'remark'" json:"remark" xml:"remark"`
 }
@@ -935,15 +937,15 @@ func (m *Article) TableName() string {
 	name="article" 
 	desc="文章" 
 	packages="github.com/2637309949/dolphin/packages/null,
-	github.com/2637309949/dolphin/packages/decimal">
+	github.com/shopspring/decimal">
 	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
 	<column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
 
-	<column name="create_by" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36)" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
-	<column name="update_by" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36)" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
-	<column name="del_flag" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
 </table>
 ```
@@ -1056,8 +1058,8 @@ package rpc
 import (
 	"demo/rpc/proto"
 
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 )
 
@@ -1122,13 +1124,13 @@ The quasi-directory structure of the rpc is shown below:
 	<column name="type" type="null.Int" xorm="notnull" />
 	<column name="status" type="null.Int" xorm="notnull" />
 	<column name="auth_mode" type="null.Int" xorm="notnull" />
-	<column name="sync_flag" type="null.Int" xorm="notnull" />
+	<column name="is_sync" type="null.Int" xorm="notnull" />
 
-	<column name="create_by" type="null.String" xorm="varchar(36) notnull" />
+	<column name="creater" type="null.String" xorm="varchar(36) notnull" />
 	<column name="create_time" type="null.Time" xorm="datetime notnull" />
-	<column name="update_by" type="null.String" xorm="varchar(36) notnull" />
+	<column name="updater" type="null.String" xorm="varchar(36) notnull" />
 	<column name="update_time" type="null.Time" xorm="datetime notnull" />
-	<column name="del_flag" type="null.Int" xorm="notnull" />
+	<column name="is_delete" type="null.Int" xorm="notnull" />
 	<column name="remark" type="null.String" xorm="varchar(200)" />
 </table>
 ```
@@ -1321,7 +1323,7 @@ demo/srv/article.go
 ```go
 func init() {
 	// add hello topic handler
-	pApp.App.Manager
+	app.App.Manager
 	.Worker()
 	.AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
 		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
@@ -1430,7 +1432,7 @@ AddFunc(string, func()) (int, error)
 ```
 
 ```go
-pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 ```
@@ -1444,10 +1446,10 @@ RefreshFunc(int, string) (int, error)
 ```
 
 ```go
-id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-pApp.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
 ```
 
 ### Del Func
@@ -1459,11 +1461,11 @@ DelFunc(int) error
 ```
 
 ```go
-id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 
-pApp.App.Manager.Cron().DelFunc(id)
+app.App.Manager.Cron().DelFunc(id)
 ```
 
 ### Try Func
@@ -1475,10 +1477,10 @@ TryFunc(int) error
 ```
 
 ```go
-id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-pApp.App.Manager.Cron().TryFunc(id)
+app.App.Manager.Cron().TryFunc(id)
 ```
 
 ## Load User Info

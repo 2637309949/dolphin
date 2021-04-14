@@ -1,4 +1,4 @@
-<table name="product_type" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="product_type" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="p_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
@@ -7,5 +7,5 @@
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="business_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="parent_id" desc="" type="null.Int" xorm="int(11)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

@@ -4,12 +4,10 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"os"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/mattn/go-isatty"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 // Formatter log formatter params
@@ -100,8 +98,8 @@ func (rc *NopCloser) Close() error {
 // Tracker instance a Logger middleware with config.
 func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFunc {
 	notlogged := []string{}
-	isTerm := true
-	out := logrus.GetOutput()
+	// isTerm := true
+	// out := logrus.StandardLogger().Out
 	formatter := Formatter
 	recv := func(*gin.Context, *LogFormatterParams) {}
 
@@ -109,10 +107,10 @@ func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFun
 		recv = receiver[0]
 	}
 
-	if w, ok := out.(*os.File); !ok || os.Getenv("TERM") == "dumb" ||
-		(!isatty.IsTerminal(w.Fd()) && !isatty.IsCygwinTerminal(w.Fd())) {
-		isTerm = false
-	}
+	// if w, ok := out.(*os.File); !ok || os.Getenv("TERM") == "dumb" ||
+	// 	(!isatty.IsTerminal(w.Fd()) && !isatty.IsCygwinTerminal(w.Fd())) {
+	// 	isTerm = false
+	// }
 
 	var skip map[string]struct{}
 
@@ -163,8 +161,8 @@ func Tracker(receiver ...func(*gin.Context, *LogFormatterParams)) gin.HandlerFun
 			param := LogFormatterParams{
 				LogFormatterParams: gin.LogFormatterParams{
 					Request: c.Request,
-					IsTerm:  isTerm,
-					Keys:    c.Keys,
+					// IsTerm:  isTerm,
+					Keys: c.Keys,
 				},
 				Header:  hr.Bytes(),
 				ReqBody: buf,

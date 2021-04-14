@@ -14,16 +14,16 @@ import (
 	"strings"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/go-session/cookie"
-	"github.com/2637309949/dolphin/packages/go-session/session"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/packages/xoauth2"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/go-session/cookie"
+	"github.com/go-session/session"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
+	xoauth2 "golang.org/x/oauth2"
 )
 
 func init() {
@@ -53,7 +53,7 @@ func init() {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/login [post]
 func SysCasLogin(ctx *Context) {
-	store, err := session.Start(nil, ctx.Writer, ctx.Request)
+	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasLogin/Start:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
@@ -69,11 +69,11 @@ func SysCasLogin(ctx *Context) {
 		Domain: null.StringFrom(domain),
 	}
 	if account.Domain.String == "" {
-		reg := regexp.MustCompile("^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$")
+		reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
 		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
 		account.Domain = null.StringFrom(base[0][2])
 	}
-	ext, err := ctx.PlatformDB.Where("del_flag = 0 and status = 1").Get(&account)
+	ext, err := ctx.PlatformDB.Where("is_delete = 0 and status = 1").Get(&account)
 
 	if err != nil {
 		logrus.Errorf("SysCasLogin/Where:%v", err)
@@ -81,7 +81,7 @@ func SysCasLogin(ctx *Context) {
 		return
 	}
 	if !ext || !account.ValidPassword(password) {
-		err = errors.New("Account doesn't exist or password error")
+		err = errors.New("account doesn't exist or password error")
 		logrus.Errorf("SysCasLogin/ValidPassword:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+util.ErrInvalidGrant.Error())
 		return
@@ -104,7 +104,7 @@ func SysCasLogin(ctx *Context) {
 // @Router /api/sys/cas/logout [get]
 func SysCasLogout(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
-	session.Destroy(nil, ctx.Writer, ctx.Request)
+	session.Destroy(context.Background(), ctx.Writer, ctx.Request)
 	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
 }
 
@@ -117,7 +117,7 @@ func SysCasLogout(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/affirm [post]
 func SysCasAffirm(ctx *Context) {
-	store, err := session.Start(nil, ctx.Writer, ctx.Request)
+	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAffirm/Start:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
@@ -147,7 +147,7 @@ func SysCasAffirm(ctx *Context) {
 // @Router /api/sys/cas/authorize [get]
 func SysCasAuthorize(ctx *Context) {
 	var form url.Values
-	store, err := session.Start(nil, ctx.Writer, ctx.Request)
+	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAuthorize/Start:%v", err)
 		ctx.Fail(err)
@@ -217,13 +217,13 @@ func SysCasOauth2(ctx *Context) {
 	state, _ = url.QueryUnescape(state)
 
 	if code == "" {
-		logrus.Errorf("SysCasOauth2/code:%v", errors.New("Code not found"))
-		ctx.Fail(errors.New("Code not found"))
+		logrus.Errorf("SysCasOauth2/code:%v", errors.New("code not found"))
+		ctx.Fail(errors.New("code not found"))
 		return
 	}
 	ret, err := OA2Cfg.Exchange(context.Background(), code)
 	if err != nil {
-		logrus.Errorf("SysCasOauth2/Exchange:%v", errors.New("Code not found"))
+		logrus.Errorf("SysCasOauth2/Exchange:%v", errors.New("code not found"))
 		ctx.Fail(err)
 		return
 	}
@@ -278,7 +278,7 @@ func SysCasRefresh(ctx *Context) {
 func SysCasCheck(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("openid")
-	ret, err := srv.SysCasAction(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysCasTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

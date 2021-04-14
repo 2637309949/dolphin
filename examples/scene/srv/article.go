@@ -4,28 +4,46 @@
 package srv
 
 import (
+	"context"
 	"errors"
 	"fmt"
+	"time"
 
-	"github.com/2637309949/dolphin/packages/gin"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	pApp "github.com/2637309949/dolphin/platform/app"
-	pModel "github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/app"
+	"github.com/2637309949/dolphin/platform/model"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
-// ArticleAction defined srv
-func ArticleAction(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
-	return nil, errors.New("No implementation found")
+// ArticleTODO defined srv
+func ArticleTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
+	actCtx, cancel := context.WithTimeout(actCtx, 5*time.Second)
+	go func(ctx context.Context) {
+		ticker := time.NewTicker(1 * time.Second)
+		for range ticker.C {
+			select {
+			case <-actCtx.Done():
+				logrus.Infoln("child process interrupt...")
+				return
+			default:
+				logrus.Infoln("child job...")
+			}
+		}
+	}(actCtx)
+	defer cancel()
+	<-actCtx.Done()
+	logrus.Infoln("main process exit!")
+	return nil, errors.New("no implementation found")
 }
 
 func init() {
-	id, _ := pApp.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+	id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
 		fmt.Println("hello")
 	})
-
-	entry, _ := pApp.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
-	pApp.App.Manager.Cron().TryFunc(entry)
-	pApp.App.Manager.Worker().AddJobHandler("hello", func(args pModel.Worker) (interface{}, error) {
+	entry, _ := app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+	app.App.Manager.Cron().TryFunc(entry)
+	app.App.Manager.Worker().AddJobHandler("hello", func(args model.Worker) (interface{}, error) {
 		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
 		return map[string]interface{}{
 			"score": 99,

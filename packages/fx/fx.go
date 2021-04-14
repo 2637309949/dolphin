@@ -7,7 +7,7 @@ package fx
 import (
 	"reflect"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/thoas/go-funk"
 	"go.uber.org/fx"
 )
 

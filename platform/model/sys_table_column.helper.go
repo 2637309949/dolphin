@@ -18,9 +18,9 @@ func (m *SysTableColumn) ColumnInfo(info *schemas.Column) SysTableColumn {
 		Nullable:     null.BoolFrom(info.Nullable),
 		Default:      null.StringFrom(info.Default),
 		CreateTime:   null.TimeFrom(time.Now()),
-		CreateBy:     DefaultAdmin.ID,
+		Creater:      DefaultAdmin.ID,
 		UpdateTime:   null.TimeFrom(time.Now()),
-		UpdateBy:     DefaultAdmin.ID,
-		DelFlag:      null.IntFrom(0),
+		Updater:      DefaultAdmin.ID,
+		IsDelete:     null.IntFrom(0),
 	}
 }

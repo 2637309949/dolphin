@@ -1,4 +1,4 @@
-<table name="css_cs_task_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="css_cs_task_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="c_c_t_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="cs_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="fileid" desc="" type="null.Int" xorm="int(11)" />
@@ -6,7 +6,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="css_cs_t_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="cs_t_filed" desc="" type="null.Int" xorm="int(11)" />
 	<column name="css_id" desc="" type="null.Int" xorm="int(11)" />

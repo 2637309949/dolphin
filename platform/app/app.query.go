@@ -11,9 +11,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/thoas/go-funk"
 )
 
 // Query defined parse struct from query
@@ -288,8 +288,12 @@ func (q *Query) SetRule(rules ...string) {
 }
 
 // SetUser defined
-func (q *Query) SetUser() {
-	q.m["uid"] = q.ctx.GetToken().GetUserID()
+func (q *Query) SetUser(uid ...string) {
+	if len(uid) > 0 {
+		q.m["uid"] = uid[0]
+	} else {
+		q.m["uid"] = q.ctx.GetToken().GetUserID()
+	}
 }
 
 // GetUser defined
@@ -318,7 +322,7 @@ func (q *Query) Unescaped(s string) template.HTML {
 }
 
 // SetTags defined
-func (q *Query) SetTags(tags ...struct {
+func (q *Query) SetTags(params ...struct {
 	Key   string
 	Value string
 }) {
@@ -328,8 +332,8 @@ func (q *Query) SetTags(tags ...struct {
 	q.SetString("lte", q.Unescaped("<="))
 	q.SetString("gt", q.Unescaped(">"))
 	q.SetString("gte", q.Unescaped(">="))
-	for i := range tags {
-		q.SetString(tags[i].Key, tags[i].Value)
+	for i := range params {
+		q.SetString(params[i].Key, params[i].Value)
 	}
 }
 

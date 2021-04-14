@@ -1,4 +1,4 @@
-<table name="student_class_type" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="student_class_type" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="s_c_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="ct_id" desc="" type="null.Int" xorm="int(11)" />
@@ -10,7 +10,7 @@
 	<column name="spp_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="all_price" desc="" type="null.Float" xorm="float(11,2)" />
 	<column name="one_price" desc="" type="null.Float" xorm="float(10,2)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="os_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="os_money" desc="" type="null.Float" xorm="float(10,2)" />
 	<column name="final_money" desc="" type="null.Float" xorm="float(10,2)" />

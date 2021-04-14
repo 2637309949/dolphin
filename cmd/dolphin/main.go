@@ -13,9 +13,9 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
-	"github.com/2637309949/dolphin/packages/cobra"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	// "github.com/go-sql-driver/mysql" init
 	_ "github.com/go-sql-driver/mysql"
@@ -43,7 +43,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("http.temp", "temp")
 	viper.SetDefault("grpc.port", "9081")
 	viper.SetDefault("oauth.id", "Y76U9344RABF4")
-	viper.SetDefault("oauth.secret", "98UYO6FVB865")
+	viper.SetDefault("oauth.secret", "8UYO6FVB8UYO6FVB")
 	viper.SetDefault("oauth.login", "/static/web/login.html")
 	viper.SetDefault("oauth.affirm", "/static/web/affirm.html")
 	viper.SetDefault("db.driver", "mysql")
@@ -119,7 +119,7 @@ var (
 			}
 			g := gen.New(p.Application)
 			g.AddPipe(gen.GetPipesByName(pipes...)...)
-			err = g.BuildWithDir(wd, args)
+			err = g.BuildDir(wd, args)
 			return err
 		},
 	}
@@ -150,7 +150,7 @@ var (
 				}
 				g := gen.New(p.Application)
 				g.AddPipe(gen.GetPipesByName("boilerplate")...)
-				return g.BuildWithDir(wd, args)
+				return g.BuildDir(wd, args)
 			}
 			logrus.Warn("It is not allowed to initialize a non-empty project")
 			return nil

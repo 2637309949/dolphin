@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -43,8 +44,8 @@ type StudentVisit struct {
 	ScId null.Int `xorm:"int(11) 'sc_id'" json:"sc_id" form:"sc_id" xml:"sc_id"`
 	// StuOrder defined
 	StuOrder null.Float `xorm:"float(11,2) 'stu_order'" json:"stu_order" form:"stu_order" xml:"stu_order"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// RevivalDate defined
 	RevivalDate null.Time `xorm:"datetime 'revival_date'" json:"revival_date" form:"revival_date" xml:"revival_date"`
 	// KhType defined
@@ -73,6 +74,21 @@ type StudentVisit struct {
 	HfrType null.String `xorm:"varchar(1000) 'hfr_type'" json:"hfr_type" form:"hfr_type" xml:"hfr_type"`
 	// TmkVisitStatus defined
 	TmkVisitStatus null.Int `xorm:"int(11) 'tmk_visit_status'" json:"tmk_visit_status" form:"tmk_visit_status" xml:"tmk_visit_status"`
+}
+
+// With defined
+func (m *StudentVisit) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -108,7 +124,8 @@ func (m *StudentVisit) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *StudentVisit) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

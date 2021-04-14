@@ -6,13 +6,13 @@ package app
 import (
 	"errors"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 )
 
 // SysClientAdd api implementation
@@ -34,10 +34,10 @@ func SysClientAdd(ctx *Context) {
 	}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
 	if err != nil {
@@ -68,10 +68,10 @@ func SysClientBatchAdd(ctx *Context) {
 	for i := range payload {
 		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		payload[i].DelFlag = null.IntFrom(0)
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -101,8 +101,8 @@ func SysClientDel(ctx *Context) {
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -135,8 +135,8 @@ func SysClientBatchDel(ctx *Context) {
 	})
 	ret, err := ctx.PlatformDB.In("id", ids).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -163,7 +163,7 @@ func SysClientUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
@@ -195,10 +195,18 @@ func SysClientBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+	s.Begin()
+	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		if err != nil {
+			s.Rollback()
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -232,6 +240,11 @@ func SysClientPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetString("app_name", viper.GetString("app.name"))()
 	q.SetRule("sys_client_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
 	if err != nil {

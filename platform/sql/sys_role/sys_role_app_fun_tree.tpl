@@ -16,7 +16,7 @@ where
     and sys_app_fun.id = sys_role_app_fun.app_fun_id
     and sys_role_app_fun.role_id = "{{.role_id}}"
 {{end}}
-    and sys_app_fun.del_flag = 0
+    and sys_app_fun.is_delete = 0
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

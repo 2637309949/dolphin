@@ -4,7 +4,7 @@ const axios = require('../request').default
 // add Add Encrypt
 module.exports.add = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/encrypt/add'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }
@@ -18,6 +18,19 @@ module.exports.add = (data = {}, opt = {}) => {
     url: url,
     method: 'post',
     data,
+    ...opt
+  })
+}
+
+// info skip auth
+module.exports.info = (data = {}, opt = {}) => {
+  let url = opt.url || '/api/encrypt/info?'
+  for (var key in data) {
+    url += key + '=' + encodeURIComponent(data[key]) + '&'
+  }
+  return axios({
+    url: url,
+    method: 'get',
     ...opt
   })
 }

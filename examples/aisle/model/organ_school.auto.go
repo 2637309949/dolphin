@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -37,8 +38,8 @@ type OrganSchool struct {
 	OcNum null.String `xorm:"varchar(50) 'oc_num'" json:"oc_num" form:"oc_num" xml:"oc_num"`
 	// SchTell defined
 	SchTell null.String `xorm:"varchar(20) 'sch_tell'" json:"sch_tell" form:"sch_tell" xml:"sch_tell"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// SchoolAddress defined
 	SchoolAddress null.String `xorm:"varchar(100) 'school_address'" json:"school_address" form:"school_address" xml:"school_address"`
 	// SchoolMeasure defined
@@ -81,6 +82,21 @@ type OrganSchool struct {
 	OsRoomNum null.Float `xorm:"float(50,2) 'os_room_num'" json:"os_room_num" form:"os_room_num" xml:"os_room_num"`
 }
 
+// With defined
+func (m *OrganSchool) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *OrganSchool) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -114,7 +130,8 @@ func (m *OrganSchool) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *OrganSchool) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

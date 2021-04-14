@@ -1,0 +1,8 @@
+<controller name="i_cache" desc="cache controller">
+    <api name="info" desc="Cache info" auth="never" cache="5s" method="get">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

@@ -1,4 +1,4 @@
-<table name="trainer_table" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="trainer_table" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="t_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="train_id" desc="" type="null.Int" xorm="int(11)" />
@@ -6,7 +6,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="cpp_desc" desc="" type="null.String" xorm="varchar(500)" />
 	<column name="start_time" desc="" type="null.Time" xorm="datetime" />
 	<column name="end_time" desc="" type="null.Time" xorm="datetime" />

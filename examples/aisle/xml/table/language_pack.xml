@@ -1,4 +1,4 @@
-<table name="language_pack" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="language_pack" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="l_p_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="lp_name" desc="" type="null.String" xorm="varchar(200)" />
 	<column name="lp_begindate" desc="" type="null.Time" xorm="datetime" />
@@ -9,7 +9,7 @@
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
-	<column name="isdelete" desc="" type="null.Int" xorm="notnull" />
+	<column name="is_delete" desc="" type="null.Int" xorm="notnull" />
 	<column name="achievement_num" desc="" type="null.Float" xorm="float(50,2)" />
 	<column name="mzks" desc="" type="null.Float" xorm="float(50,2)" />
 	<column name="order_edition" desc="" type="null.Int" xorm="int(11)" />

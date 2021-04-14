@@ -108,7 +108,7 @@ module.exports.profile = (data = {}, opt = {}) => {
 // symbol 
 module.exports.symbol = (data = {}, opt = {}) => {
   const url = opt.url ||  '/debug/pprof/symbol'
-  if ((opt.url || 'get,post') === 'get') {
+  if ((opt.method || 'get,post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }

@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -45,6 +46,21 @@ type Files struct {
 	IfZm null.String `xorm:"varchar(10) default('1') 'if_zm'" json:"if_zm" form:"if_zm" xml:"if_zm"`
 }
 
+// With defined
+func (m *Files) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *Files) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -78,7 +94,8 @@ func (m *Files) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Files) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

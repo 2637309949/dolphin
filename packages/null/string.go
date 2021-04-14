@@ -11,7 +11,7 @@ import (
 	"math/rand"
 	"reflect"
 
-	"github.com/2637309949/dolphin/packages/uuid"
+	"github.com/google/uuid"
 )
 
 // String is a nullable string. It supports SQL and JSON serialization.
@@ -37,7 +37,7 @@ func StringFromRandom(n int) String {
 
 // StringFromUUID creates a new String that will never be blank.
 func StringFromUUID() String {
-	return NewString(uuid.MustString(), true)
+	return NewString(uuid.Must(uuid.NewUUID()).String(), true)
 }
 
 // StringFromPtr creates a new String that be null if s is nil.

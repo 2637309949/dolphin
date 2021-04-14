@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -25,6 +26,21 @@ type TempStuJifenAdd struct {
 	ZjJifen null.Int `xorm:"int(11) 'zj_jifen'" json:"zj_jifen" form:"zj_jifen" xml:"zj_jifen"`
 	// Remark defined
 	Remark null.String `xorm:"varchar(255) 'remark'" json:"remark" form:"remark" xml:"remark"`
+}
+
+// With defined
+func (m *TempStuJifenAdd) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -60,7 +76,8 @@ func (m *TempStuJifenAdd) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TempStuJifenAdd) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

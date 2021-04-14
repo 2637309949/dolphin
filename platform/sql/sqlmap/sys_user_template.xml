@@ -2,21 +2,21 @@
 <sqlMap>
     <sql id="insert_sys_user_template">
         insert into sys_user_template
-		(`id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark`)
+		(`id`,`name`,`type`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
 		values
-		(?id,?name,?type,?default,?create_by,?create_time,?update_by,?update_time,?del_flag,?remark)
+		(?id,?name,?type,?default,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
     </sql>
     <sql id="update_sys_user_template">
-        update sys_user_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`create_by`=?create_by,`create_time`=?create_time,`update_by`=?update_by,`update_time`=?update_time,`del_flag`=?del_flag,`remark`=?remark
+        update sys_user_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
 		where  id =?id
     </sql>
     <sql id="delete_sys_user_template">
         delete from sys_user_template where id =?id
     </sql>
     <sql id="selectone_sys_user_template">
-        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_user_template where  id =?id
+        select `id`,`name`,`type`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_user_template where  id =?id
     </sql>
     <sql id="selectall_sys_user_template">
-        select `id`,`name`,`type`,`default`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`,`remark` from sys_user_template
+        select `id`,`name`,`type`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_user_template
     </sql>
 </sqlMap>

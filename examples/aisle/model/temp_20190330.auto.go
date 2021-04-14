@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -53,6 +54,21 @@ type Temp20190330 struct {
 	XhMoney null.Float `xorm:"float(10,2) 'xh_money'" json:"xh_money" form:"xh_money" xml:"xh_money"`
 }
 
+// With defined
+func (m *Temp20190330) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *Temp20190330) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -86,7 +102,8 @@ func (m *Temp20190330) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Temp20190330) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

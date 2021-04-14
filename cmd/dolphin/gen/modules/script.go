@@ -12,8 +12,8 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/shurcooL/httpfs/vfsutil"
+	"github.com/spf13/viper"
 )
 
 // Script struct
@@ -51,13 +51,13 @@ func (app *Script) Build(dir string, args []string, node *schema.Application) ([
 	})
 
 	apisByte, _ := vfsutil.ReadFile(template.Assets, "apis.tmpl")
-	for _, c := range node.Controllers {
-		filename := utils.FileNameTrimSuffix(c.Path)
-		for _, api := range c.APIS {
+	for i := range node.Controllers {
+		filename := utils.FileNameTrimSuffix(node.Controllers[i].Path)
+		for _, api := range node.Controllers[i].APIS {
 			data := map[string]interface{}{
 				"PackageName": node.PackageName,
 				"Name":        node.Name,
-				"Controller":  c,
+				"Controller":  node.Controllers[i],
 				"Application": node,
 				"Api":         api,
 				"Viper":       viper.GetViper(),

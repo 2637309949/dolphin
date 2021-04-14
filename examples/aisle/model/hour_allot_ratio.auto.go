@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -29,14 +30,29 @@ type HourAllotRatio struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// PkHamId defined
 	PkHamId null.Int `xorm:"int(11) 'pk_ham_id'" json:"pk_ham_id" form:"pk_ham_id" xml:"pk_ham_id"`
 	// EndMolecule defined
 	EndMolecule null.Int `xorm:"int(11) 'end_molecule'" json:"end_molecule" form:"end_molecule" xml:"end_molecule"`
 	// StartMolecule defined
 	StartMolecule null.Int `xorm:"int(11) 'start_molecule'" json:"start_molecule" form:"start_molecule" xml:"start_molecule"`
+}
+
+// With defined
+func (m *HourAllotRatio) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -72,7 +88,8 @@ func (m *HourAllotRatio) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *HourAllotRatio) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

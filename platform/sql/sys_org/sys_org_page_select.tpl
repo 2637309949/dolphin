@@ -10,7 +10,7 @@ from
 where
 	sys_org.id {{.ne}} ""
 	and
-	sys_org.del_flag {{.ne}} 1
+	sys_org.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

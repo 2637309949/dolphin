@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -59,8 +60,8 @@ type Deletestudentbackups struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// StuSex defined
 	StuSex null.Int `xorm:"int(11) 'stu_sex'" json:"stu_sex" form:"stu_sex" xml:"stu_sex"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// StuZcMoney defined
 	StuZcMoney null.Float `xorm:"float(10,2) 'stu_zc_money'" json:"stu_zc_money" form:"stu_zc_money" xml:"stu_zc_money"`
 	// CallType defined
@@ -143,6 +144,21 @@ type Deletestudentbackups struct {
 	StuWxksDate null.Time `xorm:"datetime 'stu_wxks_date'" json:"stu_wxks_date" form:"stu_wxks_date" xml:"stu_wxks_date"`
 }
 
+// With defined
+func (m *Deletestudentbackups) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *Deletestudentbackups) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -176,7 +192,8 @@ func (m *Deletestudentbackups) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Deletestudentbackups) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

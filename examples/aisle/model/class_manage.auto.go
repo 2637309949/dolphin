@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -31,8 +32,8 @@ type ClassManage struct {
 	OsId null.Int `xorm:"int(11) 'os_id'" json:"os_id" form:"os_id" xml:"os_id"`
 	// ClassNumber defined
 	ClassNumber null.String `xorm:"varchar(50) 'class_number'" json:"class_number" form:"class_number" xml:"class_number"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CmState defined
 	CmState null.Int `xorm:"int(11) 'cm_state'" json:"cm_state" form:"cm_state" xml:"cm_state"`
 	// KfId defined
@@ -73,6 +74,21 @@ type ClassManage struct {
 	CmGdkbType null.Int `xorm:"int(11) 'cm_gdkb_type'" json:"cm_gdkb_type" form:"cm_gdkb_type" xml:"cm_gdkb_type"`
 }
 
+// With defined
+func (m *ClassManage) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *ClassManage) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -106,7 +122,8 @@ func (m *ClassManage) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *ClassManage) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

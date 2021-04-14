@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -35,12 +36,27 @@ type Invoice struct {
 	InvoiceType null.Int `xorm:"int(11) 'invoice_type'" json:"invoice_type" form:"invoice_type" xml:"invoice_type"`
 	// FeeId defined
 	FeeId null.Int `xorm:"int(11) 'fee_id'" json:"fee_id" form:"fee_id" xml:"fee_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// BillType defined
 	BillType null.Int `xorm:"int(11) 'bill_type'" json:"bill_type" form:"bill_type" xml:"bill_type"`
 	// OrId defined
 	OrId null.Int `xorm:"int(11) 'or_id'" json:"or_id" form:"or_id" xml:"or_id"`
+}
+
+// With defined
+func (m *Invoice) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -76,7 +92,8 @@ func (m *Invoice) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Invoice) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

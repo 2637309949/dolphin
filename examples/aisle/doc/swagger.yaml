@@ -33,8 +33,8 @@ definitions:
       if_buy_online:
         description: IfBuyOnline defined
         type: number
-      isdelete:
-        description: Isdelete defined
+      is_delete:
+        description: IsDelete defined
         type: number
       organ_id:
         description: OrganId defined
@@ -88,15 +88,12 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       hidden:
         description: Hidden defined 是否隐藏
         type: number
@@ -112,6 +109,9 @@ definitions:
       inheritance:
         description: Inheritance defined 继承关系
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
@@ -130,11 +130,11 @@ definitions:
       type:
         description: Type defined 类型 0：目录 1：菜单 2：按钮
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
       url:
         description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
@@ -143,21 +143,21 @@ definitions:
     type: object
   model.SysArea:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
       inheritance:
         description: Inheritance defined 继承关系
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       manager:
         description: Manager defined 负责人
         type: string
@@ -179,24 +179,21 @@ definitions:
       temp_value:
         description: TempValue defined 模板内容
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysAttachment:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       durable:
         description: Durable defined 是否持久化 0：否 1：是
         type: number
@@ -212,6 +209,9 @@ definitions:
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
@@ -227,11 +227,11 @@ definitions:
       type:
         description: Type defined 类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
       url:
         description: URL defined url
@@ -248,21 +248,21 @@ definitions:
       client:
         description: Client defined 应用
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       domain:
         description: Domain defined 域
         type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
@@ -272,11 +272,11 @@ definitions:
       secret:
         description: Secret defined 密钥
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysComment:
@@ -284,21 +284,21 @@ definitions:
       content:
         description: Content defined 评论内容
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       from_uid:
         description: FromUid defined 评论用户id
         type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       remark:
         description: Remark defined 备注
         type: string
@@ -308,11 +308,11 @@ definitions:
       topic_type:
         description: TopicType defined 主题类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysDataPermission:
@@ -320,29 +320,29 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysDomain:
@@ -365,18 +365,15 @@ definitions:
       contact_name:
         description: ContactName defined 负责人
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
         type: string
       data_source:
         description: DataSource defined 数据库链接串
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
       domain:
         description: Domain defined 域
         type: string
@@ -392,6 +389,12 @@ definitions:
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      is_sync:
+        description: IsSync defined 是否同步了数据库标志
+        type: number
       login_url:
         description: LoginUrl defined 登录地址
         type: string
@@ -407,20 +410,17 @@ definitions:
       status:
         description: Status defined 状态 0：禁用 1：正常
         type: number
-      sync_flag:
-        description: SyncFlag defined 是否同步了数据库标志
-        type: number
       theme:
         description: Theme defined 样式
         type: string
       type:
         description: Type defined 域类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysMenu:
@@ -431,15 +431,12 @@ definitions:
       component:
         description: Component defined 菜单组件
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       hidden:
         description: Hidden defined 是否隐藏
         type: number
@@ -452,6 +449,9 @@ definitions:
       inheritance:
         description: Inheritance defined 继承关系
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
@@ -470,11 +470,11 @@ definitions:
       type:
         description: Type defined 类型 0：目录 1：菜单 2：按钮
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
       url:
         description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
@@ -483,21 +483,21 @@ definitions:
     type: object
   model.SysNotification:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       from_uid:
         description: FromUid defined 发送者
         type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       is_read:
         description: IsRead defined 是否已读
         type: number
@@ -513,11 +513,11 @@ definitions:
       topic_type:
         description: TopicType defined 主题类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysOptionset:
@@ -525,29 +525,29 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
       value:
         description: Value defined 值
@@ -558,15 +558,12 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       full_name:
         description: FullName defined 全名
         type: string
@@ -576,6 +573,9 @@ definitions:
       inheritance:
         description: Inheritance defined 继承关系
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       leader:
         description: Leader defined 领导人
         type: string
@@ -597,11 +597,11 @@ definitions:
       type:
         description: Type defined 组织类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysPermission:
@@ -609,29 +609,29 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysRole:
@@ -645,18 +645,18 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
@@ -666,27 +666,27 @@ definitions:
       status:
         description: Status defined 状态 0：禁用 1：正常
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysRoleMenu:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       menu_id:
         description: MenuId defined 菜单ID
         type: string
@@ -696,62 +696,62 @@ definitions:
       role_id:
         description: RoleId defined 用户ID
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysSchedule:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       remark:
         description: Remark defined 备注
-        type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
         type: string
       update_time:
         description: UpdateTime defined 最后更新时间
         type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: string
     type: object
   model.SysSetting:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       key:
         description: Key defined 键
         type: string
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
       value:
         description: Value defined 值
@@ -765,21 +765,21 @@ definitions:
       charset:
         description: Charset defined 字符集
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       desc:
         description: Desc defined 描述
         type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 表名
         type: string
@@ -789,33 +789,33 @@ definitions:
       store_engine:
         description: StoreEngine defined 存储引擎
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysTableColumn:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
         type: string
       default:
         description: Default defined 默认值
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
       desc:
         description: Desc defined 描述
         type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       is_primary_key:
         description: IsPrimaryKey defined 是否主键
         type: boolean
@@ -834,41 +834,41 @@ definitions:
       type:
         description: Type defined 类型
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysTag:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       group_id:
         description: GroupId defined 分组ID
         type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysTagGroup:
@@ -876,29 +876,29 @@ definitions:
       code:
         description: Code defined 编码
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
       remark:
         description: Remark defined 备注
         type: string
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysUser:
@@ -909,15 +909,12 @@ definitions:
       avatar:
         description: Avatar defined 头像
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       domain:
         description: Domain defined 域
         type: string
@@ -936,6 +933,9 @@ definitions:
       intro:
         description: Intro defined 简介
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       is_email_confirmed:
         description: IsEmailConfirmed defined 是否邮件确认(0：尚未,1：确认)
         type: number
@@ -978,30 +978,30 @@ definitions:
       type:
         description: Type defined 用户类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysUserTemplate:
     properties:
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
         type: string
       default:
         description: Default defined 是否默认 1：是 0：否
         type: number
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 模板名称
         type: string
@@ -1011,11 +1011,11 @@ definitions:
       type:
         description: Type defined 模板类型
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
     type: object
   model.SysUserTemplateDetail:
@@ -1023,18 +1023,18 @@ definitions:
       content:
         description: Content defined 名称
         type: string
-      create_by:
-        description: CreateBy defined 创建人
-        type: string
       create_time:
         description: CreateTime defined 创建时间
         type: string
-      del_flag:
-        description: DelFlag defined 删除标记
-        type: number
+      creater:
+        description: Creater defined 创建人
+        type: string
       id:
         description: ID defined 主键
         type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
       name:
         description: Name defined 名称
         type: string
@@ -1050,11 +1050,11 @@ definitions:
       type:
         description: Type defined 模板类型 0:数值项 1:单选项 2:文字项 3:列表项
         type: number
-      update_by:
-        description: UpdateBy defined 最后更新人
-        type: string
       update_time:
         description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
         type: string
       value:
         description: Value defined 值
@@ -1107,37 +1107,7 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Article info
-        in: body
-        name: user
-        schema:
-          $ref: '#/definitions/model.Organ'
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/model.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/model.Fail'
-      summary: Add organ
-      tags:
-      - Organ controller
-  /api/organ/del:
-    delete:
-      consumes:
-      - application/json
-      parameters:
-      - description: 认证令牌
-        in: header
-        name: Authorization
-        type: string
-      - description: organ
+      - description: 城市信息
         in: body
         name: organ
         schema:
@@ -1155,9 +1125,135 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Delete organ
+      summary: 添加城市
       tags:
-      - Organ controller
+      - 城市
+  /api/organ/batch_add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市信息
+        in: body
+        name: organ
+        schema:
+          items:
+            $ref: '#/definitions/model.Organ'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 添加城市
+      tags:
+      - 城市
+  /api/organ/batch_del:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市信息
+        in: body
+        name: organ
+        schema:
+          items:
+            $ref: '#/definitions/model.Organ'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除城市
+      tags:
+      - 城市
+  /api/organ/batch_update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市信息
+        in: body
+        name: organ
+        schema:
+          items:
+            $ref: '#/definitions/model.Organ'
+          type: array
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 更新城市
+      tags:
+      - 城市
+  /api/organ/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 城市
+        in: body
+        name: organ
+        schema:
+          $ref: '#/definitions/model.Organ'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: 删除城市
+      tags:
+      - 城市
   /api/organ/get:
     get:
       parameters:
@@ -1165,7 +1261,7 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Article id
+      - description: 城市id
         in: query
         name: id
         type: string
@@ -1182,9 +1278,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Get organ info
+      summary: 获取城市信息
       tags:
-      - Organ controller
+      - 城市
   /api/organ/page:
     get:
       parameters:
@@ -1192,11 +1288,11 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Page number
+      - description: 页码
         in: query
         name: page
         type: integer
-      - description: Page size
+      - description: 单页数
         in: query
         name: size
         type: integer
@@ -1213,9 +1309,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Article page query
+      summary: 城市分页查询
       tags:
-      - Organ controller
+      - 城市
   /api/organ/update:
     put:
       consumes:
@@ -1225,9 +1321,9 @@ paths:
         in: header
         name: Authorization
         type: string
-      - description: Article info
+      - description: 城市信息
         in: body
-        name: user
+        name: organ
         schema:
           $ref: '#/definitions/model.Organ'
       responses:
@@ -1243,9 +1339,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/model.Fail'
-      summary: Update organ
+      summary: 更新城市
       tags:
-      - Organ controller
+      - 城市
   /api/sys/app/fun/del:
     delete:
       consumes:

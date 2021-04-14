@@ -7,8 +7,8 @@ import (
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
-	"github.com/2637309949/dolphin/packages/redis"
-	"github.com/2637309949/dolphin/packages/uuid"
+	"github.com/go-redis/redis/v8"
+	"github.com/google/uuid"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -185,7 +185,7 @@ func (s *RedisStore) Create(info oauth2.TokenInfo) error {
 	if code := info.GetCode(); code != "" {
 		pipe.Set(context.Background(), s.wrapperKey(code), jv, info.GetCodeExpiresIn())
 	} else {
-		basicID := uuid.MustString()
+		basicID := uuid.New().String()
 		aexp := info.GetAccessExpiresIn()
 		rexp := aexp
 

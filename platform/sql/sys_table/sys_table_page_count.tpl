@@ -6,7 +6,22 @@ from
 where
 	sys_table.id {{.ne}} ""
 	and
-	sys_table.del_flag {{.ne}} 1
+	sys_table.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
+{{end}}
+{{if ne .is_delete ""}}
+	and sys_table.is_delete={{.is_delete}}
+{{end}}
+{{if ne .creater ""}}
+	and sys_table.creater="{{.creater}}"
+{{end}}
+{{if ne .updater ""}}
+	and sys_table.updater="{{.updater}}"
+{{end}}
+{{if and (ne .create_time_start "") (ne .create_time_end "")}}
+	and sys_table.create_time BETWEEN '{{.create_time_start}}' AND '{{.create_time_end}}'
+{{end}}
+{{if and (ne .update_time_start "") (ne .update_time_end "")}}
+	and sys_table.update_time BETWEEN '{{.update_time_start}}' AND '{{.update_time_end}}'
 {{end}}

@@ -10,7 +10,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	swag "github.com/2637309949/dolphin/packages/swag/gen"
-	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/spf13/viper"
 )
 
 // Doc struct
@@ -32,6 +32,6 @@ func (m *Doc) Build(dir string, args []string, node *schema.Application) ([]*pip
 		OutputDir:          path.Join(dir, viper.GetString("dir.doc")),
 		ParseVendor:        true,
 		ParseDependency:    true,
-		ParseDepth:         2,
+		// ParseDepth:         2,
 	})
 }

@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/cache/utils"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/redis"
+	"github.com/go-redis/redis/v8"
+	"github.com/sirupsen/logrus"
 )
 
 // RedisStore represents the cache with redis persistence

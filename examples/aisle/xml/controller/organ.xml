@@ -1,35 +1,56 @@
-<controller name="organ" desc="Organ controller">
-    <api name="add" func="add" table="organ" desc="Add organ" method="post">
-        <param name="user" type="$organ" desc="Article info" />
+<controller name="organ" desc="城市">
+    <api name="add" func="add" table="organ" method="post" desc="添加城市">
+        <param name="organ" type="$organ" desc="城市信息"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="del" func="delete" table="organ" desc="Delete organ" method="delete">
-        <param name="organ" type="$organ" desc="organ" />
+    <api name="batch_add" func="add" table="organ" desc="添加城市" method="post">
+        <param name="organ" type="[]$organ" desc="城市信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="update" func="update" table="organ" desc="Update organ" method="put">
-        <param name="user" type="$organ" desc="Article info" />
+    <api name="del" func="delete" table="organ" method="delete" desc="删除城市">
+        <param name="organ" type="$organ" desc="城市"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="page" func="page" table="organ" desc="Organ page query" method="get">
-        <param name="page" type="int" desc="Page number" value="1"/>
-        <param name="size" type="int" desc="Page size" value="15" />
+    <api name="batch_del" func="delete" table="organ" desc="删除城市" method="put">
+        <param name="organ" type="[]$organ" desc="城市信息" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" desc="Get organ info" func="one" table="organ" method="get">
-        <param name="id" type="string" desc="Article id" />
+    <api name="update" func="update" table="organ" desc="更新城市" method="put">
+        <param name="organ" type="$organ" desc="城市信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="organ" desc="更新城市" method="put">
+        <param name="organ" type="[]$organ" desc="城市信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="page" func="page" table="organ" method="get" desc="城市分页查询">
+        <param name="page" type="int" value="1" desc="页码"/>
+        <param name="size" type="int" value="15" desc="单页数"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" func="one" table="organ" method="get" desc="获取城市信息">
+        <param name="id" type="string" desc="城市id" />
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

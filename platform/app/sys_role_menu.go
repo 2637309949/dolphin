@@ -8,11 +8,11 @@ import (
 
 	"github.com/2637309949/dolphin/platform/model"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
+	"github.com/thoas/go-funk"
 )
 
 // SysRoleMenuAdd api implementation
@@ -34,10 +34,10 @@ func SysRoleMenuAdd(ctx *Context) {
 	}
 	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-	payload.DelFlag = null.IntFrom(0)
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -67,10 +67,10 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 	funk.ForEach(payload, func(form *model.SysRoleMenu) {
 		form.ID = null.StringFromUUID()
 		form.CreateTime = null.TimeFrom(time.Now().Value())
-		form.CreateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		form.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		form.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
-		form.DelFlag = null.IntFrom(0)
+		form.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		form.IsDelete = null.IntFrom(0)
 	})
 	payload = funk.Filter(payload, func(form *model.SysRoleMenu) bool {
 		ext, _ := ctx.DB.Where("role_id=? and menu_id=?", form.RoleId.String, form.MenuId.String).Exist(new(model.SysRoleMenu))
@@ -104,8 +104,8 @@ func SysRoleMenuDel(ctx *Context) {
 	}
 	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysRoleMenu{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		ctx.Fail(err)
@@ -137,8 +137,8 @@ func SysRoleMenuBatchDel(ctx *Context) {
 	})
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysRoleMenu{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		UpdateBy:   null.StringFrom(ctx.GetToken().GetUserID()),
-		DelFlag:    null.IntFrom(1),
+		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
 		logrus.Error(err)
@@ -165,7 +165,7 @@ func SysRoleMenuUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
 	if err != nil {
@@ -197,10 +197,18 @@ func SysRoleMenuBatchUpdate(ctx *Context) {
 		return
 	}
 	s := ctx.DB.NewSession()
+	s.Begin()
+	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].UpdateBy = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		if err != nil {
+			s.Rollback()
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
 		ret = append(ret, r)
 	}
 	if err != nil {
@@ -233,6 +241,11 @@ func SysRoleMenuPage(ctx *Context) {
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
 	q.SetRule("sys_role_menu_page")
+	q.SetString("creater")
+	q.SetString("updater")
+	q.SetRange("create_time")
+	q.SetRange("update_time")
+	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "sys_role_menu", "page", "sys_role_menu", q.Value())
 	if err != nil {

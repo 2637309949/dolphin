@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -29,14 +30,29 @@ type AboutUs struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// AboutUsVideo defined
 	AboutUsVideo null.Int `xorm:"int(11) 'about_us_video'" json:"about_us_video" form:"about_us_video" xml:"about_us_video"`
 	// AboutUsCntitle defined
 	AboutUsCntitle null.String `xorm:"varchar(1000) 'about_us_cntitle'" json:"about_us_cntitle" form:"about_us_cntitle" xml:"about_us_cntitle"`
 	// AboutUsEntitle defined
 	AboutUsEntitle null.String `xorm:"varchar(1000) 'about_us_entitle'" json:"about_us_entitle" form:"about_us_entitle" xml:"about_us_entitle"`
+}
+
+// With defined
+func (m *AboutUs) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -72,7 +88,8 @@ func (m *AboutUs) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *AboutUs) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

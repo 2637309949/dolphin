@@ -4,7 +4,7 @@ const axios = require('../request').default
 // add Add ami
 module.exports.add = (data = {}, opt = {}) => {
   const url = opt.url ||  '/api/ami/add'
-  if ((opt.url || 'post') === 'get') {
+  if ((opt.method || 'post') === 'get') {
     for (var key in data) {
       url += key + '=' + encodeURIComponent(data[key]) + '&'
     }

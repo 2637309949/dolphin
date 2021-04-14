@@ -5,13 +5,14 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
-	"github.com/2637309949/dolphin/packages/decimal"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
+	"github.com/shopspring/decimal"
 )
 
 // YbPayFlowing defined
@@ -32,8 +33,8 @@ type YbPayFlowing struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// YbFlowNumber defined
 	YbFlowNumber null.String `xorm:"varchar(1000) 'yb_flow_number'" json:"yb_flow_number" form:"yb_flow_number" xml:"yb_flow_number"`
 	// SuccessFailure defined
@@ -94,6 +95,21 @@ type YbPayFlowing struct {
 	YpfId null.Int `xorm:"int(11) 'ypf_id'" json:"ypf_id" form:"ypf_id" xml:"ypf_id"`
 }
 
+// With defined
+func (m *YbPayFlowing) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *YbPayFlowing) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -127,7 +143,8 @@ func (m *YbPayFlowing) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *YbPayFlowing) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

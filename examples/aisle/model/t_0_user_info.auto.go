@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -113,6 +114,21 @@ type T0UserInfo struct {
 	IfShow null.Int `xorm:"int(11) 'if_show'" json:"if_show" form:"if_show" xml:"if_show"`
 }
 
+// With defined
+func (m *T0UserInfo) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *T0UserInfo) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -146,7 +162,8 @@ func (m *T0UserInfo) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *T0UserInfo) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

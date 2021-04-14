@@ -20,11 +20,11 @@ var DefaultAdmin = SysUser{
 	Status:     null.IntFrom(1),
 	Domain:     null.StringFrom("localhost"),
 	OrgId:      null.StringFrom("c637bt50-7dad-31d1-81b5-10c34fd460e1"),
-	CreateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	Creater:    null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 	CreateTime: null.TimeFrom(time.Now()),
-	UpdateBy:   null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	Updater:    null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
 	UpdateTime: null.TimeFrom(time.Now()),
-	DelFlag:    null.IntFrom(0),
+	IsDelete:   null.IntFrom(0),
 }
 
 // SetPassword Method to set salt and hash the password for a user

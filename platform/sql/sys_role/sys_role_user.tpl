@@ -7,7 +7,7 @@ from
 left join
     sys_role
 on sys_role.id = sys_role_user.role_id
-where sys_role_user.del_flag=0
+where sys_role_user.is_delete=0
 {{if ne .uids ""}}
     and sys_role_user.user_id in ({{.uids}})
 {{end}}

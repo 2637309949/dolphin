@@ -6,10 +6,10 @@ package app
 import (
 	"encoding/json"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/uuid"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/gin-gonic/gin/binding"
+	uuid "github.com/google/uuid"
+	"github.com/sirupsen/logrus"
 )
 
 // Job defined
@@ -86,7 +86,7 @@ func SysWorkerAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Code = uuid.MustString()
+	payload.Code = uuid.New().String()
 	payload.User = ctx.LoginInInfo()
 	payload.Status = model.WorkerStatusInitial
 	if bs, err = json.Marshal(&payload); err != nil {

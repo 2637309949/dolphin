@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -41,8 +42,8 @@ type TrialLesson struct {
 	TlDate null.Time `xorm:"datetime 'tl_date'" json:"tl_date" form:"tl_date" xml:"tl_date"`
 	// RoomId defined
 	RoomId null.Int `xorm:"int(11) 'room_id'" json:"room_id" form:"room_id" xml:"room_id"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// SchId defined
 	SchId null.Int `xorm:"int(11) 'sch_id'" json:"sch_id" form:"sch_id" xml:"sch_id"`
 	// LessonType defined
@@ -61,6 +62,21 @@ type TrialLesson struct {
 	RealStartTime null.Time `xorm:"datetime 'real_start_time'" json:"real_start_time" form:"real_start_time" xml:"real_start_time"`
 	// TlType defined
 	TlType null.Int `xorm:"int(11) 'tl_type'" json:"tl_type" form:"tl_type" xml:"tl_type"`
+}
+
+// With defined
+func (m *TrialLesson) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -96,7 +112,8 @@ func (m *TrialLesson) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TrialLesson) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

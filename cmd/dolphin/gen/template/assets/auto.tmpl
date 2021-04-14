@@ -7,8 +7,7 @@ import (
 	"time"
 	"{{.PackageName}}/model"
 
-	"github.com/2637309949/dolphin/packages/viper"
-	"github.com/2637309949/dolphin/platform/util"
+	"github.com/spf13/viper"
 )
 
 // Name project
@@ -19,17 +18,20 @@ var Name = "{{.Name}}"
 {{- $ctr := .}}
 // {{.ToUpperCase .Name}} defined
 type {{.ToUpperCase .Name}} struct {
+	Name string
 	{{- $APIS := .APIS}}
 	{{- range $index, $api := .APIS}}
-	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} func(ctx *Context){{- else}},{{- end}}
+	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} HandlerFunc{{- else}},{{- end}}
 	{{- end}}
 }
 
 // New{{.ToUpperCase .Name}} defined
 func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
-	ctr := &{{.ToUpperCase .Name}}{}
+	ctr := &{{.ToUpperCase .Name}}{Name: "{{.Name}}"}
 	{{- range .APIS}}
-	ctr.{{.ToUpperCase .Name}} = {{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
+	ctr.{{.ToUpperCase .Name}}.Method = "{{.ToUpper .Method}}"
+	ctr.{{.ToUpperCase .Name}}.RelativePath = "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"
+	ctr.{{.ToUpperCase .Name}}.Handler = {{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
 	{{- end}}
 	return ctr
 }
@@ -39,7 +41,7 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 func {{.ToUpperCase .Name}}Routes(engine *Engine) {
 	group := engine.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}})
 	{{- range .APIS}}
-	group.Handle("{{.ToUpper .Method}}", "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, {{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}})
+	group.Handle({{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}}.Method, {{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}}.RelativePath{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, {{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}})
 	{{- end}}
 }
 
@@ -80,13 +82,4 @@ func SyncService() error {
 	{{.ToUpperCase .Name}}Service(App)
 	{{- end}}
 	return nil
-}
-
-// Executor defined
-var Executor = util.NewExecutor(SyncModel, SyncController, SyncService)
-
-func init() {
-	if err := Executor.Execute(); err != nil {
-		panic(err)
-	}
 }

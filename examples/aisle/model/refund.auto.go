@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -33,8 +34,8 @@ type Refund struct {
 	RefWay null.Int `xorm:"int(11) 'ref_way'" json:"ref_way" form:"ref_way" xml:"ref_way"`
 	// RefReason defined
 	RefReason null.Int `xorm:"int(11) 'ref_reason'" json:"ref_reason" form:"ref_reason" xml:"ref_reason"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// CheckState defined
 	CheckState null.Int `xorm:"int(11) 'check_state'" json:"check_state" form:"check_state" xml:"check_state"`
 	// CheckRenmark defined
@@ -149,6 +150,21 @@ type Refund struct {
 	Version null.Int `xorm:"int(11) 'version'" json:"version" form:"version" xml:"version"`
 }
 
+// With defined
+func (m *Refund) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
+}
+
 // Marshal defined
 func (m *Refund) Marshal() ([]byte, error) {
 	return json.Marshal(m)
@@ -182,7 +198,8 @@ func (m *Refund) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *Refund) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

@@ -4,10 +4,12 @@
 package app
 
 import (
+	"context"
 	"scene/model"
+	"scene/srv"
 
-	"github.com/2637309949/dolphin/packages/gin/binding"
-	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
 )
 
 // EncryptAdd api implementation
@@ -28,4 +30,23 @@ func EncryptAdd(ctx *Context) {
 		return
 	}
 	ctx.Success(payload)
+}
+
+// EncryptInfo api implementation
+// @Summary skip auth
+// @Tags Encrypt controller
+// @Failure 403 {object} model.Fail
+// @Success 200 {object} model.Success
+// @Failure 500 {object} model.Fail
+// @Router /api/encrypt/info [get]
+func EncryptInfo(ctx *Context) {
+	q := ctx.TypeQuery()
+	q.Value()
+	ret, err := srv.EncryptTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success(ret)
 }

@@ -1,4 +1,4 @@
-<table name="temp_stu" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="temp_stu" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="fid" desc="" type="null.Int" xorm="int(11) pk notnull" />
 	<column name="stu_name" desc="" type="null.String" xorm="varchar(255)" />
 	<column name="stu_phone" desc="" type="null.String" xorm="varchar(255)" />

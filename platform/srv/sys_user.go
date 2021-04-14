@@ -4,17 +4,37 @@
 package srv
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"html/template"
 	"strings"
+	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
-// SysUserAction defined srv
-func SysUserAction(v interface{}) (interface{}, error) {
-	return nil, errors.New("No implementation found")
+// SysUserTODO defined srv
+func SysUserTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
+	actCtx, cancel := context.WithTimeout(actCtx, 5*time.Second)
+	go func(ctx context.Context) {
+		ticker := time.NewTicker(1 * time.Second)
+		for range ticker.C {
+			select {
+			case <-actCtx.Done():
+				logrus.Infoln("child process interrupt...")
+				return
+			default:
+				logrus.Infoln("child job...")
+			}
+		}
+	}(actCtx)
+	defer cancel()
+	<-actCtx.Done()
+	logrus.Infoln("main process exit!")
+	return nil, errors.New("no implementation found")
 }
 
 // SysUserGetOrgsFromInheritance defined srv
@@ -22,7 +42,7 @@ func SysUserGetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error)
 	idst := struct {
 		IDS string `xorm:"ids"`
 	}{}
-	_, err := db.SQL(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, del_flag from sys_org where del_flag=0 and inheritance like "%v" group by del_flag`, "%"+cn+"%")).Get(&idst)
+	_, err := db.SQL(fmt.Sprintf(`select IFNULL(GROUP_CONCAT(id), '') ids, is_delete from sys_org where is_delete=0 and inheritance like "%v" group by is_delete`, "%"+cn+"%")).Get(&idst)
 	if err != nil {
 		return nil, err
 	}

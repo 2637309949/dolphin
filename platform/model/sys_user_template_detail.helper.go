@@ -12,7 +12,7 @@ import (
 
 // sysUserTemplateDetails default
 var sysUserTemplateDetails = []SysUserTemplateDetail{
-	SysUserTemplateDetail{
+	{
 		ID:         null.StringFrom("7c3da436-2772-48da-86d8-97b2bd80e391"),
 		Name:       null.StringFrom("Hobby"),
 		Value:      null.StringFrom("Writing"),
@@ -20,11 +20,11 @@ var sysUserTemplateDetails = []SysUserTemplateDetail{
 		Type:       null.IntFrom(2),
 		Content:    null.StringFrom(""),
 		Priority:   null.IntFrom(1),
-		CreateBy:   DefaultAdmin.ID,
+		Creater:    DefaultAdmin.ID,
 		CreateTime: null.TimeFrom(time.Now()),
-		UpdateBy:   DefaultAdmin.ID,
+		Updater:    DefaultAdmin.ID,
 		UpdateTime: null.TimeFrom(time.Now()),
-		DelFlag:    null.IntFrom(0),
+		IsDelete:   null.IntFrom(0),
 	},
 }
 

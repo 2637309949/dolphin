@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -24,11 +25,11 @@ type EmailMessage struct {
 	// IfNotice defined
 	IfNotice null.Int `xorm:"int(11) 'if_notice'" json:"if_notice" form:"if_notice" xml:"if_notice"`
 	// IfNoticecn defined
-	IfNoticecn null.String `xorm:"varchar 'if_noticecn'" json:"if_noticecn" form:"if_noticecn" xml:"if_noticecn"`
+	IfNoticecn null.Int `xorm:"int(11) 'if_noticecn'" json:"if_noticecn" form:"if_noticecn" xml:"if_noticecn"`
 	// IfSee defined
 	IfSee null.Int `xorm:"int(11) 'if_see'" json:"if_see" form:"if_see" xml:"if_see"`
 	// IfSeecn defined
-	IfSeecn null.String `xorm:"varchar 'if_seecn'" json:"if_seecn" form:"if_seecn" xml:"if_seecn"`
+	IfSeecn null.Int `xorm:"int(11) 'if_seecn'" json:"if_seecn" form:"if_seecn" xml:"if_seecn"`
 	// NoticeUser defined
 	NoticeUser null.Int `xorm:"int(11) 'notice_user'" json:"notice_user" form:"notice_user" xml:"notice_user"`
 	// NoticeName defined
@@ -41,8 +42,23 @@ type EmailMessage struct {
 	Creater null.String `xorm:"varchar(36) 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// Updater defined
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
+}
+
+// With defined
+func (m *EmailMessage) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -78,7 +94,8 @@ func (m *EmailMessage) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *EmailMessage) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

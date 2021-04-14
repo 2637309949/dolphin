@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -29,6 +30,21 @@ type TempHuifu struct {
 	StuPhone null.String `xorm:"varchar(11) 'stu_phone'" json:"stu_phone" form:"stu_phone" xml:"stu_phone"`
 	// OfNumber defined
 	OfNumber null.String `xorm:"varchar(255) 'of_number'" json:"of_number" form:"of_number" xml:"of_number"`
+}
+
+// With defined
+func (m *TempHuifu) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -64,7 +80,8 @@ func (m *TempHuifu) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *TempHuifu) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

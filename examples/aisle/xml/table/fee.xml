@@ -1,4 +1,4 @@
-<table name="fee" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="fee" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="fee_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
@@ -11,7 +11,7 @@
 	<column name="of_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="yh_count" desc="" type="null.String" xorm="varchar(50)" />
 	<column name="yh_name" desc="" type="null.String" xorm="varchar(50)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 	<column name="fee_type" desc="" type="null.Int" xorm="int(11)" />
 	<column name="check_state" desc="" type="null.Int" xorm="int(11)" />
 	<column name="check_remark" desc="" type="null.String" xorm="varchar(500)" />

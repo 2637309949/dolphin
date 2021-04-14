@@ -6,4 +6,10 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="info" method="get" auth="never"  desc="skip auth">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
 </controller>

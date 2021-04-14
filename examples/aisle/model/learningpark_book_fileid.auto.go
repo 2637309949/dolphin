@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -27,8 +28,8 @@ type LearningparkBookFileid struct {
 	Updater null.String `xorm:"varchar(36) 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateDate defined
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"notnull 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"notnull 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// VideoFiled defined
 	VideoFiled null.Int `xorm:"int(11) 'video_filed'" json:"video_filed" form:"video_filed" xml:"video_filed"`
 	// LbId defined
@@ -41,6 +42,21 @@ type LearningparkBookFileid struct {
 	PkSl null.Int `xorm:"int(11) 'pk_sl'" json:"pk_sl" form:"pk_sl" xml:"pk_sl"`
 	// SpsltFiled defined
 	SpsltFiled null.Int `xorm:"int(11) 'spslt_filed'" json:"spslt_filed" form:"spslt_filed" xml:"spslt_filed"`
+}
+
+// With defined
+func (m *LearningparkBookFileid) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -76,7 +92,8 @@ func (m *LearningparkBookFileid) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *LearningparkBookFileid) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

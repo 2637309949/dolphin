@@ -1,4 +1,4 @@
-<table name="exam_paper_introduction" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/2637309949/dolphin/packages/decimal">
+<table name="exam_paper_introduction" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
 	<column name="e_p_i_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="create_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="update_date" desc="" type="null.Time" xorm="datetime" />
@@ -9,5 +9,5 @@
 	<column name="epi_order" desc="" type="null.Int" xorm="int(11)" />
 	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />
 	<column name="updater" desc="" type="null.String" xorm="varchar(36)" />
-	<column name="isdelete" desc="" type="null.Int" xorm="int(11)" />
+	<column name="is_delete" desc="" type="null.Int" xorm="int(11)" />
 </table>

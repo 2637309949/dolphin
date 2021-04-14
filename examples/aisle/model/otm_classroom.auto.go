@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -31,12 +32,27 @@ type OtmClassroom struct {
 	UpdateDate null.Time `xorm:"datetime 'update_date'" json:"update_date" form:"update_date" xml:"update_date"`
 	// ClassroomContain defined
 	ClassroomContain null.Float `xorm:"float(11,2) 'classroom_contain'" json:"classroom_contain" form:"classroom_contain" xml:"classroom_contain"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// Remarke defined
 	Remarke null.String `xorm:"varchar(2000) 'remarke'" json:"remarke" form:"remarke" xml:"remarke"`
 	// EnglishName defined
 	EnglishName null.String `xorm:"varchar(100) 'english_name'" json:"english_name" form:"english_name" xml:"english_name"`
+}
+
+// With defined
+func (m *OtmClassroom) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -72,7 +88,8 @@ func (m *OtmClassroom) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *OtmClassroom) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

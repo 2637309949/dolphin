@@ -4,76 +4,94 @@
 package srv
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"scene/model"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/go-errors/errors"
-	kafka "github.com/segmentio/kafka-go"
+	"github.com/segmentio/kafka-go"
+	"github.com/sirupsen/logrus"
 )
 
-var kafkaConn *kafka.Conn
+var Writer *kafka.Writer
+var Reader *kafka.Reader
+var KafkaDispatcher *worker.Dispatcher
+var WokerCntChannel = make(chan bool, 2)
 
 func init() {
-	var err error
-	topic, partition := "score-topic", 0
-	kafkaConn, err = kafka.DialLeader(context.Background(), "tcp", "172.16.10.191:9092", topic, partition)
-	if err != nil {
-		logrus.Error("failed to dial leader:", err)
-	} else {
-		kafkaConn.SetWriteDeadline(time.Now().Add(10 * time.Second))
-		kafkaConn.SetReadDeadline(time.Now().Add(10 * time.Second))
+	broker1Address, topic := "172.16.10.191:9092", "score-topic"
+	dialer := &kafka.Dialer{
+		Timeout:   10 * time.Second,
+		DualStack: true,
 	}
+	Writer = kafka.NewWriter(kafka.WriterConfig{
+		Dialer:       dialer,
+		Brokers:      []string{broker1Address},
+		Topic:        topic,
+		BatchSize:    2,
+		BatchTimeout: 2 * time.Second,
+		RequiredAcks: 1,
+		Balancer:     &kafka.Hash{},
+	})
+	Reader = kafka.NewReader(kafka.ReaderConfig{
+		Dialer:      dialer,
+		Brokers:     []string{broker1Address},
+		Topic:       topic,
+		GroupID:     "kafka-group",
+		MinBytes:    5,
+		MaxBytes:    1e6,
+		MaxWait:     3 * time.Second,
+		StartOffset: kafka.LastOffset,
+		// Logger:      log.New(os.Stdout, "kafka reader: ", 0),
+	})
+	go KafkaConsumer(context.Background())
 }
 
 // KafkaProducer defined srv
-func KafkaProducer(ctx *gin.Context, db *xorm.Engine, params model.KafkaInfo) (interface{}, error) {
+func KafkaProducer(ctx context.Context, params model.KafkaInfo) error {
 	kpStr, err := json.Marshal(&params)
 	if err != nil {
-		logrus.Error("failed to marshal:", err)
-		return nil, err
+		return err
 	}
-	n, err := kafkaConn.WriteMessages(kafka.Message{Value: kpStr})
+	err = Writer.WriteMessages(ctx, kafka.Message{Value: kpStr})
 	if err != nil {
-		logrus.Error("failed to write messages:", err)
-		return nil, err
+		return err
 	}
-	return n, nil
+	return nil
 }
 
 // KafkaConsumer defined srv
-func KafkaConsumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+func KafkaConsumer(ctx context.Context) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
 			fmt.Print(string(goErr.Stack()))
+		} else {
+			close(WokerCntChannel)
 		}
 	}()
-	batch := kafkaConn.ReadBatch(10e3, 1e6) // fetch 10KB min, 1MB max
-	defer batch.Close()
-	var buffer bytes.Buffer
-	var items []model.KafkaInfo
 	for {
-		b := make([]byte, 10e3) // 10KB max per message
-		n, err := batch.Read(b)
-		buffer.Write(b[:n])
+		msg, err := Reader.ReadMessage(context.Background())
 		if err != nil {
+			logrus.Error(err)
 			break
 		}
-		if bte := buffer.Bytes(); len(bte) > 0 {
-			value := model.KafkaInfo{}
-			if err := json.Unmarshal(bte, &value); err != nil {
-				logrus.Error("failed to unmarshal:", err)
-				return nil, err
-			}
-			items = append(items, value)
+		value := model.KafkaInfo{}
+		if err := json.Unmarshal(msg.Value, &value); err != nil {
+			logrus.Error("failed to unmarshal:", err)
 		}
+		WokerCntChannel <- true
+		go func() {
+			Woker(msg.Value)
+			<-WokerCntChannel
+		}()
 	}
-	return items, nil
+}
+
+func Woker(value []byte) {
+	fmt.Println("------start woker: ", string(value))
+	time.Sleep(10 * time.Second)
 }

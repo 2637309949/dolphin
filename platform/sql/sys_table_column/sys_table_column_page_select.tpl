@@ -12,7 +12,7 @@ from
 where
 	sys_table_column.id {{.ne}} ""
 	and
-	sys_table_column.del_flag {{.ne}} 1
+	sys_table_column.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
 {{end}}

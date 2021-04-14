@@ -2,16 +2,17 @@ package utils
 
 import (
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
 	"reflect"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/cobra"
+	"github.com/spf13/cobra"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/viper"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 )
 
 var timeFormat = "2006/01/02 15:04:05"
@@ -93,4 +94,15 @@ func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
 		return nil, err
 	}
 	return os.OpenFile(name, flag, perm)
+}
+
+// InstallPackages defined
+func InstallPackages(pkgs ...string) error {
+	for i := range pkgs {
+		if err := exec.Command("go", "get", pkgs[i]).Run(); err != nil && err != exec.ErrNotFound {
+			logrus.Error(err)
+			return err
+		}
+	}
+	return nil
 }

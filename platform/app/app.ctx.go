@@ -16,15 +16,15 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/gin"
-	"github.com/2637309949/dolphin/packages/go-funk"
-	"github.com/2637309949/dolphin/packages/logrus"
-	"github.com/2637309949/dolphin/packages/mustache"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/eriklott/mustache"
+	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"github.com/thoas/go-funk"
 )
 
 type (
@@ -42,13 +42,24 @@ type (
 		engine     *Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value
-	HandlerFunc func(*Context)
+	HandlerFunc struct {
+		Method       string
+		RelativePath string
+		Interceptor  []HandlerFunc
+		Handler      func(ctx *Context)
+	}
+
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
 		*gin.RouterGroup
 		engine *Engine
 	}
 )
+
+// HF2Handler defined
+func HF2Handler(h func(ctx *Context)) HandlerFunc {
+	return HandlerFunc{Handler: h}
+}
 
 // Raw defined
 func (ctx *Context) Raw() *gin.Context {
@@ -88,7 +99,7 @@ func (ctx *Context) InRole(role ...string) bool {
 func (ctx *Context) InAdmin(idn ...string) bool {
 	roles := []string{model.AdminRole.ID.String}
 	roles = append(roles, idn...)
-	exit, err := ctx.DB.In("role_id", roles).Where(`user_id = ? and del_flag != 1`, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
+	exit, err := ctx.DB.In("role_id", roles).Where(`user_id = ? and is_delete != 1`, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
 	if err != nil {
 		logrus.Error(err)
 		return false
@@ -131,8 +142,8 @@ func (ctx *Context) TypeQuery() *Query {
 
 // PageSearch defined
 func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (*model.PageList, error) {
-	page := q["page"].(int)
-	size := q["size"].(int)
+	page, _ := q["page"].(int)
+	size, _ := q["size"].(int)
 	q["offset"] = (page - 1) * size
 	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_select.tpl", controller, api), &q).Query().List()
 	if err != nil {
@@ -143,11 +154,11 @@ func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q
 		return nil, err
 	}
 	var plt model.PageList
-	if rowsSet == nil || len(rowsSet) == 0 {
+	if len(rowsSet) == 0 {
 		plt.Data = []map[string]interface{}{}
 		return &plt, nil
 	}
-	records := cntSet[0]["records"].(int64)
+	records, _ := cntSet[0]["records"].(int64)
 	var totalpages int64 = 0
 	if records < int64(size) {
 		totalpages = 1
@@ -247,7 +258,7 @@ func (ctx *Context) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[
 		Text  string      `json:"text"`
 	}
 	var optSets []model.SysOptionset
-	if err := db.Where("del_flag = 0").In("code", keys).Find(&optSets); err != nil {
+	if err := db.Where("is_delete = 0").In("code", keys).Find(&optSets); err != nil {
 		return nil, err
 	}
 
@@ -364,7 +375,10 @@ func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
 	if ctx.QueryString("__columns__") != "" {
 		cstr := ctx.QueryString("__columns__")
 		columns := []map[string]interface{}{}
-		json.Unmarshal([]byte(cstr), &columns)
+		err := json.Unmarshal([]byte(cstr), &columns)
+		if err != nil {
+			logrus.Error(err)
+		}
 		cfg.Header = columns
 	}
 	excelInfo, err := BuildExcel(cfg)
@@ -379,29 +393,39 @@ func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
 	ctx.Success(excelInfo)
 }
 
+// BusinessDB defined
+func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
+	return ctx.engine.Manager.GetBusinessDB(domain)
+}
+
 // Persist defined
-func (ctx *Context) Persist(db *xorm.Engine, ids ...string) (int64, error) {
+func (ctx *Context) Persist(db *xorm.Session, ids ...string) (int64, error) {
 	return new(model.SysAttachment).Persist(db, ids...)
 }
 
 // PersistFile defined
-func (ctx *Context) PersistFile(db *xorm.Engine, cb func([]model.SysAttachment) error, ids ...string) (int64, error) {
+func (ctx *Context) PersistFile(db *xorm.Session, cb func([]model.SysAttachment) error, ids ...string) (int64, error) {
 	return new(model.SysAttachment).PersistFile(db, cb, ids...)
 }
 
 // Remove defined
-func (ctx *Context) Remove(db *xorm.Engine, ids ...string) (int64, error) {
+func (ctx *Context) Remove(db *xorm.Session, ids ...string) (int64, error) {
 	return new(model.SysAttachment).Remove(db, ids...)
 }
 
 // RemoveFile defined
-func (ctx *Context) RemoveFile(db *xorm.Engine, cb func([]model.SysAttachment) error, ids ...string) (int64, error) {
+func (ctx *Context) RemoveFile(db *xorm.Session, cb func([]model.SysAttachment) error, ids ...string) (int64, error) {
 	return new(model.SysAttachment).RemoveFile(db, cb, ids...)
 }
 
 // RenderString defined
-func (ctx *Context) String(code int, data string, context ...interface{}) {
-	ctx.Context.String(code, mustache.Render(data, context...))
+func (ctx *Context) String(code int, data string, context ...interface{}) error {
+	str, err := mustache.NewTemplate().Render(data, context...)
+	if err != nil {
+		return err
+	}
+	ctx.Context.String(code, str)
+	return nil
 }
 
 // RenderFile defined
@@ -420,7 +444,13 @@ func (ctx *Context) RenderFile(filepath string, filename string, context ...inte
 		ctx.Fail(err)
 		return
 	}
-	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -444,7 +474,13 @@ func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
 		ctx.Fail(err)
 		return
 	}
-	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -468,7 +504,13 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 		ctx.Fail(err)
 		return
 	}
-	if _, err = file.WriteString(mustache.Render(string(bte), context...)); err != nil {
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -478,10 +520,10 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	pAppHandlers := funk.Map(handlers, func(h HandlerFunc) gin.HandlerFunc {
-		return rg.engine.HandlerFunc(h)
-	}).([]gin.HandlerFunc)
-	return funk.Map(strings.Split(httpMethod, ","), func(method string) gin.IRoutes {
-		return rg.RouterGroup.Handle(method, relativePath, pAppHandlers...)
-	}).([]gin.IRoutes)
+	return funk.Chain(strings.Split(httpMethod, ",")).Map(func(method string) gin.IRoutes {
+		return rg.RouterGroup.Handle(method, relativePath, funk.Chain(handlers).Map(func(h HandlerFunc) []gin.HandlerFunc {
+			ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) gin.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]gin.HandlerFunc)
+			return append(ic, rg.engine.HandlerFunc(h))
+		}).FlattenDeep().Value().([]gin.HandlerFunc)...)
+	}).Value().([]gin.IRoutes)
 }

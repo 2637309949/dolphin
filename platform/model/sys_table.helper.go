@@ -17,9 +17,9 @@ func (m *SysTable) TableInfo(info *schemas.Table) SysTable {
 		AutoIncrement: null.StringFrom(info.AutoIncrement),
 		StoreEngine:   null.StringFrom(info.StoreEngine),
 		CreateTime:    null.TimeFrom(time.Now()),
-		CreateBy:      DefaultAdmin.ID,
+		Creater:       DefaultAdmin.ID,
 		UpdateTime:    null.TimeFrom(time.Now()),
-		UpdateBy:      DefaultAdmin.ID,
-		DelFlag:       null.IntFrom(0),
+		Updater:       DefaultAdmin.ID,
+		IsDelete:      null.IntFrom(0),
 	}
 }

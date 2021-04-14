@@ -11,7 +11,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/2637309949/dolphin/packages/go-funk"
+	"github.com/thoas/go-funk"
 )
 
 // Common struct
@@ -148,6 +148,11 @@ func (c *Common) ToUpperCase(name string) string {
 		}
 	}
 	return newName
+}
+
+// Title first word
+func (c *Common) Title(str string) string {
+	return strings.Title(strings.ToLower(str))
 }
 
 // LcFirst first word

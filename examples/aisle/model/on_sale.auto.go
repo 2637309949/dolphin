@@ -5,6 +5,7 @@ package model
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -43,8 +44,8 @@ type OnSale struct {
 	OsType null.Int `xorm:"int(11) 'os_type'" json:"os_type" form:"os_type" xml:"os_type"`
 	// OsWay defined
 	OsWay null.Int `xorm:"int(11) 'os_way'" json:"os_way" form:"os_way" xml:"os_way"`
-	// Isdelete defined
-	Isdelete null.Int `xorm:"int(11) 'isdelete'" json:"isdelete" form:"isdelete" xml:"isdelete"`
+	// IsDelete defined
+	IsDelete null.Int `xorm:"int(11) 'is_delete'" json:"is_delete" form:"is_delete" xml:"is_delete"`
 	// MaId defined
 	MaId null.Int `xorm:"int(11) 'ma_id'" json:"ma_id" form:"ma_id" xml:"ma_id"`
 	// NaId defined
@@ -57,6 +58,21 @@ type OnSale struct {
 	OsBigType null.Int `xorm:"int(11) 'os_big_type'" json:"os_big_type" form:"os_big_type" xml:"os_big_type"`
 	// SaleJxType defined
 	SaleJxType null.Int `xorm:"int(11) 'sale_jx_type'" json:"sale_jx_type" form:"sale_jx_type" xml:"sale_jx_type"`
+}
+
+// With defined
+func (m *OnSale) With(s interface{}) (interface{}, error) {
+	if reflect.ValueOf(s).Kind() != reflect.Ptr {
+		return nil, errors.New("ptr required")
+	}
+	mbt, err := json.Marshal(m)
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(mbt, s); err != nil {
+		return nil, err
+	}
+	return s, err
 }
 
 // Marshal defined
@@ -92,7 +108,8 @@ func (m *OnSale) FromMap(fm map[string]interface{}) error {
 
 // Parser defined
 func (m *OnSale) Parser(db *xorm.Engine) *tags.Parser {
-	return tags.NewParser("xorm", db.Dialect(), db.DB().Mapper, db.DB().Mapper, caches.NewManager())
+	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
+	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
 }
 
 // PrimaryKeys defined

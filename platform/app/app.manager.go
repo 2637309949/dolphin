@@ -12,18 +12,18 @@ import (
 
 	"github.com/2637309949/dolphin/packages/cache"
 	"github.com/2637309949/dolphin/packages/cache/persistence"
-	"github.com/2637309949/dolphin/packages/cron"
-	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
-	"github.com/2637309949/dolphin/packages/redis"
-	"github.com/2637309949/dolphin/packages/viper"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/go-errors/errors"
+	"github.com/go-redis/redis/v8"
+	"github.com/robfig/cron/v3"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 // Worker defined
@@ -216,10 +216,10 @@ func NewDefaultManager() Manager {
 }
 
 // Cache middles
-func Cache(time time.Duration) func(ctx *Context) {
-	return func(ctx *Context) {
+func Cache(time time.Duration) HandlerFunc {
+	return HF2Handler(func(ctx *Context) {
 		cache.CachePage(CacheStore, time)(ctx.Context)
-	}
+	})
 }
 
 // MaxWorkers defined
