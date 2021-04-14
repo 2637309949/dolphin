@@ -5,7 +5,7 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/packages/null"
-	pModel "github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/model"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,8 +17,8 @@ import (
 // @Failure 500 {object} model.Fail
 // @Router /api/sqlmap/selectone [get]
 func SqlmapSelectone(ctx *Context) {
-	var user pModel.SysUser
-	_, err := ctx.PlatformDB.SqlMapClient("selectone_sys_user", &map[string]interface{}{"id": pModel.DefaultAdmin.ID.ValueOrZero()}).Get(&user)
+	var user model.SysUser
+	_, err := ctx.PlatformDB.SqlMapClient("selectone_sys_user", &map[string]interface{}{"id": model.DefaultAdmin.ID.ValueOrZero()}).Get(&user)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
