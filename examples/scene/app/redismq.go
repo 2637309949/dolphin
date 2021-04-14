@@ -11,7 +11,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// AmiAdd api implementation
+// RedisMqAdd api implementation
 // @Summary Add ami
 // @Tags Ami controller
 // @Accept application/json
@@ -21,7 +21,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/ami/add [post]
-func AmiAdd(ctx *Context) {
+func RedisMqAdd(ctx *Context) {
 	var payload model.AmiInfo
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
@@ -37,7 +37,7 @@ func AmiAdd(ctx *Context) {
 	ctx.Success(ret)
 }
 
-// AmiGet api implementation
+// RedisMqGet api implementation
 // @Summary Get ami info
 // @Tags Ami controller
 // @Param Authorization header string false "认证令牌"
@@ -46,7 +46,7 @@ func AmiAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/ami/get [get]
-func AmiGet(ctx *Context) {
+func RedisMqGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	ret, err := srv.AmiConsumer(ctx.Raw(), ctx.DB, q.Value())

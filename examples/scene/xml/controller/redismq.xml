@@ -1,4 +1,4 @@
-<controller name="ami" desc="Ami controller">
+<controller name="redis_mq" desc="Ami controller">
     <api name="add" desc="Add ami" method="post">
         <param name="ami_info" type="$ami_info" desc="Ami info" />
         <return>
