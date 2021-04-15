@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_family_share_numbe">
         insert into family_share_numbe
-		(`f_s_n_id`,`fs_num`,`fs_yb_num`,`fs_yb_hour`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`f_s_n_id`,`fs_num`,`fs_yb_num`,`fs_yb_hour`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?f_s_n_id,?fs_num,?fs_yb_num,?fs_yb_hour,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?f_s_n_id,?fs_num,?fs_yb_num,?fs_yb_hour,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_family_share_numbe">
-        update family_share_numbe set `f_s_n_id`=?f_s_n_id,`fs_num`=?fs_num,`fs_yb_num`=?fs_yb_num,`fs_yb_hour`=?fs_yb_hour,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_family_share_numbe">
-        delete from family_share_numbe
+        update family_share_numbe set `f_s_n_id`=?f_s_n_id,`fs_num`=?fs_num,`fs_yb_num`=?fs_yb_num,`fs_yb_hour`=?fs_yb_hour,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_family_share_numbe">
+        delete from family_share_numbe where id =?id
+    </sql>
     <sql id="selectone_family_share_numbe">
-        select `f_s_n_id`,`fs_num`,`fs_yb_num`,`fs_yb_hour`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from family_share_numbe
-		where  id =?id
+        select `f_s_n_id`,`fs_num`,`fs_yb_num`,`fs_yb_hour`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from family_share_numbe where id =?id
     </sql>
     <sql id="selectall_family_share_numbe">
-        select `f_s_n_id`,`fs_num`,`fs_yb_num`,`fs_yb_hour`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from family_share_numbe
+        select `f_s_n_id`,`fs_num`,`fs_yb_num`,`fs_yb_hour`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from family_share_numbe
     </sql>
 </sqlMap>

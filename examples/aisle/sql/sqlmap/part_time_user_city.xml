@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_part_time_user_city">
         insert into part_time_user_city
-		(`p_t_u_c_id`,`ptuser_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`p_t_u_c_id`,`ptuser_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?p_t_u_c_id,?ptuser_id,?organ_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?p_t_u_c_id,?ptuser_id,?organ_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_part_time_user_city">
-        update part_time_user_city set `p_t_u_c_id`=?p_t_u_c_id,`ptuser_id`=?ptuser_id,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_part_time_user_city">
-        delete from part_time_user_city
+        update part_time_user_city set `p_t_u_c_id`=?p_t_u_c_id,`ptuser_id`=?ptuser_id,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_part_time_user_city">
+        delete from part_time_user_city where id =?id
+    </sql>
     <sql id="selectone_part_time_user_city">
-        select `p_t_u_c_id`,`ptuser_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from part_time_user_city
-		where  id =?id
+        select `p_t_u_c_id`,`ptuser_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from part_time_user_city where id =?id
     </sql>
     <sql id="selectall_part_time_user_city">
-        select `p_t_u_c_id`,`ptuser_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from part_time_user_city
+        select `p_t_u_c_id`,`ptuser_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from part_time_user_city
     </sql>
 </sqlMap>

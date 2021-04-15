@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_export_log">
         insert into export_log
-		(`export_log_id`,`export_user`,`export_ip`,`export_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`export_log_id`,`export_user`,`export_ip`,`export_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?export_log_id,?export_user,?export_ip,?export_time,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?export_log_id,?export_user,?export_ip,?export_time,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_export_log">
-        update export_log set `export_log_id`=?export_log_id,`export_user`=?export_user,`export_ip`=?export_ip,`export_time`=?export_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_export_log">
-        delete from export_log
+        update export_log set `export_log_id`=?export_log_id,`export_user`=?export_user,`export_ip`=?export_ip,`export_time`=?export_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_export_log">
+        delete from export_log where id =?id
+    </sql>
     <sql id="selectone_export_log">
-        select `export_log_id`,`export_user`,`export_ip`,`export_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from export_log
-		where  id =?id
+        select `export_log_id`,`export_user`,`export_ip`,`export_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from export_log where id =?id
     </sql>
     <sql id="selectall_export_log">
-        select `export_log_id`,`export_user`,`export_ip`,`export_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from export_log
+        select `export_log_id`,`export_user`,`export_ip`,`export_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from export_log
     </sql>
 </sqlMap>

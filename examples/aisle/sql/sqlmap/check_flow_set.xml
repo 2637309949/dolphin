@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_check_flow_set">
         update check_flow_set set `c_f_s_id`=?c_f_s_id,`pk_object`=?pk_object,`cfs_name`=?cfs_name,`max_floor`=?max_floor,`homesetid`=?homesetid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date
-		where  id =?id
-    </sql>
-    <sql id="delete_check_flow_set">
-        delete from check_flow_set
 		where id =?id
     </sql>
+    <sql id="deleteone_check_flow_set">
+        delete from check_flow_set where id =?id
+    </sql>
     <sql id="selectone_check_flow_set">
-        select `c_f_s_id`,`pk_object`,`cfs_name`,`max_floor`,`homesetid`,`creater`,`create_date`,`updater`,`update_date` from check_flow_set
-		where  id =?id
+        select `c_f_s_id`,`pk_object`,`cfs_name`,`max_floor`,`homesetid`,`creater`,`create_date`,`updater`,`update_date` from check_flow_set where id =?id
     </sql>
     <sql id="selectall_check_flow_set">
         select `c_f_s_id`,`pk_object`,`cfs_name`,`max_floor`,`homesetid`,`creater`,`create_date`,`updater`,`update_date` from check_flow_set

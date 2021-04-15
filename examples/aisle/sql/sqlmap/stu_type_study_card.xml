@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stu_type_study_card">
         insert into stu_type_study_card
-		(`s_t_s_c_id`,`sct_id`,`sc_id`,`sc_discount_amount`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`s_t_s_c_id`,`sct_id`,`sc_id`,`sc_discount_amount`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?s_t_s_c_id,?sct_id,?sc_id,?sc_discount_amount,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?s_t_s_c_id,?sct_id,?sc_id,?sc_discount_amount,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_stu_type_study_card">
-        update stu_type_study_card set `s_t_s_c_id`=?s_t_s_c_id,`sct_id`=?sct_id,`sc_id`=?sc_id,`sc_discount_amount`=?sc_discount_amount,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_stu_type_study_card">
-        delete from stu_type_study_card
+        update stu_type_study_card set `s_t_s_c_id`=?s_t_s_c_id,`sct_id`=?sct_id,`sc_id`=?sc_id,`sc_discount_amount`=?sc_discount_amount,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_stu_type_study_card">
+        delete from stu_type_study_card where id =?id
+    </sql>
     <sql id="selectone_stu_type_study_card">
-        select `s_t_s_c_id`,`sct_id`,`sc_id`,`sc_discount_amount`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from stu_type_study_card
-		where  id =?id
+        select `s_t_s_c_id`,`sct_id`,`sc_id`,`sc_discount_amount`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from stu_type_study_card where id =?id
     </sql>
     <sql id="selectall_stu_type_study_card">
-        select `s_t_s_c_id`,`sct_id`,`sc_id`,`sc_discount_amount`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from stu_type_study_card
+        select `s_t_s_c_id`,`sct_id`,`sc_id`,`sc_discount_amount`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from stu_type_study_card
     </sql>
 </sqlMap>

@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_check_flow_set_floor">
         update check_flow_set_floor set `c_f_s_f_id`=?c_f_s_f_id,`pk_cfs`=?pk_cfs,`cfsf_or`=?cfsf_or,`cfsf_type`=?cfsf_type,`floor_name`=?floor_name,`if_filter_school`=?if_filter_school,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date
-		where  id =?id
-    </sql>
-    <sql id="delete_check_flow_set_floor">
-        delete from check_flow_set_floor
 		where id =?id
     </sql>
+    <sql id="deleteone_check_flow_set_floor">
+        delete from check_flow_set_floor where id =?id
+    </sql>
     <sql id="selectone_check_flow_set_floor">
-        select `c_f_s_f_id`,`pk_cfs`,`cfsf_or`,`cfsf_type`,`floor_name`,`if_filter_school`,`creater`,`create_date`,`updater`,`update_date` from check_flow_set_floor
-		where  id =?id
+        select `c_f_s_f_id`,`pk_cfs`,`cfsf_or`,`cfsf_type`,`floor_name`,`if_filter_school`,`creater`,`create_date`,`updater`,`update_date` from check_flow_set_floor where id =?id
     </sql>
     <sql id="selectall_check_flow_set_floor">
         select `c_f_s_f_id`,`pk_cfs`,`cfsf_or`,`cfsf_type`,`floor_name`,`if_filter_school`,`creater`,`create_date`,`updater`,`update_date` from check_flow_set_floor

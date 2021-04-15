@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_of_overdue_sct">
         insert into of_overdue_sct
-		(`o_o_s_id`,`of_overdue_id`,`sct_id`,`overdue_hour`,`overdue_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`account_date`,`account_type`,`of_id`,`kf_id`)
+		(`o_o_s_id`,`of_overdue_id`,`sct_id`,`overdue_hour`,`overdue_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`account_date`,`account_type`,`of_id`,`kf_id`)
 		values
-		(?o_o_s_id,?of_overdue_id,?sct_id,?overdue_hour,?overdue_money,?creater,?create_date,?updater,?update_date,?isdelete,?account_date,?account_type,?of_id,?kf_id)
+		(?o_o_s_id,?of_overdue_id,?sct_id,?overdue_hour,?overdue_money,?creater,?create_date,?updater,?update_date,?is_delete,?account_date,?account_type,?of_id,?kf_id)
     </sql>
     <sql id="update_of_overdue_sct">
-        update of_overdue_sct set `o_o_s_id`=?o_o_s_id,`of_overdue_id`=?of_overdue_id,`sct_id`=?sct_id,`overdue_hour`=?overdue_hour,`overdue_money`=?overdue_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`account_date`=?account_date,`account_type`=?account_type,`of_id`=?of_id,`kf_id`=?kf_id
-		where  id =?id
-    </sql>
-    <sql id="delete_of_overdue_sct">
-        delete from of_overdue_sct
+        update of_overdue_sct set `o_o_s_id`=?o_o_s_id,`of_overdue_id`=?of_overdue_id,`sct_id`=?sct_id,`overdue_hour`=?overdue_hour,`overdue_money`=?overdue_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`account_date`=?account_date,`account_type`=?account_type,`of_id`=?of_id,`kf_id`=?kf_id
 		where id =?id
     </sql>
+    <sql id="deleteone_of_overdue_sct">
+        delete from of_overdue_sct where id =?id
+    </sql>
     <sql id="selectone_of_overdue_sct">
-        select `o_o_s_id`,`of_overdue_id`,`sct_id`,`overdue_hour`,`overdue_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`account_date`,`account_type`,`of_id`,`kf_id` from of_overdue_sct
-		where  id =?id
+        select `o_o_s_id`,`of_overdue_id`,`sct_id`,`overdue_hour`,`overdue_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`account_date`,`account_type`,`of_id`,`kf_id` from of_overdue_sct where id =?id
     </sql>
     <sql id="selectall_of_overdue_sct">
-        select `o_o_s_id`,`of_overdue_id`,`sct_id`,`overdue_hour`,`overdue_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`account_date`,`account_type`,`of_id`,`kf_id` from of_overdue_sct
+        select `o_o_s_id`,`of_overdue_id`,`sct_id`,`overdue_hour`,`overdue_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`account_date`,`account_type`,`of_id`,`kf_id` from of_overdue_sct
     </sql>
 </sqlMap>

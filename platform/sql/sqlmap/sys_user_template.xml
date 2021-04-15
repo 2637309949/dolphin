@@ -8,13 +8,13 @@
     </sql>
     <sql id="update_sys_user_template">
         update sys_user_template set `id`=?id,`name`=?name,`type`=?type,`default`=?default,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
-		where  id =?id
+		where id =?id
     </sql>
-    <sql id="delete_sys_user_template">
+    <sql id="deleteone_sys_user_template">
         delete from sys_user_template where id =?id
     </sql>
     <sql id="selectone_sys_user_template">
-        select `id`,`name`,`type`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_user_template where  id =?id
+        select `id`,`name`,`type`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_user_template where id =?id
     </sql>
     <sql id="selectall_sys_user_template">
         select `id`,`name`,`type`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_user_template

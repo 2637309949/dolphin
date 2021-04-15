@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_materiel_add">
         insert into materiel_add
-		(`materiel_id`,`add_num`,`add_money`,`creater`,`updater`,`m_a_id`,`create_date`,`update_date`,`add_reason`,`add_object`,`isdelete`)
+		(`materiel_id`,`add_num`,`add_money`,`creater`,`updater`,`m_a_id`,`create_date`,`update_date`,`add_reason`,`add_object`,`is_delete`)
 		values
-		(?materiel_id,?add_num,?add_money,?creater,?updater,?m_a_id,?create_date,?update_date,?add_reason,?add_object,?isdelete)
+		(?materiel_id,?add_num,?add_money,?creater,?updater,?m_a_id,?create_date,?update_date,?add_reason,?add_object,?is_delete)
     </sql>
     <sql id="update_materiel_add">
-        update materiel_add set `materiel_id`=?materiel_id,`add_num`=?add_num,`add_money`=?add_money,`creater`=?creater,`updater`=?updater,`m_a_id`=?m_a_id,`create_date`=?create_date,`update_date`=?update_date,`add_reason`=?add_reason,`add_object`=?add_object,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_materiel_add">
-        delete from materiel_add
+        update materiel_add set `materiel_id`=?materiel_id,`add_num`=?add_num,`add_money`=?add_money,`creater`=?creater,`updater`=?updater,`m_a_id`=?m_a_id,`create_date`=?create_date,`update_date`=?update_date,`add_reason`=?add_reason,`add_object`=?add_object,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_materiel_add">
+        delete from materiel_add where id =?id
+    </sql>
     <sql id="selectone_materiel_add">
-        select `materiel_id`,`add_num`,`add_money`,`creater`,`updater`,`m_a_id`,`create_date`,`update_date`,`add_reason`,`add_object`,`isdelete` from materiel_add
-		where  id =?id
+        select `materiel_id`,`add_num`,`add_money`,`creater`,`updater`,`m_a_id`,`create_date`,`update_date`,`add_reason`,`add_object`,`is_delete` from materiel_add where id =?id
     </sql>
     <sql id="selectall_materiel_add">
-        select `materiel_id`,`add_num`,`add_money`,`creater`,`updater`,`m_a_id`,`create_date`,`update_date`,`add_reason`,`add_object`,`isdelete` from materiel_add
+        select `materiel_id`,`add_num`,`add_money`,`creater`,`updater`,`m_a_id`,`create_date`,`update_date`,`add_reason`,`add_object`,`is_delete` from materiel_add
     </sql>
 </sqlMap>

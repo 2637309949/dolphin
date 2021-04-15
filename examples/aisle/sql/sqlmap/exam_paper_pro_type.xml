@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_exam_paper_pro_type">
         insert into exam_paper_pro_type
-		(`e_p_p_t_id`,`create_date`,`update_date`,`ep_id`,`pt_id`,`creater`,`updater`,`isdelete`)
+		(`e_p_p_t_id`,`create_date`,`update_date`,`ep_id`,`pt_id`,`creater`,`updater`,`is_delete`)
 		values
-		(?e_p_p_t_id,?create_date,?update_date,?ep_id,?pt_id,?creater,?updater,?isdelete)
+		(?e_p_p_t_id,?create_date,?update_date,?ep_id,?pt_id,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_exam_paper_pro_type">
-        update exam_paper_pro_type set `e_p_p_t_id`=?e_p_p_t_id,`create_date`=?create_date,`update_date`=?update_date,`ep_id`=?ep_id,`pt_id`=?pt_id,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_exam_paper_pro_type">
-        delete from exam_paper_pro_type
+        update exam_paper_pro_type set `e_p_p_t_id`=?e_p_p_t_id,`create_date`=?create_date,`update_date`=?update_date,`ep_id`=?ep_id,`pt_id`=?pt_id,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_exam_paper_pro_type">
+        delete from exam_paper_pro_type where id =?id
+    </sql>
     <sql id="selectone_exam_paper_pro_type">
-        select `e_p_p_t_id`,`create_date`,`update_date`,`ep_id`,`pt_id`,`creater`,`updater`,`isdelete` from exam_paper_pro_type
-		where  id =?id
+        select `e_p_p_t_id`,`create_date`,`update_date`,`ep_id`,`pt_id`,`creater`,`updater`,`is_delete` from exam_paper_pro_type where id =?id
     </sql>
     <sql id="selectall_exam_paper_pro_type">
-        select `e_p_p_t_id`,`create_date`,`update_date`,`ep_id`,`pt_id`,`creater`,`updater`,`isdelete` from exam_paper_pro_type
+        select `e_p_p_t_id`,`create_date`,`update_date`,`ep_id`,`pt_id`,`creater`,`updater`,`is_delete` from exam_paper_pro_type
     </sql>
 </sqlMap>

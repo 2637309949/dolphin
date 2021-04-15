@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_check_flow_set_floor_user">
         insert into check_flow_set_floor_user
-		(`c_f_s_f_u_id`,`pk_ckfl`,`pk_user`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_f_s_f_u_id`,`pk_ckfl`,`pk_user`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_f_s_f_u_id,?pk_ckfl,?pk_user,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_f_s_f_u_id,?pk_ckfl,?pk_user,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_check_flow_set_floor_user">
-        update check_flow_set_floor_user set `c_f_s_f_u_id`=?c_f_s_f_u_id,`pk_ckfl`=?pk_ckfl,`pk_user`=?pk_user,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_check_flow_set_floor_user">
-        delete from check_flow_set_floor_user
+        update check_flow_set_floor_user set `c_f_s_f_u_id`=?c_f_s_f_u_id,`pk_ckfl`=?pk_ckfl,`pk_user`=?pk_user,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_check_flow_set_floor_user">
+        delete from check_flow_set_floor_user where id =?id
+    </sql>
     <sql id="selectone_check_flow_set_floor_user">
-        select `c_f_s_f_u_id`,`pk_ckfl`,`pk_user`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from check_flow_set_floor_user
-		where  id =?id
+        select `c_f_s_f_u_id`,`pk_ckfl`,`pk_user`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from check_flow_set_floor_user where id =?id
     </sql>
     <sql id="selectall_check_flow_set_floor_user">
-        select `c_f_s_f_u_id`,`pk_ckfl`,`pk_user`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from check_flow_set_floor_user
+        select `c_f_s_f_u_id`,`pk_ckfl`,`pk_user`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from check_flow_set_floor_user
     </sql>
 </sqlMap>

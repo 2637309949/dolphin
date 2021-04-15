@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_on_sale_city">
         insert into on_sale_city
-		(`o_s_c_id`,`os_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`o_s_c_id`,`os_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?o_s_c_id,?os_id,?city_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?o_s_c_id,?os_id,?city_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_on_sale_city">
-        update on_sale_city set `o_s_c_id`=?o_s_c_id,`os_id`=?os_id,`city_id`=?city_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_on_sale_city">
-        delete from on_sale_city
+        update on_sale_city set `o_s_c_id`=?o_s_c_id,`os_id`=?os_id,`city_id`=?city_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_on_sale_city">
+        delete from on_sale_city where id =?id
+    </sql>
     <sql id="selectone_on_sale_city">
-        select `o_s_c_id`,`os_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from on_sale_city
-		where  id =?id
+        select `o_s_c_id`,`os_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from on_sale_city where id =?id
     </sql>
     <sql id="selectall_on_sale_city">
-        select `o_s_c_id`,`os_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from on_sale_city
+        select `o_s_c_id`,`os_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from on_sale_city
     </sql>
 </sqlMap>

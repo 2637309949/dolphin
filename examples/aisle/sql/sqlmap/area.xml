@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_area">
         insert into area
-		(`area_id`,`area_name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`area_code`,`wc_id`)
+		(`area_id`,`area_name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`area_code`,`wc_id`)
 		values
-		(?area_id,?area_name,?creater,?create_date,?updater,?update_date,?isdelete,?area_code,?wc_id)
+		(?area_id,?area_name,?creater,?create_date,?updater,?update_date,?is_delete,?area_code,?wc_id)
     </sql>
     <sql id="update_area">
-        update area set `area_id`=?area_id,`area_name`=?area_name,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`area_code`=?area_code,`wc_id`=?wc_id
-		where  id =?id
-    </sql>
-    <sql id="delete_area">
-        delete from area
+        update area set `area_id`=?area_id,`area_name`=?area_name,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`area_code`=?area_code,`wc_id`=?wc_id
 		where id =?id
     </sql>
+    <sql id="deleteone_area">
+        delete from area where id =?id
+    </sql>
     <sql id="selectone_area">
-        select `area_id`,`area_name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`area_code`,`wc_id` from area
-		where  id =?id
+        select `area_id`,`area_name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`area_code`,`wc_id` from area where id =?id
     </sql>
     <sql id="selectall_area">
-        select `area_id`,`area_name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`area_code`,`wc_id` from area
+        select `area_id`,`area_name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`area_code`,`wc_id` from area
     </sql>
 </sqlMap>

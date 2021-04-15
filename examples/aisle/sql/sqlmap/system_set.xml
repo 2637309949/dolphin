@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_system_set">
         insert into system_set
-		(`isdelete`)
+		(`is_delete`)
 		values
-		(?isdelete)
+		(?is_delete)
     </sql>
     <sql id="update_system_set">
-        update system_set set `isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_system_set">
-        delete from system_set
+        update system_set set `is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_system_set">
+        delete from system_set where id =?id
+    </sql>
     <sql id="selectone_system_set">
-        select `isdelete` from system_set
-		where  id =?id
+        select `is_delete` from system_set where id =?id
     </sql>
     <sql id="selectall_system_set">
-        select `isdelete` from system_set
+        select `is_delete` from system_set
     </sql>
 </sqlMap>

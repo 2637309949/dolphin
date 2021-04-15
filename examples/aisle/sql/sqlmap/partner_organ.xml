@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_partner_organ">
         insert into partner_organ
-		(`p_o_id`,`partner_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`p_o_id`,`partner_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?p_o_id,?partner_id,?organ_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?p_o_id,?partner_id,?organ_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_partner_organ">
-        update partner_organ set `p_o_id`=?p_o_id,`partner_id`=?partner_id,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_partner_organ">
-        delete from partner_organ
+        update partner_organ set `p_o_id`=?p_o_id,`partner_id`=?partner_id,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_partner_organ">
+        delete from partner_organ where id =?id
+    </sql>
     <sql id="selectone_partner_organ">
-        select `p_o_id`,`partner_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from partner_organ
-		where  id =?id
+        select `p_o_id`,`partner_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from partner_organ where id =?id
     </sql>
     <sql id="selectall_partner_organ">
-        select `p_o_id`,`partner_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from partner_organ
+        select `p_o_id`,`partner_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from partner_organ
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_business_department">
         insert into business_department
-		(`b_d_id`,`bd_name`,`bd_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`b_d_id`,`bd_name`,`bd_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?b_d_id,?bd_name,?bd_desc,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?b_d_id,?bd_name,?bd_desc,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_business_department">
-        update business_department set `b_d_id`=?b_d_id,`bd_name`=?bd_name,`bd_desc`=?bd_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_business_department">
-        delete from business_department
+        update business_department set `b_d_id`=?b_d_id,`bd_name`=?bd_name,`bd_desc`=?bd_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_business_department">
+        delete from business_department where id =?id
+    </sql>
     <sql id="selectone_business_department">
-        select `b_d_id`,`bd_name`,`bd_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from business_department
-		where  id =?id
+        select `b_d_id`,`bd_name`,`bd_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from business_department where id =?id
     </sql>
     <sql id="selectall_business_department">
-        select `b_d_id`,`bd_name`,`bd_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from business_department
+        select `b_d_id`,`bd_name`,`bd_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from business_department
     </sql>
 </sqlMap>

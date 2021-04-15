@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stu_gwc_gef">
         insert into stu_gwc_gef
-		(`s_g_g_id`,`stu_gwc_id`,`gef_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`s_g_g_id`,`stu_gwc_id`,`gef_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?s_g_g_id,?stu_gwc_id,?gef_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?s_g_g_id,?stu_gwc_id,?gef_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_stu_gwc_gef">
-        update stu_gwc_gef set `s_g_g_id`=?s_g_g_id,`stu_gwc_id`=?stu_gwc_id,`gef_id`=?gef_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_stu_gwc_gef">
-        delete from stu_gwc_gef
+        update stu_gwc_gef set `s_g_g_id`=?s_g_g_id,`stu_gwc_id`=?stu_gwc_id,`gef_id`=?gef_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_stu_gwc_gef">
+        delete from stu_gwc_gef where id =?id
+    </sql>
     <sql id="selectone_stu_gwc_gef">
-        select `s_g_g_id`,`stu_gwc_id`,`gef_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from stu_gwc_gef
-		where  id =?id
+        select `s_g_g_id`,`stu_gwc_id`,`gef_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from stu_gwc_gef where id =?id
     </sql>
     <sql id="selectall_stu_gwc_gef">
-        select `s_g_g_id`,`stu_gwc_id`,`gef_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from stu_gwc_gef
+        select `s_g_g_id`,`stu_gwc_id`,`gef_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from stu_gwc_gef
     </sql>
 </sqlMap>

@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_data_dictionary">
         update data_dictionary set `dic_id`=?dic_id,`dic_parent`=?dic_parent,`dic_shortname`=?dic_shortname,`dic_name`=?dic_name,`dic_remark`=?dic_remark,`dic_value`=?dic_value,`dic_isdel`=?dic_isdel,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date
-		where  id =?id
-    </sql>
-    <sql id="delete_data_dictionary">
-        delete from data_dictionary
 		where id =?id
     </sql>
+    <sql id="deleteone_data_dictionary">
+        delete from data_dictionary where id =?id
+    </sql>
     <sql id="selectone_data_dictionary">
-        select `dic_id`,`dic_parent`,`dic_shortname`,`dic_name`,`dic_remark`,`dic_value`,`dic_isdel`,`creater`,`create_date`,`updater`,`update_date` from data_dictionary
-		where  id =?id
+        select `dic_id`,`dic_parent`,`dic_shortname`,`dic_name`,`dic_remark`,`dic_value`,`dic_isdel`,`creater`,`create_date`,`updater`,`update_date` from data_dictionary where id =?id
     </sql>
     <sql id="selectall_data_dictionary">
         select `dic_id`,`dic_parent`,`dic_shortname`,`dic_name`,`dic_remark`,`dic_value`,`dic_isdel`,`creater`,`create_date`,`updater`,`update_date` from data_dictionary

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_time_set">
         insert into time_set
-		(`t_325_0`,`time_name`,`time_code`,`isdelete`)
+		(`t_325_0`,`time_name`,`time_code`,`is_delete`)
 		values
-		(?t_325_0,?time_name,?time_code,?isdelete)
+		(?t_325_0,?time_name,?time_code,?is_delete)
     </sql>
     <sql id="update_time_set">
-        update time_set set `t_325_0`=?t_325_0,`time_name`=?time_name,`time_code`=?time_code,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_time_set">
-        delete from time_set
+        update time_set set `t_325_0`=?t_325_0,`time_name`=?time_name,`time_code`=?time_code,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_time_set">
+        delete from time_set where id =?id
+    </sql>
     <sql id="selectone_time_set">
-        select `t_325_0`,`time_name`,`time_code`,`isdelete` from time_set
-		where  id =?id
+        select `t_325_0`,`time_name`,`time_code`,`is_delete` from time_set where id =?id
     </sql>
     <sql id="selectall_time_set">
-        select `t_325_0`,`time_name`,`time_code`,`isdelete` from time_set
+        select `t_325_0`,`time_name`,`time_code`,`is_delete` from time_set
     </sql>
 </sqlMap>

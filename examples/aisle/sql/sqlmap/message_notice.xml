@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_message_notice">
         insert into message_notice
-		(`m_n_id`,`message_content`,`notice_date`,`sp_id`,`if_read`,`scs_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cs_id`,`cct_id`,`scf_id`,`message_type`,`stu_id`,`amn_id`,`par_id`,`if_send`,`saa_id`)
+		(`m_n_id`,`message_content`,`notice_date`,`sp_id`,`if_read`,`scs_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cs_id`,`cct_id`,`scf_id`,`message_type`,`stu_id`,`amn_id`,`par_id`,`if_send`,`saa_id`)
 		values
-		(?m_n_id,?message_content,?notice_date,?sp_id,?if_read,?scs_id,?creater,?create_date,?updater,?update_date,?isdelete,?cs_id,?cct_id,?scf_id,?message_type,?stu_id,?amn_id,?par_id,?if_send,?saa_id)
+		(?m_n_id,?message_content,?notice_date,?sp_id,?if_read,?scs_id,?creater,?create_date,?updater,?update_date,?is_delete,?cs_id,?cct_id,?scf_id,?message_type,?stu_id,?amn_id,?par_id,?if_send,?saa_id)
     </sql>
     <sql id="update_message_notice">
-        update message_notice set `m_n_id`=?m_n_id,`message_content`=?message_content,`notice_date`=?notice_date,`sp_id`=?sp_id,`if_read`=?if_read,`scs_id`=?scs_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`cs_id`=?cs_id,`cct_id`=?cct_id,`scf_id`=?scf_id,`message_type`=?message_type,`stu_id`=?stu_id,`amn_id`=?amn_id,`par_id`=?par_id,`if_send`=?if_send,`saa_id`=?saa_id
-		where  id =?id
-    </sql>
-    <sql id="delete_message_notice">
-        delete from message_notice
+        update message_notice set `m_n_id`=?m_n_id,`message_content`=?message_content,`notice_date`=?notice_date,`sp_id`=?sp_id,`if_read`=?if_read,`scs_id`=?scs_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`cs_id`=?cs_id,`cct_id`=?cct_id,`scf_id`=?scf_id,`message_type`=?message_type,`stu_id`=?stu_id,`amn_id`=?amn_id,`par_id`=?par_id,`if_send`=?if_send,`saa_id`=?saa_id
 		where id =?id
     </sql>
+    <sql id="deleteone_message_notice">
+        delete from message_notice where id =?id
+    </sql>
     <sql id="selectone_message_notice">
-        select `m_n_id`,`message_content`,`notice_date`,`sp_id`,`if_read`,`scs_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cs_id`,`cct_id`,`scf_id`,`message_type`,`stu_id`,`amn_id`,`par_id`,`if_send`,`saa_id` from message_notice
-		where  id =?id
+        select `m_n_id`,`message_content`,`notice_date`,`sp_id`,`if_read`,`scs_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cs_id`,`cct_id`,`scf_id`,`message_type`,`stu_id`,`amn_id`,`par_id`,`if_send`,`saa_id` from message_notice where id =?id
     </sql>
     <sql id="selectall_message_notice">
-        select `m_n_id`,`message_content`,`notice_date`,`sp_id`,`if_read`,`scs_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cs_id`,`cct_id`,`scf_id`,`message_type`,`stu_id`,`amn_id`,`par_id`,`if_send`,`saa_id` from message_notice
+        select `m_n_id`,`message_content`,`notice_date`,`sp_id`,`if_read`,`scs_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cs_id`,`cct_id`,`scf_id`,`message_type`,`stu_id`,`amn_id`,`par_id`,`if_send`,`saa_id` from message_notice
     </sql>
 </sqlMap>

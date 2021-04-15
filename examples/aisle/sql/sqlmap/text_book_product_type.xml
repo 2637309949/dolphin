@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_text_book_product_type">
         insert into text_book_product_type
-		(`t_b_p_t_id`,`tb_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`t_b_p_t_id`,`tb_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?t_b_p_t_id,?tb_id,?pt_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?t_b_p_t_id,?tb_id,?pt_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_text_book_product_type">
-        update text_book_product_type set `t_b_p_t_id`=?t_b_p_t_id,`tb_id`=?tb_id,`pt_id`=?pt_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_text_book_product_type">
-        delete from text_book_product_type
+        update text_book_product_type set `t_b_p_t_id`=?t_b_p_t_id,`tb_id`=?tb_id,`pt_id`=?pt_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_text_book_product_type">
+        delete from text_book_product_type where id =?id
+    </sql>
     <sql id="selectone_text_book_product_type">
-        select `t_b_p_t_id`,`tb_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from text_book_product_type
-		where  id =?id
+        select `t_b_p_t_id`,`tb_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from text_book_product_type where id =?id
     </sql>
     <sql id="selectall_text_book_product_type">
-        select `t_b_p_t_id`,`tb_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from text_book_product_type
+        select `t_b_p_t_id`,`tb_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from text_book_product_type
     </sql>
 </sqlMap>

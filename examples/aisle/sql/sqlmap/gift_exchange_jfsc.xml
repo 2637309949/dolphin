@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_gift_exchange_jfsc">
         insert into gift_exchange_jfsc
-		(`g_e_j_id`,`exchange_num`,`xh_jf`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`gift_id`,`pk_stu`)
+		(`g_e_j_id`,`exchange_num`,`xh_jf`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`gift_id`,`pk_stu`)
 		values
-		(?g_e_j_id,?exchange_num,?xh_jf,?creater,?create_date,?updater,?update_date,?isdelete,?gift_id,?pk_stu)
+		(?g_e_j_id,?exchange_num,?xh_jf,?creater,?create_date,?updater,?update_date,?is_delete,?gift_id,?pk_stu)
     </sql>
     <sql id="update_gift_exchange_jfsc">
-        update gift_exchange_jfsc set `g_e_j_id`=?g_e_j_id,`exchange_num`=?exchange_num,`xh_jf`=?xh_jf,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`gift_id`=?gift_id,`pk_stu`=?pk_stu
-		where  id =?id
-    </sql>
-    <sql id="delete_gift_exchange_jfsc">
-        delete from gift_exchange_jfsc
+        update gift_exchange_jfsc set `g_e_j_id`=?g_e_j_id,`exchange_num`=?exchange_num,`xh_jf`=?xh_jf,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`gift_id`=?gift_id,`pk_stu`=?pk_stu
 		where id =?id
     </sql>
+    <sql id="deleteone_gift_exchange_jfsc">
+        delete from gift_exchange_jfsc where id =?id
+    </sql>
     <sql id="selectone_gift_exchange_jfsc">
-        select `g_e_j_id`,`exchange_num`,`xh_jf`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`gift_id`,`pk_stu` from gift_exchange_jfsc
-		where  id =?id
+        select `g_e_j_id`,`exchange_num`,`xh_jf`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`gift_id`,`pk_stu` from gift_exchange_jfsc where id =?id
     </sql>
     <sql id="selectall_gift_exchange_jfsc">
-        select `g_e_j_id`,`exchange_num`,`xh_jf`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`gift_id`,`pk_stu` from gift_exchange_jfsc
+        select `g_e_j_id`,`exchange_num`,`xh_jf`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`gift_id`,`pk_stu` from gift_exchange_jfsc
     </sql>
 </sqlMap>

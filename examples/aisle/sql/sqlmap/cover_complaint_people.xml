@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_cover_complaint_people">
         insert into cover_complaint_people
-		(`c_c_p_id`,`complaint_id`,`complaint_people`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_c_p_id`,`complaint_id`,`complaint_people`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_c_p_id,?complaint_id,?complaint_people,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_c_p_id,?complaint_id,?complaint_people,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_cover_complaint_people">
-        update cover_complaint_people set `c_c_p_id`=?c_c_p_id,`complaint_id`=?complaint_id,`complaint_people`=?complaint_people,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_cover_complaint_people">
-        delete from cover_complaint_people
+        update cover_complaint_people set `c_c_p_id`=?c_c_p_id,`complaint_id`=?complaint_id,`complaint_people`=?complaint_people,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_cover_complaint_people">
+        delete from cover_complaint_people where id =?id
+    </sql>
     <sql id="selectone_cover_complaint_people">
-        select `c_c_p_id`,`complaint_id`,`complaint_people`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from cover_complaint_people
-		where  id =?id
+        select `c_c_p_id`,`complaint_id`,`complaint_people`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from cover_complaint_people where id =?id
     </sql>
     <sql id="selectall_cover_complaint_people">
-        select `c_c_p_id`,`complaint_id`,`complaint_people`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from cover_complaint_people
+        select `c_c_p_id`,`complaint_id`,`complaint_people`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from cover_complaint_people
     </sql>
 </sqlMap>

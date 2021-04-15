@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_pa_activity_class_file">
         insert into pa_activity_class_file
-		(`p_a_c_f_id`,`file_id`,`pacf_desc`,`par_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`p_a_c_f_id`,`file_id`,`pacf_desc`,`par_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?p_a_c_f_id,?file_id,?pacf_desc,?par_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?p_a_c_f_id,?file_id,?pacf_desc,?par_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_pa_activity_class_file">
-        update pa_activity_class_file set `p_a_c_f_id`=?p_a_c_f_id,`file_id`=?file_id,`pacf_desc`=?pacf_desc,`par_id`=?par_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_pa_activity_class_file">
-        delete from pa_activity_class_file
+        update pa_activity_class_file set `p_a_c_f_id`=?p_a_c_f_id,`file_id`=?file_id,`pacf_desc`=?pacf_desc,`par_id`=?par_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_pa_activity_class_file">
+        delete from pa_activity_class_file where id =?id
+    </sql>
     <sql id="selectone_pa_activity_class_file">
-        select `p_a_c_f_id`,`file_id`,`pacf_desc`,`par_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from pa_activity_class_file
-		where  id =?id
+        select `p_a_c_f_id`,`file_id`,`pacf_desc`,`par_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from pa_activity_class_file where id =?id
     </sql>
     <sql id="selectall_pa_activity_class_file">
-        select `p_a_c_f_id`,`file_id`,`pacf_desc`,`par_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from pa_activity_class_file
+        select `p_a_c_f_id`,`file_id`,`pacf_desc`,`par_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from pa_activity_class_file
     </sql>
 </sqlMap>

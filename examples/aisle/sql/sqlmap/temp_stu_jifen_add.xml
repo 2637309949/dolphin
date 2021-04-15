@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_temp_stu_jifen_add">
         update temp_stu_jifen_add set `fid`=?fid,`stu_name`=?stu_name,`stu_phone`=?stu_phone,`zj_jifen`=?zj_jifen,`remark`=?remark
-		where  id =?id
-    </sql>
-    <sql id="delete_temp_stu_jifen_add">
-        delete from temp_stu_jifen_add
 		where id =?id
     </sql>
+    <sql id="deleteone_temp_stu_jifen_add">
+        delete from temp_stu_jifen_add where id =?id
+    </sql>
     <sql id="selectone_temp_stu_jifen_add">
-        select `fid`,`stu_name`,`stu_phone`,`zj_jifen`,`remark` from temp_stu_jifen_add
-		where  id =?id
+        select `fid`,`stu_name`,`stu_phone`,`zj_jifen`,`remark` from temp_stu_jifen_add where id =?id
     </sql>
     <sql id="selectall_temp_stu_jifen_add">
         select `fid`,`stu_name`,`stu_phone`,`zj_jifen`,`remark` from temp_stu_jifen_add

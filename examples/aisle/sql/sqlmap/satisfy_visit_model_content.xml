@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_satisfy_visit_model_content">
         insert into satisfy_visit_model_content
-		(`s_v_m_c_id`,`satisfy_visit_customer_type`,`satisfy_visit_type`,`content`,`svm_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fraction`)
+		(`s_v_m_c_id`,`satisfy_visit_customer_type`,`satisfy_visit_type`,`content`,`svm_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fraction`)
 		values
-		(?s_v_m_c_id,?satisfy_visit_customer_type,?satisfy_visit_type,?content,?svm_id,?creater,?create_date,?updater,?update_date,?isdelete,?fraction)
+		(?s_v_m_c_id,?satisfy_visit_customer_type,?satisfy_visit_type,?content,?svm_id,?creater,?create_date,?updater,?update_date,?is_delete,?fraction)
     </sql>
     <sql id="update_satisfy_visit_model_content">
-        update satisfy_visit_model_content set `s_v_m_c_id`=?s_v_m_c_id,`satisfy_visit_customer_type`=?satisfy_visit_customer_type,`satisfy_visit_type`=?satisfy_visit_type,`content`=?content,`svm_id`=?svm_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`fraction`=?fraction
-		where  id =?id
-    </sql>
-    <sql id="delete_satisfy_visit_model_content">
-        delete from satisfy_visit_model_content
+        update satisfy_visit_model_content set `s_v_m_c_id`=?s_v_m_c_id,`satisfy_visit_customer_type`=?satisfy_visit_customer_type,`satisfy_visit_type`=?satisfy_visit_type,`content`=?content,`svm_id`=?svm_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`fraction`=?fraction
 		where id =?id
     </sql>
+    <sql id="deleteone_satisfy_visit_model_content">
+        delete from satisfy_visit_model_content where id =?id
+    </sql>
     <sql id="selectone_satisfy_visit_model_content">
-        select `s_v_m_c_id`,`satisfy_visit_customer_type`,`satisfy_visit_type`,`content`,`svm_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fraction` from satisfy_visit_model_content
-		where  id =?id
+        select `s_v_m_c_id`,`satisfy_visit_customer_type`,`satisfy_visit_type`,`content`,`svm_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fraction` from satisfy_visit_model_content where id =?id
     </sql>
     <sql id="selectall_satisfy_visit_model_content">
-        select `s_v_m_c_id`,`satisfy_visit_customer_type`,`satisfy_visit_type`,`content`,`svm_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fraction` from satisfy_visit_model_content
+        select `s_v_m_c_id`,`satisfy_visit_customer_type`,`satisfy_visit_type`,`content`,`svm_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fraction` from satisfy_visit_model_content
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_hour_allot_ratio">
         insert into hour_allot_ratio
-		(`h_a_r_id`,`period`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_ham_id`,`end_molecule`,`start_molecule`)
+		(`h_a_r_id`,`period`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_ham_id`,`end_molecule`,`start_molecule`)
 		values
-		(?h_a_r_id,?period,?ratio,?creater,?create_date,?updater,?update_date,?isdelete,?pk_ham_id,?end_molecule,?start_molecule)
+		(?h_a_r_id,?period,?ratio,?creater,?create_date,?updater,?update_date,?is_delete,?pk_ham_id,?end_molecule,?start_molecule)
     </sql>
     <sql id="update_hour_allot_ratio">
-        update hour_allot_ratio set `h_a_r_id`=?h_a_r_id,`period`=?period,`ratio`=?ratio,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`pk_ham_id`=?pk_ham_id,`end_molecule`=?end_molecule,`start_molecule`=?start_molecule
-		where  id =?id
-    </sql>
-    <sql id="delete_hour_allot_ratio">
-        delete from hour_allot_ratio
+        update hour_allot_ratio set `h_a_r_id`=?h_a_r_id,`period`=?period,`ratio`=?ratio,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`pk_ham_id`=?pk_ham_id,`end_molecule`=?end_molecule,`start_molecule`=?start_molecule
 		where id =?id
     </sql>
+    <sql id="deleteone_hour_allot_ratio">
+        delete from hour_allot_ratio where id =?id
+    </sql>
     <sql id="selectone_hour_allot_ratio">
-        select `h_a_r_id`,`period`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_ham_id`,`end_molecule`,`start_molecule` from hour_allot_ratio
-		where  id =?id
+        select `h_a_r_id`,`period`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_ham_id`,`end_molecule`,`start_molecule` from hour_allot_ratio where id =?id
     </sql>
     <sql id="selectall_hour_allot_ratio">
-        select `h_a_r_id`,`period`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_ham_id`,`end_molecule`,`start_molecule` from hour_allot_ratio
+        select `h_a_r_id`,`period`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_ham_id`,`end_molecule`,`start_molecule` from hour_allot_ratio
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stu_pc_hour">
         insert into stu_pc_hour
-		(`s_p_h_id`,`pc_number`,`stu_id`,`notpblsyhour`,`pblsyhour`,`notpblgivesyhour`,`pblgivesyhour`,`bl_give_hour`,`notpblwxhmoney`,`pblwxhmoney`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`yess_hour`,`yess_givehour`,`yess_money`,`pbl_zhuan_yyhour`,`pc_state_date`,`pc_end_date`)
+		(`s_p_h_id`,`pc_number`,`stu_id`,`notpblsyhour`,`pblsyhour`,`notpblgivesyhour`,`pblgivesyhour`,`bl_give_hour`,`notpblwxhmoney`,`pblwxhmoney`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`yess_hour`,`yess_givehour`,`yess_money`,`pbl_zhuan_yyhour`,`pc_state_date`,`pc_end_date`)
 		values
-		(?s_p_h_id,?pc_number,?stu_id,?notpblsyhour,?pblsyhour,?notpblgivesyhour,?pblgivesyhour,?bl_give_hour,?notpblwxhmoney,?pblwxhmoney,?creater,?create_date,?updater,?update_date,?isdelete,?yess_hour,?yess_givehour,?yess_money,?pbl_zhuan_yyhour,?pc_state_date,?pc_end_date)
+		(?s_p_h_id,?pc_number,?stu_id,?notpblsyhour,?pblsyhour,?notpblgivesyhour,?pblgivesyhour,?bl_give_hour,?notpblwxhmoney,?pblwxhmoney,?creater,?create_date,?updater,?update_date,?is_delete,?yess_hour,?yess_givehour,?yess_money,?pbl_zhuan_yyhour,?pc_state_date,?pc_end_date)
     </sql>
     <sql id="update_stu_pc_hour">
-        update stu_pc_hour set `s_p_h_id`=?s_p_h_id,`pc_number`=?pc_number,`stu_id`=?stu_id,`notpblsyhour`=?notpblsyhour,`pblsyhour`=?pblsyhour,`notpblgivesyhour`=?notpblgivesyhour,`pblgivesyhour`=?pblgivesyhour,`bl_give_hour`=?bl_give_hour,`notpblwxhmoney`=?notpblwxhmoney,`pblwxhmoney`=?pblwxhmoney,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`yess_hour`=?yess_hour,`yess_givehour`=?yess_givehour,`yess_money`=?yess_money,`pbl_zhuan_yyhour`=?pbl_zhuan_yyhour,`pc_state_date`=?pc_state_date,`pc_end_date`=?pc_end_date
-		where  id =?id
-    </sql>
-    <sql id="delete_stu_pc_hour">
-        delete from stu_pc_hour
+        update stu_pc_hour set `s_p_h_id`=?s_p_h_id,`pc_number`=?pc_number,`stu_id`=?stu_id,`notpblsyhour`=?notpblsyhour,`pblsyhour`=?pblsyhour,`notpblgivesyhour`=?notpblgivesyhour,`pblgivesyhour`=?pblgivesyhour,`bl_give_hour`=?bl_give_hour,`notpblwxhmoney`=?notpblwxhmoney,`pblwxhmoney`=?pblwxhmoney,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`yess_hour`=?yess_hour,`yess_givehour`=?yess_givehour,`yess_money`=?yess_money,`pbl_zhuan_yyhour`=?pbl_zhuan_yyhour,`pc_state_date`=?pc_state_date,`pc_end_date`=?pc_end_date
 		where id =?id
     </sql>
+    <sql id="deleteone_stu_pc_hour">
+        delete from stu_pc_hour where id =?id
+    </sql>
     <sql id="selectone_stu_pc_hour">
-        select `s_p_h_id`,`pc_number`,`stu_id`,`notpblsyhour`,`pblsyhour`,`notpblgivesyhour`,`pblgivesyhour`,`bl_give_hour`,`notpblwxhmoney`,`pblwxhmoney`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`yess_hour`,`yess_givehour`,`yess_money`,`pbl_zhuan_yyhour`,`pc_state_date`,`pc_end_date` from stu_pc_hour
-		where  id =?id
+        select `s_p_h_id`,`pc_number`,`stu_id`,`notpblsyhour`,`pblsyhour`,`notpblgivesyhour`,`pblgivesyhour`,`bl_give_hour`,`notpblwxhmoney`,`pblwxhmoney`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`yess_hour`,`yess_givehour`,`yess_money`,`pbl_zhuan_yyhour`,`pc_state_date`,`pc_end_date` from stu_pc_hour where id =?id
     </sql>
     <sql id="selectall_stu_pc_hour">
-        select `s_p_h_id`,`pc_number`,`stu_id`,`notpblsyhour`,`pblsyhour`,`notpblgivesyhour`,`pblgivesyhour`,`bl_give_hour`,`notpblwxhmoney`,`pblwxhmoney`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`yess_hour`,`yess_givehour`,`yess_money`,`pbl_zhuan_yyhour`,`pc_state_date`,`pc_end_date` from stu_pc_hour
+        select `s_p_h_id`,`pc_number`,`stu_id`,`notpblsyhour`,`pblsyhour`,`notpblgivesyhour`,`pblgivesyhour`,`bl_give_hour`,`notpblwxhmoney`,`pblwxhmoney`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`yess_hour`,`yess_givehour`,`yess_money`,`pbl_zhuan_yyhour`,`pc_state_date`,`pc_end_date` from stu_pc_hour
     </sql>
 </sqlMap>

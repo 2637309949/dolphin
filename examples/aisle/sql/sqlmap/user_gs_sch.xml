@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_user_gs_sch">
         insert into user_gs_sch
-		(`u_g_s_id`,`user_id`,`sch_iid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`u_g_s_id`,`user_id`,`sch_iid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?u_g_s_id,?user_id,?sch_iid,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?u_g_s_id,?user_id,?sch_iid,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_user_gs_sch">
-        update user_gs_sch set `u_g_s_id`=?u_g_s_id,`user_id`=?user_id,`sch_iid`=?sch_iid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_user_gs_sch">
-        delete from user_gs_sch
+        update user_gs_sch set `u_g_s_id`=?u_g_s_id,`user_id`=?user_id,`sch_iid`=?sch_iid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_user_gs_sch">
+        delete from user_gs_sch where id =?id
+    </sql>
     <sql id="selectone_user_gs_sch">
-        select `u_g_s_id`,`user_id`,`sch_iid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from user_gs_sch
-		where  id =?id
+        select `u_g_s_id`,`user_id`,`sch_iid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from user_gs_sch where id =?id
     </sql>
     <sql id="selectall_user_gs_sch">
-        select `u_g_s_id`,`user_id`,`sch_iid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from user_gs_sch
+        select `u_g_s_id`,`user_id`,`sch_iid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from user_gs_sch
     </sql>
 </sqlMap>

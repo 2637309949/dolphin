@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_student_time_resource">
         insert into student_time_resource
-		(`s_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`course_type`,`course_state`)
+		(`s_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`course_type`,`course_state`)
 		values
-		(?s_t_r_id,?data_id,?table_id,?main_data_id,?start_time,?end_time,?conflict_content,?show_content,?creater,?create_date,?updater,?update_date,?isdelete,?course_type,?course_state)
+		(?s_t_r_id,?data_id,?table_id,?main_data_id,?start_time,?end_time,?conflict_content,?show_content,?creater,?create_date,?updater,?update_date,?is_delete,?course_type,?course_state)
     </sql>
     <sql id="update_student_time_resource">
-        update student_time_resource set `s_t_r_id`=?s_t_r_id,`data_id`=?data_id,`table_id`=?table_id,`main_data_id`=?main_data_id,`start_time`=?start_time,`end_time`=?end_time,`conflict_content`=?conflict_content,`show_content`=?show_content,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`course_type`=?course_type,`course_state`=?course_state
-		where  id =?id
-    </sql>
-    <sql id="delete_student_time_resource">
-        delete from student_time_resource
+        update student_time_resource set `s_t_r_id`=?s_t_r_id,`data_id`=?data_id,`table_id`=?table_id,`main_data_id`=?main_data_id,`start_time`=?start_time,`end_time`=?end_time,`conflict_content`=?conflict_content,`show_content`=?show_content,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`course_type`=?course_type,`course_state`=?course_state
 		where id =?id
     </sql>
+    <sql id="deleteone_student_time_resource">
+        delete from student_time_resource where id =?id
+    </sql>
     <sql id="selectone_student_time_resource">
-        select `s_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`course_type`,`course_state` from student_time_resource
-		where  id =?id
+        select `s_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`course_type`,`course_state` from student_time_resource where id =?id
     </sql>
     <sql id="selectall_student_time_resource">
-        select `s_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`course_type`,`course_state` from student_time_resource
+        select `s_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`course_type`,`course_state` from student_time_resource
     </sql>
 </sqlMap>

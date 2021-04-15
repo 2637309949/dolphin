@@ -8,13 +8,13 @@
     </sql>
     <sql id="update_sys_table_column">
         update sys_table_column set `id`=?id,`tb_id`=?tb_id,`name`=?name,`desc`=?desc,`is_primary_key`=?is_primary_key,`type`=?type,`nullable`=?nullable,`default`=?default,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
-		where  id =?id
+		where id =?id
     </sql>
-    <sql id="delete_sys_table_column">
+    <sql id="deleteone_sys_table_column">
         delete from sys_table_column where id =?id
     </sql>
     <sql id="selectone_sys_table_column">
-        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_table_column where  id =?id
+        select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_table_column where id =?id
     </sql>
     <sql id="selectall_sys_table_column">
         select `id`,`tb_id`,`name`,`desc`,`is_primary_key`,`type`,`nullable`,`default`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_table_column

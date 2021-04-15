@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_channel_school_plan">
         insert into channel_school_plan
-		(`c_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_plan`,`plan_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_plan`,`plan_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_s_p_id,?pk_sch,?in_plan,?out_plan,?demo_plan,?achievement_plan,?plan_date,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_s_p_id,?pk_sch,?in_plan,?out_plan,?demo_plan,?achievement_plan,?plan_date,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_channel_school_plan">
-        update channel_school_plan set `c_s_p_id`=?c_s_p_id,`pk_sch`=?pk_sch,`in_plan`=?in_plan,`out_plan`=?out_plan,`demo_plan`=?demo_plan,`achievement_plan`=?achievement_plan,`plan_date`=?plan_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_channel_school_plan">
-        delete from channel_school_plan
+        update channel_school_plan set `c_s_p_id`=?c_s_p_id,`pk_sch`=?pk_sch,`in_plan`=?in_plan,`out_plan`=?out_plan,`demo_plan`=?demo_plan,`achievement_plan`=?achievement_plan,`plan_date`=?plan_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_channel_school_plan">
+        delete from channel_school_plan where id =?id
+    </sql>
     <sql id="selectone_channel_school_plan">
-        select `c_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_plan`,`plan_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from channel_school_plan
-		where  id =?id
+        select `c_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_plan`,`plan_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from channel_school_plan where id =?id
     </sql>
     <sql id="selectall_channel_school_plan">
-        select `c_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_plan`,`plan_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from channel_school_plan
+        select `c_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_plan`,`plan_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from channel_school_plan
     </sql>
 </sqlMap>

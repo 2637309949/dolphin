@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_educational_research">
         insert into educational_research
-		(`e_r_id`,`er_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`e_r_id`,`er_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?e_r_id,?er_date,?remark,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?e_r_id,?er_date,?remark,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_educational_research">
-        update educational_research set `e_r_id`=?e_r_id,`er_date`=?er_date,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_educational_research">
-        delete from educational_research
+        update educational_research set `e_r_id`=?e_r_id,`er_date`=?er_date,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_educational_research">
+        delete from educational_research where id =?id
+    </sql>
     <sql id="selectone_educational_research">
-        select `e_r_id`,`er_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from educational_research
-		where  id =?id
+        select `e_r_id`,`er_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from educational_research where id =?id
     </sql>
     <sql id="selectall_educational_research">
-        select `e_r_id`,`er_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from educational_research
+        select `e_r_id`,`er_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from educational_research
     </sql>
 </sqlMap>

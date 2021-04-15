@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_gift_exchange">
         insert into gift_exchange
-		(`g_e_id`,`express_number`,`stu_address`,`return_reason`,`gift_type`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_gift_id`)
+		(`g_e_id`,`express_number`,`stu_address`,`return_reason`,`gift_type`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_gift_id`)
 		values
-		(?g_e_id,?express_number,?stu_address,?return_reason,?gift_type,?creater,?create_date,?updater,?update_date,?isdelete,?stu_gift_id)
+		(?g_e_id,?express_number,?stu_address,?return_reason,?gift_type,?creater,?create_date,?updater,?update_date,?is_delete,?stu_gift_id)
     </sql>
     <sql id="update_gift_exchange">
-        update gift_exchange set `g_e_id`=?g_e_id,`express_number`=?express_number,`stu_address`=?stu_address,`return_reason`=?return_reason,`gift_type`=?gift_type,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`stu_gift_id`=?stu_gift_id
-		where  id =?id
-    </sql>
-    <sql id="delete_gift_exchange">
-        delete from gift_exchange
+        update gift_exchange set `g_e_id`=?g_e_id,`express_number`=?express_number,`stu_address`=?stu_address,`return_reason`=?return_reason,`gift_type`=?gift_type,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`stu_gift_id`=?stu_gift_id
 		where id =?id
     </sql>
+    <sql id="deleteone_gift_exchange">
+        delete from gift_exchange where id =?id
+    </sql>
     <sql id="selectone_gift_exchange">
-        select `g_e_id`,`express_number`,`stu_address`,`return_reason`,`gift_type`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_gift_id` from gift_exchange
-		where  id =?id
+        select `g_e_id`,`express_number`,`stu_address`,`return_reason`,`gift_type`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_gift_id` from gift_exchange where id =?id
     </sql>
     <sql id="selectall_gift_exchange">
-        select `g_e_id`,`express_number`,`stu_address`,`return_reason`,`gift_type`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_gift_id` from gift_exchange
+        select `g_e_id`,`express_number`,`stu_address`,`return_reason`,`gift_type`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_gift_id` from gift_exchange
     </sql>
 </sqlMap>

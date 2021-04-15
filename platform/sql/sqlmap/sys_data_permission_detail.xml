@@ -8,13 +8,13 @@
     </sql>
     <sql id="update_sys_data_permission_detail">
         update sys_data_permission_detail set `id`=?id,`data_permission_id`=?data_permission_id,`role_id`=?role_id,`rule`=?rule,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
-		where  id =?id
+		where id =?id
     </sql>
-    <sql id="delete_sys_data_permission_detail">
+    <sql id="deleteone_sys_data_permission_detail">
         delete from sys_data_permission_detail where id =?id
     </sql>
     <sql id="selectone_sys_data_permission_detail">
-        select `id`,`data_permission_id`,`role_id`,`rule`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_data_permission_detail where  id =?id
+        select `id`,`data_permission_id`,`role_id`,`rule`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_data_permission_detail where id =?id
     </sql>
     <sql id="selectall_sys_data_permission_detail">
         select `id`,`data_permission_id`,`role_id`,`rule`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_data_permission_detail

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_gjss_app_introduction">
         insert into gjss_app_introduction
-		(`g_a_i_id`,`gjss_title`,`gjss_introduction`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_tea_dic`)
+		(`g_a_i_id`,`gjss_title`,`gjss_introduction`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_tea_dic`)
 		values
-		(?g_a_i_id,?gjss_title,?gjss_introduction,?creater,?create_date,?updater,?update_date,?isdelete,?stu_tea_dic)
+		(?g_a_i_id,?gjss_title,?gjss_introduction,?creater,?create_date,?updater,?update_date,?is_delete,?stu_tea_dic)
     </sql>
     <sql id="update_gjss_app_introduction">
-        update gjss_app_introduction set `g_a_i_id`=?g_a_i_id,`gjss_title`=?gjss_title,`gjss_introduction`=?gjss_introduction,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`stu_tea_dic`=?stu_tea_dic
-		where  id =?id
-    </sql>
-    <sql id="delete_gjss_app_introduction">
-        delete from gjss_app_introduction
+        update gjss_app_introduction set `g_a_i_id`=?g_a_i_id,`gjss_title`=?gjss_title,`gjss_introduction`=?gjss_introduction,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`stu_tea_dic`=?stu_tea_dic
 		where id =?id
     </sql>
+    <sql id="deleteone_gjss_app_introduction">
+        delete from gjss_app_introduction where id =?id
+    </sql>
     <sql id="selectone_gjss_app_introduction">
-        select `g_a_i_id`,`gjss_title`,`gjss_introduction`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_tea_dic` from gjss_app_introduction
-		where  id =?id
+        select `g_a_i_id`,`gjss_title`,`gjss_introduction`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_tea_dic` from gjss_app_introduction where id =?id
     </sql>
     <sql id="selectall_gjss_app_introduction">
-        select `g_a_i_id`,`gjss_title`,`gjss_introduction`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_tea_dic` from gjss_app_introduction
+        select `g_a_i_id`,`gjss_title`,`gjss_introduction`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_tea_dic` from gjss_app_introduction
     </sql>
 </sqlMap>

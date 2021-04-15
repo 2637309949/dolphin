@@ -14,13 +14,13 @@ func init() {
     `
 	SQLTPL["update_sys_app_fun"] = `
         update sys_app_fun set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`url`" + `=?url,` + "`perms`" + `=?perms,` + "`type`" + `=?type,` + "`image`" + `=?image,` + "`icon`" + `=?icon,` + "`order`" + `=?order,` + "`hidden`" + `=?hidden,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_app_fun"] = `
+	SQLTPL["deleteone_sys_app_fun"] = `
         delete from sys_app_fun where id =?id
     `
 	SQLTPL["selectone_sys_app_fun"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_app_fun where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_app_fun where id =?id
     `
 	SQLTPL["selectall_sys_app_fun"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`image`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_app_fun
@@ -33,13 +33,13 @@ func init() {
     `
 	SQLTPL["update_sys_area"] = `
         update sys_area set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`org_id`" + `=?org_id,` + "`temp_id`" + `=?temp_id,` + "`temp_value`" + `=?temp_value,` + "`manager`" + `=?manager,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_area"] = `
+	SQLTPL["deleteone_sys_area"] = `
         delete from sys_area where id =?id
     `
 	SQLTPL["selectone_sys_area"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area where id =?id
     `
 	SQLTPL["selectall_sys_area"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`org_id`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`manager`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area
@@ -52,13 +52,13 @@ func init() {
     `
 	SQLTPL["update_sys_area_template"] = `
         update sys_area_template set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`type`" + `=?type,` + "`default`" + `=?default,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_area_template"] = `
+	SQLTPL["deleteone_sys_area_template"] = `
         delete from sys_area_template where id =?id
     `
 	SQLTPL["selectone_sys_area_template"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template where id =?id
     `
 	SQLTPL["selectall_sys_area_template"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template
@@ -71,13 +71,13 @@ func init() {
     `
 	SQLTPL["update_sys_area_template_detail"] = `
         update sys_area_template_detail set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`temp_id`" + `=?temp_id,` + "`value`" + `=?value,` + "`type`" + `=?type,` + "`priority`" + `=?priority,` + "`content`" + `=?content,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_area_template_detail"] = `
+	SQLTPL["deleteone_sys_area_template_detail"] = `
         delete from sys_area_template_detail where id =?id
     `
 	SQLTPL["selectone_sys_area_template_detail"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template_detail where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template_detail where id =?id
     `
 	SQLTPL["selectall_sys_area_template_detail"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`temp_id`" + `,` + "`value`" + `,` + "`type`" + `,` + "`priority`" + `,` + "`content`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_area_template_detail
@@ -90,13 +90,13 @@ func init() {
     `
 	SQLTPL["update_sys_attachment"] = `
         update sys_attachment set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`icon`" + `=?icon,` + "`uuid`" + `=?uuid,` + "`size`" + `=?size,` + "`type`" + `=?type,` + "`ext`" + `=?ext,` + "`hash`" + `=?hash,` + "`path`" + `=?path,` + "`url`" + `=?url,` + "`durable`" + `=?durable,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_attachment"] = `
+	SQLTPL["deleteone_sys_attachment"] = `
         delete from sys_attachment where id =?id
     `
 	SQLTPL["selectone_sys_attachment"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_attachment where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_attachment where id =?id
     `
 	SQLTPL["selectall_sys_attachment"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`icon`" + `,` + "`uuid`" + `,` + "`size`" + `,` + "`type`" + `,` + "`ext`" + `,` + "`hash`" + `,` + "`path`" + `,` + "`url`" + `,` + "`durable`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_attachment
@@ -109,13 +109,13 @@ func init() {
     `
 	SQLTPL["update_sys_client"] = `
         update sys_client set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`app_name`" + `=?app_name,` + "`domain`" + `=?domain,` + "`client`" + `=?client,` + "`secret`" + `=?secret,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_client"] = `
+	SQLTPL["deleteone_sys_client"] = `
         delete from sys_client where id =?id
     `
 	SQLTPL["selectone_sys_client"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_client where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_client where id =?id
     `
 	SQLTPL["selectall_sys_client"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`client`" + `,` + "`secret`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_client
@@ -128,13 +128,13 @@ func init() {
     `
 	SQLTPL["update_sys_comment"] = `
         update sys_comment set ` + "`id`" + `=?id,` + "`topic_id`" + `=?topic_id,` + "`topic_type`" + `=?topic_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_comment"] = `
+	SQLTPL["deleteone_sys_comment"] = `
         delete from sys_comment where id =?id
     `
 	SQLTPL["selectone_sys_comment"] = `
-        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment where  id =?id
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment where id =?id
     `
 	SQLTPL["selectall_sys_comment"] = `
         select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment
@@ -147,13 +147,13 @@ func init() {
     `
 	SQLTPL["update_sys_comment_reply"] = `
         update sys_comment_reply set ` + "`id`" + `=?id,` + "`comment_id`" + `=?comment_id,` + "`reply_id`" + `=?reply_id,` + "`reply_type`" + `=?reply_type,` + "`content`" + `=?content,` + "`from_uid`" + `=?from_uid,` + "`to_uid`" + `=?to_uid,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_comment_reply"] = `
+	SQLTPL["deleteone_sys_comment_reply"] = `
         delete from sys_comment_reply where id =?id
     `
 	SQLTPL["selectone_sys_comment_reply"] = `
-        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment_reply where  id =?id
+        select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment_reply where id =?id
     `
 	SQLTPL["selectall_sys_comment_reply"] = `
         select ` + "`id`" + `,` + "`comment_id`" + `,` + "`reply_id`" + `,` + "`reply_type`" + `,` + "`content`" + `,` + "`from_uid`" + `,` + "`to_uid`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_comment_reply
@@ -166,13 +166,13 @@ func init() {
     `
 	SQLTPL["update_sys_data_permission"] = `
         update sys_data_permission set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_data_permission"] = `
+	SQLTPL["deleteone_sys_data_permission"] = `
         delete from sys_data_permission where id =?id
     `
 	SQLTPL["selectone_sys_data_permission"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission where id =?id
     `
 	SQLTPL["selectall_sys_data_permission"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission
@@ -185,13 +185,13 @@ func init() {
     `
 	SQLTPL["update_sys_data_permission_detail"] = `
         update sys_data_permission_detail set ` + "`id`" + `=?id,` + "`data_permission_id`" + `=?data_permission_id,` + "`role_id`" + `=?role_id,` + "`rule`" + `=?rule,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_data_permission_detail"] = `
+	SQLTPL["deleteone_sys_data_permission_detail"] = `
         delete from sys_data_permission_detail where id =?id
     `
 	SQLTPL["selectone_sys_data_permission_detail"] = `
-        select ` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission_detail where  id =?id
+        select ` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission_detail where id =?id
     `
 	SQLTPL["selectall_sys_data_permission_detail"] = `
         select ` + "`id`" + `,` + "`data_permission_id`" + `,` + "`role_id`" + `,` + "`rule`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_data_permission_detail
@@ -204,13 +204,13 @@ func init() {
     `
 	SQLTPL["update_sys_domain"] = `
         update sys_domain set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`app_name`" + `=?app_name,` + "`domain`" + `=?domain,` + "`domain_url`" + `=?domain_url,` + "`full_name`" + `=?full_name,` + "`contact_name`" + `=?contact_name,` + "`contact_email`" + `=?contact_email,` + "`contact_mobile`" + `=?contact_mobile,` + "`data_source`" + `=?data_source,` + "`driver_name`" + `=?driver_name,` + "`login_url`" + `=?login_url,` + "`api_url`" + `=?api_url,` + "`static_url`" + `=?static_url,` + "`theme`" + `=?theme,` + "`type`" + `=?type,` + "`status`" + `=?status,` + "`auth_mode`" + `=?auth_mode,` + "`is_sync`" + `=?is_sync,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_domain"] = `
+	SQLTPL["deleteone_sys_domain"] = `
         delete from sys_domain where id =?id
     `
 	SQLTPL["selectone_sys_domain"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`is_sync`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_domain where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`is_sync`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_domain where id =?id
     `
 	SQLTPL["selectall_sys_domain"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`app_name`" + `,` + "`domain`" + `,` + "`domain_url`" + `,` + "`full_name`" + `,` + "`contact_name`" + `,` + "`contact_email`" + `,` + "`contact_mobile`" + `,` + "`data_source`" + `,` + "`driver_name`" + `,` + "`login_url`" + `,` + "`api_url`" + `,` + "`static_url`" + `,` + "`theme`" + `,` + "`type`" + `,` + "`status`" + `,` + "`auth_mode`" + `,` + "`is_sync`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_domain
@@ -223,13 +223,13 @@ func init() {
     `
 	SQLTPL["update_sys_email_token"] = `
         update sys_email_token set ` + "`id`" + `=?id,` + "`token`" + `=?token,` + "`email`" + `=?email,` + "`user_id`" + `=?user_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_email_token"] = `
+	SQLTPL["deleteone_sys_email_token"] = `
         delete from sys_email_token where id =?id
     `
 	SQLTPL["selectone_sys_email_token"] = `
-        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_email_token where  id =?id
+        select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_email_token where id =?id
     `
 	SQLTPL["selectall_sys_email_token"] = `
         select ` + "`id`" + `,` + "`token`" + `,` + "`email`" + `,` + "`user_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_email_token
@@ -242,13 +242,13 @@ func init() {
     `
 	SQLTPL["update_sys_menu"] = `
         update sys_menu set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`url`" + `=?url,` + "`component`" + `=?component,` + "`perms`" + `=?perms,` + "`type`" + `=?type,` + "`icon`" + `=?icon,` + "`order`" + `=?order,` + "`hidden`" + `=?hidden,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_menu"] = `
+	SQLTPL["deleteone_sys_menu"] = `
         delete from sys_menu where id =?id
     `
 	SQLTPL["selectone_sys_menu"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_menu where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_menu where id =?id
     `
 	SQLTPL["selectall_sys_menu"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`url`" + `,` + "`component`" + `,` + "`perms`" + `,` + "`type`" + `,` + "`icon`" + `,` + "`order`" + `,` + "`hidden`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_menu
@@ -261,13 +261,13 @@ func init() {
     `
 	SQLTPL["update_sys_notification"] = `
         update sys_notification set ` + "`id`" + `=?id,` + "`topic_id`" + `=?topic_id,` + "`topic_type`" + `=?topic_type,` + "`to_uid`" + `=?to_uid,` + "`from_uid`" + `=?from_uid,` + "`is_read`" + `=?is_read,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_notification"] = `
+	SQLTPL["deleteone_sys_notification"] = `
         delete from sys_notification where id =?id
     `
 	SQLTPL["selectone_sys_notification"] = `
-        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_notification where  id =?id
+        select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_notification where id =?id
     `
 	SQLTPL["selectall_sys_notification"] = `
         select ` + "`id`" + `,` + "`topic_id`" + `,` + "`topic_type`" + `,` + "`to_uid`" + `,` + "`from_uid`" + `,` + "`is_read`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_notification
@@ -280,13 +280,13 @@ func init() {
     `
 	SQLTPL["update_sys_optionset"] = `
         update sys_optionset set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`value`" + `=?value,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_optionset"] = `
+	SQLTPL["deleteone_sys_optionset"] = `
         delete from sys_optionset where id =?id
     `
 	SQLTPL["selectone_sys_optionset"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_optionset where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_optionset where id =?id
     `
 	SQLTPL["selectall_sys_optionset"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`value`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_optionset
@@ -299,13 +299,13 @@ func init() {
     `
 	SQLTPL["update_sys_org"] = `
         update sys_org set ` + "`id`" + `=?id,` + "`parent`" + `=?parent,` + "`inheritance`" + `=?inheritance,` + "`name`" + `=?name,` + "`full_name`" + `=?full_name,` + "`leader`" + `=?leader,` + "`code`" + `=?code,` + "`type`" + `=?type,` + "`order`" + `=?order,` + "`status`" + `=?status,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_org"] = `
+	SQLTPL["deleteone_sys_org"] = `
         delete from sys_org where id =?id
     `
 	SQLTPL["selectone_sys_org"] = `
-        select ` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_org where  id =?id
+        select ` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_org where id =?id
     `
 	SQLTPL["selectall_sys_org"] = `
         select ` + "`id`" + `,` + "`parent`" + `,` + "`inheritance`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`leader`" + `,` + "`code`" + `,` + "`type`" + `,` + "`order`" + `,` + "`status`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_org
@@ -318,13 +318,13 @@ func init() {
     `
 	SQLTPL["update_sys_permission"] = `
         update sys_permission set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_permission"] = `
+	SQLTPL["deleteone_sys_permission"] = `
         delete from sys_permission where id =?id
     `
 	SQLTPL["selectone_sys_permission"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_permission where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_permission where id =?id
     `
 	SQLTPL["selectall_sys_permission"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_permission
@@ -337,13 +337,13 @@ func init() {
     `
 	SQLTPL["update_sys_role"] = `
         update sys_role set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`status`" + `=?status,` + "`app_index`" + `=?app_index,` + "`admin_index`" + `=?admin_index,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_role"] = `
+	SQLTPL["deleteone_sys_role"] = `
         delete from sys_role where id =?id
     `
 	SQLTPL["selectone_sys_role"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role where id =?id
     `
 	SQLTPL["selectall_sys_role"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`status`" + `,` + "`app_index`" + `,` + "`admin_index`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role
@@ -356,13 +356,13 @@ func init() {
     `
 	SQLTPL["update_sys_role_app_fun"] = `
         update sys_role_app_fun set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`app_fun_id`" + `=?app_fun_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_role_app_fun"] = `
+	SQLTPL["deleteone_sys_role_app_fun"] = `
         delete from sys_role_app_fun where id =?id
     `
 	SQLTPL["selectone_sys_role_app_fun"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_app_fun where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_app_fun where id =?id
     `
 	SQLTPL["selectall_sys_role_app_fun"] = `
         select ` + "`id`" + `,` + "`role_id`" + `,` + "`app_fun_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_app_fun
@@ -375,13 +375,13 @@ func init() {
     `
 	SQLTPL["update_sys_role_data_permission"] = `
         update sys_role_data_permission set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`data_permission_id`" + `=?data_permission_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_role_data_permission"] = `
+	SQLTPL["deleteone_sys_role_data_permission"] = `
         delete from sys_role_data_permission where id =?id
     `
 	SQLTPL["selectone_sys_role_data_permission"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_data_permission where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_data_permission where id =?id
     `
 	SQLTPL["selectall_sys_role_data_permission"] = `
         select ` + "`id`" + `,` + "`role_id`" + `,` + "`data_permission_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_data_permission
@@ -394,13 +394,13 @@ func init() {
     `
 	SQLTPL["update_sys_role_menu"] = `
         update sys_role_menu set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`menu_id`" + `=?menu_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_role_menu"] = `
+	SQLTPL["deleteone_sys_role_menu"] = `
         delete from sys_role_menu where id =?id
     `
 	SQLTPL["selectone_sys_role_menu"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_menu where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_menu where id =?id
     `
 	SQLTPL["selectall_sys_role_menu"] = `
         select ` + "`id`" + `,` + "`role_id`" + `,` + "`menu_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_menu
@@ -413,13 +413,13 @@ func init() {
     `
 	SQLTPL["update_sys_role_permission"] = `
         update sys_role_permission set ` + "`id`" + `=?id,` + "`role_id`" + `=?role_id,` + "`permission_id`" + `=?permission_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_role_permission"] = `
+	SQLTPL["deleteone_sys_role_permission"] = `
         delete from sys_role_permission where id =?id
     `
 	SQLTPL["selectone_sys_role_permission"] = `
-        select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_permission where  id =?id
+        select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_permission where id =?id
     `
 	SQLTPL["selectall_sys_role_permission"] = `
         select ` + "`id`" + `,` + "`role_id`" + `,` + "`permission_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_permission
@@ -444,13 +444,13 @@ func init() {
     `
 	SQLTPL["update_sys_role_user"] = `
         update sys_role_user set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`role_id`" + `=?role_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_role_user"] = `
+	SQLTPL["deleteone_sys_role_user"] = `
         delete from sys_role_user where id =?id
     `
 	SQLTPL["selectone_sys_role_user"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_user where  id =?id
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_user where id =?id
     `
 	SQLTPL["selectall_sys_role_user"] = `
         select ` + "`id`" + `,` + "`user_id`" + `,` + "`role_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_role_user
@@ -463,13 +463,13 @@ func init() {
     `
 	SQLTPL["update_sys_schedule"] = `
         update sys_schedule set ` + "`id`" + `=?id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_schedule"] = `
+	SQLTPL["deleteone_sys_schedule"] = `
         delete from sys_schedule where id =?id
     `
 	SQLTPL["selectone_sys_schedule"] = `
-        select ` + "`id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule where  id =?id
+        select ` + "`id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule where id =?id
     `
 	SQLTPL["selectall_sys_schedule"] = `
         select ` + "`id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule
@@ -482,13 +482,13 @@ func init() {
     `
 	SQLTPL["update_sys_schedule_history"] = `
         update sys_schedule_history set ` + "`id`" + `=?id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_schedule_history"] = `
+	SQLTPL["deleteone_sys_schedule_history"] = `
         delete from sys_schedule_history where id =?id
     `
 	SQLTPL["selectone_sys_schedule_history"] = `
-        select ` + "`id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule_history where  id =?id
+        select ` + "`id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule_history where id =?id
     `
 	SQLTPL["selectall_sys_schedule_history"] = `
         select ` + "`id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_schedule_history
@@ -501,13 +501,13 @@ func init() {
     `
 	SQLTPL["update_sys_setting"] = `
         update sys_setting set ` + "`id`" + `=?id,` + "`key`" + `=?key,` + "`value`" + `=?value,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_setting"] = `
+	SQLTPL["deleteone_sys_setting"] = `
         delete from sys_setting where id =?id
     `
 	SQLTPL["selectone_sys_setting"] = `
-        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_setting where  id =?id
+        select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_setting where id =?id
     `
 	SQLTPL["selectall_sys_setting"] = `
         select ` + "`id`" + `,` + "`key`" + `,` + "`value`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_setting
@@ -520,13 +520,13 @@ func init() {
     `
 	SQLTPL["update_sys_table"] = `
         update sys_table set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`desc`" + `=?desc,` + "`charset`" + `=?charset,` + "`auto_increment`" + `=?auto_increment,` + "`store_engine`" + `=?store_engine,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_table"] = `
+	SQLTPL["deleteone_sys_table"] = `
         delete from sys_table where id =?id
     `
 	SQLTPL["selectone_sys_table"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table where id =?id
     `
 	SQLTPL["selectall_sys_table"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`charset`" + `,` + "`auto_increment`" + `,` + "`store_engine`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table
@@ -539,13 +539,13 @@ func init() {
     `
 	SQLTPL["update_sys_table_col_user"] = `
         update sys_table_col_user set ` + "`id`" + `=?id,` + "`code`" + `=?code,` + "`value`" + `=?value,` + "`user_id`" + `=?user_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_table_col_user"] = `
+	SQLTPL["deleteone_sys_table_col_user"] = `
         delete from sys_table_col_user where id =?id
     `
 	SQLTPL["selectone_sys_table_col_user"] = `
-        select ` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_col_user where  id =?id
+        select ` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_col_user where id =?id
     `
 	SQLTPL["selectall_sys_table_col_user"] = `
         select ` + "`id`" + `,` + "`code`" + `,` + "`value`" + `,` + "`user_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_col_user
@@ -558,13 +558,13 @@ func init() {
     `
 	SQLTPL["update_sys_table_column"] = `
         update sys_table_column set ` + "`id`" + `=?id,` + "`tb_id`" + `=?tb_id,` + "`name`" + `=?name,` + "`desc`" + `=?desc,` + "`is_primary_key`" + `=?is_primary_key,` + "`type`" + `=?type,` + "`nullable`" + `=?nullable,` + "`default`" + `=?default,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_table_column"] = `
+	SQLTPL["deleteone_sys_table_column"] = `
         delete from sys_table_column where id =?id
     `
 	SQLTPL["selectone_sys_table_column"] = `
-        select ` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_column where  id =?id
+        select ` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_column where id =?id
     `
 	SQLTPL["selectall_sys_table_column"] = `
         select ` + "`id`" + `,` + "`tb_id`" + `,` + "`name`" + `,` + "`desc`" + `,` + "`is_primary_key`" + `,` + "`type`" + `,` + "`nullable`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_table_column
@@ -577,13 +577,13 @@ func init() {
     `
 	SQLTPL["update_sys_tag"] = `
         update sys_tag set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`group_id`" + `=?group_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_tag"] = `
+	SQLTPL["deleteone_sys_tag"] = `
         delete from sys_tag where id =?id
     `
 	SQLTPL["selectone_sys_tag"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag where id =?id
     `
 	SQLTPL["selectall_sys_tag"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`group_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag
@@ -596,13 +596,13 @@ func init() {
     `
 	SQLTPL["update_sys_tag_group"] = `
         update sys_tag_group set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`code`" + `=?code,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_tag_group"] = `
+	SQLTPL["deleteone_sys_tag_group"] = `
         delete from sys_tag_group where id =?id
     `
 	SQLTPL["selectone_sys_tag_group"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag_group where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag_group where id =?id
     `
 	SQLTPL["selectall_sys_tag_group"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`code`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tag_group
@@ -615,13 +615,13 @@ func init() {
     `
 	SQLTPL["update_sys_tracker"] = `
         update sys_tracker set ` + "`id`" + `=?id,` + "`token`" + `=?token,` + "`user_id`" + `=?user_id,` + "`status_code`" + `=?status_code,` + "`latency`" + `=?latency,` + "`client_ip`" + `=?client_ip,` + "`method`" + `=?method,` + "`path`" + `=?path,` + "`header`" + `=?header,` + "`req_body`" + `=?req_body,` + "`res_body`" + `=?res_body,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_tracker"] = `
+	SQLTPL["deleteone_sys_tracker"] = `
         delete from sys_tracker where id =?id
     `
 	SQLTPL["selectone_sys_tracker"] = `
-        select ` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tracker where  id =?id
+        select ` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tracker where id =?id
     `
 	SQLTPL["selectall_sys_tracker"] = `
         select ` + "`id`" + `,` + "`token`" + `,` + "`user_id`" + `,` + "`status_code`" + `,` + "`latency`" + `,` + "`client_ip`" + `,` + "`method`" + `,` + "`path`" + `,` + "`header`" + `,` + "`req_body`" + `,` + "`res_body`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_tracker
@@ -634,13 +634,13 @@ func init() {
     `
 	SQLTPL["update_sys_user"] = `
         update sys_user set ` + "`id`" + `=?id,` + "`password`" + `=?password,` + "`salt`" + `=?salt,` + "`name`" + `=?name,` + "`full_name`" + `=?full_name,` + "`nickname`" + `=?nickname,` + "`intro`" + `=?intro,` + "`address`" + `=?address,` + "`mobile`" + `=?mobile,` + "`email`" + `=?email,` + "`is_email_confirmed`" + `=?is_email_confirmed,` + "`org_id`" + `=?org_id,` + "`gender`" + `=?gender,` + "`type`" + `=?type,` + "`status`" + `=?status,` + "`avatar`" + `=?avatar,` + "`marked_all_as_read_at`" + `=?marked_all_as_read_at,` + "`read_notifications_at`" + `=?read_notifications_at,` + "`temp_id`" + `=?temp_id,` + "`temp_value`" + `=?temp_value,` + "`domain`" + `=?domain,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_user"] = `
+	SQLTPL["deleteone_sys_user"] = `
         delete from sys_user where id =?id
     `
 	SQLTPL["selectone_sys_user"] = `
-        select ` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user where  id =?id
+        select ` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user where id =?id
     `
 	SQLTPL["selectall_sys_user"] = `
         select ` + "`id`" + `,` + "`password`" + `,` + "`salt`" + `,` + "`name`" + `,` + "`full_name`" + `,` + "`nickname`" + `,` + "`intro`" + `,` + "`address`" + `,` + "`mobile`" + `,` + "`email`" + `,` + "`is_email_confirmed`" + `,` + "`org_id`" + `,` + "`gender`" + `,` + "`type`" + `,` + "`status`" + `,` + "`avatar`" + `,` + "`marked_all_as_read_at`" + `,` + "`read_notifications_at`" + `,` + "`temp_id`" + `,` + "`temp_value`" + `,` + "`domain`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user
@@ -653,13 +653,13 @@ func init() {
     `
 	SQLTPL["update_sys_user_binding"] = `
         update sys_user_binding set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`open_id`" + `=?open_id,` + "`union_id`" + `=?union_id,` + "`type`" + `=?type,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_user_binding"] = `
+	SQLTPL["deleteone_sys_user_binding"] = `
         delete from sys_user_binding where id =?id
     `
 	SQLTPL["selectone_sys_user_binding"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_binding where  id =?id
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_binding where id =?id
     `
 	SQLTPL["selectall_sys_user_binding"] = `
         select ` + "`id`" + `,` + "`user_id`" + `,` + "`open_id`" + `,` + "`union_id`" + `,` + "`type`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_binding
@@ -672,13 +672,13 @@ func init() {
     `
 	SQLTPL["update_sys_user_tag"] = `
         update sys_user_tag set ` + "`id`" + `=?id,` + "`user_id`" + `=?user_id,` + "`tag_id`" + `=?tag_id,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_user_tag"] = `
+	SQLTPL["deleteone_sys_user_tag"] = `
         delete from sys_user_tag where id =?id
     `
 	SQLTPL["selectone_sys_user_tag"] = `
-        select ` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_tag where  id =?id
+        select ` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_tag where id =?id
     `
 	SQLTPL["selectall_sys_user_tag"] = `
         select ` + "`id`" + `,` + "`user_id`" + `,` + "`tag_id`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_tag
@@ -691,13 +691,13 @@ func init() {
     `
 	SQLTPL["update_sys_user_template"] = `
         update sys_user_template set ` + "`id`" + `=?id,` + "`name`" + `=?name,` + "`type`" + `=?type,` + "`default`" + `=?default,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_user_template"] = `
+	SQLTPL["deleteone_sys_user_template"] = `
         delete from sys_user_template where id =?id
     `
 	SQLTPL["selectone_sys_user_template"] = `
-        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template where  id =?id
+        select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template where id =?id
     `
 	SQLTPL["selectall_sys_user_template"] = `
         select ` + "`id`" + `,` + "`name`" + `,` + "`type`" + `,` + "`default`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template
@@ -710,13 +710,13 @@ func init() {
     `
 	SQLTPL["update_sys_user_template_detail"] = `
         update sys_user_template_detail set ` + "`id`" + `=?id,` + "`temp_id`" + `=?temp_id,` + "`name`" + `=?name,` + "`value`" + `=?value,` + "`type`" + `=?type,` + "`content`" + `=?content,` + "`priority`" + `=?priority,` + "`creater`" + `=?creater,` + "`create_time`" + `=?create_time,` + "`updater`" + `=?updater,` + "`update_time`" + `=?update_time,` + "`is_delete`" + `=?is_delete,` + "`remark`" + `=?remark
-		where  id =?id
+		where id =?id
     `
-	SQLTPL["delete_sys_user_template_detail"] = `
+	SQLTPL["deleteone_sys_user_template_detail"] = `
         delete from sys_user_template_detail where id =?id
     `
 	SQLTPL["selectone_sys_user_template_detail"] = `
-        select ` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template_detail where  id =?id
+        select ` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template_detail where id =?id
     `
 	SQLTPL["selectall_sys_user_template_detail"] = `
         select ` + "`id`" + `,` + "`temp_id`" + `,` + "`name`" + `,` + "`value`" + `,` + "`type`" + `,` + "`content`" + `,` + "`priority`" + `,` + "`creater`" + `,` + "`create_time`" + `,` + "`updater`" + `,` + "`update_time`" + `,` + "`is_delete`" + `,` + "`remark`" + ` from sys_user_template_detail
@@ -1366,6 +1366,21 @@ where
 	sys_table.is_delete {{.ne}} 1
 {{if ne .role_rule ""}}
 	and {{.role_rule}}
+{{end}}
+{{if ne .is_delete ""}}
+	and sys_table.is_delete={{.is_delete}}
+{{end}}
+{{if ne .creater ""}}
+	and sys_table.creater="{{.creater}}"
+{{end}}
+{{if ne .updater ""}}
+	and sys_table.updater="{{.updater}}"
+{{end}}
+{{if and (ne .create_time_start "") (ne .create_time_end "")}}
+	and sys_table.create_time BETWEEN '{{.create_time_start}}' AND '{{.create_time_end}}'
+{{end}}
+{{if and (ne .update_time_start "") (ne .update_time_end "")}}
+	and sys_table.update_time BETWEEN '{{.update_time_start}}' AND '{{.update_time_end}}'
 {{end}}
 `
 	SQLTPL["sys_table_page_select.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.

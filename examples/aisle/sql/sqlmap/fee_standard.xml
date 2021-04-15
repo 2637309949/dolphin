@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_fee_standard">
         insert into fee_standard
-		(`f_s_id`,`fs_name`,`fs_price`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`fs_type`,`isdelete`,`ct_id`,`fs_all_money`,`travel_routes`,`study_countries`,`begin_time`,`begin_endtime`,`fee_course_type`)
+		(`f_s_id`,`fs_name`,`fs_price`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`fs_type`,`is_delete`,`ct_id`,`fs_all_money`,`travel_routes`,`study_countries`,`begin_time`,`begin_endtime`,`fee_course_type`)
 		values
-		(?f_s_id,?fs_name,?fs_price,?organ_id,?creater,?create_date,?updater,?update_date,?fs_type,?isdelete,?ct_id,?fs_all_money,?travel_routes,?study_countries,?begin_time,?begin_endtime,?fee_course_type)
+		(?f_s_id,?fs_name,?fs_price,?organ_id,?creater,?create_date,?updater,?update_date,?fs_type,?is_delete,?ct_id,?fs_all_money,?travel_routes,?study_countries,?begin_time,?begin_endtime,?fee_course_type)
     </sql>
     <sql id="update_fee_standard">
-        update fee_standard set `f_s_id`=?f_s_id,`fs_name`=?fs_name,`fs_price`=?fs_price,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`fs_type`=?fs_type,`isdelete`=?isdelete,`ct_id`=?ct_id,`fs_all_money`=?fs_all_money,`travel_routes`=?travel_routes,`study_countries`=?study_countries,`begin_time`=?begin_time,`begin_endtime`=?begin_endtime,`fee_course_type`=?fee_course_type
-		where  id =?id
-    </sql>
-    <sql id="delete_fee_standard">
-        delete from fee_standard
+        update fee_standard set `f_s_id`=?f_s_id,`fs_name`=?fs_name,`fs_price`=?fs_price,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`fs_type`=?fs_type,`is_delete`=?is_delete,`ct_id`=?ct_id,`fs_all_money`=?fs_all_money,`travel_routes`=?travel_routes,`study_countries`=?study_countries,`begin_time`=?begin_time,`begin_endtime`=?begin_endtime,`fee_course_type`=?fee_course_type
 		where id =?id
     </sql>
+    <sql id="deleteone_fee_standard">
+        delete from fee_standard where id =?id
+    </sql>
     <sql id="selectone_fee_standard">
-        select `f_s_id`,`fs_name`,`fs_price`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`fs_type`,`isdelete`,`ct_id`,`fs_all_money`,`travel_routes`,`study_countries`,`begin_time`,`begin_endtime`,`fee_course_type` from fee_standard
-		where  id =?id
+        select `f_s_id`,`fs_name`,`fs_price`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`fs_type`,`is_delete`,`ct_id`,`fs_all_money`,`travel_routes`,`study_countries`,`begin_time`,`begin_endtime`,`fee_course_type` from fee_standard where id =?id
     </sql>
     <sql id="selectall_fee_standard">
-        select `f_s_id`,`fs_name`,`fs_price`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`fs_type`,`isdelete`,`ct_id`,`fs_all_money`,`travel_routes`,`study_countries`,`begin_time`,`begin_endtime`,`fee_course_type` from fee_standard
+        select `f_s_id`,`fs_name`,`fs_price`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`fs_type`,`is_delete`,`ct_id`,`fs_all_money`,`travel_routes`,`study_countries`,`begin_time`,`begin_endtime`,`fee_course_type` from fee_standard
     </sql>
 </sqlMap>

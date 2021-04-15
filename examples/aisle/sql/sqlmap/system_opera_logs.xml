@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_system_opera_logs">
         insert into system_opera_logs
-		(`t_12_0`,`data_id`,`data_name`,`user_ip`,`opera_object`,`opera_type`,`program_ip`,`create_date`,`update_date`,`creater`,`updater`,`isdelete`)
+		(`t_12_0`,`data_id`,`data_name`,`user_ip`,`opera_object`,`opera_type`,`program_ip`,`create_date`,`update_date`,`creater`,`updater`,`is_delete`)
 		values
-		(?t_12_0,?data_id,?data_name,?user_ip,?opera_object,?opera_type,?program_ip,?create_date,?update_date,?creater,?updater,?isdelete)
+		(?t_12_0,?data_id,?data_name,?user_ip,?opera_object,?opera_type,?program_ip,?create_date,?update_date,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_system_opera_logs">
-        update system_opera_logs set `t_12_0`=?t_12_0,`data_id`=?data_id,`data_name`=?data_name,`user_ip`=?user_ip,`opera_object`=?opera_object,`opera_type`=?opera_type,`program_ip`=?program_ip,`create_date`=?create_date,`update_date`=?update_date,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_system_opera_logs">
-        delete from system_opera_logs
+        update system_opera_logs set `t_12_0`=?t_12_0,`data_id`=?data_id,`data_name`=?data_name,`user_ip`=?user_ip,`opera_object`=?opera_object,`opera_type`=?opera_type,`program_ip`=?program_ip,`create_date`=?create_date,`update_date`=?update_date,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_system_opera_logs">
+        delete from system_opera_logs where id =?id
+    </sql>
     <sql id="selectone_system_opera_logs">
-        select `t_12_0`,`data_id`,`data_name`,`user_ip`,`opera_object`,`opera_type`,`program_ip`,`create_date`,`update_date`,`creater`,`updater`,`isdelete` from system_opera_logs
-		where  id =?id
+        select `t_12_0`,`data_id`,`data_name`,`user_ip`,`opera_object`,`opera_type`,`program_ip`,`create_date`,`update_date`,`creater`,`updater`,`is_delete` from system_opera_logs where id =?id
     </sql>
     <sql id="selectall_system_opera_logs">
-        select `t_12_0`,`data_id`,`data_name`,`user_ip`,`opera_object`,`opera_type`,`program_ip`,`create_date`,`update_date`,`creater`,`updater`,`isdelete` from system_opera_logs
+        select `t_12_0`,`data_id`,`data_name`,`user_ip`,`opera_object`,`opera_type`,`program_ip`,`create_date`,`update_date`,`creater`,`updater`,`is_delete` from system_opera_logs
     </sql>
 </sqlMap>

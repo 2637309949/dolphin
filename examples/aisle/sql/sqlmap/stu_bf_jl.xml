@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stu_bf_jl">
         insert into stu_bf_jl
-		(`stu_bf_jl_id`,`lbf_id`,`stu_id`,`bf_sc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`stu_bf_jl_id`,`lbf_id`,`stu_id`,`bf_sc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?stu_bf_jl_id,?lbf_id,?stu_id,?bf_sc,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?stu_bf_jl_id,?lbf_id,?stu_id,?bf_sc,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_stu_bf_jl">
-        update stu_bf_jl set `stu_bf_jl_id`=?stu_bf_jl_id,`lbf_id`=?lbf_id,`stu_id`=?stu_id,`bf_sc`=?bf_sc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_stu_bf_jl">
-        delete from stu_bf_jl
+        update stu_bf_jl set `stu_bf_jl_id`=?stu_bf_jl_id,`lbf_id`=?lbf_id,`stu_id`=?stu_id,`bf_sc`=?bf_sc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_stu_bf_jl">
+        delete from stu_bf_jl where id =?id
+    </sql>
     <sql id="selectone_stu_bf_jl">
-        select `stu_bf_jl_id`,`lbf_id`,`stu_id`,`bf_sc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from stu_bf_jl
-		where  id =?id
+        select `stu_bf_jl_id`,`lbf_id`,`stu_id`,`bf_sc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from stu_bf_jl where id =?id
     </sql>
     <sql id="selectall_stu_bf_jl">
-        select `stu_bf_jl_id`,`lbf_id`,`stu_id`,`bf_sc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from stu_bf_jl
+        select `stu_bf_jl_id`,`lbf_id`,`stu_id`,`bf_sc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from stu_bf_jl
     </sql>
 </sqlMap>

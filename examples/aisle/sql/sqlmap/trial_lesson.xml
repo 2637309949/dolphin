@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_trial_lesson">
         insert into trial_lesson
-		(`t_l_id`,`tl_name`,`start_time`,`end_time`,`tl_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`tl_date`,`room_id`,`isdelete`,`sch_id`,`lesson_type`,`now_num`,`tl_num_state`,`remark`,`real_tl_date`,`real_end_time`,`real_start_time`,`tl_type`)
+		(`t_l_id`,`tl_name`,`start_time`,`end_time`,`tl_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`tl_date`,`room_id`,`is_delete`,`sch_id`,`lesson_type`,`now_num`,`tl_num_state`,`remark`,`real_tl_date`,`real_end_time`,`real_start_time`,`tl_type`)
 		values
-		(?t_l_id,?tl_name,?start_time,?end_time,?tl_state,?max_num,?tea_id,?creater,?create_date,?updater,?update_date,?tl_date,?room_id,?isdelete,?sch_id,?lesson_type,?now_num,?tl_num_state,?remark,?real_tl_date,?real_end_time,?real_start_time,?tl_type)
+		(?t_l_id,?tl_name,?start_time,?end_time,?tl_state,?max_num,?tea_id,?creater,?create_date,?updater,?update_date,?tl_date,?room_id,?is_delete,?sch_id,?lesson_type,?now_num,?tl_num_state,?remark,?real_tl_date,?real_end_time,?real_start_time,?tl_type)
     </sql>
     <sql id="update_trial_lesson">
-        update trial_lesson set `t_l_id`=?t_l_id,`tl_name`=?tl_name,`start_time`=?start_time,`end_time`=?end_time,`tl_state`=?tl_state,`max_num`=?max_num,`tea_id`=?tea_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`tl_date`=?tl_date,`room_id`=?room_id,`isdelete`=?isdelete,`sch_id`=?sch_id,`lesson_type`=?lesson_type,`now_num`=?now_num,`tl_num_state`=?tl_num_state,`remark`=?remark,`real_tl_date`=?real_tl_date,`real_end_time`=?real_end_time,`real_start_time`=?real_start_time,`tl_type`=?tl_type
-		where  id =?id
-    </sql>
-    <sql id="delete_trial_lesson">
-        delete from trial_lesson
+        update trial_lesson set `t_l_id`=?t_l_id,`tl_name`=?tl_name,`start_time`=?start_time,`end_time`=?end_time,`tl_state`=?tl_state,`max_num`=?max_num,`tea_id`=?tea_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`tl_date`=?tl_date,`room_id`=?room_id,`is_delete`=?is_delete,`sch_id`=?sch_id,`lesson_type`=?lesson_type,`now_num`=?now_num,`tl_num_state`=?tl_num_state,`remark`=?remark,`real_tl_date`=?real_tl_date,`real_end_time`=?real_end_time,`real_start_time`=?real_start_time,`tl_type`=?tl_type
 		where id =?id
     </sql>
+    <sql id="deleteone_trial_lesson">
+        delete from trial_lesson where id =?id
+    </sql>
     <sql id="selectone_trial_lesson">
-        select `t_l_id`,`tl_name`,`start_time`,`end_time`,`tl_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`tl_date`,`room_id`,`isdelete`,`sch_id`,`lesson_type`,`now_num`,`tl_num_state`,`remark`,`real_tl_date`,`real_end_time`,`real_start_time`,`tl_type` from trial_lesson
-		where  id =?id
+        select `t_l_id`,`tl_name`,`start_time`,`end_time`,`tl_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`tl_date`,`room_id`,`is_delete`,`sch_id`,`lesson_type`,`now_num`,`tl_num_state`,`remark`,`real_tl_date`,`real_end_time`,`real_start_time`,`tl_type` from trial_lesson where id =?id
     </sql>
     <sql id="selectall_trial_lesson">
-        select `t_l_id`,`tl_name`,`start_time`,`end_time`,`tl_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`tl_date`,`room_id`,`isdelete`,`sch_id`,`lesson_type`,`now_num`,`tl_num_state`,`remark`,`real_tl_date`,`real_end_time`,`real_start_time`,`tl_type` from trial_lesson
+        select `t_l_id`,`tl_name`,`start_time`,`end_time`,`tl_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`tl_date`,`room_id`,`is_delete`,`sch_id`,`lesson_type`,`now_num`,`tl_num_state`,`remark`,`real_tl_date`,`real_end_time`,`real_start_time`,`tl_type` from trial_lesson
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_temp_storage_rz">
         insert into temp_storage_rz
-		(`t_s_r_id`,`stu_id`,`toll_money`,`fee_way`,`come_enter`,`toll_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tsr_stu_id`,`ref_id`,`zc_source`,`buss_type`,`check_state`,`ref_rz_orderid`)
+		(`t_s_r_id`,`stu_id`,`toll_money`,`fee_way`,`come_enter`,`toll_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tsr_stu_id`,`ref_id`,`zc_source`,`buss_type`,`check_state`,`ref_rz_orderid`)
 		values
-		(?t_s_r_id,?stu_id,?toll_money,?fee_way,?come_enter,?toll_date,?remark,?creater,?create_date,?updater,?update_date,?isdelete,?tsr_stu_id,?ref_id,?zc_source,?buss_type,?check_state,?ref_rz_orderid)
+		(?t_s_r_id,?stu_id,?toll_money,?fee_way,?come_enter,?toll_date,?remark,?creater,?create_date,?updater,?update_date,?is_delete,?tsr_stu_id,?ref_id,?zc_source,?buss_type,?check_state,?ref_rz_orderid)
     </sql>
     <sql id="update_temp_storage_rz">
-        update temp_storage_rz set `t_s_r_id`=?t_s_r_id,`stu_id`=?stu_id,`toll_money`=?toll_money,`fee_way`=?fee_way,`come_enter`=?come_enter,`toll_date`=?toll_date,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`tsr_stu_id`=?tsr_stu_id,`ref_id`=?ref_id,`zc_source`=?zc_source,`buss_type`=?buss_type,`check_state`=?check_state,`ref_rz_orderid`=?ref_rz_orderid
-		where  id =?id
-    </sql>
-    <sql id="delete_temp_storage_rz">
-        delete from temp_storage_rz
+        update temp_storage_rz set `t_s_r_id`=?t_s_r_id,`stu_id`=?stu_id,`toll_money`=?toll_money,`fee_way`=?fee_way,`come_enter`=?come_enter,`toll_date`=?toll_date,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`tsr_stu_id`=?tsr_stu_id,`ref_id`=?ref_id,`zc_source`=?zc_source,`buss_type`=?buss_type,`check_state`=?check_state,`ref_rz_orderid`=?ref_rz_orderid
 		where id =?id
     </sql>
+    <sql id="deleteone_temp_storage_rz">
+        delete from temp_storage_rz where id =?id
+    </sql>
     <sql id="selectone_temp_storage_rz">
-        select `t_s_r_id`,`stu_id`,`toll_money`,`fee_way`,`come_enter`,`toll_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tsr_stu_id`,`ref_id`,`zc_source`,`buss_type`,`check_state`,`ref_rz_orderid` from temp_storage_rz
-		where  id =?id
+        select `t_s_r_id`,`stu_id`,`toll_money`,`fee_way`,`come_enter`,`toll_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tsr_stu_id`,`ref_id`,`zc_source`,`buss_type`,`check_state`,`ref_rz_orderid` from temp_storage_rz where id =?id
     </sql>
     <sql id="selectall_temp_storage_rz">
-        select `t_s_r_id`,`stu_id`,`toll_money`,`fee_way`,`come_enter`,`toll_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tsr_stu_id`,`ref_id`,`zc_source`,`buss_type`,`check_state`,`ref_rz_orderid` from temp_storage_rz
+        select `t_s_r_id`,`stu_id`,`toll_money`,`fee_way`,`come_enter`,`toll_date`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tsr_stu_id`,`ref_id`,`zc_source`,`buss_type`,`check_state`,`ref_rz_orderid` from temp_storage_rz
     </sql>
 </sqlMap>

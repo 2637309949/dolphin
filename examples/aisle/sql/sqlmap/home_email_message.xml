@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_home_email_message">
         update home_email_message set `t_284_0`=?t_284_0,`title`=?title,`content`=?content,`email`=?email,`sendtime`=?sendtime,`if_send`=?if_send,`if_sendcn`=?if_sendcn,`user_id`=?user_id,`stu_id`=?stu_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date
-		where  id =?id
-    </sql>
-    <sql id="delete_home_email_message">
-        delete from home_email_message
 		where id =?id
     </sql>
+    <sql id="deleteone_home_email_message">
+        delete from home_email_message where id =?id
+    </sql>
     <sql id="selectone_home_email_message">
-        select `t_284_0`,`title`,`content`,`email`,`sendtime`,`if_send`,`if_sendcn`,`user_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date` from home_email_message
-		where  id =?id
+        select `t_284_0`,`title`,`content`,`email`,`sendtime`,`if_send`,`if_sendcn`,`user_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date` from home_email_message where id =?id
     </sql>
     <sql id="selectall_home_email_message">
         select `t_284_0`,`title`,`content`,`email`,`sendtime`,`if_send`,`if_sendcn`,`user_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date` from home_email_message

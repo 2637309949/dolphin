@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_temp_huifu">
         update temp_huifu set `fid`=?fid,`stu_name`=?stu_name,`stu_type`=?stu_type,`stu_city`=?stu_city,`os_name`=?os_name,`stu_phone`=?stu_phone,`of_number`=?of_number
-		where  id =?id
-    </sql>
-    <sql id="delete_temp_huifu">
-        delete from temp_huifu
 		where id =?id
     </sql>
+    <sql id="deleteone_temp_huifu">
+        delete from temp_huifu where id =?id
+    </sql>
     <sql id="selectone_temp_huifu">
-        select `fid`,`stu_name`,`stu_type`,`stu_city`,`os_name`,`stu_phone`,`of_number` from temp_huifu
-		where  id =?id
+        select `fid`,`stu_name`,`stu_type`,`stu_city`,`os_name`,`stu_phone`,`of_number` from temp_huifu where id =?id
     </sql>
     <sql id="selectall_temp_huifu">
         select `fid`,`stu_name`,`stu_type`,`stu_city`,`os_name`,`stu_phone`,`of_number` from temp_huifu

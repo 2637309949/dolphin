@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_pc_sct_give_mx">
         insert into pc_sct_give_mx
-		(`p_s_g_m_id`,`stu_id`,`sct_id`,`sf_surplus_hour`,`yuan_give_hour`,`zs_bl`,`bl_give_hour`,`of_id`,`pc_number`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`bx_type`,`wxh_money`,`organ_id`,`sch_id`,`class_course_type`)
+		(`p_s_g_m_id`,`stu_id`,`sct_id`,`sf_surplus_hour`,`yuan_give_hour`,`zs_bl`,`bl_give_hour`,`of_id`,`pc_number`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`bx_type`,`wxh_money`,`organ_id`,`sch_id`,`class_course_type`)
 		values
-		(?p_s_g_m_id,?stu_id,?sct_id,?sf_surplus_hour,?yuan_give_hour,?zs_bl,?bl_give_hour,?of_id,?pc_number,?creater,?create_date,?updater,?update_date,?isdelete,?bx_type,?wxh_money,?organ_id,?sch_id,?class_course_type)
+		(?p_s_g_m_id,?stu_id,?sct_id,?sf_surplus_hour,?yuan_give_hour,?zs_bl,?bl_give_hour,?of_id,?pc_number,?creater,?create_date,?updater,?update_date,?is_delete,?bx_type,?wxh_money,?organ_id,?sch_id,?class_course_type)
     </sql>
     <sql id="update_pc_sct_give_mx">
-        update pc_sct_give_mx set `p_s_g_m_id`=?p_s_g_m_id,`stu_id`=?stu_id,`sct_id`=?sct_id,`sf_surplus_hour`=?sf_surplus_hour,`yuan_give_hour`=?yuan_give_hour,`zs_bl`=?zs_bl,`bl_give_hour`=?bl_give_hour,`of_id`=?of_id,`pc_number`=?pc_number,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`bx_type`=?bx_type,`wxh_money`=?wxh_money,`organ_id`=?organ_id,`sch_id`=?sch_id,`class_course_type`=?class_course_type
-		where  id =?id
-    </sql>
-    <sql id="delete_pc_sct_give_mx">
-        delete from pc_sct_give_mx
+        update pc_sct_give_mx set `p_s_g_m_id`=?p_s_g_m_id,`stu_id`=?stu_id,`sct_id`=?sct_id,`sf_surplus_hour`=?sf_surplus_hour,`yuan_give_hour`=?yuan_give_hour,`zs_bl`=?zs_bl,`bl_give_hour`=?bl_give_hour,`of_id`=?of_id,`pc_number`=?pc_number,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`bx_type`=?bx_type,`wxh_money`=?wxh_money,`organ_id`=?organ_id,`sch_id`=?sch_id,`class_course_type`=?class_course_type
 		where id =?id
     </sql>
+    <sql id="deleteone_pc_sct_give_mx">
+        delete from pc_sct_give_mx where id =?id
+    </sql>
     <sql id="selectone_pc_sct_give_mx">
-        select `p_s_g_m_id`,`stu_id`,`sct_id`,`sf_surplus_hour`,`yuan_give_hour`,`zs_bl`,`bl_give_hour`,`of_id`,`pc_number`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`bx_type`,`wxh_money`,`organ_id`,`sch_id`,`class_course_type` from pc_sct_give_mx
-		where  id =?id
+        select `p_s_g_m_id`,`stu_id`,`sct_id`,`sf_surplus_hour`,`yuan_give_hour`,`zs_bl`,`bl_give_hour`,`of_id`,`pc_number`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`bx_type`,`wxh_money`,`organ_id`,`sch_id`,`class_course_type` from pc_sct_give_mx where id =?id
     </sql>
     <sql id="selectall_pc_sct_give_mx">
-        select `p_s_g_m_id`,`stu_id`,`sct_id`,`sf_surplus_hour`,`yuan_give_hour`,`zs_bl`,`bl_give_hour`,`of_id`,`pc_number`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`bx_type`,`wxh_money`,`organ_id`,`sch_id`,`class_course_type` from pc_sct_give_mx
+        select `p_s_g_m_id`,`stu_id`,`sct_id`,`sf_surplus_hour`,`yuan_give_hour`,`zs_bl`,`bl_give_hour`,`of_id`,`pc_number`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`bx_type`,`wxh_money`,`organ_id`,`sch_id`,`class_course_type` from pc_sct_give_mx
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_jfsc_fl_sy_tu_file">
         insert into jfsc_fl_sy_tu_file
-		(`j_f_s_t_f_id`,`jfsc_fl_sy_tu`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`j_f_s_t_f_id`,`jfsc_fl_sy_tu`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?j_f_s_t_f_id,?jfsc_fl_sy_tu,?fileid,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?j_f_s_t_f_id,?jfsc_fl_sy_tu,?fileid,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_jfsc_fl_sy_tu_file">
-        update jfsc_fl_sy_tu_file set `j_f_s_t_f_id`=?j_f_s_t_f_id,`jfsc_fl_sy_tu`=?jfsc_fl_sy_tu,`fileid`=?fileid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_jfsc_fl_sy_tu_file">
-        delete from jfsc_fl_sy_tu_file
+        update jfsc_fl_sy_tu_file set `j_f_s_t_f_id`=?j_f_s_t_f_id,`jfsc_fl_sy_tu`=?jfsc_fl_sy_tu,`fileid`=?fileid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_jfsc_fl_sy_tu_file">
+        delete from jfsc_fl_sy_tu_file where id =?id
+    </sql>
     <sql id="selectone_jfsc_fl_sy_tu_file">
-        select `j_f_s_t_f_id`,`jfsc_fl_sy_tu`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from jfsc_fl_sy_tu_file
-		where  id =?id
+        select `j_f_s_t_f_id`,`jfsc_fl_sy_tu`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from jfsc_fl_sy_tu_file where id =?id
     </sql>
     <sql id="selectall_jfsc_fl_sy_tu_file">
-        select `j_f_s_t_f_id`,`jfsc_fl_sy_tu`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from jfsc_fl_sy_tu_file
+        select `j_f_s_t_f_id`,`jfsc_fl_sy_tu`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from jfsc_fl_sy_tu_file
     </sql>
 </sqlMap>

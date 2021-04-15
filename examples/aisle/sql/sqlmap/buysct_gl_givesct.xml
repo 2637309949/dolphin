@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_buysct_gl_givesct">
         insert into buysct_gl_givesct
-		(`b_g_g_id`,`buysct_id`,`givesct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`b_g_g_id`,`buysct_id`,`givesct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?b_g_g_id,?buysct_id,?givesct_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?b_g_g_id,?buysct_id,?givesct_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_buysct_gl_givesct">
-        update buysct_gl_givesct set `b_g_g_id`=?b_g_g_id,`buysct_id`=?buysct_id,`givesct_id`=?givesct_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_buysct_gl_givesct">
-        delete from buysct_gl_givesct
+        update buysct_gl_givesct set `b_g_g_id`=?b_g_g_id,`buysct_id`=?buysct_id,`givesct_id`=?givesct_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_buysct_gl_givesct">
+        delete from buysct_gl_givesct where id =?id
+    </sql>
     <sql id="selectone_buysct_gl_givesct">
-        select `b_g_g_id`,`buysct_id`,`givesct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from buysct_gl_givesct
-		where  id =?id
+        select `b_g_g_id`,`buysct_id`,`givesct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from buysct_gl_givesct where id =?id
     </sql>
     <sql id="selectall_buysct_gl_givesct">
-        select `b_g_g_id`,`buysct_id`,`givesct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from buysct_gl_givesct
+        select `b_g_g_id`,`buysct_id`,`givesct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from buysct_gl_givesct
     </sql>
 </sqlMap>

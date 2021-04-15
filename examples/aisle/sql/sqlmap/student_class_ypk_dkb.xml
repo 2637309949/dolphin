@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_student_class_ypk_dkb">
         insert into student_class_ypk_dkb
-		(`s_c_y_id`,`pk_ypk`,`pk_stu`,`kc`,`one_price`,`all_price`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`class_date`,`pk_sct`,`pk_ct`)
+		(`s_c_y_id`,`pk_ypk`,`pk_stu`,`kc`,`one_price`,`all_price`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`class_date`,`pk_sct`,`pk_ct`)
 		values
-		(?s_c_y_id,?pk_ypk,?pk_stu,?kc,?one_price,?all_price,?pk_sch,?creater,?create_date,?updater,?update_date,?isdelete,?class_date,?pk_sct,?pk_ct)
+		(?s_c_y_id,?pk_ypk,?pk_stu,?kc,?one_price,?all_price,?pk_sch,?creater,?create_date,?updater,?update_date,?is_delete,?class_date,?pk_sct,?pk_ct)
     </sql>
     <sql id="update_student_class_ypk_dkb">
-        update student_class_ypk_dkb set `s_c_y_id`=?s_c_y_id,`pk_ypk`=?pk_ypk,`pk_stu`=?pk_stu,`kc`=?kc,`one_price`=?one_price,`all_price`=?all_price,`pk_sch`=?pk_sch,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`class_date`=?class_date,`pk_sct`=?pk_sct,`pk_ct`=?pk_ct
-		where  id =?id
-    </sql>
-    <sql id="delete_student_class_ypk_dkb">
-        delete from student_class_ypk_dkb
+        update student_class_ypk_dkb set `s_c_y_id`=?s_c_y_id,`pk_ypk`=?pk_ypk,`pk_stu`=?pk_stu,`kc`=?kc,`one_price`=?one_price,`all_price`=?all_price,`pk_sch`=?pk_sch,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`class_date`=?class_date,`pk_sct`=?pk_sct,`pk_ct`=?pk_ct
 		where id =?id
     </sql>
+    <sql id="deleteone_student_class_ypk_dkb">
+        delete from student_class_ypk_dkb where id =?id
+    </sql>
     <sql id="selectone_student_class_ypk_dkb">
-        select `s_c_y_id`,`pk_ypk`,`pk_stu`,`kc`,`one_price`,`all_price`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`class_date`,`pk_sct`,`pk_ct` from student_class_ypk_dkb
-		where  id =?id
+        select `s_c_y_id`,`pk_ypk`,`pk_stu`,`kc`,`one_price`,`all_price`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`class_date`,`pk_sct`,`pk_ct` from student_class_ypk_dkb where id =?id
     </sql>
     <sql id="selectall_student_class_ypk_dkb">
-        select `s_c_y_id`,`pk_ypk`,`pk_stu`,`kc`,`one_price`,`all_price`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`class_date`,`pk_sct`,`pk_ct` from student_class_ypk_dkb
+        select `s_c_y_id`,`pk_ypk`,`pk_stu`,`kc`,`one_price`,`all_price`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`class_date`,`pk_sct`,`pk_ct` from student_class_ypk_dkb
     </sql>
 </sqlMap>

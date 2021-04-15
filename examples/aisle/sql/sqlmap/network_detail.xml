@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_network_detail">
         insert into network_detail
-		(`n_d_id`,`qd_detail`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`qudao`,`channel_type`,`query_type`)
+		(`n_d_id`,`qd_detail`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`qudao`,`channel_type`,`query_type`)
 		values
-		(?n_d_id,?qd_detail,?remake,?creater,?create_date,?updater,?update_date,?isdelete,?qudao,?channel_type,?query_type)
+		(?n_d_id,?qd_detail,?remake,?creater,?create_date,?updater,?update_date,?is_delete,?qudao,?channel_type,?query_type)
     </sql>
     <sql id="update_network_detail">
-        update network_detail set `n_d_id`=?n_d_id,`qd_detail`=?qd_detail,`remake`=?remake,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`qudao`=?qudao,`channel_type`=?channel_type,`query_type`=?query_type
-		where  id =?id
-    </sql>
-    <sql id="delete_network_detail">
-        delete from network_detail
+        update network_detail set `n_d_id`=?n_d_id,`qd_detail`=?qd_detail,`remake`=?remake,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`qudao`=?qudao,`channel_type`=?channel_type,`query_type`=?query_type
 		where id =?id
     </sql>
+    <sql id="deleteone_network_detail">
+        delete from network_detail where id =?id
+    </sql>
     <sql id="selectone_network_detail">
-        select `n_d_id`,`qd_detail`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`qudao`,`channel_type`,`query_type` from network_detail
-		where  id =?id
+        select `n_d_id`,`qd_detail`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`qudao`,`channel_type`,`query_type` from network_detail where id =?id
     </sql>
     <sql id="selectall_network_detail">
-        select `n_d_id`,`qd_detail`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`qudao`,`channel_type`,`query_type` from network_detail
+        select `n_d_id`,`qd_detail`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`qudao`,`channel_type`,`query_type` from network_detail
     </sql>
 </sqlMap>

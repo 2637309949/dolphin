@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_label_info">
         insert into label_info
-		(`label_info_id`,`parent_id`,`label_name`,`label_remark`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`label_info_id`,`parent_id`,`label_name`,`label_remark`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?label_info_id,?parent_id,?label_name,?label_remark,?pt_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?label_info_id,?parent_id,?label_name,?label_remark,?pt_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_label_info">
-        update label_info set `label_info_id`=?label_info_id,`parent_id`=?parent_id,`label_name`=?label_name,`label_remark`=?label_remark,`pt_id`=?pt_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_label_info">
-        delete from label_info
+        update label_info set `label_info_id`=?label_info_id,`parent_id`=?parent_id,`label_name`=?label_name,`label_remark`=?label_remark,`pt_id`=?pt_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_label_info">
+        delete from label_info where id =?id
+    </sql>
     <sql id="selectone_label_info">
-        select `label_info_id`,`parent_id`,`label_name`,`label_remark`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from label_info
-		where  id =?id
+        select `label_info_id`,`parent_id`,`label_name`,`label_remark`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from label_info where id =?id
     </sql>
     <sql id="selectall_label_info">
-        select `label_info_id`,`parent_id`,`label_name`,`label_remark`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from label_info
+        select `label_info_id`,`parent_id`,`label_name`,`label_remark`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from label_info
     </sql>
 </sqlMap>

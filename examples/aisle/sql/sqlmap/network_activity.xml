@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_network_activity">
         insert into network_activity
-		(`n_a_id`,`activity_name`,`nd_id`,`start_time`,`end_time`,`ma_use_money`,`activity_exposure`,`activity_content`,`activity_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`activity_estimate_income`)
+		(`n_a_id`,`activity_name`,`nd_id`,`start_time`,`end_time`,`ma_use_money`,`activity_exposure`,`activity_content`,`activity_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`activity_estimate_income`)
 		values
-		(?n_a_id,?activity_name,?nd_id,?start_time,?end_time,?ma_use_money,?activity_exposure,?activity_content,?activity_desc,?creater,?create_date,?updater,?update_date,?isdelete,?activity_estimate_income)
+		(?n_a_id,?activity_name,?nd_id,?start_time,?end_time,?ma_use_money,?activity_exposure,?activity_content,?activity_desc,?creater,?create_date,?updater,?update_date,?is_delete,?activity_estimate_income)
     </sql>
     <sql id="update_network_activity">
-        update network_activity set `n_a_id`=?n_a_id,`activity_name`=?activity_name,`nd_id`=?nd_id,`start_time`=?start_time,`end_time`=?end_time,`ma_use_money`=?ma_use_money,`activity_exposure`=?activity_exposure,`activity_content`=?activity_content,`activity_desc`=?activity_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`activity_estimate_income`=?activity_estimate_income
-		where  id =?id
-    </sql>
-    <sql id="delete_network_activity">
-        delete from network_activity
+        update network_activity set `n_a_id`=?n_a_id,`activity_name`=?activity_name,`nd_id`=?nd_id,`start_time`=?start_time,`end_time`=?end_time,`ma_use_money`=?ma_use_money,`activity_exposure`=?activity_exposure,`activity_content`=?activity_content,`activity_desc`=?activity_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`activity_estimate_income`=?activity_estimate_income
 		where id =?id
     </sql>
+    <sql id="deleteone_network_activity">
+        delete from network_activity where id =?id
+    </sql>
     <sql id="selectone_network_activity">
-        select `n_a_id`,`activity_name`,`nd_id`,`start_time`,`end_time`,`ma_use_money`,`activity_exposure`,`activity_content`,`activity_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`activity_estimate_income` from network_activity
-		where  id =?id
+        select `n_a_id`,`activity_name`,`nd_id`,`start_time`,`end_time`,`ma_use_money`,`activity_exposure`,`activity_content`,`activity_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`activity_estimate_income` from network_activity where id =?id
     </sql>
     <sql id="selectall_network_activity">
-        select `n_a_id`,`activity_name`,`nd_id`,`start_time`,`end_time`,`ma_use_money`,`activity_exposure`,`activity_content`,`activity_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`activity_estimate_income` from network_activity
+        select `n_a_id`,`activity_name`,`nd_id`,`start_time`,`end_time`,`ma_use_money`,`activity_exposure`,`activity_content`,`activity_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`activity_estimate_income` from network_activity
     </sql>
 </sqlMap>

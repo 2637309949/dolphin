@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_cs_kf_hour_detail">
         insert into cs_kf_hour_detail
-		(`c_k_h_d_id`,`pk_cs`,`pk_kf`,`kq_hour`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`kq_date`,`pk_css`,`pk_csckf_id`,`pk_cssckf_id`,`zd_rs_type`,`pk_stu`,`kx_one_price`,`kx_all_price`,`jf_one_price`,`jf_all_price`,`pk_class`,`kq_kc`,`pk_sch`)
+		(`c_k_h_d_id`,`pk_cs`,`pk_kf`,`kq_hour`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`kq_date`,`pk_css`,`pk_csckf_id`,`pk_cssckf_id`,`zd_rs_type`,`pk_stu`,`kx_one_price`,`kx_all_price`,`jf_one_price`,`jf_all_price`,`pk_class`,`kq_kc`,`pk_sch`)
 		values
-		(?c_k_h_d_id,?pk_cs,?pk_kf,?kq_hour,?creater,?create_date,?updater,?update_date,?isdelete,?kq_date,?pk_css,?pk_csckf_id,?pk_cssckf_id,?zd_rs_type,?pk_stu,?kx_one_price,?kx_all_price,?jf_one_price,?jf_all_price,?pk_class,?kq_kc,?pk_sch)
+		(?c_k_h_d_id,?pk_cs,?pk_kf,?kq_hour,?creater,?create_date,?updater,?update_date,?is_delete,?kq_date,?pk_css,?pk_csckf_id,?pk_cssckf_id,?zd_rs_type,?pk_stu,?kx_one_price,?kx_all_price,?jf_one_price,?jf_all_price,?pk_class,?kq_kc,?pk_sch)
     </sql>
     <sql id="update_cs_kf_hour_detail">
-        update cs_kf_hour_detail set `c_k_h_d_id`=?c_k_h_d_id,`pk_cs`=?pk_cs,`pk_kf`=?pk_kf,`kq_hour`=?kq_hour,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`kq_date`=?kq_date,`pk_css`=?pk_css,`pk_csckf_id`=?pk_csckf_id,`pk_cssckf_id`=?pk_cssckf_id,`zd_rs_type`=?zd_rs_type,`pk_stu`=?pk_stu,`kx_one_price`=?kx_one_price,`kx_all_price`=?kx_all_price,`jf_one_price`=?jf_one_price,`jf_all_price`=?jf_all_price,`pk_class`=?pk_class,`kq_kc`=?kq_kc,`pk_sch`=?pk_sch
-		where  id =?id
-    </sql>
-    <sql id="delete_cs_kf_hour_detail">
-        delete from cs_kf_hour_detail
+        update cs_kf_hour_detail set `c_k_h_d_id`=?c_k_h_d_id,`pk_cs`=?pk_cs,`pk_kf`=?pk_kf,`kq_hour`=?kq_hour,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`kq_date`=?kq_date,`pk_css`=?pk_css,`pk_csckf_id`=?pk_csckf_id,`pk_cssckf_id`=?pk_cssckf_id,`zd_rs_type`=?zd_rs_type,`pk_stu`=?pk_stu,`kx_one_price`=?kx_one_price,`kx_all_price`=?kx_all_price,`jf_one_price`=?jf_one_price,`jf_all_price`=?jf_all_price,`pk_class`=?pk_class,`kq_kc`=?kq_kc,`pk_sch`=?pk_sch
 		where id =?id
     </sql>
+    <sql id="deleteone_cs_kf_hour_detail">
+        delete from cs_kf_hour_detail where id =?id
+    </sql>
     <sql id="selectone_cs_kf_hour_detail">
-        select `c_k_h_d_id`,`pk_cs`,`pk_kf`,`kq_hour`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`kq_date`,`pk_css`,`pk_csckf_id`,`pk_cssckf_id`,`zd_rs_type`,`pk_stu`,`kx_one_price`,`kx_all_price`,`jf_one_price`,`jf_all_price`,`pk_class`,`kq_kc`,`pk_sch` from cs_kf_hour_detail
-		where  id =?id
+        select `c_k_h_d_id`,`pk_cs`,`pk_kf`,`kq_hour`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`kq_date`,`pk_css`,`pk_csckf_id`,`pk_cssckf_id`,`zd_rs_type`,`pk_stu`,`kx_one_price`,`kx_all_price`,`jf_one_price`,`jf_all_price`,`pk_class`,`kq_kc`,`pk_sch` from cs_kf_hour_detail where id =?id
     </sql>
     <sql id="selectall_cs_kf_hour_detail">
-        select `c_k_h_d_id`,`pk_cs`,`pk_kf`,`kq_hour`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`kq_date`,`pk_css`,`pk_csckf_id`,`pk_cssckf_id`,`zd_rs_type`,`pk_stu`,`kx_one_price`,`kx_all_price`,`jf_one_price`,`jf_all_price`,`pk_class`,`kq_kc`,`pk_sch` from cs_kf_hour_detail
+        select `c_k_h_d_id`,`pk_cs`,`pk_kf`,`kq_hour`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`kq_date`,`pk_css`,`pk_csckf_id`,`pk_cssckf_id`,`zd_rs_type`,`pk_stu`,`kx_one_price`,`kx_all_price`,`jf_one_price`,`jf_all_price`,`pk_class`,`kq_kc`,`pk_sch` from cs_kf_hour_detail
     </sql>
 </sqlMap>

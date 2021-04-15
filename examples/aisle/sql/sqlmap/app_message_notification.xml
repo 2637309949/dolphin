@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_app_message_notification">
         insert into app_message_notification
-		(`a_m_n_id`,`message_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`amn_title`)
+		(`a_m_n_id`,`message_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`amn_title`)
 		values
-		(?a_m_n_id,?message_content,?creater,?create_date,?updater,?update_date,?isdelete,?amn_title)
+		(?a_m_n_id,?message_content,?creater,?create_date,?updater,?update_date,?is_delete,?amn_title)
     </sql>
     <sql id="update_app_message_notification">
-        update app_message_notification set `a_m_n_id`=?a_m_n_id,`message_content`=?message_content,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`amn_title`=?amn_title
-		where  id =?id
-    </sql>
-    <sql id="delete_app_message_notification">
-        delete from app_message_notification
+        update app_message_notification set `a_m_n_id`=?a_m_n_id,`message_content`=?message_content,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`amn_title`=?amn_title
 		where id =?id
     </sql>
+    <sql id="deleteone_app_message_notification">
+        delete from app_message_notification where id =?id
+    </sql>
     <sql id="selectone_app_message_notification">
-        select `a_m_n_id`,`message_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`amn_title` from app_message_notification
-		where  id =?id
+        select `a_m_n_id`,`message_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`amn_title` from app_message_notification where id =?id
     </sql>
     <sql id="selectall_app_message_notification">
-        select `a_m_n_id`,`message_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`amn_title` from app_message_notification
+        select `a_m_n_id`,`message_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`amn_title` from app_message_notification
     </sql>
 </sqlMap>

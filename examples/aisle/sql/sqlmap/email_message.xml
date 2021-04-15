@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_email_message">
         insert into email_message
-		(`t_10_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`isdelete`)
+		(`t_10_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`is_delete`)
 		values
-		(?t_10_0,?title,?content,?if_notice,?if_noticecn,?if_see,?if_seecn,?notice_user,?notice_name,?create_date,?update_date,?creater,?updater,?isdelete)
+		(?t_10_0,?title,?content,?if_notice,?if_noticecn,?if_see,?if_seecn,?notice_user,?notice_name,?create_date,?update_date,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_email_message">
-        update email_message set `t_10_0`=?t_10_0,`title`=?title,`content`=?content,`if_notice`=?if_notice,`if_noticecn`=?if_noticecn,`if_see`=?if_see,`if_seecn`=?if_seecn,`notice_user`=?notice_user,`notice_name`=?notice_name,`create_date`=?create_date,`update_date`=?update_date,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_email_message">
-        delete from email_message
+        update email_message set `t_10_0`=?t_10_0,`title`=?title,`content`=?content,`if_notice`=?if_notice,`if_noticecn`=?if_noticecn,`if_see`=?if_see,`if_seecn`=?if_seecn,`notice_user`=?notice_user,`notice_name`=?notice_name,`create_date`=?create_date,`update_date`=?update_date,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_email_message">
+        delete from email_message where id =?id
+    </sql>
     <sql id="selectone_email_message">
-        select `t_10_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`isdelete` from email_message
-		where  id =?id
+        select `t_10_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`is_delete` from email_message where id =?id
     </sql>
     <sql id="selectall_email_message">
-        select `t_10_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`isdelete` from email_message
+        select `t_10_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`is_delete` from email_message
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_materiel_minus">
         insert into materiel_minus
-		(`m_m_id`,`materiel_id`,`minus_num`,`minus_money`,`creater`,`create_date`,`updater`,`update_date`,`minus_reason`,`minus_object`,`isdelete`)
+		(`m_m_id`,`materiel_id`,`minus_num`,`minus_money`,`creater`,`create_date`,`updater`,`update_date`,`minus_reason`,`minus_object`,`is_delete`)
 		values
-		(?m_m_id,?materiel_id,?minus_num,?minus_money,?creater,?create_date,?updater,?update_date,?minus_reason,?minus_object,?isdelete)
+		(?m_m_id,?materiel_id,?minus_num,?minus_money,?creater,?create_date,?updater,?update_date,?minus_reason,?minus_object,?is_delete)
     </sql>
     <sql id="update_materiel_minus">
-        update materiel_minus set `m_m_id`=?m_m_id,`materiel_id`=?materiel_id,`minus_num`=?minus_num,`minus_money`=?minus_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`minus_reason`=?minus_reason,`minus_object`=?minus_object,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_materiel_minus">
-        delete from materiel_minus
+        update materiel_minus set `m_m_id`=?m_m_id,`materiel_id`=?materiel_id,`minus_num`=?minus_num,`minus_money`=?minus_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`minus_reason`=?minus_reason,`minus_object`=?minus_object,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_materiel_minus">
+        delete from materiel_minus where id =?id
+    </sql>
     <sql id="selectone_materiel_minus">
-        select `m_m_id`,`materiel_id`,`minus_num`,`minus_money`,`creater`,`create_date`,`updater`,`update_date`,`minus_reason`,`minus_object`,`isdelete` from materiel_minus
-		where  id =?id
+        select `m_m_id`,`materiel_id`,`minus_num`,`minus_money`,`creater`,`create_date`,`updater`,`update_date`,`minus_reason`,`minus_object`,`is_delete` from materiel_minus where id =?id
     </sql>
     <sql id="selectall_materiel_minus">
-        select `m_m_id`,`materiel_id`,`minus_num`,`minus_money`,`creater`,`create_date`,`updater`,`update_date`,`minus_reason`,`minus_object`,`isdelete` from materiel_minus
+        select `m_m_id`,`materiel_id`,`minus_num`,`minus_money`,`creater`,`create_date`,`updater`,`update_date`,`minus_reason`,`minus_object`,`is_delete` from materiel_minus
     </sql>
 </sqlMap>

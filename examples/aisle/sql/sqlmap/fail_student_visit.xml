@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_fail_student_visit">
         insert into fail_student_visit
-		(`f_s_v_id`,`stu_id`,`visit_content`,`visit_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`f_s_v_id`,`stu_id`,`visit_content`,`visit_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?f_s_v_id,?stu_id,?visit_content,?visit_time,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?f_s_v_id,?stu_id,?visit_content,?visit_time,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_fail_student_visit">
-        update fail_student_visit set `f_s_v_id`=?f_s_v_id,`stu_id`=?stu_id,`visit_content`=?visit_content,`visit_time`=?visit_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_fail_student_visit">
-        delete from fail_student_visit
+        update fail_student_visit set `f_s_v_id`=?f_s_v_id,`stu_id`=?stu_id,`visit_content`=?visit_content,`visit_time`=?visit_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_fail_student_visit">
+        delete from fail_student_visit where id =?id
+    </sql>
     <sql id="selectone_fail_student_visit">
-        select `f_s_v_id`,`stu_id`,`visit_content`,`visit_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from fail_student_visit
-		where  id =?id
+        select `f_s_v_id`,`stu_id`,`visit_content`,`visit_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from fail_student_visit where id =?id
     </sql>
     <sql id="selectall_fail_student_visit">
-        select `f_s_v_id`,`stu_id`,`visit_content`,`visit_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from fail_student_visit
+        select `f_s_v_id`,`stu_id`,`visit_content`,`visit_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from fail_student_visit
     </sql>
 </sqlMap>

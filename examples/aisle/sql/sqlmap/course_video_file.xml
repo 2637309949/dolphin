@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_course_video_file">
         insert into course_video_file
-		(`c_v_f_id`,`cv_id`,`filed`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_v_f_id`,`cv_id`,`filed`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_v_f_id,?cv_id,?filed,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_v_f_id,?cv_id,?filed,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_course_video_file">
-        update course_video_file set `c_v_f_id`=?c_v_f_id,`cv_id`=?cv_id,`filed`=?filed,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_course_video_file">
-        delete from course_video_file
+        update course_video_file set `c_v_f_id`=?c_v_f_id,`cv_id`=?cv_id,`filed`=?filed,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_course_video_file">
+        delete from course_video_file where id =?id
+    </sql>
     <sql id="selectone_course_video_file">
-        select `c_v_f_id`,`cv_id`,`filed`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from course_video_file
-		where  id =?id
+        select `c_v_f_id`,`cv_id`,`filed`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from course_video_file where id =?id
     </sql>
     <sql id="selectall_course_video_file">
-        select `c_v_f_id`,`cv_id`,`filed`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from course_video_file
+        select `c_v_f_id`,`cv_id`,`filed`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from course_video_file
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_class_yp_sc">
         insert into class_yp_sc
-		(`c_y_s_id`,`pk_class`,`kc`,`class_date`,`start_time`,`class_week`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_sch`)
+		(`c_y_s_id`,`pk_class`,`kc`,`class_date`,`start_time`,`class_week`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_sch`)
 		values
-		(?c_y_s_id,?pk_class,?kc,?class_date,?start_time,?class_week,?creater,?create_date,?updater,?update_date,?isdelete,?pk_sch)
+		(?c_y_s_id,?pk_class,?kc,?class_date,?start_time,?class_week,?creater,?create_date,?updater,?update_date,?is_delete,?pk_sch)
     </sql>
     <sql id="update_class_yp_sc">
-        update class_yp_sc set `c_y_s_id`=?c_y_s_id,`pk_class`=?pk_class,`kc`=?kc,`class_date`=?class_date,`start_time`=?start_time,`class_week`=?class_week,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`pk_sch`=?pk_sch
-		where  id =?id
-    </sql>
-    <sql id="delete_class_yp_sc">
-        delete from class_yp_sc
+        update class_yp_sc set `c_y_s_id`=?c_y_s_id,`pk_class`=?pk_class,`kc`=?kc,`class_date`=?class_date,`start_time`=?start_time,`class_week`=?class_week,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`pk_sch`=?pk_sch
 		where id =?id
     </sql>
+    <sql id="deleteone_class_yp_sc">
+        delete from class_yp_sc where id =?id
+    </sql>
     <sql id="selectone_class_yp_sc">
-        select `c_y_s_id`,`pk_class`,`kc`,`class_date`,`start_time`,`class_week`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_sch` from class_yp_sc
-		where  id =?id
+        select `c_y_s_id`,`pk_class`,`kc`,`class_date`,`start_time`,`class_week`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_sch` from class_yp_sc where id =?id
     </sql>
     <sql id="selectall_class_yp_sc">
-        select `c_y_s_id`,`pk_class`,`kc`,`class_date`,`start_time`,`class_week`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_sch` from class_yp_sc
+        select `c_y_s_id`,`pk_class`,`kc`,`class_date`,`start_time`,`class_week`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_sch` from class_yp_sc
     </sql>
 </sqlMap>

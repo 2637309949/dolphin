@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_class_manage_tea">
         insert into class_manage_tea
-		(`c_m_t_id`,`pk_class`,`pk_tea`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_cct`)
+		(`c_m_t_id`,`pk_class`,`pk_tea`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_cct`)
 		values
-		(?c_m_t_id,?pk_class,?pk_tea,?creater,?create_date,?updater,?update_date,?isdelete,?pk_cct)
+		(?c_m_t_id,?pk_class,?pk_tea,?creater,?create_date,?updater,?update_date,?is_delete,?pk_cct)
     </sql>
     <sql id="update_class_manage_tea">
-        update class_manage_tea set `c_m_t_id`=?c_m_t_id,`pk_class`=?pk_class,`pk_tea`=?pk_tea,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`pk_cct`=?pk_cct
-		where  id =?id
-    </sql>
-    <sql id="delete_class_manage_tea">
-        delete from class_manage_tea
+        update class_manage_tea set `c_m_t_id`=?c_m_t_id,`pk_class`=?pk_class,`pk_tea`=?pk_tea,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`pk_cct`=?pk_cct
 		where id =?id
     </sql>
+    <sql id="deleteone_class_manage_tea">
+        delete from class_manage_tea where id =?id
+    </sql>
     <sql id="selectone_class_manage_tea">
-        select `c_m_t_id`,`pk_class`,`pk_tea`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_cct` from class_manage_tea
-		where  id =?id
+        select `c_m_t_id`,`pk_class`,`pk_tea`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_cct` from class_manage_tea where id =?id
     </sql>
     <sql id="selectall_class_manage_tea">
-        select `c_m_t_id`,`pk_class`,`pk_tea`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_cct` from class_manage_tea
+        select `c_m_t_id`,`pk_class`,`pk_tea`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_cct` from class_manage_tea
     </sql>
 </sqlMap>

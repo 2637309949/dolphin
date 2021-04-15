@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_jfsc_sy_tu">
         insert into jfsc_sy_tu
-		(`jfsc_sy_tu_id`,`jfsc_str`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`jfsc_sy_tu_id`,`jfsc_str`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?jfsc_sy_tu_id,?jfsc_str,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?jfsc_sy_tu_id,?jfsc_str,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_jfsc_sy_tu">
-        update jfsc_sy_tu set `jfsc_sy_tu_id`=?jfsc_sy_tu_id,`jfsc_str`=?jfsc_str,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_jfsc_sy_tu">
-        delete from jfsc_sy_tu
+        update jfsc_sy_tu set `jfsc_sy_tu_id`=?jfsc_sy_tu_id,`jfsc_str`=?jfsc_str,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_jfsc_sy_tu">
+        delete from jfsc_sy_tu where id =?id
+    </sql>
     <sql id="selectone_jfsc_sy_tu">
-        select `jfsc_sy_tu_id`,`jfsc_str`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from jfsc_sy_tu
-		where  id =?id
+        select `jfsc_sy_tu_id`,`jfsc_str`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from jfsc_sy_tu where id =?id
     </sql>
     <sql id="selectall_jfsc_sy_tu">
-        select `jfsc_sy_tu_id`,`jfsc_str`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from jfsc_sy_tu
+        select `jfsc_sy_tu_id`,`jfsc_str`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from jfsc_sy_tu
     </sql>
 </sqlMap>

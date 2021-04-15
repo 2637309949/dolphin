@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_cs_change_teacher">
         insert into cs_change_teacher
-		(`c_c_t_id`,`pk_cs`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`kq_kc`)
+		(`c_c_t_id`,`pk_cs`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`kq_kc`)
 		values
-		(?c_c_t_id,?pk_cs,?remark,?creater,?create_date,?updater,?update_date,?isdelete,?kq_kc)
+		(?c_c_t_id,?pk_cs,?remark,?creater,?create_date,?updater,?update_date,?is_delete,?kq_kc)
     </sql>
     <sql id="update_cs_change_teacher">
-        update cs_change_teacher set `c_c_t_id`=?c_c_t_id,`pk_cs`=?pk_cs,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`kq_kc`=?kq_kc
-		where  id =?id
-    </sql>
-    <sql id="delete_cs_change_teacher">
-        delete from cs_change_teacher
+        update cs_change_teacher set `c_c_t_id`=?c_c_t_id,`pk_cs`=?pk_cs,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`kq_kc`=?kq_kc
 		where id =?id
     </sql>
+    <sql id="deleteone_cs_change_teacher">
+        delete from cs_change_teacher where id =?id
+    </sql>
     <sql id="selectone_cs_change_teacher">
-        select `c_c_t_id`,`pk_cs`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`kq_kc` from cs_change_teacher
-		where  id =?id
+        select `c_c_t_id`,`pk_cs`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`kq_kc` from cs_change_teacher where id =?id
     </sql>
     <sql id="selectall_cs_change_teacher">
-        select `c_c_t_id`,`pk_cs`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`kq_kc` from cs_change_teacher
+        select `c_c_t_id`,`pk_cs`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`kq_kc` from cs_change_teacher
     </sql>
 </sqlMap>

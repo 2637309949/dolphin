@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_time_trigger">
         insert into time_trigger
-		(`tg_tj_namestr`,`t_324_0`,`tg_name`,`tablecnname`,`exe_betweentime`,`exe_time`,`isdelete`)
+		(`tg_tj_namestr`,`t_324_0`,`tg_name`,`tablecnname`,`exe_betweentime`,`exe_time`,`is_delete`)
 		values
-		(?tg_tj_namestr,?t_324_0,?tg_name,?tablecnname,?exe_betweentime,?exe_time,?isdelete)
+		(?tg_tj_namestr,?t_324_0,?tg_name,?tablecnname,?exe_betweentime,?exe_time,?is_delete)
     </sql>
     <sql id="update_time_trigger">
-        update time_trigger set `tg_tj_namestr`=?tg_tj_namestr,`t_324_0`=?t_324_0,`tg_name`=?tg_name,`tablecnname`=?tablecnname,`exe_betweentime`=?exe_betweentime,`exe_time`=?exe_time,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_time_trigger">
-        delete from time_trigger
+        update time_trigger set `tg_tj_namestr`=?tg_tj_namestr,`t_324_0`=?t_324_0,`tg_name`=?tg_name,`tablecnname`=?tablecnname,`exe_betweentime`=?exe_betweentime,`exe_time`=?exe_time,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_time_trigger">
+        delete from time_trigger where id =?id
+    </sql>
     <sql id="selectone_time_trigger">
-        select `tg_tj_namestr`,`t_324_0`,`tg_name`,`tablecnname`,`exe_betweentime`,`exe_time`,`isdelete` from time_trigger
-		where  id =?id
+        select `tg_tj_namestr`,`t_324_0`,`tg_name`,`tablecnname`,`exe_betweentime`,`exe_time`,`is_delete` from time_trigger where id =?id
     </sql>
     <sql id="selectall_time_trigger">
-        select `tg_tj_namestr`,`t_324_0`,`tg_name`,`tablecnname`,`exe_betweentime`,`exe_time`,`isdelete` from time_trigger
+        select `tg_tj_namestr`,`t_324_0`,`tg_name`,`tablecnname`,`exe_betweentime`,`exe_time`,`is_delete` from time_trigger
     </sql>
 </sqlMap>

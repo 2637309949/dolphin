@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stuclasstype_extrafee">
         insert into stuclasstype_extrafee
-		(`s_e_id`,`stu_class_type_id`,`extra_fee`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`order_extra_id`)
+		(`s_e_id`,`stu_class_type_id`,`extra_fee`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`order_extra_id`)
 		values
-		(?s_e_id,?stu_class_type_id,?extra_fee,?creater,?create_date,?updater,?update_date,?isdelete,?order_extra_id)
+		(?s_e_id,?stu_class_type_id,?extra_fee,?creater,?create_date,?updater,?update_date,?is_delete,?order_extra_id)
     </sql>
     <sql id="update_stuclasstype_extrafee">
-        update stuclasstype_extrafee set `s_e_id`=?s_e_id,`stu_class_type_id`=?stu_class_type_id,`extra_fee`=?extra_fee,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`order_extra_id`=?order_extra_id
-		where  id =?id
-    </sql>
-    <sql id="delete_stuclasstype_extrafee">
-        delete from stuclasstype_extrafee
+        update stuclasstype_extrafee set `s_e_id`=?s_e_id,`stu_class_type_id`=?stu_class_type_id,`extra_fee`=?extra_fee,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`order_extra_id`=?order_extra_id
 		where id =?id
     </sql>
+    <sql id="deleteone_stuclasstype_extrafee">
+        delete from stuclasstype_extrafee where id =?id
+    </sql>
     <sql id="selectone_stuclasstype_extrafee">
-        select `s_e_id`,`stu_class_type_id`,`extra_fee`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`order_extra_id` from stuclasstype_extrafee
-		where  id =?id
+        select `s_e_id`,`stu_class_type_id`,`extra_fee`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`order_extra_id` from stuclasstype_extrafee where id =?id
     </sql>
     <sql id="selectall_stuclasstype_extrafee">
-        select `s_e_id`,`stu_class_type_id`,`extra_fee`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`order_extra_id` from stuclasstype_extrafee
+        select `s_e_id`,`stu_class_type_id`,`extra_fee`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`order_extra_id` from stuclasstype_extrafee
     </sql>
 </sqlMap>

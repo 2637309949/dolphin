@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_fqorder_zx">
         insert into fqorder_zx
-		(`fqorder_zx_id`,`order_id`,`zc_schid`,`zr_schid`,`zx_desc`,`check_state`,`check_user`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`allot_ta`)
+		(`fqorder_zx_id`,`order_id`,`zc_schid`,`zr_schid`,`zx_desc`,`check_state`,`check_user`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`allot_ta`)
 		values
-		(?fqorder_zx_id,?order_id,?zc_schid,?zr_schid,?zx_desc,?check_state,?check_user,?creater,?create_date,?updater,?update_date,?isdelete,?allot_ta)
+		(?fqorder_zx_id,?order_id,?zc_schid,?zr_schid,?zx_desc,?check_state,?check_user,?creater,?create_date,?updater,?update_date,?is_delete,?allot_ta)
     </sql>
     <sql id="update_fqorder_zx">
-        update fqorder_zx set `fqorder_zx_id`=?fqorder_zx_id,`order_id`=?order_id,`zc_schid`=?zc_schid,`zr_schid`=?zr_schid,`zx_desc`=?zx_desc,`check_state`=?check_state,`check_user`=?check_user,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`allot_ta`=?allot_ta
-		where  id =?id
-    </sql>
-    <sql id="delete_fqorder_zx">
-        delete from fqorder_zx
+        update fqorder_zx set `fqorder_zx_id`=?fqorder_zx_id,`order_id`=?order_id,`zc_schid`=?zc_schid,`zr_schid`=?zr_schid,`zx_desc`=?zx_desc,`check_state`=?check_state,`check_user`=?check_user,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`allot_ta`=?allot_ta
 		where id =?id
     </sql>
+    <sql id="deleteone_fqorder_zx">
+        delete from fqorder_zx where id =?id
+    </sql>
     <sql id="selectone_fqorder_zx">
-        select `fqorder_zx_id`,`order_id`,`zc_schid`,`zr_schid`,`zx_desc`,`check_state`,`check_user`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`allot_ta` from fqorder_zx
-		where  id =?id
+        select `fqorder_zx_id`,`order_id`,`zc_schid`,`zr_schid`,`zx_desc`,`check_state`,`check_user`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`allot_ta` from fqorder_zx where id =?id
     </sql>
     <sql id="selectall_fqorder_zx">
-        select `fqorder_zx_id`,`order_id`,`zc_schid`,`zr_schid`,`zx_desc`,`check_state`,`check_user`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`allot_ta` from fqorder_zx
+        select `fqorder_zx_id`,`order_id`,`zc_schid`,`zr_schid`,`zx_desc`,`check_state`,`check_user`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`allot_ta` from fqorder_zx
     </sql>
 </sqlMap>

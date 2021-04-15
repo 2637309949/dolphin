@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_complaint_deal">
         insert into complaint_deal
-		(`c_d_id`,`cd_state`,`cd_user`,`cd_situation`,`cd_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cd_deal`,`cp_id`)
+		(`c_d_id`,`cd_state`,`cd_user`,`cd_situation`,`cd_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cd_deal`,`cp_id`)
 		values
-		(?c_d_id,?cd_state,?cd_user,?cd_situation,?cd_date,?creater,?create_date,?updater,?update_date,?isdelete,?cd_deal,?cp_id)
+		(?c_d_id,?cd_state,?cd_user,?cd_situation,?cd_date,?creater,?create_date,?updater,?update_date,?is_delete,?cd_deal,?cp_id)
     </sql>
     <sql id="update_complaint_deal">
-        update complaint_deal set `c_d_id`=?c_d_id,`cd_state`=?cd_state,`cd_user`=?cd_user,`cd_situation`=?cd_situation,`cd_date`=?cd_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`cd_deal`=?cd_deal,`cp_id`=?cp_id
-		where  id =?id
-    </sql>
-    <sql id="delete_complaint_deal">
-        delete from complaint_deal
+        update complaint_deal set `c_d_id`=?c_d_id,`cd_state`=?cd_state,`cd_user`=?cd_user,`cd_situation`=?cd_situation,`cd_date`=?cd_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`cd_deal`=?cd_deal,`cp_id`=?cp_id
 		where id =?id
     </sql>
+    <sql id="deleteone_complaint_deal">
+        delete from complaint_deal where id =?id
+    </sql>
     <sql id="selectone_complaint_deal">
-        select `c_d_id`,`cd_state`,`cd_user`,`cd_situation`,`cd_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cd_deal`,`cp_id` from complaint_deal
-		where  id =?id
+        select `c_d_id`,`cd_state`,`cd_user`,`cd_situation`,`cd_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cd_deal`,`cp_id` from complaint_deal where id =?id
     </sql>
     <sql id="selectall_complaint_deal">
-        select `c_d_id`,`cd_state`,`cd_user`,`cd_situation`,`cd_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cd_deal`,`cp_id` from complaint_deal
+        select `c_d_id`,`cd_state`,`cd_user`,`cd_situation`,`cd_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cd_deal`,`cp_id` from complaint_deal
     </sql>
 </sqlMap>

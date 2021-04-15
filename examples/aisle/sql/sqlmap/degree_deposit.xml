@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_degree_deposit">
         insert into degree_deposit
-		(`d_d_id`,`dd_name`,`dd_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`dd_state`)
+		(`d_d_id`,`dd_name`,`dd_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`dd_state`)
 		values
-		(?d_d_id,?dd_name,?dd_money,?creater,?create_date,?updater,?update_date,?isdelete,?dd_state)
+		(?d_d_id,?dd_name,?dd_money,?creater,?create_date,?updater,?update_date,?is_delete,?dd_state)
     </sql>
     <sql id="update_degree_deposit">
-        update degree_deposit set `d_d_id`=?d_d_id,`dd_name`=?dd_name,`dd_money`=?dd_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`dd_state`=?dd_state
-		where  id =?id
-    </sql>
-    <sql id="delete_degree_deposit">
-        delete from degree_deposit
+        update degree_deposit set `d_d_id`=?d_d_id,`dd_name`=?dd_name,`dd_money`=?dd_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`dd_state`=?dd_state
 		where id =?id
     </sql>
+    <sql id="deleteone_degree_deposit">
+        delete from degree_deposit where id =?id
+    </sql>
     <sql id="selectone_degree_deposit">
-        select `d_d_id`,`dd_name`,`dd_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`dd_state` from degree_deposit
-		where  id =?id
+        select `d_d_id`,`dd_name`,`dd_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`dd_state` from degree_deposit where id =?id
     </sql>
     <sql id="selectall_degree_deposit">
-        select `d_d_id`,`dd_name`,`dd_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`dd_state` from degree_deposit
+        select `d_d_id`,`dd_name`,`dd_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`dd_state` from degree_deposit
     </sql>
 </sqlMap>

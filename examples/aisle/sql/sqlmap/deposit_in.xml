@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_deposit_in">
         insert into deposit_in
-		(`deposit_in_id`,`deposit_money`,`receipt_num`,`fee_way`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_id`,`buss_type`,`check_state`,`bank_account`,`bank_name`,`payee`,`check_user_id`,`check_time`,`account_operator`,`actual_charge_time`,`charge_time`,`school_id`,`pk_of`,`can_refund_date`)
+		(`deposit_in_id`,`deposit_money`,`receipt_num`,`fee_way`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_id`,`buss_type`,`check_state`,`bank_account`,`bank_name`,`payee`,`check_user_id`,`check_time`,`account_operator`,`actual_charge_time`,`charge_time`,`school_id`,`pk_of`,`can_refund_date`)
 		values
-		(?deposit_in_id,?deposit_money,?receipt_num,?fee_way,?remark,?creater,?create_date,?updater,?update_date,?isdelete,?stu_id,?buss_type,?check_state,?bank_account,?bank_name,?payee,?check_user_id,?check_time,?account_operator,?actual_charge_time,?charge_time,?school_id,?pk_of,?can_refund_date)
+		(?deposit_in_id,?deposit_money,?receipt_num,?fee_way,?remark,?creater,?create_date,?updater,?update_date,?is_delete,?stu_id,?buss_type,?check_state,?bank_account,?bank_name,?payee,?check_user_id,?check_time,?account_operator,?actual_charge_time,?charge_time,?school_id,?pk_of,?can_refund_date)
     </sql>
     <sql id="update_deposit_in">
-        update deposit_in set `deposit_in_id`=?deposit_in_id,`deposit_money`=?deposit_money,`receipt_num`=?receipt_num,`fee_way`=?fee_way,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`stu_id`=?stu_id,`buss_type`=?buss_type,`check_state`=?check_state,`bank_account`=?bank_account,`bank_name`=?bank_name,`payee`=?payee,`check_user_id`=?check_user_id,`check_time`=?check_time,`account_operator`=?account_operator,`actual_charge_time`=?actual_charge_time,`charge_time`=?charge_time,`school_id`=?school_id,`pk_of`=?pk_of,`can_refund_date`=?can_refund_date
-		where  id =?id
-    </sql>
-    <sql id="delete_deposit_in">
-        delete from deposit_in
+        update deposit_in set `deposit_in_id`=?deposit_in_id,`deposit_money`=?deposit_money,`receipt_num`=?receipt_num,`fee_way`=?fee_way,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`stu_id`=?stu_id,`buss_type`=?buss_type,`check_state`=?check_state,`bank_account`=?bank_account,`bank_name`=?bank_name,`payee`=?payee,`check_user_id`=?check_user_id,`check_time`=?check_time,`account_operator`=?account_operator,`actual_charge_time`=?actual_charge_time,`charge_time`=?charge_time,`school_id`=?school_id,`pk_of`=?pk_of,`can_refund_date`=?can_refund_date
 		where id =?id
     </sql>
+    <sql id="deleteone_deposit_in">
+        delete from deposit_in where id =?id
+    </sql>
     <sql id="selectone_deposit_in">
-        select `deposit_in_id`,`deposit_money`,`receipt_num`,`fee_way`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_id`,`buss_type`,`check_state`,`bank_account`,`bank_name`,`payee`,`check_user_id`,`check_time`,`account_operator`,`actual_charge_time`,`charge_time`,`school_id`,`pk_of`,`can_refund_date` from deposit_in
-		where  id =?id
+        select `deposit_in_id`,`deposit_money`,`receipt_num`,`fee_way`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_id`,`buss_type`,`check_state`,`bank_account`,`bank_name`,`payee`,`check_user_id`,`check_time`,`account_operator`,`actual_charge_time`,`charge_time`,`school_id`,`pk_of`,`can_refund_date` from deposit_in where id =?id
     </sql>
     <sql id="selectall_deposit_in">
-        select `deposit_in_id`,`deposit_money`,`receipt_num`,`fee_way`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_id`,`buss_type`,`check_state`,`bank_account`,`bank_name`,`payee`,`check_user_id`,`check_time`,`account_operator`,`actual_charge_time`,`charge_time`,`school_id`,`pk_of`,`can_refund_date` from deposit_in
+        select `deposit_in_id`,`deposit_money`,`receipt_num`,`fee_way`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_id`,`buss_type`,`check_state`,`bank_account`,`bank_name`,`payee`,`check_user_id`,`check_time`,`account_operator`,`actual_charge_time`,`charge_time`,`school_id`,`pk_of`,`can_refund_date` from deposit_in
     </sql>
 </sqlMap>

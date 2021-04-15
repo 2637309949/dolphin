@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_wechat_message">
         insert into wechat_message
-		(`t_323_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`isdelete`)
+		(`t_323_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`is_delete`)
 		values
-		(?t_323_0,?title,?content,?if_notice,?if_noticecn,?if_see,?if_seecn,?notice_user,?notice_name,?create_date,?update_date,?creater,?updater,?isdelete)
+		(?t_323_0,?title,?content,?if_notice,?if_noticecn,?if_see,?if_seecn,?notice_user,?notice_name,?create_date,?update_date,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_wechat_message">
-        update wechat_message set `t_323_0`=?t_323_0,`title`=?title,`content`=?content,`if_notice`=?if_notice,`if_noticecn`=?if_noticecn,`if_see`=?if_see,`if_seecn`=?if_seecn,`notice_user`=?notice_user,`notice_name`=?notice_name,`create_date`=?create_date,`update_date`=?update_date,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_wechat_message">
-        delete from wechat_message
+        update wechat_message set `t_323_0`=?t_323_0,`title`=?title,`content`=?content,`if_notice`=?if_notice,`if_noticecn`=?if_noticecn,`if_see`=?if_see,`if_seecn`=?if_seecn,`notice_user`=?notice_user,`notice_name`=?notice_name,`create_date`=?create_date,`update_date`=?update_date,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_wechat_message">
+        delete from wechat_message where id =?id
+    </sql>
     <sql id="selectone_wechat_message">
-        select `t_323_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`isdelete` from wechat_message
-		where  id =?id
+        select `t_323_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`is_delete` from wechat_message where id =?id
     </sql>
     <sql id="selectall_wechat_message">
-        select `t_323_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`isdelete` from wechat_message
+        select `t_323_0`,`title`,`content`,`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`creater`,`updater`,`is_delete` from wechat_message
     </sql>
 </sqlMap>

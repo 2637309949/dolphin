@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_refund_process_set">
         insert into refund_process_set
-		(`r_p_s_id`,`rps_name`,`rps_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`r_p_s_id`,`rps_name`,`rps_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?r_p_s_id,?rps_name,?rps_desc,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?r_p_s_id,?rps_name,?rps_desc,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_refund_process_set">
-        update refund_process_set set `r_p_s_id`=?r_p_s_id,`rps_name`=?rps_name,`rps_desc`=?rps_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_refund_process_set">
-        delete from refund_process_set
+        update refund_process_set set `r_p_s_id`=?r_p_s_id,`rps_name`=?rps_name,`rps_desc`=?rps_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_refund_process_set">
+        delete from refund_process_set where id =?id
+    </sql>
     <sql id="selectone_refund_process_set">
-        select `r_p_s_id`,`rps_name`,`rps_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from refund_process_set
-		where  id =?id
+        select `r_p_s_id`,`rps_name`,`rps_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from refund_process_set where id =?id
     </sql>
     <sql id="selectall_refund_process_set">
-        select `r_p_s_id`,`rps_name`,`rps_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from refund_process_set
+        select `r_p_s_id`,`rps_name`,`rps_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from refund_process_set
     </sql>
 </sqlMap>

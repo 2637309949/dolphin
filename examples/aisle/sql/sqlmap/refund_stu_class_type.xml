@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_refund_stu_class_type">
         insert into refund_stu_class_type
-		(`r_s_c_t_id`,`ref_id`,`sct_id`,`money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`refund_hour`,`ref_unitprice`,`rst_invoice_fee`,`rst_service_fee`,`check_state`,`ref_way`,`ref_type`,`stu_id`,`order_id`)
+		(`r_s_c_t_id`,`ref_id`,`sct_id`,`money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`refund_hour`,`ref_unitprice`,`rst_invoice_fee`,`rst_service_fee`,`check_state`,`ref_way`,`ref_type`,`stu_id`,`order_id`)
 		values
-		(?r_s_c_t_id,?ref_id,?sct_id,?money,?creater,?create_date,?updater,?update_date,?isdelete,?refund_hour,?ref_unitprice,?rst_invoice_fee,?rst_service_fee,?check_state,?ref_way,?ref_type,?stu_id,?order_id)
+		(?r_s_c_t_id,?ref_id,?sct_id,?money,?creater,?create_date,?updater,?update_date,?is_delete,?refund_hour,?ref_unitprice,?rst_invoice_fee,?rst_service_fee,?check_state,?ref_way,?ref_type,?stu_id,?order_id)
     </sql>
     <sql id="update_refund_stu_class_type">
-        update refund_stu_class_type set `r_s_c_t_id`=?r_s_c_t_id,`ref_id`=?ref_id,`sct_id`=?sct_id,`money`=?money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`refund_hour`=?refund_hour,`ref_unitprice`=?ref_unitprice,`rst_invoice_fee`=?rst_invoice_fee,`rst_service_fee`=?rst_service_fee,`check_state`=?check_state,`ref_way`=?ref_way,`ref_type`=?ref_type,`stu_id`=?stu_id,`order_id`=?order_id
-		where  id =?id
-    </sql>
-    <sql id="delete_refund_stu_class_type">
-        delete from refund_stu_class_type
+        update refund_stu_class_type set `r_s_c_t_id`=?r_s_c_t_id,`ref_id`=?ref_id,`sct_id`=?sct_id,`money`=?money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`refund_hour`=?refund_hour,`ref_unitprice`=?ref_unitprice,`rst_invoice_fee`=?rst_invoice_fee,`rst_service_fee`=?rst_service_fee,`check_state`=?check_state,`ref_way`=?ref_way,`ref_type`=?ref_type,`stu_id`=?stu_id,`order_id`=?order_id
 		where id =?id
     </sql>
+    <sql id="deleteone_refund_stu_class_type">
+        delete from refund_stu_class_type where id =?id
+    </sql>
     <sql id="selectone_refund_stu_class_type">
-        select `r_s_c_t_id`,`ref_id`,`sct_id`,`money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`refund_hour`,`ref_unitprice`,`rst_invoice_fee`,`rst_service_fee`,`check_state`,`ref_way`,`ref_type`,`stu_id`,`order_id` from refund_stu_class_type
-		where  id =?id
+        select `r_s_c_t_id`,`ref_id`,`sct_id`,`money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`refund_hour`,`ref_unitprice`,`rst_invoice_fee`,`rst_service_fee`,`check_state`,`ref_way`,`ref_type`,`stu_id`,`order_id` from refund_stu_class_type where id =?id
     </sql>
     <sql id="selectall_refund_stu_class_type">
-        select `r_s_c_t_id`,`ref_id`,`sct_id`,`money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`refund_hour`,`ref_unitprice`,`rst_invoice_fee`,`rst_service_fee`,`check_state`,`ref_way`,`ref_type`,`stu_id`,`order_id` from refund_stu_class_type
+        select `r_s_c_t_id`,`ref_id`,`sct_id`,`money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`refund_hour`,`ref_unitprice`,`rst_invoice_fee`,`rst_service_fee`,`check_state`,`ref_way`,`ref_type`,`stu_id`,`order_id` from refund_stu_class_type
     </sql>
 </sqlMap>

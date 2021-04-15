@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_temp_20190330">
         update temp_20190330 set `order_form_id`=?order_form_id,`of_number`=?of_number,`teaching_materia_amount`=?teaching_materia_amount,`total_ach`=?total_ach,`must_money`=?must_money,`get_money`=?get_money,`danjia`=?danjia,`s_c_t_id`=?s_c_t_id,`all_price`=?all_price,`one_price`=?one_price,`os_money`=?os_money,`final_money`=?final_money,`refund_one_price`=?refund_one_price,`buy_hour`=?buy_hour,`use_hour`=?use_hour,`surplus_hour`=?surplus_hour,`wxh_money`=?wxh_money,`xh_money`=?xh_money
-		where  id =?id
-    </sql>
-    <sql id="delete_temp_20190330">
-        delete from temp_20190330
 		where id =?id
     </sql>
+    <sql id="deleteone_temp_20190330">
+        delete from temp_20190330 where id =?id
+    </sql>
     <sql id="selectone_temp_20190330">
-        select `order_form_id`,`of_number`,`teaching_materia_amount`,`total_ach`,`must_money`,`get_money`,`danjia`,`s_c_t_id`,`all_price`,`one_price`,`os_money`,`final_money`,`refund_one_price`,`buy_hour`,`use_hour`,`surplus_hour`,`wxh_money`,`xh_money` from temp_20190330
-		where  id =?id
+        select `order_form_id`,`of_number`,`teaching_materia_amount`,`total_ach`,`must_money`,`get_money`,`danjia`,`s_c_t_id`,`all_price`,`one_price`,`os_money`,`final_money`,`refund_one_price`,`buy_hour`,`use_hour`,`surplus_hour`,`wxh_money`,`xh_money` from temp_20190330 where id =?id
     </sql>
     <sql id="selectall_temp_20190330">
         select `order_form_id`,`of_number`,`teaching_materia_amount`,`total_ach`,`must_money`,`get_money`,`danjia`,`s_c_t_id`,`all_price`,`one_price`,`os_money`,`final_money`,`refund_one_price`,`buy_hour`,`use_hour`,`surplus_hour`,`wxh_money`,`xh_money` from temp_20190330

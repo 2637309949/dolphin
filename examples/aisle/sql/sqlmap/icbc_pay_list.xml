@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_icbc_pay_list">
         insert into icbc_pay_list
-		(`i_p_l_id`,`pk_stu`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`response_code`,`trans_type`,`terminal_id`,`merchantid`,`reference_no`,`card_no`,`order_id`,`receipt_no`,`trans_date`,`trans_time`,`amout`)
+		(`i_p_l_id`,`pk_stu`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`response_code`,`trans_type`,`terminal_id`,`merchantid`,`reference_no`,`card_no`,`order_id`,`receipt_no`,`trans_date`,`trans_time`,`amout`)
 		values
-		(?i_p_l_id,?pk_stu,?pk_sch,?creater,?create_date,?updater,?update_date,?isdelete,?response_code,?trans_type,?terminal_id,?merchantid,?reference_no,?card_no,?order_id,?receipt_no,?trans_date,?trans_time,?amout)
+		(?i_p_l_id,?pk_stu,?pk_sch,?creater,?create_date,?updater,?update_date,?is_delete,?response_code,?trans_type,?terminal_id,?merchantid,?reference_no,?card_no,?order_id,?receipt_no,?trans_date,?trans_time,?amout)
     </sql>
     <sql id="update_icbc_pay_list">
-        update icbc_pay_list set `i_p_l_id`=?i_p_l_id,`pk_stu`=?pk_stu,`pk_sch`=?pk_sch,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`response_code`=?response_code,`trans_type`=?trans_type,`terminal_id`=?terminal_id,`merchantid`=?merchantid,`reference_no`=?reference_no,`card_no`=?card_no,`order_id`=?order_id,`receipt_no`=?receipt_no,`trans_date`=?trans_date,`trans_time`=?trans_time,`amout`=?amout
-		where  id =?id
-    </sql>
-    <sql id="delete_icbc_pay_list">
-        delete from icbc_pay_list
+        update icbc_pay_list set `i_p_l_id`=?i_p_l_id,`pk_stu`=?pk_stu,`pk_sch`=?pk_sch,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`response_code`=?response_code,`trans_type`=?trans_type,`terminal_id`=?terminal_id,`merchantid`=?merchantid,`reference_no`=?reference_no,`card_no`=?card_no,`order_id`=?order_id,`receipt_no`=?receipt_no,`trans_date`=?trans_date,`trans_time`=?trans_time,`amout`=?amout
 		where id =?id
     </sql>
+    <sql id="deleteone_icbc_pay_list">
+        delete from icbc_pay_list where id =?id
+    </sql>
     <sql id="selectone_icbc_pay_list">
-        select `i_p_l_id`,`pk_stu`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`response_code`,`trans_type`,`terminal_id`,`merchantid`,`reference_no`,`card_no`,`order_id`,`receipt_no`,`trans_date`,`trans_time`,`amout` from icbc_pay_list
-		where  id =?id
+        select `i_p_l_id`,`pk_stu`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`response_code`,`trans_type`,`terminal_id`,`merchantid`,`reference_no`,`card_no`,`order_id`,`receipt_no`,`trans_date`,`trans_time`,`amout` from icbc_pay_list where id =?id
     </sql>
     <sql id="selectall_icbc_pay_list">
-        select `i_p_l_id`,`pk_stu`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`response_code`,`trans_type`,`terminal_id`,`merchantid`,`reference_no`,`card_no`,`order_id`,`receipt_no`,`trans_date`,`trans_time`,`amout` from icbc_pay_list
+        select `i_p_l_id`,`pk_stu`,`pk_sch`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`response_code`,`trans_type`,`terminal_id`,`merchantid`,`reference_no`,`card_no`,`order_id`,`receipt_no`,`trans_date`,`trans_time`,`amout` from icbc_pay_list
     </sql>
 </sqlMap>

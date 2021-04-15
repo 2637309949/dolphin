@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_class_manager_pt">
         insert into class_manager_pt
-		(`c_m_p_id`,`cm_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_m_p_id`,`cm_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_m_p_id,?cm_id,?pt_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_m_p_id,?cm_id,?pt_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_class_manager_pt">
-        update class_manager_pt set `c_m_p_id`=?c_m_p_id,`cm_id`=?cm_id,`pt_id`=?pt_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_class_manager_pt">
-        delete from class_manager_pt
+        update class_manager_pt set `c_m_p_id`=?c_m_p_id,`cm_id`=?cm_id,`pt_id`=?pt_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_class_manager_pt">
+        delete from class_manager_pt where id =?id
+    </sql>
     <sql id="selectone_class_manager_pt">
-        select `c_m_p_id`,`cm_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from class_manager_pt
-		where  id =?id
+        select `c_m_p_id`,`cm_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from class_manager_pt where id =?id
     </sql>
     <sql id="selectall_class_manager_pt">
-        select `c_m_p_id`,`cm_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from class_manager_pt
+        select `c_m_p_id`,`cm_id`,`pt_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from class_manager_pt
     </sql>
 </sqlMap>

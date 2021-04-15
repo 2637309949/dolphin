@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_check_flow_set_floor_casting">
         insert into check_flow_set_floor_casting
-		(`c_f_s_c_id`,`pk_ckfl`,`pk_casting`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_f_s_c_id`,`pk_ckfl`,`pk_casting`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_f_s_c_id,?pk_ckfl,?pk_casting,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_f_s_c_id,?pk_ckfl,?pk_casting,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_check_flow_set_floor_casting">
-        update check_flow_set_floor_casting set `c_f_s_c_id`=?c_f_s_c_id,`pk_ckfl`=?pk_ckfl,`pk_casting`=?pk_casting,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_check_flow_set_floor_casting">
-        delete from check_flow_set_floor_casting
+        update check_flow_set_floor_casting set `c_f_s_c_id`=?c_f_s_c_id,`pk_ckfl`=?pk_ckfl,`pk_casting`=?pk_casting,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_check_flow_set_floor_casting">
+        delete from check_flow_set_floor_casting where id =?id
+    </sql>
     <sql id="selectone_check_flow_set_floor_casting">
-        select `c_f_s_c_id`,`pk_ckfl`,`pk_casting`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from check_flow_set_floor_casting
-		where  id =?id
+        select `c_f_s_c_id`,`pk_ckfl`,`pk_casting`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from check_flow_set_floor_casting where id =?id
     </sql>
     <sql id="selectall_check_flow_set_floor_casting">
-        select `c_f_s_c_id`,`pk_ckfl`,`pk_casting`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from check_flow_set_floor_casting
+        select `c_f_s_c_id`,`pk_ckfl`,`pk_casting`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from check_flow_set_floor_casting
     </sql>
 </sqlMap>

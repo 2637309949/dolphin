@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_enterprises">
         insert into enterprises
-		(`e_id`,`create_date`,`update_date`,`ent_name`,`ent_remark`,`creater`,`updater`,`isdelete`)
+		(`e_id`,`create_date`,`update_date`,`ent_name`,`ent_remark`,`creater`,`updater`,`is_delete`)
 		values
-		(?e_id,?create_date,?update_date,?ent_name,?ent_remark,?creater,?updater,?isdelete)
+		(?e_id,?create_date,?update_date,?ent_name,?ent_remark,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_enterprises">
-        update enterprises set `e_id`=?e_id,`create_date`=?create_date,`update_date`=?update_date,`ent_name`=?ent_name,`ent_remark`=?ent_remark,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_enterprises">
-        delete from enterprises
+        update enterprises set `e_id`=?e_id,`create_date`=?create_date,`update_date`=?update_date,`ent_name`=?ent_name,`ent_remark`=?ent_remark,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_enterprises">
+        delete from enterprises where id =?id
+    </sql>
     <sql id="selectone_enterprises">
-        select `e_id`,`create_date`,`update_date`,`ent_name`,`ent_remark`,`creater`,`updater`,`isdelete` from enterprises
-		where  id =?id
+        select `e_id`,`create_date`,`update_date`,`ent_name`,`ent_remark`,`creater`,`updater`,`is_delete` from enterprises where id =?id
     </sql>
     <sql id="selectall_enterprises">
-        select `e_id`,`create_date`,`update_date`,`ent_name`,`ent_remark`,`creater`,`updater`,`isdelete` from enterprises
+        select `e_id`,`create_date`,`update_date`,`ent_name`,`ent_remark`,`creater`,`updater`,`is_delete` from enterprises
     </sql>
 </sqlMap>

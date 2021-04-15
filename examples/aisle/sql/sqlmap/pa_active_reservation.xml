@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_pa_active_reservation">
         insert into pa_active_reservation
-		(`p_a_r_id`,`active_theme`,`active_begin_date`,`active_end_date`,`active_desc`,`sy_file`,`sch_id`,`max_num`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pbl_theme`,`now_renshu`,`cm_id`,`kq_state`,`pa_reservation`)
+		(`p_a_r_id`,`active_theme`,`active_begin_date`,`active_end_date`,`active_desc`,`sy_file`,`sch_id`,`max_num`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pbl_theme`,`now_renshu`,`cm_id`,`kq_state`,`pa_reservation`)
 		values
-		(?p_a_r_id,?active_theme,?active_begin_date,?active_end_date,?active_desc,?sy_file,?sch_id,?max_num,?creater,?create_date,?updater,?update_date,?isdelete,?pbl_theme,?now_renshu,?cm_id,?kq_state,?pa_reservation)
+		(?p_a_r_id,?active_theme,?active_begin_date,?active_end_date,?active_desc,?sy_file,?sch_id,?max_num,?creater,?create_date,?updater,?update_date,?is_delete,?pbl_theme,?now_renshu,?cm_id,?kq_state,?pa_reservation)
     </sql>
     <sql id="update_pa_active_reservation">
-        update pa_active_reservation set `p_a_r_id`=?p_a_r_id,`active_theme`=?active_theme,`active_begin_date`=?active_begin_date,`active_end_date`=?active_end_date,`active_desc`=?active_desc,`sy_file`=?sy_file,`sch_id`=?sch_id,`max_num`=?max_num,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`pbl_theme`=?pbl_theme,`now_renshu`=?now_renshu,`cm_id`=?cm_id,`kq_state`=?kq_state,`pa_reservation`=?pa_reservation
-		where  id =?id
-    </sql>
-    <sql id="delete_pa_active_reservation">
-        delete from pa_active_reservation
+        update pa_active_reservation set `p_a_r_id`=?p_a_r_id,`active_theme`=?active_theme,`active_begin_date`=?active_begin_date,`active_end_date`=?active_end_date,`active_desc`=?active_desc,`sy_file`=?sy_file,`sch_id`=?sch_id,`max_num`=?max_num,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`pbl_theme`=?pbl_theme,`now_renshu`=?now_renshu,`cm_id`=?cm_id,`kq_state`=?kq_state,`pa_reservation`=?pa_reservation
 		where id =?id
     </sql>
+    <sql id="deleteone_pa_active_reservation">
+        delete from pa_active_reservation where id =?id
+    </sql>
     <sql id="selectone_pa_active_reservation">
-        select `p_a_r_id`,`active_theme`,`active_begin_date`,`active_end_date`,`active_desc`,`sy_file`,`sch_id`,`max_num`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pbl_theme`,`now_renshu`,`cm_id`,`kq_state`,`pa_reservation` from pa_active_reservation
-		where  id =?id
+        select `p_a_r_id`,`active_theme`,`active_begin_date`,`active_end_date`,`active_desc`,`sy_file`,`sch_id`,`max_num`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pbl_theme`,`now_renshu`,`cm_id`,`kq_state`,`pa_reservation` from pa_active_reservation where id =?id
     </sql>
     <sql id="selectall_pa_active_reservation">
-        select `p_a_r_id`,`active_theme`,`active_begin_date`,`active_end_date`,`active_desc`,`sy_file`,`sch_id`,`max_num`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pbl_theme`,`now_renshu`,`cm_id`,`kq_state`,`pa_reservation` from pa_active_reservation
+        select `p_a_r_id`,`active_theme`,`active_begin_date`,`active_end_date`,`active_desc`,`sy_file`,`sch_id`,`max_num`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pbl_theme`,`now_renshu`,`cm_id`,`kq_state`,`pa_reservation` from pa_active_reservation
     </sql>
 </sqlMap>

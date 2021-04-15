@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_student_add_agreement">
         insert into student_add_agreement
-		(`s_a_a_id`,`pk_stu`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_pro_type`,`pk_saam`,`stu_sign`,`jhr_sign`,`sq_sign`,`stu_sign_date`,`yf_sign_date`,`pk_sch`,`agree_num`,`agreement_date`,`saa_desc`,`parent_auth_sign`,`parent_auth_sign_remark`,`check_status`,`check_remark`,`check_user`,`check_date`,`shifou_update`)
+		(`s_a_a_id`,`pk_stu`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_pro_type`,`pk_saam`,`stu_sign`,`jhr_sign`,`sq_sign`,`stu_sign_date`,`yf_sign_date`,`pk_sch`,`agree_num`,`agreement_date`,`saa_desc`,`parent_auth_sign`,`parent_auth_sign_remark`,`check_status`,`check_remark`,`check_user`,`check_date`,`shifou_update`)
 		values
-		(?s_a_a_id,?pk_stu,?creater,?create_date,?updater,?update_date,?isdelete,?pk_pro_type,?pk_saam,?stu_sign,?jhr_sign,?sq_sign,?stu_sign_date,?yf_sign_date,?pk_sch,?agree_num,?agreement_date,?saa_desc,?parent_auth_sign,?parent_auth_sign_remark,?check_status,?check_remark,?check_user,?check_date,?shifou_update)
+		(?s_a_a_id,?pk_stu,?creater,?create_date,?updater,?update_date,?is_delete,?pk_pro_type,?pk_saam,?stu_sign,?jhr_sign,?sq_sign,?stu_sign_date,?yf_sign_date,?pk_sch,?agree_num,?agreement_date,?saa_desc,?parent_auth_sign,?parent_auth_sign_remark,?check_status,?check_remark,?check_user,?check_date,?shifou_update)
     </sql>
     <sql id="update_student_add_agreement">
-        update student_add_agreement set `s_a_a_id`=?s_a_a_id,`pk_stu`=?pk_stu,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`pk_pro_type`=?pk_pro_type,`pk_saam`=?pk_saam,`stu_sign`=?stu_sign,`jhr_sign`=?jhr_sign,`sq_sign`=?sq_sign,`stu_sign_date`=?stu_sign_date,`yf_sign_date`=?yf_sign_date,`pk_sch`=?pk_sch,`agree_num`=?agree_num,`agreement_date`=?agreement_date,`saa_desc`=?saa_desc,`parent_auth_sign`=?parent_auth_sign,`parent_auth_sign_remark`=?parent_auth_sign_remark,`check_status`=?check_status,`check_remark`=?check_remark,`check_user`=?check_user,`check_date`=?check_date,`shifou_update`=?shifou_update
-		where  id =?id
-    </sql>
-    <sql id="delete_student_add_agreement">
-        delete from student_add_agreement
+        update student_add_agreement set `s_a_a_id`=?s_a_a_id,`pk_stu`=?pk_stu,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`pk_pro_type`=?pk_pro_type,`pk_saam`=?pk_saam,`stu_sign`=?stu_sign,`jhr_sign`=?jhr_sign,`sq_sign`=?sq_sign,`stu_sign_date`=?stu_sign_date,`yf_sign_date`=?yf_sign_date,`pk_sch`=?pk_sch,`agree_num`=?agree_num,`agreement_date`=?agreement_date,`saa_desc`=?saa_desc,`parent_auth_sign`=?parent_auth_sign,`parent_auth_sign_remark`=?parent_auth_sign_remark,`check_status`=?check_status,`check_remark`=?check_remark,`check_user`=?check_user,`check_date`=?check_date,`shifou_update`=?shifou_update
 		where id =?id
     </sql>
+    <sql id="deleteone_student_add_agreement">
+        delete from student_add_agreement where id =?id
+    </sql>
     <sql id="selectone_student_add_agreement">
-        select `s_a_a_id`,`pk_stu`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_pro_type`,`pk_saam`,`stu_sign`,`jhr_sign`,`sq_sign`,`stu_sign_date`,`yf_sign_date`,`pk_sch`,`agree_num`,`agreement_date`,`saa_desc`,`parent_auth_sign`,`parent_auth_sign_remark`,`check_status`,`check_remark`,`check_user`,`check_date`,`shifou_update` from student_add_agreement
-		where  id =?id
+        select `s_a_a_id`,`pk_stu`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_pro_type`,`pk_saam`,`stu_sign`,`jhr_sign`,`sq_sign`,`stu_sign_date`,`yf_sign_date`,`pk_sch`,`agree_num`,`agreement_date`,`saa_desc`,`parent_auth_sign`,`parent_auth_sign_remark`,`check_status`,`check_remark`,`check_user`,`check_date`,`shifou_update` from student_add_agreement where id =?id
     </sql>
     <sql id="selectall_student_add_agreement">
-        select `s_a_a_id`,`pk_stu`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`pk_pro_type`,`pk_saam`,`stu_sign`,`jhr_sign`,`sq_sign`,`stu_sign_date`,`yf_sign_date`,`pk_sch`,`agree_num`,`agreement_date`,`saa_desc`,`parent_auth_sign`,`parent_auth_sign_remark`,`check_status`,`check_remark`,`check_user`,`check_date`,`shifou_update` from student_add_agreement
+        select `s_a_a_id`,`pk_stu`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`pk_pro_type`,`pk_saam`,`stu_sign`,`jhr_sign`,`sq_sign`,`stu_sign_date`,`yf_sign_date`,`pk_sch`,`agree_num`,`agreement_date`,`saa_desc`,`parent_auth_sign`,`parent_auth_sign_remark`,`check_status`,`check_remark`,`check_user`,`check_date`,`shifou_update` from student_add_agreement
     </sql>
 </sqlMap>

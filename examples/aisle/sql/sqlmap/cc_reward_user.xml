@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_cc_reward_user">
         insert into cc_reward_user
-		(`c_r_u_id`,`user_id`,`ndpd_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cc_money`)
+		(`c_r_u_id`,`user_id`,`ndpd_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cc_money`)
 		values
-		(?c_r_u_id,?user_id,?ndpd_id,?creater,?create_date,?updater,?update_date,?isdelete,?cc_money)
+		(?c_r_u_id,?user_id,?ndpd_id,?creater,?create_date,?updater,?update_date,?is_delete,?cc_money)
     </sql>
     <sql id="update_cc_reward_user">
-        update cc_reward_user set `c_r_u_id`=?c_r_u_id,`user_id`=?user_id,`ndpd_id`=?ndpd_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`cc_money`=?cc_money
-		where  id =?id
-    </sql>
-    <sql id="delete_cc_reward_user">
-        delete from cc_reward_user
+        update cc_reward_user set `c_r_u_id`=?c_r_u_id,`user_id`=?user_id,`ndpd_id`=?ndpd_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`cc_money`=?cc_money
 		where id =?id
     </sql>
+    <sql id="deleteone_cc_reward_user">
+        delete from cc_reward_user where id =?id
+    </sql>
     <sql id="selectone_cc_reward_user">
-        select `c_r_u_id`,`user_id`,`ndpd_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cc_money` from cc_reward_user
-		where  id =?id
+        select `c_r_u_id`,`user_id`,`ndpd_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cc_money` from cc_reward_user where id =?id
     </sql>
     <sql id="selectall_cc_reward_user">
-        select `c_r_u_id`,`user_id`,`ndpd_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`cc_money` from cc_reward_user
+        select `c_r_u_id`,`user_id`,`ndpd_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`cc_money` from cc_reward_user
     </sql>
 </sqlMap>

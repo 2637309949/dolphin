@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_hotfix_files">
         insert into hotfix_files
-		(`h_f_id`,`suoshu`,`files`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`h_f_id`,`suoshu`,`files`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?h_f_id,?suoshu,?files,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?h_f_id,?suoshu,?files,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_hotfix_files">
-        update hotfix_files set `h_f_id`=?h_f_id,`suoshu`=?suoshu,`files`=?files,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_hotfix_files">
-        delete from hotfix_files
+        update hotfix_files set `h_f_id`=?h_f_id,`suoshu`=?suoshu,`files`=?files,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_hotfix_files">
+        delete from hotfix_files where id =?id
+    </sql>
     <sql id="selectone_hotfix_files">
-        select `h_f_id`,`suoshu`,`files`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from hotfix_files
-		where  id =?id
+        select `h_f_id`,`suoshu`,`files`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from hotfix_files where id =?id
     </sql>
     <sql id="selectall_hotfix_files">
-        select `h_f_id`,`suoshu`,`files`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from hotfix_files
+        select `h_f_id`,`suoshu`,`files`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from hotfix_files
     </sql>
 </sqlMap>

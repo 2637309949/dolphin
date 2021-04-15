@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_net_school_plan">
         insert into net_school_plan
-		(`n_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_paln`,`plan_month`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`n_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_paln`,`plan_month`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?n_s_p_id,?pk_sch,?in_plan,?out_plan,?demo_plan,?achievement_paln,?plan_month,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?n_s_p_id,?pk_sch,?in_plan,?out_plan,?demo_plan,?achievement_paln,?plan_month,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_net_school_plan">
-        update net_school_plan set `n_s_p_id`=?n_s_p_id,`pk_sch`=?pk_sch,`in_plan`=?in_plan,`out_plan`=?out_plan,`demo_plan`=?demo_plan,`achievement_paln`=?achievement_paln,`plan_month`=?plan_month,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_net_school_plan">
-        delete from net_school_plan
+        update net_school_plan set `n_s_p_id`=?n_s_p_id,`pk_sch`=?pk_sch,`in_plan`=?in_plan,`out_plan`=?out_plan,`demo_plan`=?demo_plan,`achievement_paln`=?achievement_paln,`plan_month`=?plan_month,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_net_school_plan">
+        delete from net_school_plan where id =?id
+    </sql>
     <sql id="selectone_net_school_plan">
-        select `n_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_paln`,`plan_month`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from net_school_plan
-		where  id =?id
+        select `n_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_paln`,`plan_month`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from net_school_plan where id =?id
     </sql>
     <sql id="selectall_net_school_plan">
-        select `n_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_paln`,`plan_month`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from net_school_plan
+        select `n_s_p_id`,`pk_sch`,`in_plan`,`out_plan`,`demo_plan`,`achievement_paln`,`plan_month`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from net_school_plan
     </sql>
 </sqlMap>

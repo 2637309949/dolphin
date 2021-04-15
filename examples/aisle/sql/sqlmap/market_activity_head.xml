@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_market_activity_head">
         insert into market_activity_head
-		(`m_a_h_id`,`ma_id`,`head_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`m_a_h_id`,`ma_id`,`head_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?m_a_h_id,?ma_id,?head_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?m_a_h_id,?ma_id,?head_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_market_activity_head">
-        update market_activity_head set `m_a_h_id`=?m_a_h_id,`ma_id`=?ma_id,`head_id`=?head_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_market_activity_head">
-        delete from market_activity_head
+        update market_activity_head set `m_a_h_id`=?m_a_h_id,`ma_id`=?ma_id,`head_id`=?head_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_market_activity_head">
+        delete from market_activity_head where id =?id
+    </sql>
     <sql id="selectone_market_activity_head">
-        select `m_a_h_id`,`ma_id`,`head_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from market_activity_head
-		where  id =?id
+        select `m_a_h_id`,`ma_id`,`head_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from market_activity_head where id =?id
     </sql>
     <sql id="selectall_market_activity_head">
-        select `m_a_h_id`,`ma_id`,`head_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from market_activity_head
+        select `m_a_h_id`,`ma_id`,`head_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from market_activity_head
     </sql>
 </sqlMap>

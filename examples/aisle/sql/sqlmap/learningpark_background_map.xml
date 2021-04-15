@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_learningpark_background_map">
         insert into learningpark_background_map
-		(`l_b_m_id`,`desc_name`,`lpbmfileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`l_b_m_id`,`desc_name`,`lpbmfileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?l_b_m_id,?desc_name,?lpbmfileid,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?l_b_m_id,?desc_name,?lpbmfileid,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_learningpark_background_map">
-        update learningpark_background_map set `l_b_m_id`=?l_b_m_id,`desc_name`=?desc_name,`lpbmfileid`=?lpbmfileid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_learningpark_background_map">
-        delete from learningpark_background_map
+        update learningpark_background_map set `l_b_m_id`=?l_b_m_id,`desc_name`=?desc_name,`lpbmfileid`=?lpbmfileid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_learningpark_background_map">
+        delete from learningpark_background_map where id =?id
+    </sql>
     <sql id="selectone_learningpark_background_map">
-        select `l_b_m_id`,`desc_name`,`lpbmfileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from learningpark_background_map
-		where  id =?id
+        select `l_b_m_id`,`desc_name`,`lpbmfileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from learningpark_background_map where id =?id
     </sql>
     <sql id="selectall_learningpark_background_map">
-        select `l_b_m_id`,`desc_name`,`lpbmfileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from learningpark_background_map
+        select `l_b_m_id`,`desc_name`,`lpbmfileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from learningpark_background_map
     </sql>
 </sqlMap>

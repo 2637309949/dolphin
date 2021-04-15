@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_gift_city">
         insert into gift_city
-		(`gift_city_id`,`gift_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`gift_city_id`,`gift_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?gift_city_id,?gift_id,?city_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?gift_city_id,?gift_id,?city_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_gift_city">
-        update gift_city set `gift_city_id`=?gift_city_id,`gift_id`=?gift_id,`city_id`=?city_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_gift_city">
-        delete from gift_city
+        update gift_city set `gift_city_id`=?gift_city_id,`gift_id`=?gift_id,`city_id`=?city_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_gift_city">
+        delete from gift_city where id =?id
+    </sql>
     <sql id="selectone_gift_city">
-        select `gift_city_id`,`gift_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from gift_city
-		where  id =?id
+        select `gift_city_id`,`gift_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from gift_city where id =?id
     </sql>
     <sql id="selectall_gift_city">
-        select `gift_city_id`,`gift_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from gift_city
+        select `gift_city_id`,`gift_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from gift_city
     </sql>
 </sqlMap>

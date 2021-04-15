@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_change_tea_his_tea">
         insert into change_tea_his_tea
-		(`c_t_h_t_id`,`pk_change_tea`,`pk_his_tea`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`start_time`,`end_time`,`kq_kc`,`if_kou_hour`)
+		(`c_t_h_t_id`,`pk_change_tea`,`pk_his_tea`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`start_time`,`end_time`,`kq_kc`,`if_kou_hour`)
 		values
-		(?c_t_h_t_id,?pk_change_tea,?pk_his_tea,?creater,?create_date,?updater,?update_date,?isdelete,?start_time,?end_time,?kq_kc,?if_kou_hour)
+		(?c_t_h_t_id,?pk_change_tea,?pk_his_tea,?creater,?create_date,?updater,?update_date,?is_delete,?start_time,?end_time,?kq_kc,?if_kou_hour)
     </sql>
     <sql id="update_change_tea_his_tea">
-        update change_tea_his_tea set `c_t_h_t_id`=?c_t_h_t_id,`pk_change_tea`=?pk_change_tea,`pk_his_tea`=?pk_his_tea,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`start_time`=?start_time,`end_time`=?end_time,`kq_kc`=?kq_kc,`if_kou_hour`=?if_kou_hour
-		where  id =?id
-    </sql>
-    <sql id="delete_change_tea_his_tea">
-        delete from change_tea_his_tea
+        update change_tea_his_tea set `c_t_h_t_id`=?c_t_h_t_id,`pk_change_tea`=?pk_change_tea,`pk_his_tea`=?pk_his_tea,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`start_time`=?start_time,`end_time`=?end_time,`kq_kc`=?kq_kc,`if_kou_hour`=?if_kou_hour
 		where id =?id
     </sql>
+    <sql id="deleteone_change_tea_his_tea">
+        delete from change_tea_his_tea where id =?id
+    </sql>
     <sql id="selectone_change_tea_his_tea">
-        select `c_t_h_t_id`,`pk_change_tea`,`pk_his_tea`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`start_time`,`end_time`,`kq_kc`,`if_kou_hour` from change_tea_his_tea
-		where  id =?id
+        select `c_t_h_t_id`,`pk_change_tea`,`pk_his_tea`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`start_time`,`end_time`,`kq_kc`,`if_kou_hour` from change_tea_his_tea where id =?id
     </sql>
     <sql id="selectall_change_tea_his_tea">
-        select `c_t_h_t_id`,`pk_change_tea`,`pk_his_tea`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`start_time`,`end_time`,`kq_kc`,`if_kou_hour` from change_tea_his_tea
+        select `c_t_h_t_id`,`pk_change_tea`,`pk_his_tea`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`start_time`,`end_time`,`kq_kc`,`if_kou_hour` from change_tea_his_tea
     </sql>
 </sqlMap>

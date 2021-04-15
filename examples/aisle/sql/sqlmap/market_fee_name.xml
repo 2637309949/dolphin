@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_market_fee_name">
         insert into market_fee_name
-		(`m_f_n_id`,`project`,`name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`m_f_n_id`,`project`,`name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?m_f_n_id,?project,?name,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?m_f_n_id,?project,?name,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_market_fee_name">
-        update market_fee_name set `m_f_n_id`=?m_f_n_id,`project`=?project,`name`=?name,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_market_fee_name">
-        delete from market_fee_name
+        update market_fee_name set `m_f_n_id`=?m_f_n_id,`project`=?project,`name`=?name,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_market_fee_name">
+        delete from market_fee_name where id =?id
+    </sql>
     <sql id="selectone_market_fee_name">
-        select `m_f_n_id`,`project`,`name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from market_fee_name
-		where  id =?id
+        select `m_f_n_id`,`project`,`name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from market_fee_name where id =?id
     </sql>
     <sql id="selectall_market_fee_name">
-        select `m_f_n_id`,`project`,`name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from market_fee_name
+        select `m_f_n_id`,`project`,`name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from market_fee_name
     </sql>
 </sqlMap>

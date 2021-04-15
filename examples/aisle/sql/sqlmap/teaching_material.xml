@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_teaching_material">
         insert into teaching_material
-		(`t_m_id`,`tm_name`,`tm_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`t_m_id`,`tm_name`,`tm_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?t_m_id,?tm_name,?tm_desc,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?t_m_id,?tm_name,?tm_desc,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_teaching_material">
-        update teaching_material set `t_m_id`=?t_m_id,`tm_name`=?tm_name,`tm_desc`=?tm_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_teaching_material">
-        delete from teaching_material
+        update teaching_material set `t_m_id`=?t_m_id,`tm_name`=?tm_name,`tm_desc`=?tm_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_teaching_material">
+        delete from teaching_material where id =?id
+    </sql>
     <sql id="selectone_teaching_material">
-        select `t_m_id`,`tm_name`,`tm_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from teaching_material
-		where  id =?id
+        select `t_m_id`,`tm_name`,`tm_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from teaching_material where id =?id
     </sql>
     <sql id="selectall_teaching_material">
-        select `t_m_id`,`tm_name`,`tm_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from teaching_material
+        select `t_m_id`,`tm_name`,`tm_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from teaching_material
     </sql>
 </sqlMap>

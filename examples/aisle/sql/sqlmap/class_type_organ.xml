@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_class_type_organ">
         insert into class_type_organ
-		(`c_t_o_id`,`ct_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_t_o_id`,`ct_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_t_o_id,?ct_id,?organ_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_t_o_id,?ct_id,?organ_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_class_type_organ">
-        update class_type_organ set `c_t_o_id`=?c_t_o_id,`ct_id`=?ct_id,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_class_type_organ">
-        delete from class_type_organ
+        update class_type_organ set `c_t_o_id`=?c_t_o_id,`ct_id`=?ct_id,`organ_id`=?organ_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_class_type_organ">
+        delete from class_type_organ where id =?id
+    </sql>
     <sql id="selectone_class_type_organ">
-        select `c_t_o_id`,`ct_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from class_type_organ
-		where  id =?id
+        select `c_t_o_id`,`ct_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from class_type_organ where id =?id
     </sql>
     <sql id="selectall_class_type_organ">
-        select `c_t_o_id`,`ct_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from class_type_organ
+        select `c_t_o_id`,`ct_id`,`organ_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from class_type_organ
     </sql>
 </sqlMap>

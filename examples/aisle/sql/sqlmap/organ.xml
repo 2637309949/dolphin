@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_organ">
         insert into organ
-		(`organ_id`,`organ_name`,`create_date`,`update_date`,`organ_pinyin`,`organ_number`,`creater`,`updater`,`parent_id`,`if_buy_online`,`organ_tell`,`isdelete`,`sheng_id`)
+		(`organ_id`,`organ_name`,`create_date`,`update_date`,`organ_pinyin`,`organ_number`,`creater`,`updater`,`parent_id`,`if_buy_online`,`organ_tell`,`is_delete`,`sheng_id`)
 		values
-		(?organ_id,?organ_name,?create_date,?update_date,?organ_pinyin,?organ_number,?creater,?updater,?parent_id,?if_buy_online,?organ_tell,?isdelete,?sheng_id)
+		(?organ_id,?organ_name,?create_date,?update_date,?organ_pinyin,?organ_number,?creater,?updater,?parent_id,?if_buy_online,?organ_tell,?is_delete,?sheng_id)
     </sql>
     <sql id="update_organ">
-        update organ set `organ_id`=?organ_id,`organ_name`=?organ_name,`create_date`=?create_date,`update_date`=?update_date,`organ_pinyin`=?organ_pinyin,`organ_number`=?organ_number,`creater`=?creater,`updater`=?updater,`parent_id`=?parent_id,`if_buy_online`=?if_buy_online,`organ_tell`=?organ_tell,`isdelete`=?isdelete,`sheng_id`=?sheng_id
-		where  id =?id
-    </sql>
-    <sql id="delete_organ">
-        delete from organ
+        update organ set `organ_id`=?organ_id,`organ_name`=?organ_name,`create_date`=?create_date,`update_date`=?update_date,`organ_pinyin`=?organ_pinyin,`organ_number`=?organ_number,`creater`=?creater,`updater`=?updater,`parent_id`=?parent_id,`if_buy_online`=?if_buy_online,`organ_tell`=?organ_tell,`is_delete`=?is_delete,`sheng_id`=?sheng_id
 		where id =?id
     </sql>
+    <sql id="deleteone_organ">
+        delete from organ where id =?id
+    </sql>
     <sql id="selectone_organ">
-        select `organ_id`,`organ_name`,`create_date`,`update_date`,`organ_pinyin`,`organ_number`,`creater`,`updater`,`parent_id`,`if_buy_online`,`organ_tell`,`isdelete`,`sheng_id` from organ
-		where  id =?id
+        select `organ_id`,`organ_name`,`create_date`,`update_date`,`organ_pinyin`,`organ_number`,`creater`,`updater`,`parent_id`,`if_buy_online`,`organ_tell`,`is_delete`,`sheng_id` from organ where id =?id
     </sql>
     <sql id="selectall_organ">
-        select `organ_id`,`organ_name`,`create_date`,`update_date`,`organ_pinyin`,`organ_number`,`creater`,`updater`,`parent_id`,`if_buy_online`,`organ_tell`,`isdelete`,`sheng_id` from organ
+        select `organ_id`,`organ_name`,`create_date`,`update_date`,`organ_pinyin`,`organ_number`,`creater`,`updater`,`parent_id`,`if_buy_online`,`organ_tell`,`is_delete`,`sheng_id` from organ
     </sql>
 </sqlMap>

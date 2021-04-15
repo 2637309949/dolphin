@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_level_unit">
         insert into level_unit
-		(`level_unit_id`,`level_id`,`unit_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`unit_total_score`)
+		(`level_unit_id`,`level_id`,`unit_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`unit_total_score`)
 		values
-		(?level_unit_id,?level_id,?unit_id,?creater,?create_date,?updater,?update_date,?isdelete,?unit_total_score)
+		(?level_unit_id,?level_id,?unit_id,?creater,?create_date,?updater,?update_date,?is_delete,?unit_total_score)
     </sql>
     <sql id="update_level_unit">
-        update level_unit set `level_unit_id`=?level_unit_id,`level_id`=?level_id,`unit_id`=?unit_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`unit_total_score`=?unit_total_score
-		where  id =?id
-    </sql>
-    <sql id="delete_level_unit">
-        delete from level_unit
+        update level_unit set `level_unit_id`=?level_unit_id,`level_id`=?level_id,`unit_id`=?unit_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`unit_total_score`=?unit_total_score
 		where id =?id
     </sql>
+    <sql id="deleteone_level_unit">
+        delete from level_unit where id =?id
+    </sql>
     <sql id="selectone_level_unit">
-        select `level_unit_id`,`level_id`,`unit_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`unit_total_score` from level_unit
-		where  id =?id
+        select `level_unit_id`,`level_id`,`unit_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`unit_total_score` from level_unit where id =?id
     </sql>
     <sql id="selectall_level_unit">
-        select `level_unit_id`,`level_id`,`unit_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`unit_total_score` from level_unit
+        select `level_unit_id`,`level_id`,`unit_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`unit_total_score` from level_unit
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_user_training_table">
         insert into user_training_table
-		(`u_t_t_id`,`train_type`,`train_content`,`train_date`,`train_start_time`,`train_end_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`train_name`,`training_state`,`user_id`)
+		(`u_t_t_id`,`train_type`,`train_content`,`train_date`,`train_start_time`,`train_end_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`train_name`,`training_state`,`user_id`)
 		values
-		(?u_t_t_id,?train_type,?train_content,?train_date,?train_start_time,?train_end_time,?creater,?create_date,?updater,?update_date,?isdelete,?train_name,?training_state,?user_id)
+		(?u_t_t_id,?train_type,?train_content,?train_date,?train_start_time,?train_end_time,?creater,?create_date,?updater,?update_date,?is_delete,?train_name,?training_state,?user_id)
     </sql>
     <sql id="update_user_training_table">
-        update user_training_table set `u_t_t_id`=?u_t_t_id,`train_type`=?train_type,`train_content`=?train_content,`train_date`=?train_date,`train_start_time`=?train_start_time,`train_end_time`=?train_end_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`train_name`=?train_name,`training_state`=?training_state,`user_id`=?user_id
-		where  id =?id
-    </sql>
-    <sql id="delete_user_training_table">
-        delete from user_training_table
+        update user_training_table set `u_t_t_id`=?u_t_t_id,`train_type`=?train_type,`train_content`=?train_content,`train_date`=?train_date,`train_start_time`=?train_start_time,`train_end_time`=?train_end_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`train_name`=?train_name,`training_state`=?training_state,`user_id`=?user_id
 		where id =?id
     </sql>
+    <sql id="deleteone_user_training_table">
+        delete from user_training_table where id =?id
+    </sql>
     <sql id="selectone_user_training_table">
-        select `u_t_t_id`,`train_type`,`train_content`,`train_date`,`train_start_time`,`train_end_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`train_name`,`training_state`,`user_id` from user_training_table
-		where  id =?id
+        select `u_t_t_id`,`train_type`,`train_content`,`train_date`,`train_start_time`,`train_end_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`train_name`,`training_state`,`user_id` from user_training_table where id =?id
     </sql>
     <sql id="selectall_user_training_table">
-        select `u_t_t_id`,`train_type`,`train_content`,`train_date`,`train_start_time`,`train_end_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`train_name`,`training_state`,`user_id` from user_training_table
+        select `u_t_t_id`,`train_type`,`train_content`,`train_date`,`train_start_time`,`train_end_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`train_name`,`training_state`,`user_id` from user_training_table
     </sql>
 </sqlMap>

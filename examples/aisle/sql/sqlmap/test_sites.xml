@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_test_sites">
         insert into test_sites
-		(`test_sites_id`,`ts_name`,`ts_remark`,`creater`,`create_date`,`updater`,`update_date`,`school_id`,`isdelete`)
+		(`test_sites_id`,`ts_name`,`ts_remark`,`creater`,`create_date`,`updater`,`update_date`,`school_id`,`is_delete`)
 		values
-		(?test_sites_id,?ts_name,?ts_remark,?creater,?create_date,?updater,?update_date,?school_id,?isdelete)
+		(?test_sites_id,?ts_name,?ts_remark,?creater,?create_date,?updater,?update_date,?school_id,?is_delete)
     </sql>
     <sql id="update_test_sites">
-        update test_sites set `test_sites_id`=?test_sites_id,`ts_name`=?ts_name,`ts_remark`=?ts_remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`school_id`=?school_id,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_test_sites">
-        delete from test_sites
+        update test_sites set `test_sites_id`=?test_sites_id,`ts_name`=?ts_name,`ts_remark`=?ts_remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`school_id`=?school_id,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_test_sites">
+        delete from test_sites where id =?id
+    </sql>
     <sql id="selectone_test_sites">
-        select `test_sites_id`,`ts_name`,`ts_remark`,`creater`,`create_date`,`updater`,`update_date`,`school_id`,`isdelete` from test_sites
-		where  id =?id
+        select `test_sites_id`,`ts_name`,`ts_remark`,`creater`,`create_date`,`updater`,`update_date`,`school_id`,`is_delete` from test_sites where id =?id
     </sql>
     <sql id="selectall_test_sites">
-        select `test_sites_id`,`ts_name`,`ts_remark`,`creater`,`create_date`,`updater`,`update_date`,`school_id`,`isdelete` from test_sites
+        select `test_sites_id`,`ts_name`,`ts_remark`,`creater`,`create_date`,`updater`,`update_date`,`school_id`,`is_delete` from test_sites
     </sql>
 </sqlMap>

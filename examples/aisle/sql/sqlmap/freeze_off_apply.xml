@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_freeze_off_apply">
         insert into freeze_off_apply
-		(`f_o_a_id`,`freeze_off_desc`,`freeze_off_time`,`freeze_off_auditing`,`buss_type`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_id`,`shenhe_person`)
+		(`f_o_a_id`,`freeze_off_desc`,`freeze_off_time`,`freeze_off_auditing`,`buss_type`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_id`,`shenhe_person`)
 		values
-		(?f_o_a_id,?freeze_off_desc,?freeze_off_time,?freeze_off_auditing,?buss_type,?creater,?create_date,?updater,?update_date,?isdelete,?stu_id,?shenhe_person)
+		(?f_o_a_id,?freeze_off_desc,?freeze_off_time,?freeze_off_auditing,?buss_type,?creater,?create_date,?updater,?update_date,?is_delete,?stu_id,?shenhe_person)
     </sql>
     <sql id="update_freeze_off_apply">
-        update freeze_off_apply set `f_o_a_id`=?f_o_a_id,`freeze_off_desc`=?freeze_off_desc,`freeze_off_time`=?freeze_off_time,`freeze_off_auditing`=?freeze_off_auditing,`buss_type`=?buss_type,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`stu_id`=?stu_id,`shenhe_person`=?shenhe_person
-		where  id =?id
-    </sql>
-    <sql id="delete_freeze_off_apply">
-        delete from freeze_off_apply
+        update freeze_off_apply set `f_o_a_id`=?f_o_a_id,`freeze_off_desc`=?freeze_off_desc,`freeze_off_time`=?freeze_off_time,`freeze_off_auditing`=?freeze_off_auditing,`buss_type`=?buss_type,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`stu_id`=?stu_id,`shenhe_person`=?shenhe_person
 		where id =?id
     </sql>
+    <sql id="deleteone_freeze_off_apply">
+        delete from freeze_off_apply where id =?id
+    </sql>
     <sql id="selectone_freeze_off_apply">
-        select `f_o_a_id`,`freeze_off_desc`,`freeze_off_time`,`freeze_off_auditing`,`buss_type`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_id`,`shenhe_person` from freeze_off_apply
-		where  id =?id
+        select `f_o_a_id`,`freeze_off_desc`,`freeze_off_time`,`freeze_off_auditing`,`buss_type`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_id`,`shenhe_person` from freeze_off_apply where id =?id
     </sql>
     <sql id="selectall_freeze_off_apply">
-        select `f_o_a_id`,`freeze_off_desc`,`freeze_off_time`,`freeze_off_auditing`,`buss_type`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`stu_id`,`shenhe_person` from freeze_off_apply
+        select `f_o_a_id`,`freeze_off_desc`,`freeze_off_time`,`freeze_off_auditing`,`buss_type`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`stu_id`,`shenhe_person` from freeze_off_apply
     </sql>
 </sqlMap>

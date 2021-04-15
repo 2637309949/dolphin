@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_temp_storage_cz_flow">
         update temp_storage_cz_flow set `c_flow_id`=?c_flow_id,`pk_t_s_c_id`=?pk_t_s_c_id,`pk_cfs`=?pk_cfs,`pk_user`=?pk_user,`zd_check_state`=?zd_check_state,`check_date`=?check_date,`check_remark`=?check_remark,`now_floor`=?now_floor,`pk_cf_pool`=?pk_cf_pool
-		where  id =?id
-    </sql>
-    <sql id="delete_temp_storage_cz_flow">
-        delete from temp_storage_cz_flow
 		where id =?id
     </sql>
+    <sql id="deleteone_temp_storage_cz_flow">
+        delete from temp_storage_cz_flow where id =?id
+    </sql>
     <sql id="selectone_temp_storage_cz_flow">
-        select `c_flow_id`,`pk_t_s_c_id`,`pk_cfs`,`pk_user`,`zd_check_state`,`check_date`,`check_remark`,`now_floor`,`pk_cf_pool` from temp_storage_cz_flow
-		where  id =?id
+        select `c_flow_id`,`pk_t_s_c_id`,`pk_cfs`,`pk_user`,`zd_check_state`,`check_date`,`check_remark`,`now_floor`,`pk_cf_pool` from temp_storage_cz_flow where id =?id
     </sql>
     <sql id="selectall_temp_storage_cz_flow">
         select `c_flow_id`,`pk_t_s_c_id`,`pk_cfs`,`pk_user`,`zd_check_state`,`check_date`,`check_remark`,`now_floor`,`pk_cf_pool` from temp_storage_cz_flow

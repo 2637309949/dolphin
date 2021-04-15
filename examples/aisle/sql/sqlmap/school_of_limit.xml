@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_school_of_limit">
         insert into school_of_limit
-		(`s_o_l_id`,`pk_sch`,`start_date`,`end_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`of_yj_type`,`of_base`,`sol_name`,`pk_yyb`)
+		(`s_o_l_id`,`pk_sch`,`start_date`,`end_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`of_yj_type`,`of_base`,`sol_name`,`pk_yyb`)
 		values
-		(?s_o_l_id,?pk_sch,?start_date,?end_date,?creater,?create_date,?updater,?update_date,?isdelete,?of_yj_type,?of_base,?sol_name,?pk_yyb)
+		(?s_o_l_id,?pk_sch,?start_date,?end_date,?creater,?create_date,?updater,?update_date,?is_delete,?of_yj_type,?of_base,?sol_name,?pk_yyb)
     </sql>
     <sql id="update_school_of_limit">
-        update school_of_limit set `s_o_l_id`=?s_o_l_id,`pk_sch`=?pk_sch,`start_date`=?start_date,`end_date`=?end_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`of_yj_type`=?of_yj_type,`of_base`=?of_base,`sol_name`=?sol_name,`pk_yyb`=?pk_yyb
-		where  id =?id
-    </sql>
-    <sql id="delete_school_of_limit">
-        delete from school_of_limit
+        update school_of_limit set `s_o_l_id`=?s_o_l_id,`pk_sch`=?pk_sch,`start_date`=?start_date,`end_date`=?end_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`of_yj_type`=?of_yj_type,`of_base`=?of_base,`sol_name`=?sol_name,`pk_yyb`=?pk_yyb
 		where id =?id
     </sql>
+    <sql id="deleteone_school_of_limit">
+        delete from school_of_limit where id =?id
+    </sql>
     <sql id="selectone_school_of_limit">
-        select `s_o_l_id`,`pk_sch`,`start_date`,`end_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`of_yj_type`,`of_base`,`sol_name`,`pk_yyb` from school_of_limit
-		where  id =?id
+        select `s_o_l_id`,`pk_sch`,`start_date`,`end_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`of_yj_type`,`of_base`,`sol_name`,`pk_yyb` from school_of_limit where id =?id
     </sql>
     <sql id="selectall_school_of_limit">
-        select `s_o_l_id`,`pk_sch`,`start_date`,`end_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`of_yj_type`,`of_base`,`sol_name`,`pk_yyb` from school_of_limit
+        select `s_o_l_id`,`pk_sch`,`start_date`,`end_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`of_yj_type`,`of_base`,`sol_name`,`pk_yyb` from school_of_limit
     </sql>
 </sqlMap>

@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_t_19_login_log">
         update t_19_login_log set `login_log_id`=?login_log_id,`user_id`=?user_id,`start_time`=?start_time,`end_time`=?end_time,`login_hour`=?login_hour,`login_ip`=?login_ip
-		where  id =?id
-    </sql>
-    <sql id="delete_t_19_login_log">
-        delete from t_19_login_log
 		where id =?id
     </sql>
+    <sql id="deleteone_t_19_login_log">
+        delete from t_19_login_log where id =?id
+    </sql>
     <sql id="selectone_t_19_login_log">
-        select `login_log_id`,`user_id`,`start_time`,`end_time`,`login_hour`,`login_ip` from t_19_login_log
-		where  id =?id
+        select `login_log_id`,`user_id`,`start_time`,`end_time`,`login_hour`,`login_ip` from t_19_login_log where id =?id
     </sql>
     <sql id="selectall_t_19_login_log">
         select `login_log_id`,`user_id`,`start_time`,`end_time`,`login_hour`,`login_ip` from t_19_login_log

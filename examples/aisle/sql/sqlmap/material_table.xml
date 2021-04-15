@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_material_table">
         insert into material_table
-		(`m_t_id`,`mt_name`,`mt_price`,`mt_remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`m_t_id`,`mt_name`,`mt_price`,`mt_remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?m_t_id,?mt_name,?mt_price,?mt_remark,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?m_t_id,?mt_name,?mt_price,?mt_remark,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_material_table">
-        update material_table set `m_t_id`=?m_t_id,`mt_name`=?mt_name,`mt_price`=?mt_price,`mt_remark`=?mt_remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_material_table">
-        delete from material_table
+        update material_table set `m_t_id`=?m_t_id,`mt_name`=?mt_name,`mt_price`=?mt_price,`mt_remark`=?mt_remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_material_table">
+        delete from material_table where id =?id
+    </sql>
     <sql id="selectone_material_table">
-        select `m_t_id`,`mt_name`,`mt_price`,`mt_remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from material_table
-		where  id =?id
+        select `m_t_id`,`mt_name`,`mt_price`,`mt_remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from material_table where id =?id
     </sql>
     <sql id="selectall_material_table">
-        select `m_t_id`,`mt_name`,`mt_price`,`mt_remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from material_table
+        select `m_t_id`,`mt_name`,`mt_price`,`mt_remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from material_table
     </sql>
 </sqlMap>

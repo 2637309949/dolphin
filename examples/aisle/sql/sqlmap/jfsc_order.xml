@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_jfsc_order">
         insert into jfsc_order
-		(`jfsc_order_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`sg_id`,`ge_id`,`recipient_info_id`,`dingdan_state`)
+		(`jfsc_order_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`sg_id`,`ge_id`,`recipient_info_id`,`dingdan_state`)
 		values
-		(?jfsc_order_id,?stu_id,?creater,?create_date,?updater,?update_date,?isdelete,?sg_id,?ge_id,?recipient_info_id,?dingdan_state)
+		(?jfsc_order_id,?stu_id,?creater,?create_date,?updater,?update_date,?is_delete,?sg_id,?ge_id,?recipient_info_id,?dingdan_state)
     </sql>
     <sql id="update_jfsc_order">
-        update jfsc_order set `jfsc_order_id`=?jfsc_order_id,`stu_id`=?stu_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`sg_id`=?sg_id,`ge_id`=?ge_id,`recipient_info_id`=?recipient_info_id,`dingdan_state`=?dingdan_state
-		where  id =?id
-    </sql>
-    <sql id="delete_jfsc_order">
-        delete from jfsc_order
+        update jfsc_order set `jfsc_order_id`=?jfsc_order_id,`stu_id`=?stu_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`sg_id`=?sg_id,`ge_id`=?ge_id,`recipient_info_id`=?recipient_info_id,`dingdan_state`=?dingdan_state
 		where id =?id
     </sql>
+    <sql id="deleteone_jfsc_order">
+        delete from jfsc_order where id =?id
+    </sql>
     <sql id="selectone_jfsc_order">
-        select `jfsc_order_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`sg_id`,`ge_id`,`recipient_info_id`,`dingdan_state` from jfsc_order
-		where  id =?id
+        select `jfsc_order_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`sg_id`,`ge_id`,`recipient_info_id`,`dingdan_state` from jfsc_order where id =?id
     </sql>
     <sql id="selectall_jfsc_order">
-        select `jfsc_order_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`sg_id`,`ge_id`,`recipient_info_id`,`dingdan_state` from jfsc_order
+        select `jfsc_order_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`sg_id`,`ge_id`,`recipient_info_id`,`dingdan_state` from jfsc_order
     </sql>
 </sqlMap>

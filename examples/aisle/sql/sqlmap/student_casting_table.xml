@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_student_casting_table">
         insert into student_casting_table
-		(`s_c_t_id`,`stu_id`,`stu_cast_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`s_c_t_id`,`stu_id`,`stu_cast_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?s_c_t_id,?stu_id,?stu_cast_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?s_c_t_id,?stu_id,?stu_cast_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_student_casting_table">
-        update student_casting_table set `s_c_t_id`=?s_c_t_id,`stu_id`=?stu_id,`stu_cast_id`=?stu_cast_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_student_casting_table">
-        delete from student_casting_table
+        update student_casting_table set `s_c_t_id`=?s_c_t_id,`stu_id`=?stu_id,`stu_cast_id`=?stu_cast_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_student_casting_table">
+        delete from student_casting_table where id =?id
+    </sql>
     <sql id="selectone_student_casting_table">
-        select `s_c_t_id`,`stu_id`,`stu_cast_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from student_casting_table
-		where  id =?id
+        select `s_c_t_id`,`stu_id`,`stu_cast_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from student_casting_table where id =?id
     </sql>
     <sql id="selectall_student_casting_table">
-        select `s_c_t_id`,`stu_id`,`stu_cast_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from student_casting_table
+        select `s_c_t_id`,`stu_id`,`stu_cast_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from student_casting_table
     </sql>
 </sqlMap>

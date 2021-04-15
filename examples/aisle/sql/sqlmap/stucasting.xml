@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stucasting">
         insert into stucasting
-		(`stucasting_id`,`create_date`,`update_date`,`cast_name`,`creater`,`updater`,`isdelete`)
+		(`stucasting_id`,`create_date`,`update_date`,`cast_name`,`creater`,`updater`,`is_delete`)
 		values
-		(?stucasting_id,?create_date,?update_date,?cast_name,?creater,?updater,?isdelete)
+		(?stucasting_id,?create_date,?update_date,?cast_name,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_stucasting">
-        update stucasting set `stucasting_id`=?stucasting_id,`create_date`=?create_date,`update_date`=?update_date,`cast_name`=?cast_name,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_stucasting">
-        delete from stucasting
+        update stucasting set `stucasting_id`=?stucasting_id,`create_date`=?create_date,`update_date`=?update_date,`cast_name`=?cast_name,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_stucasting">
+        delete from stucasting where id =?id
+    </sql>
     <sql id="selectone_stucasting">
-        select `stucasting_id`,`create_date`,`update_date`,`cast_name`,`creater`,`updater`,`isdelete` from stucasting
-		where  id =?id
+        select `stucasting_id`,`create_date`,`update_date`,`cast_name`,`creater`,`updater`,`is_delete` from stucasting where id =?id
     </sql>
     <sql id="selectall_stucasting">
-        select `stucasting_id`,`create_date`,`update_date`,`cast_name`,`creater`,`updater`,`isdelete` from stucasting
+        select `stucasting_id`,`create_date`,`update_date`,`cast_name`,`creater`,`updater`,`is_delete` from stucasting
     </sql>
 </sqlMap>

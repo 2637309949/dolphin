@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_app_message_file">
         insert into app_message_file
-		(`a_m_f_id`,`amn_id`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`a_m_f_id`,`amn_id`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?a_m_f_id,?amn_id,?fileid,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?a_m_f_id,?amn_id,?fileid,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_app_message_file">
-        update app_message_file set `a_m_f_id`=?a_m_f_id,`amn_id`=?amn_id,`fileid`=?fileid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_app_message_file">
-        delete from app_message_file
+        update app_message_file set `a_m_f_id`=?a_m_f_id,`amn_id`=?amn_id,`fileid`=?fileid,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_app_message_file">
+        delete from app_message_file where id =?id
+    </sql>
     <sql id="selectone_app_message_file">
-        select `a_m_f_id`,`amn_id`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from app_message_file
-		where  id =?id
+        select `a_m_f_id`,`amn_id`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from app_message_file where id =?id
     </sql>
     <sql id="selectall_app_message_file">
-        select `a_m_f_id`,`amn_id`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from app_message_file
+        select `a_m_f_id`,`amn_id`,`fileid`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from app_message_file
     </sql>
 </sqlMap>

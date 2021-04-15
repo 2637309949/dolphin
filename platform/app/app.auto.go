@@ -16,6 +16,7 @@ var Name = "platform"
 
 // SysAppFun defined
 type SysAppFun struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -29,7 +30,7 @@ type SysAppFun struct {
 
 // NewSysAppFun defined
 func NewSysAppFun() *SysAppFun {
-	ctr := &SysAppFun{}
+	ctr := &SysAppFun{Name: "sys_app_fun"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/app/fun/add"
 	ctr.Add.Handler = SysAppFunAdd
@@ -79,6 +80,7 @@ var SysAppFunInstance = NewSysAppFun()
 
 // SysArea defined
 type SysArea struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -91,7 +93,7 @@ type SysArea struct {
 
 // NewSysArea defined
 func NewSysArea() *SysArea {
-	ctr := &SysArea{}
+	ctr := &SysArea{Name: "sys_area"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/area/add"
 	ctr.Add.Handler = SysAreaAdd
@@ -137,6 +139,7 @@ var SysAreaInstance = NewSysArea()
 
 // SysAttachment defined
 type SysAttachment struct {
+	Name string
 	Add,
 	BatchAdd,
 	Upload,
@@ -151,7 +154,7 @@ type SysAttachment struct {
 
 // NewSysAttachment defined
 func NewSysAttachment() *SysAttachment {
-	ctr := &SysAttachment{}
+	ctr := &SysAttachment{Name: "sys_attachment"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/attachment/add"
 	ctr.Add.Handler = SysAttachmentAdd
@@ -205,6 +208,7 @@ var SysAttachmentInstance = NewSysAttachment()
 
 // SysCas defined
 type SysCas struct {
+	Name string
 	Login,
 	Logout,
 	Affirm,
@@ -220,7 +224,7 @@ type SysCas struct {
 
 // NewSysCas defined
 func NewSysCas() *SysCas {
-	ctr := &SysCas{}
+	ctr := &SysCas{Name: "sys_cas"}
 	ctr.Login.Method = "POST"
 	ctr.Login.RelativePath = "/sys/cas/login"
 	ctr.Login.Handler = SysCasLogin
@@ -278,6 +282,7 @@ var SysCasInstance = NewSysCas()
 
 // SysClient defined
 type SysClient struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -290,7 +295,7 @@ type SysClient struct {
 
 // NewSysClient defined
 func NewSysClient() *SysClient {
-	ctr := &SysClient{}
+	ctr := &SysClient{Name: "sys_client"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/client/add"
 	ctr.Add.Handler = SysClientAdd
@@ -336,6 +341,7 @@ var SysClientInstance = NewSysClient()
 
 // SysComment defined
 type SysComment struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -348,7 +354,7 @@ type SysComment struct {
 
 // NewSysComment defined
 func NewSysComment() *SysComment {
-	ctr := &SysComment{}
+	ctr := &SysComment{Name: "sys_comment"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/comment/add"
 	ctr.Add.Handler = SysCommentAdd
@@ -394,6 +400,7 @@ var SysCommentInstance = NewSysComment()
 
 // SysDataPermission defined
 type SysDataPermission struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -406,7 +413,7 @@ type SysDataPermission struct {
 
 // NewSysDataPermission defined
 func NewSysDataPermission() *SysDataPermission {
-	ctr := &SysDataPermission{}
+	ctr := &SysDataPermission{Name: "sys_data_permission"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/data/permission/add"
 	ctr.Add.Handler = SysDataPermissionAdd
@@ -452,6 +459,7 @@ var SysDataPermissionInstance = NewSysDataPermission()
 
 // Debug defined
 type Debug struct {
+	Name string
 	Pprof,
 	Heap,
 	Goroutine,
@@ -467,7 +475,7 @@ type Debug struct {
 
 // NewDebug defined
 func NewDebug() *Debug {
-	ctr := &Debug{}
+	ctr := &Debug{Name: "debug"}
 	ctr.Pprof.Method = "GET"
 	ctr.Pprof.RelativePath = "/pprof/"
 	ctr.Pprof.Handler = DebugPprof
@@ -525,12 +533,13 @@ var DebugInstance = NewDebug()
 
 // SysDingtalk defined
 type SysDingtalk struct {
+	Name   string
 	Oauth2 HandlerFunc
 }
 
 // NewSysDingtalk defined
 func NewSysDingtalk() *SysDingtalk {
-	ctr := &SysDingtalk{}
+	ctr := &SysDingtalk{Name: "sys_dingtalk"}
 	ctr.Oauth2.Method = "GET"
 	ctr.Oauth2.RelativePath = "/sys/dingtalk/oauth2"
 	ctr.Oauth2.Handler = SysDingtalkOauth2
@@ -548,6 +557,7 @@ var SysDingtalkInstance = NewSysDingtalk()
 
 // SysDomain defined
 type SysDomain struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -560,7 +570,7 @@ type SysDomain struct {
 
 // NewSysDomain defined
 func NewSysDomain() *SysDomain {
-	ctr := &SysDomain{}
+	ctr := &SysDomain{Name: "sys_domain"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/domain/add"
 	ctr.Add.Handler = SysDomainAdd
@@ -606,6 +616,7 @@ var SysDomainInstance = NewSysDomain()
 
 // SysMenu defined
 type SysMenu struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -620,7 +631,7 @@ type SysMenu struct {
 
 // NewSysMenu defined
 func NewSysMenu() *SysMenu {
-	ctr := &SysMenu{}
+	ctr := &SysMenu{Name: "sys_menu"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/menu/add"
 	ctr.Add.Handler = SysMenuAdd
@@ -674,6 +685,7 @@ var SysMenuInstance = NewSysMenu()
 
 // SysNotification defined
 type SysNotification struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -686,7 +698,7 @@ type SysNotification struct {
 
 // NewSysNotification defined
 func NewSysNotification() *SysNotification {
-	ctr := &SysNotification{}
+	ctr := &SysNotification{Name: "sys_notification"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/notification/add"
 	ctr.Add.Handler = SysNotificationAdd
@@ -732,6 +744,7 @@ var SysNotificationInstance = NewSysNotification()
 
 // SysOptionset defined
 type SysOptionset struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -744,7 +757,7 @@ type SysOptionset struct {
 
 // NewSysOptionset defined
 func NewSysOptionset() *SysOptionset {
-	ctr := &SysOptionset{}
+	ctr := &SysOptionset{Name: "sys_optionset"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/optionset/add"
 	ctr.Add.Handler = SysOptionsetAdd
@@ -790,6 +803,7 @@ var SysOptionsetInstance = NewSysOptionset()
 
 // SysOrg defined
 type SysOrg struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -803,7 +817,7 @@ type SysOrg struct {
 
 // NewSysOrg defined
 func NewSysOrg() *SysOrg {
-	ctr := &SysOrg{}
+	ctr := &SysOrg{Name: "sys_org"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/org/add"
 	ctr.Add.Handler = SysOrgAdd
@@ -853,6 +867,7 @@ var SysOrgInstance = NewSysOrg()
 
 // SysPermission defined
 type SysPermission struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -865,7 +880,7 @@ type SysPermission struct {
 
 // NewSysPermission defined
 func NewSysPermission() *SysPermission {
-	ctr := &SysPermission{}
+	ctr := &SysPermission{Name: "sys_permission"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/permission/add"
 	ctr.Add.Handler = SysPermissionAdd
@@ -911,6 +926,7 @@ var SysPermissionInstance = NewSysPermission()
 
 // SysRole defined
 type SysRole struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -925,7 +941,7 @@ type SysRole struct {
 
 // NewSysRole defined
 func NewSysRole() *SysRole {
-	ctr := &SysRole{}
+	ctr := &SysRole{Name: "sys_role"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/role/add"
 	ctr.Add.Handler = SysRoleAdd
@@ -979,6 +995,7 @@ var SysRoleInstance = NewSysRole()
 
 // SysRoleMenu defined
 type SysRoleMenu struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -991,7 +1008,7 @@ type SysRoleMenu struct {
 
 // NewSysRoleMenu defined
 func NewSysRoleMenu() *SysRoleMenu {
-	ctr := &SysRoleMenu{}
+	ctr := &SysRoleMenu{Name: "sys_role_menu"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/role/menu/add"
 	ctr.Add.Handler = SysRoleMenuAdd
@@ -1037,6 +1054,7 @@ var SysRoleMenuInstance = NewSysRoleMenu()
 
 // SysSchedule defined
 type SysSchedule struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1049,7 +1067,7 @@ type SysSchedule struct {
 
 // NewSysSchedule defined
 func NewSysSchedule() *SysSchedule {
-	ctr := &SysSchedule{}
+	ctr := &SysSchedule{Name: "sys_schedule"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/schedule/add"
 	ctr.Add.Handler = SysScheduleAdd
@@ -1095,12 +1113,13 @@ var SysScheduleInstance = NewSysSchedule()
 
 // SysScheduleHistory defined
 type SysScheduleHistory struct {
+	Name string
 	Page HandlerFunc
 }
 
 // NewSysScheduleHistory defined
 func NewSysScheduleHistory() *SysScheduleHistory {
-	ctr := &SysScheduleHistory{}
+	ctr := &SysScheduleHistory{Name: "sys_schedule_history"}
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/schedule/history/page"
 	ctr.Page.Handler = SysScheduleHistoryPage
@@ -1118,6 +1137,7 @@ var SysScheduleHistoryInstance = NewSysScheduleHistory()
 
 // SysScheduling defined
 type SysScheduling struct {
+	Name string
 	Add,
 	Del,
 	Update,
@@ -1127,7 +1147,7 @@ type SysScheduling struct {
 
 // NewSysScheduling defined
 func NewSysScheduling() *SysScheduling {
-	ctr := &SysScheduling{}
+	ctr := &SysScheduling{Name: "sys_scheduling"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/scheduling/add"
 	ctr.Add.Handler = SysSchedulingAdd
@@ -1161,6 +1181,7 @@ var SysSchedulingInstance = NewSysScheduling()
 
 // SysSetting defined
 type SysSetting struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1173,7 +1194,7 @@ type SysSetting struct {
 
 // NewSysSetting defined
 func NewSysSetting() *SysSetting {
-	ctr := &SysSetting{}
+	ctr := &SysSetting{Name: "sys_setting"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/setting/add"
 	ctr.Add.Handler = SysSettingAdd
@@ -1219,6 +1240,7 @@ var SysSettingInstance = NewSysSetting()
 
 // SysTable defined
 type SysTable struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1231,7 +1253,7 @@ type SysTable struct {
 
 // NewSysTable defined
 func NewSysTable() *SysTable {
-	ctr := &SysTable{}
+	ctr := &SysTable{Name: "sys_table"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/table/add"
 	ctr.Add.Handler = SysTableAdd
@@ -1277,6 +1299,7 @@ var SysTableInstance = NewSysTable()
 
 // SysTableColumn defined
 type SysTableColumn struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1289,7 +1312,7 @@ type SysTableColumn struct {
 
 // NewSysTableColumn defined
 func NewSysTableColumn() *SysTableColumn {
-	ctr := &SysTableColumn{}
+	ctr := &SysTableColumn{Name: "sys_table_column"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/table/column/add"
 	ctr.Add.Handler = SysTableColumnAdd
@@ -1335,6 +1358,7 @@ var SysTableColumnInstance = NewSysTableColumn()
 
 // SysTag defined
 type SysTag struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1347,7 +1371,7 @@ type SysTag struct {
 
 // NewSysTag defined
 func NewSysTag() *SysTag {
-	ctr := &SysTag{}
+	ctr := &SysTag{Name: "sys_tag"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/tag/add"
 	ctr.Add.Handler = SysTagAdd
@@ -1393,6 +1417,7 @@ var SysTagInstance = NewSysTag()
 
 // SysTagGroup defined
 type SysTagGroup struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1405,7 +1430,7 @@ type SysTagGroup struct {
 
 // NewSysTagGroup defined
 func NewSysTagGroup() *SysTagGroup {
-	ctr := &SysTagGroup{}
+	ctr := &SysTagGroup{Name: "sys_tag_group"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/tag/group/add"
 	ctr.Add.Handler = SysTagGroupAdd
@@ -1451,13 +1476,14 @@ var SysTagGroupInstance = NewSysTagGroup()
 
 // SysTracker defined
 type SysTracker struct {
+	Name string
 	Page,
 	Get HandlerFunc
 }
 
 // NewSysTracker defined
 func NewSysTracker() *SysTracker {
-	ctr := &SysTracker{}
+	ctr := &SysTracker{Name: "sys_tracker"}
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/tracker/page"
 	ctr.Page.Handler = SysTrackerPage
@@ -1479,6 +1505,7 @@ var SysTrackerInstance = NewSysTracker()
 
 // SysUser defined
 type SysUser struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1493,7 +1520,7 @@ type SysUser struct {
 
 // NewSysUser defined
 func NewSysUser() *SysUser {
-	ctr := &SysUser{}
+	ctr := &SysUser{Name: "sys_user"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/user/add"
 	ctr.Add.Handler = SysUserAdd
@@ -1547,6 +1574,7 @@ var SysUserInstance = NewSysUser()
 
 // SysUserTemplate defined
 type SysUserTemplate struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1559,7 +1587,7 @@ type SysUserTemplate struct {
 
 // NewSysUserTemplate defined
 func NewSysUserTemplate() *SysUserTemplate {
-	ctr := &SysUserTemplate{}
+	ctr := &SysUserTemplate{Name: "sys_user_template"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/user/template/add"
 	ctr.Add.Handler = SysUserTemplateAdd
@@ -1605,6 +1633,7 @@ var SysUserTemplateInstance = NewSysUserTemplate()
 
 // SysUserTemplateDetail defined
 type SysUserTemplateDetail struct {
+	Name string
 	Add,
 	BatchAdd,
 	Del,
@@ -1617,7 +1646,7 @@ type SysUserTemplateDetail struct {
 
 // NewSysUserTemplateDetail defined
 func NewSysUserTemplateDetail() *SysUserTemplateDetail {
-	ctr := &SysUserTemplateDetail{}
+	ctr := &SysUserTemplateDetail{Name: "sys_user_template_detail"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/user/template/detail/add"
 	ctr.Add.Handler = SysUserTemplateDetailAdd
@@ -1663,12 +1692,13 @@ var SysUserTemplateDetailInstance = NewSysUserTemplateDetail()
 
 // SysWechat defined
 type SysWechat struct {
+	Name   string
 	Oauth2 HandlerFunc
 }
 
 // NewSysWechat defined
 func NewSysWechat() *SysWechat {
-	ctr := &SysWechat{}
+	ctr := &SysWechat{Name: "sys_wechat"}
 	ctr.Oauth2.Method = "GET"
 	ctr.Oauth2.RelativePath = "/sys/wechat/oauth2"
 	ctr.Oauth2.Handler = SysWechatOauth2
@@ -1686,13 +1716,14 @@ var SysWechatInstance = NewSysWechat()
 
 // SysWorker defined
 type SysWorker struct {
+	Name string
 	Add,
 	Get HandlerFunc
 }
 
 // NewSysWorker defined
 func NewSysWorker() *SysWorker {
-	ctr := &SysWorker{}
+	ctr := &SysWorker{Name: "sys_worker"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/worker/add"
 	ctr.Add.Handler = SysWorkerAdd

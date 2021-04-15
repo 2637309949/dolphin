@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_market_activity_materiel">
         insert into market_activity_materiel
-		(`ma_id`,`materiel_id`,`plan_num`,`receive_num`,`use_num`,`return_num`,`creater`,`create_date`,`updater`,`update_date`,`m_a_m_id`,`isdelete`)
+		(`ma_id`,`materiel_id`,`plan_num`,`receive_num`,`use_num`,`return_num`,`creater`,`create_date`,`updater`,`update_date`,`m_a_m_id`,`is_delete`)
 		values
-		(?ma_id,?materiel_id,?plan_num,?receive_num,?use_num,?return_num,?creater,?create_date,?updater,?update_date,?m_a_m_id,?isdelete)
+		(?ma_id,?materiel_id,?plan_num,?receive_num,?use_num,?return_num,?creater,?create_date,?updater,?update_date,?m_a_m_id,?is_delete)
     </sql>
     <sql id="update_market_activity_materiel">
-        update market_activity_materiel set `ma_id`=?ma_id,`materiel_id`=?materiel_id,`plan_num`=?plan_num,`receive_num`=?receive_num,`use_num`=?use_num,`return_num`=?return_num,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`m_a_m_id`=?m_a_m_id,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_market_activity_materiel">
-        delete from market_activity_materiel
+        update market_activity_materiel set `ma_id`=?ma_id,`materiel_id`=?materiel_id,`plan_num`=?plan_num,`receive_num`=?receive_num,`use_num`=?use_num,`return_num`=?return_num,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`m_a_m_id`=?m_a_m_id,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_market_activity_materiel">
+        delete from market_activity_materiel where id =?id
+    </sql>
     <sql id="selectone_market_activity_materiel">
-        select `ma_id`,`materiel_id`,`plan_num`,`receive_num`,`use_num`,`return_num`,`creater`,`create_date`,`updater`,`update_date`,`m_a_m_id`,`isdelete` from market_activity_materiel
-		where  id =?id
+        select `ma_id`,`materiel_id`,`plan_num`,`receive_num`,`use_num`,`return_num`,`creater`,`create_date`,`updater`,`update_date`,`m_a_m_id`,`is_delete` from market_activity_materiel where id =?id
     </sql>
     <sql id="selectall_market_activity_materiel">
-        select `ma_id`,`materiel_id`,`plan_num`,`receive_num`,`use_num`,`return_num`,`creater`,`create_date`,`updater`,`update_date`,`m_a_m_id`,`isdelete` from market_activity_materiel
+        select `ma_id`,`materiel_id`,`plan_num`,`receive_num`,`use_num`,`return_num`,`creater`,`create_date`,`updater`,`update_date`,`m_a_m_id`,`is_delete` from market_activity_materiel
     </sql>
 </sqlMap>

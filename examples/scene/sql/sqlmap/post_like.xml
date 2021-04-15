@@ -8,13 +8,13 @@
     </sql>
     <sql id="update_post_like">
         update post_like set `id`=?id,`count`=?count,`post_id`=?post_id,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
-		where  id =?id
+		where id =?id
     </sql>
-    <sql id="delete_post_like">
+    <sql id="deleteone_post_like">
         delete from post_like where id =?id
     </sql>
     <sql id="selectone_post_like">
-        select `id`,`count`,`post_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from post_like where  id =?id
+        select `id`,`count`,`post_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from post_like where id =?id
     </sql>
     <sql id="selectall_post_like">
         select `id`,`count`,`post_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from post_like

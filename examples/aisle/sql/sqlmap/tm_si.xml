@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_tm_si">
         insert into tm_si
-		(`tm_si_id`,`tm_id`,`si_name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`tm_si_id`,`tm_id`,`si_name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?tm_si_id,?tm_id,?si_name,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?tm_si_id,?tm_id,?si_name,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_tm_si">
-        update tm_si set `tm_si_id`=?tm_si_id,`tm_id`=?tm_id,`si_name`=?si_name,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_tm_si">
-        delete from tm_si
+        update tm_si set `tm_si_id`=?tm_si_id,`tm_id`=?tm_id,`si_name`=?si_name,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_tm_si">
+        delete from tm_si where id =?id
+    </sql>
     <sql id="selectone_tm_si">
-        select `tm_si_id`,`tm_id`,`si_name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from tm_si
-		where  id =?id
+        select `tm_si_id`,`tm_id`,`si_name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from tm_si where id =?id
     </sql>
     <sql id="selectall_tm_si">
-        select `tm_si_id`,`tm_id`,`si_name`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from tm_si
+        select `tm_si_id`,`tm_id`,`si_name`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from tm_si
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_par_studnet_class_type">
         insert into par_studnet_class_type
-		(`p_s_c_t_id`,`par_id`,`sct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`p_s_c_t_id`,`par_id`,`sct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?p_s_c_t_id,?par_id,?sct_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?p_s_c_t_id,?par_id,?sct_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_par_studnet_class_type">
-        update par_studnet_class_type set `p_s_c_t_id`=?p_s_c_t_id,`par_id`=?par_id,`sct_id`=?sct_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_par_studnet_class_type">
-        delete from par_studnet_class_type
+        update par_studnet_class_type set `p_s_c_t_id`=?p_s_c_t_id,`par_id`=?par_id,`sct_id`=?sct_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_par_studnet_class_type">
+        delete from par_studnet_class_type where id =?id
+    </sql>
     <sql id="selectone_par_studnet_class_type">
-        select `p_s_c_t_id`,`par_id`,`sct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from par_studnet_class_type
-		where  id =?id
+        select `p_s_c_t_id`,`par_id`,`sct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from par_studnet_class_type where id =?id
     </sql>
     <sql id="selectall_par_studnet_class_type">
-        select `p_s_c_t_id`,`par_id`,`sct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from par_studnet_class_type
+        select `p_s_c_t_id`,`par_id`,`sct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from par_studnet_class_type
     </sql>
 </sqlMap>

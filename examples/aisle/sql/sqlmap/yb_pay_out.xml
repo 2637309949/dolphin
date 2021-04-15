@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_yb_pay_out">
         insert into yb_pay_out
-		(`yb_pay_out_id`,`stu_id`,`yb_pay_id`,`out_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fee_id`,`check_state`,`ybout_desc`,`if_zdj`,`dj_id`)
+		(`yb_pay_out_id`,`stu_id`,`yb_pay_id`,`out_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fee_id`,`check_state`,`ybout_desc`,`if_zdj`,`dj_id`)
 		values
-		(?yb_pay_out_id,?stu_id,?yb_pay_id,?out_money,?creater,?create_date,?updater,?update_date,?isdelete,?fee_id,?check_state,?ybout_desc,?if_zdj,?dj_id)
+		(?yb_pay_out_id,?stu_id,?yb_pay_id,?out_money,?creater,?create_date,?updater,?update_date,?is_delete,?fee_id,?check_state,?ybout_desc,?if_zdj,?dj_id)
     </sql>
     <sql id="update_yb_pay_out">
-        update yb_pay_out set `yb_pay_out_id`=?yb_pay_out_id,`stu_id`=?stu_id,`yb_pay_id`=?yb_pay_id,`out_money`=?out_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`fee_id`=?fee_id,`check_state`=?check_state,`ybout_desc`=?ybout_desc,`if_zdj`=?if_zdj,`dj_id`=?dj_id
-		where  id =?id
-    </sql>
-    <sql id="delete_yb_pay_out">
-        delete from yb_pay_out
+        update yb_pay_out set `yb_pay_out_id`=?yb_pay_out_id,`stu_id`=?stu_id,`yb_pay_id`=?yb_pay_id,`out_money`=?out_money,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`fee_id`=?fee_id,`check_state`=?check_state,`ybout_desc`=?ybout_desc,`if_zdj`=?if_zdj,`dj_id`=?dj_id
 		where id =?id
     </sql>
+    <sql id="deleteone_yb_pay_out">
+        delete from yb_pay_out where id =?id
+    </sql>
     <sql id="selectone_yb_pay_out">
-        select `yb_pay_out_id`,`stu_id`,`yb_pay_id`,`out_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fee_id`,`check_state`,`ybout_desc`,`if_zdj`,`dj_id` from yb_pay_out
-		where  id =?id
+        select `yb_pay_out_id`,`stu_id`,`yb_pay_id`,`out_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fee_id`,`check_state`,`ybout_desc`,`if_zdj`,`dj_id` from yb_pay_out where id =?id
     </sql>
     <sql id="selectall_yb_pay_out">
-        select `yb_pay_out_id`,`stu_id`,`yb_pay_id`,`out_money`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fee_id`,`check_state`,`ybout_desc`,`if_zdj`,`dj_id` from yb_pay_out
+        select `yb_pay_out_id`,`stu_id`,`yb_pay_id`,`out_money`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fee_id`,`check_state`,`ybout_desc`,`if_zdj`,`dj_id` from yb_pay_out
     </sql>
 </sqlMap>

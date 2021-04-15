@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_system_message">
         insert into system_message
-		(`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`t_8_0`,`title`,`content`,`creater`,`updater`,`isdelete`)
+		(`if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`t_8_0`,`title`,`content`,`creater`,`updater`,`is_delete`)
 		values
-		(?if_notice,?if_noticecn,?if_see,?if_seecn,?notice_user,?notice_name,?create_date,?update_date,?t_8_0,?title,?content,?creater,?updater,?isdelete)
+		(?if_notice,?if_noticecn,?if_see,?if_seecn,?notice_user,?notice_name,?create_date,?update_date,?t_8_0,?title,?content,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_system_message">
-        update system_message set `if_notice`=?if_notice,`if_noticecn`=?if_noticecn,`if_see`=?if_see,`if_seecn`=?if_seecn,`notice_user`=?notice_user,`notice_name`=?notice_name,`create_date`=?create_date,`update_date`=?update_date,`t_8_0`=?t_8_0,`title`=?title,`content`=?content,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_system_message">
-        delete from system_message
+        update system_message set `if_notice`=?if_notice,`if_noticecn`=?if_noticecn,`if_see`=?if_see,`if_seecn`=?if_seecn,`notice_user`=?notice_user,`notice_name`=?notice_name,`create_date`=?create_date,`update_date`=?update_date,`t_8_0`=?t_8_0,`title`=?title,`content`=?content,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_system_message">
+        delete from system_message where id =?id
+    </sql>
     <sql id="selectone_system_message">
-        select `if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`t_8_0`,`title`,`content`,`creater`,`updater`,`isdelete` from system_message
-		where  id =?id
+        select `if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`t_8_0`,`title`,`content`,`creater`,`updater`,`is_delete` from system_message where id =?id
     </sql>
     <sql id="selectall_system_message">
-        select `if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`t_8_0`,`title`,`content`,`creater`,`updater`,`isdelete` from system_message
+        select `if_notice`,`if_noticecn`,`if_see`,`if_seecn`,`notice_user`,`notice_name`,`create_date`,`update_date`,`t_8_0`,`title`,`content`,`creater`,`updater`,`is_delete` from system_message
     </sql>
 </sqlMap>

@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_user_casting">
         update user_casting set `user_cast_id`=?user_cast_id,`user_id`=?user_id,`cast_id`=?cast_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date
-		where  id =?id
-    </sql>
-    <sql id="delete_user_casting">
-        delete from user_casting
 		where id =?id
     </sql>
+    <sql id="deleteone_user_casting">
+        delete from user_casting where id =?id
+    </sql>
     <sql id="selectone_user_casting">
-        select `user_cast_id`,`user_id`,`cast_id`,`creater`,`create_date`,`updater`,`update_date` from user_casting
-		where  id =?id
+        select `user_cast_id`,`user_id`,`cast_id`,`creater`,`create_date`,`updater`,`update_date` from user_casting where id =?id
     </sql>
     <sql id="selectall_user_casting">
         select `user_cast_id`,`user_id`,`cast_id`,`creater`,`create_date`,`updater`,`update_date` from user_casting

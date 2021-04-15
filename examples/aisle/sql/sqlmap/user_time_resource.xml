@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_user_time_resource">
         insert into user_time_resource
-		(`u_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`course_type`,`course_state`)
+		(`u_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`course_type`,`course_state`)
 		values
-		(?u_t_r_id,?data_id,?table_id,?main_data_id,?start_time,?end_time,?conflict_content,?show_content,?creater,?create_date,?updater,?update_date,?isdelete,?course_type,?course_state)
+		(?u_t_r_id,?data_id,?table_id,?main_data_id,?start_time,?end_time,?conflict_content,?show_content,?creater,?create_date,?updater,?update_date,?is_delete,?course_type,?course_state)
     </sql>
     <sql id="update_user_time_resource">
-        update user_time_resource set `u_t_r_id`=?u_t_r_id,`data_id`=?data_id,`table_id`=?table_id,`main_data_id`=?main_data_id,`start_time`=?start_time,`end_time`=?end_time,`conflict_content`=?conflict_content,`show_content`=?show_content,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`course_type`=?course_type,`course_state`=?course_state
-		where  id =?id
-    </sql>
-    <sql id="delete_user_time_resource">
-        delete from user_time_resource
+        update user_time_resource set `u_t_r_id`=?u_t_r_id,`data_id`=?data_id,`table_id`=?table_id,`main_data_id`=?main_data_id,`start_time`=?start_time,`end_time`=?end_time,`conflict_content`=?conflict_content,`show_content`=?show_content,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`course_type`=?course_type,`course_state`=?course_state
 		where id =?id
     </sql>
+    <sql id="deleteone_user_time_resource">
+        delete from user_time_resource where id =?id
+    </sql>
     <sql id="selectone_user_time_resource">
-        select `u_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`course_type`,`course_state` from user_time_resource
-		where  id =?id
+        select `u_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`course_type`,`course_state` from user_time_resource where id =?id
     </sql>
     <sql id="selectall_user_time_resource">
-        select `u_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`course_type`,`course_state` from user_time_resource
+        select `u_t_r_id`,`data_id`,`table_id`,`main_data_id`,`start_time`,`end_time`,`conflict_content`,`show_content`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`course_type`,`course_state` from user_time_resource
     </sql>
 </sqlMap>

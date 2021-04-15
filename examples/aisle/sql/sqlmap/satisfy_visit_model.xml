@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_satisfy_visit_model">
         insert into satisfy_visit_model
-		(`s_v_m_id`,`model_name`,`model_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`s_v_m_id`,`model_name`,`model_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?s_v_m_id,?model_name,?model_desc,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?s_v_m_id,?model_name,?model_desc,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_satisfy_visit_model">
-        update satisfy_visit_model set `s_v_m_id`=?s_v_m_id,`model_name`=?model_name,`model_desc`=?model_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_satisfy_visit_model">
-        delete from satisfy_visit_model
+        update satisfy_visit_model set `s_v_m_id`=?s_v_m_id,`model_name`=?model_name,`model_desc`=?model_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_satisfy_visit_model">
+        delete from satisfy_visit_model where id =?id
+    </sql>
     <sql id="selectone_satisfy_visit_model">
-        select `s_v_m_id`,`model_name`,`model_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from satisfy_visit_model
-		where  id =?id
+        select `s_v_m_id`,`model_name`,`model_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from satisfy_visit_model where id =?id
     </sql>
     <sql id="selectall_satisfy_visit_model">
-        select `s_v_m_id`,`model_name`,`model_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from satisfy_visit_model
+        select `s_v_m_id`,`model_name`,`model_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from satisfy_visit_model
     </sql>
 </sqlMap>

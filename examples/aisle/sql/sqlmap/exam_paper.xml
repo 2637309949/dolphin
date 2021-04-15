@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_exam_paper">
         insert into exam_paper
-		(`exam_paper_id`,`remark`,`create_date`,`update_date`,`ep_name`,`ep_type`,`ep_duration`,`ep_total_score`,`passing_score`,`eq_number`,`creater`,`updater`,`isdelete`)
+		(`exam_paper_id`,`remark`,`create_date`,`update_date`,`ep_name`,`ep_type`,`ep_duration`,`ep_total_score`,`passing_score`,`eq_number`,`creater`,`updater`,`is_delete`)
 		values
-		(?exam_paper_id,?remark,?create_date,?update_date,?ep_name,?ep_type,?ep_duration,?ep_total_score,?passing_score,?eq_number,?creater,?updater,?isdelete)
+		(?exam_paper_id,?remark,?create_date,?update_date,?ep_name,?ep_type,?ep_duration,?ep_total_score,?passing_score,?eq_number,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_exam_paper">
-        update exam_paper set `exam_paper_id`=?exam_paper_id,`remark`=?remark,`create_date`=?create_date,`update_date`=?update_date,`ep_name`=?ep_name,`ep_type`=?ep_type,`ep_duration`=?ep_duration,`ep_total_score`=?ep_total_score,`passing_score`=?passing_score,`eq_number`=?eq_number,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_exam_paper">
-        delete from exam_paper
+        update exam_paper set `exam_paper_id`=?exam_paper_id,`remark`=?remark,`create_date`=?create_date,`update_date`=?update_date,`ep_name`=?ep_name,`ep_type`=?ep_type,`ep_duration`=?ep_duration,`ep_total_score`=?ep_total_score,`passing_score`=?passing_score,`eq_number`=?eq_number,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_exam_paper">
+        delete from exam_paper where id =?id
+    </sql>
     <sql id="selectone_exam_paper">
-        select `exam_paper_id`,`remark`,`create_date`,`update_date`,`ep_name`,`ep_type`,`ep_duration`,`ep_total_score`,`passing_score`,`eq_number`,`creater`,`updater`,`isdelete` from exam_paper
-		where  id =?id
+        select `exam_paper_id`,`remark`,`create_date`,`update_date`,`ep_name`,`ep_type`,`ep_duration`,`ep_total_score`,`passing_score`,`eq_number`,`creater`,`updater`,`is_delete` from exam_paper where id =?id
     </sql>
     <sql id="selectall_exam_paper">
-        select `exam_paper_id`,`remark`,`create_date`,`update_date`,`ep_name`,`ep_type`,`ep_duration`,`ep_total_score`,`passing_score`,`eq_number`,`creater`,`updater`,`isdelete` from exam_paper
+        select `exam_paper_id`,`remark`,`create_date`,`update_date`,`ep_name`,`ep_type`,`ep_duration`,`ep_total_score`,`passing_score`,`eq_number`,`creater`,`updater`,`is_delete` from exam_paper
     </sql>
 </sqlMap>

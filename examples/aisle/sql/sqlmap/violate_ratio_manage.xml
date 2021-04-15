@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_violate_ratio_manage">
         insert into violate_ratio_manage
-		(`v_r_m_id`,`ratio_name`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`if_open`)
+		(`v_r_m_id`,`ratio_name`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`if_open`)
 		values
-		(?v_r_m_id,?ratio_name,?ratio,?creater,?create_date,?updater,?update_date,?isdelete,?if_open)
+		(?v_r_m_id,?ratio_name,?ratio,?creater,?create_date,?updater,?update_date,?is_delete,?if_open)
     </sql>
     <sql id="update_violate_ratio_manage">
-        update violate_ratio_manage set `v_r_m_id`=?v_r_m_id,`ratio_name`=?ratio_name,`ratio`=?ratio,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`if_open`=?if_open
-		where  id =?id
-    </sql>
-    <sql id="delete_violate_ratio_manage">
-        delete from violate_ratio_manage
+        update violate_ratio_manage set `v_r_m_id`=?v_r_m_id,`ratio_name`=?ratio_name,`ratio`=?ratio,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`if_open`=?if_open
 		where id =?id
     </sql>
+    <sql id="deleteone_violate_ratio_manage">
+        delete from violate_ratio_manage where id =?id
+    </sql>
     <sql id="selectone_violate_ratio_manage">
-        select `v_r_m_id`,`ratio_name`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`if_open` from violate_ratio_manage
-		where  id =?id
+        select `v_r_m_id`,`ratio_name`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`if_open` from violate_ratio_manage where id =?id
     </sql>
     <sql id="selectall_violate_ratio_manage">
-        select `v_r_m_id`,`ratio_name`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`if_open` from violate_ratio_manage
+        select `v_r_m_id`,`ratio_name`,`ratio`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`if_open` from violate_ratio_manage
     </sql>
 </sqlMap>

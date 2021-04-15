@@ -8,13 +8,13 @@
     </sql>
     <sql id="update_sys_tag">
         update sys_tag set `id`=?id,`name`=?name,`group_id`=?group_id,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
-		where  id =?id
+		where id =?id
     </sql>
-    <sql id="delete_sys_tag">
+    <sql id="deleteone_sys_tag">
         delete from sys_tag where id =?id
     </sql>
     <sql id="selectone_sys_tag">
-        select `id`,`name`,`group_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_tag where  id =?id
+        select `id`,`name`,`group_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_tag where id =?id
     </sql>
     <sql id="selectall_sys_tag">
         select `id`,`name`,`group_id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_tag

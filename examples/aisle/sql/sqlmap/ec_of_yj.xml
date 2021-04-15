@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_ec_of_yj">
         insert into ec_of_yj
-		(`ec_of_yj_id`,`of_id`,`user_id`,`yjbl_num`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`ec_of_yj_id`,`of_id`,`user_id`,`yjbl_num`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?ec_of_yj_id,?of_id,?user_id,?yjbl_num,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?ec_of_yj_id,?of_id,?user_id,?yjbl_num,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_ec_of_yj">
-        update ec_of_yj set `ec_of_yj_id`=?ec_of_yj_id,`of_id`=?of_id,`user_id`=?user_id,`yjbl_num`=?yjbl_num,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_ec_of_yj">
-        delete from ec_of_yj
+        update ec_of_yj set `ec_of_yj_id`=?ec_of_yj_id,`of_id`=?of_id,`user_id`=?user_id,`yjbl_num`=?yjbl_num,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_ec_of_yj">
+        delete from ec_of_yj where id =?id
+    </sql>
     <sql id="selectone_ec_of_yj">
-        select `ec_of_yj_id`,`of_id`,`user_id`,`yjbl_num`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from ec_of_yj
-		where  id =?id
+        select `ec_of_yj_id`,`of_id`,`user_id`,`yjbl_num`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from ec_of_yj where id =?id
     </sql>
     <sql id="selectall_ec_of_yj">
-        select `ec_of_yj_id`,`of_id`,`user_id`,`yjbl_num`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from ec_of_yj
+        select `ec_of_yj_id`,`of_id`,`user_id`,`yjbl_num`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from ec_of_yj
     </sql>
 </sqlMap>

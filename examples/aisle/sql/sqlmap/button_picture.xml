@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_button_picture">
         insert into button_picture
-		(`t_223_0`,`btnpic_name`,`btnpic_type`,`btnpic_picture`,`pro_id`,`isdelete`)
+		(`t_223_0`,`btnpic_name`,`btnpic_type`,`btnpic_picture`,`pro_id`,`is_delete`)
 		values
-		(?t_223_0,?btnpic_name,?btnpic_type,?btnpic_picture,?pro_id,?isdelete)
+		(?t_223_0,?btnpic_name,?btnpic_type,?btnpic_picture,?pro_id,?is_delete)
     </sql>
     <sql id="update_button_picture">
-        update button_picture set `t_223_0`=?t_223_0,`btnpic_name`=?btnpic_name,`btnpic_type`=?btnpic_type,`btnpic_picture`=?btnpic_picture,`pro_id`=?pro_id,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_button_picture">
-        delete from button_picture
+        update button_picture set `t_223_0`=?t_223_0,`btnpic_name`=?btnpic_name,`btnpic_type`=?btnpic_type,`btnpic_picture`=?btnpic_picture,`pro_id`=?pro_id,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_button_picture">
+        delete from button_picture where id =?id
+    </sql>
     <sql id="selectone_button_picture">
-        select `t_223_0`,`btnpic_name`,`btnpic_type`,`btnpic_picture`,`pro_id`,`isdelete` from button_picture
-		where  id =?id
+        select `t_223_0`,`btnpic_name`,`btnpic_type`,`btnpic_picture`,`pro_id`,`is_delete` from button_picture where id =?id
     </sql>
     <sql id="selectall_button_picture">
-        select `t_223_0`,`btnpic_name`,`btnpic_type`,`btnpic_picture`,`pro_id`,`isdelete` from button_picture
+        select `t_223_0`,`btnpic_name`,`btnpic_type`,`btnpic_picture`,`pro_id`,`is_delete` from button_picture
     </sql>
 </sqlMap>

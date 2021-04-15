@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_external_place">
         insert into external_place
-		(`e_p_id`,`place_name`,`ep_city`,`ep_remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`e_p_id`,`place_name`,`ep_city`,`ep_remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?e_p_id,?place_name,?ep_city,?ep_remark,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?e_p_id,?place_name,?ep_city,?ep_remark,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_external_place">
-        update external_place set `e_p_id`=?e_p_id,`place_name`=?place_name,`ep_city`=?ep_city,`ep_remark`=?ep_remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_external_place">
-        delete from external_place
+        update external_place set `e_p_id`=?e_p_id,`place_name`=?place_name,`ep_city`=?ep_city,`ep_remark`=?ep_remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_external_place">
+        delete from external_place where id =?id
+    </sql>
     <sql id="selectone_external_place">
-        select `e_p_id`,`place_name`,`ep_city`,`ep_remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from external_place
-		where  id =?id
+        select `e_p_id`,`place_name`,`ep_city`,`ep_remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from external_place where id =?id
     </sql>
     <sql id="selectall_external_place">
-        select `e_p_id`,`place_name`,`ep_city`,`ep_remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from external_place
+        select `e_p_id`,`place_name`,`ep_city`,`ep_remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from external_place
     </sql>
 </sqlMap>

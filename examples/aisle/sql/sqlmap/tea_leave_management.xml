@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_tea_leave_management">
         insert into tea_leave_management
-		(`t_l_m_id`,`tea_id`,`leave_type`,`leave_start_date`,`leave_start_time`,`leave_end_date`,`leave_end_time`,`leave_word_day`,`tea_stu_num`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`t_l_m_id`,`tea_id`,`leave_type`,`leave_start_date`,`leave_start_time`,`leave_end_date`,`leave_end_time`,`leave_word_day`,`tea_stu_num`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?t_l_m_id,?tea_id,?leave_type,?leave_start_date,?leave_start_time,?leave_end_date,?leave_end_time,?leave_word_day,?tea_stu_num,?remark,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?t_l_m_id,?tea_id,?leave_type,?leave_start_date,?leave_start_time,?leave_end_date,?leave_end_time,?leave_word_day,?tea_stu_num,?remark,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_tea_leave_management">
-        update tea_leave_management set `t_l_m_id`=?t_l_m_id,`tea_id`=?tea_id,`leave_type`=?leave_type,`leave_start_date`=?leave_start_date,`leave_start_time`=?leave_start_time,`leave_end_date`=?leave_end_date,`leave_end_time`=?leave_end_time,`leave_word_day`=?leave_word_day,`tea_stu_num`=?tea_stu_num,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_tea_leave_management">
-        delete from tea_leave_management
+        update tea_leave_management set `t_l_m_id`=?t_l_m_id,`tea_id`=?tea_id,`leave_type`=?leave_type,`leave_start_date`=?leave_start_date,`leave_start_time`=?leave_start_time,`leave_end_date`=?leave_end_date,`leave_end_time`=?leave_end_time,`leave_word_day`=?leave_word_day,`tea_stu_num`=?tea_stu_num,`remark`=?remark,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_tea_leave_management">
+        delete from tea_leave_management where id =?id
+    </sql>
     <sql id="selectone_tea_leave_management">
-        select `t_l_m_id`,`tea_id`,`leave_type`,`leave_start_date`,`leave_start_time`,`leave_end_date`,`leave_end_time`,`leave_word_day`,`tea_stu_num`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from tea_leave_management
-		where  id =?id
+        select `t_l_m_id`,`tea_id`,`leave_type`,`leave_start_date`,`leave_start_time`,`leave_end_date`,`leave_end_time`,`leave_word_day`,`tea_stu_num`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from tea_leave_management where id =?id
     </sql>
     <sql id="selectall_tea_leave_management">
-        select `t_l_m_id`,`tea_id`,`leave_type`,`leave_start_date`,`leave_start_time`,`leave_end_date`,`leave_end_time`,`leave_word_day`,`tea_stu_num`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from tea_leave_management
+        select `t_l_m_id`,`tea_id`,`leave_type`,`leave_start_date`,`leave_start_time`,`leave_end_date`,`leave_end_time`,`leave_word_day`,`tea_stu_num`,`remark`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from tea_leave_management
     </sql>
 </sqlMap>

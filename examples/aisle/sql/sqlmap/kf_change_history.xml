@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_kf_change_history">
         insert into kf_change_history
-		(`k_c_h_id`,`pk_sc`,`pk_old_kf`,`pk_new_kf`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`k_c_h_id`,`pk_sc`,`pk_old_kf`,`pk_new_kf`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?k_c_h_id,?pk_sc,?pk_old_kf,?pk_new_kf,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?k_c_h_id,?pk_sc,?pk_old_kf,?pk_new_kf,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_kf_change_history">
-        update kf_change_history set `k_c_h_id`=?k_c_h_id,`pk_sc`=?pk_sc,`pk_old_kf`=?pk_old_kf,`pk_new_kf`=?pk_new_kf,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_kf_change_history">
-        delete from kf_change_history
+        update kf_change_history set `k_c_h_id`=?k_c_h_id,`pk_sc`=?pk_sc,`pk_old_kf`=?pk_old_kf,`pk_new_kf`=?pk_new_kf,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_kf_change_history">
+        delete from kf_change_history where id =?id
+    </sql>
     <sql id="selectone_kf_change_history">
-        select `k_c_h_id`,`pk_sc`,`pk_old_kf`,`pk_new_kf`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from kf_change_history
-		where  id =?id
+        select `k_c_h_id`,`pk_sc`,`pk_old_kf`,`pk_new_kf`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from kf_change_history where id =?id
     </sql>
     <sql id="selectall_kf_change_history">
-        select `k_c_h_id`,`pk_sc`,`pk_old_kf`,`pk_new_kf`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from kf_change_history
+        select `k_c_h_id`,`pk_sc`,`pk_old_kf`,`pk_new_kf`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from kf_change_history
     </sql>
 </sqlMap>

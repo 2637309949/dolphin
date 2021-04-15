@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_lg_classtype">
         insert into lg_classtype
-		(`l_c_id`,`lg_id`,`ct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fs_id`)
+		(`l_c_id`,`lg_id`,`ct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fs_id`)
 		values
-		(?l_c_id,?lg_id,?ct_id,?creater,?create_date,?updater,?update_date,?isdelete,?fs_id)
+		(?l_c_id,?lg_id,?ct_id,?creater,?create_date,?updater,?update_date,?is_delete,?fs_id)
     </sql>
     <sql id="update_lg_classtype">
-        update lg_classtype set `l_c_id`=?l_c_id,`lg_id`=?lg_id,`ct_id`=?ct_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`fs_id`=?fs_id
-		where  id =?id
-    </sql>
-    <sql id="delete_lg_classtype">
-        delete from lg_classtype
+        update lg_classtype set `l_c_id`=?l_c_id,`lg_id`=?lg_id,`ct_id`=?ct_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`fs_id`=?fs_id
 		where id =?id
     </sql>
+    <sql id="deleteone_lg_classtype">
+        delete from lg_classtype where id =?id
+    </sql>
     <sql id="selectone_lg_classtype">
-        select `l_c_id`,`lg_id`,`ct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fs_id` from lg_classtype
-		where  id =?id
+        select `l_c_id`,`lg_id`,`ct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fs_id` from lg_classtype where id =?id
     </sql>
     <sql id="selectall_lg_classtype">
-        select `l_c_id`,`lg_id`,`ct_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`fs_id` from lg_classtype
+        select `l_c_id`,`lg_id`,`ct_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`fs_id` from lg_classtype
     </sql>
 </sqlMap>

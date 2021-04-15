@@ -8,15 +8,13 @@
     </sql>
     <sql id="update_system_notice">
         update system_notice set `sysn_id`=?sysn_id,`sysn_name`=?sysn_name,`sysn_content`=?sysn_content,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date
-		where  id =?id
-    </sql>
-    <sql id="delete_system_notice">
-        delete from system_notice
 		where id =?id
     </sql>
+    <sql id="deleteone_system_notice">
+        delete from system_notice where id =?id
+    </sql>
     <sql id="selectone_system_notice">
-        select `sysn_id`,`sysn_name`,`sysn_content`,`creater`,`create_date`,`updater`,`update_date` from system_notice
-		where  id =?id
+        select `sysn_id`,`sysn_name`,`sysn_content`,`creater`,`create_date`,`updater`,`update_date` from system_notice where id =?id
     </sql>
     <sql id="selectall_system_notice">
         select `sysn_id`,`sysn_name`,`sysn_content`,`creater`,`create_date`,`updater`,`update_date` from system_notice

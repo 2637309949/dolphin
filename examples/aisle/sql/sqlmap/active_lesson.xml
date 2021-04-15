@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_active_lesson">
         insert into active_lesson
-		(`a_l_id`,`active_name`,`start_time`,`end_time`,`active_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tl_date`,`room_id`,`sch_id`,`active_type`,`reported_number`,`note`,`age_group`,`before_id`,`tk_type`)
+		(`a_l_id`,`active_name`,`start_time`,`end_time`,`active_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tl_date`,`room_id`,`sch_id`,`active_type`,`reported_number`,`note`,`age_group`,`before_id`,`tk_type`)
 		values
-		(?a_l_id,?active_name,?start_time,?end_time,?active_state,?max_num,?tea_id,?creater,?create_date,?updater,?update_date,?isdelete,?tl_date,?room_id,?sch_id,?active_type,?reported_number,?note,?age_group,?before_id,?tk_type)
+		(?a_l_id,?active_name,?start_time,?end_time,?active_state,?max_num,?tea_id,?creater,?create_date,?updater,?update_date,?is_delete,?tl_date,?room_id,?sch_id,?active_type,?reported_number,?note,?age_group,?before_id,?tk_type)
     </sql>
     <sql id="update_active_lesson">
-        update active_lesson set `a_l_id`=?a_l_id,`active_name`=?active_name,`start_time`=?start_time,`end_time`=?end_time,`active_state`=?active_state,`max_num`=?max_num,`tea_id`=?tea_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`tl_date`=?tl_date,`room_id`=?room_id,`sch_id`=?sch_id,`active_type`=?active_type,`reported_number`=?reported_number,`note`=?note,`age_group`=?age_group,`before_id`=?before_id,`tk_type`=?tk_type
-		where  id =?id
-    </sql>
-    <sql id="delete_active_lesson">
-        delete from active_lesson
+        update active_lesson set `a_l_id`=?a_l_id,`active_name`=?active_name,`start_time`=?start_time,`end_time`=?end_time,`active_state`=?active_state,`max_num`=?max_num,`tea_id`=?tea_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`tl_date`=?tl_date,`room_id`=?room_id,`sch_id`=?sch_id,`active_type`=?active_type,`reported_number`=?reported_number,`note`=?note,`age_group`=?age_group,`before_id`=?before_id,`tk_type`=?tk_type
 		where id =?id
     </sql>
+    <sql id="deleteone_active_lesson">
+        delete from active_lesson where id =?id
+    </sql>
     <sql id="selectone_active_lesson">
-        select `a_l_id`,`active_name`,`start_time`,`end_time`,`active_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tl_date`,`room_id`,`sch_id`,`active_type`,`reported_number`,`note`,`age_group`,`before_id`,`tk_type` from active_lesson
-		where  id =?id
+        select `a_l_id`,`active_name`,`start_time`,`end_time`,`active_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tl_date`,`room_id`,`sch_id`,`active_type`,`reported_number`,`note`,`age_group`,`before_id`,`tk_type` from active_lesson where id =?id
     </sql>
     <sql id="selectall_active_lesson">
-        select `a_l_id`,`active_name`,`start_time`,`end_time`,`active_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tl_date`,`room_id`,`sch_id`,`active_type`,`reported_number`,`note`,`age_group`,`before_id`,`tk_type` from active_lesson
+        select `a_l_id`,`active_name`,`start_time`,`end_time`,`active_state`,`max_num`,`tea_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tl_date`,`room_id`,`sch_id`,`active_type`,`reported_number`,`note`,`age_group`,`before_id`,`tk_type` from active_lesson
     </sql>
 </sqlMap>

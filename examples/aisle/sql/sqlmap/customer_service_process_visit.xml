@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_customer_service_process_visit">
         insert into customer_service_process_visit
-		(`c_s_p_v_id`,`stu_id`,`visit_date`,`finish_date`,`feedback_problems`,`unfinished_reason`,`css_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`c_s_p_v_id`,`stu_id`,`visit_date`,`finish_date`,`feedback_problems`,`unfinished_reason`,`css_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?c_s_p_v_id,?stu_id,?visit_date,?finish_date,?feedback_problems,?unfinished_reason,?css_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?c_s_p_v_id,?stu_id,?visit_date,?finish_date,?feedback_problems,?unfinished_reason,?css_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_customer_service_process_visit">
-        update customer_service_process_visit set `c_s_p_v_id`=?c_s_p_v_id,`stu_id`=?stu_id,`visit_date`=?visit_date,`finish_date`=?finish_date,`feedback_problems`=?feedback_problems,`unfinished_reason`=?unfinished_reason,`css_id`=?css_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_customer_service_process_visit">
-        delete from customer_service_process_visit
+        update customer_service_process_visit set `c_s_p_v_id`=?c_s_p_v_id,`stu_id`=?stu_id,`visit_date`=?visit_date,`finish_date`=?finish_date,`feedback_problems`=?feedback_problems,`unfinished_reason`=?unfinished_reason,`css_id`=?css_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_customer_service_process_visit">
+        delete from customer_service_process_visit where id =?id
+    </sql>
     <sql id="selectone_customer_service_process_visit">
-        select `c_s_p_v_id`,`stu_id`,`visit_date`,`finish_date`,`feedback_problems`,`unfinished_reason`,`css_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from customer_service_process_visit
-		where  id =?id
+        select `c_s_p_v_id`,`stu_id`,`visit_date`,`finish_date`,`feedback_problems`,`unfinished_reason`,`css_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from customer_service_process_visit where id =?id
     </sql>
     <sql id="selectall_customer_service_process_visit">
-        select `c_s_p_v_id`,`stu_id`,`visit_date`,`finish_date`,`feedback_problems`,`unfinished_reason`,`css_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from customer_service_process_visit
+        select `c_s_p_v_id`,`stu_id`,`visit_date`,`finish_date`,`feedback_problems`,`unfinished_reason`,`css_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from customer_service_process_visit
     </sql>
 </sqlMap>

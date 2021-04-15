@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_tm_level">
         insert into tm_level
-		(`tm_level_id`,`tm_id`,`level_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`tm_level_id`,`tm_id`,`level_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?tm_level_id,?tm_id,?level_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?tm_level_id,?tm_id,?level_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_tm_level">
-        update tm_level set `tm_level_id`=?tm_level_id,`tm_id`=?tm_id,`level_id`=?level_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_tm_level">
-        delete from tm_level
+        update tm_level set `tm_level_id`=?tm_level_id,`tm_id`=?tm_id,`level_id`=?level_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_tm_level">
+        delete from tm_level where id =?id
+    </sql>
     <sql id="selectone_tm_level">
-        select `tm_level_id`,`tm_id`,`level_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from tm_level
-		where  id =?id
+        select `tm_level_id`,`tm_id`,`level_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from tm_level where id =?id
     </sql>
     <sql id="selectall_tm_level">
-        select `tm_level_id`,`tm_id`,`level_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from tm_level
+        select `tm_level_id`,`tm_id`,`level_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from tm_level
     </sql>
 </sqlMap>

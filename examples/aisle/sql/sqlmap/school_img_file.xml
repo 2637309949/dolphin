@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_school_img_file">
         insert into school_img_file
-		(`s_i_f_id`,`create_date`,`update_date`,`sch_id`,`file_id`,`creater`,`updater`,`isdelete`)
+		(`s_i_f_id`,`create_date`,`update_date`,`sch_id`,`file_id`,`creater`,`updater`,`is_delete`)
 		values
-		(?s_i_f_id,?create_date,?update_date,?sch_id,?file_id,?creater,?updater,?isdelete)
+		(?s_i_f_id,?create_date,?update_date,?sch_id,?file_id,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_school_img_file">
-        update school_img_file set `s_i_f_id`=?s_i_f_id,`create_date`=?create_date,`update_date`=?update_date,`sch_id`=?sch_id,`file_id`=?file_id,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_school_img_file">
-        delete from school_img_file
+        update school_img_file set `s_i_f_id`=?s_i_f_id,`create_date`=?create_date,`update_date`=?update_date,`sch_id`=?sch_id,`file_id`=?file_id,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_school_img_file">
+        delete from school_img_file where id =?id
+    </sql>
     <sql id="selectone_school_img_file">
-        select `s_i_f_id`,`create_date`,`update_date`,`sch_id`,`file_id`,`creater`,`updater`,`isdelete` from school_img_file
-		where  id =?id
+        select `s_i_f_id`,`create_date`,`update_date`,`sch_id`,`file_id`,`creater`,`updater`,`is_delete` from school_img_file where id =?id
     </sql>
     <sql id="selectall_school_img_file">
-        select `s_i_f_id`,`create_date`,`update_date`,`sch_id`,`file_id`,`creater`,`updater`,`isdelete` from school_img_file
+        select `s_i_f_id`,`create_date`,`update_date`,`sch_id`,`file_id`,`creater`,`updater`,`is_delete` from school_img_file
     </sql>
 </sqlMap>

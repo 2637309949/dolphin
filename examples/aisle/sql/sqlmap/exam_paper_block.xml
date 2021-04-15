@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_exam_paper_block">
         insert into exam_paper_block
-		(`e_p_b_id`,`create_date`,`update_date`,`ep_id`,`block_name`,`block_time_length`,`block_ques_num`,`block_score`,`block_order`,`block_remark`,`creater`,`updater`,`isdelete`)
+		(`e_p_b_id`,`create_date`,`update_date`,`ep_id`,`block_name`,`block_time_length`,`block_ques_num`,`block_score`,`block_order`,`block_remark`,`creater`,`updater`,`is_delete`)
 		values
-		(?e_p_b_id,?create_date,?update_date,?ep_id,?block_name,?block_time_length,?block_ques_num,?block_score,?block_order,?block_remark,?creater,?updater,?isdelete)
+		(?e_p_b_id,?create_date,?update_date,?ep_id,?block_name,?block_time_length,?block_ques_num,?block_score,?block_order,?block_remark,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_exam_paper_block">
-        update exam_paper_block set `e_p_b_id`=?e_p_b_id,`create_date`=?create_date,`update_date`=?update_date,`ep_id`=?ep_id,`block_name`=?block_name,`block_time_length`=?block_time_length,`block_ques_num`=?block_ques_num,`block_score`=?block_score,`block_order`=?block_order,`block_remark`=?block_remark,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_exam_paper_block">
-        delete from exam_paper_block
+        update exam_paper_block set `e_p_b_id`=?e_p_b_id,`create_date`=?create_date,`update_date`=?update_date,`ep_id`=?ep_id,`block_name`=?block_name,`block_time_length`=?block_time_length,`block_ques_num`=?block_ques_num,`block_score`=?block_score,`block_order`=?block_order,`block_remark`=?block_remark,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_exam_paper_block">
+        delete from exam_paper_block where id =?id
+    </sql>
     <sql id="selectone_exam_paper_block">
-        select `e_p_b_id`,`create_date`,`update_date`,`ep_id`,`block_name`,`block_time_length`,`block_ques_num`,`block_score`,`block_order`,`block_remark`,`creater`,`updater`,`isdelete` from exam_paper_block
-		where  id =?id
+        select `e_p_b_id`,`create_date`,`update_date`,`ep_id`,`block_name`,`block_time_length`,`block_ques_num`,`block_score`,`block_order`,`block_remark`,`creater`,`updater`,`is_delete` from exam_paper_block where id =?id
     </sql>
     <sql id="selectall_exam_paper_block">
-        select `e_p_b_id`,`create_date`,`update_date`,`ep_id`,`block_name`,`block_time_length`,`block_ques_num`,`block_score`,`block_order`,`block_remark`,`creater`,`updater`,`isdelete` from exam_paper_block
+        select `e_p_b_id`,`create_date`,`update_date`,`ep_id`,`block_name`,`block_time_length`,`block_ques_num`,`block_score`,`block_order`,`block_remark`,`creater`,`updater`,`is_delete` from exam_paper_block
     </sql>
 </sqlMap>

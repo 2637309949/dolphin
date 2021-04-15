@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_sale_school">
         insert into sale_school
-		(`s_s_id`,`os_id`,`sch_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`s_s_id`,`os_id`,`sch_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?s_s_id,?os_id,?sch_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?s_s_id,?os_id,?sch_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_sale_school">
-        update sale_school set `s_s_id`=?s_s_id,`os_id`=?os_id,`sch_id`=?sch_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_sale_school">
-        delete from sale_school
+        update sale_school set `s_s_id`=?s_s_id,`os_id`=?os_id,`sch_id`=?sch_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_sale_school">
+        delete from sale_school where id =?id
+    </sql>
     <sql id="selectone_sale_school">
-        select `s_s_id`,`os_id`,`sch_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from sale_school
-		where  id =?id
+        select `s_s_id`,`os_id`,`sch_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from sale_school where id =?id
     </sql>
     <sql id="selectall_sale_school">
-        select `s_s_id`,`os_id`,`sch_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from sale_school
+        select `s_s_id`,`os_id`,`sch_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from sale_school
     </sql>
 </sqlMap>

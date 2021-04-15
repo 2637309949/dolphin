@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stu_score">
         insert into stu_score
-		(`stu_score_id`,`stu_id`,`of_id`,`tm_id`,`level_id`,`unit_id`,`test_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`all_score`,`user_id`,`tauser_id`)
+		(`stu_score_id`,`stu_id`,`of_id`,`tm_id`,`level_id`,`unit_id`,`test_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`all_score`,`user_id`,`tauser_id`)
 		values
-		(?stu_score_id,?stu_id,?of_id,?tm_id,?level_id,?unit_id,?test_time,?creater,?create_date,?updater,?update_date,?isdelete,?all_score,?user_id,?tauser_id)
+		(?stu_score_id,?stu_id,?of_id,?tm_id,?level_id,?unit_id,?test_time,?creater,?create_date,?updater,?update_date,?is_delete,?all_score,?user_id,?tauser_id)
     </sql>
     <sql id="update_stu_score">
-        update stu_score set `stu_score_id`=?stu_score_id,`stu_id`=?stu_id,`of_id`=?of_id,`tm_id`=?tm_id,`level_id`=?level_id,`unit_id`=?unit_id,`test_time`=?test_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`all_score`=?all_score,`user_id`=?user_id,`tauser_id`=?tauser_id
-		where  id =?id
-    </sql>
-    <sql id="delete_stu_score">
-        delete from stu_score
+        update stu_score set `stu_score_id`=?stu_score_id,`stu_id`=?stu_id,`of_id`=?of_id,`tm_id`=?tm_id,`level_id`=?level_id,`unit_id`=?unit_id,`test_time`=?test_time,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`all_score`=?all_score,`user_id`=?user_id,`tauser_id`=?tauser_id
 		where id =?id
     </sql>
+    <sql id="deleteone_stu_score">
+        delete from stu_score where id =?id
+    </sql>
     <sql id="selectone_stu_score">
-        select `stu_score_id`,`stu_id`,`of_id`,`tm_id`,`level_id`,`unit_id`,`test_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`all_score`,`user_id`,`tauser_id` from stu_score
-		where  id =?id
+        select `stu_score_id`,`stu_id`,`of_id`,`tm_id`,`level_id`,`unit_id`,`test_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`all_score`,`user_id`,`tauser_id` from stu_score where id =?id
     </sql>
     <sql id="selectall_stu_score">
-        select `stu_score_id`,`stu_id`,`of_id`,`tm_id`,`level_id`,`unit_id`,`test_time`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`all_score`,`user_id`,`tauser_id` from stu_score
+        select `stu_score_id`,`stu_id`,`of_id`,`tm_id`,`level_id`,`unit_id`,`test_time`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`all_score`,`user_id`,`tauser_id` from stu_score
     </sql>
 </sqlMap>

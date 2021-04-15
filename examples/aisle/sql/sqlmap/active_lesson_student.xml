@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_active_lesson_student">
         insert into active_lesson_student
-		(`a_l_s_id`,`active_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tls_state`,`sv_id`,`iv_id`)
+		(`a_l_s_id`,`active_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tls_state`,`sv_id`,`iv_id`)
 		values
-		(?a_l_s_id,?active_id,?stu_id,?creater,?create_date,?updater,?update_date,?isdelete,?tls_state,?sv_id,?iv_id)
+		(?a_l_s_id,?active_id,?stu_id,?creater,?create_date,?updater,?update_date,?is_delete,?tls_state,?sv_id,?iv_id)
     </sql>
     <sql id="update_active_lesson_student">
-        update active_lesson_student set `a_l_s_id`=?a_l_s_id,`active_id`=?active_id,`stu_id`=?stu_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`tls_state`=?tls_state,`sv_id`=?sv_id,`iv_id`=?iv_id
-		where  id =?id
-    </sql>
-    <sql id="delete_active_lesson_student">
-        delete from active_lesson_student
+        update active_lesson_student set `a_l_s_id`=?a_l_s_id,`active_id`=?active_id,`stu_id`=?stu_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`tls_state`=?tls_state,`sv_id`=?sv_id,`iv_id`=?iv_id
 		where id =?id
     </sql>
+    <sql id="deleteone_active_lesson_student">
+        delete from active_lesson_student where id =?id
+    </sql>
     <sql id="selectone_active_lesson_student">
-        select `a_l_s_id`,`active_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tls_state`,`sv_id`,`iv_id` from active_lesson_student
-		where  id =?id
+        select `a_l_s_id`,`active_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tls_state`,`sv_id`,`iv_id` from active_lesson_student where id =?id
     </sql>
     <sql id="selectall_active_lesson_student">
-        select `a_l_s_id`,`active_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`tls_state`,`sv_id`,`iv_id` from active_lesson_student
+        select `a_l_s_id`,`active_id`,`stu_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`tls_state`,`sv_id`,`iv_id` from active_lesson_student
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_date_table">
         insert into date_table
-		(`date_table_id`,`dt_date`,`dt_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`week`,`isholiday`)
+		(`date_table_id`,`dt_date`,`dt_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`week`,`isholiday`)
 		values
-		(?date_table_id,?dt_date,?dt_desc,?creater,?create_date,?updater,?update_date,?isdelete,?week,?isholiday)
+		(?date_table_id,?dt_date,?dt_desc,?creater,?create_date,?updater,?update_date,?is_delete,?week,?isholiday)
     </sql>
     <sql id="update_date_table">
-        update date_table set `date_table_id`=?date_table_id,`dt_date`=?dt_date,`dt_desc`=?dt_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`week`=?week,`isholiday`=?isholiday
-		where  id =?id
-    </sql>
-    <sql id="delete_date_table">
-        delete from date_table
+        update date_table set `date_table_id`=?date_table_id,`dt_date`=?dt_date,`dt_desc`=?dt_desc,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`week`=?week,`isholiday`=?isholiday
 		where id =?id
     </sql>
+    <sql id="deleteone_date_table">
+        delete from date_table where id =?id
+    </sql>
     <sql id="selectone_date_table">
-        select `date_table_id`,`dt_date`,`dt_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`week`,`isholiday` from date_table
-		where  id =?id
+        select `date_table_id`,`dt_date`,`dt_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`week`,`isholiday` from date_table where id =?id
     </sql>
     <sql id="selectall_date_table">
-        select `date_table_id`,`dt_date`,`dt_desc`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`week`,`isholiday` from date_table
+        select `date_table_id`,`dt_date`,`dt_desc`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`week`,`isholiday` from date_table
     </sql>
 </sqlMap>

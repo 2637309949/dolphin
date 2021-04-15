@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_loginlanguageset">
         insert into loginlanguageset
-		(`t_224_0`,`language_name`,`isdelete`)
+		(`t_224_0`,`language_name`,`is_delete`)
 		values
-		(?t_224_0,?language_name,?isdelete)
+		(?t_224_0,?language_name,?is_delete)
     </sql>
     <sql id="update_loginlanguageset">
-        update loginlanguageset set `t_224_0`=?t_224_0,`language_name`=?language_name,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_loginlanguageset">
-        delete from loginlanguageset
+        update loginlanguageset set `t_224_0`=?t_224_0,`language_name`=?language_name,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_loginlanguageset">
+        delete from loginlanguageset where id =?id
+    </sql>
     <sql id="selectone_loginlanguageset">
-        select `t_224_0`,`language_name`,`isdelete` from loginlanguageset
-		where  id =?id
+        select `t_224_0`,`language_name`,`is_delete` from loginlanguageset where id =?id
     </sql>
     <sql id="selectall_loginlanguageset">
-        select `t_224_0`,`language_name`,`isdelete` from loginlanguageset
+        select `t_224_0`,`language_name`,`is_delete` from loginlanguageset
     </sql>
 </sqlMap>

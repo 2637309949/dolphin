@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_xy_hour_record">
         insert into xy_hour_record
-		(`x_h_r_id`,`pk_stu`,`ct_name`,`surplus_hour`,`final_money`,`of_start_date`,`of_end_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`of_batch`,`ct_course_type`,`of_create_date`,`pk_of`,`sct_ids`)
+		(`x_h_r_id`,`pk_stu`,`ct_name`,`surplus_hour`,`final_money`,`of_start_date`,`of_end_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`of_batch`,`ct_course_type`,`of_create_date`,`pk_of`,`sct_ids`)
 		values
-		(?x_h_r_id,?pk_stu,?ct_name,?surplus_hour,?final_money,?of_start_date,?of_end_date,?creater,?create_date,?updater,?update_date,?isdelete,?of_batch,?ct_course_type,?of_create_date,?pk_of,?sct_ids)
+		(?x_h_r_id,?pk_stu,?ct_name,?surplus_hour,?final_money,?of_start_date,?of_end_date,?creater,?create_date,?updater,?update_date,?is_delete,?of_batch,?ct_course_type,?of_create_date,?pk_of,?sct_ids)
     </sql>
     <sql id="update_xy_hour_record">
-        update xy_hour_record set `x_h_r_id`=?x_h_r_id,`pk_stu`=?pk_stu,`ct_name`=?ct_name,`surplus_hour`=?surplus_hour,`final_money`=?final_money,`of_start_date`=?of_start_date,`of_end_date`=?of_end_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`of_batch`=?of_batch,`ct_course_type`=?ct_course_type,`of_create_date`=?of_create_date,`pk_of`=?pk_of,`sct_ids`=?sct_ids
-		where  id =?id
-    </sql>
-    <sql id="delete_xy_hour_record">
-        delete from xy_hour_record
+        update xy_hour_record set `x_h_r_id`=?x_h_r_id,`pk_stu`=?pk_stu,`ct_name`=?ct_name,`surplus_hour`=?surplus_hour,`final_money`=?final_money,`of_start_date`=?of_start_date,`of_end_date`=?of_end_date,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`of_batch`=?of_batch,`ct_course_type`=?ct_course_type,`of_create_date`=?of_create_date,`pk_of`=?pk_of,`sct_ids`=?sct_ids
 		where id =?id
     </sql>
+    <sql id="deleteone_xy_hour_record">
+        delete from xy_hour_record where id =?id
+    </sql>
     <sql id="selectone_xy_hour_record">
-        select `x_h_r_id`,`pk_stu`,`ct_name`,`surplus_hour`,`final_money`,`of_start_date`,`of_end_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`of_batch`,`ct_course_type`,`of_create_date`,`pk_of`,`sct_ids` from xy_hour_record
-		where  id =?id
+        select `x_h_r_id`,`pk_stu`,`ct_name`,`surplus_hour`,`final_money`,`of_start_date`,`of_end_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`of_batch`,`ct_course_type`,`of_create_date`,`pk_of`,`sct_ids` from xy_hour_record where id =?id
     </sql>
     <sql id="selectall_xy_hour_record">
-        select `x_h_r_id`,`pk_stu`,`ct_name`,`surplus_hour`,`final_money`,`of_start_date`,`of_end_date`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`of_batch`,`ct_course_type`,`of_create_date`,`pk_of`,`sct_ids` from xy_hour_record
+        select `x_h_r_id`,`pk_stu`,`ct_name`,`surplus_hour`,`final_money`,`of_start_date`,`of_end_date`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`of_batch`,`ct_course_type`,`of_create_date`,`pk_of`,`sct_ids` from xy_hour_record
     </sql>
 </sqlMap>

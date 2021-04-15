@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_language_pack_city">
         insert into language_pack_city
-		(`l_p_c_id`,`lp_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`l_p_c_id`,`lp_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?l_p_c_id,?lp_id,?city_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?l_p_c_id,?lp_id,?city_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_language_pack_city">
-        update language_pack_city set `l_p_c_id`=?l_p_c_id,`lp_id`=?lp_id,`city_id`=?city_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_language_pack_city">
-        delete from language_pack_city
+        update language_pack_city set `l_p_c_id`=?l_p_c_id,`lp_id`=?lp_id,`city_id`=?city_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_language_pack_city">
+        delete from language_pack_city where id =?id
+    </sql>
     <sql id="selectone_language_pack_city">
-        select `l_p_c_id`,`lp_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from language_pack_city
-		where  id =?id
+        select `l_p_c_id`,`lp_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from language_pack_city where id =?id
     </sql>
     <sql id="selectall_language_pack_city">
-        select `l_p_c_id`,`lp_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from language_pack_city
+        select `l_p_c_id`,`lp_id`,`city_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from language_pack_city
     </sql>
 </sqlMap>

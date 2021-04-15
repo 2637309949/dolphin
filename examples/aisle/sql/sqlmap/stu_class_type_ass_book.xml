@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_stu_class_type_ass_book">
         insert into stu_class_type_ass_book
-		(`s_c_t_a_b_id`,`sct_id`,`ab_id`,`ab_source`,`ab_price`,`if_receive`,`ref_price`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`ref_moeny`,`buy_num`,`of_id`)
+		(`s_c_t_a_b_id`,`sct_id`,`ab_id`,`ab_source`,`ab_price`,`if_receive`,`ref_price`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`ref_moeny`,`buy_num`,`of_id`)
 		values
-		(?s_c_t_a_b_id,?sct_id,?ab_id,?ab_source,?ab_price,?if_receive,?ref_price,?creater,?create_date,?updater,?update_date,?isdelete,?ref_moeny,?buy_num,?of_id)
+		(?s_c_t_a_b_id,?sct_id,?ab_id,?ab_source,?ab_price,?if_receive,?ref_price,?creater,?create_date,?updater,?update_date,?is_delete,?ref_moeny,?buy_num,?of_id)
     </sql>
     <sql id="update_stu_class_type_ass_book">
-        update stu_class_type_ass_book set `s_c_t_a_b_id`=?s_c_t_a_b_id,`sct_id`=?sct_id,`ab_id`=?ab_id,`ab_source`=?ab_source,`ab_price`=?ab_price,`if_receive`=?if_receive,`ref_price`=?ref_price,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`ref_moeny`=?ref_moeny,`buy_num`=?buy_num,`of_id`=?of_id
-		where  id =?id
-    </sql>
-    <sql id="delete_stu_class_type_ass_book">
-        delete from stu_class_type_ass_book
+        update stu_class_type_ass_book set `s_c_t_a_b_id`=?s_c_t_a_b_id,`sct_id`=?sct_id,`ab_id`=?ab_id,`ab_source`=?ab_source,`ab_price`=?ab_price,`if_receive`=?if_receive,`ref_price`=?ref_price,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`ref_moeny`=?ref_moeny,`buy_num`=?buy_num,`of_id`=?of_id
 		where id =?id
     </sql>
+    <sql id="deleteone_stu_class_type_ass_book">
+        delete from stu_class_type_ass_book where id =?id
+    </sql>
     <sql id="selectone_stu_class_type_ass_book">
-        select `s_c_t_a_b_id`,`sct_id`,`ab_id`,`ab_source`,`ab_price`,`if_receive`,`ref_price`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`ref_moeny`,`buy_num`,`of_id` from stu_class_type_ass_book
-		where  id =?id
+        select `s_c_t_a_b_id`,`sct_id`,`ab_id`,`ab_source`,`ab_price`,`if_receive`,`ref_price`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`ref_moeny`,`buy_num`,`of_id` from stu_class_type_ass_book where id =?id
     </sql>
     <sql id="selectall_stu_class_type_ass_book">
-        select `s_c_t_a_b_id`,`sct_id`,`ab_id`,`ab_source`,`ab_price`,`if_receive`,`ref_price`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`ref_moeny`,`buy_num`,`of_id` from stu_class_type_ass_book
+        select `s_c_t_a_b_id`,`sct_id`,`ab_id`,`ab_source`,`ab_price`,`if_receive`,`ref_price`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`ref_moeny`,`buy_num`,`of_id` from stu_class_type_ass_book
     </sql>
 </sqlMap>

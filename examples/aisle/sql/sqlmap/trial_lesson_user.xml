@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_trial_lesson_user">
         insert into trial_lesson_user
-		(`t_l_u_id`,`tl_id`,`user_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`t_l_u_id`,`tl_id`,`user_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?t_l_u_id,?tl_id,?user_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?t_l_u_id,?tl_id,?user_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_trial_lesson_user">
-        update trial_lesson_user set `t_l_u_id`=?t_l_u_id,`tl_id`=?tl_id,`user_id`=?user_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_trial_lesson_user">
-        delete from trial_lesson_user
+        update trial_lesson_user set `t_l_u_id`=?t_l_u_id,`tl_id`=?tl_id,`user_id`=?user_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_trial_lesson_user">
+        delete from trial_lesson_user where id =?id
+    </sql>
     <sql id="selectone_trial_lesson_user">
-        select `t_l_u_id`,`tl_id`,`user_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from trial_lesson_user
-		where  id =?id
+        select `t_l_u_id`,`tl_id`,`user_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from trial_lesson_user where id =?id
     </sql>
     <sql id="selectall_trial_lesson_user">
-        select `t_l_u_id`,`tl_id`,`user_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from trial_lesson_user
+        select `t_l_u_id`,`tl_id`,`user_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from trial_lesson_user
     </sql>
 </sqlMap>

@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_exam_paper_introduction">
         insert into exam_paper_introduction
-		(`e_p_i_id`,`create_date`,`update_date`,`ep_id`,`epi_title`,`epi_detail`,`epi_key`,`epi_order`,`creater`,`updater`,`isdelete`)
+		(`e_p_i_id`,`create_date`,`update_date`,`ep_id`,`epi_title`,`epi_detail`,`epi_key`,`epi_order`,`creater`,`updater`,`is_delete`)
 		values
-		(?e_p_i_id,?create_date,?update_date,?ep_id,?epi_title,?epi_detail,?epi_key,?epi_order,?creater,?updater,?isdelete)
+		(?e_p_i_id,?create_date,?update_date,?ep_id,?epi_title,?epi_detail,?epi_key,?epi_order,?creater,?updater,?is_delete)
     </sql>
     <sql id="update_exam_paper_introduction">
-        update exam_paper_introduction set `e_p_i_id`=?e_p_i_id,`create_date`=?create_date,`update_date`=?update_date,`ep_id`=?ep_id,`epi_title`=?epi_title,`epi_detail`=?epi_detail,`epi_key`=?epi_key,`epi_order`=?epi_order,`creater`=?creater,`updater`=?updater,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_exam_paper_introduction">
-        delete from exam_paper_introduction
+        update exam_paper_introduction set `e_p_i_id`=?e_p_i_id,`create_date`=?create_date,`update_date`=?update_date,`ep_id`=?ep_id,`epi_title`=?epi_title,`epi_detail`=?epi_detail,`epi_key`=?epi_key,`epi_order`=?epi_order,`creater`=?creater,`updater`=?updater,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_exam_paper_introduction">
+        delete from exam_paper_introduction where id =?id
+    </sql>
     <sql id="selectone_exam_paper_introduction">
-        select `e_p_i_id`,`create_date`,`update_date`,`ep_id`,`epi_title`,`epi_detail`,`epi_key`,`epi_order`,`creater`,`updater`,`isdelete` from exam_paper_introduction
-		where  id =?id
+        select `e_p_i_id`,`create_date`,`update_date`,`ep_id`,`epi_title`,`epi_detail`,`epi_key`,`epi_order`,`creater`,`updater`,`is_delete` from exam_paper_introduction where id =?id
     </sql>
     <sql id="selectall_exam_paper_introduction">
-        select `e_p_i_id`,`create_date`,`update_date`,`ep_id`,`epi_title`,`epi_detail`,`epi_key`,`epi_order`,`creater`,`updater`,`isdelete` from exam_paper_introduction
+        select `e_p_i_id`,`create_date`,`update_date`,`ep_id`,`epi_title`,`epi_detail`,`epi_key`,`epi_order`,`creater`,`updater`,`is_delete` from exam_paper_introduction
     </sql>
 </sqlMap>

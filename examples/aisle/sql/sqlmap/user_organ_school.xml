@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_user_organ_school">
         insert into user_organ_school
-		(`u_o_s_id`,`user_id`,`os_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`)
+		(`u_o_s_id`,`user_id`,`os_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`)
 		values
-		(?u_o_s_id,?user_id,?os_id,?creater,?create_date,?updater,?update_date,?isdelete)
+		(?u_o_s_id,?user_id,?os_id,?creater,?create_date,?updater,?update_date,?is_delete)
     </sql>
     <sql id="update_user_organ_school">
-        update user_organ_school set `u_o_s_id`=?u_o_s_id,`user_id`=?user_id,`os_id`=?os_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete
-		where  id =?id
-    </sql>
-    <sql id="delete_user_organ_school">
-        delete from user_organ_school
+        update user_organ_school set `u_o_s_id`=?u_o_s_id,`user_id`=?user_id,`os_id`=?os_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete
 		where id =?id
     </sql>
+    <sql id="deleteone_user_organ_school">
+        delete from user_organ_school where id =?id
+    </sql>
     <sql id="selectone_user_organ_school">
-        select `u_o_s_id`,`user_id`,`os_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from user_organ_school
-		where  id =?id
+        select `u_o_s_id`,`user_id`,`os_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from user_organ_school where id =?id
     </sql>
     <sql id="selectall_user_organ_school">
-        select `u_o_s_id`,`user_id`,`os_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete` from user_organ_school
+        select `u_o_s_id`,`user_id`,`os_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete` from user_organ_school
     </sql>
 </sqlMap>

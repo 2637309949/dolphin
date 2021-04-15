@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_market_expend">
         insert into market_expend
-		(`m_e_id`,`market_id`,`expend_money`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`expend_type`)
+		(`m_e_id`,`market_id`,`expend_money`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`expend_type`)
 		values
-		(?m_e_id,?market_id,?expend_money,?remake,?creater,?create_date,?updater,?update_date,?isdelete,?expend_type)
+		(?m_e_id,?market_id,?expend_money,?remake,?creater,?create_date,?updater,?update_date,?is_delete,?expend_type)
     </sql>
     <sql id="update_market_expend">
-        update market_expend set `m_e_id`=?m_e_id,`market_id`=?market_id,`expend_money`=?expend_money,`remake`=?remake,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`expend_type`=?expend_type
-		where  id =?id
-    </sql>
-    <sql id="delete_market_expend">
-        delete from market_expend
+        update market_expend set `m_e_id`=?m_e_id,`market_id`=?market_id,`expend_money`=?expend_money,`remake`=?remake,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`expend_type`=?expend_type
 		where id =?id
     </sql>
+    <sql id="deleteone_market_expend">
+        delete from market_expend where id =?id
+    </sql>
     <sql id="selectone_market_expend">
-        select `m_e_id`,`market_id`,`expend_money`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`expend_type` from market_expend
-		where  id =?id
+        select `m_e_id`,`market_id`,`expend_money`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`expend_type` from market_expend where id =?id
     </sql>
     <sql id="selectall_market_expend">
-        select `m_e_id`,`market_id`,`expend_money`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`expend_type` from market_expend
+        select `m_e_id`,`market_id`,`expend_money`,`remake`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`expend_type` from market_expend
     </sql>
 </sqlMap>

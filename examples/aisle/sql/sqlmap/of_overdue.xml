@@ -2,23 +2,21 @@
 <sqlMap>
     <sql id="insert_of_overdue">
         insert into of_overdue
-		(`of_overdue_id`,`of_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`overdue_desc`)
+		(`of_overdue_id`,`of_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`overdue_desc`)
 		values
-		(?of_overdue_id,?of_id,?creater,?create_date,?updater,?update_date,?isdelete,?overdue_desc)
+		(?of_overdue_id,?of_id,?creater,?create_date,?updater,?update_date,?is_delete,?overdue_desc)
     </sql>
     <sql id="update_of_overdue">
-        update of_overdue set `of_overdue_id`=?of_overdue_id,`of_id`=?of_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`isdelete`=?isdelete,`overdue_desc`=?overdue_desc
-		where  id =?id
-    </sql>
-    <sql id="delete_of_overdue">
-        delete from of_overdue
+        update of_overdue set `of_overdue_id`=?of_overdue_id,`of_id`=?of_id,`creater`=?creater,`create_date`=?create_date,`updater`=?updater,`update_date`=?update_date,`is_delete`=?is_delete,`overdue_desc`=?overdue_desc
 		where id =?id
     </sql>
+    <sql id="deleteone_of_overdue">
+        delete from of_overdue where id =?id
+    </sql>
     <sql id="selectone_of_overdue">
-        select `of_overdue_id`,`of_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`overdue_desc` from of_overdue
-		where  id =?id
+        select `of_overdue_id`,`of_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`overdue_desc` from of_overdue where id =?id
     </sql>
     <sql id="selectall_of_overdue">
-        select `of_overdue_id`,`of_id`,`creater`,`create_date`,`updater`,`update_date`,`isdelete`,`overdue_desc` from of_overdue
+        select `of_overdue_id`,`of_id`,`creater`,`create_date`,`updater`,`update_date`,`is_delete`,`overdue_desc` from of_overdue
     </sql>
 </sqlMap>
