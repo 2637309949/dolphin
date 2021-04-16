@@ -41,7 +41,6 @@ func (f *FX) invoke(funcs ...interface{}) {
 }
 
 func (f *FX) build() {
-	// disable fx logger
 	f.App = fx.New(fx.NopLogger, fx.Provide(f.providers...), fx.Invoke(f.invokers...))
 }
 

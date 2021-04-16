@@ -10,8 +10,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/cache"
-	"github.com/2637309949/dolphin/packages/cache/persistence"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -19,6 +17,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/worker"
+	"github.com/gin-contrib/cache/persistence"
 	"github.com/go-errors/errors"
 	"github.com/go-redis/redis/v8"
 	"github.com/robfig/cron/v3"
@@ -215,13 +214,6 @@ func NewDefaultManager() Manager {
 	return mg
 }
 
-// Cache middles
-func Cache(time time.Duration) HandlerFunc {
-	return HF2Handler(func(ctx *Context) {
-		cache.CachePage(CacheStore, time)(ctx.Context)
-	})
-}
-
 // MaxWorkers defined
 var MaxWorkers = 15
 
@@ -229,21 +221,17 @@ var MaxWorkers = 15
 var RedisClient *redis.Client
 
 // CacheStore defined
-var CacheStore persistence.CacheStore
+var CacheStore = persistence.NewInMemoryStore(60 * time.Second)
 
 func init() {
-	if uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI); uri.Laddr != "" {
-		RedisClient = redis.NewClient(&redis.Options{
-			Addr:     uri.Laddr,
-			Password: uri.Passwd,
-			DB:       util.EnsureLeft(strconv.Atoi(uri.DbName)).(int),
-		})
+	uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI)
+	if uri.Laddr != "" {
+		RedisClient = redis.NewClient(&redis.Options{Addr: uri.Laddr, Password: uri.Passwd, DB: util.EnsureLeft(strconv.Atoi(uri.DbName)).(int)})
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
 			logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
-			RedisClient = nil
 		} else {
+			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
 			logrus.Infof("Redis:%v connect successfully", viper.GetString("rd.dataSource"))
 		}
 	}
-	CacheStore = persistence.NewInMemoryStore(60 * time.Second)
 }
