@@ -221,7 +221,7 @@ var MaxWorkers = 15
 var RedisClient *redis.Client
 
 // CacheStore defined
-var CacheStore = persistence.NewInMemoryStore(60 * time.Second)
+var CacheStore persistence.CacheStore = persistence.NewInMemoryStore(60 * time.Second)
 
 func init() {
 	uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI)
