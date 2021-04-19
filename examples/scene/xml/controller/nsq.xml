@@ -1,0 +1,16 @@
+<controller name="nsq" desc="Nsq controller">
+    <api name="add" desc="Add article" method="post">
+        <param name="nsq" type="$nsq_info" desc="nsq info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" desc="Get Nsq info" method="get">
+        <param name="id" type="string" desc="nsq id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

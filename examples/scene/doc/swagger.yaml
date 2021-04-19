@@ -187,6 +187,15 @@ definitions:
         description: 密码
         type: string
     type: object
+  model.NsqInfo:
+    properties:
+      id:
+        description: id
+        type: string
+      score:
+        description: score
+        type: number
+    type: object
   model.Scheduling:
     properties:
       code:
@@ -1683,6 +1692,63 @@ paths:
       summary: Get kafka info
       tags:
       - Kafka controller
+  /api/nsq/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: nsq info
+        in: body
+        name: nsq
+        schema:
+          $ref: '#/definitions/model.NsqInfo'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Add article
+      tags:
+      - Nsq controller
+  /api/nsq/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: nsq id
+        in: query
+        name: id
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/model.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Fail'
+      summary: Get Nsq info
+      tags:
+      - Nsq controller
   /api/redis/lock:
     get:
       parameters:

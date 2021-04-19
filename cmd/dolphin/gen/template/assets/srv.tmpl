@@ -20,7 +20,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ginCtx *gin.Context, db 
 		ticker := time.NewTicker(1 * time.Second)
 		for range ticker.C {
 			select {
-			case <-actCtx.Done():
+			case {{.lt}}-actCtx.Done():
 				logrus.Infoln("child process interrupt...")
 				return
 			default:
@@ -29,7 +29,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ginCtx *gin.Context, db 
 		}
 	}(actCtx)
 	defer cancel()
-	<-actCtx.Done()
+	{{.lt}}-actCtx.Done()
 	time.Sleep(1 * time.Second)
 	logrus.Infoln("main process exit!")
 	return nil, errors.New("no implementation found")

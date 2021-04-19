@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -30,6 +31,7 @@ func (app *Srv) Build(dir string, args []string, node *schema.Application) ([]*p
 	srvByte, _ := vfsutil.ReadFile(template.Assets, "srv.tmpl")
 	for i := range node.Controllers {
 		data := map[string]interface{}{
+			"lt":          ht.HTML("<"),
 			"PackageName": node.PackageName,
 			"Name":        node.Name,
 			"Controller":  node.Controllers[i],

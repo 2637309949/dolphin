@@ -26,7 +26,7 @@ func UserInfo(ctx *Context) {
 		return
 	}
 	if uids, ok := slice.GetFieldSliceByName(articles, "creater", "%v").([]string); ok {
-		users, err := ctx.PlatformDB.Table("sys_user").In("id", uids).Where("is_delete != ?", 1).Cols("id", "name").QueryString()
+		users, err := ctx.PlatformDB.Table("sys_user").In("id", uids).Where("is_delete != !").Cols("id", "name").QueryString()
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)

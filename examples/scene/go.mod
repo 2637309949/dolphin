@@ -17,6 +17,7 @@ require (
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
+	github.com/nsqio/go-nsq v1.0.8 // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/segmentio/kafka-go v0.4.10
