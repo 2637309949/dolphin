@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
-	uuid "github.com/google/uuid"
+	"github.com/google/uuid"
 )
 
 // NewAuthorizeGenerate create to generate the authorize code instance

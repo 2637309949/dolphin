@@ -38,6 +38,16 @@ func SysRoleAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
+	cnt, err := ctx.DB.Where("code=? and is_delete !=1", payload.Code.String).Count(new(model.SysRole))
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if cnt > 0 {
+		ctx.Fail(errors.New("the record already exists"))
+		return
+	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -71,6 +81,18 @@ func SysRoleBatchAdd(ctx *Context) {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
 		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
+	}
+	cnt, err := ctx.DB.Where("is_delete !=1").In("code", (funk.Map(payload, func(item model.SysRole) interface{} {
+		return item.Code.String
+	}).([]interface{}))...).Count(new(model.SysRole))
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	if cnt > 0 {
+		ctx.Fail(errors.New("the record already exists"))
+		return
 	}
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {

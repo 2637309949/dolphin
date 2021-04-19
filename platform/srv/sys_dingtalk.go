@@ -30,6 +30,7 @@ func SysDingtalkTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Contex
 	}(actCtx)
 	defer cancel()
 	<-actCtx.Done()
+	time.Sleep(1 * time.Second)
 	logrus.Infoln("main process exit!")
 	return nil, errors.New("no implementation found")
 }

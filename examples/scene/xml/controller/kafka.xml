@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="get" desc="Get kafka info" method="get" auth="never">
+    <api name="get" desc="Get kafka info" method="get">
         <param name="id" type="string" desc="kafka id" />
         <return>
             <success type="$success"/>

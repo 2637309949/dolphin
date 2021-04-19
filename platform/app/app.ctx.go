@@ -8,7 +8,6 @@ import (
 	"container/list"
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -83,12 +82,14 @@ func (ctx *Context) LoginInInfo() model.SysUser {
 func (ctx *Context) InRole(role ...string) bool {
 	var cnt int
 	role, _ = slice.RemoveStringDuplicates(role)
-	if _, err := ctx.DB.SqlTemplateClient("sys_role_in_role_cnt.tpl", &map[string]interface{}{
-		"uid": ctx.GetToken().GetUserID(),
-		"roles": template.HTML(strings.Join(funk.Map(role, func(r string) string {
-			return fmt.Sprintf(`"%v"`, r)
-		}).([]string), ",")),
-	}).Get(&cnt); err != nil {
+	if _, err := ctx.DB.SQL(
+		fmt.Sprintf(
+			`select count(distinct(role_id)) cnt from sys_role_user left join sys_role on sys_role.id=sys_role_user.role_id where sys_role.code in (%v) and sys_role_user.user_id = ? and sys_role_user.is_delete != 1`,
+			strings.Join(funk.Map(role, func(id string) string {
+				return fmt.Sprintf("'%v'", id)
+			}).([]string), ",")),
+		ctx.GetToken().GetUserID(),
+	).Get(&cnt); err != nil {
 		logrus.Error(err)
 		return false
 	}
@@ -97,14 +98,18 @@ func (ctx *Context) InRole(role ...string) bool {
 
 // InAdmin defined
 func (ctx *Context) InAdmin(idn ...string) bool {
-	roles := []string{model.AdminRole.ID.String}
-	roles = append(roles, idn...)
-	exit, err := ctx.DB.In("role_id", roles).Where(`user_id = ? and is_delete != 1`, ctx.GetToken().GetUserID()).Exist(new(model.SysRoleUser))
-	if err != nil {
+	var cnt int
+	idn, _ = slice.RemoveStringDuplicates(append(idn, model.AdminRole.Code.String))
+	if _, err := ctx.DB.SQL(
+		fmt.Sprintf(`select count(sys_role_user.id) cnt from sys_role_user left join sys_role on sys_role.id=sys_role_user.role_id where sys_role_user.user_id = ? and sys_role.code in (%v) and sys_role_user.is_delete != 1`, strings.Join(funk.Map(idn, func(id string) string {
+			return fmt.Sprintf("'%v'", id)
+		}).([]string), ",")),
+		ctx.GetToken().GetUserID(),
+	).Get(&cnt); err != nil {
 		logrus.Error(err)
 		return false
 	}
-	return exit
+	return cnt > 0
 }
 
 // Success defined success result

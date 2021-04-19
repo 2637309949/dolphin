@@ -11,8 +11,8 @@ import (
 // AdminRole default admin
 var AdminRole = SysRole{
 	ID:         null.StringFrom("4c18ee66-c5e6-40a7-b190-86d115bae3e5"),
-	Name:       null.StringFrom("admin"),
-	Code:       null.StringFrom("X8e6D3y60K"),
+	Name:       null.StringFrom("管理员"),
+	Code:       null.StringFrom("admin"),
 	Status:     null.IntFrom(1),
 	Creater:    DefaultAdmin.ID,
 	CreateTime: null.TimeFrom(time.Now()),
@@ -25,8 +25,8 @@ var roles = []SysRole{
 	AdminRole,
 	{
 		ID:         null.StringFrom("3b18ee66-a5e6-40a3-b190-86d115bae3e2"),
-		Name:       null.StringFrom("test"),
-		Code:       null.StringFrom("A5b6D3y20Y"),
+		Name:       null.StringFrom("客户关系"),
+		Code:       null.StringFrom("crm"),
 		Status:     null.IntFrom(1),
 		Creater:    DefaultAdmin.ID,
 		CreateTime: null.TimeFrom(time.Now()),
@@ -38,7 +38,7 @@ var roles = []SysRole{
 
 // GenCode table name of defined SysRole
 func (m *SysRole) GenCode(rewrite ...bool) {
-	if len(rewrite) > 0 && rewrite[0] == true || m.Code.String == "" {
+	if len(rewrite) > 0 && rewrite[0] || m.Code.String == "" {
 		m.Code = null.StringFrom(util.RandString(10, util.RandNumChar))
 	}
 }
