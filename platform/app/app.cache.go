@@ -40,10 +40,6 @@ type RedisStore struct {
 	defaultExpiration time.Duration
 }
 
-const (
-	CACHE_MIDDLEWARE_KEY = "dolphin.cache"
-)
-
 var (
 	PageCachePrefix = "dolphin.page.cache"
 )
