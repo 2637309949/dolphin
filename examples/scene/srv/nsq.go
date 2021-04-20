@@ -61,14 +61,12 @@ func NProducer(ctx *gin.Context, db *xorm.Engine, params model.NsqInfo) (interfa
 	if err != nil {
 		return nil, err
 	}
-	// Synchronously publish a single message to the specified topic.
-	// Messages can also be sent asynchronously and/or in batches.
 	err = NsqProducer.Publish("nsq-test", aiStr)
-	if err != nil {
-		return nil, err
-	}
+	// if err != nil {
+	// 	return nil, err
+	// }
 	// NsqProducer.Stop()
-	return nil, nil
+	return nil, err
 }
 
 // NConsumer defined srv
@@ -87,7 +85,7 @@ func NConsumer() (interface{}, error) {
 		return nil, err
 	}
 	// NsqConsumer.Stop()
-	return nil, nil
+	return nil, err
 }
 
 // NsqTODO defined srv
