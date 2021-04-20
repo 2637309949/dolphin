@@ -198,7 +198,6 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 	treeNodeList := list.New()
 	originNodeList := list.New()
 
-	// 区分root节点和子节点数组
 	for _, params := range paramsArr {
 		value, parent, name := "", "", ""
 		if params[valueFiled] != nil {
@@ -210,10 +209,6 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 		if params[nameFiled] != nil {
 			name = fmt.Sprintf("%v", params[nameFiled])
 		}
-		// json,_ := xorm.JSONString(params, true)
-		// 如果根节点root为空，则从parent为空中获取root节点数组
-		// 如果root不为空且treeSrcs中包含id为root的，则获取id等于的节点为root节点数组(相当于显示root节点的树)
-		// 如果root不为空且treeSrcs中不包含id为root的，则获取parent等于的节点为root节点数组(相当于不显示root节点的树)
 		if (parentValue == "" && parent == "") || value == parentValue || parent == parentValue {
 			node := &model.TreeNode{
 				ID:     value,
@@ -235,7 +230,6 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 		}
 	}
 
-	// 把子节点根据parent分配到对应的父节点上
 	for ele := treeNodeList.Front(); ele != nil; ele = ele.Next() {
 		treeNode := ele.Value.(*model.TreeNode)
 		originEle := originNodeList.Front()
