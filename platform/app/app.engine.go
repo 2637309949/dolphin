@@ -243,9 +243,14 @@ func (e *Engine) lifeCycle() {
 
 // Run booting system
 func (e *Engine) Run() {
+	e.Init()
+	e.lifeCycle()
+}
+
+// Init defined
+func (e *Engine) Init() {
 	e.database()
 	e.authorize()
-	e.lifeCycle()
 }
 
 func NewEngine() *Engine {
