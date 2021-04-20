@@ -1,4 +1,4 @@
-package dolphin
+package main
 
 import (
 	"bufio"

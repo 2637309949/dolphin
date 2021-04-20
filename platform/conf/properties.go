@@ -14,7 +14,6 @@ func init() {
 	viper.SetConfigName("app")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")
-	viper.AddConfigPath("platform") // just for test platform
 	viper.SetDefault("app.mode", "release")
 	viper.SetDefault("app.name", "dolphin")
 	viper.SetDefault("app.version", "1.0")
