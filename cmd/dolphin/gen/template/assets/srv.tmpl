@@ -20,7 +20,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ginCtx *gin.Context, db 
 		ticker := time.NewTicker(1 * time.Second)
 		for range ticker.C {
 			select {
-			case {{.lt}}-actCtx.Done():
+			case {{.lt}}-ctx.Done():
 				logrus.Infoln("child process interrupt...")
 				return
 			default:

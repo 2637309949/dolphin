@@ -95,7 +95,7 @@ func NsqTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, param
 		ticker := time.NewTicker(1 * time.Second)
 		for range ticker.C {
 			select {
-			case <-actCtx.Done():
+			case <-ctx.Done():
 				logrus.Infoln("child process interrupt...")
 				return
 			default:
