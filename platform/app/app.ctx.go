@@ -520,9 +520,13 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 // Handle overwrite RouterGroup.Handle
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
 	return funk.Chain(strings.Split(httpMethod, ",")).Map(func(method string) gin.IRoutes {
-		return rg.RouterGroup.Handle(method, relativePath, funk.Chain(handlers).Map(func(h HandlerFunc) []gin.HandlerFunc {
-			ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) gin.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]gin.HandlerFunc)
-			return append(ic, rg.engine.HandlerFunc(h))
-		}).FlattenDeep().Value().([]gin.HandlerFunc)...)
+		return rg.RouterGroup.Handle(
+			method,
+			relativePath,
+			funk.Chain(handlers).Map(func(h HandlerFunc) []gin.HandlerFunc {
+				ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) gin.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]gin.HandlerFunc)
+				return append(ic, rg.engine.HandlerFunc(h))
+			}).FlattenDeep().Value().([]gin.HandlerFunc)...,
+		)
 	}).Value().([]gin.IRoutes)
 }
