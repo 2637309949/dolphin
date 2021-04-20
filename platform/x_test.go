@@ -64,7 +64,7 @@ func TestMain(m *testing.M) {
 	app.App.Init()
 	httpTools = &HTTPTools{}
 	httpTools.engine = app.App.Gin
-	XTestSysUserLogin()
+	// XTestSysUserLogin()
 	os.Exit(m.Run())
 }
 
