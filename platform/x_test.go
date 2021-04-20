@@ -69,4 +69,4 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func TestSysMenuPage(t *testing.T) { XTestSysMenuPage(t) }
+// func TestSysMenuPage(t *testing.T) { XTestSysMenuPage(t) }
