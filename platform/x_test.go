@@ -46,7 +46,6 @@ func (t HTTPTools) handler(m, p string, body io.Reader, h func(w *httptest.Respo
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest(m, p, body)
 	req.Header.Add("Authorization", "Bearer "+AccessToken)
-	req.Host = "local"
 	t.engine.ServeHTTP(w, req)
 	h(w)
 }
