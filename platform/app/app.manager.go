@@ -177,11 +177,11 @@ func (d *DefaultManager) AddBusinessDB(domain string, db *xorm.Engine) {
 
 // GetTokenStore defined
 func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
+	ots, _ := store.NewMemoryTokenStore()
 	if RedisClient != nil {
-		return store.NewRedisStoreWithCli(RedisClient, TokenkeyNamespace)
+		ots = store.NewRedisStoreWithCli(RedisClient, TokenkeyNamespace)
 	}
-	memo, _ := store.NewMemoryTokenStore()
-	return memo
+	return ots
 }
 
 // Worker defined
