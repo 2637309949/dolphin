@@ -10,8 +10,8 @@ import (
 
 	//  "github.com/2637309949/dolphin/platform/conf"
 	_ "github.com/2637309949/dolphin/platform/conf"
-	// "github.com/go-sql-driver/mysql"
-	_ "github.com/go-sql-driver/mysql"
+	// "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 
 	"github.com/2637309949/dolphin/platform/app"
 	"github.com/gin-gonic/gin"
@@ -39,23 +39,25 @@ type testingT interface {
 
 // HTTPTools defined  tools
 type HTTPTools struct {
-	engine *gin.Engine
+	*gin.Engine
 }
 
-func (t HTTPTools) handler(m, p string, body io.Reader, h func(w *httptest.ResponseRecorder)) {
+func (t HTTPTools) handler(req *http.Request, h func(w *httptest.ResponseRecorder)) {
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest(m, p, body)
 	req.Header.Add("Authorization", "Bearer "+AccessToken)
-	t.engine.ServeHTTP(w, req)
+	t.ServeHTTP(w, req)
 	h(w)
 }
 
-func (t HTTPTools) Get(p string, h func(w *httptest.ResponseRecorder)) {
-	t.handler("GET", p, nil, h)
+func (t HTTPTools) Get(url string, h func(w *httptest.ResponseRecorder)) {
+	req, _ := http.NewRequest("GET", url, nil)
+	t.handler(req, h)
 }
 
-func (t HTTPTools) Post(p string, body io.Reader, h func(w *httptest.ResponseRecorder)) {
-	t.handler("POST", p, body, h)
+func (t HTTPTools) Post(url string, body io.Reader, h func(w *httptest.ResponseRecorder)) {
+	req, _ := http.NewRequest("POST", url, body)
+	req.Header.Add("Content-Type", "application/json")
+	t.handler(req, h)
 }
 
 var httpTools *HTTPTools
@@ -63,9 +65,9 @@ var httpTools *HTTPTools
 func TestMain(m *testing.M) {
 	app.App.Init()
 	httpTools = &HTTPTools{}
-	httpTools.engine = app.App.Gin
-	// XTestSysUserLogin()
+	httpTools.Engine = app.App.Gin
+	XTestSysUserLogin()
 	os.Exit(m.Run())
 }
 
-// func TestSysMenuPage(t *testing.T) { XTestSysMenuPage(t) }
+func TestSysMenuPage(t *testing.T) { XTestSysMenuPage(t) }

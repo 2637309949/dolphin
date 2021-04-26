@@ -432,7 +432,6 @@ func (session *Session) SqlTemplateClient(sqlTagName string, args ...interface{}
 	if err != nil {
 		session.engine.logger.Errorf("%v", err)
 	}
-
 	if len(args) == 0 {
 		return session.SQL(sql)
 	} else {

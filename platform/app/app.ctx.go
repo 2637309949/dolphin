@@ -146,15 +146,15 @@ func (ctx *Context) TypeQuery() *Query {
 }
 
 // PageSearch defined
-func (ctx *Context) PageSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (*model.PageList, error) {
-	page, _ := q["page"].(int)
-	size, _ := q["size"].(int)
-	q["offset"] = (page - 1) * size
-	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_select.tpl", controller, api), &q).Query().List()
+func (ctx *Context) PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*model.PageList, error) {
+	page, _ := params["page"].(int)
+	size, _ := params["size"].(int)
+	params["offset"] = (page - 1) * size
+	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_select.tpl", ctr, api), &params).Query().List()
 	if err != nil {
 		return nil, err
 	}
-	cntSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_count.tpl", controller, api), &q).Query().List()
+	cntSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_count.tpl", ctr, api), &params).Query().List()
 	if err != nil {
 		return nil, err
 	}

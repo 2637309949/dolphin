@@ -6,7 +6,6 @@ package app
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/signal"
 	"path"
@@ -104,8 +103,8 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 			return sc
 		}).([]model.SysTableColumn)...)
 	}, name)
-	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTable).TableName())))
-	util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(model.SysTableColumn).TableName())))
+	new(model.SysTable).TruncateTable(session, session.Engine().DriverName())
+	new(model.SysTableColumn).TruncateTable(session, session.Engine().DriverName())
 	stb, stc := slice.Chunk(tables, 50).([][]model.SysTable), slice.Chunk(columns, 50).([][]model.SysTableColumn)
 	for i := range stb {
 		util.EnsureLeft(session.Insert(stb[i]))
@@ -140,7 +139,7 @@ func (e *Engine) database() {
 	funk.ForEach(domains, func(domain model.SysDomain) {
 		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
 		uri := util.EnsureLeft(http.Parse(domain.DataSource.String)).(*http.URI)
-		util.EnsureLeft(e.PlatformDB.SQL(fmt.Sprintf("create database if not exists %v default character set utf8mb4 default collate utf8mb4_general_ci", uri.DbName)).Execute())
+		domain.CreateDataBase(e.PlatformDB, domain.DriverName.String, uri.DbName)
 		db := util.EnsureLeft(xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)).(*xorm.Engine)
 		db.SetLogger(xlogger)
 		db.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
@@ -247,7 +246,7 @@ func (e *Engine) Run() {
 	e.lifeCycle()
 }
 
-// Init defined
+// Init defined booting init
 func (e *Engine) Init() {
 	e.database()
 	e.authorize()

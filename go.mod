@@ -40,6 +40,7 @@ require (
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lib/pq v1.9.0
 	github.com/magiconair/properties v1.8.4 // indirect
+	github.com/mattn/go-sqlite3 v1.14.7 // indirect
 	github.com/memcachier/mc v2.0.1+incompatible
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
 	github.com/pelletier/go-toml v1.8.1 // indirect

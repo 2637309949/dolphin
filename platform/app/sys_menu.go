@@ -291,7 +291,7 @@ func SysMenuPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetString("name")
 	q.SetString("code")
-	q.SetString("sort", "`order`")
+	q.SetString("sort", "update_time desc")
 	q.SetRule("sys_menu_page")
 	q.SetString("creater")
 	q.SetString("updater")

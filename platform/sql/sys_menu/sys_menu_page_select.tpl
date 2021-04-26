@@ -5,7 +5,7 @@ select
     sys_menu.hidden,
     sys_menu.icon,
     sys_menu.name,
-    sys_menu.order,
+    sys_menu.`order`,
     sys_menu.url,
     sys_menu.type,
     sys_menu.component

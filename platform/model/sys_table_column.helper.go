@@ -1,11 +1,23 @@
 package model
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
+	"github.com/2637309949/dolphin/platform/util"
 )
+
+// TruncateTable defined
+func (m *SysTableColumn) TruncateTable(session *xorm.Session, driverName string) {
+	if driverName != "sqlite3" {
+		util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(SysTableColumn).TableName())))
+	} else {
+		util.EnsureLeft(session.Exec(fmt.Sprintf("delete from %v", new(SysTableColumn).TableName())))
+	}
+}
 
 // ColumnInfo defined inital system data
 func (m *SysTableColumn) ColumnInfo(info *schemas.Column) SysTableColumn {

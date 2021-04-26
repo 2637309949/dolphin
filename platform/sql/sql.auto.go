@@ -949,7 +949,7 @@ where
     sys_menu.hidden,
     sys_menu.icon,
     sys_menu.name,
-    sys_menu.order,
+    sys_menu.` + "`order`" + `,
     sys_menu.url,
     sys_menu.type,
     sys_menu.component
@@ -1167,11 +1167,6 @@ where
 
 order by ` + "`order`" + `
 `
-	SQLTPL["sys_role_in_role_cnt.tpl"] = `select
-    count(distinct(role_id))
-from sys_role_user
-where
-role_id in (select id from sys_role where code in ({{.roles}})) and user_id = "{{.uid}}" and is_delete != 1`
 	SQLTPL["sys_role_menu_tree.tpl"] = `select
     distinct
     sys_menu.id,

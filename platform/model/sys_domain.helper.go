@@ -4,6 +4,7 @@
 package model
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
@@ -21,6 +22,13 @@ func (m *SysDomain) Ensure(db *xorm.Engine) {
 	}
 }
 
+// CreateDataBase defined
+func (m *SysDomain) CreateDataBase(db *xorm.Engine, driverName, database string) {
+	if driverName != "sqlite3" {
+		util.EnsureLeft(db.SQL(fmt.Sprintf("create database if not exists %v default character set utf8mb4 default collate utf8mb4_general_ci", database)).Execute())
+	}
+}
+
 // InitSysData defined inital system data
 func (m *SysDomain) InitSysData(s *xorm.Session) {
 	domains := []SysDomain{
@@ -30,7 +38,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			FullName:   null.StringFrom("localhost"),
 			AppName:    null.StringFrom(viper.GetString("app.name")),
 			Theme:      null.StringFrom("default"),
-			DriverName: null.StringFrom("mysql"),
+			DriverName: null.StringFrom(viper.GetString("db.driver")),
 			LoginUrl:   null.StringFrom("localhost"),
 			Type:       null.IntFrom(0),
 			Status:     null.IntFrom(1),
@@ -46,14 +54,19 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			IsDelete:   null.IntFrom(0),
 		},
 	}
-	for _, domain := range domains {
-		if ct, err := s.Where("id=?", domain.ID.String).Count(new(SysDomain)); ct == 0 || err != nil {
+	for i := range domains {
+		occ, occLoc := "?", "_localhost?"
+		if ct, err := s.Where("id=?", domains[i].ID.String).Count(new(SysDomain)); ct == 0 || err != nil {
 			if err != nil {
 				s.Rollback()
 				panic(err)
 			}
-			domain.DataSource = null.StringFrom(strings.Replace(viper.GetString("db.dataSource"), "?", "_localhost?", 1))
-			if _, err := s.InsertOne(&domain); err != nil {
+			if domains[i].DriverName.String == "sqlite3" {
+				occ = ".db"
+				occLoc = "_localhost.db"
+			}
+			domains[i].DataSource = null.StringFrom(strings.Replace(viper.GetString("db.dataSource"), occ, occLoc, 1))
+			if _, err := s.InsertOne(&domains[i]); err != nil {
 				s.Rollback()
 				panic(err)
 			}
