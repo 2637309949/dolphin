@@ -13,7 +13,7 @@ func XTestSysMenuPage(t testingT) {
 			}
 			ret := Response{}
 			json.Unmarshal(w.Body.Bytes(), &ret)
-			if ret.Code != 401 {
+			if ret.Code != 200 {
 				t.Errorf("SysMenuPage = %v want %v", ret.Code, 200)
 			}
 		},

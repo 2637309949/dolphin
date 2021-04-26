@@ -429,7 +429,8 @@ func SysUserLogin(ctx *Context) {
 	}
 	account.Domain = payload.Domain
 	account.Name = payload.Name
-	ext, err := ctx.PlatformDB.Where("is_delete = 0 and status = 1").Get(&account)
+
+	ext, err := ctx.PlatformDB.Where("is_delete != 1 and status = 1").Get(&account)
 	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
 		if err == nil {
 			err = errors.New("account doesn't exist or password error")
