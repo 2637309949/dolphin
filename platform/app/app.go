@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"path"
 
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/json-iterator/go/extra"
@@ -72,9 +73,9 @@ func init() {
 	AuthServerURL = viper.GetString("oauth.server")
 	OA2Cfg.ClientID = viper.GetString("oauth.id")
 	OA2Cfg.ClientSecret = viper.GetString("oauth.secret")
-	OA2Cfg.RedirectURL = fmt.Sprintf("%v/api/sys/cas/oauth2", viper.GetString("oauth.cli"))
-	OA2Cfg.Endpoint.AuthURL = AuthServerURL + "/api/sys/cas/authorize"
-	OA2Cfg.Endpoint.TokenURL = AuthServerURL + "/api/sys/cas/token"
+	OA2Cfg.RedirectURL = path.Join(viper.GetString("oauth.cli"), viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
+	OA2Cfg.Endpoint.AuthURL = path.Join(AuthServerURL, viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath)
+	OA2Cfg.Endpoint.TokenURL = path.Join(AuthServerURL, viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath)
 	HTTPServer = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	RPCListener = util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
 	SyncModel()
