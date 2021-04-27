@@ -5,6 +5,7 @@
 package app
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -234,7 +235,7 @@ func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 
 // UserAuthorizationHandler defined
 var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
-	store, err := session.Start(nil, w, r)
+	store, err := session.Start(context.Background(), w, r)
 	if err != nil {
 		return
 	}

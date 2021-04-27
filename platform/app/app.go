@@ -73,9 +73,9 @@ func init() {
 	AuthServerURL = viper.GetString("oauth.server")
 	OA2Cfg.ClientID = viper.GetString("oauth.id")
 	OA2Cfg.ClientSecret = viper.GetString("oauth.secret")
-	OA2Cfg.RedirectURL = path.Join(viper.GetString("oauth.cli"), viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
-	OA2Cfg.Endpoint.AuthURL = path.Join(AuthServerURL, viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath)
-	OA2Cfg.Endpoint.TokenURL = path.Join(AuthServerURL, viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath)
+	OA2Cfg.RedirectURL = viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
+	OA2Cfg.Endpoint.AuthURL = AuthServerURL + path.Join(viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath)
+	OA2Cfg.Endpoint.TokenURL = AuthServerURL + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath)
 	HTTPServer = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	RPCListener = util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
 	SyncModel()

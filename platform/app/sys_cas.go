@@ -61,9 +61,7 @@ func SysCasLogin(ctx *Context) {
 	}
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
-	domain := f.Get("domain")
-	username := f.Get("username")
-	password := f.Get("password")
+	domain, username, password := f.Get("domain"), f.Get("username"), f.Get("password")
 	account := model.SysUser{
 		Name:   null.StringFrom(username),
 		Domain: null.StringFrom(domain),
