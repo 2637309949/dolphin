@@ -11,7 +11,6 @@ require (
 	github.com/agrison/go-tablib v0.0.0-20160310143025-4930582c22ee
 	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/bndr/gotabulate v1.1.2 // indirect
-	github.com/bradfitz/gomemcache v0.0.0-20180710155616-bc664df96737
 	github.com/clbanning/mxj v1.8.4 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/eriklott/mustache v0.10.1
@@ -19,18 +18,17 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/ghodss/yaml v1.0.0
-	github.com/gin-contrib/cache v1.1.0 // indirect
+	github.com/gin-contrib/cache v1.1.0
 	github.com/gin-gonic/gin v1.7.1
 	github.com/go-errors/errors v1.0.1
 	github.com/go-openapi/spec v0.20.0
 	github.com/go-redis/redis/v8 v8.8.0
-	github.com/go-session/cookie v3.0.1+incompatible
 	github.com/go-session/session v3.1.2+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.4.2
 	github.com/golang/snappy v0.0.2 // indirect
 	github.com/google/uuid v1.2.0
-	github.com/gorilla/securecookie v1.1.1 // indirect
+	github.com/gorilla/securecookie v1.1.1
 	github.com/imdario/mergo v0.3.11
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/json-iterator/go v1.1.9
@@ -40,13 +38,11 @@ require (
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/lib/pq v1.9.0
 	github.com/magiconair/properties v1.8.4 // indirect
-	github.com/mattn/go-sqlite3 v1.14.7 // indirect
-	github.com/memcachier/mc v2.0.1+incompatible
+	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/pkg/errors v0.8.1
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/robfig/go-cache v0.0.0-20130306151617-9fc39e0dbf62
 	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749
 	github.com/shurcooL/vfsgen v0.0.0-20200824052919-0d455de96546
 	github.com/sirupsen/logrus v1.2.0

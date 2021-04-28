@@ -18,7 +18,6 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util"
-	"github.com/go-session/cookie"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -31,9 +30,9 @@ func init() {
 	session.InitManager(
 		session.SetCookieName("session_id"),
 		session.SetStore(
-			cookie.NewCookieStore(
-				cookie.SetCookieName("store_id"),
-				cookie.SetHashKey(hashKey),
+			NewCookieStore(
+				SetCookieName("store_id"),
+				SetHashKey(hashKey),
 			),
 		),
 	)
@@ -87,6 +86,9 @@ func SysCasLogin(ctx *Context) {
 	store.Set("LoggedInUserID", account.ID.String)
 	store.Set("LoggedInDomain", account.Domain.String)
 	store.Save()
+	fmt.Println("-----------------SysCasLogin", store.SessionID())
+	fmt.Println("-----------------SysCasLogin", store)
+
 	ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm"))
 }
 
@@ -121,6 +123,9 @@ func SysCasAffirm(ctx *Context) {
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
 		return
 	}
+	fmt.Println("-----------------SysCasAffirm", store.SessionID())
+	fmt.Println("-----------------SysCasAffirm", store)
+
 	var form url.Values
 	if v, ok := store.Get("ReturnUri"); ok {
 		form = v.(url.Values)
