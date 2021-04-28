@@ -3,10 +3,37 @@ package null
 import (
 	"database/sql/driver"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 	"time"
 )
+
+const (
+	timeFormat = "2006-01-02 15:04:05"
+	zeroTime   = "1970-01-01 00:00:00"
+)
+
+func Parse(x string) (time.Time, error) {
+	if strings.Index(x, "T") > 0 {
+		x = strings.Replace(x, "T", " ", 1)
+	}
+	switch l := len(x); true {
+	case l > 19:
+		x = x[0:19]
+		if strings.Index(x, "000") == 0 {
+			x = zeroTime
+		}
+	case l == 10:
+		x += " 00:00:00"
+	case l == 13:
+		x += ":00:00"
+	case l == 16:
+		x += ":00"
+	}
+	return time.ParseInLocation(timeFormat, x, time.Local)
+}
 
 // Time is a nullable time.Time. It supports SQL and JSON serialization.
 // It will marshal to null if null.
@@ -74,7 +101,23 @@ func (t Time) MarshalJSON() ([]byte, error) {
 	if !t.Valid {
 		return []byte("null"), nil
 	}
-	return t.Time.MarshalJSON()
+	if y := t.Time.Year(); y < 0 || y >= 10000 {
+		// RFC 3339 is clear that years are 4 digits exactly.
+		// See golang.org/issue/4556#c15 for more discussion.
+		return nil, errors.New("Time.MarshalJSON: year outside of range [0,9999]")
+	}
+
+	b := make([]byte, 0, len(timeFormat)+2)
+	b = append(b, '"')
+	b = t.Time.AppendFormat(b, timeFormat)
+	b = append(b, '"')
+	return b, nil
+}
+
+// ToDB implements json.Marshaler.
+// It will encode null if this time is null.
+func (t Time) ToDB() ([]byte, error) {
+	return t.MarshalJSON()
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
@@ -88,14 +131,14 @@ func (t *Time) UnmarshalJSON(data []byte) error {
 	}
 	switch x := v.(type) {
 	case string:
-		err = t.Time.UnmarshalJSON(data)
+		t.Time, err = Parse(x)
 	case map[string]interface{}:
 		ti, tiOK := x["Time"].(string)
 		valid, validOK := x["Valid"].(bool)
 		if !tiOK || !validOK {
 			return fmt.Errorf(`json: unmarshalling object into Go value of type null.Time requires key "Time" to be of type string and key "Valid" to be of type bool; found %T and %T, respectively`, x["Time"], x["Valid"])
 		}
-		err = t.Time.UnmarshalText([]byte(ti))
+		t.Time, err = Parse(ti)
 		t.Valid = valid
 		return err
 	case nil:
@@ -106,6 +149,17 @@ func (t *Time) UnmarshalJSON(data []byte) error {
 	}
 	t.Valid = err == nil
 	return err
+}
+
+// FromDB implements json.Unmarshaler.
+// It supports string, object (e.g. pq.NullTime and friends)
+// and null input.
+func (t Time) FromDB(data []byte) error {
+	data, err := json.Marshal(string(data))
+	if err != nil {
+		return err
+	}
+	return t.UnmarshalJSON(data)
 }
 
 func (t Time) MarshalText() ([]byte, error) {

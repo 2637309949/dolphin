@@ -10,11 +10,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"reflect"
 	"strconv"
 	"strings"
 
+	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
@@ -22,6 +24,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/eriklott/mustache"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -457,7 +460,7 @@ func (ctx *Context) RenderFile(filepath string, filename string, context ...inte
 	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
 }
 
-// RenderHTML defined
+// RenderHTL defined
 func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
 	ctx.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
 	file, err := ioutil.TempFile("", "*")
@@ -515,6 +518,58 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 		return
 	}
 	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
+}
+
+// ShouldBindQuery defined
+func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
+	urls, err := url.ParseQuery(ctx.Request.URL.RawQuery)
+	if err != nil {
+		return err
+	}
+	ptrVal := reflect.ValueOf(ptr)
+	if ptrVal.Kind() == reflect.Ptr {
+		ptrVal = ptrVal.Elem()
+	}
+	if ptrVal.Kind() == reflect.Map &&
+		ptrVal.Type().Key().Kind() == reflect.String {
+		return ctx.ShouldBindWith(ptr, binding.Query)
+	}
+	var head = func(str, sep string) (head string, tail string) {
+		idx := strings.Index(str, sep)
+		if idx < 0 {
+			return str, ""
+		}
+		return str[:idx], str[idx+len(sep):]
+	}
+	var vKind = ptrVal.Kind()
+	if vKind == reflect.Struct {
+		tValue := ptrVal.Type()
+		for i := 0; i < ptrVal.NumField(); i++ {
+			sf := tValue.Field(i)
+			if (sf.PkgPath != "" && !sf.Anonymous) || sf.Tag.Get("form") == "-" { // unexported
+				continue
+			}
+			tagValue, _ := head(sf.Tag.Get("form"), ",")
+			if tagValue == "" { // default value is FieldName
+				tagValue = sf.Name
+				if tagValue == "" { // default value is FieldName
+					continue
+				}
+			}
+			switch sf.Type {
+			case reflect.TypeOf(null.String{}), reflect.TypeOf(null.Time{}):
+				u, ok := urls[tagValue]
+				if ok {
+					urls[tagValue] = funk.Map(u, func(j string) string {
+						bte, _ := json.Marshal(j)
+						return string(bte)
+					}).([]string)
+				}
+			}
+		}
+	}
+	ctx.Request.URL.RawQuery = urls.Encode()
+	return ctx.ShouldBindWith(ptr, binding.Query)
 }
 
 // Handle overwrite RouterGroup.Handle

@@ -271,18 +271,18 @@ func SysOptionsetGet(ctx *Context) {
 	var entity model.SysOptionset
 	err := ctx.ShouldBindQuery(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Errorf("SysOptionsetGet#ShouldBindQuery#%v", err)
 		ctx.Fail(err)
 		return
 	}
 	ext, err := ctx.DB.Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Errorf("SysOptionsetGet#Get#%v", err)
 		ctx.Fail(err)
 		return
 	}
 	if !ext {
-		ctx.Fail(errors.New("not found"))
+		ctx.Fail(errors.New("SysOptionsetGet#not found"))
 		return
 	}
 	ctx.Success(ctx.OmitByZero(entity))
