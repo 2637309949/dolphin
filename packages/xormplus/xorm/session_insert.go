@@ -150,6 +150,13 @@ func (session *Session) innerInsertMulti(rowsSlicePtr interface{}) (int64, error
 				return 0, err
 			}
 			fieldValue := *ptrFieldValue
+
+			if zeroType, ok := fieldValue.Interface().(interface {
+				IsZero() bool
+			}); ok && zeroType.IsZero() {
+				continue
+			}
+
 			if col.IsAutoIncrement && utils.IsZero(fieldValue.Interface()) {
 				continue
 			}
