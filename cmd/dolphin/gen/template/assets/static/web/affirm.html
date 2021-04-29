@@ -10,6 +10,18 @@
   <meta name="keywords" content="网站关键字" />
   <meta name="description" content="网站描述" />
   <style>
+    @keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
     html,
     body {
       height: 100%;
@@ -20,9 +32,14 @@
     }
 
     body {
-      margin: 0;
-      font: 12px"\5B8B\4F53", sans-serif;
-      background: #f0f2f5;
+        margin: 0;
+        font: 12px"\5B8B\4F53", sans-serif;
+        background: #f0f2f5;
+        font-family: "Exo", sans-serif;
+        color: #fff;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
     }
 
     div,
@@ -105,7 +122,7 @@
     .auth-box{
             width: 500px;
             background: #fff;
-            border-radius: 10px;
+            border-radius: 7px;
             overflow: hidden;
             box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
             -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
