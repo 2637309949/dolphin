@@ -526,6 +526,12 @@ func (session *Session) genInsertColumns(bean interface{}) ([]string, []interfac
 		}
 		fieldValue := *fieldValuePtr
 
+		if zeroType, ok := fieldValue.Interface().(interface {
+			IsZero() bool
+		}); ok && zeroType.IsZero() {
+			continue
+		}
+
 		if col.IsAutoIncrement && utils.IsValueZero(fieldValue) {
 			continue
 		}

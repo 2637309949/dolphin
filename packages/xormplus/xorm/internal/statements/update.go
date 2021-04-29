@@ -95,6 +95,12 @@ func (statement *Statement) BuildUpdates(tableValue reflect.Value,
 			continue
 		}
 
+		if zeroType, ok := fieldValue.Interface().(interface {
+			IsZero() bool
+		}); ok && zeroType.IsZero() {
+			continue
+		}
+
 		requiredField := useAllCols
 		includeNil := useAllCols
 
@@ -198,9 +204,6 @@ func (statement *Statement) BuildUpdates(tableValue reflect.Value,
 					continue
 				}
 				val = dialects.FormatColumnTime(statement.dialect, statement.defaultTimeZone, col, t)
-			} else if zeroType, ok := fieldValue.Interface().(ZeroType); ok && zeroType.IsZero() {
-				// skip zero
-				continue
 			} else if nulType, ok := fieldValue.Interface().(driver.Valuer); ok {
 				val, _ = nulType.Value()
 				if val == nil && !requiredField {
@@ -221,7 +224,7 @@ func (statement *Statement) BuildUpdates(tableValue reflect.Value,
 								continue
 							}
 						} else {
-							return nil, nil, errors.New("Not supported multiple primary keys")
+							return nil, nil, errors.New("not supported multiple primary keys")
 						}
 					}
 				} else {
