@@ -154,6 +154,5 @@ func (t Time) Ptr() *time.Time {
 // IsZero returns true for invalid Times, hopefully for future omitempty support.
 // A non-null Time with a zero value will not be considered zero.
 func (t Time) IsZero() bool {
-	fmt.Println("---------", t.Valid)
 	return !t.Valid
 }
