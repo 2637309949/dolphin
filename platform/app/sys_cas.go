@@ -86,9 +86,6 @@ func SysCasLogin(ctx *Context) {
 	store.Set("LoggedInUserID", account.ID.String)
 	store.Set("LoggedInDomain", account.Domain.String)
 	store.Save()
-	fmt.Println("-----------------SysCasLogin", store.SessionID())
-	fmt.Println("-----------------SysCasLogin", store)
-
 	ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm"))
 }
 
@@ -123,9 +120,6 @@ func SysCasAffirm(ctx *Context) {
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
 		return
 	}
-	fmt.Println("-----------------SysCasAffirm", store.SessionID())
-	fmt.Println("-----------------SysCasAffirm", store)
-
 	var form url.Values
 	if v, ok := store.Get("ReturnUri"); ok {
 		form = v.(url.Values)
