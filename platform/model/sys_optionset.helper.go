@@ -69,6 +69,17 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			IsDelete:   null.IntFrom(0),
 		},
 		{
+			ID:         null.StringFrom("b1a7bt50-7dad-12d1-81b5-10c34fd461e4"),
+			Name:       null.StringFrom("角色启用状态"),
+			Code:       null.StringFrom("sys_role_status"),
+			Value:      null.StringFrom(`[{"text":"禁用","value":0},{"text":"正常","value":1}]`),
+			Creater:    DefaultAdmin.ID,
+			CreateTime: null.TimeFrom(time.Now()),
+			Updater:    DefaultAdmin.ID,
+			UpdateTime: null.TimeFrom(time.Now()),
+			IsDelete:   null.IntFrom(0),
+		},
+		{
 			ID:         null.StringFrom("a1b7b150-6dad-12d1-81b5-10c34fd460e5"),
 			Name:       null.StringFrom("菜单类型"),
 			Code:       null.StringFrom("sys_menu_type"),
