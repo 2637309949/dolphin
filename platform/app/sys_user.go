@@ -5,6 +5,7 @@ package app
 
 import (
 	"errors"
+	"fmt"
 	"html/template"
 	"regexp"
 	"strings"
@@ -338,6 +339,7 @@ func SysUserPage(ctx *Context) {
 			ctx.Fail(err)
 			return
 		}
+		fmt.Println("-----", roles)
 		err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
 		if err != nil {
 			logrus.Error(err)

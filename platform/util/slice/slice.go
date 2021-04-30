@@ -93,7 +93,7 @@ func PatchSliceByField(target interface{}, source interface{}, targetMatchKey st
 	if err != nil {
 		return nil
 	}
-	if err = json.Unmarshal(ste, &ssm); err != nil || len(ssm) == 0 {
+	if err = json.Unmarshal(ste, &ssm); err != nil {
 		return nil
 	}
 
