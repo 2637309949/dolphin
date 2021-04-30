@@ -12,15 +12,14 @@ import (
 
 // NewGin defined
 func NewGin() *gin.Engine {
+	// gin DefaultWriter DefaultMode
+	gin.DefaultWriter = logrus.StandardLogger().Out
+	gin.SetMode(viper.GetString("app.mode"))
+
 	gn := gin.New()
 	gn.Use(plugin.CORS())
 	gn.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	gn.Use(plugin.Recovery())
 	gn.Use(plugin.Override(gn.HandleContext))
 	return gn
-}
-
-func init() {
-	gin.DefaultWriter = logrus.StandardLogger().Out
-	gin.SetMode(viper.GetString("app.mode"))
 }

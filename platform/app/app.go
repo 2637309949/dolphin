@@ -68,6 +68,7 @@ func NewLifeHook(e *Engine) Hook {
 	}
 }
 
+// init after NewEngine
 func init() {
 	extra.RegisterFuzzyDecoders()
 	AuthServerURL = viper.GetString("oauth.server")
