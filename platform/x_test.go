@@ -54,6 +54,7 @@ type (
 	}
 )
 
+// handler defined
 func (t HTTPTools) handler(req *http.Request, h func(w *httptest.ResponseRecorder)) {
 	w := httptest.NewRecorder()
 	req.Header.Add("Authorization", "Bearer "+AccessToken)
@@ -61,11 +62,13 @@ func (t HTTPTools) handler(req *http.Request, h func(w *httptest.ResponseRecorde
 	h(w)
 }
 
+// Get defined
 func (t HTTPTools) Get(url string, h func(w *httptest.ResponseRecorder)) {
 	req, _ := http.NewRequest("GET", url, nil)
 	t.handler(req, h)
 }
 
+// Post defined
 func (t HTTPTools) Post(url string, payform map[string]interface{}, h func(w *httptest.ResponseRecorder)) {
 	jm, _ := json.Marshal(&payform)
 	req, _ := http.NewRequest("POST", url, bufio.NewReader(strings.NewReader(string(jm))))
@@ -73,6 +76,7 @@ func (t HTTPTools) Post(url string, payform map[string]interface{}, h func(w *ht
 	t.handler(req, h)
 }
 
+// HttpTest defined
 func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...map[string]interface{}) {
 	switch len(p) {
 	case 0:
@@ -82,6 +86,7 @@ func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...map[st
 	}
 }
 
+// TestMain defined
 func TestMain(m *testing.M) {
 	app.App.Init()
 	httpTools = &HTTPTools{}
@@ -89,6 +94,8 @@ func TestMain(m *testing.M) {
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }
+
+// SetToken defined
 func SetToken(token string) {
 	AccessToken = token
 }
