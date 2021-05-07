@@ -39,9 +39,9 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 // {{.ToUpperCase .Name}}Routes defined
 {{- $ctrName := .Name}}
 func {{.ToUpperCase .Name}}Routes(engine *Engine) {
-	group := engine.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}})
+	group, instance := engine.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
-	group.Handle({{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}}.Method, {{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}}.RelativePath{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, {{.ToUpperCase $ctrName}}Instance.{{.ToUpperCase .Name}})
+	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, instance.{{.ToUpperCase .Name}})
 	{{- end}}
 }
 
