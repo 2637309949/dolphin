@@ -57,15 +57,15 @@ func NewOrgan() *Organ {
 
 // OrganRoutes defined
 func OrganRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(OrganInstance.Add.Method, OrganInstance.Add.RelativePath, Auth("token"), OrganInstance.Add)
-	group.Handle(OrganInstance.BatchAdd.Method, OrganInstance.BatchAdd.RelativePath, Auth("token"), OrganInstance.BatchAdd)
-	group.Handle(OrganInstance.Del.Method, OrganInstance.Del.RelativePath, Auth("token"), OrganInstance.Del)
-	group.Handle(OrganInstance.BatchDel.Method, OrganInstance.BatchDel.RelativePath, Auth("token"), OrganInstance.BatchDel)
-	group.Handle(OrganInstance.Update.Method, OrganInstance.Update.RelativePath, Auth("token"), OrganInstance.Update)
-	group.Handle(OrganInstance.BatchUpdate.Method, OrganInstance.BatchUpdate.RelativePath, Auth("token"), OrganInstance.BatchUpdate)
-	group.Handle(OrganInstance.Page.Method, OrganInstance.Page.RelativePath, Auth("token"), OrganInstance.Page)
-	group.Handle(OrganInstance.Get.Method, OrganInstance.Get.RelativePath, Auth("token"), OrganInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), OrganInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // OrganInstance defined
