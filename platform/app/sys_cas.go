@@ -83,7 +83,7 @@ func SysCasLogin(ctx *Context) {
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+util.ErrInvalidGrant.Error())
 		return
 	}
-	store.Set("LoggedInUserID", account.ID.String)
+	store.Set("LoggedInUserID", fmt.Sprintf("%v", account.ID.Int64))
 	store.Set("LoggedInDomain", account.Domain.String)
 	store.Save()
 	ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm"))
@@ -295,16 +295,14 @@ func SysCasCheck(ctx *Context) {
 func SysCasProfile(ctx *Context) {
 	user := ctx.LoginInInfo()
 	roles := []model.SysRole{}
-	err := ctx.DB.SqlTemplateClient("sys_cas_role.tpl", &map[string]interface{}{
-		"user_id": user.ID.String,
-	}).Find(&roles)
+	err := ctx.DB.SqlTemplateClient("sys_cas_role.tpl", &map[string]interface{}{"user_id": user.ID.Int64}).Find(&roles)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 	rolesArr := funk.Map(roles, func(role model.SysRole) string {
-		return role.Name.String
+		return role.Code.String
 	}).([]string)
 	ctx.Success(map[string]interface{}{
 		"roles":  rolesArr,

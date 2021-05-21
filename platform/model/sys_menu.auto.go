@@ -17,13 +17,13 @@ import (
 // SysMenu defined 系统菜单
 type SysMenu struct {
 	// ID defined 主键
-	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
+	ID null.Int `xorm:"bigint(20) notnull autoincr unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
 	// Name defined 名称
 	Name null.String `xorm:"varchar(36) notnull comment('名称') 'name'" json:"name" form:"name" xml:"name"`
 	// Code defined 编码
 	Code null.String `xorm:"varchar(36) notnull comment('编码') 'code'" json:"code" form:"code" xml:"code"`
 	// Parent defined 父菜单ID，一级菜单为null
-	Parent null.String `xorm:"varchar(36) comment('父菜单ID，一级菜单为null') 'parent'" json:"parent" form:"parent" xml:"parent"`
+	Parent null.Int `xorm:"bigint(20) comment('父菜单ID，一级菜单为null') 'parent'" json:"parent" form:"parent" xml:"parent"`
 	// Inheritance defined 继承关系
 	Inheritance null.String `xorm:"varchar(500) comment('继承关系') 'inheritance'" json:"inheritance" form:"inheritance" xml:"inheritance"`
 	// URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
@@ -41,11 +41,11 @@ type SysMenu struct {
 	// Hidden defined 是否隐藏
 	Hidden null.Int `xorm:"notnull comment('是否隐藏') 'hidden'" json:"hidden" form:"hidden" xml:"hidden"`
 	// Creater defined 创建人
-	Creater null.String `xorm:"varchar(36) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
+	Creater null.Int `xorm:"bigint(20) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// CreateTime defined 创建时间
 	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
 	// Updater defined 最后更新人
-	Updater null.String `xorm:"varchar(36) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
+	Updater null.Int `xorm:"bigint(20) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateTime defined 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
 	// IsDelete defined 删除标记

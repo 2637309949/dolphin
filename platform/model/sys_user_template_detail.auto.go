@@ -17,9 +17,9 @@ import (
 // SysUserTemplateDetail defined 用户信息扩展模板明细
 type SysUserTemplateDetail struct {
 	// ID defined 主键
-	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
+	ID null.Int `xorm:"bigint(20) notnull autoincr unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
 	// TempId defined 模板ID
-	TempId null.String `xorm:"varchar(36) notnull comment('模板ID') 'temp_id'" json:"temp_id" form:"temp_id" xml:"temp_id"`
+	TempId null.Int `xorm:"bigint(20) notnull comment('模板ID') 'temp_id'" json:"temp_id" form:"temp_id" xml:"temp_id"`
 	// Name defined 名称
 	Name null.String `xorm:"varchar(200) notnull comment('名称') 'name'" json:"name" form:"name" xml:"name"`
 	// Value defined 值
@@ -31,11 +31,11 @@ type SysUserTemplateDetail struct {
 	// Priority defined 优先级
 	Priority null.Int `xorm:"comment('优先级') 'priority'" json:"priority" form:"priority" xml:"priority"`
 	// Creater defined 创建人
-	Creater null.String `xorm:"varchar(36) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
+	Creater null.Int `xorm:"bigint(20) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// CreateTime defined 创建时间
 	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
 	// Updater defined 最后更新人
-	Updater null.String `xorm:"varchar(36) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
+	Updater null.Int `xorm:"bigint(20) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateTime defined 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
 	// IsDelete defined 删除标记

@@ -12,19 +12,18 @@ import (
 
 // AdminRoleUser default admin
 var AdminRoleUser = SysRoleUser{
-	ID:         null.StringFrom("03eda436-2772-48da-86d8-97b2bd80e391"),
-	UserId:     DefaultAdmin.ID,
+	UserId:     null.IntFrom(1),
 	RoleId:     AdminRole.ID,
-	Creater:    DefaultAdmin.ID,
+	Creater:    null.IntFrom(1),
 	CreateTime: null.TimeFrom(time.Now()),
-	Updater:    DefaultAdmin.ID,
+	Updater:    null.IntFrom(1),
 	UpdateTime: null.TimeFrom(time.Now()),
 	IsDelete:   null.IntFrom(0),
 }
 
 // InitSysData defined inital system data
 func (m *SysRoleUser) InitSysData(s *xorm.Session) {
-	if ct, err := s.Where("id=?", AdminRoleUser.ID).Count(new(SysRoleUser)); ct == 0 || err != nil {
+	if ct, err := s.Where("user_id=? and role_id=?", AdminRoleUser.UserId, AdminRoleUser.RoleId).Count(new(SysRoleUser)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)

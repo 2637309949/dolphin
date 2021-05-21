@@ -6,6 +6,7 @@ package xorm
 
 import (
 	"bytes"
+	"database/sql"
 	"database/sql/driver"
 	"encoding/binary"
 	"errors"
@@ -414,6 +415,13 @@ func int64ToIntValue(id int64, tp reflect.Type) reflect.Value {
 	case reflect.Uint:
 		temp := uint(id)
 		v = &temp
+	case reflect.Struct:
+		tpzv := reflect.New(tp)
+		if nulVal, ok := tpzv.Interface().(sql.Scanner); ok {
+			if err := nulVal.Scan(id); err == nil {
+				v = tpzv.Interface()
+			}
+		}
 	}
 
 	if tp.Kind() == reflect.Ptr {

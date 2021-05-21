@@ -10,27 +10,27 @@ import (
 
 // DefaultClient default client
 var DefaultClient = SysClient{
-	ID:         null.StringFrom("5ba2b110-9dad-11d1-80b4-00c04fd431c4"),
+	ID:         null.IntFrom(1),
 	Client:     null.StringFrom("Y76U9344RABF4"),
 	Name:       null.StringFrom("default"),
 	AppName:    null.StringFrom(viper.GetString("app.name")),
 	Secret:     null.StringFrom("8UYO6FVB8UYO6FVB"),
 	Domain:     null.StringFrom("localhost"),
-	Creater:    DefaultAdmin.ID,
+	Creater:    null.IntFrom(1),
 	CreateTime: null.TimeFrom(time.Now()),
-	Updater:    DefaultAdmin.ID,
+	Updater:    null.IntFrom(1),
 	UpdateTime: null.TimeFrom(time.Now()),
 	IsDelete:   null.IntFrom(0),
 }
 
 // InitSysData defined inital system data
 func (m *SysClient) InitSysData(s *xorm.Session) {
-	if ct, err := s.Where("id=?", DefaultClient.ID.String).Count(new(SysClient)); ct == 0 || err != nil {
+	if ct, err := s.Where("id=?", DefaultClient.ID.Int64).Count(new(SysClient)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)
 		}
-		if _, err := s.InsertOne(&DefaultClient); err != nil {
+		if _, err := s.Insert(&DefaultClient); err != nil {
 			s.Rollback()
 			panic(err)
 		}

@@ -6,7 +6,7 @@ package model
 // Attach defined 附件结构
 type Attach struct {
 	// 文件ID
-	ID string `json:"id" xml:"id"`
+	ID int64 `json:"id" xml:"id"`
 	// 文件名
 	Name string `json:"name" xml:"name"`
 	// 访问路径

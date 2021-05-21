@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"html/template"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -39,12 +40,11 @@ func SysUserAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.ID = null.StringFromUUID()
 	payload.Domain = null.StringFrom(ctx.GetToken().GetDomain())
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	if payload.Avatar.IsZero() {
 		payload.Avatar = null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg?imageView2/1/w/80/h/80")
@@ -77,11 +77,10 @@ func SysUserBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
@@ -110,9 +109,9 @@ func SysUserDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysUser{
+	ret, err := ctx.PlatformDB.In("id", payload.ID.Int64).Update(&model.SysUser{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -135,18 +134,15 @@ func SysUserDel(ctx *Context) {
 // @Router /api/sys/user/batch_del [delete]
 func SysUserBatchDel(ctx *Context) {
 	var payload []*model.SysUser
-	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	funk.ForEach(payload, func(form model.SysUser) {
-		ids = append(ids, form.ID.String)
-	})
+	var ids = funk.Map(payload, func(form model.SysUser) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.PlatformDB.In("id", ids).Update(&model.SysUser{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -177,7 +173,7 @@ func SysUserUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
@@ -186,7 +182,7 @@ func SysUserUpdate(ctx *Context) {
 	ds := ctx.DB.NewSession()
 	defer ps.Close()
 	defer ds.Close()
-	ret, err := ps.Table(new(model.SysUser)).ID(payload.ID.String).Omit("user_role").Update(&payload)
+	ret, err := ps.Table(new(model.SysUser)).ID(payload.ID.Int64).Omit("user_role").Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -194,7 +190,7 @@ func SysUserUpdate(ctx *Context) {
 		return
 	}
 
-	_, err = ds.SQL("delete from sys_role_user where user_id=?", payload.ID.String).Execute()
+	_, err = ds.SQL("delete from sys_role_user where user_id=?", payload.ID.Int64).Execute()
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -204,14 +200,14 @@ func SysUserUpdate(ctx *Context) {
 	}
 
 	roleUsers := funk.Map(strings.Split(payload.UserRole.String, ","), func(role string) model.SysRoleUser {
+		r, _ := strconv.ParseInt(role, 10, 64)
 		return model.SysRoleUser{
-			ID:         null.StringFromUUID(),
 			UserId:     payload.ID,
-			RoleId:     null.StringFrom(role),
+			RoleId:     null.IntFrom(r),
 			CreateTime: null.TimeFrom(time.Now().Value()),
-			Creater:    null.StringFrom(ctx.GetToken().GetUserID()),
+			Creater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
-			Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+			Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 			IsDelete:   null.IntFrom(0),
 		}
 	}).([]model.SysRoleUser)
@@ -267,8 +263,8 @@ func SysUserBatchUpdate(ctx *Context) {
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
-		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
 			logrus.Error(err)
@@ -339,7 +335,6 @@ func SysUserPage(ctx *Context) {
 			ctx.Fail(err)
 			return
 		}
-		fmt.Println("-----", roles)
 		err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
 		if err != nil {
 			logrus.Error(err)
@@ -364,7 +359,7 @@ func SysUserPage(ctx *Context) {
 	}
 
 	ret = ret.With(new([]struct {
-		ID        null.String `json:"id" xml:"id"`
+		ID        null.Int    `json:"id" xml:"id"`
 		Name      null.String `json:"name" xml:"name"`
 		NickName  null.String `json:"nickname" xml:"nickname"`
 		Mobile    null.String `json:"mobile" xml:"mobile"`
@@ -372,8 +367,8 @@ func SysUserPage(ctx *Context) {
 		RoleName  null.String `json:"role_name" xml:"role_name"`
 		UserRole  null.String `json:"user_role" xml:"user_role"`
 		OrgName   null.String `json:"org_name" xml:"org_name"`
-		OrgID     null.String `json:"org_id" xml:"org_id"`
-		TempID    null.String `json:"temp_id" xml:"temp_id"`
+		OrgID     null.Int    `json:"org_id" xml:"org_id"`
+		TempID    null.Int    `json:"temp_id" xml:"temp_id"`
 		TempValue null.String `json:"temp_value" xml:"temp_value"`
 	}))
 	if ctx.QueryBool("__export__") {
@@ -442,7 +437,7 @@ func SysUserLogin(ctx *Context) {
 		return
 	}
 	token, err := ctx.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
-		UserID:       account.ID.String,
+		UserID:       fmt.Sprintf("%v", account.ID.Int64),
 		Domain:       account.Domain.String,
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),

@@ -102,9 +102,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		payload[i].{{- $v}} = null.StringFromUUID()
 		{{- end }}
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	{{- else}}
@@ -112,9 +112,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	payload.{{- $v}} = null.StringFromUUID()
 	{{- end}}
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	{{- end}}
 	ret, err := ctx.DB.Insert(&payload)
@@ -133,10 +133,10 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		return
 	}
 	{{- if .ISArray $bp.Type}}
-	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) string { return form.ID.String }).([]string)
+	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:   null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
@@ -146,9 +146,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- else }}
-	ret, err := ctx.DB.In("id", payload.ID.String).Update(&{{$bp.ORef $bp.Type}}{
+	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:   null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:   null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
@@ -179,8 +179,8 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
-		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if  err != nil {
 			logrus.Error(err)
 			s.Rollback()
@@ -203,9 +203,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	}
 	ctx.Success(ret)
 	{{- else }}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
+	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

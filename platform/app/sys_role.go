@@ -6,10 +6,9 @@ package app
 import (
 	"errors"
 
-	"github.com/2637309949/dolphin/platform/model"
-
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/time"
+	"github.com/2637309949/dolphin/platform/model"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
@@ -32,11 +31,10 @@ func SysRoleAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	cnt, err := ctx.DB.Where("code=? and is_delete !=1", payload.Code.String).Count(new(model.SysRole))
 	if err != nil {
@@ -75,11 +73,11 @@ func SysRoleBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].ID = null.StringFromUUID()
+
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	cnt, err := ctx.DB.Where("is_delete !=1").In("code", (funk.Map(payload, func(item model.SysRole) interface{} {
@@ -120,9 +118,9 @@ func SysRoleDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysRole{
+	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&model.SysRole{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -145,18 +143,15 @@ func SysRoleDel(ctx *Context) {
 // @Router /api/sys/role/batch_del [delete]
 func SysRoleBatchDel(ctx *Context) {
 	var payload []*model.SysRole
-	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	funk.ForEach(payload, func(form model.SysRole) {
-		ids = append(ids, form.ID.String)
-	})
+	var ids = funk.Map(payload, func(form model.SysRole) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysRole{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -184,9 +179,9 @@ func SysRoleUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
+	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -220,8 +215,8 @@ func SysRoleBatchUpdate(ctx *Context) {
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
-		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
 			logrus.Error(err)
@@ -291,7 +286,7 @@ func SysRoleRoleMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", q.GetString("role_id") == model.AdminRole.ID.String)
+	q.SetBool("is_admin", ctx.InAdmin())
 	q.SetRule("sys_role_menu_tree")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "menu_tree", "sys_org", q.Value())
@@ -313,7 +308,7 @@ func SysRoleRoleAppFunTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", q.GetString("role_id") == model.AdminRole.ID.String)
+	q.SetBool("is_admin", ctx.InAdmin())
 	q.SetRule("sys_role_app_fun_tree")
 	q.SetTags()
 	ret, err := ctx.TreeSearch(ctx.DB, "sys_role", "app_fun_tree", "sys_org", q.Value())

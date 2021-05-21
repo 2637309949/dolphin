@@ -1,14 +1,14 @@
 <table name="sys_client" desc="OA授权应用" packages="github.com/2637309949/dolphin/packages/null" bind="platform">
-	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 	<column name="name" desc="名称" type="null.String" xorm="varchar(36)" />
 	<column name="app_name" desc="应用归属" type="null.String" xorm="varchar(36) notnull" />
 	<column name="domain" desc="域" type="null.String" xorm="varchar(36) notnull" />
     <column name="client" desc="应用" type="null.String" xorm="varchar(36)" />
 	<column name="secret" desc="密钥" type="null.String" xorm="varchar(36)" />
 
-	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
-	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
 	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />

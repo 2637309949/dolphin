@@ -139,7 +139,6 @@ func (s *Server) CheckResponseType(rt oauth2.ResponseType) bool {
 
 // ValidationAuthorizeRequest the authorization request validation
 func (s *Server) ValidationAuthorizeRequest(r *http.Request) (*AuthorizeRequest, error) {
-	fmt.Println("-----------------ValidationAuthorizeRequest", r.Header)
 	redirectURI := r.FormValue("redirect_uri")
 	clientID := r.FormValue("client_id")
 	if !(r.Method == "GET" || r.Method == "POST") ||

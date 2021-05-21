@@ -12,7 +12,7 @@ import (
 
 // DefaultAdmin default admin
 var DefaultAdmin = SysUser{
-	ID:         null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	ID:         null.IntFrom(1),
 	Password:   null.StringFrom("admin"),
 	Name:       null.StringFrom("admin"),
 	Nickname:   null.StringFrom("admin"),
@@ -20,9 +20,9 @@ var DefaultAdmin = SysUser{
 	Status:     null.IntFrom(1),
 	Domain:     null.StringFrom("localhost"),
 	OrgId:      null.StringFrom("c637bt50-7dad-31d1-81b5-10c34fd460e1"),
-	Creater:    null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	Creater:    null.IntFrom(1),
 	CreateTime: null.TimeFrom(time.Now()),
-	Updater:    null.StringFrom("6ba7b810-9dad-11d1-80b4-00c04fd430c8"),
+	Updater:    null.IntFrom(1),
 	UpdateTime: null.TimeFrom(time.Now()),
 	IsDelete:   null.IntFrom(0),
 }
@@ -49,7 +49,7 @@ func (m *SysUser) ValidPassword(password string) bool {
 
 // InitSysData defined inital system data
 func (m *SysUser) InitSysData(s *xorm.Session) {
-	if ct, err := s.Where("id=?", DefaultAdmin.ID.String).Count(new(SysUser)); ct == 0 || err != nil {
+	if ct, err := s.Where("id=?", DefaultAdmin.ID.Int64).Count(new(SysUser)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)

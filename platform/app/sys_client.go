@@ -32,11 +32,10 @@ func SysClientAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
@@ -66,11 +65,10 @@ func SysClientBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
@@ -99,9 +97,9 @@ func SysClientDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysClient{
+	ret, err := ctx.PlatformDB.In("id", payload.ID.Int64).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -124,18 +122,15 @@ func SysClientDel(ctx *Context) {
 // @Router /api/sys/client/batch_del [delete]
 func SysClientBatchDel(ctx *Context) {
 	var payload []model.SysClient
-	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	funk.ForEach(payload, func(form model.SysClient) {
-		ids = append(ids, form.ID.String)
-	})
+	var ids = funk.Map(payload, func(form model.SysClient) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.PlatformDB.In("id", ids).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -163,7 +158,7 @@ func SysClientUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
@@ -199,8 +194,8 @@ func SysClientBatchUpdate(ctx *Context) {
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
-		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
 			logrus.Error(err)

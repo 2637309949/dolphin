@@ -407,11 +407,11 @@ func SysClientAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.ID = null.StringFromUUID()
+	
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := ctx.PlatformDB.Insert(&payload)
@@ -458,7 +458,6 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 		return
 	}
 	funk.ForEach(payload, func(form *model.SysRoleMenu) {
-		form.ID = null.StringFromUUID()
 		form.CreateTime = null.TimeFrom(time.Now().Value())
 		form.Creater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
@@ -516,7 +515,7 @@ func SysClientDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.In("id", payload.ID.String).Update(&model.SysClient{
+	ret, err := ctx.PlatformDB.In("id", payload.ID.Int64).Update(&model.SysClient{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
 		Updater:   null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
@@ -566,7 +565,7 @@ func SysOptionsetBatchDel(ctx *Context) {
 		return
 	}
 	funk.ForEach(payload, func(form model.SysOptionset) {
-		ids = append(ids, form.ID.String)
+		ids = append(ids, form.ID.Int64)
 	})
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysOptionset{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
@@ -619,7 +618,7 @@ func SysClientUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
 	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
@@ -673,7 +672,7 @@ func ArticleBatchUpdate(ctx *Context) {
 	funk.ForEach(payload, func(form model.Article) {
 		form.Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		form.UpdateTime = null.TimeFrom(time.Now().Value())
-		r, err = s.ID(form.ID.String).Update(&form)
+		r, err = s.ID(form.ID.Int64).Update(&form)
 		ret = append(ret, r)
 	})
 	if err != nil {

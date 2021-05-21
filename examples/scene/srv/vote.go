@@ -98,26 +98,23 @@ func init() {
 			}
 			for i := int64(0); i < num2; i++ {
 				ulp := model.UserLikePost{}
-				userId, err := app.RedisClient.SPop(context.Background(),
-					fmt.Sprintf("post_user_like_set_%v", postId)).Result()
+				userId, err := app.RedisClient.SPop(context.Background(), fmt.Sprintf("post_user_like_set_%v", postId)).Result()
 				if err != nil {
 					logrus.Error(err)
 					break
 				}
-				field, err := app.RedisClient.HMGet(context.Background(),
-					fmt.Sprintf("post_user_like_%v%v", postId, userId), "create_time", "type").Result()
+				field, err := app.RedisClient.HMGet(context.Background(), fmt.Sprintf("post_user_like_%v%v", postId, userId), "create_time", "type").Result()
 				if err != nil {
 					logrus.Error(err)
 					break
 				}
 				te, _ := time.Parse("2006-01-02 15:04", fmt.Sprintf("%v", field[0]))
-				ulp.ID = null.StringFromUUID()
-				ulp.UserId = null.StringFrom(userId)
-				ulp.PostId = null.StringFrom(postId)
+				ulp.UserId = null.IntFromStr(userId)
+				ulp.PostId = null.IntFromStr(postId)
 				ulp.CreateTime = null.TimeFrom(te.Value())
-				ulp.Creater = null.StringFrom(userId)
+				ulp.Creater = null.IntFromStr(userId)
 				ulp.UpdateTime = null.TimeFrom(te.Value())
-				ulp.Updater = null.StringFrom(userId)
+				ulp.Updater = null.IntFromStr(userId)
 				ulp.IsDelete = null.IntFrom(0)
 				tpe, _ := strconv.Atoi(fmt.Sprintf("%v", field[1]))
 				if tpe == 101 {
@@ -137,28 +134,28 @@ func init() {
 				}
 			}
 		}
-		userDomains := map[string]string{}
+		userDomains := map[int64]string{}
 		if uids, ok := slice.GetFieldSliceByName(ulpsIncr, "user_id", "%v").([]string); ok {
 			users, _ := app.App.PlatformDB.Table("sys_user").In("id", uids).Where("is_delete != ?", 1).Cols("id", "domain").QueryString()
 			for i := range users {
-				userDomains[users[i]["id"]] = users[i]["domain"]
+				userDomains[null.IntFromStr(users[i]["id"]).Int64] = users[i]["domain"]
 			}
 		}
 		if uids, ok := slice.GetFieldSliceByName(ulpsDecr, "user_id", "%v").([]string); ok {
 			users, _ := app.App.PlatformDB.Table("sys_user").In("id", uids).Where("is_delete != ?", 1).Cols("id", "domain").QueryString()
 			for i := range users {
-				userDomains[users[i]["id"]] = users[i]["domain"]
+				userDomains[null.IntFromStr(users[i]["id"]).Int64] = users[i]["domain"]
 			}
 		}
 		domainIncr := map[string][]model.UserLikePost{}
 		domainDecr := map[string][]model.UserLikePost{}
 		for i := range ulpsIncr {
-			ret := domainIncr[userDomains[ulpsIncr[i].UserId.String]]
-			domainIncr[userDomains[ulpsIncr[i].UserId.String]] = append(ret, ulpsIncr[i])
+			ret := domainIncr[userDomains[ulpsIncr[i].UserId.Int64]]
+			domainIncr[userDomains[ulpsIncr[i].UserId.Int64]] = append(ret, ulpsIncr[i])
 		}
 		for i := range ulpsDecr {
-			ret := domainDecr[userDomains[ulpsDecr[i].UserId.String]]
-			domainDecr[userDomains[ulpsDecr[i].UserId.String]] = append(ret, ulpsDecr[i])
+			ret := domainDecr[userDomains[ulpsDecr[i].UserId.Int64]]
+			domainDecr[userDomains[ulpsDecr[i].UserId.Int64]] = append(ret, ulpsDecr[i])
 		}
 		for k, v := range domainDecr {
 			db := app.App.Manager.GetBusinessDB(k)
@@ -166,7 +163,7 @@ func init() {
 				logrus.Println("domainDecr:", len(v))
 				sql := "false"
 				for i2 := range v {
-					sql += " or (user_id='" + v[i2].UserId.String + "' and " + "post_id='" + v[i2].PostId.String + "')"
+					sql += " or (user_id=" + fmt.Sprintf("%v", v[i2].UserId.Int64) + " and " + "post_id=" + fmt.Sprintf("%v", v[i2].PostId.Int64) + ")"
 				}
 				if _, err := db.Table(new(model.UserLikePost)).Where(sql).Update(&map[string]interface{}{
 					"is_delete": 1,
@@ -183,7 +180,7 @@ func init() {
 				extList := []model.UserLikePost{}
 				sql := "false"
 				for i2 := range v {
-					sql += " or (user_id='" + v[i2].UserId.String + "' and " + "post_id='" + v[i2].PostId.String + "')"
+					sql += " or (user_id=" + fmt.Sprintf("%v", v[i2].UserId.Int64) + " and " + "post_id=" + fmt.Sprintf("%v", v[i2].PostId.Int64) + ")"
 				}
 				if err := db.Table(new(model.UserLikePost)).Where(sql).Find(&extList); err != nil {
 					logrus.Error(err)
@@ -191,8 +188,8 @@ func init() {
 				}
 				items := funk.Filter(v, func(v1 model.UserLikePost) bool {
 					for i3 := range extList {
-						if v1.UserId.String == extList[i3].UserId.String &&
-							v1.PostId.String == extList[i3].PostId.String {
+						if v1.UserId.Int64 == extList[i3].UserId.Int64 &&
+							v1.PostId.Int64 == extList[i3].PostId.Int64 {
 							return false
 						}
 					}

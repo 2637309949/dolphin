@@ -51,7 +51,7 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       hidden:
         description: Hidden defined 是否隐藏
         type: number
@@ -60,7 +60,7 @@ definitions:
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       image:
         description: Image defined 图片
         type: string
@@ -93,7 +93,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
       url:
         description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
           3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
@@ -106,10 +106,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       inheritance:
         description: Inheritance defined 继承关系
         type: string
@@ -142,7 +142,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysAttachment:
     properties:
@@ -151,7 +151,7 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       durable:
         description: Durable defined 是否持久化 0：否 1：是
         type: number
@@ -166,7 +166,7 @@ definitions:
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -190,7 +190,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
       url:
         description: URL defined url
         type: string
@@ -211,13 +211,13 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       domain:
         description: Domain defined 域
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -235,7 +235,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysComment:
     properties:
@@ -247,13 +247,13 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       from_uid:
         description: FromUid defined 评论用户id
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -262,7 +262,7 @@ definitions:
         type: string
       topic_id:
         description: TopicId defined 主题ID
-        type: string
+        type: number
       topic_type:
         description: TopicType defined 主题类型
         type: string
@@ -271,7 +271,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysDataPermission:
     properties:
@@ -283,10 +283,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -301,7 +301,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysDomain:
     properties:
@@ -328,7 +328,7 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       data_source:
         description: DataSource defined 数据库链接串
         type: string
@@ -346,7 +346,7 @@ definitions:
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -379,7 +379,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysMenu:
     properties:
@@ -394,7 +394,7 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       hidden:
         description: Hidden defined 是否隐藏
         type: number
@@ -403,7 +403,7 @@ definitions:
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       inheritance:
         description: Inheritance defined 继承关系
         type: string
@@ -418,7 +418,7 @@ definitions:
         type: number
       parent:
         description: Parent defined 父菜单ID，一级菜单为null
-        type: string
+        type: number
       perms:
         description: Perms defined 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
         type: string
@@ -433,7 +433,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
       url:
         description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
           3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
@@ -446,13 +446,13 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       from_uid:
         description: FromUid defined 发送者
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -476,7 +476,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysOptionset:
     properties:
@@ -488,10 +488,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -506,7 +506,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
       value:
         description: Value defined 值
         type: string
@@ -521,13 +521,13 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       full_name:
         description: FullName defined 全名
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       inheritance:
         description: Inheritance defined 继承关系
         type: string
@@ -560,7 +560,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysPermission:
     properties:
@@ -572,10 +572,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -590,7 +590,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysRole:
     properties:
@@ -608,10 +608,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -629,7 +629,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysRoleMenu:
     properties:
@@ -638,28 +638,28 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
       menu_id:
         description: MenuId defined 菜单ID
-        type: string
+        type: number
       remark:
         description: Remark defined 备注
         type: string
       role_id:
         description: RoleId defined 用户ID
-        type: string
+        type: number
       update_time:
         description: UpdateTime defined 最后更新时间
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysSchedule:
     properties:
@@ -668,10 +668,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -683,7 +683,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysSetting:
     properties:
@@ -692,10 +692,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -710,7 +710,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
       value:
         description: Value defined 值
         type: string
@@ -728,13 +728,13 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       desc:
         description: Desc defined 描述
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -752,7 +752,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysTableColumn:
     properties:
@@ -761,7 +761,7 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       default:
         description: Default defined 默认值
         type: string
@@ -770,7 +770,7 @@ definitions:
         type: string
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -788,7 +788,7 @@ definitions:
         type: string
       tb_id:
         description: TbId defined 表ID
-        type: string
+        type: number
       type:
         description: Type defined 类型
         type: string
@@ -797,7 +797,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysTag:
     properties:
@@ -806,13 +806,13 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       group_id:
         description: GroupId defined 分组ID
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -827,7 +827,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysTagGroup:
     properties:
@@ -839,10 +839,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -857,7 +857,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysUser:
     properties:
@@ -872,7 +872,7 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       domain:
         description: Domain defined 域
         type: string
@@ -887,7 +887,7 @@ definitions:
         type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       intro:
         description: Intro defined 简介
         type: string
@@ -941,7 +941,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysUserTemplate:
     properties:
@@ -950,13 +950,13 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       default:
         description: Default defined 是否默认 1：是 0：否
         type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -974,7 +974,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
     type: object
   model.SysUserTemplateDetail:
     properties:
@@ -986,10 +986,10 @@ definitions:
         type: string
       creater:
         description: Creater defined 创建人
-        type: string
+        type: number
       id:
         description: ID defined 主键
-        type: string
+        type: number
       is_delete:
         description: IsDelete defined 删除标记
         type: number
@@ -1004,7 +1004,7 @@ definitions:
         type: string
       temp_id:
         description: TempId defined 模板ID
-        type: string
+        type: number
       type:
         description: Type defined 模板类型 0:数值项 1:单选项 2:文字项 3:列表项
         type: number
@@ -1013,7 +1013,7 @@ definitions:
         type: string
       updater:
         description: Updater defined 最后更新人
-        type: string
+        type: number
       value:
         description: Value defined 值
         type: string

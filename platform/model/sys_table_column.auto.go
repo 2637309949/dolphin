@@ -17,9 +17,9 @@ import (
 // SysTableColumn defined 系统字段
 type SysTableColumn struct {
 	// ID defined 主键
-	ID null.String `xorm:"varchar(36) notnull unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
+	ID null.Int `xorm:"bigint(20) notnull autoincr unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
 	// TbId defined 表ID
-	TbId null.String `xorm:"varchar(36) notnull comment('表ID') 'tb_id'" json:"tb_id" form:"tb_id" xml:"tb_id"`
+	TbId null.Int `xorm:"bigint(20) notnull comment('表ID') 'tb_id'" json:"tb_id" form:"tb_id" xml:"tb_id"`
 	// Name defined 表名
 	Name null.String `xorm:"varchar(150) notnull comment('表名') 'name'" json:"name" form:"name" xml:"name"`
 	// Desc defined 描述
@@ -33,11 +33,11 @@ type SysTableColumn struct {
 	// Default defined 默认值
 	Default null.String `xorm:"varchar(100) notnull comment('默认值') 'default'" json:"default" form:"default" xml:"default"`
 	// Creater defined 创建人
-	Creater null.String `xorm:"varchar(36) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
+	Creater null.Int `xorm:"bigint(20) notnull comment('创建人') 'creater'" json:"creater" form:"creater" xml:"creater"`
 	// CreateTime defined 创建时间
 	CreateTime null.Time `xorm:"datetime notnull comment('创建时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
 	// Updater defined 最后更新人
-	Updater null.String `xorm:"varchar(36) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
+	Updater null.Int `xorm:"bigint(20) notnull comment('最后更新人') 'updater'" json:"updater" form:"updater" xml:"updater"`
 	// UpdateTime defined 最后更新时间
 	UpdateTime null.Time `xorm:"datetime notnull comment('最后更新时间') 'update_time'" json:"update_time" form:"update_time" xml:"update_time"`
 	// IsDelete defined 删除标记

@@ -38,11 +38,10 @@ func SysAttachmentAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.ID = null.StringFromUUID()
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -71,11 +70,10 @@ func SysAttachmentBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
@@ -98,7 +96,6 @@ func SysAttachmentBatchAdd(ctx *Context) {
 // @Router /api/sys/attachment/upload [post]
 func SysAttachmentUpload(ctx *Context) {
 	var attachments []model.SysAttachment
-	var attachs []model.Attach
 	form, err := ctx.MultipartForm()
 	if err != nil {
 		fmt.Println("err", err)
@@ -121,7 +118,6 @@ func SysAttachmentUpload(ctx *Context) {
 		}
 		urlPath := path.Join("files", uuid+filepath.Ext(filename))
 		item := model.SysAttachment{
-			ID:         null.StringFromUUID(),
 			Name:       null.StringFrom(filename),
 			UUID:       null.StringFrom(uuid),
 			Size:       null.IntFrom(f.Size),
@@ -132,24 +128,27 @@ func SysAttachmentUpload(ctx *Context) {
 			Type:       null.StringFrom(fileType),
 			Durable:    null.IntFrom(0),
 			CreateTime: null.TimeFrom(time.Now().Value()),
-			Creater:    null.StringFrom(ctx.GetToken().GetUserID()),
+			Creater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 			UpdateTime: null.TimeFrom(time.Now().Value()),
-			Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+			Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 			IsDelete:   null.IntFrom(0),
 		}
 		attachments = append(attachments, item)
-		attachs = append(attachs, model.Attach{
-			ID:   item.ID.String,
-			Name: item.Name.String,
-			Hash: item.Hash.String,
-			URL:  item.URL.String,
-		})
 	}
 	if _, err = ctx.DB.Insert(attachments); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
+	attachs := funk.Map(attachments, func(mst model.SysAttachment) model.Attach {
+		return model.Attach{
+			ID:   mst.ID.Int64,
+			Name: mst.Name.String,
+			Hash: mst.Hash.String,
+			URL:  mst.URL.String,
+		}
+	})
+
 	ctx.Success(attachs)
 }
 
@@ -189,9 +188,9 @@ func SysAttachmentDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysAttachment{
+	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&model.SysAttachment{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -219,10 +218,10 @@ func SysAttachmentBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	var ids = funk.Map(payload, func(form model.SysAttachment) string { return form.ID.String }).([]string)
+	var ids = funk.Map(payload, func(form model.SysAttachment) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysAttachment{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -250,9 +249,9 @@ func SysAttachmentUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
+	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -286,8 +285,8 @@ func SysAttachmentBatchUpdate(ctx *Context) {
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
-		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
 			logrus.Error(err)

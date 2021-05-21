@@ -22,7 +22,6 @@ func (m *SysTableColumn) TruncateTable(session *xorm.Session, driverName string)
 // ColumnInfo defined inital system data
 func (m *SysTableColumn) ColumnInfo(info *schemas.Column) SysTableColumn {
 	return SysTableColumn{
-		ID:           null.StringFromUUID(),
 		Name:         null.StringFrom(info.Name),
 		Type:         null.StringFrom(info.SQLType.Name),
 		Desc:         null.StringFrom(info.Comment),
@@ -30,9 +29,9 @@ func (m *SysTableColumn) ColumnInfo(info *schemas.Column) SysTableColumn {
 		Nullable:     null.BoolFrom(info.Nullable),
 		Default:      null.StringFrom(info.Default),
 		CreateTime:   null.TimeFrom(time.Now()),
-		Creater:      DefaultAdmin.ID,
+		Creater:      null.IntFrom(0),
 		UpdateTime:   null.TimeFrom(time.Now()),
-		Updater:      DefaultAdmin.ID,
+		Updater:      null.IntFrom(0),
 		IsDelete:     null.IntFrom(0),
 	}
 }

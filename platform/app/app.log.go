@@ -119,7 +119,6 @@ func initTracker() {
 					item := entity.(*plugin.LogFormatterParams)
 					return SysTracker{
 						SysTracker: model.SysTracker{
-							ID:         null.StringFromUUID(),
 							Token:      null.StringFrom(item.Token),
 							UserId:     null.StringFrom(item.UserID),
 							StatusCode: null.IntFrom(int64(item.StatusCode)),
@@ -131,9 +130,9 @@ func initTracker() {
 							ReqBody:    item.ReqBody,
 							ResBody:    item.ResBody,
 							CreateTime: null.TimeFrom(time.Now()),
-							Creater:    model.DefaultAdmin.ID,
+							Creater:    null.IntFrom(1),
 							UpdateTime: null.TimeFrom(time.Now()),
-							Updater:    model.DefaultAdmin.ID,
+							Updater:    null.IntFrom(1),
 							IsDelete:   null.IntFrom(0),
 						},
 						Domain: null.StringFrom(item.Domain),

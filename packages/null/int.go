@@ -25,6 +25,12 @@ func NewInt(i int64, valid bool) Int {
 	}
 }
 
+// IntFromStr creates a new Int that will always be valid.
+func IntFromStr(i string) Int {
+	it, _ := strconv.ParseInt(i, 10, 64)
+	return NewInt(it, true)
+}
+
 // IntFrom creates a new Int that will always be valid.
 func IntFrom(i int64) Int {
 	return NewInt(i, true)

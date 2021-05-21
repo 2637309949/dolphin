@@ -4,17 +4,17 @@ reply_type： 表示回复的类型，因为回复可以是针对评论的回复
 reply_id：   表示回复目标的id，如果reply_type是comment的话，那么reply_id＝commit_id，如果reply_type是reply的话，这表示这条回复的父回复。
 -->
 <table name="sys_comment_reply" desc="评论回复表" packages="github.com/2637309949/dolphin/packages/null">
-	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
-	<column name="comment_id" desc="评论id" type="null.String" xorm="varchar(36) notnull" />
-	<column name="reply_id" desc="回复目标id" type="null.String" xorm="varchar(36) notnull" />
+	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
+	<column name="comment_id" desc="评论id" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="reply_id" desc="回复目标id" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="reply_type" desc="回复类型" type="null.Int" xorm="notnull" />
     <column name="content" desc="回复内容" type="null.String" xorm="varchar(36)" />
-    <column name="from_uid" desc="评论用户id" type="null.String" xorm="varchar(36) notnull" />
-    <column name="to_uid" desc="目标用户id" type="null.String" xorm="varchar(36) notnull" />
+    <column name="from_uid" desc="评论用户id" type="null.Int" xorm="varchar(36) notnull" />
+    <column name="to_uid" desc="目标用户id" type="null.Int" xorm="varchar(36) notnull" />
 
-	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
-	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
 	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />

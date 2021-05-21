@@ -97,6 +97,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 		tableInfo := util.EnsureLeft(db.TableInfo(m)).(*schemas.Table)
 		colsInfo := tableInfo.Columns()
 		tables = append(tables, new(model.SysTable).TableInfo(tableInfo))
+		tables[len(tables)-1].ID = null.IntFrom(int64(len(tables)))
 		columns = append(columns, funk.Map(colsInfo, func(col *schemas.Column) model.SysTableColumn {
 			sc := new(model.SysTableColumn).ColumnInfo(col)
 			sc.TbId = tables[len(tables)-1].ID
@@ -172,7 +173,7 @@ func (e *Engine) database() {
 		new(model.SysUserTemplate).InitSysData(db.NewSession())
 		new(model.SysUserTemplateDetail).InitSysData(db.NewSession())
 		// ensure is_sync
-		util.EnsureLeft(e.PlatformDB.ID(domain.ID.String).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)}))
+		util.EnsureLeft(e.PlatformDB.ID(domain.ID.Int64).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)}))
 	})
 	// release model sets
 	e.Manager.MSet().Release()

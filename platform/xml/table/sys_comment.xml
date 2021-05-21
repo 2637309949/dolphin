@@ -3,15 +3,15 @@ topic_type：为了能复用评论模块，我们引入这个字段来区分主�
 from_uid：  表示评论人的id，通过该id我们可以检索到评论人的相关信息。
 -->
 <table name="sys_comment" desc="评论表" packages="github.com/2637309949/dolphin/packages/null">
-	<column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
-	<column name="topic_id" desc="主题ID" type="null.String" xorm="varchar(36) notnull" />
+	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
+	<column name="topic_id" desc="主题ID" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="topic_type" desc="主题类型" type="null.String" xorm="varchar(36) notnull" />
 	<column name="content" desc="评论内容" type="null.String" xorm="varchar(36)" />
-    <column name="from_uid" desc="评论用户id" type="null.String" xorm="varchar(36) notnull" />
+    <column name="from_uid" desc="评论用户id" type="null.Int" xorm="bigint(20) notnull" />
 
-	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
-	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36) notnull" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
 	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />

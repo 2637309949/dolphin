@@ -95,7 +95,7 @@ func OrganDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("organ_id", payload.OrganId.Int64).Update(&model.Organ{
+	ret, err := ctx.DB.In("id", payload.OrganId.Int64).Update(&model.Organ{
 		UpdateDate: null.TimeFrom(time.Now().Value()),
 		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -126,7 +126,7 @@ func OrganBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form model.Organ) int64 { return form.OrganId.Int64 }).([]int64)
-	ret, err := ctx.DB.In("organ_id", ids).Update(&model.Organ{
+	ret, err := ctx.DB.In("id", ids).Update(&model.Organ{
 		UpdateDate: null.TimeFrom(time.Now().Value()),
 		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -190,15 +190,23 @@ func OrganBatchUpdate(ctx *Context) {
 	s := ctx.DB.NewSession()
 	s.Begin()
 	defer s.Close()
+	s.Begin()
+	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateDate = null.TimeFrom(time.Now().Value())
 		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].OrganId.Int64).Update(&payload[i])
+		if err != nil {
+			logrus.Error(err)
+			s.Rollback()
+			ctx.Fail(err)
+			return
+		}
 		ret = append(ret, r)
 	}
 	if err != nil {
-		s.Rollback()
 		logrus.Error(err)
+		s.Rollback()
 		ctx.Fail(err)
 		return
 	}
@@ -231,6 +239,7 @@ func OrganPage(ctx *Context) {
 	q.SetRange("create_time")
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
+	q.SetString("sort", "update_time desc")
 	q.SetTags()
 	ret, err := ctx.PageSearch(ctx.DB, "organ", "page", "organ", q.Value())
 	if err != nil {

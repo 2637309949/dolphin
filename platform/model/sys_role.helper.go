@@ -10,13 +10,13 @@ import (
 
 // AdminRole default admin
 var AdminRole = SysRole{
-	ID:         null.StringFrom("4c18ee66-c5e6-40a7-b190-86d115bae3e5"),
+	ID:         null.IntFrom(1),
 	Name:       null.StringFrom("管理员"),
 	Code:       null.StringFrom("admin"),
 	Status:     null.IntFrom(1),
-	Creater:    DefaultAdmin.ID,
+	Creater:    null.IntFrom(1),
 	CreateTime: null.TimeFrom(time.Now()),
-	Updater:    DefaultAdmin.ID,
+	Updater:    null.IntFrom(1),
 	UpdateTime: null.TimeFrom(time.Now()),
 	IsDelete:   null.IntFrom(0),
 }
@@ -24,13 +24,12 @@ var AdminRole = SysRole{
 var roles = []SysRole{
 	AdminRole,
 	{
-		ID:         null.StringFrom("3b18ee66-a5e6-40a3-b190-86d115bae3e2"),
 		Name:       null.StringFrom("客户关系"),
 		Code:       null.StringFrom("crm"),
 		Status:     null.IntFrom(1),
-		Creater:    DefaultAdmin.ID,
+		Creater:    null.IntFrom(1),
 		CreateTime: null.TimeFrom(time.Now()),
-		Updater:    DefaultAdmin.ID,
+		Updater:    null.IntFrom(1),
 		UpdateTime: null.TimeFrom(time.Now()),
 		IsDelete:   null.IntFrom(0),
 	},
@@ -46,7 +45,7 @@ func (m *SysRole) GenCode(rewrite ...bool) {
 // InitSysData defined inital system data
 func (m *SysRole) InitSysData(s *xorm.Session) {
 	for _, role := range roles {
-		if ct, err := s.Where("id=?", role.ID.String).Count(new(SysRole)); ct == 0 || err != nil {
+		if ct, err := s.Where("code=?", role.Code.String).Count(new(SysRole)); ct == 0 || err != nil {
 			if err != nil {
 				s.Rollback()
 				panic(err)

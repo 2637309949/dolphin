@@ -33,7 +33,7 @@ func (m *SysDomain) CreateDataBase(db *xorm.Engine, driverName, database string)
 func (m *SysDomain) InitSysData(s *xorm.Session) {
 	domains := []SysDomain{
 		{
-			ID:         null.StringFrom("5ba2b810-9dad-11d1-80b4-00c04fd430c1"),
+			ID:         null.IntFrom(1),
 			Name:       null.StringFrom("localhost"),
 			FullName:   null.StringFrom("localhost"),
 			AppName:    null.StringFrom(viper.GetString("app.name")),
@@ -47,16 +47,16 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			Domain:     null.StringFrom("localhost"),
 			DomainUrl:  null.StringFrom("localhost"),
 			ApiUrl:     null.StringFrom("http://localhost:8082"),
-			Creater:    DefaultAdmin.ID,
+			Creater:    null.IntFrom(1),
 			CreateTime: null.TimeFrom(time.Now()),
-			Updater:    DefaultAdmin.ID,
+			Updater:    null.IntFrom(1),
 			UpdateTime: null.TimeFrom(time.Now()),
 			IsDelete:   null.IntFrom(0),
 		},
 	}
 	for i := range domains {
 		occ, occLoc := "?", "_localhost?"
-		if ct, err := s.Where("id=?", domains[i].ID.String).Count(new(SysDomain)); ct == 0 || err != nil {
+		if ct, err := s.Where("id=?", domains[i].ID.Int64).Count(new(SysDomain)); ct == 0 || err != nil {
 			if err != nil {
 				s.Rollback()
 				panic(err)
@@ -66,7 +66,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 				occLoc = "_localhost.db"
 			}
 			domains[i].DataSource = null.StringFrom(strings.Replace(viper.GetString("db.dataSource"), occ, occLoc, 1))
-			if _, err := s.InsertOne(&domains[i]); err != nil {
+			if _, err := s.Insert(&domains[i]); err != nil {
 				s.Rollback()
 				panic(err)
 			}

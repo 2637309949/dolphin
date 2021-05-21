@@ -1,5 +1,5 @@
 <bean name="attach" desc="附件结构">
-    <prop name="id" desc="文件ID" type="string" />
+    <prop name="id" desc="文件ID" type="int64" />
     <prop name="name" desc="文件名" type="string" />
     <prop name="hash" desc="访问路径" type="string" />
     <prop name="url" desc="访问路径" type="string" />

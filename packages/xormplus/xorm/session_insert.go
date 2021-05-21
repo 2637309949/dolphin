@@ -454,6 +454,7 @@ func (session *Session) innerInsert(bean interface{}) (int64, error) {
 
 	var id int64
 	id, err = res.LastInsertId()
+
 	if err != nil || id <= 0 {
 		return res.RowsAffected()
 	}

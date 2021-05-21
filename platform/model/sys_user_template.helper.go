@@ -12,20 +12,20 @@ import (
 
 // DefaultUserTemplate default
 var DefaultUserTemplate = SysUserTemplate{
-	ID:         null.StringFrom("12ada436-2772-48da-86d8-97b2bd80e391"),
+	ID:         null.IntFrom(1),
 	Name:       null.StringFrom("默认模板"),
 	Type:       null.IntFrom(0),
 	Default:    null.IntFrom(1),
-	Creater:    DefaultAdmin.ID,
+	Creater:    null.IntFrom(1),
 	CreateTime: null.TimeFrom(time.Now()),
-	Updater:    DefaultAdmin.ID,
+	Updater:    null.IntFrom(1),
 	UpdateTime: null.TimeFrom(time.Now()),
 	IsDelete:   null.IntFrom(0),
 }
 
 // InitSysData defined inital system data
 func (m *SysUserTemplate) InitSysData(s *xorm.Session) {
-	if ct, err := s.Where("id=?", DefaultUserTemplate.ID.String).Count(new(SysUserTemplate)); ct == 0 || err != nil {
+	if ct, err := s.Where("id=?", DefaultUserTemplate.ID.Int64).Count(new(SysUserTemplate)); ct == 0 || err != nil {
 		if err != nil {
 			s.Rollback()
 			panic(err)

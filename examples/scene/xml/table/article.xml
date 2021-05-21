@@ -1,5 +1,5 @@
 <table name="article" desc="文章" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
-    <column name="id" desc="主键" type="null.String" xorm="varchar(36) notnull unique pk" />
+    <column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
     <column name="unanswered_count" desc="未答复数目" type="null.Int" />
     <column name="best_answerers_count" desc="最佳答复数目" type="null.Int" />
     <column name="is_super_topic_vote" desc="是否超级话题投票" type="null.Int" />
@@ -15,9 +15,9 @@
 	<column name="type" desc="类别" type="null.String" xorm="varchar(36)" />
     <column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
 
-	<column name="creater" desc="创建人" type="null.String" xorm="varchar(36)" />
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
-	<column name="updater" desc="最后更新人" type="null.String" xorm="varchar(36)" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
 	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
 	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />

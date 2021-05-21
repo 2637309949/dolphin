@@ -13,16 +13,15 @@ import (
 // sysUserTemplateDetails default
 var sysUserTemplateDetails = []SysUserTemplateDetail{
 	{
-		ID:         null.StringFrom("7c3da436-2772-48da-86d8-97b2bd80e391"),
 		Name:       null.StringFrom("Hobby"),
 		Value:      null.StringFrom("Writing"),
-		TempId:     DefaultUserTemplate.ID,
+		TempId:     null.IntFrom(0),
 		Type:       null.IntFrom(2),
 		Content:    null.StringFrom(""),
 		Priority:   null.IntFrom(1),
-		Creater:    DefaultAdmin.ID,
+		Creater:    null.IntFrom(1),
 		CreateTime: null.TimeFrom(time.Now()),
-		Updater:    DefaultAdmin.ID,
+		Updater:    null.IntFrom(1),
 		UpdateTime: null.TimeFrom(time.Now()),
 		IsDelete:   null.IntFrom(0),
 	},
@@ -30,13 +29,13 @@ var sysUserTemplateDetails = []SysUserTemplateDetail{
 
 // InitSysData defined inital system data
 func (m *SysUserTemplateDetail) InitSysData(s *xorm.Session) {
-	for _, detail := range sysUserTemplateDetails {
-		if ct, err := s.Where("id=?", detail.ID.String).Count(new(SysUserTemplateDetail)); ct == 0 || err != nil {
+	for i := range sysUserTemplateDetails {
+		if ct, err := s.Where("name=?", sysUserTemplateDetails[i].Name.String).Count(new(SysUserTemplateDetail)); ct == 0 || err != nil {
 			if err != nil {
 				s.Rollback()
 				panic(err)
 			}
-			if _, err := s.InsertOne(&detail); err != nil {
+			if _, err := s.Insert(&sysUserTemplateDetails[i]); err != nil {
 				s.Rollback()
 				panic(err)
 			}

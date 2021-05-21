@@ -22,16 +22,15 @@ func (m *SysTable) TruncateTable(session *xorm.Session, driverName string) {
 // TableInfo defined inital system data
 func (m *SysTable) TableInfo(info *schemas.Table) SysTable {
 	return SysTable{
-		ID:            null.StringFromUUID(),
 		Name:          null.StringFrom(info.Name),
 		Desc:          null.StringFrom(info.Comment),
 		Charset:       null.StringFrom(info.Charset),
 		AutoIncrement: null.StringFrom(info.AutoIncrement),
 		StoreEngine:   null.StringFrom(info.StoreEngine),
 		CreateTime:    null.TimeFrom(time.Now()),
-		Creater:       DefaultAdmin.ID,
+		Creater:       null.IntFrom(0),
 		UpdateTime:    null.TimeFrom(time.Now()),
-		Updater:       DefaultAdmin.ID,
+		Updater:       null.IntFrom(0),
 		IsDelete:      null.IntFrom(0),
 	}
 }

@@ -32,11 +32,11 @@ func SysSettingAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.ID = null.StringFromUUID()
+
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
 	if err != nil {
@@ -65,11 +65,10 @@ func SysSettingBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].ID = null.StringFromUUID()
 		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	ret, err := ctx.DB.Insert(&payload)
@@ -98,9 +97,9 @@ func SysSettingDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.String).Update(&model.SysSetting{
+	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&model.SysSetting{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -122,18 +121,15 @@ func SysSettingDel(ctx *Context) {
 // @Router /api/sys/setting/batch_del [delete]
 func SysSettingBatchDel(ctx *Context) {
 	var payload []*model.SysSetting
-	var ids []string
 	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	funk.ForEach(payload, func(form model.SysSetting) {
-		ids = append(ids, form.ID.String)
-	})
+	var ids = funk.Map(payload, func(form model.SysSetting) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysSetting{
 		UpdateTime: null.TimeFrom(time.Now().Value()),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -161,9 +157,9 @@ func SysSettingUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
-	ret, err := ctx.DB.ID(payload.ID.String).Update(&payload)
+	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -197,8 +193,8 @@ func SysSettingBatchUpdate(ctx *Context) {
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
-		r, err = s.ID(payload[i].ID.String).Update(&payload[i])
+		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
 			logrus.Error(err)
