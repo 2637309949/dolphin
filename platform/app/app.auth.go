@@ -89,11 +89,17 @@ func (ec *EncryptForm) ParseForm(ctx *Context) (*EncryptForm, error) {
 }
 
 // form2Uri defined
-func (ec *EncryptForm) form2Uri() string {
+func (ec *EncryptForm) parseForm() (string, error) {
 	var puJSON map[string]string
 	var puKeys = make([]string, 0, len(puJSON))
-	puByte, _ := json.Marshal(ec)
-	json.Unmarshal(puByte, &puJSON)
+	puByte, err := json.Marshal(ec)
+	if err != nil {
+		return "", err
+	}
+	err = json.Unmarshal(puByte, &puJSON)
+	if err != nil {
+		return "", err
+	}
 	for k := range puJSON {
 		if k != "sign" {
 			puKeys = append(puKeys, k)
@@ -101,21 +107,23 @@ func (ec *EncryptForm) form2Uri() string {
 	}
 	sort.Strings(puKeys)
 	var signString = ""
-	for _, k := range puKeys {
+	for i := range puKeys {
 		if signString != "" {
-			signString = signString + "&" + k + "=" + puJSON[k]
+			signString = signString + "&" + puKeys[i] + "=" + puJSON[puKeys[i]]
 		} else {
-			signString = signString + k + "=" + puJSON[k]
+			signString = signString + puKeys[i] + "=" + puJSON[puKeys[i]]
 		}
 	}
-	return signString
+	return signString, nil
 }
 
 func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
-	uri := ec.form2Uri()
+	uri, err := ec.parseForm()
+	if err != nil {
+		return []byte{}, err
+	}
 	ecyt, err := encrypt.AesEncrypt([]byte(uri), []byte(cli.GetSecret()))
 	if err != nil {
-		logrus.Error(err)
 		return []byte{}, err
 	}
 	return ecyt, nil

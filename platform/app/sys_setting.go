@@ -32,7 +32,6 @@ func SysSettingAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-
 	payload.CreateTime = null.TimeFrom(time.Now().Value())
 	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFrom(time.Now().Value())
