@@ -10,6 +10,8 @@ require (
 	github.com/gin-gonic/gin v1.7.1
 	github.com/go-errors/errors v1.1.1
 	github.com/go-redis/redis/v8 v8.8.0
+	github.com/go-redsync/redsync v1.4.2 // indirect
+	github.com/go-redsync/redsync/v4 v4.3.0 // indirect
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/golang/protobuf v1.5.1
 	github.com/golang/snappy v0.0.3 // indirect

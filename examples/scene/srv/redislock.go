@@ -6,50 +6,35 @@ package srv
 import (
 	"context"
 	"errors"
-	"fmt"
-	"log"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/redislock"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/platform/app"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
+	"github.com/go-redsync/redsync/v4"
+	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
 )
+
+var RedSync *redsync.Redsync
+
+func init() {
+	RedSync = redsync.New(goredis.NewPool(redis.NewClient(&redis.Options{
+		Addr: "localhost:6379",
+	})))
+}
 
 // RedisLockTODO defined srv
 func RedisLockTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
-	locker := redislock.New(app.RedisClient)
-	// Try to obtain lock.
-	lock, err := locker.Obtain(context.Background(), "/redis/lock/RedisAction", 100*time.Millisecond, nil)
-	if err == redislock.ErrNotObtained {
-		fmt.Println("Could not obtain lock!")
-	} else if err != nil {
-		log.Fatalln(err)
+	mutexname := "my-global-mutex"
+	mutex := RedSync.NewMutex(mutexname)
+	if err := mutex.Lock(); err != nil {
+		panic(err)
 	}
 
-	// Don't forget to defer Release.
-	defer lock.Release(context.Background())
-	fmt.Println("I have a lock!")
-
-	// Sleep and check the remaining TTL.
 	time.Sleep(50 * time.Millisecond)
-	if ttl, err := lock.TTL(context.Background()); err != nil {
-		log.Fatalln(err)
-	} else if ttl > 0 {
-		fmt.Println("Yay, I still have my lock!")
-	}
 
-	// Extend my lock.
-	if err := lock.Refresh(context.Background(), 100*time.Millisecond, nil); err != nil {
-		log.Fatalln(err)
-	}
-
-	// Sleep a little longer, then check.
-	time.Sleep(100 * time.Millisecond)
-	if ttl, err := lock.TTL(context.Background()); err != nil {
-		log.Fatalln(err)
-	} else if ttl == 0 {
-		fmt.Println("Now, my lock has expired!")
+	if ok, err := mutex.Unlock(); !ok || err != nil {
+		panic("unlock failed")
 	}
 	return nil, errors.New("no implementation found")
 }
