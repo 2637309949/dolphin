@@ -229,6 +229,7 @@ func init() {
 		RedisClient = redis.NewClient(&redis.Options{Addr: uri.Laddr, Password: uri.Passwd, DB: util.EnsureLeft(strconv.Atoi(uri.DbName)).(int)})
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
 			logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
+			RedisClient = nil
 		} else {
 			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
 			logrus.Infof("Redis:%v connect successfully", viper.GetString("rd.dataSource"))

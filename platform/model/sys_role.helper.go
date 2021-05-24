@@ -44,13 +44,13 @@ func (m *SysRole) GenCode(rewrite ...bool) {
 
 // InitSysData defined inital system data
 func (m *SysRole) InitSysData(s *xorm.Session) {
-	for _, role := range roles {
-		if ct, err := s.Where("code=?", role.Code.String).Count(new(SysRole)); ct == 0 || err != nil {
+	for i := range roles {
+		if ct, err := s.Where("code=?", roles[i].Code.String).Count(new(SysRole)); ct == 0 || err != nil {
 			if err != nil {
 				s.Rollback()
 				panic(err)
 			}
-			if _, err := s.InsertOne(&role); err != nil {
+			if _, err := s.InsertOne(&roles[i]); err != nil {
 				s.Rollback()
 				panic(err)
 			}

@@ -95,13 +95,13 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 			IsDelete:   null.IntFrom(0),
 		},
 	}
-	for _, option := range options {
-		if ct, err := s.Where("code=?", option.Code.String).Count(new(SysOptionset)); ct == 0 || err != nil {
+	for i := range options {
+		if ct, err := s.Where("code=?", options[i].Code.String).Count(new(SysOptionset)); ct == 0 || err != nil {
 			if err != nil {
 				s.Rollback()
 				panic(err)
 			}
-			if _, err := s.InsertOne(&option); err != nil {
+			if _, err := s.InsertOne(&options[i]); err != nil {
 				s.Rollback()
 				panic(err)
 			}

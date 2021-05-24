@@ -15,6 +15,7 @@ func XTestSysUserLogin(ctx *Context) {
 	}{}
 	json.Unmarshal(ctx.Body.Bytes(), &ret)
 	SetToken(ret.Data.AccessToken)
+
 }
 
 // XTestSysMenuPage defined
