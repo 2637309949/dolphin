@@ -558,12 +558,15 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 			}
 			switch sf.Type {
 			case reflect.TypeOf(null.String{}), reflect.TypeOf(null.Time{}):
-				u, ok := urls[tagValue]
-				if ok {
-					urls[tagValue] = funk.Map(u, func(j string) string {
-						bte, _ := json.Marshal(j)
-						return string(bte)
-					}).([]string)
+				if u, ok := urls[tagValue]; ok {
+					urls[tagValue] = []string{}
+					for i := range u {
+						bte, err := json.Marshal(u[i])
+						if err != nil {
+							return err
+						}
+						urls[tagValue] = append(urls[tagValue], string(bte))
+					}
 				}
 			}
 		}
