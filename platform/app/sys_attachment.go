@@ -15,7 +15,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util/encode"
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/gin-gonic/gin/binding"
-	uuid "github.com/google/uuid"
+	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"

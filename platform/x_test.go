@@ -89,8 +89,7 @@ func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...map[st
 // TestMain defined
 func TestMain(m *testing.M) {
 	app.App.Init()
-	httpTools = &HTTPTools{}
-	httpTools.Engine = app.App.Gin
+	httpTools = &HTTPTools{Engine: app.App.Gin}
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }
@@ -105,11 +104,7 @@ var AccessToken string
 
 // TestSysMenuPage defined
 func TestSysUserLogin(t *testing.T) {
-	HttpTest("/api/sys/user/login", XTestSysUserLogin, t, map[string]interface{}{
-		"domain":   "localhost",
-		"name":     "admin",
-		"password": "admin",
-	})
+	HttpTest("/api/sys/user/login", XTestSysUserLogin, t, map[string]interface{}{"domain": "localhost", "name": "admin", "password": "admin"})
 }
 
 // TestSysMenuPage defined

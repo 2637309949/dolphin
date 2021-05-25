@@ -208,13 +208,8 @@ func (e *Engine) authorize() {
 	manager.SetValidateURIHandler(ValidateURIHandler)
 	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
 	e.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
-	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) {
-		logrus.Error(err)
-		return
-	})
-	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) {
-		logrus.Error(re.Error)
-	})
+	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
+	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
 }
 
 // Done returns a channel of signals to block on after starting the
