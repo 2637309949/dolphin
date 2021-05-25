@@ -9,9 +9,8 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/2637309949/dolphin/platform/util"
-
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/util"
 )
 
 // Static defined

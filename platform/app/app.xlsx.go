@@ -10,7 +10,7 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/360EntSecGroup-Skylar/excelize"
-	uuid "github.com/google/uuid"
+	"github.com/google/uuid"
 	"github.com/spf13/viper"
 )
 

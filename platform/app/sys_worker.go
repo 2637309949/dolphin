@@ -8,7 +8,7 @@ import (
 
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/gin-gonic/gin/binding"
-	uuid "github.com/google/uuid"
+	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 )
 
