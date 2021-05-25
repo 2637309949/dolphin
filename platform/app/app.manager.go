@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
@@ -198,7 +199,7 @@ func (d *DefaultManager) Cron() Cron {
 func NewDefaultManager() Manager {
 	mg := &DefaultManager{}
 	mg.BusinessDBSet = map[string]*xorm.Engine{}
-	mg.MSeti = &MSet{m: map[string][]interface{}{}}
+	mg.MSeti = &MSet{m: map[string][]interface{}{}, lock: new(sync.RWMutex)}
 
 	dispatcher := worker.NewDispatcher(MaxWorkers)
 	dispatcher.Run()

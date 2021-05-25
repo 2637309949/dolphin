@@ -5,6 +5,8 @@
 package app
 
 import (
+	"sync"
+
 	"github.com/spf13/viper"
 )
 
@@ -19,22 +21,28 @@ type MSeti interface {
 
 // MSet struct
 type MSet struct {
-	m map[string][]interface{}
+	lock *sync.RWMutex
+	m    map[string][]interface{}
 }
 
 // Get defined get models
 func (s *MSet) Get(cb func(string, interface{}) bool) interface{} {
-	var model interface{}
-	s.ForEach(func(name string, m interface{}) {
-		if cb(name, m) {
-			model = m
+	s.lock.RLock()
+	defer s.lock.RUnlock()
+	for name, m := range s.m {
+		for index := 0; index < len(m); index++ {
+			if cb(name, m[index]) {
+				return m[index]
+			}
 		}
-	})
-	return model
+	}
+	return nil
 }
 
 // Add defined add models
 func (s *MSet) Add(m interface{}, n ...string) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	if len(n) > 0 {
 		s.m[n[0]] = append(s.m[n[0]], m)
 	} else {
@@ -54,6 +62,8 @@ func (s *MSet) Name(cb func(string) bool) (m []string) {
 
 // ForEach defined foreach models
 func (s *MSet) ForEach(cb func(name string, m interface{}), names ...string) {
+	s.lock.RLock()
+	defer s.lock.RUnlock()
 	for name, m := range s.m {
 		for index := 0; index < len(m); index++ {
 			if len(names) > 0 && names[0] == name {
