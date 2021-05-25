@@ -77,5 +77,7 @@ func (s *MSet) ForEach(cb func(name string, m interface{}), names ...string) {
 
 // Release defined release models
 func (s *MSet) Release() {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	s.m = nil
 }
