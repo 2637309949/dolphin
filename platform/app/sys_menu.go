@@ -47,9 +47,9 @@ func SysMenuAdd(ctx *Context) {
 			ctx.Fail(errors.New("the record does not exist"))
 			return
 		}
-		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s%s", payload.ID.Int64, parent.Inheritance.String))
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v%v", payload.ID.Int64, parent.Inheritance.String))
 	} else {
-		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s|", payload.ID.Int64))
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v|", payload.ID.Int64))
 	}
 
 	ret, err := ctx.DB.Insert(&payload)
@@ -185,9 +185,9 @@ func SysMenuUpdate(ctx *Context) {
 			ctx.Fail(errors.New("the record does not exist"))
 			return
 		}
-		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s%s", payload.ID.Int64, parent.Inheritance.String))
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v%v", payload.ID.Int64, parent.Inheritance.String))
 	} else {
-		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%s|", payload.ID.Int64))
+		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v|", payload.ID.Int64))
 	}
 
 	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
