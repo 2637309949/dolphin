@@ -12,6 +12,7 @@ import (
 
 	//  "github.com/2637309949/dolphin/platform/conf"
 	_ "github.com/2637309949/dolphin/platform/conf"
+	"github.com/spf13/viper"
 
 	// "github.com/mattn/go-sqlite3"
 	_ "github.com/mattn/go-sqlite3"
@@ -52,32 +53,48 @@ type (
 		*httptest.ResponseRecorder
 		T testingT
 	}
+	M map[string]interface{}
 )
 
 // handler defined
 func (t HTTPTools) handler(req *http.Request, h func(w *httptest.ResponseRecorder)) {
 	w := httptest.NewRecorder()
 	req.Header.Add("Authorization", "Bearer "+AccessToken)
+	req.Header.Add("cache-control", "no-cache")
+	req.Header.Add("origin", "http://localhost:"+viper.GetString("http.port"))
+	req.Header.Add("accept", "application/json, text/plain, */*")
+	req.Header.Add("accept-encoding", "gzip, deflate, br")
+	req.Header.Add("accept-language", "zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
+	req.Header.Add("user-agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36")
 	t.ServeHTTP(w, req)
 	h(w)
 }
 
 // Get defined
 func (t HTTPTools) Get(url string, h func(w *httptest.ResponseRecorder)) {
-	req, _ := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		panic(err)
+	}
 	t.handler(req, h)
 }
 
 // Post defined
-func (t HTTPTools) Post(url string, payform map[string]interface{}, h func(w *httptest.ResponseRecorder)) {
-	jm, _ := json.Marshal(&payform)
-	req, _ := http.NewRequest("POST", url, bufio.NewReader(strings.NewReader(string(jm))))
+func (t HTTPTools) Post(url string, payform M, h func(w *httptest.ResponseRecorder)) {
+	jm, err := json.Marshal(&payform)
+	if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("POST", url, bufio.NewReader(strings.NewReader(string(jm))))
+	if err != nil {
+		panic(err)
+	}
 	req.Header.Add("Content-Type", "application/json")
 	t.handler(req, h)
 }
 
 // HttpTest defined
-func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...map[string]interface{}) {
+func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...M) {
 	switch len(p) {
 	case 0:
 		httpTools.Get(reqPath, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
@@ -104,7 +121,7 @@ var AccessToken string
 
 // TestSysMenuPage defined
 func TestSysUserLogin(t *testing.T) {
-	HttpTest("/api/sys/user/login", XTestSysUserLogin, t, map[string]interface{}{"domain": "localhost", "name": "admin", "password": "admin"})
+	HttpTest("/api/sys/user/login", XTestSysUserLogin, t, M{"domain": "localhost", "name": "admin", "password": "admin"})
 }
 
 // TestSysMenuPage defined
