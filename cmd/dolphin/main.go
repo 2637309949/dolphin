@@ -135,6 +135,20 @@ var (
 			return nil
 		},
 	}
+	more = &cobra.Command{
+		Use:   "more",
+		Short: "Add controller and table",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			wd, err := os.Getwd()
+			if err != nil {
+				return err
+			}
+			p := parser.NewTpl(path.Base(wd), path.Base(wd))
+			g := gen.New(p.Application)
+			g.AddPipe(gen.GetPipesByName("more")...)
+			return g.BuildDir(wd, args)
+		},
+	}
 	setup = &cobra.Command{
 		Use:   "init",
 		Short: "Initialize a empty project",
@@ -161,6 +175,7 @@ var (
 func main() {
 	rootCmd.AddCommand(setup)
 	rootCmd.AddCommand(build)
+	rootCmd.AddCommand(more)
 	rootCmd.AddCommand(clean)
 	if err := rootCmd.Execute(); err != nil {
 		logrus.Fatal(err)

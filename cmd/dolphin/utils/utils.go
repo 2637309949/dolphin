@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"os"
 	"os/exec"
 	"path"
@@ -57,6 +58,22 @@ func WalkFileInDirWithSuffix(wd string, suffix string) ([]string, error) {
 		return []string{}, err
 	}
 	return files, nil
+}
+
+// SearchFileInDirWithSuffix defined
+func SearchFileInDirWithSuffix(wd string, suffix string, cb func(string) bool) string {
+	var file string
+	filepath.Walk(wd, func(path string, info os.FileInfo, err error) error {
+		if strings.HasSuffix(path, suffix) {
+			ext := cb(path)
+			if ext {
+				file = path
+				return errors.New("has found")
+			}
+		}
+		return nil
+	})
+	return file
 }
 
 // RemoveFileWithSuffix defined

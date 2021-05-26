@@ -42,6 +42,7 @@ var lines = []pipe.Pipe{
 	&modules.Boilerplate{},
 	&modules.Table{},
 	&modules.Deploy{},
+	&modules.More{},
 }
 
 // AddPipe defined addPipe
