@@ -1,0 +1,8 @@
+<table name="mc_report" desc="举报" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="report_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="reportable_id" desc="举报目标ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="reportable_type" desc="举报目标类型：question、article、answer、comment、user" type="null.String" xorm=" notnull" />
+	<column name="user_id" desc="用户ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="reason" desc="举报原因" type="null.String" xorm="varchar(200) notnull" />
+	<column name="create_time" desc="举报时间" type="null.Int" xorm="int(11) notnull" />
+</table>

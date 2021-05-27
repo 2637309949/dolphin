@@ -1,0 +1,9 @@
+<table name="mc_inbox" desc="私信表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="inbox_id" desc="私信ID" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="receiver_id" desc="接收者ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="sender_id" desc="发送者ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="content_markdown" desc="原始的私信内容" type="null.String" xorm="text(0) notnull" />
+	<column name="content_rendered" desc="过滤渲染后的私信内容" type="null.String" xorm="text(0) notnull" />
+	<column name="create_time" desc="发送时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="read_time" desc="阅读时间" type="null.Int" xorm="int(10) notnull default(0)" />
+</table>

@@ -1,0 +1,14 @@
+<table name="mc_comment" desc="回答评论表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="comment_id" desc="回答评论ID" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="commentable_id" desc="评论目标的ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="commentable_type" desc="评论目标类型：article、question、answer、comment" type="null.String" xorm=" notnull" />
+	<column name="user_id" desc="用户ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="content" desc="原始正文内容" type="null.String" xorm="text(0) notnull" />
+	<column name="reply_count" desc="回复数量" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="vote_count" desc="投票数，赞成票-反对票，可以为负数" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="vote_up_count" desc="赞成票总数" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="vote_down_count" desc="反对票总数" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="create_time" desc="创建时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="update_time" desc="更新时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="delete_time" desc="删除时间" type="null.Int" xorm="int(10) notnull default(0)" />
+</table>

@@ -1,0 +1,17 @@
+<table name="mc_question" desc="问题表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="question_id" desc="问题ID" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="user_id" desc="用户ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="title" desc="标题" type="null.String" xorm="varchar(80) notnull" />
+	<column name="content_markdown" desc="原始的正文内容" type="null.String" xorm="text(0)" />
+	<column name="content_rendered" desc="过滤渲染后的正文内容" type="null.String" xorm="text(0)" />
+	<column name="comment_count" desc="评论数量" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="answer_count" desc="回答数量" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="follower_count" desc="关注者数量" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="vote_count" desc="投票数，赞成票-反对票，可以为负数" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="vote_up_count" desc="赞成票总数" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="vote_down_count" desc="反对票总数" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="last_answer_time" desc="最后回答时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="create_time" desc="创建时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="update_time" desc="更新时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="delete_time" desc="删除时间" type="null.Int" xorm="int(10) notnull default(0)" />
+</table>

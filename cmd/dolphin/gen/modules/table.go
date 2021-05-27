@@ -68,15 +68,13 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 			logrus.Infoln(tables[i2].Name)
 			meta := schema.Table{}
 			meta.Name = tables[i2].Name
-			meta.Desc = tables[i2].Comment
+			meta.Desc = strings.ReplaceAll(tables[i2].Comment, "\n", "")
 			meta.Columns = []*schema.Column{}
 			cols := tables[i2].Columns()
 			for i3 := range cols {
 				c := schema.Column{}
 				c.Name = strings.ToLower(cols[i3].Name)
-				c.Desc = cols[i3].Comment
-
-				// convert golang type
+				c.Desc = strings.ReplaceAll(cols[i3].Comment, "\n", "")
 				switch cols[i3].SQLType.Name {
 				case "VARCHAR", "TEXT", "LONGTEXT", "CHAR":
 					c.Type = "null.String"

@@ -1,0 +1,6 @@
+<table name="mc_cache" desc="缓存表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="name" desc="" type="null.String" xorm="varchar(180) pk notnull" />
+	<column name="value" desc="" type="null.String" xorm="text(0) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Int" xorm="int(10)" />
+	<column name="life_time" desc="有效时间" type="null.Int" xorm="int(10) notnull default(0)" />
+</table>

@@ -1,0 +1,14 @@
+<table name="mc_notification" desc="通知表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="notification_id" desc="通知ID" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="receiver_id" desc="接收者ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="sender_id" desc="发送者ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="type" desc="消息类型： question_answered, question_commented, question_deleted, article_commented, article_deleted, answer_commented, answer_deleted, comment_replied, comment_deleted" type="null.String" xorm="varchar(40) notnull" />
+	<column name="article_id" desc="文章ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="question_id" desc="提问ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="answer_id" desc="回答ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="comment_id" desc="评论ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="reply_id" desc="回复ID" type="null.Int" xorm="int(11) notnull" />
+	<column name="content_deleted" desc="被删除的内容的备份" type="null.String" xorm="text(0) notnull" />
+	<column name="create_time" desc="发送时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="read_time" desc="阅读时间" type="null.Int" xorm="int(10) notnull default(0)" />
+</table>

@@ -1,0 +1,10 @@
+<table name="mc_image" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="key" desc="图片键名" type="null.String" xorm="varchar(50) pk notnull" />
+	<column name="filename" desc="原始文件名" type="null.String" xorm="varchar(255) notnull" />
+	<column name="width" desc="原始图片宽度" type="null.Int" xorm="int(5) notnull default(0)" />
+	<column name="height" desc="原始图片高度" type="null.Int" xorm="int(5) notnull default(0)" />
+	<column name="create_time" desc="上传时间" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="item_type" desc="关联类型：question、answer、article" type="null.String" xorm="" />
+	<column name="item_id" desc="关联ID" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="user_id" desc="用户ID" type="null.Int" xorm="int(11) notnull" />
+</table>
