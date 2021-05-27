@@ -1,0 +1,14 @@
+<table name="customer_point_log" desc="用户积分日志表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="point_id" desc="积分日志ID" type="null.Int" xorm="int(10) pk notnull autoincr" />
+	<column name="customer_id" desc="用户ID" type="null.Int" xorm="int(10) notnull" />
+	<column name="source" desc="积分来源：0订单，1登陆，2活动" type="null.Int" xorm=" notnull" />
+	<column name="refer_number" desc="积分来源相关编号" type="null.Int" xorm="int(10) notnull default(0)" />
+	<column name="change_point" desc="变更积分数" type="null.Int" xorm=" notnull default(0)" />
+
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>

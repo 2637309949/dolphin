@@ -1,0 +1,22 @@
+<table name="customer_inf" desc="用户信息表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="customer_inf_id" desc="自增主键ID" type="null.Int" xorm="int(10) pk notnull autoincr" />
+	<column name="customer_id" desc="customer_login表的自增ID" type="null.Int" xorm="int(10) notnull" />
+	<column name="customer_name" desc="用户真实姓名" type="null.String" xorm="varchar(20) notnull" />
+	<column name="identity_card_type" desc="证件类型：1 身份证，2 军官证，3 护照" type="null.Int" xorm=" notnull default(1)" />
+	<column name="identity_card_no" desc="证件号码" type="null.String" xorm="varchar(20)" />
+	<column name="mobile_phone" desc="手机号" type="null.Int" xorm="int(10)" />
+	<column name="customer_email" desc="邮箱" type="null.String" xorm="varchar(50)" />
+	<column name="gender" desc="性别" type="null.String" xorm="" />
+	<column name="user_point" desc="用户积分" type="null.Int" xorm="int(11) notnull default(0)" />
+	<column name="register_time" desc="注册时间" type="null.Time" xorm=" notnull default(CURRENT_TIMESTAMP)" />
+	<column name="birthday" desc="会员生日" type="null.Time" xorm="datetime" />
+	<column name="customer_level" desc="会员级别：1 普通会员，2 青铜，3白银，4黄金，5钻石" type="null.Int" xorm=" notnull default(1)" />
+	<column name="user_money" desc="用户余额" type="decimal.Decimal" xorm="decimal(8,2) notnull default(0.00)" />
+
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>

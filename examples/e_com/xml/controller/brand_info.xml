@@ -1,0 +1,59 @@
+<controller name="brand_info" desc="brand_info接口">
+    <api name="add" func="add" table="brand_info" method="post" desc="添加brand_info" >
+        <param name="brand_info" type="$brand_info" desc="brand_info信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_add" func="add" table="brand_info" method="post" desc="添加brand_info">
+        <param name="brand_info" type="[]$brand_info" desc="brand_info信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="del" func="delete" table="brand_info" method="delete" desc="删除brand_info">
+        <param name="brand_info" type="$brand_info" desc="brand_info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_del" func="delete" table="brand_info" method="delete" desc="删除brand_info">
+        <param name="brand_info" type="[]$brand_info" desc="brand_info" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="update" func="update" table="brand_info" method="put" desc="更新brand_info">
+        <param name="brand_info" type="$brand_info" desc="brand_info信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="batch_update" func="update" table="brand_info" method="put" desc="更新brand_info">
+        <param name="brand_info" type="[]$brand_info" desc="brand_info信息" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="page" func="page" table="brand_info" method="get" desc="brand_info分页查询">
+        <param name="page" type="int" value="1" desc="页码"/>
+        <param name="size" type="int"  value="10" desc="单页数"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="get" func="one" table="brand_info" method="get" desc="获取brand_info信息">
+        <param name="id" type="string" desc="brand_infoid" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

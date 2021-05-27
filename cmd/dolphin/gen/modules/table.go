@@ -78,11 +78,11 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 
 				// convert golang type
 				switch cols[i3].SQLType.Name {
-				case "VARCHAR", "TEXT", "LONGTEXT":
+				case "VARCHAR", "TEXT", "LONGTEXT", "CHAR":
 					c.Type = "null.String"
-				case "DATETIME":
+				case "DATETIME", "TIMESTAMP":
 					c.Type = "null.Time"
-				case "ENUM", "INT", "BIGINT", "TINYINT":
+				case "ENUM", "INT", "SMALLINT", "BIGINT", "TINYINT":
 					c.Type = "null.Int"
 				case "DECIMAL":
 					c.Type = "decimal.Decimal"

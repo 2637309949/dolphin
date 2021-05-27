@@ -1,0 +1,18 @@
+<table name="brand_info" desc="品牌信息表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="brand_id" desc="品牌ID" type="null.Int" xorm=" pk notnull autoincr" />
+	<column name="brand_name" desc="品牌名称" type="null.String" xorm="varchar(50) notnull" />
+	<column name="telephone" desc="联系电话" type="null.String" xorm="varchar(50) notnull" />
+	<column name="brand_web" desc="品牌网络" type="null.String" xorm="varchar(100)" />
+	<column name="brand_logo" desc="品牌logo URL" type="null.String" xorm="varchar(100)" />
+	<column name="brand_desc" desc="品牌描述" type="null.String" xorm="varchar(150)" />
+	<column name="brand_status" desc="品牌状态,0禁用,1启用" type="null.Int" xorm=" notnull default(0)" />
+	<column name="brand_order" desc="排序" type="null.Int" xorm=" notnull default(0)" />
+	<column name="modified_time" desc="最后修改时间" type="null.Time" xorm=" notnull default(CURRENT_TIMESTAMP)" />
+
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>

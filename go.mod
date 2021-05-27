@@ -21,32 +21,33 @@ require (
 	github.com/gin-contrib/cache v1.1.0
 	github.com/gin-gonic/gin v1.7.1
 	github.com/go-errors/errors v1.0.1
-	github.com/go-openapi/spec v0.20.0
+	github.com/go-openapi/spec v0.20.3
+	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/go-redis/redis/v8 v8.8.0
 	github.com/go-session/session v3.1.2+incompatible
-	github.com/go-sql-driver/mysql v1.5.0
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang/protobuf v1.4.2
-	github.com/golang/snappy v0.0.2 // indirect
+	github.com/golang/snappy v0.0.3 // indirect
 	github.com/google/uuid v1.2.0
 	github.com/gorilla/securecookie v1.1.1
 	github.com/imdario/mergo v0.3.11
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/json-iterator/go v1.1.9
-	github.com/konsorten/go-windows-terminal-sequences v1.0.3 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
-	github.com/lib/pq v1.9.0
-	github.com/magiconair/properties v1.8.4 // indirect
+	github.com/lib/pq v1.10.2
+	github.com/magiconair/properties v1.8.5 // indirect
+	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-sqlite3 v1.14.7
-	github.com/mitchellh/mapstructure v1.4.0 // indirect
-	github.com/pelletier/go-toml v1.8.1 // indirect
-	github.com/pkg/errors v0.8.1
+	github.com/mitchellh/mapstructure v1.4.1 // indirect
+	github.com/pelletier/go-toml v1.9.1 // indirect
+	github.com/pkg/errors v0.9.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749
 	github.com/shurcooL/vfsgen v0.0.0-20200824052919-0d455de96546
-	github.com/sirupsen/logrus v1.2.0
-	github.com/spf13/afero v1.5.1 // indirect
+	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -57,14 +58,13 @@ require (
 	github.com/tebeka/strftime v0.1.3 // indirect
 	github.com/thoas/go-funk v0.8.0
 	github.com/tidwall/buntdb v1.1.2
-	go.uber.org/fx v1.10.0
 	go.uber.org/multierr v1.4.0
-	golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad
-	golang.org/x/net v0.0.0-20210405180319-a5a99cb37ef4
+	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
+	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-	golang.org/x/sys v0.0.0-20210510120138-977fb7262007
-	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf
-	golang.org/x/tools v0.1.1
+	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea
+	golang.org/x/term v0.0.0-20210503060354-a79de5458b56
+	golang.org/x/tools v0.1.2
 	google.golang.org/genproto v0.0.0-20191230161307-f3c370f40bfb // indirect
 	google.golang.org/grpc v1.26.0
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4
