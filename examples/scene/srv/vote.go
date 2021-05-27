@@ -69,7 +69,7 @@ func VoteLike(ctx *gin.Context, db *xorm.Engine, params model.VoteInfo) (interfa
 		return nil, err
 	}
 	if _, err := app.RedisClient.Set(context.Background(),
-		fmt.Sprintf("post%v_counter", num), params.PostId.String, 0).Result(); err != nil {
+		fmt.Sprintf("post%v_counter", params.PostId.String), num, 0).Result(); err != nil {
 		return nil, err
 	}
 	return "ok", nil
