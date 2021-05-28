@@ -9,8 +9,9 @@ import (
 	"scene/model"
 	"strconv"
 
+	"time"
+
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/app"
 	"github.com/2637309949/dolphin/platform/util/slice"
@@ -58,7 +59,7 @@ func VoteLike(ctx *gin.Context, db *xorm.Engine, params model.VoteInfo) (interfa
 	// 3.写入post_user_like_{$post_id}{$user_id}
 	if _, err := app.RedisClient.HMSet(context.Background(),
 		fmt.Sprintf("post_user_like_%v%v", params.PostId.String, params.UserId.String),
-		"create_time", time.Now().Value().Format("2006-01-02 15:04"), "type", params.Type.Int64).Result(); err != nil {
+		"create_time", time.Now().Format("2006-01-02 15:04"), "type", params.Type.Int64).Result(); err != nil {
 		return nil, err
 	}
 	// 4.新增计数
@@ -111,9 +112,9 @@ func init() {
 				te, _ := time.Parse("2006-01-02 15:04", fmt.Sprintf("%v", field[0]))
 				ulp.UserId = null.IntFromStr(userId)
 				ulp.PostId = null.IntFromStr(postId)
-				ulp.CreateTime = null.TimeFrom(te.Value())
+				ulp.CreateTime = null.TimeFrom(te)
 				ulp.Creater = null.IntFromStr(userId)
-				ulp.UpdateTime = null.TimeFrom(te.Value())
+				ulp.UpdateTime = null.TimeFrom(te)
 				ulp.Updater = null.IntFromStr(userId)
 				ulp.IsDelete = null.IntFrom(0)
 				tpe, _ := strconv.Atoi(fmt.Sprintf("%v", field[1]))

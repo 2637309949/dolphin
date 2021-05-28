@@ -7,8 +7,9 @@ import (
 	"errors"
 	"fmt"
 
+	"time"
+
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/time"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
@@ -32,9 +33,9 @@ func SysMenuAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.CreateTime = null.TimeFrom(time.Now().Value())
+	payload.CreateTime = null.TimeFrom(time.Now())
 	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFrom(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now())
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	if !payload.Parent.IsZero() {
@@ -79,9 +80,9 @@ func SysMenuBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].CreateTime = null.TimeFrom(time.Now().Value())
+		payload[i].CreateTime = null.TimeFrom(time.Now())
 		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
-		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateTime = null.TimeFrom(time.Now())
 		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
@@ -112,7 +113,7 @@ func SysMenuDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&model.SysMenu{
-		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateTime: null.TimeFrom(time.Now()),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
@@ -143,7 +144,7 @@ func SysMenuBatchDel(ctx *Context) {
 	}
 	var ids = funk.Map(payload, func(form model.SysDomain) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.DB.In("id", ids).Update(&model.SysMenu{
-		UpdateTime: null.TimeFrom(time.Now().Value()),
+		UpdateTime: null.TimeFrom(time.Now()),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
@@ -173,7 +174,7 @@ func SysMenuUpdate(ctx *Context) {
 		return
 	}
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFrom(time.Now().Value())
+	payload.UpdateTime = null.TimeFrom(time.Now())
 
 	if !payload.Parent.IsZero() {
 		parent := model.SysMenu{}
@@ -223,7 +224,7 @@ func SysMenuBatchUpdate(ctx *Context) {
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
-		payload[i].UpdateTime = null.TimeFrom(time.Now().Value())
+		payload[i].UpdateTime = null.TimeFrom(time.Now())
 		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {

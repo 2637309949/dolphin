@@ -10,11 +10,11 @@ import (
 	"scene/model"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/redismq"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v7"
+	"github.com/kak-tus/ami"
 	"github.com/sirupsen/logrus"
 )
 
@@ -25,50 +25,46 @@ func (l *errorLogger) AmiError(err error) {
 }
 
 // RedisProducer defined
-var RedisProducer *redismq.Producer
+var RedisProducer *ami.Producer
 
 // RedisConsumer defined
-var RedisConsumer *redismq.Consumer
+var RedisConsumer *ami.Consumer
 
 func init() {
 	var err error
-	RedisProducer, err = redismq.NewProducer(
-		redismq.ProducerOptions{
-			Name:              "ami",
-			ErrorNotifier:     &errorLogger{},
-			PendingBufferSize: 10000000,
-			PipeBufferSize:    50000,
-			PipePeriod:        time.Microsecond * 1000,
-			ShardsCount:       10,
-		},
-		&redis.Options{
-			Addr:         ":6379",
-			ReadTimeout:  time.Second * 60,
-			WriteTimeout: time.Second * 60,
-		},
-	)
+	RedisProducer, err = ami.NewProducer(ami.ProducerOptions{
+		Name:              "ami",
+		ErrorNotifier:     &errorLogger{},
+		PendingBufferSize: 10000000,
+		PipeBufferSize:    50000,
+		PipePeriod:        time.Microsecond * 1000,
+		ShardsCount:       10,
+	}, &redis.ClusterOptions{
+		Addrs:        []string{"127.0.0.1:6379"},
+		ReadTimeout:  time.Second * 60,
+		WriteTimeout: time.Second * 60,
+	})
 	if err != nil {
-		panic(err)
+		logrus.Error(err)
+		// panic(err)
 	}
-	RedisConsumer, err = redismq.NewConsumer(
-		redismq.ConsumerOptions{
-			Name:              "ami",
-			Consumer:          "ami",
-			ErrorNotifier:     &errorLogger{},
-			PendingBufferSize: 10000000,
-			PipeBufferSize:    50000,
-			PipePeriod:        time.Microsecond * 1000,
-			PrefetchCount:     100,
-			ShardsCount:       10,
-		},
-		&redis.Options{
-			Addr:         ":6379",
-			ReadTimeout:  time.Second * 60,
-			WriteTimeout: time.Second * 60,
-		},
-	)
+	RedisConsumer, err = ami.NewConsumer(ami.ConsumerOptions{
+		Name:              "ami",
+		Consumer:          "ami",
+		ErrorNotifier:     &errorLogger{},
+		PendingBufferSize: 10000000,
+		PipeBufferSize:    50000,
+		PipePeriod:        time.Microsecond * 1000,
+		PrefetchCount:     100,
+		ShardsCount:       10,
+	}, &redis.ClusterOptions{
+		Addrs:        []string{"127.0.0.1:6379"},
+		ReadTimeout:  time.Second * 60,
+		WriteTimeout: time.Second * 60,
+	})
 	if err != nil {
-		panic(err)
+		logrus.Error(err)
+		// panic(err)
 	}
 }
 
