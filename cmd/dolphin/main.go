@@ -145,7 +145,7 @@ var (
 			}
 			p := parser.NewTpl(path.Base(wd), path.Base(wd))
 			g := gen.New(p)
-			g.AddPipe(gen.GetPipesByName("more", "ctr", "model", "bean")...)
+			g.AddPipe(gen.GetPipesByName("more", "ctr", "srv", "model", "bean")...)
 			return g.BuildDir(wd, args)
 		},
 	}
