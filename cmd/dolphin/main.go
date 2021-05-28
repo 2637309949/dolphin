@@ -117,7 +117,7 @@ var (
 			} else {
 				pipes = cupArgs
 			}
-			g := gen.New(p.Application)
+			g := gen.New(p)
 			g.AddPipe(gen.GetPipesByName(pipes...)...)
 			err = g.BuildDir(wd, args)
 			return err
@@ -144,8 +144,8 @@ var (
 				return err
 			}
 			p := parser.NewTpl(path.Base(wd), path.Base(wd))
-			g := gen.New(p.Application)
-			g.AddPipe(gen.GetPipesByName("more")...)
+			g := gen.New(p)
+			g.AddPipe(gen.GetPipesByName("more", "ctr", "model", "bean")...)
 			return g.BuildDir(wd, args)
 		},
 	}
@@ -162,7 +162,7 @@ var (
 				if err := p.Walk(wd); err != nil {
 					return err
 				}
-				g := gen.New(p.Application)
+				g := gen.New(p)
 				g.AddPipe(gen.GetPipesByName("boilerplate")...)
 				return g.BuildDir(wd, args)
 			}

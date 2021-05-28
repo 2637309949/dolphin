@@ -17,13 +17,14 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/modules"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
 var lines = []pipe.Pipe{
+	&modules.More{},
 	&modules.Main{},
 	&modules.App{},
 	&modules.Ctr{},
@@ -42,7 +43,6 @@ var lines = []pipe.Pipe{
 	&modules.Boilerplate{},
 	&modules.Table{},
 	&modules.Deploy{},
-	&modules.More{},
 }
 
 // AddPipe defined addPipe
@@ -52,25 +52,25 @@ func AddPipe(p pipe.Pipe) {
 
 // GetPipesByName defined getbyname
 func GetPipesByName(nm ...string) []pipe.Pipe {
-	return funk.Filter(lines, func(pipe pipe.Pipe) bool {
-		for _, v := range nm {
-			if pipe.Name() == v {
+	return funk.Chain(lines).Filter(func(pipe pipe.Pipe) bool {
+		for i := range nm {
+			if pipe.Name() == nm[i] {
 				return true
 			}
 		}
 		return false
-	}).([]pipe.Pipe)
+	}).Value().([]pipe.Pipe)
 }
 
 // Gen struct
 type Gen struct {
-	App   *schema.Application
-	Pipes []pipe.Pipe
+	Parser *parser.AppParser
+	Pipes  []pipe.Pipe
 }
 
 // New defined gen
-func New(app *schema.Application) *Gen {
-	return &Gen{App: app}
+func New(parser *parser.AppParser) *Gen {
+	return &Gen{Parser: parser}
 }
 
 // AddPipe add pipe
@@ -88,16 +88,24 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	// generate code
 	cfgs := []*pipe.TmplCfg{}
 	for i := range gen.Pipes {
-		items, err := gen.Pipes[i].Build(dir, args, gen.App)
-		cfgs = append(cfgs, items...)
+		err := gen.Pipes[i].Pre(gen.Parser)
 		if err != nil {
 			return err
 		}
+		items, err := gen.Pipes[i].Build(dir, args, gen.Parser)
+		if err != nil {
+			return err
+		}
+		cfgs = append(cfgs, items...)
 		for j := range items {
 			err = gen.Build(items[j])
 			if err != nil {
 				panic(err)
 			}
+		}
+		err = gen.Pipes[i].After(gen.Parser, items)
+		if err != nil {
+			return err
 		}
 	}
 	// fmt code

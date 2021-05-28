@@ -9,7 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -24,18 +24,28 @@ func (m *Model) Name() string {
 	return "model"
 }
 
+// Pre defined
+func (m *Model) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (m *Model) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (m *Model) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Model) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	modelByte, _ := vfsutil.ReadFile(template.Assets, "model.tmpl")
-	for i := range node.Tables {
+	for i := range parser.Tables {
 		data := map[string]interface{}{
-			"PackageName": node.PackageName,
-			"Name":        node.Name,
-			"Table":       node.Tables[i],
+			"PackageName": parser.PackageName,
+			"Name":        parser.Name,
+			"Table":       parser.Tables[i],
 			"Viper":       viper.GetViper(),
 		}
-		filename := utils.FileNameTrimSuffix(node.Tables[i].Path)
+		filename := utils.FileNameTrimSuffix(parser.Tables[i].Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(modelByte),
 			FilePath: path.Join(dir, viper.GetString("dir.model"), filename+".auto.go"),

@@ -173,3 +173,17 @@ func (parser *AppParser) Walk(xmlPath string) error {
 	}
 	return nil
 }
+
+// WalkXML parse all xml in directory
+func (parser *AppParser) WalkXML(files ...string) error {
+	for _, v := range files {
+		if err := parser.parse(v); err != nil {
+			return err
+		}
+	}
+	err := validate.Struct(parser.Application)
+	if err != nil {
+		return err
+	}
+	return nil
+}

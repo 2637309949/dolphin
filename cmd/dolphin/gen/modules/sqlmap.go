@@ -9,7 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -24,19 +24,29 @@ func (app *SQLMap) Name() string {
 	return "sqlmap"
 }
 
+// Pre defined
+func (app *SQLMap) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (app *SQLMap) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (app *SQLMap) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *SQLMap) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	sqlmapByte, _ := vfsutil.ReadFile(template.Assets, "sqlmap.tmpl")
-	for i := range node.Tables {
+	for i := range parser.Tables {
 		data := map[string]interface{}{
-			"PackageName": node.PackageName,
-			"Name":        node.Name,
-			"Application": node,
-			"Table":       node.Tables[i],
+			"PackageName": parser.PackageName,
+			"Name":        parser.Name,
+			"Application": parser,
+			"Table":       parser.Tables[i],
 			"Viper":       viper.GetViper(),
 		}
-		filename := utils.FileNameTrimSuffix(node.Tables[i].Path)
+		filename := utils.FileNameTrimSuffix(parser.Tables[i].Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(sqlmapByte),
 			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sqlmap"), filename+".xml"),

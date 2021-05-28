@@ -13,7 +13,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -27,14 +27,24 @@ func (m *Boilerplate) Name() string {
 	return "boilerplate"
 }
 
+// Pre defined
+func (m *Boilerplate) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (m *Boilerplate) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (m *Boilerplate) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Boilerplate) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	cfgs := []*pipe.TmplCfg{}
 	data := map[string]interface{}{
 		"lt":          ht.HTML("<"),
-		"PackageName": node.PackageName,
-		"Name":        node.Name,
-		"Desc":        node.Desc,
+		"PackageName": parser.PackageName,
+		"Name":        parser.Name,
+		"Desc":        parser.Desc,
 		"Viper":       viper.GetViper(),
 	}
 	walkFn := func(p string, fi os.FileInfo, err error) error {

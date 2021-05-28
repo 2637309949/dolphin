@@ -10,7 +10,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -25,19 +25,29 @@ func (app *Srv) Name() string {
 	return "srv"
 }
 
+// Pre defined
+func (app *Srv) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (app *Srv) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (app *Srv) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *Srv) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	srvByte, _ := vfsutil.ReadFile(template.Assets, "srv.tmpl")
-	for i := range node.Controllers {
+	for i := range parser.Controllers {
 		data := map[string]interface{}{
 			"lt":          ht.HTML("<"),
-			"PackageName": node.PackageName,
-			"Name":        node.Name,
-			"Controller":  node.Controllers[i],
+			"PackageName": parser.PackageName,
+			"Name":        parser.Name,
+			"Controller":  parser.Controllers[i],
 			"Viper":       viper.GetViper(),
 		}
-		filename := utils.FileNameTrimSuffix(node.Controllers[i].Path)
+		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(srvByte),
 			FilePath: path.Join(dir, viper.GetString("dir.srv"), filename+".go"),

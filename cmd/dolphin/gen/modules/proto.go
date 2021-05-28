@@ -9,7 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -24,16 +24,26 @@ func (oa *Proto) Name() string {
 	return "proto"
 }
 
+// Pre defined
+func (oa *Proto) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (oa *Proto) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (oa *Proto) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (oa *Proto) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	ctrByte, _ := vfsutil.ReadFile(template.Assets, "proto.tmpl")
 	rpcByte, _ := vfsutil.ReadFile(template.Assets, "rpc.tmpl")
 	rpcCliByte, _ := vfsutil.ReadFile(template.Assets, "rpc.cli.tmpl")
-	for _, s := range node.Services {
+	for _, s := range parser.Services {
 		data := map[string]interface{}{
-			"PackageName": node.PackageName,
-			"Name":        node.Name,
+			"PackageName": parser.PackageName,
+			"Name":        parser.Name,
 			"Service":     s,
 			"Viper":       viper.GetViper(),
 		}

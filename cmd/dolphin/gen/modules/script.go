@@ -10,7 +10,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -25,8 +25,18 @@ func (app *Script) Name() string {
 	return "script"
 }
 
+// Pre defined
+func (app *Script) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (app *Script) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (app *Script) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *Script) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
 	axiosByte, _ := vfsutil.ReadFile(template.Assets, "request.tmpl")
@@ -40,10 +50,10 @@ func (app *Script) Build(dir string, args []string, node *schema.Application) ([
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text: string(apiByte),
 		Data: map[string]interface{}{
-			"PackageName": node.PackageName,
-			"Name":        node.Name,
-			"Controllers": node.Controllers,
-			"Application": node,
+			"PackageName": parser.PackageName,
+			"Name":        parser.Name,
+			"Controllers": parser.Controllers,
+			"Application": parser,
 			"Viper":       viper.GetViper(),
 		},
 		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index.js"),
@@ -51,14 +61,14 @@ func (app *Script) Build(dir string, args []string, node *schema.Application) ([
 	})
 
 	apisByte, _ := vfsutil.ReadFile(template.Assets, "apis.tmpl")
-	for i := range node.Controllers {
-		filename := utils.FileNameTrimSuffix(node.Controllers[i].Path)
-		for _, api := range node.Controllers[i].APIS {
+	for i := range parser.Controllers {
+		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
+		for _, api := range parser.Controllers[i].APIS {
 			data := map[string]interface{}{
-				"PackageName": node.PackageName,
-				"Name":        node.Name,
-				"Controller":  node.Controllers[i],
-				"Application": node,
+				"PackageName": parser.PackageName,
+				"Name":        parser.Name,
+				"Controller":  parser.Controllers[i],
+				"Application": parser,
 				"Api":         api,
 				"Viper":       viper.GetViper(),
 			}

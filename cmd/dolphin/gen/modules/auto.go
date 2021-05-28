@@ -9,7 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -23,14 +23,24 @@ func (auto *Auto) Name() string {
 	return "auto"
 }
 
+// Pre defined
+func (auto *Auto) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (auto *Auto) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (auto *Auto) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (auto *Auto) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
-		"PackageName": node.PackageName,
-		"Name":        node.Name,
-		"Controllers": node.Controllers,
-		"Services":    node.Services,
-		"Tables":      node.Tables,
+		"PackageName": parser.PackageName,
+		"Name":        parser.Name,
+		"Controllers": parser.Controllers,
+		"Services":    parser.Services,
+		"Tables":      parser.Tables,
 		"Viper":       viper.GetViper(),
 	}
 	autoByte, _ := vfsutil.ReadFile(template.Assets, "auto.tmpl")

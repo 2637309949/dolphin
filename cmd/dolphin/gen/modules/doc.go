@@ -8,7 +8,7 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	swag "github.com/2637309949/dolphin/packages/swag/gen"
 	"github.com/spf13/viper"
 )
@@ -22,8 +22,18 @@ func (m *Doc) Name() string {
 	return "doc"
 }
 
+// Pre defined
+func (m *Doc) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (m *Doc) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (m *Doc) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Doc) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	return []*pipe.TmplCfg{}, swag.New().Build(&swag.Config{
 		SearchDir:          dir,
 		MainAPIFile:        "main.go",

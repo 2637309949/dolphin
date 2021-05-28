@@ -11,11 +11,12 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 )
 
 // More struct
@@ -27,8 +28,19 @@ func (m *More) Name() string {
 	return "more"
 }
 
+// Pre defined
+func (m *More) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (m *More) After(parser *parser.AppParser, cfgs []*pipe.TmplCfg) error {
+	parser.WalkXML(funk.Map(cfgs, func(cfg *pipe.TmplCfg) string { return cfg.FilePath }).([]string)...)
+	return nil
+}
+
 // Build func
-func (m *More) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *More) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	ctrByte, _ := vfsutil.ReadFile(template.Assets, "more.ctr.tmpl")
 	tbByte, _ := vfsutil.ReadFile(template.Assets, "more.tb.tmpl")
@@ -45,8 +57,8 @@ func (m *More) Build(dir string, args []string, node *schema.Application) ([]*pi
 		return strings.Contains(string(data), "<table")
 	})
 	data := map[string]interface{}{
-		"PackageName": node.PackageName,
-		"Name":        node.Name,
+		"PackageName": parser.PackageName,
+		"Name":        parser.Name,
 		"Viper":       viper.GetViper(),
 		"more":        args[0],
 	}

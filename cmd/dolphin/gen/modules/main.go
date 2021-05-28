@@ -9,7 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -23,11 +23,21 @@ func (m *Main) Name() string {
 	return "main"
 }
 
+// Pre defined
+func (m *Main) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (m *Main) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (m *Main) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (m *Main) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
-		"PackageName": node.PackageName,
-		"Name":        node.Name,
+		"PackageName": parser.PackageName,
+		"Name":        parser.Name,
 		"Viper":       viper.GetViper(),
 	}
 	mainByte, _ := vfsutil.ReadFile(template.Assets, "main.tmpl")

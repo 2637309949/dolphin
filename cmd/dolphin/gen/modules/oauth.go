@@ -11,7 +11,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -25,11 +25,21 @@ func (oa *OAuth) Name() string {
 	return "oauth"
 }
 
+// Pre defined
+func (oa *OAuth) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (oa *OAuth) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (oa *OAuth) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (oa *OAuth) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	data := map[string]interface{}{
-		"PackageName": node.PackageName,
-		"Name":        node.Name,
+		"PackageName": parser.PackageName,
+		"Name":        parser.Name,
 		"Viper":       viper.GetViper(),
 	}
 

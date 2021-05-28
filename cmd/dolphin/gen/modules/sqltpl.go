@@ -17,7 +17,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -38,17 +38,22 @@ type SQLTPL struct {
 }
 
 // Name defined pipe name
-func Name() string {
-	return "sqltmp"
-}
-
-// Name defined pipe name
 func (app *SQLTPL) Name() string {
 	return "sqltpl"
 }
 
+// Pre defined
+func (app *SQLTPL) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (app *SQLTPL) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (app *SQLTPL) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *SQLTPL) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	var files []struct {
 		Name    string
@@ -101,9 +106,9 @@ func (app *SQLTPL) Build(dir string, args []string, node *schema.Application) ([
 		return tmplCfgs, err
 	}
 	data := map[string]interface{}{
-		"PackageName": node.PackageName,
-		"Name":        node.Name,
-		"Application": node,
+		"PackageName": parser.PackageName,
+		"Name":        parser.Name,
+		"Application": parser,
 		"Files":       files,
 		"Viper":       viper.GetViper(),
 	}

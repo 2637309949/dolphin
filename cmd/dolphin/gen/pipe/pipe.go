@@ -1,6 +1,6 @@
 package pipe
 
-import "github.com/2637309949/dolphin/cmd/dolphin/schema"
+import "github.com/2637309949/dolphin/cmd/dolphin/parser"
 
 type (
 	// Overlap int
@@ -17,8 +17,10 @@ type (
 	}
 	// Pipe interface
 	Pipe interface {
+		Pre(*parser.AppParser) error
+		After(*parser.AppParser, []*TmplCfg) error
 		Name() string
-		Build(string, []string, *schema.Application) ([]*TmplCfg, error)
+		Build(string, []string, *parser.AppParser) ([]*TmplCfg, error)
 	}
 )
 

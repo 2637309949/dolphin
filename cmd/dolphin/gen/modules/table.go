@@ -11,6 +11,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -27,8 +28,18 @@ func (app *Table) Name() string {
 	return "table"
 }
 
+// Pre defined
+func (app *Table) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (app *Table) After(*parser.AppParser, []*pipe.TmplCfg) error {
+	return nil
+}
+
 // Build func
-func (app *Table) Build(dir string, args []string, node *schema.Application) ([]*pipe.TmplCfg, error) {
+func (app *Table) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	tbByte, _ := vfsutil.ReadFile(template.Assets, "table.tmpl")
 	tmplCfgs := []*pipe.TmplCfg{}
 	engines := []*xorm.Engine{}
@@ -144,8 +155,8 @@ func (app *Table) Build(dir string, args []string, node *schema.Application) ([]
 				meta.Columns = append(meta.Columns, &c)
 			}
 			data := map[string]interface{}{
-				"PackageName": node.PackageName,
-				"Name":        node.Name,
+				"PackageName": parser.PackageName,
+				"Name":        parser.Name,
 				"Table":       meta,
 				"Viper":       viper.GetViper(),
 			}
