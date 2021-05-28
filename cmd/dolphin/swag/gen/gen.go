@@ -17,7 +17,7 @@ import (
 
 	"github.com/go-openapi/spec"
 
-	"github.com/2637309949/dolphin/packages/swag"
+	"github.com/2637309949/dolphin/cmd/dolphin/swag"
 )
 
 // Gen presents a generate tool for swag.
@@ -262,7 +262,7 @@ import (
 	"strings"
 
 	"github.com/alecthomas/template"
-	"github.com/2637309949/dolphin/packages/swag"
+	"github.com/2637309949/dolphin/cmd/dolphin/swag"
 )
 
 var doc = ` + "`{{ printDoc .Doc}}`" + `

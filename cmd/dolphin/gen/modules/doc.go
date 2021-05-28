@@ -9,7 +9,7 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	swag "github.com/2637309949/dolphin/packages/swag/gen"
+	"github.com/2637309949/dolphin/cmd/dolphin/swag/gen"
 	"github.com/spf13/viper"
 )
 
@@ -34,7 +34,7 @@ func (m *Doc) After(*parser.AppParser, []*pipe.TmplCfg) error {
 
 // Build func
 func (m *Doc) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
-	return []*pipe.TmplCfg{}, swag.New().Build(&swag.Config{
+	return []*pipe.TmplCfg{}, gen.New().Build(&gen.Config{
 		SearchDir:          dir,
 		MainAPIFile:        "main.go",
 		PropNamingStrategy: "camelcase",
