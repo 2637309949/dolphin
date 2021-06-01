@@ -4,7 +4,6 @@
 package srv
 
 import (
-	"context"
 	"errors"
 	"log"
 	"sync"
@@ -15,7 +14,7 @@ import (
 )
 
 // ICacheTODO defined srv
-func ICacheTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
+func ICacheTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	logrus.Infoln("ICacheAction")
 	fatalErrors := make(chan error)
 	wgDone := make(chan bool)

@@ -14,8 +14,8 @@ import (
 )
 
 // SysTableTODO defined srv
-func SysTableTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
-	actCtx, cancel := context.WithTimeout(actCtx, 5*time.Second)
+func SysTableTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	go func(ctx context.Context) {
 		ticker := time.NewTicker(1 * time.Second)
 		for range ticker.C {
@@ -27,9 +27,9 @@ func SysTableTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, 
 				logrus.Infoln("child job...")
 			}
 		}
-	}(actCtx)
+	}(cwt)
 	defer cancel()
-	<-actCtx.Done()
+	<-cwt.Done()
 	logrus.Infoln("main process exit!")
 	return nil, errors.New("no implementation found")
 }

@@ -14,7 +14,7 @@ import (
 )
 
 // RPCTODO defined srv
-func RPCTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
+func RPCTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	deadlinectx, cancel := context.WithDeadline(actCtx, time.Now().Add(10*time.Second))
 	defer cancel()
 	messageReply, err := rpc.MessageSrvClient.SendMail(deadlinectx, &proto.MessageMail{})

@@ -4,8 +4,6 @@
 package app
 
 import (
-	"context"
-
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/sirupsen/logrus"
 )
@@ -20,7 +18,7 @@ import (
 func SysWechatOauth2(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetUser()
-	ret, err := srv.SysWechatTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.SysWechatTODO(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -14,22 +14,19 @@ import (
 )
 
 // SysNotificationTODO defined srv
-func SysNotificationTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
-	actCtx, cancel := context.WithTimeout(actCtx, 5*time.Second)
-	go func(ctx context.Context) {
-		ticker := time.NewTicker(1 * time.Second)
-		for range ticker.C {
-			select {
-			case <-ctx.Done():
-				logrus.Infoln("child process interrupt...")
-				return
-			default:
-				logrus.Infoln("child job...")
-			}
-		}
-	}(actCtx)
+func SysNotificationTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
-	<-actCtx.Done()
-	logrus.Infoln("main process exit!")
+	go func(ctx context.Context) {
+	}(cwt)
+	ticker := time.NewTicker(1 * time.Second)
+	for range ticker.C {
+		select {
+		case <-ctx.Done():
+			return nil, ctx.Err()
+		default:
+			logrus.Infoln("child job...")
+		}
+	}
 	return nil, errors.New("no implementation found")
 }

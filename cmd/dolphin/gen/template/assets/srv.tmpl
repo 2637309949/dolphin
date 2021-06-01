@@ -14,8 +14,9 @@ import (
 )
 
 // {{$.Controller.ToUpperCase $.Controller.Name}}TODO defined srv
-func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
-	actCtx, cancel := context.WithTimeout(actCtx, 5*time.Second)
+func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
 	go func(ctx context.Context) {
 		ticker := time.NewTicker(1 * time.Second)
 		for range ticker.C {
@@ -27,8 +28,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ginCtx *gin.Context, db 
 				logrus.Infoln("child job...")
 			}
 		}
-	}(actCtx)
-	defer cancel()
+	}(cwt)
 	{{.lt}}-actCtx.Done()
 	time.Sleep(1 * time.Second)
 	logrus.Infoln("main process exit!")

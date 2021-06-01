@@ -4,7 +4,6 @@
 package srv
 
 import (
-	"context"
 	"errors"
 	"time"
 
@@ -24,7 +23,7 @@ func init() {
 }
 
 // RedisLockTODO defined srv
-func RedisLockTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
+func RedisLockTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	mutexname := "my-global-mutex"
 	mutex := RedSync.NewMutex(mutexname)
 	if err := mutex.Lock(); err != nil {

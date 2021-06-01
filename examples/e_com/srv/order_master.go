@@ -14,8 +14,8 @@ import (
 )
 
 // OrderMasterTODO defined srv
-func OrderMasterTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
-	actCtx, cancel := context.WithTimeout(actCtx, 5*time.Second)
+func OrderMasterTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	go func(ctx context.Context) {
 		ticker := time.NewTicker(1 * time.Second)
 		for range ticker.C {
@@ -27,9 +27,9 @@ func OrderMasterTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Contex
 				logrus.Infoln("child job...")
 			}
 		}
-	}(actCtx)
+	}(cwt)
 	defer cancel()
-	<-actCtx.Done()
+	<-cwt.Done()
 	time.Sleep(1 * time.Second)
 	logrus.Infoln("main process exit!")
 	return nil, errors.New("no implementation found")

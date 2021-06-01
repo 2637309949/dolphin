@@ -14,8 +14,9 @@ import (
 )
 
 // SysMenuTODO defined srv
-func SysMenuTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, params struct{}) (interface{}, error) {
-	actCtx, cancel := context.WithTimeout(actCtx, 5*time.Second)
+func SysMenuTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
 	go func(ctx context.Context) {
 		ticker := time.NewTicker(1 * time.Second)
 		for range ticker.C {
@@ -27,9 +28,8 @@ func SysMenuTODO(ginCtx *gin.Context, db *xorm.Engine, actCtx context.Context, p
 				logrus.Infoln("child job...")
 			}
 		}
-	}(actCtx)
-	defer cancel()
-	<-actCtx.Done()
+	}(cwt)
+	<-cwt.Done()
 	logrus.Infoln("main process exit!")
 	return nil, errors.New("no implementation found")
 }

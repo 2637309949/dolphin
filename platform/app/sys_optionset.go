@@ -10,6 +10,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
@@ -266,6 +267,7 @@ func SysOptionsetPage(ctx *Context) {
 func SysOptionsetGet(ctx *Context) {
 	var entity model.SysOptionset
 	err := ctx.ShouldBindQuery(&entity)
+	srv.SysOptionsetTODO(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Errorf("SysOptionsetGet#ShouldBindQuery#%v", err)
 		ctx.Fail(err)
