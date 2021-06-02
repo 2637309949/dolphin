@@ -17,23 +17,23 @@ import (
 func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
+	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
 	chi := func(cwt context.Context) chan interface{} {
 		chi := make(chan interface{}, 1)
 		go func() {
 			time.Sleep(1 * time.Second)
-			chi {{.lt}}- 100
-			close(chi)
+			chi <- 100
 			cancel()
+			close(chi)
 		}()
 		return chi
 	}(cwt)
-	ticker := time.NewTicker(1 * time.Second)
-	defer ticker.Stop()
 	for range ticker.C {
 		select {
-		case {{.lt}}-cwt.Done():
+		case <-cwt.Done():
 			logrus.Infoln("child process interrupt...")
-			return {{.lt}}-chi, cwt.Err()
+			return <-chi, cwt.Err()
 		default:
 			logrus.Infoln("awaiting job...")
 		}
