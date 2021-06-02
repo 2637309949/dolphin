@@ -17,19 +17,26 @@ import (
 func SysMenuTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
-	go func(ctx context.Context) {
-		ticker := time.NewTicker(1 * time.Second)
-		for range ticker.C {
-			select {
-			case <-ctx.Done():
-				logrus.Infoln("child process interrupt...")
-				return
-			default:
-				logrus.Infoln("child job...")
-			}
-		}
+	chi := func(cwt context.Context) chan interface{} {
+		chi := make(chan interface{}, 1)
+		go func() {
+			time.Sleep(1 * time.Second)
+			chi <- 100
+			close(chi)
+			cancel()
+		}()
+		return chi
 	}(cwt)
-	<-cwt.Done()
-	logrus.Infoln("main process exit!")
+	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
+	for range ticker.C {
+		select {
+		case <-cwt.Done():
+			logrus.Infoln("child process interrupt...")
+			return <-chi, cwt.Err()
+		default:
+			logrus.Infoln("awaiting job...")
+		}
+	}
 	return nil, errors.New("no implementation found")
 }

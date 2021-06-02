@@ -15,18 +15,27 @@ import (
 
 // SysOptionsetTODO defined srv
 func SysOptionsetTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
-	cwt, stop := context.WithTimeout(ctx, 5*time.Second)
-	defer stop()
-	go func(ctx context.Context) {
-		//
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+	chi := func(cwt context.Context) chan interface{} {
+		chi := make(chan interface{}, 1)
+		go func() {
+			time.Sleep(1 * time.Second)
+			chi <- 100
+			close(chi)
+			cancel()
+		}()
+		return chi
 	}(cwt)
 	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
 	for range ticker.C {
 		select {
-		case <-ctx.Done():
-			return nil, ctx.Err()
+		case <-cwt.Done():
+			logrus.Infoln("child process interrupt...")
+			return <-chi, cwt.Err()
 		default:
-			logrus.Infoln("waiting job...")
+			logrus.Infoln("awaiting job...")
 		}
 	}
 	return nil, errors.New("no implementation found")

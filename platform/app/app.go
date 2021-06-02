@@ -5,12 +5,10 @@ package app
 
 import (
 	"context"
-	"fmt"
 	"net"
 	"net/http"
 	"path"
 
-	"github.com/2637309949/dolphin/platform/util"
 	"github.com/json-iterator/go/extra"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -19,25 +17,19 @@ import (
 	_ "github.com/2637309949/dolphin/platform/conf"
 )
 
-// HTTPServer defined http.Server
-var HTTPServer *http.Server
-
-// RPCListener defined net
-var RPCListener net.Listener
-
 // OnStart defined OnStart
-func OnStart(e *Engine) func(context.Context) error {
+func OnStart(e *Engine, srv *http.Server, rpc net.Listener) func(context.Context) error {
 	return func(context.Context) error {
+		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
+		logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
+		srv.Handler = e.Gin
 		go func() {
-			logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
-			HTTPServer.Handler = e.Gin
-			if err := HTTPServer.ListenAndServe(); err != nil {
+			if err := srv.ListenAndServe(); err != nil {
 				logrus.Fatal(err)
 			}
 		}()
 		go func() {
-			logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
-			if err := e.GRPC.Serve(RPCListener); err != nil {
+			if err := e.GRPC.Serve(rpc); err != nil {
 				logrus.Fatal(err)
 			}
 		}()
@@ -46,13 +38,13 @@ func OnStart(e *Engine) func(context.Context) error {
 }
 
 // OnStop defined OnStop
-func OnStop(e *Engine) func(ctx context.Context) error {
+func OnStop(e *Engine, srv *http.Server, rpc net.Listener) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
-		if err := HTTPServer.Shutdown(ctx); err != nil {
+		if err := srv.Shutdown(ctx); err != nil {
 			logrus.Fatal(err)
 			return err
 		}
-		if err := RPCListener.Close(); err != nil {
+		if err := rpc.Close(); err != nil {
 			logrus.Fatal(err)
 			return err
 		}
@@ -61,11 +53,8 @@ func OnStop(e *Engine) func(ctx context.Context) error {
 }
 
 // NewLifeHook create lifecycle hook
-func NewLifeHook(e *Engine) Hook {
-	return Hook{
-		OnStart: OnStart(e),
-		OnStop:  OnStop(e),
-	}
+func NewLifeHook(e *Engine, srv *http.Server, rpc net.Listener) Hook {
+	return Hook{OnStart(e, srv, rpc), OnStop(e, srv, rpc)}
 }
 
 // init after NewEngine
@@ -77,8 +66,6 @@ func init() {
 	OA2Cfg.RedirectURL = viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
 	OA2Cfg.Endpoint.AuthURL = AuthServerURL + path.Join(viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath)
 	OA2Cfg.Endpoint.TokenURL = AuthServerURL + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath)
-	HTTPServer = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
-	RPCListener = util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
 	SyncModel()
 	SyncController()
 	SyncService()
