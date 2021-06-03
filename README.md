@@ -57,6 +57,7 @@ Dolphin is a code generate tools and web Framework written in Go (Golang), Will 
         - [build](#build)
         - [clean](#clean)
         - [init](#init)
+        - [more](#more)
     - [API Examples](#api-examples)
         - [dolphin-ui](#dolphin-ui)
     - [XML Label](#xml-label)
@@ -226,6 +227,7 @@ Available Commands:
   clean       Removing intermediate files
   help        Help about any command
   init        Initialize a empty project
+  more        Add controller and table
 
 Flags:
   -h, --help   help for dolphin
@@ -273,6 +275,13 @@ The init command, as stated, generates a series of initialization files
 
 ```sh
 mkdir demo && cd demo && dolphin init
+```
+
+### more
+The more command, provide controller and Table XML generation
+
+```sh
+dolphin more wechat_info
 ```
 
 ## API Examples

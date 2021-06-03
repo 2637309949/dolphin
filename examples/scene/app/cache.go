@@ -4,7 +4,6 @@
 package app
 
 import (
-	"context"
 	"scene/srv"
 
 	"github.com/sirupsen/logrus"
@@ -20,7 +19,7 @@ import (
 func ICacheInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := srv.ICacheTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.ICacheTODO(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

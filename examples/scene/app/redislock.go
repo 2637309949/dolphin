@@ -4,7 +4,6 @@
 package app
 
 import (
-	"context"
 	"scene/srv"
 
 	"github.com/sirupsen/logrus"
@@ -23,7 +22,7 @@ func RedisLockLock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RedisLockTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.RedisLockTODO(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -45,7 +44,7 @@ func RedisLockUnlock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RedisLockTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.RedisLockTODO(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

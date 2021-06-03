@@ -4,7 +4,6 @@
 package app
 
 import (
-	"context"
 	"scene/model"
 	"scene/srv"
 
@@ -42,7 +41,7 @@ func EncryptAdd(ctx *Context) {
 func EncryptInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := srv.EncryptTODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.EncryptTODO(ctx.Raw(), ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

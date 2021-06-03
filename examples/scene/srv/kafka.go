@@ -92,6 +92,5 @@ func KafkaConsumer(ctx context.Context) {
 }
 
 func Woker(value []byte) {
-	fmt.Println("------start woker: ", string(value))
 	time.Sleep(10 * time.Second)
 }
