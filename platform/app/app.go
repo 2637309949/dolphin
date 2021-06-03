@@ -5,6 +5,7 @@ package app
 
 import (
 	"context"
+	"fmt"
 	"net"
 	"net/http"
 	"path"
@@ -15,21 +16,22 @@ import (
 
 	// github.com/2637309949/dolphin/platform/conf
 	_ "github.com/2637309949/dolphin/platform/conf"
+	"github.com/2637309949/dolphin/platform/util"
 )
 
 // OnStart defined OnStart
-func OnStart(e *Engine, srv *http.Server, rpc net.Listener) func(context.Context) error {
+func OnStart(engine *Engine, httpSrv *http.Server, rpcSrv net.Listener) func(context.Context) error {
 	return func(context.Context) error {
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 		logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
-		srv.Handler = e.Gin
+		httpSrv.Handler = engine.Gin
 		go func() {
-			if err := srv.ListenAndServe(); err != nil {
+			if err := httpSrv.ListenAndServe(); err != nil {
 				logrus.Fatal(err)
 			}
 		}()
 		go func() {
-			if err := e.GRPC.Serve(rpc); err != nil {
+			if err := engine.GRPC.Serve(rpcSrv); err != nil {
 				logrus.Fatal(err)
 			}
 		}()
@@ -38,13 +40,13 @@ func OnStart(e *Engine, srv *http.Server, rpc net.Listener) func(context.Context
 }
 
 // OnStop defined OnStop
-func OnStop(e *Engine, srv *http.Server, rpc net.Listener) func(ctx context.Context) error {
+func OnStop(e *Engine, httpSrv *http.Server, rpcSrv net.Listener) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
-		if err := srv.Shutdown(ctx); err != nil {
+		if err := httpSrv.Shutdown(ctx); err != nil {
 			logrus.Fatal(err)
 			return err
 		}
-		if err := rpc.Close(); err != nil {
+		if err := rpcSrv.Close(); err != nil {
 			logrus.Fatal(err)
 			return err
 		}
@@ -53,8 +55,9 @@ func OnStop(e *Engine, srv *http.Server, rpc net.Listener) func(ctx context.Cont
 }
 
 // NewLifeHook create lifecycle hook
-func NewLifeHook(e *Engine, srv *http.Server, rpc net.Listener) Hook {
-	return Hook{OnStart(e, srv, rpc), OnStop(e, srv, rpc)}
+func NewLifeHook(e *Engine) Hook {
+	httpSrv, rpcSrv := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}, util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
+	return Hook{OnStart(e, httpSrv, rpcSrv), OnStop(e, httpSrv, rpcSrv)}
 }
 
 // init after NewEngine

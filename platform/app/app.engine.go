@@ -6,9 +6,6 @@ package app
 
 import (
 	"context"
-	"fmt"
-	"net"
-	nhttp "net/http"
 	"os"
 	"os/signal"
 	"path"
@@ -252,8 +249,6 @@ func (e *Engine) Init() {
 }
 
 func NewEngine() *Engine {
-	httpSrv := &nhttp.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
-	rpcSrv := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
 	e := &Engine{}
 	e.Manager = NewDefaultManager()
 	e.lifecycle = &lifecycleWrapper{}
@@ -261,7 +256,7 @@ func NewEngine() *Engine {
 	e.Gin = NewGin()
 	e.Gin.Use(plugin.Tracker(Tracker(e)))
 	e.pool.New = func() interface{} { return e.allocateContext() }
-	e.lifecycle.Append(NewLifeHook(e, httpSrv, rpcSrv))
+	e.lifecycle.Append(NewLifeHook(e))
 	return e
 }
 
