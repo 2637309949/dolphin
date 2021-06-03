@@ -129,10 +129,8 @@ func (e *Engine) database() {
 	e.PlatformDB.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
 	e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
 	e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
-	{
-		new(model.SysDomain).Ensure(e.PlatformDB)
-		new(model.SysDomain).InitSysData(e.PlatformDB.NewSession())
-	}
+	new(model.SysDomain).Ensure(e.PlatformDB)
+	new(model.SysDomain).InitSysData(e.PlatformDB.NewSession())
 
 	// initBusinessDB
 	asyncOnce, domains := sync.Once{}, []model.SysDomain{}
