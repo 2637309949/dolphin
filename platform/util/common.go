@@ -6,6 +6,7 @@ package util
 import (
 	"math/rand"
 	"os"
+	"reflect"
 	"runtime"
 	"time"
 
@@ -143,4 +144,17 @@ func DeepSearch(m map[string]interface{}, path []string) map[string]interface{} 
 		m = m3
 	}
 	return m
+}
+
+// SomeOne defined
+func SomeOne(srv interface{}, def interface{}) interface{} {
+	sliceValue := reflect.Indirect(reflect.ValueOf(srv))
+	if sliceValue.Kind() == reflect.Slice {
+		size := sliceValue.Len()
+		if size <= 0 {
+			return def
+		}
+		return sliceValue.Index(0).Interface()
+	}
+	return def
 }

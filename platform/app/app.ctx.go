@@ -117,10 +117,7 @@ func (ctx *Context) InAdmin(role ...string) bool {
 
 // Success defined success result
 func (ctx *Context) Success(data interface{}, status ...int) {
-	code := 200
-	if len(status) > 0 {
-		code = status[0]
-	}
+	code := util.SomeOne(status, 200).(int)
 	ctx.JSON(http.StatusOK, model.Success{
 		Code: code,
 		Data: data,
@@ -134,9 +131,7 @@ func (ctx *Context) Fail(err error, status ...int) {
 	if mErr, ok := err.(model.Error); ok {
 		code = mErr.Code
 	}
-	if len(status) > 0 {
-		code = status[0]
-	}
+	code = util.SomeOne(status, code).(int)
 	ctx.JSON(http.StatusOK, model.Fail{
 		Code: code,
 		Msg:  msg,
