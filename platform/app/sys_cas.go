@@ -127,7 +127,7 @@ func SysCasAffirm(ctx *Context) {
 	ctx.Request.Form = form
 	store.Delete("ReturnUri")
 	store.Save()
-	err = ctx.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
+	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAffirm/HandleAuthorizeRequest:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
@@ -161,7 +161,7 @@ func SysCasAuthorize(ctx *Context) {
 	}
 	store.Delete("ReturnUri")
 	store.Save()
-	err = ctx.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
+	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAuthorize/HandleAuthorizeRequest:%v", err)
 		ctx.Fail(err)
@@ -178,7 +178,7 @@ func SysCasAuthorize(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/token [post]
 func SysCasToken(ctx *Context) {
-	err := ctx.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
+	err := App.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasToken/HandleTokenRequest:%v", err)
 		ctx.Fail(err)
@@ -246,7 +246,7 @@ func SysCasOauth2(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/refresh [get]
 func SysCasRefresh(ctx *Context) {
-	refreshtoken, ok := ctx.OAuth2.BearerAuth(ctx.Request)
+	refreshtoken, ok := App.OAuth2.BearerAuth(ctx.Request)
 	if !ok {
 		logrus.Errorf("SysCasRefresh/BearerAuth:%v", ok)
 		ctx.Fail(util.ErrInvalidAccessToken)

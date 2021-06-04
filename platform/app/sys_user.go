@@ -437,7 +437,7 @@ func SysUserLogin(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	token, err := ctx.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
+	token, err := App.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
 		UserID:       fmt.Sprintf("%v", account.ID.Int64),
 		Domain:       account.Domain.String,
 		ClientID:     viper.GetString("oauth.id"),
@@ -464,7 +464,7 @@ func SysUserLogin(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/logout [get]
 func SysUserLogout(ctx *Context) {
-	err := ctx.OAuth2.Manager.RemoveAccessToken(ctx.GetToken().GetAccess())
+	err := App.OAuth2.Manager.RemoveAccessToken(ctx.GetToken().GetAccess())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -17,7 +17,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
@@ -30,18 +29,12 @@ import (
 )
 
 type (
-	// ZeroType defined
-	ZeroType interface {
-		IsZero() bool
-	}
 	// Context defined http handle hook context
 	Context struct {
-		AuthInfo
 		*gin.Context
-		DB         *xorm.Engine
+		AuthInfo
 		PlatformDB *xorm.Engine
-		OAuth2     *server.Server
-		engine     *Engine
+		DB         *xorm.Engine
 	}
 	// HandlerFunc defines the handler used by gin middleware as return value
 	HandlerFunc struct {
@@ -86,13 +79,15 @@ func (ctx *Context) InRole(role ...string) bool {
 	var cnt int
 	role, _ = slice.RemoveStringDuplicates(role)
 	if _, err := ctx.DB.SQL(
-		fmt.Sprintf(
-			`select count(distinct(role_id)) cnt from sys_role_user left join sys_role on sys_role.id=sys_role_user.role_id where sys_role.code in (%v) and sys_role_user.user_id = ? and sys_role_user.is_delete != 1`,
-			strings.Join(funk.Map(role, func(id string) string {
-				return fmt.Sprintf("'%v'", id)
-			}).([]string), ",")),
-		ctx.GetToken().GetUserID(),
-	).Get(&cnt); err != nil {
+		fmt.Sprintf(`
+		    select count(distinct(role_id)) cnt 
+			from sys_role_user 
+			left join sys_role on sys_role.id=sys_role_user.role_id 
+			where sys_role.code in (%v) and sys_role_user.user_id = ? and sys_role_user.is_delete != 1
+		`, strings.Join(funk.Map(role, func(id string) string {
+			return fmt.Sprintf("'%v'", id)
+		}).([]string), ",")),
+		ctx.GetToken().GetUserID()).Get(&cnt); err != nil {
 		logrus.Error(err)
 		return false
 	}
@@ -104,11 +99,15 @@ func (ctx *Context) InAdmin(role ...string) bool {
 	var cnt int
 	role, _ = slice.RemoveStringDuplicates(append(role, model.AdminRole.Code.String))
 	if _, err := ctx.DB.SQL(
-		fmt.Sprintf(`select count(sys_role_user.id) cnt from sys_role_user left join sys_role on sys_role.id=sys_role_user.role_id where sys_role_user.user_id = ? and sys_role.code in (%v) and sys_role_user.is_delete != 1`, strings.Join(funk.Map(role, func(id string) string {
+		fmt.Sprintf(`
+			select count(sys_role_user.id) cnt 
+			from sys_role_user 
+			left join sys_role on sys_role.id=sys_role_user.role_id 
+			where sys_role_user.user_id = ? and sys_role.code in (%v) and sys_role_user.is_delete != 1
+		`, strings.Join(funk.Map(role, func(id string) string {
 			return fmt.Sprintf("'%v'", id)
 		}).([]string), ",")),
-		ctx.GetToken().GetUserID(),
-	).Get(&cnt); err != nil {
+		ctx.GetToken().GetUserID()).Get(&cnt); err != nil {
 		logrus.Error(err)
 		return false
 	}
@@ -282,7 +281,9 @@ func (ctx *Context) OmitByZero(source interface{}) (target interface{}) {
 	v := reflect.ValueOf(source)
 	for i := 0; i < v.NumField(); i++ {
 		if v.Field(i).CanInterface() {
-			if zeroType, ok := v.Field(i).Interface().(ZeroType); !ok || !zeroType.IsZero() {
+			if zeroType, ok := v.Field(i).Interface().(interface {
+				IsZero() bool
+			}); !ok || !zeroType.IsZero() {
 				sv = append(sv, reflect.StructField{
 					Name: strings.Title(t.Field(i).Name),
 					Type: t.Field(i).Type,
@@ -392,7 +393,7 @@ func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
 
 // BusinessDB defined
 func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
-	return ctx.engine.Manager.GetBusinessDB(domain)
+	return App.Manager.GetBusinessDB(domain)
 }
 
 // Persist defined

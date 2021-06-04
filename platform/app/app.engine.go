@@ -36,12 +36,12 @@ import (
 
 // Engine defined parse app engine
 type Engine struct {
-	Manager    Manager
-	lifecycle  Lifecycle
-	Gin        *gin.Engine
-	GRPC       *grpc.Server
-	OAuth2     *server.Server
+	*gin.Engine
 	PlatformDB *xorm.Engine
+	lifecycle  Lifecycle
+	Manager    Manager
+	OAuth2     *server.Server
+	GRPC       *grpc.Server
 	pool       sync.Pool
 }
 
@@ -64,13 +64,14 @@ func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 	})
 }
 
+// allocateContext defined new context
 func (e *Engine) allocateContext() *Context {
-	return &Context{PlatformDB: e.PlatformDB, engine: e, OAuth2: e.OAuth2, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
+	return &Context{PlatformDB: e.PlatformDB, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
 }
 
 // Group handlers
 func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
-	return &RouterGroup{engine: e, RouterGroup: e.Gin.Group(relativePath, handlers...)}
+	return &RouterGroup{engine: e, RouterGroup: e.Engine.Group(relativePath, handlers...)}
 }
 
 // Migration models
@@ -251,8 +252,8 @@ func NewEngine() *Engine {
 	e.Manager = NewDefaultManager()
 	e.lifecycle = &lifecycleWrapper{}
 	e.GRPC = grpc.NewServer()
-	e.Gin = NewGin()
-	e.Gin.Use(plugin.Tracker(Tracker(e)))
+	e.Engine = NewGin()
+	e.Engine.Use(plugin.Tracker(Tracker(e)))
 	e.pool.New = func() interface{} { return e.allocateContext() }
 	e.lifecycle.Append(NewLifeHook(e))
 	return e

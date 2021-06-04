@@ -24,7 +24,7 @@ func OnStart(engine *Engine, httpSrv *http.Server, rpcSrv net.Listener) func(con
 	return func(context.Context) error {
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 		logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
-		httpSrv.Handler = engine.Gin
+		httpSrv.Handler = engine
 		go func() {
 			if err := httpSrv.ListenAndServe(); err != nil {
 				logrus.Fatal(err)
