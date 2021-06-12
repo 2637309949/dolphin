@@ -196,19 +196,6 @@ func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) {
 	util.Ensure(db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl")))
 }
 
-func (e *Engine) authorize() {
-	manager := manage.NewDefaultManager()
-	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.MapTokenStorage(e.Manager.GetTokenStore())
-	manager.MapAccessGenerate(generates.NewAccessGenerate())
-	manager.MapClientStorage(NewClientStore())
-	manager.SetValidateURIHandler(ValidateURIHandler)
-	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
-	e.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
-	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
-	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
-}
-
 // Done returns a channel of signals to block on after starting the
 func (e *Engine) done() <-chan os.Signal {
 	c := make(chan os.Signal, 1)
@@ -242,7 +229,6 @@ func (e *Engine) Run() {
 // Init defined booting init
 func (e *Engine) Init() {
 	e.database()
-	e.authorize()
 }
 
 func NewEngine() *Engine {
@@ -254,6 +240,16 @@ func NewEngine() *Engine {
 	e.pool.New = func() interface{} { return e.allocateContext() }
 	e.lifecycle.Append(NewLifeHook(e))
 
+	manager := manage.NewDefaultManager()
+	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
+	manager.MapTokenStorage(e.Manager.GetTokenStore())
+	manager.MapAccessGenerate(generates.NewAccessGenerate())
+	manager.MapClientStorage(NewClientStore())
+	manager.SetValidateURIHandler(ValidateURIHandler)
+	e.OAuth2 = server.NewServer(server.NewConfig(), manager)
+	e.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
+	e.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
+	e.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
 	return e
 }
 
