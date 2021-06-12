@@ -9,12 +9,11 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
 
 // SysRoleMenuTODO defined srv
-func SysRoleMenuTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+func SysRoleMenuTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

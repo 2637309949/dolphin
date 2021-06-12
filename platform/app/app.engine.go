@@ -70,8 +70,8 @@ func (e *Engine) allocateContext() *Context {
 }
 
 // Group handlers
-func (e *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
-	return &RouterGroup{RouterGroup: e.Engine.Group(relativePath, handlers...), engine: e}
+func (e *Engine) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
+	return &RouterGroup{Handlers: handlers, basePath: relativePath, engine: e}
 }
 
 // Migration models

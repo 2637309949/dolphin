@@ -4,17 +4,17 @@
 package srv
 
 import (
+	"context"
 	"errors"
 	"log"
 	"sync"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
 
 // ICacheTODO defined srv
-func ICacheTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+func ICacheTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	logrus.Infoln("ICacheAction")
 	fatalErrors := make(chan error)
 	wgDone := make(chan bool)

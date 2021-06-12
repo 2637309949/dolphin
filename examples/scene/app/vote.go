@@ -29,7 +29,7 @@ func VoteLike(ctx *Context) {
 		return
 	}
 	payload.UserId = null.StringFrom(ctx.GetToken().GetUserID())
-	ret, err := srv.VoteLike(ctx.Raw(), ctx.DB, payload)
+	ret, err := srv.VoteLike(ctx, ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

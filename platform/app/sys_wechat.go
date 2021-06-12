@@ -18,7 +18,7 @@ import (
 func SysWechatOauth2(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetUser()
-	ret, err := srv.SysWechatTODO(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.SysWechatTODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

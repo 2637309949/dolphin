@@ -22,7 +22,7 @@ func RPCMessage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RPCTODO(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.RPCTODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

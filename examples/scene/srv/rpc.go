@@ -10,11 +10,10 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/gin-gonic/gin"
 )
 
 // RPCTODO defined srv
-func RPCTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+func RPCTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	deadlinectx, cancel := context.WithDeadline(ctx, time.Now().Add(10*time.Second))
 	defer cancel()
 	messageReply, err := rpc.MessageSrvClient.SendMail(deadlinectx, &proto.MessageMail{})

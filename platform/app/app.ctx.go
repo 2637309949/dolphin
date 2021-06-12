@@ -47,8 +47,9 @@ type (
 
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		*gin.RouterGroup
-		engine *Engine
+		Handlers []HandlerFunc
+		basePath string
+		engine   *Engine
 	}
 )
 
@@ -589,15 +590,23 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 }
 
 // Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) []gin.IRoutes {
-	return funk.Chain(strings.Split(httpMethod, ",")).Map(func(method string) gin.IRoutes {
-		return rg.RouterGroup.Handle(
-			method,
-			relativePath,
-			funk.Chain(handlers).Map(func(h HandlerFunc) []gin.HandlerFunc {
-				ic := funk.Chain(h.Interceptor).Map(func(h HandlerFunc) gin.HandlerFunc { return rg.engine.HandlerFunc(h) }).Value().([]gin.HandlerFunc)
-				return append(ic, rg.engine.HandlerFunc(h))
-			}).FlattenDeep().Value().([]gin.HandlerFunc)...,
-		)
-	}).Value().([]gin.IRoutes)
+func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
+		method := methods[i]
+		group := rg.engine.Engine.Group(rg.basePath)
+		h2g := func(handlers []HandlerFunc) []gin.HandlerFunc {
+			hls := []gin.HandlerFunc{}
+			for j := 0; j < len(handlers); j++ {
+				hl := handlers[j]
+				for k := 0; k < len(hl.Interceptor); k++ {
+					ir := hl.Interceptor[k]
+					hls = append(hls, rg.engine.HandlerFunc(ir))
+				}
+				hls = append(hls, rg.engine.HandlerFunc(hl))
+			}
+			return hls
+		}
+		hls := append(h2g(rg.Handlers), h2g(handlers)...)
+		group.Handle(method, relativePath, hls...)
+	}
 }

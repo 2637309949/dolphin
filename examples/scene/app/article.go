@@ -296,7 +296,7 @@ func ArticlePayment(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.ArticleTODO(ctx.Raw(), ctx.DB, struct{}{})
+	ret, err := srv.ArticleTODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

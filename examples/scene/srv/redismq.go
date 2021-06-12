@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
 	"github.com/go-redis/redis/v7"
 	"github.com/kak-tus/ami"
@@ -69,7 +68,7 @@ func init() {
 }
 
 // Producer defined srv
-func Producer(ctx *gin.Context, db *xorm.Engine, params model.AmiInfo) (interface{}, error) {
+func Producer(ctx context.Context, db *xorm.Engine, params model.AmiInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
 		logrus.Error("failed to marshal:", err)
@@ -80,7 +79,7 @@ func Producer(ctx *gin.Context, db *xorm.Engine, params model.AmiInfo) (interfac
 }
 
 // Consumer defined srv
-func Consumer(ctx *gin.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
+func Consumer(ctx context.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)

@@ -238,7 +238,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
 	q.Value()
-	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -257,7 +257,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx.Raw(), ctx.DB, context.Background(), struct{}{})
+	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx, context.Background(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

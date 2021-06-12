@@ -266,7 +266,7 @@ func SysOptionsetPage(ctx *Context) {
 func SysOptionsetGet(ctx *Context) {
 	var entity model.SysOptionset
 	err := ctx.ShouldBindWith(&entity)
-	srv.SysOptionsetTODO(ctx.Raw(), ctx.DB, struct{}{})
+	srv.SysOptionsetTODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Errorf("SysOptionsetGet#ShouldBindQuery#%v", err)
 		ctx.Fail(err)

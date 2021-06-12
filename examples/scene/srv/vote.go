@@ -15,13 +15,12 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/app"
 	"github.com/2637309949/dolphin/platform/util/slice"
-	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
 // VoteLike defined srv
-func VoteLike(ctx *gin.Context, db *xorm.Engine, params model.VoteInfo) (interface{}, error) {
+func VoteLike(ctx context.Context, db *xorm.Engine, params model.VoteInfo) (interface{}, error) {
 	// 1.写入post_set
 	if _, err := app.RedisClient.SAdd(context.Background(), "post_set", params.PostId.String).Result(); err != nil {
 		return nil, err

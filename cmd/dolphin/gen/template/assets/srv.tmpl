@@ -14,7 +14,7 @@ import (
 )
 
 // {{$.Controller.ToUpperCase $.Controller.Name}}TODO defined srv
-func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

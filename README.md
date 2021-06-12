@@ -1651,7 +1651,7 @@ func KafkaGet(ctx *Context) {
 	q.Value()
 	ctx.Persist(ctx.DB, "0586e250-5b6c-4a79-9f4a-767a742b7890")
 	ctx.Remove(ctx.DB, "6ebce24f-6887-4d6d-a62a-2a706fcf1c3f")
-	ret, err := srv.KafkaConsumer(ctx.Raw(), ctx.DB, q.Value())
+	ret, err := srv.KafkaConsumer(ctx, ctx.DB, q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -1723,7 +1723,7 @@ func AmiAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.AmiProducer(ctx.Raw(), ctx.DB, payload)
+	ret, err := srv.AmiProducer(ctx, ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -1806,7 +1806,7 @@ func KafkaAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.KafkaProducer(ctx.Raw(), ctx.DB, payload)
+	ret, err := srv.KafkaProducer(ctx, ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

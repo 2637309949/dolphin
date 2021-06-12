@@ -13,7 +13,6 @@ import (
 	"github.com/go-errors/errors"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/gin-gonic/gin"
 	"github.com/nsqio/go-nsq"
 	"github.com/sirupsen/logrus"
 )
@@ -56,7 +55,7 @@ func (h *messageHandler) HandleMessage(m *nsq.Message) error {
 }
 
 // NProducer defined srv
-func NProducer(ctx *gin.Context, db *xorm.Engine, params model.NsqInfo) (interface{}, error) {
+func NProducer(ctx context.Context, db *xorm.Engine, params model.NsqInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
 		return nil, err
@@ -89,7 +88,7 @@ func NConsumer() (interface{}, error) {
 }
 
 // NsqTODO defined srv
-func NsqTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+func NsqTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

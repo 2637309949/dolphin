@@ -4,11 +4,11 @@
 package srv
 
 import (
+	"context"
 	"errors"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 	"github.com/go-redsync/redsync/v4"
 	"github.com/go-redsync/redsync/v4/redis/goredis/v8"
@@ -23,7 +23,7 @@ func init() {
 }
 
 // RedisLockTODO defined srv
-func RedisLockTODO(ctx *gin.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+func RedisLockTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	mutexname := "my-global-mutex"
 	mutex := RedSync.NewMutex(mutexname)
 	if err := mutex.Lock(); err != nil {
