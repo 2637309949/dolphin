@@ -22,7 +22,6 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/http"
@@ -31,17 +30,16 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
-	"google.golang.org/grpc"
 )
 
 // Engine defined parse app engine
 type Engine struct {
-	*gin.Engine
 	PlatformDB *xorm.Engine
 	lifecycle  Lifecycle
 	Manager    Manager
 	OAuth2     *server.Server
-	GRPC       *grpc.Server
+	Http       HttpHandler
+	RPC        RPCHandler
 	pool       sync.Pool
 }
 
@@ -251,9 +249,8 @@ func NewEngine() *Engine {
 	e := &Engine{}
 	e.Manager = NewDefaultManager()
 	e.lifecycle = &lifecycleWrapper{}
-	e.GRPC = grpc.NewServer()
-	e.Engine = NewGin()
-	e.Engine.Use(plugin.Tracker(Tracker(e)))
+	e.Http = NewGinHandler(e)
+	e.RPC = NewGRPCHandler(e)
 	e.pool.New = func() interface{} { return e.allocateContext() }
 	e.lifecycle.Append(NewLifeHook(e))
 	return e

@@ -7,6 +7,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/rpc"
 	"github.com/2637309949/dolphin/platform/rpc/proto"
+	"google.golang.org/grpc"
 
 	"github.com/spf13/viper"
 )
@@ -1745,17 +1746,17 @@ var SysWorkerInstance = NewSysWorker()
 
 // ClientSrv defined
 func ClientSrvService(engine *Engine) {
-	proto.RegisterClientSrvServer(engine.GRPC, &rpc.ClientSrv{})
+	engine.RPC.RegisterServer(func(srv *grpc.Server) { proto.RegisterClientSrvServer(srv, &rpc.ClientSrv{}) })
 }
 
 // DomainSrv defined
 func DomainSrvService(engine *Engine) {
-	proto.RegisterDomainSrvServer(engine.GRPC, &rpc.DomainSrv{})
+	engine.RPC.RegisterServer(func(srv *grpc.Server) { proto.RegisterDomainSrvServer(srv, &rpc.DomainSrv{}) })
 }
 
 // UserSrv defined
 func UserSrvService(engine *Engine) {
-	proto.RegisterUserSrvServer(engine.GRPC, &rpc.UserSrv{})
+	engine.RPC.RegisterServer(func(srv *grpc.Server) { proto.RegisterUserSrvServer(srv, &rpc.UserSrv{}) })
 }
 
 // SyncModel defined

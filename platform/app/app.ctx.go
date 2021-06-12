@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"reflect"
 	"strconv"
 	"strings"
@@ -44,7 +45,6 @@ type (
 		Interceptor  []HandlerFunc
 		Handler      func(ctx *Context)
 	}
-
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
 		Handlers []HandlerFunc
@@ -593,20 +593,6 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		group := rg.engine.Engine.Group(rg.basePath)
-		h2g := func(handlers []HandlerFunc) []gin.HandlerFunc {
-			hls := []gin.HandlerFunc{}
-			for j := 0; j < len(handlers); j++ {
-				hl := handlers[j]
-				for k := 0; k < len(hl.Interceptor); k++ {
-					ir := hl.Interceptor[k]
-					hls = append(hls, rg.engine.HandlerFunc(ir))
-				}
-				hls = append(hls, rg.engine.HandlerFunc(hl))
-			}
-			return hls
-		}
-		hls := append(h2g(rg.Handlers), h2g(handlers)...)
-		group.Handle(method, relativePath, hls...)
+		rg.engine.Http.Handle(method, path.Join(rg.basePath, relativePath), append(rg.Handlers, handlers...)...)
 	}
 }

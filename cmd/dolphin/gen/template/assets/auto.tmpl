@@ -53,7 +53,7 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{- range .Services}}
 // {{.ToUpperCase .Name}} defined
 func {{.ToUpperCase .Name}}Service(engine *Engine) {
-	proto.Register{{.ToUpperCase .Name}}Server(engine.GRPC, &rpc.{{.ToUpperCase .Name}}{})
+	engine.RPC.RegisterServer(func(srv *grpc.Server) {proto.Register{{.ToUpperCase .Name}}Server(srv, &rpc.{{.ToUpperCase .Name}}{})})
 }
 {{- end}}
 

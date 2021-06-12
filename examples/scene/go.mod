@@ -6,8 +6,11 @@ replace github.com/2637309949/dolphin => ../../
 
 require (
 	github.com/2637309949/dolphin v1.0.57
+	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
+	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-errors/errors v1.1.1
+	github.com/go-openapi/spec v0.20.3 // indirect
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/go-redis/redis/v8 v8.8.0
 	github.com/go-redsync/redsync/v4 v4.3.0
@@ -17,12 +20,15 @@ require (
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kak-tus/ami v0.1.15
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
+	github.com/lib/pq v1.10.2 // indirect
 	github.com/nsqio/go-nsq v1.0.8
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/segmentio/kafka-go v0.4.10
 	github.com/shopspring/decimal v1.2.0
+	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/assertions v1.2.0 // indirect
+	github.com/spf13/cobra v1.1.3 // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/thoas/go-funk v0.8.0
 	github.com/tidwall/btree v0.4.2 // indirect
@@ -31,9 +37,11 @@ require (
 	github.com/ugorji/go v1.2.4 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
+	golang.org/x/tools v0.1.3 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20210225212918-ad91960f0274 // indirect
 	google.golang.org/grpc v1.36.0
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )

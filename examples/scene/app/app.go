@@ -4,6 +4,7 @@
 package app
 
 import (
+	"path"
 	"strings"
 	"sync"
 	"time"
@@ -64,21 +65,12 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		group := rg.engine.Engine.Group(rg.basePath)
-		h2g := func(handlers []HandlerFunc) []app.HandlerFunc {
-			hls := []app.HandlerFunc{}
-			for j := 0; j < len(handlers); j++ {
-				hl := handlers[j]
-				for k := 0; k < len(hl.Interceptor); k++ {
-					ir := hl.Interceptor[k]
-					hls = append(hls, rg.engine.HandlerFunc(ir))
-				}
-				hls = append(hls, rg.engine.HandlerFunc(hl))
-			}
-			return hls
+		hdl := append(rg.Handlers, handlers...)
+		ahf := []app.HandlerFunc{}
+		for i := 0; i < len(hdl); i++ {
+			ahf = append(ahf, rg.engine.HandlerFunc(hdl[i]))
 		}
-		hls := append(h2g(rg.Handlers), h2g(handlers)...)
-		group.Handle(method, relativePath, hls...)
+		rg.engine.Http.Handle(method, path.Join(rg.basePath, relativePath), ahf...)
 	}
 }
 

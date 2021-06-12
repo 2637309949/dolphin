@@ -62,7 +62,7 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea
 	golang.org/x/term v0.0.0-20210503060354-a79de5458b56
-	golang.org/x/tools v0.1.2
+	golang.org/x/tools v0.1.3
 	google.golang.org/genproto v0.0.0-20191230161307-f3c370f40bfb // indirect
 	google.golang.org/grpc v1.26.0
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4

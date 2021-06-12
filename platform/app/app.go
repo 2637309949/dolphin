@@ -5,59 +5,36 @@ package app
 
 import (
 	"context"
-	"fmt"
-	"net"
-	"net/http"
 	"path"
 
 	"github.com/json-iterator/go/extra"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 
 	// github.com/2637309949/dolphin/platform/conf
 	_ "github.com/2637309949/dolphin/platform/conf"
-	"github.com/2637309949/dolphin/platform/util"
 )
 
 // OnStart defined OnStart
-func OnStart(engine *Engine, httpSrv *http.Server, rpcSrv net.Listener) func(context.Context) error {
-	return func(context.Context) error {
-		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
-		logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
-		httpSrv.Handler = engine
-		go func() {
-			if err := httpSrv.ListenAndServe(); err != nil {
-				logrus.Fatal(err)
-			}
-		}()
-		go func() {
-			if err := engine.GRPC.Serve(rpcSrv); err != nil {
-				logrus.Fatal(err)
-			}
-		}()
+func OnStart(engine *Engine) func(context.Context) error {
+	return func(ctx context.Context) error {
+		engine.Http.OnStart(ctx)
+		engine.RPC.OnStart(ctx)
 		return nil
 	}
 }
 
 // OnStop defined OnStop
-func OnStop(e *Engine, httpSrv *http.Server, rpcSrv net.Listener) func(ctx context.Context) error {
+func OnStop(engine *Engine) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
-		if err := httpSrv.Shutdown(ctx); err != nil {
-			logrus.Fatal(err)
-			return err
-		}
-		if err := rpcSrv.Close(); err != nil {
-			logrus.Fatal(err)
-			return err
-		}
+		engine.Http.OnStop(ctx)
+		engine.RPC.OnStop(ctx)
 		return nil
 	}
 }
 
 // NewLifeHook create lifecycle hook
 func NewLifeHook(e *Engine) Hook {
-	httpSrv, rpcSrv := &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}, util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
-	return Hook{OnStart(e, httpSrv, rpcSrv), OnStop(e, httpSrv, rpcSrv)}
+	return Hook{OnStart(e), OnStop(e)}
 }
 
 // init after NewEngine
