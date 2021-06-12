@@ -18,7 +18,6 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util/slice"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
@@ -36,7 +35,7 @@ import (
 // @Router /api/sys/user/add [post]
 func SysUserAdd(ctx *Context) {
 	var payload model.SysUser
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -72,7 +71,7 @@ func SysUserAdd(ctx *Context) {
 // @Router/api/sys/user/batch_add [post]
 func SysUserBatchAdd(ctx *Context) {
 	var payload []model.SysUser
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -105,7 +104,7 @@ func SysUserBatchAdd(ctx *Context) {
 // @Router /api/sys/user/del [delete]
 func SysUserDel(ctx *Context) {
 	var payload model.SysUser
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -135,7 +134,7 @@ func SysUserDel(ctx *Context) {
 // @Router /api/sys/user/batch_del [delete]
 func SysUserBatchDel(ctx *Context) {
 	var payload []*model.SysUser
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -169,7 +168,7 @@ func SysUserUpdate(ctx *Context) {
 		model.SysUser `xorm:"extends"`
 		UserRole      null.String `json:"user_role" xml:"user_role"`
 	}
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -254,7 +253,7 @@ func SysUserBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -415,7 +414,7 @@ func SysUserGet(ctx *Context) {
 // @Router /api/sys/user/login [post]
 func SysUserLogin(ctx *Context) {
 	var payload, account = model.Login{}, model.SysUser{}
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

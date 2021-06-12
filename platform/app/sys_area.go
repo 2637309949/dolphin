@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/area/add [post]
 func SysAreaAdd(ctx *Context) {
 	var payload model.SysArea
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -59,7 +58,7 @@ func SysAreaAdd(ctx *Context) {
 // @Router/api/sys/area/batch_add [post]
 func SysAreaBatchAdd(ctx *Context) {
 	var payload []model.SysArea
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -92,7 +91,7 @@ func SysAreaBatchAdd(ctx *Context) {
 // @Router /api/sys/area/del [delete]
 func SysAreaDel(ctx *Context) {
 	var payload model.SysArea
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -122,7 +121,7 @@ func SysAreaDel(ctx *Context) {
 // @Router/api/sys/area/batch_del [delete]
 func SysAreaBatchDel(ctx *Context) {
 	var payload []model.SysArea
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -153,7 +152,7 @@ func SysAreaBatchDel(ctx *Context) {
 // @Router /api/sys/area/update [put]
 func SysAreaUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -184,7 +183,7 @@ func SysAreaBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -260,7 +259,7 @@ func SysAreaPage(ctx *Context) {
 // @Router /api/sys/area/get [get]
 func SysAreaGet(ctx *Context) {
 	var entity model.SysArea
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

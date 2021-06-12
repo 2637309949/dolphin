@@ -63,16 +63,16 @@ func NewSysAppFun() *SysAppFun {
 
 // SysAppFunRoutes defined
 func SysAppFunRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysAppFunInstance.Add.Method, SysAppFunInstance.Add.RelativePath, Auth("token"), SysAppFunInstance.Add)
-	group.Handle(SysAppFunInstance.BatchAdd.Method, SysAppFunInstance.BatchAdd.RelativePath, Auth("token"), SysAppFunInstance.BatchAdd)
-	group.Handle(SysAppFunInstance.Del.Method, SysAppFunInstance.Del.RelativePath, Auth("token"), SysAppFunInstance.Del)
-	group.Handle(SysAppFunInstance.BatchDel.Method, SysAppFunInstance.BatchDel.RelativePath, Auth("token"), SysAppFunInstance.BatchDel)
-	group.Handle(SysAppFunInstance.Update.Method, SysAppFunInstance.Update.RelativePath, Auth("token"), SysAppFunInstance.Update)
-	group.Handle(SysAppFunInstance.BatchUpdate.Method, SysAppFunInstance.BatchUpdate.RelativePath, Auth("token"), SysAppFunInstance.BatchUpdate)
-	group.Handle(SysAppFunInstance.Page.Method, SysAppFunInstance.Page.RelativePath, Auth("token"), SysAppFunInstance.Page)
-	group.Handle(SysAppFunInstance.Tree.Method, SysAppFunInstance.Tree.RelativePath, Auth("token"), SysAppFunInstance.Tree)
-	group.Handle(SysAppFunInstance.Get.Method, SysAppFunInstance.Get.RelativePath, Auth("token"), SysAppFunInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysAppFunInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, Auth("token"), instance.Tree)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysAppFunInstance defined
@@ -123,15 +123,15 @@ func NewSysArea() *SysArea {
 
 // SysAreaRoutes defined
 func SysAreaRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysAreaInstance.Add.Method, SysAreaInstance.Add.RelativePath, Auth("token"), SysAreaInstance.Add)
-	group.Handle(SysAreaInstance.BatchAdd.Method, SysAreaInstance.BatchAdd.RelativePath, Auth("token"), SysAreaInstance.BatchAdd)
-	group.Handle(SysAreaInstance.Del.Method, SysAreaInstance.Del.RelativePath, Auth("token"), SysAreaInstance.Del)
-	group.Handle(SysAreaInstance.BatchDel.Method, SysAreaInstance.BatchDel.RelativePath, Auth("token"), SysAreaInstance.BatchDel)
-	group.Handle(SysAreaInstance.Update.Method, SysAreaInstance.Update.RelativePath, Auth("token"), SysAreaInstance.Update)
-	group.Handle(SysAreaInstance.BatchUpdate.Method, SysAreaInstance.BatchUpdate.RelativePath, Auth("token"), SysAreaInstance.BatchUpdate)
-	group.Handle(SysAreaInstance.Page.Method, SysAreaInstance.Page.RelativePath, Auth("token"), SysAreaInstance.Page)
-	group.Handle(SysAreaInstance.Get.Method, SysAreaInstance.Get.RelativePath, Auth("token"), SysAreaInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysAreaInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysAreaInstance defined
@@ -190,17 +190,17 @@ func NewSysAttachment() *SysAttachment {
 
 // SysAttachmentRoutes defined
 func SysAttachmentRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysAttachmentInstance.Add.Method, SysAttachmentInstance.Add.RelativePath, Auth("token"), SysAttachmentInstance.Add)
-	group.Handle(SysAttachmentInstance.BatchAdd.Method, SysAttachmentInstance.BatchAdd.RelativePath, Auth("token"), SysAttachmentInstance.BatchAdd)
-	group.Handle(SysAttachmentInstance.Upload.Method, SysAttachmentInstance.Upload.RelativePath, Auth("token"), SysAttachmentInstance.Upload)
-	group.Handle(SysAttachmentInstance.Export.Method, SysAttachmentInstance.Export.RelativePath, SysAttachmentInstance.Export)
-	group.Handle(SysAttachmentInstance.Del.Method, SysAttachmentInstance.Del.RelativePath, Auth("token"), SysAttachmentInstance.Del)
-	group.Handle(SysAttachmentInstance.BatchDel.Method, SysAttachmentInstance.BatchDel.RelativePath, Auth("token"), SysAttachmentInstance.BatchDel)
-	group.Handle(SysAttachmentInstance.Update.Method, SysAttachmentInstance.Update.RelativePath, Auth("token"), SysAttachmentInstance.Update)
-	group.Handle(SysAttachmentInstance.BatchUpdate.Method, SysAttachmentInstance.BatchUpdate.RelativePath, Auth("token"), SysAttachmentInstance.BatchUpdate)
-	group.Handle(SysAttachmentInstance.Page.Method, SysAttachmentInstance.Page.RelativePath, Auth("token"), SysAttachmentInstance.Page)
-	group.Handle(SysAttachmentInstance.Get.Method, SysAttachmentInstance.Get.RelativePath, Auth("token"), SysAttachmentInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysAttachmentInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Upload.Method, instance.Upload.RelativePath, Auth("token"), instance.Upload)
+	group.Handle(instance.Export.Method, instance.Export.RelativePath, instance.Export)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysAttachmentInstance defined
@@ -263,18 +263,18 @@ func NewSysCas() *SysCas {
 
 // SysCasRoutes defined
 func SysCasRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysCasInstance.Login.Method, SysCasInstance.Login.RelativePath, SysCasInstance.Login)
-	group.Handle(SysCasInstance.Logout.Method, SysCasInstance.Logout.RelativePath, SysCasInstance.Logout)
-	group.Handle(SysCasInstance.Affirm.Method, SysCasInstance.Affirm.RelativePath, SysCasInstance.Affirm)
-	group.Handle(SysCasInstance.Authorize.Method, SysCasInstance.Authorize.RelativePath, SysCasInstance.Authorize)
-	group.Handle(SysCasInstance.Token.Method, SysCasInstance.Token.RelativePath, SysCasInstance.Token)
-	group.Handle(SysCasInstance.URL.Method, SysCasInstance.URL.RelativePath, SysCasInstance.URL)
-	group.Handle(SysCasInstance.Oauth2.Method, SysCasInstance.Oauth2.RelativePath, SysCasInstance.Oauth2)
-	group.Handle(SysCasInstance.Refresh.Method, SysCasInstance.Refresh.RelativePath, SysCasInstance.Refresh)
-	group.Handle(SysCasInstance.Check.Method, SysCasInstance.Check.RelativePath, SysCasInstance.Check)
-	group.Handle(SysCasInstance.Profile.Method, SysCasInstance.Profile.RelativePath, Auth("token"), SysCasInstance.Profile)
-	group.Handle(SysCasInstance.Qrcode.Method, SysCasInstance.Qrcode.RelativePath, SysCasInstance.Qrcode)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysCasInstance
+	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login)
+	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, instance.Logout)
+	group.Handle(instance.Affirm.Method, instance.Affirm.RelativePath, instance.Affirm)
+	group.Handle(instance.Authorize.Method, instance.Authorize.RelativePath, instance.Authorize)
+	group.Handle(instance.Token.Method, instance.Token.RelativePath, instance.Token)
+	group.Handle(instance.URL.Method, instance.URL.RelativePath, instance.URL)
+	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2)
+	group.Handle(instance.Refresh.Method, instance.Refresh.RelativePath, instance.Refresh)
+	group.Handle(instance.Check.Method, instance.Check.RelativePath, instance.Check)
+	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, Auth("token"), instance.Profile)
+	group.Handle(instance.Qrcode.Method, instance.Qrcode.RelativePath, instance.Qrcode)
 }
 
 // SysCasInstance defined
@@ -325,15 +325,15 @@ func NewSysClient() *SysClient {
 
 // SysClientRoutes defined
 func SysClientRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysClientInstance.Add.Method, SysClientInstance.Add.RelativePath, Auth("token"), SysClientInstance.Add)
-	group.Handle(SysClientInstance.BatchAdd.Method, SysClientInstance.BatchAdd.RelativePath, Auth("token"), SysClientInstance.BatchAdd)
-	group.Handle(SysClientInstance.Del.Method, SysClientInstance.Del.RelativePath, Auth("token"), SysClientInstance.Del)
-	group.Handle(SysClientInstance.BatchDel.Method, SysClientInstance.BatchDel.RelativePath, Auth("token"), SysClientInstance.BatchDel)
-	group.Handle(SysClientInstance.Update.Method, SysClientInstance.Update.RelativePath, Auth("token"), SysClientInstance.Update)
-	group.Handle(SysClientInstance.BatchUpdate.Method, SysClientInstance.BatchUpdate.RelativePath, Auth("token"), SysClientInstance.BatchUpdate)
-	group.Handle(SysClientInstance.Page.Method, SysClientInstance.Page.RelativePath, Auth("token"), SysClientInstance.Page)
-	group.Handle(SysClientInstance.Get.Method, SysClientInstance.Get.RelativePath, Auth("token"), SysClientInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysClientInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysClientInstance defined
@@ -384,15 +384,15 @@ func NewSysComment() *SysComment {
 
 // SysCommentRoutes defined
 func SysCommentRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysCommentInstance.Add.Method, SysCommentInstance.Add.RelativePath, Auth("token"), SysCommentInstance.Add)
-	group.Handle(SysCommentInstance.BatchAdd.Method, SysCommentInstance.BatchAdd.RelativePath, Auth("token"), SysCommentInstance.BatchAdd)
-	group.Handle(SysCommentInstance.Del.Method, SysCommentInstance.Del.RelativePath, Auth("token"), SysCommentInstance.Del)
-	group.Handle(SysCommentInstance.BatchDel.Method, SysCommentInstance.BatchDel.RelativePath, Auth("token"), SysCommentInstance.BatchDel)
-	group.Handle(SysCommentInstance.Update.Method, SysCommentInstance.Update.RelativePath, Auth("token"), SysCommentInstance.Update)
-	group.Handle(SysCommentInstance.BatchUpdate.Method, SysCommentInstance.BatchUpdate.RelativePath, Auth("token"), SysCommentInstance.BatchUpdate)
-	group.Handle(SysCommentInstance.Page.Method, SysCommentInstance.Page.RelativePath, Auth("token"), SysCommentInstance.Page)
-	group.Handle(SysCommentInstance.Get.Method, SysCommentInstance.Get.RelativePath, Auth("token"), SysCommentInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysCommentInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysCommentInstance defined
@@ -443,15 +443,15 @@ func NewSysDataPermission() *SysDataPermission {
 
 // SysDataPermissionRoutes defined
 func SysDataPermissionRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysDataPermissionInstance.Add.Method, SysDataPermissionInstance.Add.RelativePath, Auth("token"), SysDataPermissionInstance.Add)
-	group.Handle(SysDataPermissionInstance.BatchAdd.Method, SysDataPermissionInstance.BatchAdd.RelativePath, Auth("token"), SysDataPermissionInstance.BatchAdd)
-	group.Handle(SysDataPermissionInstance.Del.Method, SysDataPermissionInstance.Del.RelativePath, Auth("token"), SysDataPermissionInstance.Del)
-	group.Handle(SysDataPermissionInstance.BatchDel.Method, SysDataPermissionInstance.BatchDel.RelativePath, Auth("token"), SysDataPermissionInstance.BatchDel)
-	group.Handle(SysDataPermissionInstance.Update.Method, SysDataPermissionInstance.Update.RelativePath, Auth("token"), SysDataPermissionInstance.Update)
-	group.Handle(SysDataPermissionInstance.BatchUpdate.Method, SysDataPermissionInstance.BatchUpdate.RelativePath, Auth("token"), SysDataPermissionInstance.BatchUpdate)
-	group.Handle(SysDataPermissionInstance.Page.Method, SysDataPermissionInstance.Page.RelativePath, Auth("token"), SysDataPermissionInstance.Page)
-	group.Handle(SysDataPermissionInstance.Get.Method, SysDataPermissionInstance.Get.RelativePath, Auth("token"), SysDataPermissionInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysDataPermissionInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysDataPermissionInstance defined
@@ -514,18 +514,18 @@ func NewDebug() *Debug {
 
 // DebugRoutes defined
 func DebugRoutes(engine *Engine) {
-	group := engine.Group("/debug")
-	group.Handle(DebugInstance.Pprof.Method, DebugInstance.Pprof.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Pprof)
-	group.Handle(DebugInstance.Heap.Method, DebugInstance.Heap.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Heap)
-	group.Handle(DebugInstance.Goroutine.Method, DebugInstance.Goroutine.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Goroutine)
-	group.Handle(DebugInstance.Allocs.Method, DebugInstance.Allocs.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Allocs)
-	group.Handle(DebugInstance.Block.Method, DebugInstance.Block.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Block)
-	group.Handle(DebugInstance.Threadcreate.Method, DebugInstance.Threadcreate.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Threadcreate)
-	group.Handle(DebugInstance.Cmdline.Method, DebugInstance.Cmdline.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Cmdline)
-	group.Handle(DebugInstance.Profile.Method, DebugInstance.Profile.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Profile)
-	group.Handle(DebugInstance.Symbol.Method, DebugInstance.Symbol.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Symbol)
-	group.Handle(DebugInstance.Trace.Method, DebugInstance.Trace.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Trace)
-	group.Handle(DebugInstance.Mutex.Method, DebugInstance.Mutex.RelativePath, Auth("token"), Roles("X8e6D3y60K"), DebugInstance.Mutex)
+	group, instance := engine.Group("/debug"), DebugInstance
+	group.Handle(instance.Pprof.Method, instance.Pprof.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Pprof)
+	group.Handle(instance.Heap.Method, instance.Heap.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Heap)
+	group.Handle(instance.Goroutine.Method, instance.Goroutine.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Goroutine)
+	group.Handle(instance.Allocs.Method, instance.Allocs.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Allocs)
+	group.Handle(instance.Block.Method, instance.Block.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Block)
+	group.Handle(instance.Threadcreate.Method, instance.Threadcreate.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Threadcreate)
+	group.Handle(instance.Cmdline.Method, instance.Cmdline.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Cmdline)
+	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Profile)
+	group.Handle(instance.Symbol.Method, instance.Symbol.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Symbol)
+	group.Handle(instance.Trace.Method, instance.Trace.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Trace)
+	group.Handle(instance.Mutex.Method, instance.Mutex.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Mutex)
 }
 
 // DebugInstance defined
@@ -548,8 +548,8 @@ func NewSysDingtalk() *SysDingtalk {
 
 // SysDingtalkRoutes defined
 func SysDingtalkRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysDingtalkInstance.Oauth2.Method, SysDingtalkInstance.Oauth2.RelativePath, SysDingtalkInstance.Oauth2)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysDingtalkInstance
+	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2)
 }
 
 // SysDingtalkInstance defined
@@ -600,15 +600,15 @@ func NewSysDomain() *SysDomain {
 
 // SysDomainRoutes defined
 func SysDomainRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysDomainInstance.Add.Method, SysDomainInstance.Add.RelativePath, Auth("token"), SysDomainInstance.Add)
-	group.Handle(SysDomainInstance.BatchAdd.Method, SysDomainInstance.BatchAdd.RelativePath, Auth("token"), SysDomainInstance.BatchAdd)
-	group.Handle(SysDomainInstance.Del.Method, SysDomainInstance.Del.RelativePath, Auth("token"), SysDomainInstance.Del)
-	group.Handle(SysDomainInstance.BatchDel.Method, SysDomainInstance.BatchDel.RelativePath, Auth("token"), SysDomainInstance.BatchDel)
-	group.Handle(SysDomainInstance.Update.Method, SysDomainInstance.Update.RelativePath, Auth("token"), SysDomainInstance.Update)
-	group.Handle(SysDomainInstance.BatchUpdate.Method, SysDomainInstance.BatchUpdate.RelativePath, Auth("token"), SysDomainInstance.BatchUpdate)
-	group.Handle(SysDomainInstance.Page.Method, SysDomainInstance.Page.RelativePath, Auth("token"), SysDomainInstance.Page)
-	group.Handle(SysDomainInstance.Get.Method, SysDomainInstance.Get.RelativePath, Auth("token"), SysDomainInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysDomainInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysDomainInstance defined
@@ -667,17 +667,17 @@ func NewSysMenu() *SysMenu {
 
 // SysMenuRoutes defined
 func SysMenuRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysMenuInstance.Add.Method, SysMenuInstance.Add.RelativePath, Auth("token"), SysMenuInstance.Add)
-	group.Handle(SysMenuInstance.BatchAdd.Method, SysMenuInstance.BatchAdd.RelativePath, Auth("token"), SysMenuInstance.BatchAdd)
-	group.Handle(SysMenuInstance.Del.Method, SysMenuInstance.Del.RelativePath, Auth("token"), SysMenuInstance.Del)
-	group.Handle(SysMenuInstance.BatchDel.Method, SysMenuInstance.BatchDel.RelativePath, Auth("token"), SysMenuInstance.BatchDel)
-	group.Handle(SysMenuInstance.Update.Method, SysMenuInstance.Update.RelativePath, Auth("token"), SysMenuInstance.Update)
-	group.Handle(SysMenuInstance.BatchUpdate.Method, SysMenuInstance.BatchUpdate.RelativePath, Auth("token"), SysMenuInstance.BatchUpdate)
-	group.Handle(SysMenuInstance.Sidebar.Method, SysMenuInstance.Sidebar.RelativePath, Auth("token"), SysMenuInstance.Sidebar)
-	group.Handle(SysMenuInstance.Page.Method, SysMenuInstance.Page.RelativePath, Auth("token"), SysMenuInstance.Page)
-	group.Handle(SysMenuInstance.Tree.Method, SysMenuInstance.Tree.RelativePath, Auth("token"), SysMenuInstance.Tree)
-	group.Handle(SysMenuInstance.Get.Method, SysMenuInstance.Get.RelativePath, Auth("token"), SysMenuInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysMenuInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Sidebar.Method, instance.Sidebar.RelativePath, Auth("token"), instance.Sidebar)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, Auth("token"), instance.Tree)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysMenuInstance defined
@@ -728,15 +728,15 @@ func NewSysNotification() *SysNotification {
 
 // SysNotificationRoutes defined
 func SysNotificationRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysNotificationInstance.Add.Method, SysNotificationInstance.Add.RelativePath, Auth("token"), SysNotificationInstance.Add)
-	group.Handle(SysNotificationInstance.BatchAdd.Method, SysNotificationInstance.BatchAdd.RelativePath, Auth("token"), SysNotificationInstance.BatchAdd)
-	group.Handle(SysNotificationInstance.Del.Method, SysNotificationInstance.Del.RelativePath, Auth("token"), SysNotificationInstance.Del)
-	group.Handle(SysNotificationInstance.BatchDel.Method, SysNotificationInstance.BatchDel.RelativePath, Auth("token"), SysNotificationInstance.BatchDel)
-	group.Handle(SysNotificationInstance.Update.Method, SysNotificationInstance.Update.RelativePath, Auth("token"), SysNotificationInstance.Update)
-	group.Handle(SysNotificationInstance.BatchUpdate.Method, SysNotificationInstance.BatchUpdate.RelativePath, Auth("token"), SysNotificationInstance.BatchUpdate)
-	group.Handle(SysNotificationInstance.Page.Method, SysNotificationInstance.Page.RelativePath, Auth("token"), SysNotificationInstance.Page)
-	group.Handle(SysNotificationInstance.Get.Method, SysNotificationInstance.Get.RelativePath, Auth("token"), SysNotificationInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysNotificationInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysNotificationInstance defined
@@ -787,15 +787,15 @@ func NewSysOptionset() *SysOptionset {
 
 // SysOptionsetRoutes defined
 func SysOptionsetRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysOptionsetInstance.Add.Method, SysOptionsetInstance.Add.RelativePath, Auth("token"), SysOptionsetInstance.Add)
-	group.Handle(SysOptionsetInstance.BatchAdd.Method, SysOptionsetInstance.BatchAdd.RelativePath, Auth("token"), SysOptionsetInstance.BatchAdd)
-	group.Handle(SysOptionsetInstance.Del.Method, SysOptionsetInstance.Del.RelativePath, Auth("token"), SysOptionsetInstance.Del)
-	group.Handle(SysOptionsetInstance.BatchDel.Method, SysOptionsetInstance.BatchDel.RelativePath, Auth("token"), SysOptionsetInstance.BatchDel)
-	group.Handle(SysOptionsetInstance.Update.Method, SysOptionsetInstance.Update.RelativePath, Auth("token"), SysOptionsetInstance.Update)
-	group.Handle(SysOptionsetInstance.BatchUpdate.Method, SysOptionsetInstance.BatchUpdate.RelativePath, Auth("token"), SysOptionsetInstance.BatchUpdate)
-	group.Handle(SysOptionsetInstance.Page.Method, SysOptionsetInstance.Page.RelativePath, Auth("token"), SysOptionsetInstance.Page)
-	group.Handle(SysOptionsetInstance.Get.Method, SysOptionsetInstance.Get.RelativePath, Auth("token"), SysOptionsetInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysOptionsetInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysOptionsetInstance defined
@@ -850,16 +850,16 @@ func NewSysOrg() *SysOrg {
 
 // SysOrgRoutes defined
 func SysOrgRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysOrgInstance.Add.Method, SysOrgInstance.Add.RelativePath, Auth("token"), SysOrgInstance.Add)
-	group.Handle(SysOrgInstance.BatchAdd.Method, SysOrgInstance.BatchAdd.RelativePath, Auth("token"), SysOrgInstance.BatchAdd)
-	group.Handle(SysOrgInstance.Del.Method, SysOrgInstance.Del.RelativePath, Auth("token"), SysOrgInstance.Del)
-	group.Handle(SysOrgInstance.BatchDel.Method, SysOrgInstance.BatchDel.RelativePath, Auth("token"), SysOrgInstance.BatchDel)
-	group.Handle(SysOrgInstance.Update.Method, SysOrgInstance.Update.RelativePath, Auth("token"), SysOrgInstance.Update)
-	group.Handle(SysOrgInstance.BatchUpdate.Method, SysOrgInstance.BatchUpdate.RelativePath, Auth("token"), SysOrgInstance.BatchUpdate)
-	group.Handle(SysOrgInstance.Page.Method, SysOrgInstance.Page.RelativePath, Auth("token"), SysOrgInstance.Page)
-	group.Handle(SysOrgInstance.Tree.Method, SysOrgInstance.Tree.RelativePath, Auth("token"), SysOrgInstance.Tree)
-	group.Handle(SysOrgInstance.Get.Method, SysOrgInstance.Get.RelativePath, Auth("token"), SysOrgInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysOrgInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, Auth("token"), instance.Tree)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysOrgInstance defined
@@ -910,15 +910,15 @@ func NewSysPermission() *SysPermission {
 
 // SysPermissionRoutes defined
 func SysPermissionRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysPermissionInstance.Add.Method, SysPermissionInstance.Add.RelativePath, Auth("token"), SysPermissionInstance.Add)
-	group.Handle(SysPermissionInstance.BatchAdd.Method, SysPermissionInstance.BatchAdd.RelativePath, Auth("token"), SysPermissionInstance.BatchAdd)
-	group.Handle(SysPermissionInstance.Del.Method, SysPermissionInstance.Del.RelativePath, Auth("token"), SysPermissionInstance.Del)
-	group.Handle(SysPermissionInstance.BatchDel.Method, SysPermissionInstance.BatchDel.RelativePath, Auth("token"), SysPermissionInstance.BatchDel)
-	group.Handle(SysPermissionInstance.Update.Method, SysPermissionInstance.Update.RelativePath, Auth("token"), SysPermissionInstance.Update)
-	group.Handle(SysPermissionInstance.BatchUpdate.Method, SysPermissionInstance.BatchUpdate.RelativePath, Auth("token"), SysPermissionInstance.BatchUpdate)
-	group.Handle(SysPermissionInstance.Page.Method, SysPermissionInstance.Page.RelativePath, Auth("token"), SysPermissionInstance.Page)
-	group.Handle(SysPermissionInstance.Get.Method, SysPermissionInstance.Get.RelativePath, Auth("token"), SysPermissionInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysPermissionInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysPermissionInstance defined
@@ -977,17 +977,17 @@ func NewSysRole() *SysRole {
 
 // SysRoleRoutes defined
 func SysRoleRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysRoleInstance.Add.Method, SysRoleInstance.Add.RelativePath, Auth("token"), SysRoleInstance.Add)
-	group.Handle(SysRoleInstance.BatchAdd.Method, SysRoleInstance.BatchAdd.RelativePath, Auth("token"), SysRoleInstance.BatchAdd)
-	group.Handle(SysRoleInstance.Del.Method, SysRoleInstance.Del.RelativePath, Auth("token"), SysRoleInstance.Del)
-	group.Handle(SysRoleInstance.BatchDel.Method, SysRoleInstance.BatchDel.RelativePath, Auth("token"), SysRoleInstance.BatchDel)
-	group.Handle(SysRoleInstance.Update.Method, SysRoleInstance.Update.RelativePath, Auth("token"), SysRoleInstance.Update)
-	group.Handle(SysRoleInstance.BatchUpdate.Method, SysRoleInstance.BatchUpdate.RelativePath, Auth("token"), SysRoleInstance.BatchUpdate)
-	group.Handle(SysRoleInstance.Page.Method, SysRoleInstance.Page.RelativePath, Auth("token"), SysRoleInstance.Page)
-	group.Handle(SysRoleInstance.RoleMenuTree.Method, SysRoleInstance.RoleMenuTree.RelativePath, Auth("token"), SysRoleInstance.RoleMenuTree)
-	group.Handle(SysRoleInstance.RoleAppFunTree.Method, SysRoleInstance.RoleAppFunTree.RelativePath, Auth("token"), SysRoleInstance.RoleAppFunTree)
-	group.Handle(SysRoleInstance.Get.Method, SysRoleInstance.Get.RelativePath, Auth("token"), SysRoleInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysRoleInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.RoleMenuTree.Method, instance.RoleMenuTree.RelativePath, Auth("token"), instance.RoleMenuTree)
+	group.Handle(instance.RoleAppFunTree.Method, instance.RoleAppFunTree.RelativePath, Auth("token"), instance.RoleAppFunTree)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysRoleInstance defined
@@ -1038,15 +1038,15 @@ func NewSysRoleMenu() *SysRoleMenu {
 
 // SysRoleMenuRoutes defined
 func SysRoleMenuRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysRoleMenuInstance.Add.Method, SysRoleMenuInstance.Add.RelativePath, Auth("token"), SysRoleMenuInstance.Add)
-	group.Handle(SysRoleMenuInstance.BatchAdd.Method, SysRoleMenuInstance.BatchAdd.RelativePath, Auth("token"), SysRoleMenuInstance.BatchAdd)
-	group.Handle(SysRoleMenuInstance.Del.Method, SysRoleMenuInstance.Del.RelativePath, Auth("token"), SysRoleMenuInstance.Del)
-	group.Handle(SysRoleMenuInstance.BatchDel.Method, SysRoleMenuInstance.BatchDel.RelativePath, Auth("token"), SysRoleMenuInstance.BatchDel)
-	group.Handle(SysRoleMenuInstance.Update.Method, SysRoleMenuInstance.Update.RelativePath, Auth("token"), SysRoleMenuInstance.Update)
-	group.Handle(SysRoleMenuInstance.BatchUpdate.Method, SysRoleMenuInstance.BatchUpdate.RelativePath, Auth("token"), SysRoleMenuInstance.BatchUpdate)
-	group.Handle(SysRoleMenuInstance.Page.Method, SysRoleMenuInstance.Page.RelativePath, Auth("token"), SysRoleMenuInstance.Page)
-	group.Handle(SysRoleMenuInstance.Get.Method, SysRoleMenuInstance.Get.RelativePath, Auth("token"), SysRoleMenuInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysRoleMenuInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysRoleMenuInstance defined
@@ -1097,15 +1097,15 @@ func NewSysSchedule() *SysSchedule {
 
 // SysScheduleRoutes defined
 func SysScheduleRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysScheduleInstance.Add.Method, SysScheduleInstance.Add.RelativePath, Auth("token"), SysScheduleInstance.Add)
-	group.Handle(SysScheduleInstance.BatchAdd.Method, SysScheduleInstance.BatchAdd.RelativePath, Auth("token"), SysScheduleInstance.BatchAdd)
-	group.Handle(SysScheduleInstance.Del.Method, SysScheduleInstance.Del.RelativePath, Auth("token"), SysScheduleInstance.Del)
-	group.Handle(SysScheduleInstance.BatchDel.Method, SysScheduleInstance.BatchDel.RelativePath, Auth("token"), SysScheduleInstance.BatchDel)
-	group.Handle(SysScheduleInstance.Update.Method, SysScheduleInstance.Update.RelativePath, Auth("token"), SysScheduleInstance.Update)
-	group.Handle(SysScheduleInstance.BatchUpdate.Method, SysScheduleInstance.BatchUpdate.RelativePath, Auth("token"), SysScheduleInstance.BatchUpdate)
-	group.Handle(SysScheduleInstance.Page.Method, SysScheduleInstance.Page.RelativePath, Auth("token"), SysScheduleInstance.Page)
-	group.Handle(SysScheduleInstance.Get.Method, SysScheduleInstance.Get.RelativePath, Auth("token"), SysScheduleInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysScheduleInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysScheduleInstance defined
@@ -1128,8 +1128,8 @@ func NewSysScheduleHistory() *SysScheduleHistory {
 
 // SysScheduleHistoryRoutes defined
 func SysScheduleHistoryRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysScheduleHistoryInstance.Page.Method, SysScheduleHistoryInstance.Page.RelativePath, Auth("token"), SysScheduleHistoryInstance.Page)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysScheduleHistoryInstance
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
 }
 
 // SysScheduleHistoryInstance defined
@@ -1168,12 +1168,12 @@ func NewSysScheduling() *SysScheduling {
 
 // SysSchedulingRoutes defined
 func SysSchedulingRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysSchedulingInstance.Add.Method, SysSchedulingInstance.Add.RelativePath, Auth("token"), SysSchedulingInstance.Add)
-	group.Handle(SysSchedulingInstance.Del.Method, SysSchedulingInstance.Del.RelativePath, Auth("token"), SysSchedulingInstance.Del)
-	group.Handle(SysSchedulingInstance.Update.Method, SysSchedulingInstance.Update.RelativePath, Auth("token"), SysSchedulingInstance.Update)
-	group.Handle(SysSchedulingInstance.Page.Method, SysSchedulingInstance.Page.RelativePath, Auth("token"), SysSchedulingInstance.Page)
-	group.Handle(SysSchedulingInstance.Get.Method, SysSchedulingInstance.Get.RelativePath, Auth("token"), SysSchedulingInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysSchedulingInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysSchedulingInstance defined
@@ -1224,15 +1224,15 @@ func NewSysSetting() *SysSetting {
 
 // SysSettingRoutes defined
 func SysSettingRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysSettingInstance.Add.Method, SysSettingInstance.Add.RelativePath, Auth("token"), SysSettingInstance.Add)
-	group.Handle(SysSettingInstance.BatchAdd.Method, SysSettingInstance.BatchAdd.RelativePath, Auth("token"), SysSettingInstance.BatchAdd)
-	group.Handle(SysSettingInstance.Del.Method, SysSettingInstance.Del.RelativePath, Auth("token"), SysSettingInstance.Del)
-	group.Handle(SysSettingInstance.BatchDel.Method, SysSettingInstance.BatchDel.RelativePath, Auth("token"), SysSettingInstance.BatchDel)
-	group.Handle(SysSettingInstance.Update.Method, SysSettingInstance.Update.RelativePath, Auth("token"), SysSettingInstance.Update)
-	group.Handle(SysSettingInstance.BatchUpdate.Method, SysSettingInstance.BatchUpdate.RelativePath, Auth("token"), SysSettingInstance.BatchUpdate)
-	group.Handle(SysSettingInstance.Page.Method, SysSettingInstance.Page.RelativePath, Auth("token"), SysSettingInstance.Page)
-	group.Handle(SysSettingInstance.Get.Method, SysSettingInstance.Get.RelativePath, Auth("token"), SysSettingInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysSettingInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysSettingInstance defined
@@ -1283,15 +1283,15 @@ func NewSysTable() *SysTable {
 
 // SysTableRoutes defined
 func SysTableRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysTableInstance.Add.Method, SysTableInstance.Add.RelativePath, Auth("token"), SysTableInstance.Add)
-	group.Handle(SysTableInstance.BatchAdd.Method, SysTableInstance.BatchAdd.RelativePath, Auth("token"), SysTableInstance.BatchAdd)
-	group.Handle(SysTableInstance.Del.Method, SysTableInstance.Del.RelativePath, Auth("token"), SysTableInstance.Del)
-	group.Handle(SysTableInstance.BatchDel.Method, SysTableInstance.BatchDel.RelativePath, Auth("token"), SysTableInstance.BatchDel)
-	group.Handle(SysTableInstance.Update.Method, SysTableInstance.Update.RelativePath, Auth("token"), SysTableInstance.Update)
-	group.Handle(SysTableInstance.BatchUpdate.Method, SysTableInstance.BatchUpdate.RelativePath, Auth("token"), SysTableInstance.BatchUpdate)
-	group.Handle(SysTableInstance.Page.Method, SysTableInstance.Page.RelativePath, Auth("token"), SysTableInstance.Page)
-	group.Handle(SysTableInstance.Get.Method, SysTableInstance.Get.RelativePath, Auth("token"), SysTableInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysTableInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysTableInstance defined
@@ -1342,15 +1342,15 @@ func NewSysTableColumn() *SysTableColumn {
 
 // SysTableColumnRoutes defined
 func SysTableColumnRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysTableColumnInstance.Add.Method, SysTableColumnInstance.Add.RelativePath, Auth("token"), SysTableColumnInstance.Add)
-	group.Handle(SysTableColumnInstance.BatchAdd.Method, SysTableColumnInstance.BatchAdd.RelativePath, Auth("token"), SysTableColumnInstance.BatchAdd)
-	group.Handle(SysTableColumnInstance.Del.Method, SysTableColumnInstance.Del.RelativePath, Auth("token"), SysTableColumnInstance.Del)
-	group.Handle(SysTableColumnInstance.BatchDel.Method, SysTableColumnInstance.BatchDel.RelativePath, Auth("token"), SysTableColumnInstance.BatchDel)
-	group.Handle(SysTableColumnInstance.Update.Method, SysTableColumnInstance.Update.RelativePath, Auth("token"), SysTableColumnInstance.Update)
-	group.Handle(SysTableColumnInstance.BatchUpdate.Method, SysTableColumnInstance.BatchUpdate.RelativePath, Auth("token"), SysTableColumnInstance.BatchUpdate)
-	group.Handle(SysTableColumnInstance.Page.Method, SysTableColumnInstance.Page.RelativePath, Auth("token"), SysTableColumnInstance.Page)
-	group.Handle(SysTableColumnInstance.Get.Method, SysTableColumnInstance.Get.RelativePath, Auth("token"), SysTableColumnInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysTableColumnInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysTableColumnInstance defined
@@ -1401,15 +1401,15 @@ func NewSysTag() *SysTag {
 
 // SysTagRoutes defined
 func SysTagRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysTagInstance.Add.Method, SysTagInstance.Add.RelativePath, Auth("token"), SysTagInstance.Add)
-	group.Handle(SysTagInstance.BatchAdd.Method, SysTagInstance.BatchAdd.RelativePath, Auth("token"), SysTagInstance.BatchAdd)
-	group.Handle(SysTagInstance.Del.Method, SysTagInstance.Del.RelativePath, Auth("token"), SysTagInstance.Del)
-	group.Handle(SysTagInstance.BatchDel.Method, SysTagInstance.BatchDel.RelativePath, Auth("token"), SysTagInstance.BatchDel)
-	group.Handle(SysTagInstance.Update.Method, SysTagInstance.Update.RelativePath, Auth("token"), SysTagInstance.Update)
-	group.Handle(SysTagInstance.BatchUpdate.Method, SysTagInstance.BatchUpdate.RelativePath, Auth("token"), SysTagInstance.BatchUpdate)
-	group.Handle(SysTagInstance.Page.Method, SysTagInstance.Page.RelativePath, Auth("token"), SysTagInstance.Page)
-	group.Handle(SysTagInstance.Get.Method, SysTagInstance.Get.RelativePath, Auth("token"), SysTagInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysTagInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysTagInstance defined
@@ -1460,15 +1460,15 @@ func NewSysTagGroup() *SysTagGroup {
 
 // SysTagGroupRoutes defined
 func SysTagGroupRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysTagGroupInstance.Add.Method, SysTagGroupInstance.Add.RelativePath, Auth("token"), SysTagGroupInstance.Add)
-	group.Handle(SysTagGroupInstance.BatchAdd.Method, SysTagGroupInstance.BatchAdd.RelativePath, Auth("token"), SysTagGroupInstance.BatchAdd)
-	group.Handle(SysTagGroupInstance.Del.Method, SysTagGroupInstance.Del.RelativePath, Auth("token"), SysTagGroupInstance.Del)
-	group.Handle(SysTagGroupInstance.BatchDel.Method, SysTagGroupInstance.BatchDel.RelativePath, Auth("token"), SysTagGroupInstance.BatchDel)
-	group.Handle(SysTagGroupInstance.Update.Method, SysTagGroupInstance.Update.RelativePath, Auth("token"), SysTagGroupInstance.Update)
-	group.Handle(SysTagGroupInstance.BatchUpdate.Method, SysTagGroupInstance.BatchUpdate.RelativePath, Auth("token"), SysTagGroupInstance.BatchUpdate)
-	group.Handle(SysTagGroupInstance.Page.Method, SysTagGroupInstance.Page.RelativePath, Auth("token"), SysTagGroupInstance.Page)
-	group.Handle(SysTagGroupInstance.Get.Method, SysTagGroupInstance.Get.RelativePath, Auth("token"), SysTagGroupInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysTagGroupInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysTagGroupInstance defined
@@ -1495,9 +1495,9 @@ func NewSysTracker() *SysTracker {
 
 // SysTrackerRoutes defined
 func SysTrackerRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysTrackerInstance.Page.Method, SysTrackerInstance.Page.RelativePath, Auth("token"), SysTrackerInstance.Page)
-	group.Handle(SysTrackerInstance.Get.Method, SysTrackerInstance.Get.RelativePath, Auth("token"), SysTrackerInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysTrackerInstance
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysTrackerInstance defined
@@ -1556,17 +1556,17 @@ func NewSysUser() *SysUser {
 
 // SysUserRoutes defined
 func SysUserRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysUserInstance.Add.Method, SysUserInstance.Add.RelativePath, Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.Add)
-	group.Handle(SysUserInstance.BatchAdd.Method, SysUserInstance.BatchAdd.RelativePath, Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.BatchAdd)
-	group.Handle(SysUserInstance.Del.Method, SysUserInstance.Del.RelativePath, Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.Del)
-	group.Handle(SysUserInstance.BatchDel.Method, SysUserInstance.BatchDel.RelativePath, Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.BatchDel)
-	group.Handle(SysUserInstance.Update.Method, SysUserInstance.Update.RelativePath, Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.Update)
-	group.Handle(SysUserInstance.BatchUpdate.Method, SysUserInstance.BatchUpdate.RelativePath, Auth("token"), Roles("X8e6D3y60K"), SysUserInstance.BatchUpdate)
-	group.Handle(SysUserInstance.Page.Method, SysUserInstance.Page.RelativePath, Auth("token"), SysUserInstance.Page)
-	group.Handle(SysUserInstance.Get.Method, SysUserInstance.Get.RelativePath, Auth("token"), SysUserInstance.Get)
-	group.Handle(SysUserInstance.Login.Method, SysUserInstance.Login.RelativePath, SysUserInstance.Login)
-	group.Handle(SysUserInstance.Logout.Method, SysUserInstance.Logout.RelativePath, Auth("token"), SysUserInstance.Logout)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysUserInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
+	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login)
+	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, Auth("token"), instance.Logout)
 }
 
 // SysUserInstance defined
@@ -1617,15 +1617,15 @@ func NewSysUserTemplate() *SysUserTemplate {
 
 // SysUserTemplateRoutes defined
 func SysUserTemplateRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysUserTemplateInstance.Add.Method, SysUserTemplateInstance.Add.RelativePath, Auth("token"), SysUserTemplateInstance.Add)
-	group.Handle(SysUserTemplateInstance.BatchAdd.Method, SysUserTemplateInstance.BatchAdd.RelativePath, Auth("token"), SysUserTemplateInstance.BatchAdd)
-	group.Handle(SysUserTemplateInstance.Del.Method, SysUserTemplateInstance.Del.RelativePath, Auth("token"), SysUserTemplateInstance.Del)
-	group.Handle(SysUserTemplateInstance.BatchDel.Method, SysUserTemplateInstance.BatchDel.RelativePath, Auth("token"), SysUserTemplateInstance.BatchDel)
-	group.Handle(SysUserTemplateInstance.Update.Method, SysUserTemplateInstance.Update.RelativePath, Auth("token"), SysUserTemplateInstance.Update)
-	group.Handle(SysUserTemplateInstance.BatchUpdate.Method, SysUserTemplateInstance.BatchUpdate.RelativePath, Auth("token"), SysUserTemplateInstance.BatchUpdate)
-	group.Handle(SysUserTemplateInstance.Page.Method, SysUserTemplateInstance.Page.RelativePath, Auth("token"), SysUserTemplateInstance.Page)
-	group.Handle(SysUserTemplateInstance.Get.Method, SysUserTemplateInstance.Get.RelativePath, Auth("token"), SysUserTemplateInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysUserTemplateInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysUserTemplateInstance defined
@@ -1676,15 +1676,15 @@ func NewSysUserTemplateDetail() *SysUserTemplateDetail {
 
 // SysUserTemplateDetailRoutes defined
 func SysUserTemplateDetailRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysUserTemplateDetailInstance.Add.Method, SysUserTemplateDetailInstance.Add.RelativePath, Auth("token"), SysUserTemplateDetailInstance.Add)
-	group.Handle(SysUserTemplateDetailInstance.BatchAdd.Method, SysUserTemplateDetailInstance.BatchAdd.RelativePath, Auth("token"), SysUserTemplateDetailInstance.BatchAdd)
-	group.Handle(SysUserTemplateDetailInstance.Del.Method, SysUserTemplateDetailInstance.Del.RelativePath, Auth("token"), SysUserTemplateDetailInstance.Del)
-	group.Handle(SysUserTemplateDetailInstance.BatchDel.Method, SysUserTemplateDetailInstance.BatchDel.RelativePath, Auth("token"), SysUserTemplateDetailInstance.BatchDel)
-	group.Handle(SysUserTemplateDetailInstance.Update.Method, SysUserTemplateDetailInstance.Update.RelativePath, Auth("token"), SysUserTemplateDetailInstance.Update)
-	group.Handle(SysUserTemplateDetailInstance.BatchUpdate.Method, SysUserTemplateDetailInstance.BatchUpdate.RelativePath, Auth("token"), SysUserTemplateDetailInstance.BatchUpdate)
-	group.Handle(SysUserTemplateDetailInstance.Page.Method, SysUserTemplateDetailInstance.Page.RelativePath, Auth("token"), SysUserTemplateDetailInstance.Page)
-	group.Handle(SysUserTemplateDetailInstance.Get.Method, SysUserTemplateDetailInstance.Get.RelativePath, Auth("token"), SysUserTemplateDetailInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysUserTemplateDetailInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysUserTemplateDetailInstance defined
@@ -1707,8 +1707,8 @@ func NewSysWechat() *SysWechat {
 
 // SysWechatRoutes defined
 func SysWechatRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysWechatInstance.Oauth2.Method, SysWechatInstance.Oauth2.RelativePath, SysWechatInstance.Oauth2)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysWechatInstance
+	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2)
 }
 
 // SysWechatInstance defined
@@ -1735,9 +1735,9 @@ func NewSysWorker() *SysWorker {
 
 // SysWorkerRoutes defined
 func SysWorkerRoutes(engine *Engine) {
-	group := engine.Group(viper.GetString("http.prefix"))
-	group.Handle(SysWorkerInstance.Add.Method, SysWorkerInstance.Add.RelativePath, Auth("token"), SysWorkerInstance.Add)
-	group.Handle(SysWorkerInstance.Get.Method, SysWorkerInstance.Get.RelativePath, Auth("token"), SysWorkerInstance.Get)
+	group, instance := engine.Group(viper.GetString("http.prefix")), SysWorkerInstance
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
 }
 
 // SysWorkerInstance defined

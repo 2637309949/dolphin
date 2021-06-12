@@ -76,7 +76,7 @@ func SysTrackerPage(ctx *Context) {
 // @Router /api/sys/tracker/get [get]
 func SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

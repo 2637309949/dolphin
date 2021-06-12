@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/table/add [post]
 func SysTableAdd(ctx *Context) {
 	var payload model.SysTable
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysTableAdd(ctx *Context) {
 // @Router/api/sys/table/batch_add [post]
 func SysTableBatchAdd(ctx *Context) {
 	var payload []model.SysTable
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func SysTableBatchAdd(ctx *Context) {
 // @Router /api/sys/table/del [delete]
 func SysTableDel(ctx *Context) {
 	var payload model.SysTable
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -120,7 +119,7 @@ func SysTableDel(ctx *Context) {
 // @Router /api/sys/table/batch_del [delete]
 func SysTableBatchDel(ctx *Context) {
 	var payload []*model.SysTable
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -151,7 +150,7 @@ func SysTableBatchDel(ctx *Context) {
 // @Router /api/sys/table/update [put]
 func SysTableUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -182,7 +181,7 @@ func SysTableBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -264,7 +263,7 @@ func SysTablePage(ctx *Context) {
 // @Router /api/sys/table/get [get]
 func SysTableGet(ctx *Context) {
 	var entity model.SysTable
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

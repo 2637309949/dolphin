@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/data/permission/add [post]
 func SysDataPermissionAdd(ctx *Context) {
 	var payload model.SysDataPermission
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysDataPermissionAdd(ctx *Context) {
 // @Router/api/sys/data/permission/batch_add [post]
 func SysDataPermissionBatchAdd(ctx *Context) {
 	var payload []model.SysDataPermission
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func SysDataPermissionBatchAdd(ctx *Context) {
 // @Router /api/sys/data/permission/del [delete]
 func SysDataPermissionDel(ctx *Context) {
 	var payload model.SysDataPermission
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -121,7 +120,7 @@ func SysDataPermissionDel(ctx *Context) {
 // @Router/api/sys/data/permission/batch_del [delete]
 func SysDataPermissionBatchDel(ctx *Context) {
 	var payload []model.SysDataPermission
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -152,7 +151,7 @@ func SysDataPermissionBatchDel(ctx *Context) {
 // @Router /api/sys/data/permission/update [put]
 func SysDataPermissionUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -183,7 +182,7 @@ func SysDataPermissionBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -259,7 +258,7 @@ func SysDataPermissionPage(ctx *Context) {
 // @Router /api/sys/data/permission/get [get]
 func SysDataPermissionGet(ctx *Context) {
 	var entity model.SysDataPermission
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/role/add [post]
 func SysRoleAdd(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -68,7 +67,7 @@ func SysRoleAdd(ctx *Context) {
 // @Router/api/sys/role/batch_add [post]
 func SysRoleBatchAdd(ctx *Context) {
 	var payload []model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -114,7 +113,7 @@ func SysRoleBatchAdd(ctx *Context) {
 // @Router /api/sys/role/del [delete]
 func SysRoleDel(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -144,7 +143,7 @@ func SysRoleDel(ctx *Context) {
 // @Router /api/sys/role/batch_del [delete]
 func SysRoleBatchDel(ctx *Context) {
 	var payload []*model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -175,7 +174,7 @@ func SysRoleBatchDel(ctx *Context) {
 // @Router /api/sys/role/update [put]
 func SysRoleUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -206,7 +205,7 @@ func SysRoleBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -332,7 +331,7 @@ func SysRoleRoleAppFunTree(ctx *Context) {
 // @Router /api/sys/role/get [get]
 func SysRoleGet(ctx *Context) {
 	var entity model.SysRole
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

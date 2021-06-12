@@ -8,7 +8,6 @@ import (
 	"scene/model"
 	"scene/srv"
 
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 )
 
@@ -24,7 +23,7 @@ import (
 // @Router /api/kafka/add [post]
 func KafkaAdd(ctx *Context) {
 	var payload model.KafkaInfo
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

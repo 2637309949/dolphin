@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -28,7 +27,7 @@ import (
 // @Router /api/sys/comment/add [post]
 func SysCommentAdd(ctx *Context) {
 	var payload model.SysComment
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -59,7 +58,7 @@ func SysCommentAdd(ctx *Context) {
 // @Router/api/sys/comment/batch_add [post]
 func SysCommentBatchAdd(ctx *Context) {
 	var payload []model.SysComment
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -92,7 +91,7 @@ func SysCommentBatchAdd(ctx *Context) {
 // @Router /api/sys/comment/del [delete]
 func SysCommentDel(ctx *Context) {
 	var payload model.SysUserTemplate
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -121,7 +120,7 @@ func SysCommentDel(ctx *Context) {
 // @Router/api/sys/comment/batch_del [delete]
 func SysCommentBatchDel(ctx *Context) {
 	var payload []model.SysUserTemplate
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -152,7 +151,7 @@ func SysCommentBatchDel(ctx *Context) {
 // @Router /api/sys/comment/update [put]
 func SysCommentUpdate(ctx *Context) {
 	var payload model.SysComment
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -183,7 +182,7 @@ func SysCommentBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -259,7 +258,7 @@ func SysCommentPage(ctx *Context) {
 // @Router /api/sys/comment/get [get]
 func SysCommentGet(ctx *Context) {
 	var entity model.SysComment
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

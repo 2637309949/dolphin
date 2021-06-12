@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/setting/add [post]
 func SysSettingAdd(ctx *Context) {
 	var payload model.SysSetting
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysSettingAdd(ctx *Context) {
 // @Router/api/sys/setting/batch_add [post]
 func SysSettingBatchAdd(ctx *Context) {
 	var payload []model.SysSetting
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func SysSettingBatchAdd(ctx *Context) {
 // @Router /api/sys/setting/del [delete]
 func SysSettingDel(ctx *Context) {
 	var payload model.SysSetting
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -120,7 +119,7 @@ func SysSettingDel(ctx *Context) {
 // @Router /api/sys/setting/batch_del [delete]
 func SysSettingBatchDel(ctx *Context) {
 	var payload []*model.SysSetting
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -151,7 +150,7 @@ func SysSettingBatchDel(ctx *Context) {
 // @Router /api/sys/setting/update [put]
 func SysSettingUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -182,7 +181,7 @@ func SysSettingBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -260,7 +259,7 @@ func SysSettingPage(ctx *Context) {
 // @Router /api/sys/setting/get [get]
 func SysSettingGet(ctx *Context) {
 	var entity model.SysSetting
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

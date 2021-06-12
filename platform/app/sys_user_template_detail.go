@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/user/template/detail/add [post]
 func SysUserTemplateDetailAdd(ctx *Context) {
 	var payload model.SysUserTemplateDetail
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysUserTemplateDetailAdd(ctx *Context) {
 // @Router/api/sys/user/template/detail/batch_add [post]
 func SysUserTemplateDetailBatchAdd(ctx *Context) {
 	var payload []model.SysUserTemplateDetail
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func SysUserTemplateDetailBatchAdd(ctx *Context) {
 // @Router /api/sys/user/template/detail/del [delete]
 func SysUserTemplateDetailDel(ctx *Context) {
 	var payload model.SysUserTemplateDetail
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -120,7 +119,7 @@ func SysUserTemplateDetailDel(ctx *Context) {
 // @Router/api/sys/user/template/detail/batch_del [delete]
 func SysUserTemplateDetailBatchDel(ctx *Context) {
 	var payload []model.SysUserTemplateDetail
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -151,7 +150,7 @@ func SysUserTemplateDetailBatchDel(ctx *Context) {
 // @Router /api/sys/user/template/detail/update [put]
 func SysUserTemplateDetailUpdate(ctx *Context) {
 	var payload model.SysUserTemplateDetail
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -182,7 +181,7 @@ func SysUserTemplateDetailBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -259,7 +258,7 @@ func SysUserTemplateDetailPage(ctx *Context) {
 // @Router /api/sys/user/template/detail/get [get]
 func SysUserTemplateDetailGet(ctx *Context) {
 	var entity model.SysUserTemplateDetail
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

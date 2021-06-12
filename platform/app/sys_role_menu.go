@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/role/menu/add [post]
 func SysRoleMenuAdd(ctx *Context) {
 	var payload model.SysRoleMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysRoleMenuAdd(ctx *Context) {
 // @Router /api/sys/role/menu/batch_add [post]
 func SysRoleMenuBatchAdd(ctx *Context) {
 	var payload []*model.SysRoleMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -95,7 +94,7 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 // @Router /api/sys/role/menu/del [delete]
 func SysRoleMenuDel(ctx *Context) {
 	var payload model.SysRoleMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -124,7 +123,7 @@ func SysRoleMenuDel(ctx *Context) {
 // @Router /api/sys/role/menu/batch_del [delete]
 func SysRoleMenuBatchDel(ctx *Context) {
 	var payload []*model.SysRoleMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -155,7 +154,7 @@ func SysRoleMenuBatchDel(ctx *Context) {
 // @Router /api/sys/role/menu/update [put]
 func SysRoleMenuUpdate(ctx *Context) {
 	var payload model.SysRoleMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -186,7 +185,7 @@ func SysRoleMenuBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -262,7 +261,7 @@ func SysRoleMenuPage(ctx *Context) {
 // @Router /api/sys/role/menu/get [get]
 func SysRoleMenuGet(ctx *Context) {
 	var entity model.SysRoleMenu
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

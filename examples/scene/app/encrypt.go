@@ -7,7 +7,6 @@ import (
 	"scene/model"
 	"scene/srv"
 
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 )
 
@@ -23,7 +22,7 @@ import (
 // @Router /api/encrypt/add [post]
 func EncryptAdd(ctx *Context) {
 	var payload model.EncryptInfo
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

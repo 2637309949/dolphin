@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/org/add [post]
 func SysOrgAdd(ctx *Context) {
 	var payload model.SysOrg
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysOrgAdd(ctx *Context) {
 // @Router/api/sys/org/batch_add [post]
 func SysOrgBatchAdd(ctx *Context) {
 	var payload []model.SysOrg
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func SysOrgBatchAdd(ctx *Context) {
 // @Router /api/sys/org/del [delete]
 func SysOrgDel(ctx *Context) {
 	var payload model.SysOrg
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -121,7 +120,7 @@ func SysOrgDel(ctx *Context) {
 // @Router /api/sys/org/batch_del [delete]
 func SysOrgBatchDel(ctx *Context) {
 	var payload []*model.SysOrg
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -152,7 +151,7 @@ func SysOrgBatchDel(ctx *Context) {
 // @Router /api/sys/org/update [put]
 func SysOrgUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -183,7 +182,7 @@ func SysOrgBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -288,7 +287,7 @@ func SysOrgTree(ctx *Context) {
 // @Router /api/sys/org/get [get]
 func SysOrgGet(ctx *Context) {
 	var entity model.SysOrg
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

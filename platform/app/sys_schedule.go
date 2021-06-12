@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/schedule/add [post]
 func SysScheduleAdd(ctx *Context) {
 	var payload model.SysSchedule
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysScheduleAdd(ctx *Context) {
 // @Router/api/sys/schedule/batch_add [post]
 func SysScheduleBatchAdd(ctx *Context) {
 	var payload []model.SysSchedule
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func SysScheduleBatchAdd(ctx *Context) {
 // @Router /api/sys/schedule/del [delete]
 func SysScheduleDel(ctx *Context) {
 	var payload model.SysSchedule
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -120,7 +119,7 @@ func SysScheduleDel(ctx *Context) {
 // @Router /api/sys/schedule/batch_del [delete]
 func SysScheduleBatchDel(ctx *Context) {
 	var payload []*model.SysSchedule
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -151,7 +150,7 @@ func SysScheduleBatchDel(ctx *Context) {
 // @Router /api/sys/schedule/update [put]
 func SysScheduleUpdate(ctx *Context) {
 	var payload model.SysSchedule
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -182,7 +181,7 @@ func SysScheduleBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -258,7 +257,7 @@ func SysSchedulePage(ctx *Context) {
 // @Router /api/sys/schedule/get [get]
 func SysScheduleGet(ctx *Context) {
 	var entity model.SysSchedule
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

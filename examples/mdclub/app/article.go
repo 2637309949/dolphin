@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/article/add [post]
 func ArticleAdd(ctx *Context) {
 	var payload model.Article
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func ArticleAdd(ctx *Context) {
 // @Router /api/article/batch_add [post]
 func ArticleBatchAdd(ctx *Context) {
 	var payload []model.Article
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func ArticleBatchAdd(ctx *Context) {
 // @Router /api/article/del [delete]
 func ArticleDel(ctx *Context) {
 	var payload model.Article
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -121,7 +120,7 @@ func ArticleDel(ctx *Context) {
 // @Router /api/article/batch_del [delete]
 func ArticleBatchDel(ctx *Context) {
 	var payload []model.Article
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -152,7 +151,7 @@ func ArticleBatchDel(ctx *Context) {
 // @Router /api/article/update [put]
 func ArticleUpdate(ctx *Context) {
 	var payload model.Article
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -183,7 +182,7 @@ func ArticleBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -262,7 +261,7 @@ func ArticlePage(ctx *Context) {
 // @Router /api/article/get [get]
 func ArticleGet(ctx *Context) {
 	var entity model.Article
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

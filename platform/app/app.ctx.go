@@ -7,6 +7,7 @@ package app
 import (
 	"container/list"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -65,6 +66,19 @@ func (ctx *Context) Raw() *gin.Context {
 func (ctx *Context) reset() {
 	ctx.DB = nil
 	ctx.Context = nil
+}
+
+// ShouldBindWith defined
+func (ctx *Context) ShouldBindWith(ptr interface{}) error {
+	req, err := ctx.Request, ctx.ShouldBindQuery(ptr)
+	if err != nil {
+		return err
+	}
+	if req.ContentLength > 0 &&
+		strings.Contains(req.Header.Get("Content-Type"), "application/json") {
+		return ctx.ShouldBindBodyWith(ptr, binding.JSON)
+	}
+	return nil
 }
 
 // LoginInInfo defined
@@ -144,8 +158,14 @@ func (ctx *Context) TypeQuery() *Query {
 
 // PageSearch defined
 func (ctx *Context) PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*model.PageList, error) {
-	page, _ := params["page"].(int)
-	size, _ := params["size"].(int)
+	page, ok := params["page"].(int)
+	if !ok {
+		return nil, errors.New("not found page")
+	}
+	size, ok := params["size"].(int)
+	if !ok {
+		return nil, errors.New("not found size")
+	}
 	params["offset"] = (page - 1) * size
 	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_select.tpl", ctr, api), &params).Query().List()
 	if err != nil {
@@ -184,16 +204,10 @@ func (ctx *Context) TreeSearch(db *xorm.Engine, controller, api, table string, q
 		return nil, err
 	}
 
-	root := ""
-	rootArr := []*model.TreeNode{}
-	paramsArr := rowsSet
-	valueFiled := "id"
-	parentField := "parent"
-	nameFiled := "name"
-	parentValue := root
-
-	treeNodeList := list.New()
-	originNodeList := list.New()
+	valueFiled, parentField, nameFiled := "id", "parent", "name"
+	treeNodeList, originNodeList := list.New(), list.New()
+	root, rootArr := "", []*model.TreeNode{}
+	paramsArr, parentValue := rowsSet, root
 
 	for _, params := range paramsArr {
 		value, parent, name := "", "", ""
@@ -357,7 +371,7 @@ func (ctx *Context) QueryString(key string, init ...string) string {
 }
 
 // ParseExcel defined
-// []Msi{ Msi{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}}
+// []map[string]string{ map[string]string{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}}
 func (ctx *Context) ParseExcel(cfg ExcelConfig) ([]map[string]string, error) {
 	if ctx.QueryString("__columns__") != "" {
 		cstr := ctx.QueryString("__columns__")
@@ -518,6 +532,9 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 
 // ShouldBindQuery defined
 func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
+	if ptr == nil {
+		return errors.New("first parameter must be an struct")
+	}
 	urls, err := url.ParseQuery(ctx.Request.URL.RawQuery)
 	if err != nil {
 		return err
@@ -528,7 +545,7 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 	}
 	if ptrVal.Kind() == reflect.Map &&
 		ptrVal.Type().Key().Kind() == reflect.String {
-		return ctx.ShouldBindWith(ptr, binding.Query)
+		return ctx.Context.ShouldBindWith(ptr, binding.Query)
 	}
 	var head = func(str, sep string) (head string, tail string) {
 		idx := strings.Index(str, sep)
@@ -568,7 +585,7 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 		}
 	}
 	ctx.Request.URL.RawQuery = urls.Encode()
-	return ctx.ShouldBindWith(ptr, binding.Query)
+	return ctx.Context.ShouldBindWith(ptr, binding.Query)
 }
 
 // Handle overwrite RouterGroup.Handle

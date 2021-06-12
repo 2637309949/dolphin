@@ -9,7 +9,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -26,7 +25,7 @@ import (
 // @Router/api/sys/app/fun/add [post]
 func SysAppFunAdd(ctx *Context) {
 	var payload model.SysAppFun
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -57,7 +56,7 @@ func SysAppFunAdd(ctx *Context) {
 // @Router/api/sys/app/fun/batch_add [post]
 func SysAppFunBatchAdd(ctx *Context) {
 	var payload []model.SysAppFun
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -90,7 +89,7 @@ func SysAppFunBatchAdd(ctx *Context) {
 // @Router /api/sys/app/fun/del [delete]
 func SysAppFunDel(ctx *Context) {
 	var payload model.SysAppFun
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -120,7 +119,7 @@ func SysAppFunDel(ctx *Context) {
 // @Router/api/sys/app/fun/batch_del [delete]
 func SysAppFunBatchDel(ctx *Context) {
 	var payload []model.SysAppFun
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -151,7 +150,7 @@ func SysAppFunBatchDel(ctx *Context) {
 // @Router /api/sys/app/fun/update [put]
 func SysAppFunUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -182,7 +181,7 @@ func SysAppFunBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -273,7 +272,7 @@ func SysAppFunTree(ctx *Context) {
 // @Router /api/sys/app/fun/get [get]
 func SysAppFunGet(ctx *Context) {
 	var entity model.SysAppFun
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

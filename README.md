@@ -412,7 +412,7 @@ Generate code:
 // @Router /api/sys/client/add [post]
 func SysClientAdd(ctx *Context) {
 	var payload model.SysClient
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		ctx.Fail(err)
 		return
 	}
@@ -461,7 +461,7 @@ Generate code:
 // @Router /api/sys/role/menu/batch_add [post]
 func SysRoleMenuBatchAdd(ctx *Context) {
 	var payload []*model.SysRoleMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -520,7 +520,7 @@ Generate code:
 // @Router /api/sys/client/del [delete]
 func SysClientDel(ctx *Context) {
 	var payload model.SysClient
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		ctx.Fail(err)
 		return
 	}
@@ -568,7 +568,7 @@ Generate code:
 func SysOptionsetBatchDel(ctx *Context) {
 	var payload []*model.SysOptionset
 	var ids []string
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -623,7 +623,7 @@ Generate code:
 // @Router /api/sys/client/update [put]
 func SysClientUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		ctx.Fail(err)
 		return
 	}
@@ -852,7 +852,7 @@ Generate code:
 // @Router /api/article/payment [post]
 func ArticlePayment(ctx *Context) {
 	var payload model.ArticleInfo
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		ctx.Fail(err)
 		return
 	}
@@ -1718,7 +1718,7 @@ func KafkaGet(ctx *Context) {
 // @Router /api/ami/submit [post]
 func AmiAdd(ctx *Context) {
 	var payload model.AmiInfo
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -1801,7 +1801,7 @@ func AmiConsumer(ctx *gin.Context,
 // @Router /api/kafka/add [post]
 func KafkaAdd(ctx *Context) {
 	var payload model.KafkaInfo
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

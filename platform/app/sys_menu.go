@@ -11,7 +11,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -28,7 +27,7 @@ import (
 // @Router /api/sys/menu/add [post]
 func SysMenuAdd(ctx *Context) {
 	var payload model.SysMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -74,7 +73,7 @@ func SysMenuAdd(ctx *Context) {
 // @Router/api/sys/menu/batch_add [post]
 func SysMenuBatchAdd(ctx *Context) {
 	var payload []model.SysMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -107,7 +106,7 @@ func SysMenuBatchAdd(ctx *Context) {
 // @Router /api/sys/menu/del [delete]
 func SysMenuDel(ctx *Context) {
 	var payload model.SysMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -137,7 +136,7 @@ func SysMenuDel(ctx *Context) {
 // @Router /api/sys/menu/batch_del [delete]
 func SysMenuBatchDel(ctx *Context) {
 	var payload []model.SysMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -168,7 +167,7 @@ func SysMenuBatchDel(ctx *Context) {
 // @Router /api/sys/menu/update [put]
 func SysMenuUpdate(ctx *Context) {
 	var payload model.SysMenu
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -215,7 +214,7 @@ func SysMenuBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -341,7 +340,7 @@ func SysMenuTree(ctx *Context) {
 // @Router /api/sys/menu/get [get]
 func SysMenuGet(ctx *Context) {
 	var entity model.SysMenu
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

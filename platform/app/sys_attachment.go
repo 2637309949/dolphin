@@ -15,7 +15,6 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util/encode"
 	"github.com/2637309949/dolphin/platform/util/file"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -34,7 +33,7 @@ import (
 // @Router /api/sys/attachment/add [post]
 func SysAttachmentAdd(ctx *Context) {
 	var payload model.SysAttachment
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -65,7 +64,7 @@ func SysAttachmentAdd(ctx *Context) {
 // @Router/api/sys/attachment/batch_add [post]
 func SysAttachmentBatchAdd(ctx *Context) {
 	var payload []model.SysAttachment
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -184,7 +183,7 @@ func SysAttachmentExport(ctx *Context) {
 // @Router /api/sys/attachment/del [delete]
 func SysAttachmentDel(ctx *Context) {
 	var payload model.SysAttachment
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -214,7 +213,7 @@ func SysAttachmentDel(ctx *Context) {
 // @Router/api/sys/attachment/batch_del [post]
 func SysAttachmentBatchDel(ctx *Context) {
 	var payload []model.SysAttachment
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -245,7 +244,7 @@ func SysAttachmentBatchDel(ctx *Context) {
 // @Router /api/sys/attachment/update [put]
 func SysAttachmentUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -276,7 +275,7 @@ func SysAttachmentBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -352,7 +351,7 @@ func SysAttachmentPage(ctx *Context) {
 // @Router /api/sys/attachment/get [get]
 func SysAttachmentGet(ctx *Context) {
 	var entity model.SysAttachment
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

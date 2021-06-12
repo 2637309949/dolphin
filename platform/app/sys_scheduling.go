@@ -6,7 +6,6 @@ package app
 import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/srv"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 )
 
@@ -22,7 +21,7 @@ import (
 // @Router /api/sys/scheduling/add [post]
 func SysSchedulingAdd(ctx *Context) {
 	var payload model.Scheduling
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -48,7 +47,7 @@ func SysSchedulingAdd(ctx *Context) {
 // @Router /api/sys/scheduling/del [delete]
 func SysSchedulingDel(ctx *Context) {
 	var payload model.Scheduling
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -74,7 +73,7 @@ func SysSchedulingDel(ctx *Context) {
 // @Router /api/sys/scheduling/update [put]
 func SysSchedulingUpdate(ctx *Context) {
 	var payload model.Scheduling
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

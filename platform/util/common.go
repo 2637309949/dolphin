@@ -99,6 +99,7 @@ func SetFormatter(isTerminal bool) {
 		logrus.SetFormatter(&logrus.TextFormatter{
 			FullTimestamp:   true,
 			TimestampFormat: "02/01 15:04:05",
+			DisableQuote:    true,
 		})
 	}
 }

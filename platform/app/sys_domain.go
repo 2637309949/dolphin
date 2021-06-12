@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
@@ -28,7 +27,7 @@ import (
 // @Router /api/sys/domain/add [post]
 func SysDomainAdd(ctx *Context) {
 	var payload model.SysDomain
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -60,7 +59,7 @@ func SysDomainAdd(ctx *Context) {
 // @Router/api/sys/domain/batch_add [post]
 func SysDomainBatchAdd(ctx *Context) {
 	var payload []model.SysDomain
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -93,7 +92,7 @@ func SysDomainBatchAdd(ctx *Context) {
 // @Router /api/sys/domain/del [delete]
 func SysDomainDel(ctx *Context) {
 	var payload model.SysDomain
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -123,7 +122,7 @@ func SysDomainDel(ctx *Context) {
 // @Router/api/sys/domain/batch_del [delete]
 func SysDomainBatchDel(ctx *Context) {
 	var payload []model.SysDomain
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -154,7 +153,7 @@ func SysDomainBatchDel(ctx *Context) {
 // @Router /api/sys/domain/update [put]
 func SysDomainUpdate(ctx *Context) {
 	var payload model.SysRole
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -185,7 +184,7 @@ func SysDomainBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -262,7 +261,7 @@ func SysDomainPage(ctx *Context) {
 // @Router /api/sys/domain/get [get]
 func SysDomainGet(ctx *Context) {
 	var entity model.SysDomain
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

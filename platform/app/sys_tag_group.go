@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -27,7 +26,7 @@ import (
 // @Router /api/sys/tag/group/add [post]
 func SysTagGroupAdd(ctx *Context) {
 	var payload model.SysTagGroup
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -58,7 +57,7 @@ func SysTagGroupAdd(ctx *Context) {
 // @Router/api/sys/tag/group/batch_add [post]
 func SysTagGroupBatchAdd(ctx *Context) {
 	var payload []model.SysTagGroup
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -91,7 +90,7 @@ func SysTagGroupBatchAdd(ctx *Context) {
 // @Router /api/sys/tag/group/del [delete]
 func SysTagGroupDel(ctx *Context) {
 	var payload model.SysTagGroup
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -121,7 +120,7 @@ func SysTagGroupDel(ctx *Context) {
 // @Router/api/sys/tag/group/batch_del [delete]
 func SysTagGroupBatchDel(ctx *Context) {
 	var payload []model.SysTagGroup
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -152,7 +151,7 @@ func SysTagGroupBatchDel(ctx *Context) {
 // @Router /api/sys/tag/group/update [put]
 func SysTagGroupUpdate(ctx *Context) {
 	var payload model.SysTagGroup
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -183,7 +182,7 @@ func SysTagGroupBatchUpdate(ctx *Context) {
 	var err error
 	var ret []int64
 	var r int64
-	if err := ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -259,7 +258,7 @@ func SysTagGroupPage(ctx *Context) {
 // @Router /api/sys/tag/group/get [get]
 func SysTagGroupGet(ctx *Context) {
 	var entity model.SysTagGroup
-	err := ctx.ShouldBindQuery(&entity)
+	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

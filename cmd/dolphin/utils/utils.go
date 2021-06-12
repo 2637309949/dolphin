@@ -113,11 +113,18 @@ func OpenFile(name string, flag int, perm os.FileMode) (*os.File, error) {
 	return os.OpenFile(name, flag, perm)
 }
 
+// NetWorkStatus defined
+func NetWorkStatus() bool {
+	if err := exec.Command("ping", "baidu.com", "-c", "1", "-W", "5").Run(); err != nil {
+		return false
+	}
+	return true
+}
+
 // InstallPackages defined
 func InstallPackages(pkgs ...string) error {
 	for i := range pkgs {
 		if err := exec.Command("go", "get", pkgs[i]).Run(); err != nil && err != exec.ErrNotFound {
-			logrus.Error(err)
 			return err
 		}
 	}

@@ -39,7 +39,7 @@ type SysUser struct {
 	// IsEmailConfirmed defined 是否邮件确认(0：尚未,1：确认)
 	IsEmailConfirmed null.Int `xorm:"comment('是否邮件确认(0：尚未,1：确认)') 'is_email_confirmed'" json:"is_email_confirmed" form:"is_email_confirmed" xml:"is_email_confirmed"`
 	// OrgId defined 组织ID
-	OrgId null.String `xorm:"varchar(36) comment('组织ID') 'org_id'" json:"org_id" form:"org_id" xml:"org_id"`
+	OrgId null.Int `xorm:"bigint(20) notnull comment('组织ID') 'org_id'" json:"org_id" form:"org_id" xml:"org_id"`
 	// Gender defined 性别(0：女,1：男)
 	Gender null.Int `xorm:"comment('性别(0：女,1：男)') 'gender'" json:"gender" form:"gender" xml:"gender"`
 	// Type defined 用户类型
@@ -53,7 +53,7 @@ type SysUser struct {
 	// ReadNotificationsAt defined 标记读取消息时间
 	ReadNotificationsAt null.Time `xorm:"datetime comment('标记读取消息时间') 'read_notifications_at'" json:"read_notifications_at" form:"read_notifications_at" xml:"read_notifications_at"`
 	// TempId defined 模板ID
-	TempId null.String `xorm:"varchar(36) comment('模板ID') 'temp_id'" json:"temp_id" form:"temp_id" xml:"temp_id"`
+	TempId null.Int `xorm:"bigint(20) notnull comment('模板ID') 'temp_id'" json:"temp_id" form:"temp_id" xml:"temp_id"`
 	// TempValue defined 模板值
 	TempValue null.String `xorm:"text comment('模板值') 'temp_value'" json:"temp_value" form:"temp_value" xml:"temp_value"`
 	// Domain defined 域
