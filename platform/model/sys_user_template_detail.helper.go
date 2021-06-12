@@ -15,7 +15,7 @@ var sysUserTemplateDetails = []SysUserTemplateDetail{
 	{
 		Name:       null.StringFrom("Hobby"),
 		Value:      null.StringFrom("Writing"),
-		TempId:     null.IntFrom(0),
+		TempId:     null.IntFrom(1),
 		Type:       null.IntFrom(2),
 		Content:    null.StringFrom(""),
 		Priority:   null.IntFrom(1),

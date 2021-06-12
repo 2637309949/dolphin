@@ -253,6 +253,7 @@ func NewEngine() *Engine {
 	e.RPC = NewGRPCHandler(e)
 	e.pool.New = func() interface{} { return e.allocateContext() }
 	e.lifecycle.Append(NewLifeHook(e))
+
 	return e
 }
 

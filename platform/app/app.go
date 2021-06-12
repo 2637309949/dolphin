@@ -9,9 +9,7 @@ import (
 
 	"github.com/json-iterator/go/extra"
 	"github.com/spf13/viper"
-
-	// github.com/2637309949/dolphin/platform/conf
-	_ "github.com/2637309949/dolphin/platform/conf"
+	"golang.org/x/oauth2"
 )
 
 // OnStart defined OnStart
@@ -40,12 +38,16 @@ func NewLifeHook(e *Engine) Hook {
 // init after NewEngine
 func init() {
 	extra.RegisterFuzzyDecoders()
-	AuthServerURL = viper.GetString("oauth.server")
-	OA2Cfg.ClientID = viper.GetString("oauth.id")
-	OA2Cfg.ClientSecret = viper.GetString("oauth.secret")
-	OA2Cfg.RedirectURL = viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
-	OA2Cfg.Endpoint.AuthURL = AuthServerURL + path.Join(viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath)
-	OA2Cfg.Endpoint.TokenURL = AuthServerURL + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath)
+	OA2Cfg = oauth2.Config{
+		ClientID:     viper.GetString("oauth.id"),
+		ClientSecret: viper.GetString("oauth.secret"),
+		Scopes:       []string{"admin"},
+		RedirectURL:  viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath),
+		Endpoint: oauth2.Endpoint{
+			AuthURL:  viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath),
+			TokenURL: viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath),
+		},
+	}
 	SyncModel()
 	SyncController()
 	SyncService()

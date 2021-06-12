@@ -20,6 +20,7 @@ var DefaultAdmin = SysUser{
 	Status:     null.IntFrom(1),
 	Domain:     null.StringFrom("localhost"),
 	OrgId:      null.IntFrom(1),
+	TempId:     null.IntFrom(1),
 	Creater:    null.IntFrom(1),
 	CreateTime: null.TimeFrom(time.Now()),
 	Updater:    null.IntFrom(1),

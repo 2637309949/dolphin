@@ -17,6 +17,7 @@ import (
 
 type HttpHandler interface {
 	Handle(httpMethod, relativePath string, handlers ...HandlerFunc)
+	ServeHTTP(w http.ResponseWriter, req *http.Request)
 	SetAllocateContextFunk(func(func(*Context)))
 	OnStart(context.Context) error
 	OnStop(context.Context) error
@@ -26,6 +27,10 @@ type ginHandler struct {
 	gin      *gin.Engine
 	httpSrv  *http.Server
 	allocCtx func(func(*Context))
+}
+
+func (gh *ginHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	gh.gin.ServeHTTP(w, req)
 }
 
 func (gh *ginHandler) OnStart(ctx context.Context) error {

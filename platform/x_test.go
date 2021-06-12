@@ -1,24 +1,22 @@
 package main
 
 import (
-	"bufio"
+	"bytes"
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"strings"
 	"testing"
 	"time"
+
+	// "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 
 	//  "github.com/2637309949/dolphin/platform/conf"
 	_ "github.com/2637309949/dolphin/platform/conf"
 	"github.com/spf13/viper"
 
-	// "github.com/mattn/go-sqlite3"
-	_ "github.com/mattn/go-sqlite3"
-
 	"github.com/2637309949/dolphin/platform/app"
-	"github.com/gin-gonic/gin"
 )
 
 type (
@@ -41,9 +39,6 @@ type (
 		Skipf(format string, args ...interface{})
 		Skipped() bool
 	}
-	HTTPTools struct {
-		*gin.Engine
-	}
 	Response struct {
 		Code int         `json:"code"`
 		Data interface{} `json:"data"`
@@ -57,7 +52,7 @@ type (
 )
 
 // handler defined
-func (t HTTPTools) handler(req *http.Request, h func(w *httptest.ResponseRecorder)) {
+func handler(req *http.Request, h func(w *httptest.ResponseRecorder)) {
 	w := httptest.NewRecorder()
 	req.Header.Add("Authorization", "Bearer "+AccessToken)
 	req.Header.Add("cache-control", "no-cache")
@@ -66,47 +61,47 @@ func (t HTTPTools) handler(req *http.Request, h func(w *httptest.ResponseRecorde
 	req.Header.Add("accept-encoding", "gzip, deflate, br")
 	req.Header.Add("accept-language", "zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7")
 	req.Header.Add("user-agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36")
-	t.ServeHTTP(w, req)
+	app.App.Http.ServeHTTP(w, req)
 	h(w)
 }
 
 // Get defined
-func (t HTTPTools) Get(url string, h func(w *httptest.ResponseRecorder)) {
+func Get(url string, h func(w *httptest.ResponseRecorder)) {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		panic(err)
 	}
-	t.handler(req, h)
+	handler(req, h)
 }
 
 // Post defined
-func (t HTTPTools) Post(url string, payform M, h func(w *httptest.ResponseRecorder)) {
+func Post(url string, payform M, h func(w *httptest.ResponseRecorder)) {
 	jm, err := json.Marshal(&payform)
 	if err != nil {
 		panic(err)
 	}
-	req, err := http.NewRequest("POST", url, bufio.NewReader(strings.NewReader(string(jm))))
+
+	req, err := http.NewRequest("POST", url, bytes.NewReader(jm))
 	if err != nil {
 		panic(err)
 	}
 	req.Header.Add("Content-Type", "application/json")
-	t.handler(req, h)
+	handler(req, h)
 }
 
 // HttpTest defined
 func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...M) {
 	switch len(p) {
 	case 0:
-		httpTools.Get(reqPath, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
+		Get(reqPath, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
 	default:
-		httpTools.Post(reqPath, p[0], func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
+		Post(reqPath, p[0], func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
 	}
 }
 
 // TestMain defined
 func TestMain(m *testing.M) {
 	app.App.Init()
-	httpTools = &HTTPTools{Engine: app.App.Engine}
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }
@@ -116,7 +111,6 @@ func SetToken(token string) {
 	AccessToken = token
 }
 
-var httpTools *HTTPTools
 var AccessToken string
 
 // TestSysMenuPage defined

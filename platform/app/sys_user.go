@@ -427,6 +427,7 @@ func SysUserLogin(ctx *Context) {
 	account.Domain = payload.Domain
 	account.Name = payload.Name
 
+	ctx.PlatformDB.ShowSQL(true)
 	ext, err := ctx.PlatformDB.Where("is_delete != 1 and status = 1").Get(&account)
 	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
 		if err == nil {
@@ -436,6 +437,7 @@ func SysUserLogin(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
 	token, err := App.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
 		UserID:       fmt.Sprintf("%v", account.ID.Int64),
 		Domain:       account.Domain.String,

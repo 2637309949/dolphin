@@ -8,7 +8,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"regexp"
 	"sort"
@@ -37,26 +36,12 @@ const (
 	EncryptType      = "encrypt"
 )
 
-// var defined
 var (
-	AuthServerURL   = viper.GetString("oauth.server")
-	AuthAuthURL     = "/api/cas/authorize"
-	AuthTokenURL    = "/api/cas/token"
-	AuthRedirectURL = "/api/cas/oauth2"
-	OA2Cfg          = xoauth2.Config{
-		ClientID:     viper.GetString("oauth.id"),
-		ClientSecret: viper.GetString("oauth.secret"),
-		Scopes:       []string{"admin"},
-		RedirectURL:  fmt.Sprintf("%v%v", AuthRedirectURL, viper.GetString("oauth.cli")),
-		Endpoint: xoauth2.Endpoint{
-			AuthURL:  AuthServerURL + AuthAuthURL,
-			TokenURL: AuthServerURL + AuthTokenURL,
-		},
-	}
+	// TokenkeyNamespace define
+	TokenkeyNamespace = "dolphin:token:"
+	// OA2Cfg defined
+	OA2Cfg xoauth2.Config
 )
-
-// TokenkeyNamespace define
-var TokenkeyNamespace = "dolphin:token:"
 
 // AuthInfo defined
 type AuthInfo interface {
