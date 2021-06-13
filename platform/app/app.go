@@ -48,7 +48,7 @@ func init() {
 			TokenURL: viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath),
 		},
 	}
-	SyncModel()
-	SyncController()
-	SyncService()
+	SyncModel(App)
+	SyncController(App)
+	SyncService(App)
 }

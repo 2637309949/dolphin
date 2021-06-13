@@ -116,7 +116,8 @@ func (e *Engine) migration(name string, db *xorm.Engine) {
 	session.Commit()
 }
 
-func (e *Engine) database() {
+// Reflesh defined init data before bootinh
+func (e *Engine) Reflesh() {
 	// initPlatformDB
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	xlogger := createXLogger()
@@ -204,31 +205,27 @@ func (e *Engine) done() <-chan os.Signal {
 }
 
 // lifeCycle start liftcycle hooks
-func (e *Engine) lifeCycle() {
+func (e *Engine) lifeCycle() error {
 	signal := e.done()
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	if err := e.lifecycle.Start(ctx); err != nil {
-		logrus.Fatal(err)
+		return err
 	}
 	<-signal
 	ctx, cancel = context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	if err := e.lifecycle.Stop(ctx); err != nil {
-		logrus.Fatal(err)
+		return err
 	}
+	return nil
 }
 
 // Run booting system
-func (e *Engine) Run() {
-	e.Init()
-	e.lifeCycle()
-}
-
-// Init defined booting init
-func (e *Engine) Init() {
-	e.database()
+func (e *Engine) Run() error {
+	e.Reflesh()
+	return e.lifeCycle()
 }
 
 func NewEngine() *Engine {

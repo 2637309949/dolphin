@@ -110,13 +110,8 @@ var (
 	Run = App.Run
 )
 
-// SyncMiddle defined
-func SyncMiddle() {
-}
-
 func init() {
-    SyncMiddle()
-	SyncModel()
-	SyncController()
-	SyncService()
+	SyncModel(App)
+	SyncController(App)
+	SyncService(App)
 }

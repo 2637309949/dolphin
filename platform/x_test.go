@@ -101,7 +101,7 @@ func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...M) {
 
 // TestMain defined
 func TestMain(m *testing.M) {
-	app.App.Init()
+	app.App.Reflesh()
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }

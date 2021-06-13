@@ -43,11 +43,11 @@ func (s *MSet) Get(cb func(string, interface{}) bool) interface{} {
 func (s *MSet) Add(m interface{}, n ...string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
+	ns := viper.GetString("app.name")
 	if len(n) > 0 {
-		s.m[n[0]] = append(s.m[n[0]], m)
-	} else {
-		s.m[viper.GetString("app.name")] = append(s.m[viper.GetString("app.name")], m)
+		ns = n[0]
 	}
+	s.m[ns] = append(s.m[ns], m)
 }
 
 // Name defined add models

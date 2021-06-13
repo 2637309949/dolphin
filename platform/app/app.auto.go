@@ -1760,8 +1760,8 @@ func UserSrvService(engine *Engine) {
 }
 
 // SyncModel defined
-func SyncModel() error {
-	mseti := App.Manager.MSet()
+func SyncModel(engine *Engine) error {
+	mseti := engine.Manager.MSet()
 	mseti.Add(new(model.SysAppFun))
 	mseti.Add(new(model.SysArea))
 	mseti.Add(new(model.SysAreaTemplate))
@@ -1803,45 +1803,45 @@ func SyncModel() error {
 }
 
 // SyncController defined
-func SyncController() error {
-	SysAppFunRoutes(App)
-	SysAreaRoutes(App)
-	SysAttachmentRoutes(App)
-	SysCasRoutes(App)
-	SysClientRoutes(App)
-	SysCommentRoutes(App)
-	SysDataPermissionRoutes(App)
-	DebugRoutes(App)
-	SysDingtalkRoutes(App)
-	SysDomainRoutes(App)
-	SysMenuRoutes(App)
-	SysNotificationRoutes(App)
-	SysOptionsetRoutes(App)
-	SysOrgRoutes(App)
-	SysPermissionRoutes(App)
-	SysRoleRoutes(App)
-	SysRoleMenuRoutes(App)
-	SysScheduleRoutes(App)
-	SysScheduleHistoryRoutes(App)
-	SysSchedulingRoutes(App)
-	SysSettingRoutes(App)
-	SysTableRoutes(App)
-	SysTableColumnRoutes(App)
-	SysTagRoutes(App)
-	SysTagGroupRoutes(App)
-	SysTrackerRoutes(App)
-	SysUserRoutes(App)
-	SysUserTemplateRoutes(App)
-	SysUserTemplateDetailRoutes(App)
-	SysWechatRoutes(App)
-	SysWorkerRoutes(App)
+func SyncController(engine *Engine) error {
+	SysAppFunRoutes(engine)
+	SysAreaRoutes(engine)
+	SysAttachmentRoutes(engine)
+	SysCasRoutes(engine)
+	SysClientRoutes(engine)
+	SysCommentRoutes(engine)
+	SysDataPermissionRoutes(engine)
+	DebugRoutes(engine)
+	SysDingtalkRoutes(engine)
+	SysDomainRoutes(engine)
+	SysMenuRoutes(engine)
+	SysNotificationRoutes(engine)
+	SysOptionsetRoutes(engine)
+	SysOrgRoutes(engine)
+	SysPermissionRoutes(engine)
+	SysRoleRoutes(engine)
+	SysRoleMenuRoutes(engine)
+	SysScheduleRoutes(engine)
+	SysScheduleHistoryRoutes(engine)
+	SysSchedulingRoutes(engine)
+	SysSettingRoutes(engine)
+	SysTableRoutes(engine)
+	SysTableColumnRoutes(engine)
+	SysTagRoutes(engine)
+	SysTagGroupRoutes(engine)
+	SysTrackerRoutes(engine)
+	SysUserRoutes(engine)
+	SysUserTemplateRoutes(engine)
+	SysUserTemplateDetailRoutes(engine)
+	SysWechatRoutes(engine)
+	SysWorkerRoutes(engine)
 	return nil
 }
 
 // SyncService defined
-func SyncService() error {
-	ClientSrvService(App)
-	DomainSrvService(App)
-	UserSrvService(App)
+func SyncService(engine *Engine) error {
+	ClientSrvService(engine)
+	DomainSrvService(engine)
+	UserSrvService(engine)
 	return nil
 }

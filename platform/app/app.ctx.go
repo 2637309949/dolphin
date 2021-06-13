@@ -593,6 +593,7 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		rg.engine.Http.Handle(method, path.Join(rg.basePath, relativePath), append(rg.Handlers, handlers...)...)
+		absPath := path.Join(rg.basePath, relativePath)
+		rg.engine.Http.Handle(method, absPath, append(rg.Handlers, handlers...)...)
 	}
 }

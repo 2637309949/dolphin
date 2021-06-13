@@ -15,10 +15,13 @@ import (
 	"github.com/spf13/viper"
 )
 
+// RootRelativePath defined
+const RootRelativePath = "/"
+
+// HttpHandler defined
 type HttpHandler interface {
-	Handle(httpMethod, relativePath string, handlers ...HandlerFunc)
-	ServeHTTP(w http.ResponseWriter, req *http.Request)
-	SetAllocateContextFunk(func(func(*Context)))
+	Handle(string, string, ...HandlerFunc)
+	ServeHTTP(http.ResponseWriter, *http.Request) // For httpTest
 	OnStart(context.Context) error
 	OnStop(context.Context) error
 }
@@ -29,10 +32,12 @@ type ginHandler struct {
 	allocCtx func(func(*Context))
 }
 
+// ServeHTTP defined
 func (gh *ginHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	gh.gin.ServeHTTP(w, req)
 }
 
+// OnStart defined
 func (gh *ginHandler) OnStart(ctx context.Context) error {
 	logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 	gh.httpSrv.Handler = gh.gin
@@ -44,6 +49,7 @@ func (gh *ginHandler) OnStart(ctx context.Context) error {
 	return nil
 }
 
+// OnStop defined
 func (gh *ginHandler) OnStop(ctx context.Context) error {
 	if err := gh.httpSrv.Shutdown(ctx); err != nil {
 		logrus.Fatal(err)
@@ -69,14 +75,10 @@ func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 	})
 }
 
-func (gh *ginHandler) SetAllocateContextFunk(alloc func(func(*Context))) {
-	gh.allocCtx = alloc
-}
-
 func (gh *ginHandler) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		group := gh.gin.Group("/")
+		group := gh.gin.Group(RootRelativePath)
 		hls := []gin.HandlerFunc{}
 		for j := 0; j < len(handlers); j++ {
 			hl := handlers[j]
@@ -104,11 +106,11 @@ func NewGinHandler(e *Engine) HttpHandler {
 
 	h := &ginHandler{gin: gn}
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
-	h.SetAllocateContextFunk(func(f func(*Context)) {
+	h.allocCtx = func(f func(*Context)) {
 		c := e.pool.Get().(*Context)
 		c.reset()
 		f(c)
 		e.pool.Put(c)
-	})
+	}
 	return h
 }
