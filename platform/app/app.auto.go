@@ -26,7 +26,7 @@ type SysAppFun struct {
 	BatchUpdate,
 	Page,
 	Tree,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysAppFun defined
@@ -89,7 +89,7 @@ type SysArea struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysArea defined
@@ -150,7 +150,7 @@ type SysAttachment struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysAttachment defined
@@ -220,7 +220,7 @@ type SysCas struct {
 	Refresh,
 	Check,
 	Profile,
-	Qrcode HandlerFunc
+	Qrcode Route
 }
 
 // NewSysCas defined
@@ -291,7 +291,7 @@ type SysClient struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysClient defined
@@ -350,7 +350,7 @@ type SysComment struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysComment defined
@@ -409,7 +409,7 @@ type SysDataPermission struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysDataPermission defined
@@ -471,7 +471,7 @@ type Debug struct {
 	Profile,
 	Symbol,
 	Trace,
-	Mutex HandlerFunc
+	Mutex Route
 }
 
 // NewDebug defined
@@ -535,7 +535,7 @@ var DebugInstance = NewDebug()
 // SysDingtalk defined
 type SysDingtalk struct {
 	Name   string
-	Oauth2 HandlerFunc
+	Oauth2 Route
 }
 
 // NewSysDingtalk defined
@@ -566,7 +566,7 @@ type SysDomain struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysDomain defined
@@ -627,7 +627,7 @@ type SysMenu struct {
 	Sidebar,
 	Page,
 	Tree,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysMenu defined
@@ -694,7 +694,7 @@ type SysNotification struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysNotification defined
@@ -753,7 +753,7 @@ type SysOptionset struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysOptionset defined
@@ -813,7 +813,7 @@ type SysOrg struct {
 	BatchUpdate,
 	Page,
 	Tree,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysOrg defined
@@ -876,7 +876,7 @@ type SysPermission struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysPermission defined
@@ -937,7 +937,7 @@ type SysRole struct {
 	Page,
 	RoleMenuTree,
 	RoleAppFunTree,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysRole defined
@@ -1004,7 +1004,7 @@ type SysRoleMenu struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysRoleMenu defined
@@ -1063,7 +1063,7 @@ type SysSchedule struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysSchedule defined
@@ -1115,7 +1115,7 @@ var SysScheduleInstance = NewSysSchedule()
 // SysScheduleHistory defined
 type SysScheduleHistory struct {
 	Name string
-	Page HandlerFunc
+	Page Route
 }
 
 // NewSysScheduleHistory defined
@@ -1143,7 +1143,7 @@ type SysScheduling struct {
 	Del,
 	Update,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysScheduling defined
@@ -1190,7 +1190,7 @@ type SysSetting struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysSetting defined
@@ -1249,7 +1249,7 @@ type SysTable struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysTable defined
@@ -1308,7 +1308,7 @@ type SysTableColumn struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysTableColumn defined
@@ -1367,7 +1367,7 @@ type SysTag struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysTag defined
@@ -1426,7 +1426,7 @@ type SysTagGroup struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysTagGroup defined
@@ -1479,7 +1479,7 @@ var SysTagGroupInstance = NewSysTagGroup()
 type SysTracker struct {
 	Name string
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysTracker defined
@@ -1516,7 +1516,7 @@ type SysUser struct {
 	Page,
 	Get,
 	Login,
-	Logout HandlerFunc
+	Logout Route
 }
 
 // NewSysUser defined
@@ -1583,7 +1583,7 @@ type SysUserTemplate struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysUserTemplate defined
@@ -1642,7 +1642,7 @@ type SysUserTemplateDetail struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysUserTemplateDetail defined
@@ -1694,7 +1694,7 @@ var SysUserTemplateDetailInstance = NewSysUserTemplateDetail()
 // SysWechat defined
 type SysWechat struct {
 	Name   string
-	Oauth2 HandlerFunc
+	Oauth2 Route
 }
 
 // NewSysWechat defined
@@ -1719,7 +1719,7 @@ var SysWechatInstance = NewSysWechat()
 type SysWorker struct {
 	Name string
 	Add,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewSysWorker defined

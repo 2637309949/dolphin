@@ -21,7 +21,7 @@ type {{.ToUpperCase .Name}} struct {
 	Name string
 	{{- $APIS := .APIS}}
 	{{- range $index, $api := .APIS}}
-	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} HandlerFunc{{- else}},{{- end}}
+	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} Route{{- else}},{{- end}}
 	{{- end}}
 }
 

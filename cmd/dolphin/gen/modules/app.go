@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -40,6 +41,7 @@ func (app *App) Build(dir string, args []string, parser *parser.AppParser) ([]*p
 		"Name":        parser.Name,
 		"Application": parser,
 		"Viper":       viper.GetViper(),
+		"lt":          ht.HTML("<"),
 	}
 
 	appByte, _ := vfsutil.ReadFile(template.Assets, "app.tmpl")

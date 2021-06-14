@@ -31,6 +31,8 @@ import (
 )
 
 type (
+	// HandlerFunc defined
+	HandlerFunc func(ctx *Context)
 	// Context defined http handle hook context
 	Context struct {
 		*gin.Context
@@ -38,29 +40,24 @@ type (
 		PlatformDB *xorm.Engine
 		DB         *xorm.Engine
 	}
-	// HandlerFunc defines the handler used by gin middleware as return value
-	HandlerFunc struct {
+	// Route defines the handler used by gin middleware as return value
+	Route struct {
 		Method       string
 		RelativePath string
-		Interceptor  []HandlerFunc
-		Handler      func(ctx *Context)
+		Interceptor  []Route
+		Handler      HandlerFunc
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		Handlers []HandlerFunc
+		Routes   []Route
 		basePath string
 		engine   *Engine
 	}
 )
 
 // HF2Handler defined
-func HF2Handler(h func(ctx *Context)) HandlerFunc {
-	return HandlerFunc{Handler: h}
-}
-
-// Raw defined
-func (ctx *Context) Raw() *gin.Context {
-	return ctx.Context
+func HF2Handler(h func(ctx *Context)) Route {
+	return Route{Handler: h}
 }
 
 // reset defined clean vars in ctx
@@ -590,10 +587,11 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 }
 
 // Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Route) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
 		absPath := path.Join(rg.basePath, relativePath)
-		rg.engine.Http.Handle(method, absPath, append(rg.Handlers, handlers...)...)
+
+		rg.engine.Http.Handle(method, absPath, append(rg.Routes, handlers...)...)
 	}
 }

@@ -9,6 +9,7 @@ require (
 	github.com/KyleBanks/depth v1.2.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
+	github.com/gin-gonic/gin v1.7.1 // indirect
 	github.com/go-errors/errors v1.1.1
 	github.com/go-openapi/spec v0.20.3 // indirect
 	github.com/go-redis/redis/v7 v7.4.0

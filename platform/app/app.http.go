@@ -20,7 +20,7 @@ const RootRelativePath = "/"
 
 // HttpHandler defined
 type HttpHandler interface {
-	Handle(string, string, ...HandlerFunc)
+	Handle(string, string, ...Route)
 	ServeHTTP(http.ResponseWriter, *http.Request) // For httpTest
 	OnStart(context.Context) error
 	OnStop(context.Context) error
@@ -70,12 +70,12 @@ func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 					c.AuthInfo = t
 				}
 			}
-			h.Handler(c)
+			h(c)
 		})
 	})
 }
 
-func (gh *ginHandler) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+func (gh *ginHandler) Handle(httpMethod, relativePath string, handlers ...Route) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
 		group := gh.gin.Group(RootRelativePath)
@@ -84,9 +84,9 @@ func (gh *ginHandler) Handle(httpMethod, relativePath string, handlers ...Handle
 			hl := handlers[j]
 			for k := 0; k < len(hl.Interceptor); k++ {
 				ir := hl.Interceptor[k]
-				hls = append(hls, gh.handlerFunc(ir))
+				hls = append(hls, gh.handlerFunc(ir.Handler))
 			}
-			hls = append(hls, gh.handlerFunc(hl))
+			hls = append(hls, gh.handlerFunc(hl.Handler))
 		}
 		group.Handle(method, relativePath, hls...)
 	}

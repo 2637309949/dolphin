@@ -57,7 +57,7 @@ func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 				c.AuthInfo = t
 			}
 		}
-		h.Handler(c)
+		h(c)
 		e.pool.Put(c)
 	})
 }
@@ -68,8 +68,8 @@ func (e *Engine) allocateContext() *Context {
 }
 
 // Group handlers
-func (e *Engine) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
-	return &RouterGroup{Handlers: handlers, basePath: relativePath, engine: e}
+func (e *Engine) Group(relativePath string, routes ...Route) *RouterGroup {
+	return &RouterGroup{Routes: routes, basePath: relativePath, engine: e}
 }
 
 // Migration models

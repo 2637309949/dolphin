@@ -291,7 +291,7 @@ func AuthEncrypt(ctx *Context) {
 }
 
 // Auth middles
-func Auth(auth ...string) HandlerFunc {
+func Auth(auth ...string) Route {
 	middles := []func(ctx *Context){}
 	if slice.StrSliceContains(auth, TokenType) {
 		middles = append(middles, AuthToken)
@@ -307,7 +307,7 @@ func Auth(auth ...string) HandlerFunc {
 }
 
 // Roles middles
-func Roles(roles ...string) HandlerFunc {
+func Roles(roles ...string) Route {
 	return HF2Handler(func(ctx *Context) {
 		if !ctx.InRole(roles...) {
 			ctx.Fail(util.ErrAccessDenied, 403)
