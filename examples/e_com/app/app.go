@@ -13,6 +13,8 @@ import (
 )
 
 type (
+	// HandlerFunc defined
+	HandlerFunc func(ctx *Context)
 	// Engine defined parse app engine
 	Engine struct {
 		*app.Engine
@@ -25,21 +27,21 @@ type (
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		Handlers []HandlerFunc
+		Routes   []Route
 		basePath string
 		engine   *Engine
 	}
-	// HandlerFunc defines the handler used by gin middleware as return value
-	HandlerFunc struct {
+	// Route defines the handler used by gin middleware as return value
+	Route struct {
 		Method, RelativePath string
-		Interceptor          []HandlerFunc
-		Handler              func(ctx *Context)
+		Interceptor          []Route
+		Handler              HandlerFunc
 	}
 )
 
 // HF2Handler defined
-func HF2Handler(h func(ctx *Context)) HandlerFunc {
-	return HandlerFunc{Handler: h}
+func HF2Handler(h func(ctx *Context)) Route {
+	return Route{Handler: h}
 }
 
 func (e *Engine) allocateContext() *Context {
@@ -47,49 +49,55 @@ func (e *Engine) allocateContext() *Context {
 }
 
 // Group handlers
-func (e *Engine) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
-	return &RouterGroup{Handlers: handlers, basePath: relativePath, engine: e}
+func (e *Engine) Group(relativePath string, routes ...Route) *RouterGroup {
+	return &RouterGroup{Routes: routes, basePath: relativePath, engine: e}
 }
 
 // HandlerFunc convert to app.HandlerFunc
 func (e *Engine) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
-	return app.HF2Handler(func(ctx *app.Context) {
+	return app.HandlerFunc(func(ctx *app.Context) {
 		c := e.pool.Get().(*Context)
 		c.Context = ctx
-		h.Handler(c)
+		h(c)
 		e.pool.Put(c)
 	})
 }
 
 // Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+func (rg *RouterGroup) Handle(httpMethod, relativePath string, routes ...Route) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		hdl := append(rg.Handlers, handlers...)
-		ahf := []app.HandlerFunc{}
-		for i := 0; i < len(hdl); i++ {
-			ahf = append(ahf, rg.engine.HandlerFunc(hdl[i]))
+		absPath := path.Join(rg.basePath, relativePath)
+		rs := append(rg.Routes, routes...)
+		hls := []app.HandlerFunc{}
+		for j := 0; j < len(rs); j++ {
+			route := rs[j]
+			for k := 0; k < len(route.Interceptor); k++ {
+				ir := route.Interceptor[k]
+				hls = append(hls, rg.engine.HandlerFunc(ir.Handler))
+			}
+			hls = append(hls, rg.engine.HandlerFunc(route.Handler))
 		}
-		rg.engine.Http.Handle(method, path.Join(rg.basePath, relativePath), ahf...)
+		rg.engine.Http.Handle(method, absPath, hls...)
 	}
 }
 
 // Auth middles
-func Auth(auth ...string) HandlerFunc {
+func Auth(auth ...string) Route {
 	return HF2Handler(func(ctx *Context) {
 		app.Auth(auth...).Handler(ctx.Context)
 	})
 }
 
 // Roles middles
-func Roles(roles ...string) HandlerFunc {
+func Roles(roles ...string) Route {
 	return HF2Handler(func(ctx *Context) {
 		app.Roles(roles...).Handler(ctx.Context)
 	})
 }
 
 // Cache middles
-func Cache(time time.Duration) HandlerFunc {
+func Cache(time time.Duration) Route {
 	return HF2Handler(func(ctx *Context) {
 		app.Cache(time).Handler(ctx.Context)
 	})
@@ -109,13 +117,8 @@ var (
 	Run = App.Run
 )
 
-// SyncMiddle defined
-func SyncMiddle() {
-}
-
 func init() {
-	SyncMiddle()
-	SyncModel()
-	SyncController()
-	SyncService()
+	SyncModel(App)
+	SyncController(App)
+	SyncService(App)
 }

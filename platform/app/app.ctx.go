@@ -587,11 +587,20 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 }
 
 // Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Route) {
+func (rg *RouterGroup) Handle(httpMethod, relativePath string, routes ...Route) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
 		absPath := path.Join(rg.basePath, relativePath)
-
-		rg.engine.Http.Handle(method, absPath, append(rg.Routes, handlers...)...)
+		rs := append(rg.Routes, routes...)
+		hls := []HandlerFunc{}
+		for j := 0; j < len(rs); j++ {
+			route := rs[j]
+			for k := 0; k < len(route.Interceptor); k++ {
+				ir := route.Interceptor[k]
+				hls = append(hls, ir.Handler)
+			}
+			hls = append(hls, route.Handler)
+		}
+		rg.engine.Http.Handle(method, absPath, hls...)
 	}
 }

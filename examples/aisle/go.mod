@@ -18,5 +18,7 @@ require (
 	github.com/spf13/cobra v1.1.3 // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/thoas/go-funk v0.8.0
+	golang.org/x/tools v0.1.3 // indirect
+	google.golang.org/grpc v1.26.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 )

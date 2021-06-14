@@ -53,9 +53,9 @@ func (e *Engine) Group(relativePath string, routes ...Route) *RouterGroup {
 	return &RouterGroup{Routes: routes, basePath: relativePath, engine: e}
 }
 
-// Route convert to app.Route
-func (e *Engine) Route(h HandlerFunc) (phf app.Route) {
-	return app.HF2Handler(func(ctx *app.Context) {
+// HandlerFunc convert to app.HandlerFunc
+func (e *Engine) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
+	return app.HandlerFunc(func(ctx *app.Context) {
 		c := e.pool.Get().(*Context)
 		c.Context = ctx
 		h(c)
@@ -67,12 +67,18 @@ func (e *Engine) Route(h HandlerFunc) (phf app.Route) {
 func (rg *RouterGroup) Handle(httpMethod, relativePath string, routes ...Route) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		hdl := append(rg.Routes, routes...)
-		ahf := []app.Route{}
-		for i := 0; i < len(hdl); i++ {
-			ahf = append(ahf, rg.engine.Route(hdl[i].Handler))
+		absPath := path.Join(rg.basePath, relativePath)
+		rs := append(rg.Routes, routes...)
+		hls := []app.HandlerFunc{}
+		for j := 0; j < len(rs); j++ {
+			route := rs[j]
+			for k := 0; k < len(route.Interceptor); k++ {
+				ir := route.Interceptor[k]
+				hls = append(hls, rg.engine.HandlerFunc(ir.Handler))
+			}
+			hls = append(hls, rg.engine.HandlerFunc(route.Handler))
 		}
-		rg.engine.Http.Handle(method, path.Join(rg.basePath, relativePath), ahf...)
+		rg.engine.Http.Handle(method, absPath, hls...)
 	}
 }
 

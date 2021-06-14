@@ -1043,7 +1043,7 @@ definitions:
         type: string
       org_id:
         description: OrgId defined 组织ID
-        type: string
+        type: number
       password:
         description: Password defined 密码
         type: string
@@ -1061,7 +1061,7 @@ definitions:
         type: number
       temp_id:
         description: TempId defined 模板ID
-        type: string
+        type: number
       temp_value:
         description: TempValue defined 模板值
         type: string

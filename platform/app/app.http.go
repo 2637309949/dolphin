@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"path"
-	"strings"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/plugin"
@@ -20,7 +19,7 @@ const RootRelativePath = "/"
 
 // HttpHandler defined
 type HttpHandler interface {
-	Handle(string, string, ...Route)
+	Handle(string, string, ...HandlerFunc)
 	ServeHTTP(http.ResponseWriter, *http.Request) // For httpTest
 	OnStart(context.Context) error
 	OnStop(context.Context) error
@@ -75,21 +74,14 @@ func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 	})
 }
 
-func (gh *ginHandler) Handle(httpMethod, relativePath string, handlers ...Route) {
-	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
-		method := methods[i]
-		group := gh.gin.Group(RootRelativePath)
-		hls := []gin.HandlerFunc{}
-		for j := 0; j < len(handlers); j++ {
-			hl := handlers[j]
-			for k := 0; k < len(hl.Interceptor); k++ {
-				ir := hl.Interceptor[k]
-				hls = append(hls, gh.handlerFunc(ir.Handler))
-			}
-			hls = append(hls, gh.handlerFunc(hl.Handler))
-		}
-		group.Handle(method, relativePath, hls...)
+func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
+	hls := []gin.HandlerFunc{}
+	group := gh.gin.Group(RootRelativePath)
+	for i := 0; i < len(handlerFuncs); i++ {
+		hlf := handlerFuncs[i]
+		hls = append(hls, gh.handlerFunc(hlf))
 	}
+	group.Handle(httpMethod, relativePath, hls...)
 }
 
 // NewGinHandler defined

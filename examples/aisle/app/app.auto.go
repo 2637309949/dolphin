@@ -22,7 +22,7 @@ type Organ struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewOrgan defined
@@ -72,8 +72,8 @@ func OrganRoutes(engine *Engine) {
 var OrganInstance = NewOrgan()
 
 // SyncModel defined
-func SyncModel() error {
-	mseti := App.Manager.MSet()
+func SyncModel(engine *Engine) error {
+	mseti := engine.Manager.MSet()
 	mseti.Add(new(model.AboutUs))
 	mseti.Add(new(model.AboutusContentPic))
 	mseti.Add(new(model.AchievementSendEmailMsg))
@@ -488,12 +488,12 @@ func SyncModel() error {
 }
 
 // SyncController defined
-func SyncController() error {
-	OrganRoutes(App)
+func SyncController(engine *Engine) error {
+	OrganRoutes(engine)
 	return nil
 }
 
 // SyncService defined
-func SyncService() error {
+func SyncService(engine *Engine) error {
 	return nil
 }

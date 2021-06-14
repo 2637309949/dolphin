@@ -22,7 +22,7 @@ type Article struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get HandlerFunc
+	Get Route
 }
 
 // NewArticle defined
@@ -72,8 +72,8 @@ func ArticleRoutes(engine *Engine) {
 var ArticleInstance = NewArticle()
 
 // SyncModel defined
-func SyncModel() error {
-	mseti := App.Manager.MSet()
+func SyncModel(engine *Engine) error {
+	mseti := engine.Manager.MSet()
 	mseti.Add(new(model.McAnswer))
 	mseti.Add(new(model.McArticle))
 	mseti.Add(new(model.McCache))
@@ -94,12 +94,12 @@ func SyncModel() error {
 }
 
 // SyncController defined
-func SyncController() error {
-	ArticleRoutes(App)
+func SyncController(engine *Engine) error {
+	ArticleRoutes(engine)
 	return nil
 }
 
 // SyncService defined
-func SyncService() error {
+func SyncService(engine *Engine) error {
 	return nil
 }
