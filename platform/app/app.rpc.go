@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -47,6 +48,9 @@ func (gh *grpcHandler) OnStop(ctx context.Context) error {
 
 // NewGRPCHandler defined
 func NewGRPCHandler(e *Engine) RPCHandler {
+	options := []grpc.ServerOption{
+		grpc.UnaryInterceptor(plugin.RpcCliTrace(viper.GetString("app.name"))),
+	}
 	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
-	return &grpcHandler{net: net, grpc: grpc.NewServer()}
+	return &grpcHandler{net: net, grpc: grpc.NewServer(options...)}
 }

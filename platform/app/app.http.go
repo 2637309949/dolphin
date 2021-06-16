@@ -90,10 +90,10 @@ func NewGinHandler(e *Engine) HttpHandler {
 	gin.SetMode(viper.GetString("app.mode"))
 
 	gn := gin.New()
-	gn.Use(plugin.CORS())
 	gn.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
+	gn.Use(plugin.HttpTrace())
+	gn.Use(plugin.Cors())
 	gn.Use(plugin.Recovery())
-	gn.Use(plugin.Override(gn.HandleContext))
 	gn.Use(plugin.Tracker(Tracker(e)))
 
 	h := &ginHandler{gin: gn}

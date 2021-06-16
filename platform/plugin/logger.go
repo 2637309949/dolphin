@@ -25,28 +25,6 @@ func Formatter(param gin.LogFormatterParams) string {
 	)
 }
 
-// defaultLogFormatter is the default log format function Logger middleware uses.
-var defaultLogFormatter = func(param gin.LogFormatterParams) string {
-	var methodColor, resetColor string
-	if param.IsOutputColor() {
-		methodColor = param.MethodColor()
-		resetColor = param.ResetColor()
-	}
-
-	if param.Latency > time.Minute {
-		// Truncate in a golang < 1.8 safe way
-		param.Latency = param.Latency - param.Latency%time.Second
-	}
-	return fmt.Sprintf("%3d | %13v | %15s |%s %-7s %s %s%s",
-		param.StatusCode,
-		param.Latency,
-		param.ClientIP,
-		methodColor, param.Method, resetColor,
-		param.Path,
-		param.ErrorMessage,
-	)
-}
-
 // LogFormatterParams is the structure any formatter will be handed when time to log comes
 type LogFormatterParams struct {
 	gin.LogFormatterParams

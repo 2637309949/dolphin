@@ -4,6 +4,10 @@
 package rpc
 
 import (
+	"context"
+	"time"
+
+	"github.com/2637309949/dolphin/platform/plugin"
 	"{{.PackageName}}/rpc/proto"
 
 	"github.com/sirupsen/logrus"
@@ -15,8 +19,14 @@ import (
 var {{.Service.ToUpperCase .Service.Name}}Client proto.{{.Service.ToUpperCase .Service.Name}}Client
 
 func init() {
-	opt := grpc.WithInsecure()
-	conn, err := grpc.Dial(viper.GetString("rpc.{{.Service.Name}}"), opt)
+	options := []grpc.DialOption{
+		grpc.WithInsecure(),
+		grpc.WithBlock(),
+		grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), dialTimeout)
+	defer cancel()
+	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.{{.Service.Name}}"), options...)
 	if err != nil {
 		logrus.Error("grpc dial failed: %v", err)
 	}
