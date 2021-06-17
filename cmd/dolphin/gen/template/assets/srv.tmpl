@@ -23,7 +23,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx context.Context, db 
 		chi := make(chan interface{}, 1)
 		go func() {
 			time.Sleep(1 * time.Second)
-			chi <- 100
+			chi {{.lt}}- 100
 			cancel()
 			close(chi)
 		}()
@@ -31,9 +31,9 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx context.Context, db 
 	}(cwt)
 	for range ticker.C {
 		select {
-		case <-cwt.Done():
+		case {{.lt}}-cwt.Done():
 			logrus.Infoln("child process interrupt...")
-			return <-chi, cwt.Err()
+			return {{.lt}}-chi, cwt.Err()
 		default:
 			logrus.Infoln("awaiting job...")
 		}

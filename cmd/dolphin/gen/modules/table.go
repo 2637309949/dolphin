@@ -6,6 +6,7 @@ package modules
 
 import (
 	"fmt"
+	ht "html/template"
 	"path"
 	"strings"
 
@@ -157,8 +158,14 @@ func (app *Table) Build(dir string, args []string, parser *parser.AppParser) ([]
 			data := map[string]interface{}{
 				"PackageName": parser.PackageName,
 				"Name":        parser.Name,
+				"Controllers": parser.Controllers,
+				"Services":    parser.Services,
+				"Tables":      parser.Tables,
 				"Table":       meta,
+				"Beans":       parser.Beans,
 				"Viper":       viper.GetViper(),
+				"lt":          ht.HTML("<"),
+				"gt":          ht.HTML(">"),
 			}
 			tmplCfg := &pipe.TmplCfg{
 				Text:     string(tbByte),

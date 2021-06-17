@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -40,14 +41,20 @@ func (oa *Proto) Build(dir string, args []string, parser *parser.AppParser) ([]*
 	ctrByte, _ := vfsutil.ReadFile(template.Assets, "proto.tmpl")
 	rpcByte, _ := vfsutil.ReadFile(template.Assets, "rpc.tmpl")
 	rpcCliByte, _ := vfsutil.ReadFile(template.Assets, "rpc.cli.tmpl")
-	for _, s := range parser.Services {
+	for i := range parser.Services {
 		data := map[string]interface{}{
 			"PackageName": parser.PackageName,
 			"Name":        parser.Name,
-			"Service":     s,
+			"Controllers": parser.Controllers,
+			"Services":    parser.Services,
+			"Service":     parser.Services[i],
+			"Tables":      parser.Tables,
+			"Beans":       parser.Beans,
 			"Viper":       viper.GetViper(),
+			"lt":          ht.HTML("<"),
+			"gt":          ht.HTML(">"),
 		}
-		filename := utils.FileNameTrimSuffix(s.Path)
+		filename := utils.FileNameTrimSuffix(parser.Services[i].Path)
 		tmplCfg := &pipe.TmplCfg{
 			Text:     string(ctrByte),
 			FilePath: path.Join(dir, viper.GetString("dir.rpc"), "proto", filename+".proto"),

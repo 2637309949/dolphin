@@ -41,11 +41,16 @@ func (app *Srv) Build(dir string, args []string, parser *parser.AppParser) ([]*p
 	srvByte, _ := vfsutil.ReadFile(template.Assets, "srv.tmpl")
 	for i := range parser.Controllers {
 		data := map[string]interface{}{
-			"lt":          ht.HTML("<"),
 			"PackageName": parser.PackageName,
 			"Name":        parser.Name,
+			"Controllers": parser.Controllers,
 			"Controller":  parser.Controllers[i],
+			"Services":    parser.Services,
+			"Tables":      parser.Tables,
+			"Beans":       parser.Beans,
 			"Viper":       viper.GetViper(),
+			"lt":          ht.HTML("<"),
+			"gt":          ht.HTML(">"),
 		}
 		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
 		tmplCfg := &pipe.TmplCfg{

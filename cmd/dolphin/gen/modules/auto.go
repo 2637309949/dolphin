@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -41,7 +42,10 @@ func (auto *Auto) Build(dir string, args []string, parser *parser.AppParser) ([]
 		"Controllers": parser.Controllers,
 		"Services":    parser.Services,
 		"Tables":      parser.Tables,
+		"Beans":       parser.Beans,
 		"Viper":       viper.GetViper(),
+		"lt":          ht.HTML("<"),
+		"gt":          ht.HTML(">"),
 	}
 	autoByte, _ := vfsutil.ReadFile(template.Assets, "auto.tmpl")
 	return []*pipe.TmplCfg{

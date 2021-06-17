@@ -3,6 +3,6 @@ select
 from
 	{{.Api.Table}}
 where
-	{{.Api.Table}}.id {{.Application.Unescaped "{{.ne}}"}} ""
+	{{.Api.Table}}.id {{.Controller.Unescaped "{{.ne}}"}} ""
 	and
-	{{.Api.Table}}.is_delete {{.Application.Unescaped "{{.ne}}"}} 1
+	{{.Api.Table}}.is_delete {{.Controller.Unescaped "{{.ne}}"}} 1

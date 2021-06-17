@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"path"
 	"path/filepath"
 	"strings"
@@ -40,7 +41,13 @@ func (oa *OAuth) Build(dir string, args []string, parser *parser.AppParser) ([]*
 	data := map[string]interface{}{
 		"PackageName": parser.PackageName,
 		"Name":        parser.Name,
+		"Controllers": parser.Controllers,
+		"Services":    parser.Services,
+		"Tables":      parser.Tables,
+		"Beans":       parser.Beans,
 		"Viper":       viper.GetViper(),
+		"lt":          ht.HTML("<"),
+		"gt":          ht.HTML(">"),
 	}
 
 	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")

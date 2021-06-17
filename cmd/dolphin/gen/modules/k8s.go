@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -38,7 +39,13 @@ func (dp *Deploy) Build(dir string, args []string, parser *parser.AppParser) ([]
 	data := map[string]interface{}{
 		"PackageName": parser.PackageName,
 		"Name":        parser.Name,
+		"Controllers": parser.Controllers,
+		"Services":    parser.Services,
+		"Tables":      parser.Tables,
+		"Beans":       parser.Beans,
 		"Viper":       viper.GetViper(),
+		"lt":          ht.HTML("<"),
+		"gt":          ht.HTML(">"),
 	}
 	cfgByte, _ := vfsutil.ReadFile(template.Assets, "k8s.cfg.tmpl")
 	dpyByte, _ := vfsutil.ReadFile(template.Assets, "k8s.dpy.tmpl")

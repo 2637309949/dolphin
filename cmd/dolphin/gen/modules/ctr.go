@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -41,10 +42,15 @@ func (ctr *Ctr) Build(dir string, args []string, parser *parser.AppParser) ([]*p
 	for i := range parser.Controllers {
 		data := map[string]interface{}{
 			"PackageName": parser.PackageName,
-			"Tables":      parser.Tables,
 			"Name":        parser.Name,
+			"Controllers": parser.Controllers,
 			"Controller":  parser.Controllers[i],
+			"Services":    parser.Services,
+			"Tables":      parser.Tables,
+			"Beans":       parser.Beans,
 			"Viper":       viper.GetViper(),
+			"lt":          ht.HTML("<"),
+			"gt":          ht.HTML(">"),
 		}
 		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
 		tmplCfg := &pipe.TmplCfg{

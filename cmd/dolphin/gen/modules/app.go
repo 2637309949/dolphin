@@ -39,9 +39,13 @@ func (app *App) Build(dir string, args []string, parser *parser.AppParser) ([]*p
 	data := map[string]interface{}{
 		"PackageName": parser.PackageName,
 		"Name":        parser.Name,
-		"Application": parser,
+		"Controllers": parser.Controllers,
+		"Services":    parser.Services,
+		"Tables":      parser.Tables,
+		"Beans":       parser.Beans,
 		"Viper":       viper.GetViper(),
 		"lt":          ht.HTML("<"),
+		"gt":          ht.HTML(">"),
 	}
 
 	appByte, _ := vfsutil.ReadFile(template.Assets, "app.tmpl")

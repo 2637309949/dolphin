@@ -6,6 +6,7 @@ package modules
 
 import (
 	"fmt"
+	ht "html/template"
 	"path"
 	"path/filepath"
 	"strings"
@@ -49,10 +50,15 @@ func (app *SQL) Build(dir string, args []string, parser *parser.AppParser) ([]*p
 				data := map[string]interface{}{
 					"PackageName": parser.PackageName,
 					"Name":        parser.Name,
+					"Controllers": parser.Controllers,
 					"Controller":  parser.Controllers[i],
-					"Application": parser,
-					"Api":         api,
+					"Services":    parser.Services,
+					"Tables":      parser.Tables,
+					"Beans":       parser.Beans,
 					"Viper":       viper.GetViper(),
+					"Api":         api,
+					"lt":          ht.HTML("<"),
+					"gt":          ht.HTML(">"),
 				}
 				cpath := path.Join(dir, viper.GetString("dir.sql"), parser.Controllers[i].Name, fmt.Sprintf("%v_%v_%v.tpl", parser.Controllers[i].Name, api.Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {

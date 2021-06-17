@@ -5,6 +5,7 @@
 package modules
 
 import (
+	ht "html/template"
 	"io/ioutil"
 	"path"
 	"strings"
@@ -59,8 +60,14 @@ func (m *More) Build(dir string, args []string, parser *parser.AppParser) ([]*pi
 	data := map[string]interface{}{
 		"PackageName": parser.PackageName,
 		"Name":        parser.Name,
+		"Controllers": parser.Controllers,
+		"Services":    parser.Services,
+		"Tables":      parser.Tables,
+		"Beans":       parser.Beans,
 		"Viper":       viper.GetViper(),
 		"more":        args[0],
+		"lt":          ht.HTML("<"),
+		"gt":          ht.HTML(">"),
 	}
 	tmplCfgs = append(tmplCfgs,
 		&pipe.TmplCfg{

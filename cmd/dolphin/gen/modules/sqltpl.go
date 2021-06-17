@@ -108,9 +108,14 @@ func (app *SQLTPL) Build(dir string, args []string, parser *parser.AppParser) ([
 	data := map[string]interface{}{
 		"PackageName": parser.PackageName,
 		"Name":        parser.Name,
-		"Application": parser,
-		"Files":       files,
+		"Controllers": parser.Controllers,
+		"Services":    parser.Services,
+		"Tables":      parser.Tables,
+		"Beans":       parser.Beans,
 		"Viper":       viper.GetViper(),
+		"Files":       files,
+		"lt":          ht.HTML("<"),
+		"gt":          ht.HTML(">"),
 	}
 	tmplCfg := &pipe.TmplCfg{
 		Text:     string(sqlByte),

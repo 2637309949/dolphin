@@ -6,6 +6,7 @@ package modules
 
 import (
 	"fmt"
+	ht "html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
@@ -53,8 +54,12 @@ func (app *Script) Build(dir string, args []string, parser *parser.AppParser) ([
 			"PackageName": parser.PackageName,
 			"Name":        parser.Name,
 			"Controllers": parser.Controllers,
-			"Application": parser,
+			"Services":    parser.Services,
+			"Tables":      parser.Tables,
+			"Beans":       parser.Beans,
 			"Viper":       viper.GetViper(),
+			"lt":          ht.HTML("<"),
+			"gt":          ht.HTML(">"),
 		},
 		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index.js"),
 		Overlap:  pipe.OverlapWrite,

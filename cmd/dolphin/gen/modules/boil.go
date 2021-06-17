@@ -41,11 +41,16 @@ func (m *Boilerplate) After(*parser.AppParser, []*pipe.TmplCfg) error {
 func (m *Boilerplate) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	cfgs := []*pipe.TmplCfg{}
 	data := map[string]interface{}{
-		"lt":          ht.HTML("<"),
 		"PackageName": parser.PackageName,
 		"Name":        parser.Name,
 		"Desc":        parser.Desc,
+		"Controllers": parser.Controllers,
+		"Services":    parser.Services,
+		"Tables":      parser.Tables,
+		"Beans":       parser.Beans,
 		"Viper":       viper.GetViper(),
+		"lt":          ht.HTML("<"),
+		"gt":          ht.HTML(">"),
 	}
 	walkFn := func(p string, fi os.FileInfo, err error) error {
 		if err != nil {
