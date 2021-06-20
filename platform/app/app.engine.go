@@ -205,16 +205,15 @@ func (e *Engine) done() <-chan os.Signal {
 }
 
 // lifeCycle start liftcycle hooks
-func (e *Engine) lifeCycle() error {
-	signal := e.done()
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+func (e *Engine) lifeCycle(ctx context.Context) error {
+	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
-
+	signal := e.done()
 	if err := e.lifecycle.Start(ctx); err != nil {
 		return err
 	}
 	<-signal
-	ctx, cancel = context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 	if err := e.lifecycle.Stop(ctx); err != nil {
 		return err
@@ -225,7 +224,7 @@ func (e *Engine) lifeCycle() error {
 // Run booting system
 func (e *Engine) Run() error {
 	e.Reflesh()
-	return e.lifeCycle()
+	return e.lifeCycle(context.Background())
 }
 
 func NewEngine() *Engine {
