@@ -63,11 +63,11 @@ var logWorkerPool chan chan *plugin.LogFormatterParams
 var logChannel chan *plugin.LogFormatterParams
 
 // Tracker defined tracker recorder
-func Tracker(e *Engine) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
+func Tracker(dol *Dolphin) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
 	return func(ctx *gin.Context, p *plugin.LogFormatterParams) {
-		token, _ := e.OAuth2.BearerAuth(ctx.Request)
+		token, _ := dol.OAuth2.BearerAuth(ctx.Request)
 		p.Token = token
-		if tokenInfo, err := e.OAuth2.Manager.LoadAccessToken(token); err == nil {
+		if tokenInfo, err := dol.OAuth2.Manager.LoadAccessToken(token); err == nil {
 			p.Domain = tokenInfo.GetDomain()
 			p.UserID = tokenInfo.GetUserID()
 		}

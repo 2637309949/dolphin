@@ -40,12 +40,12 @@ type (
 	HandlersChain []HandlerFunc
 	// RouterGroup defines
 	RouterGroup struct {
-		engine   *Engine
+		dolphin  *Dolphin
 		Handlers []HandlerFunc
 		basePath string
 	}
-	// Engine defined parse app engine
-	Engine struct {
+	// Dolphin defined parse app engine
+	Dolphin struct {
 		RouterGroup
 		PlatformDB *xorm.Engine
 		lifecycle  Lifecycle
@@ -62,7 +62,7 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs .
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
 		absPath := path.Join(group.basePath, relativePath)
-		group.engine.Http.Handle(method, absPath, handlerFuncs...)
+		group.dolphin.Http.Handle(method, absPath, handlerFuncs...)
 	}
 }
 
@@ -93,14 +93,14 @@ func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *R
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
 		basePath: group.calculateAbsolutePath(relativePath),
-		engine:   group.engine,
+		dolphin:  group.dolphin,
 	}
 }
 
 // HandlerFunc convert to gin.HandlerFunc
-func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
+func (dol *Dolphin) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
-		c := e.pool.Get().(*Context)
+		c := dol.pool.Get().(*Context)
 		c.reset()
 		c.Context = ctx
 		for k := range ctx.Keys {
@@ -112,17 +112,17 @@ func (e *Engine) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
 			}
 		}
 		h(c)
-		e.pool.Put(c)
+		dol.pool.Put(c)
 	})
 }
 
 // allocateContext defined new context
-func (e *Engine) allocateContext() *Context {
-	return &Context{PlatformDB: e.PlatformDB, AuthInfo: &AuthOAuth2{server: e.OAuth2}}
+func (dol *Dolphin) allocateContext() *Context {
+	return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{server: dol.OAuth2}}
 }
 
 // Migration models
-func (e *Engine) migration(name string, db *xorm.Engine) error {
+func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	tables := []model.SysTable{}
 	columns := []model.SysTableColumn{}
 	session := db.NewSession()
@@ -138,7 +138,7 @@ func (e *Engine) migration(name string, db *xorm.Engine) error {
 	if err != nil {
 		return err
 	}
-	err = e.Manager.MSet().ForEach(func(n string, m interface{}) error {
+	err = dol.Manager.MSet().ForEach(func(n string, m interface{}) error {
 		if viper.GetString("app.mode") == "debug" {
 			if tbn, ok := m.(interface{ TableName() string }); ok {
 				logrus.Infof("Sync Model[%v]:%v", n, tbn.TableName())
@@ -186,35 +186,35 @@ func (e *Engine) migration(name string, db *xorm.Engine) error {
 }
 
 // Reflesh defined init data before bootinh
-func (e *Engine) Reflesh() error {
+func (dol *Dolphin) Reflesh() error {
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	xlogger := createXLogger()
 	db, err := xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	if err != nil {
 		return err
 	}
-	e.PlatformDB = db
-	err = e.PlatformDB.Ping()
+	dol.PlatformDB = db
+	err = dol.PlatformDB.Ping()
 	if err != nil {
 		return err
 	}
-	e.PlatformDB.SetLogger(xlogger)
-	e.PlatformDB.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
-	e.PlatformDB.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
-	e.PlatformDB.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
-	err = e.RegisterSQLDir(e.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
+	dol.PlatformDB.SetLogger(xlogger)
+	dol.PlatformDB.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
+	dol.PlatformDB.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
+	dol.PlatformDB.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
+	err = dol.RegisterSQLDir(dol.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
 	if err != nil {
 		return err
 	}
-	err = e.RegisterSQLMap(e.PlatformDB, sql.SQLTPL)
+	err = dol.RegisterSQLMap(dol.PlatformDB, sql.SQLTPL)
 	if err != nil {
 		return err
 	}
-	new(model.SysDomain).Ensure(e.PlatformDB)
-	new(model.SysDomain).InitSysData(e.PlatformDB.NewSession())
+	new(model.SysDomain).Ensure(dol.PlatformDB)
+	new(model.SysDomain).InitSysData(dol.PlatformDB.NewSession())
 
 	asyncOnce, domains := sync.Once{}, []model.SysDomain{}
-	err = e.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains)
+	err = dol.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains)
 	if err != nil {
 		return err
 	}
@@ -226,7 +226,7 @@ func (e *Engine) Reflesh() error {
 		if err != nil {
 			return err
 		}
-		err = domain.CreateDataBase(e.PlatformDB, domain.DriverName.String, uri.DbName)
+		err = domain.CreateDataBase(dol.PlatformDB, domain.DriverName.String, uri.DbName)
 		if err != nil {
 			return err
 		}
@@ -238,28 +238,28 @@ func (e *Engine) Reflesh() error {
 		db.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
 		db.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
 		db.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
-		err = e.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
+		err = dol.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
 		if err != nil {
 			return err
 		}
-		err = e.RegisterSQLMap(db, sql.SQLTPL)
+		err = dol.RegisterSQLMap(db, sql.SQLTPL)
 		if err != nil {
 			return err
 		}
-		e.Manager.AddBusinessDB(domain.Domain.String, db)
+		dol.Manager.AddBusinessDB(domain.Domain.String, db)
 	}
 
-	platBindModelNames := e.Manager.MSet().Name(func(name string) bool { return name != Name })
+	platBindModelNames := dol.Manager.MSet().Name(func(name string) bool { return name != Name })
 	filtedDomains := funk.Filter(domains, func(domain model.SysDomain) bool { return domain.IsSync.Int64 != 1 }).([]model.SysDomain)
 	for i := range filtedDomains {
 		domain := filtedDomains[i]
-		db := e.Manager.GetBusinessDB(domain.Domain.String)
+		db := dol.Manager.GetBusinessDB(domain.Domain.String)
 		asyncOnce.Do(func() {
-			e.migration(Name, e.PlatformDB)
-			new(model.SysClient).InitSysData(e.PlatformDB.NewSession())
-			new(model.SysUser).InitSysData(e.PlatformDB.NewSession())
+			dol.migration(Name, dol.PlatformDB)
+			new(model.SysClient).InitSysData(dol.PlatformDB.NewSession())
+			new(model.SysUser).InitSysData(dol.PlatformDB.NewSession())
 		})
-		funk.ForEach(platBindModelNames, func(n string) { e.migration(n, db) })
+		funk.ForEach(platBindModelNames, func(n string) { dol.migration(n, db) })
 		new(model.SysRole).InitSysData(db.NewSession())
 		new(model.SysOrg).InitSysData(db.NewSession())
 		new(model.SysRoleUser).InitSysData(db.NewSession())
@@ -267,17 +267,17 @@ func (e *Engine) Reflesh() error {
 		new(model.SysOptionset).InitSysData(db.NewSession())
 		new(model.SysUserTemplate).InitSysData(db.NewSession())
 		new(model.SysUserTemplateDetail).InitSysData(db.NewSession())
-		_, err = e.PlatformDB.ID(domain.ID.Int64).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)})
+		_, err = dol.PlatformDB.ID(domain.ID.Int64).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)})
 		if err != nil {
 			return err
 		}
 	}
-	e.Manager.MSet().Release()
+	dol.Manager.MSet().Release()
 	return err
 }
 
 // RegisterSQLMap defined sql
-func (e *Engine) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) error {
+func (dol *Dolphin) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) error {
 	for key, value := range sqlMap {
 		if filepath.Ext(key) == "" {
 			db.AddSql(key, value)
@@ -292,7 +292,7 @@ func (e *Engine) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) error
 }
 
 // RegisterSQLDir defined sql
-func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) error {
+func (dol *Dolphin) RegisterSQLDir(db *xorm.Engine, sqlDir string) error {
 	err := os.MkdirAll(sqlDir, os.ModePerm)
 	if err != nil {
 		return err
@@ -314,61 +314,61 @@ func (e *Engine) RegisterSQLDir(db *xorm.Engine, sqlDir string) error {
 }
 
 // Done returns a channel of signals to block on after starting the
-func (e *Engine) done() <-chan os.Signal {
+func (dol *Dolphin) done() <-chan os.Signal {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 	return c
 }
 
 // lifeCycle start liftcycle hooks
-func (e *Engine) lifeCycle(ctx context.Context) error {
+func (dol *Dolphin) lifeCycle(ctx context.Context) error {
 	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
-	signal := e.done()
-	if err := e.lifecycle.Start(ctx); err != nil {
+	signal := dol.done()
+	if err := dol.lifecycle.Start(ctx); err != nil {
 		return err
 	}
 	<-signal
 	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
-	if err := e.lifecycle.Stop(ctx); err != nil {
+	if err := dol.lifecycle.Stop(ctx); err != nil {
 		return err
 	}
 	return nil
 }
 
 // Run booting system
-func (e *Engine) Run() {
-	util.Ensure(e.Reflesh())
-	util.Ensure(e.lifeCycle(context.Background()))
+func (dol *Dolphin) Run() {
+	util.Ensure(dol.Reflesh())
+	util.Ensure(dol.lifeCycle(context.Background()))
 }
 
-func NewEngine() *Engine {
-	engine := &Engine{
+func NewEngine() *Dolphin {
+	dol := &Dolphin{
 		RouterGroup: RouterGroup{
 			Handlers: nil,
 			basePath: "/",
 		},
 	}
-	engine.RouterGroup.engine = engine
-	engine.Manager = NewDefaultManager()
-	engine.lifecycle = &lifecycleWrapper{}
-	engine.Http = NewGinHandler(engine)
-	engine.RPC = NewGRPCHandler(engine)
-	engine.pool.New = func() interface{} { return engine.allocateContext() }
-	engine.lifecycle.Append(NewLifeHook(engine))
+	dol.RouterGroup.dolphin = dol
+	dol.Manager = NewDefaultManager()
+	dol.lifecycle = &lifecycleWrapper{}
+	dol.Http = NewGinHandler(dol)
+	dol.RPC = NewGRPCHandler(dol)
+	dol.pool.New = func() interface{} { return dol.allocateContext() }
+	dol.lifecycle.Append(NewLifeHook(dol))
 
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.MapTokenStorage(engine.Manager.GetTokenStore())
+	manager.MapTokenStorage(dol.Manager.GetTokenStore())
 	manager.MapAccessGenerate(generates.NewAccessGenerate())
 	manager.MapClientStorage(NewClientStore())
 	manager.SetValidateURIHandler(ValidateURIHandler)
-	engine.OAuth2 = server.NewServer(server.NewConfig(), manager)
-	engine.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
-	engine.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
-	engine.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
-	return engine
+	dol.OAuth2 = server.NewServer(server.NewConfig(), manager)
+	dol.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
+	dol.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
+	dol.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+	return dol
 }
 
 var (

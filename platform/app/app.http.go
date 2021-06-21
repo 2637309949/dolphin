@@ -85,7 +85,7 @@ func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...Ha
 }
 
 // NewGinHandler defined
-func NewGinHandler(e *Engine) HttpHandler {
+func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.SetMode(viper.GetString("app.mode"))
 
@@ -94,15 +94,15 @@ func NewGinHandler(e *Engine) HttpHandler {
 	g.Use(plugin.HttpTrace())
 	g.Use(plugin.Cors())
 	g.Use(plugin.Recovery())
-	g.Use(plugin.Tracker(Tracker(e)))
+	g.Use(plugin.Tracker(Tracker(dol)))
 
 	h := &ginHandler{gin: g}
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	h.allocCtx = func(f func(*Context)) {
-		c := e.pool.Get().(*Context)
+		c := dol.pool.Get().(*Context)
 		c.reset()
 		f(c)
-		e.pool.Put(c)
+		dol.pool.Put(c)
 	}
 	return h
 }

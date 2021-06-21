@@ -19,36 +19,36 @@ type (
 	HandlerFunc func(ctx *Context)
 	// HandlersChain defined
 	HandlersChain []HandlerFunc
-	// Engine defined parse app engine
-	Engine struct {
+	// Dolphin defined parse app engine
+	Dolphin struct {
 		RouterGroup
-		*app.Engine
+		*app.Dolphin
 		pool    sync.Pool
 	}
 	// Context defined http handle hook context
 	Context struct {
 		*app.Context
-		engine *Engine
+		dolphin *Dolphin
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		engine   *Engine
+		dolphin   *Dolphin
 		Handlers []HandlerFunc
 		basePath string
 	}
 )
 
-func (e *Engine) allocateContext() *Context {
-	return &Context{engine: e}
+func (dol *Dolphin) allocateContext() *Context {
+	return &Context{dolphin: dol}
 }
 
 // HandlerFunc convert to app.HandlerFunc
-func (e *Engine) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
+func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 	return app.HandlerFunc(func(ctx *app.Context) {
-		c := e.pool.Get().(*Context)
+		c := dol.pool.Get().(*Context)
 		c.Context = ctx
 		h(c)
-		e.pool.Put(c)
+		dol.pool.Put(c)
 	})
 }
 
@@ -59,9 +59,9 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 		absPath := path.Join(group.basePath, relativePath)
 		hls := []app.HandlerFunc{}
 		for j := 0; j {{.lt}} len(handlers); j++ {
-			hls = append(hls, group.engine.HandlerFunc(handlers[j]))
+			hls = append(hls, group.dolphin.HandlerFunc(handlers[j]))
 		}
-		group.engine.Http.Handle(method, absPath, hls...)
+		group.dolphin.Http.Handle(method, absPath, hls...)
 	}
 }
 
@@ -93,7 +93,7 @@ func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *R
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
 		basePath: group.calculateAbsolutePath(relativePath),
-		engine:   group.engine,
+		dolphin:   group.dolphin,
 	}
 }
 
@@ -118,18 +118,18 @@ func Cache(time time.Duration) HandlerFunc {
 	}
 }
 
-// NewEngine defined init engine you can custom engine
-func NewEngine() *Engine {
-	e := &Engine{
-		Engine: app.App,
+// NewEngine defined init dol you can custom engine
+func NewEngine() *Dolphin {
+	dol := &Dolphin{
+		Dolphin: app.App,
 		RouterGroup: RouterGroup{
 			Handlers: nil,
 			basePath: "/",
 		},
 	}
-	e.pool.New = func() interface{} { return e.allocateContext() }
-	e.RouterGroup.engine = e
-	return e
+	dol.pool.New = func() interface{} { return dol.allocateContext() }
+	dol.RouterGroup.dolphin = dol
+	return dol
 }
 
 var (

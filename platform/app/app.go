@@ -13,25 +13,25 @@ import (
 )
 
 // OnStart defined OnStart
-func OnStart(engine *Engine) func(context.Context) error {
+func OnStart(dol *Dolphin) func(context.Context) error {
 	return func(ctx context.Context) error {
-		engine.Http.OnStart(ctx)
-		engine.RPC.OnStart(ctx)
+		dol.Http.OnStart(ctx)
+		dol.RPC.OnStart(ctx)
 		return nil
 	}
 }
 
 // OnStop defined OnStop
-func OnStop(engine *Engine) func(ctx context.Context) error {
+func OnStop(dol *Dolphin) func(ctx context.Context) error {
 	return func(ctx context.Context) error {
-		engine.Http.OnStop(ctx)
-		engine.RPC.OnStop(ctx)
+		dol.Http.OnStop(ctx)
+		dol.RPC.OnStop(ctx)
 		return nil
 	}
 }
 
 // NewLifeHook create lifecycle hook
-func NewLifeHook(e *Engine) Hook {
+func NewLifeHook(e *Dolphin) Hook {
 	return Hook{OnStart(e), OnStop(e)}
 }
 

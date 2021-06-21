@@ -48,8 +48,8 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 
 // {{.ToUpperCase .Name}}Routes defined
 {{- $ctrName := .Name}}
-func {{.ToUpperCase .Name}}Routes(engine *Engine) {
-	group, instance := engine.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
+func {{.ToUpperCase .Name}}Routes(dol *Dolphin) {
+	group, instance := dol.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
 	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, instance.{{.ToUpperCase .Name}}.Interceptor, instance.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
@@ -62,15 +62,15 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 
 {{- range .Services}}
 // {{.ToUpperCase .Name}} defined
-func {{.ToUpperCase .Name}}Service(engine *Engine) {
-	engine.RPC.RegisterServer(func(srv *grpc.Server) {proto.Register{{.ToUpperCase .Name}}Server(srv, &rpc.{{.ToUpperCase .Name}}{})})
+func {{.ToUpperCase .Name}}Service(dol *Dolphin) {
+	dol.RPC.RegisterServer(func(srv *grpc.Server) {proto.Register{{.ToUpperCase .Name}}Server(srv, &rpc.{{.ToUpperCase .Name}}{})})
 }
 {{- end}}
 
 // SyncModel defined
-func SyncModel(engine *Engine) error {
+func SyncModel(dol *Dolphin) error {
 	{{- $tLen := len .Tables }}{{- if ne $tLen 0 }}
-	mseti := engine.Manager.MSet()
+	mseti := dol.Manager.MSet()
 	{{- range .Tables}}
 	mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
 	{{- end}}
@@ -79,17 +79,17 @@ func SyncModel(engine *Engine) error {
 }
 
 // SyncController defined
-func SyncController(engine *Engine) error {
+func SyncController(dol *Dolphin) error {
 	{{- range .Controllers}}
-	{{.ToUpperCase .Name}}Routes(engine)
+	{{.ToUpperCase .Name}}Routes(dol)
 	{{- end}}
 	return nil
 }
 
 // SyncService defined
-func SyncService(engine *Engine) error {
+func SyncService(dol *Dolphin) error {
 	{{- range .Services}}
-	{{.ToUpperCase .Name}}Service(engine)
+	{{.ToUpperCase .Name}}Service(dol)
 	{{- end}}
 	return nil
 }

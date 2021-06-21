@@ -73,8 +73,8 @@ func NewArticle() *Article {
 }
 
 // ArticleRoutes defined
-func ArticleRoutes(engine *Engine) {
-	group, instance := engine.Group(viper.GetString("http.prefix")), ArticleInstance
+func ArticleRoutes(dol *Dolphin) {
+	group, instance := dol.Group(viper.GetString("http.prefix")), ArticleInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
 	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
@@ -89,8 +89,8 @@ func ArticleRoutes(engine *Engine) {
 var ArticleInstance = NewArticle()
 
 // SyncModel defined
-func SyncModel(engine *Engine) error {
-	mseti := engine.Manager.MSet()
+func SyncModel(dol *Dolphin) error {
+	mseti := dol.Manager.MSet()
 	mseti.Add(new(model.McAnswer))
 	mseti.Add(new(model.McArticle))
 	mseti.Add(new(model.McCache))
@@ -111,12 +111,12 @@ func SyncModel(engine *Engine) error {
 }
 
 // SyncController defined
-func SyncController(engine *Engine) error {
-	ArticleRoutes(engine)
+func SyncController(dol *Dolphin) error {
+	ArticleRoutes(dol)
 	return nil
 }
 
 // SyncService defined
-func SyncService(engine *Engine) error {
+func SyncService(dol *Dolphin) error {
 	return nil
 }

@@ -73,8 +73,8 @@ func NewOrgan() *Organ {
 }
 
 // OrganRoutes defined
-func OrganRoutes(engine *Engine) {
-	group, instance := engine.Group(viper.GetString("http.prefix")), OrganInstance
+func OrganRoutes(dol *Dolphin) {
+	group, instance := dol.Group(viper.GetString("http.prefix")), OrganInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
 	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
@@ -89,8 +89,8 @@ func OrganRoutes(engine *Engine) {
 var OrganInstance = NewOrgan()
 
 // SyncModel defined
-func SyncModel(engine *Engine) error {
-	mseti := engine.Manager.MSet()
+func SyncModel(dol *Dolphin) error {
+	mseti := dol.Manager.MSet()
 	mseti.Add(new(model.AboutUs))
 	mseti.Add(new(model.AboutusContentPic))
 	mseti.Add(new(model.AchievementSendEmailMsg))
@@ -505,12 +505,12 @@ func SyncModel(engine *Engine) error {
 }
 
 // SyncController defined
-func SyncController(engine *Engine) error {
-	OrganRoutes(engine)
+func SyncController(dol *Dolphin) error {
+	OrganRoutes(dol)
 	return nil
 }
 
 // SyncService defined
-func SyncService(engine *Engine) error {
+func SyncService(dol *Dolphin) error {
 	return nil
 }

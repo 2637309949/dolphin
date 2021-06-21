@@ -26,8 +26,8 @@ func NewStatic() *Static {
 }
 
 // StaticRoutes defined
-func StaticRoutes(engine *Engine) {
-	engine.Group("/").Handle("GET", "/domain.js", Domain)
+func StaticRoutes(dol *Dolphin) {
+	dol.Group("/").Handle("GET", "/domain.js", Domain)
 }
 
 // DomainFormat defined
