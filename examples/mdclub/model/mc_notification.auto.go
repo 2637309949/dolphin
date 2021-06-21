@@ -4,14 +4,7 @@
 package model
 
 import (
-	"encoding/json"
-	"errors"
-	"reflect"
-
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // McNotification defined 通知表
@@ -40,65 +33,6 @@ type McNotification struct {
 	CreateTime null.Int `xorm:"int(10) notnull default(0) comment('发送时间') 'create_time'" json:"create_time" form:"create_time" xml:"create_time"`
 	// ReadTime defined 阅读时间
 	ReadTime null.Int `xorm:"int(10) notnull default(0) comment('阅读时间') 'read_time'" json:"read_time" form:"read_time" xml:"read_time"`
-}
-
-// With defined
-func (m *McNotification) With(s interface{}) (interface{}, error) {
-	if reflect.ValueOf(s).Kind() != reflect.Ptr {
-		return nil, errors.New("ptr required")
-	}
-	mbt, err := json.Marshal(m)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(mbt, s); err != nil {
-		return nil, err
-	}
-	return s, err
-}
-
-// Marshal defined
-func (m *McNotification) Marshal() ([]byte, error) {
-	return json.Marshal(m)
-}
-
-// Unmarshal defined
-func (m *McNotification) Unmarshal(data []byte) error {
-	return json.Unmarshal(data, m)
-}
-
-// ToMap defined
-func (m *McNotification) ToMap() (map[string]interface{}, error) {
-	byt, err := m.Marshal()
-	if err != nil {
-		return nil, err
-	}
-	itf := map[string]interface{}{}
-	err = json.Unmarshal(byt, &itf)
-	return itf, err
-}
-
-// FromMap defined
-func (m *McNotification) FromMap(fm map[string]interface{}) error {
-	byt, err := json.Marshal(fm)
-	if err != nil {
-		return err
-	}
-	err = m.Unmarshal(byt)
-	return err
-}
-
-// Parser defined
-func (m *McNotification) Parser(db *xorm.Engine) *tags.Parser {
-	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
-	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
-}
-
-// PrimaryKeys defined
-func (m *McNotification) PrimaryKeys(db *xorm.Engine) ([]string, error) {
-	v := reflect.Indirect(reflect.ValueOf(m))
-	table, err := m.Parser(db).Parse(v)
-	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined McNotification

@@ -4,14 +4,7 @@
 package model
 
 import (
-	"encoding/json"
-	"errors"
-	"reflect"
-
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 	"github.com/shopspring/decimal"
 )
 
@@ -61,65 +54,6 @@ type CsKfHourDetail struct {
 	KqKc null.Float `xorm:"float(50,2) 'kq_kc'" json:"kq_kc" form:"kq_kc" xml:"kq_kc"`
 	// PkSch defined
 	PkSch null.Int `xorm:"int(11) 'pk_sch'" json:"pk_sch" form:"pk_sch" xml:"pk_sch"`
-}
-
-// With defined
-func (m *CsKfHourDetail) With(s interface{}) (interface{}, error) {
-	if reflect.ValueOf(s).Kind() != reflect.Ptr {
-		return nil, errors.New("ptr required")
-	}
-	mbt, err := json.Marshal(m)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(mbt, s); err != nil {
-		return nil, err
-	}
-	return s, err
-}
-
-// Marshal defined
-func (m *CsKfHourDetail) Marshal() ([]byte, error) {
-	return json.Marshal(m)
-}
-
-// Unmarshal defined
-func (m *CsKfHourDetail) Unmarshal(data []byte) error {
-	return json.Unmarshal(data, m)
-}
-
-// ToMap defined
-func (m *CsKfHourDetail) ToMap() (map[string]interface{}, error) {
-	byt, err := m.Marshal()
-	if err != nil {
-		return nil, err
-	}
-	itf := map[string]interface{}{}
-	err = json.Unmarshal(byt, &itf)
-	return itf, err
-}
-
-// FromMap defined
-func (m *CsKfHourDetail) FromMap(fm map[string]interface{}) error {
-	byt, err := json.Marshal(fm)
-	if err != nil {
-		return err
-	}
-	err = m.Unmarshal(byt)
-	return err
-}
-
-// Parser defined
-func (m *CsKfHourDetail) Parser(db *xorm.Engine) *tags.Parser {
-	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
-	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
-}
-
-// PrimaryKeys defined
-func (m *CsKfHourDetail) PrimaryKeys(db *xorm.Engine) ([]string, error) {
-	v := reflect.Indirect(reflect.ValueOf(m))
-	table, err := m.Parser(db).Parse(v)
-	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined CsKfHourDetail

@@ -27,7 +27,7 @@ func NewStatic() *Static {
 
 // StaticRoutes defined
 func StaticRoutes(engine *Engine) {
-	engine.Group("/").Handle("GET", "/domain.js", HF2Handler(Domain))
+	engine.Group("/").Handle("GET", "/domain.js", Domain)
 }
 
 // DomainFormat defined

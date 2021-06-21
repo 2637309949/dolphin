@@ -24,8 +24,8 @@ func SqlmapSelectone(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	mbt, err := user.With(new(struct {
-		ID        null.String `json:"id" xml:"id"`
+	ctx.Success(struct {
+		ID        null.Int    `json:"id" xml:"id"`
 		Name      null.String `json:"name" xml:"name"`
 		NickName  null.String `json:"nickname" xml:"nickname"`
 		Mobile    null.String `json:"mobile" xml:"mobile"`
@@ -33,14 +33,17 @@ func SqlmapSelectone(ctx *Context) {
 		RoleName  null.String `json:"role_name" xml:"role_name"`
 		UserRole  null.String `json:"user_role" xml:"user_role"`
 		OrgName   null.String `json:"org_name" xml:"org_name"`
-		OrgID     null.String `json:"org_id" xml:"org_id"`
-		TempID    null.String `json:"temp_id" xml:"temp_id"`
+		OrgId     null.Int    `json:"org_id" xml:"org_id"`
+		TempId    null.Int    `json:"temp_id" xml:"temp_id"`
 		TempValue null.String `json:"temp_value" xml:"temp_value"`
-	}))
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	ctx.Success(mbt)
+	}{
+		ID:        user.ID,
+		Name:      user.Name,
+		NickName:  user.Nickname,
+		Mobile:    user.Mobile,
+		Email:     user.Email,
+		OrgId:     user.OrgId,
+		TempId:    user.TempId,
+		TempValue: user.TempValue,
+	})
 }

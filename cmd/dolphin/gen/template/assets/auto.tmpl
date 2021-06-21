@@ -13,6 +13,15 @@ import (
 // Name project
 {{- $pName := .Name }}
 var Name = "{{.Name}}"
+var NopInterceptor = func(ctx *Context) { ctx.Next() }
+
+// Controller defined
+type Controller struct {
+	Method       string
+	RelativePath string
+	Interceptor  HandlerFunc
+	Handler      HandlerFunc
+}
 
 {{- range .Controllers}}
 {{- $ctr := .}}
@@ -21,7 +30,7 @@ type {{.ToUpperCase .Name}} struct {
 	Name string
 	{{- $APIS := .APIS}}
 	{{- range $index, $api := .APIS}}
-	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} Route{{- else}},{{- end}}
+	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} Controller{{- else}},{{- end}}
 	{{- end}}
 }
 
@@ -31,6 +40,7 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 	{{- range .APIS}}
 	ctr.{{.ToUpperCase .Name}}.Method = "{{.ToUpper .Method}}"
 	ctr.{{.ToUpperCase .Name}}.RelativePath = "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"
+    ctr.{{.ToUpperCase .Name}}.Interceptor = NopInterceptor
 	ctr.{{.ToUpperCase .Name}}.Handler = {{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
 	{{- end}}
 	return ctr
@@ -41,7 +51,7 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 func {{.ToUpperCase .Name}}Routes(engine *Engine) {
 	group, instance := engine.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
-	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, instance.{{.ToUpperCase .Name}})
+	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, instance.{{.ToUpperCase .Name}}.Interceptor, instance.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
 }
 

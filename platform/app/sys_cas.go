@@ -293,9 +293,15 @@ func SysCasCheck(ctx *Context) {
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/profile [get]
 func SysCasProfile(ctx *Context) {
-	user := ctx.LoginInInfo()
+	user := model.SysUser{}
+	_, err := ctx.LoginInInfo(&user)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
 	roles := []model.SysRole{}
-	err := ctx.DB.SqlTemplateClient("sys_cas_role.tpl", &map[string]interface{}{"user_id": user.ID.Int64}).Find(&roles)
+	err = ctx.DB.SqlTemplateClient("sys_cas_role.tpl", &map[string]interface{}{"user_id": user.ID.Int64}).Find(&roles)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

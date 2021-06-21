@@ -10,13 +10,17 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/platform/app"
+	"github.com/2637309949/dolphin/platform/util"
 )
 
 type (
 	// HandlerFunc defined
 	HandlerFunc func(ctx *Context)
+	// HandlersChain defined
+	HandlersChain []HandlerFunc
 	// Engine defined parse app engine
 	Engine struct {
+		RouterGroup
 		*app.Engine
 		pool sync.Pool
 	}
@@ -27,30 +31,14 @@ type (
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		Routes   []Route
-		basePath string
 		engine   *Engine
-	}
-	// Route defines the handler used by gin middleware as return value
-	Route struct {
-		Method, RelativePath string
-		Interceptor          []Route
-		Handler              HandlerFunc
+		Handlers []HandlerFunc
+		basePath string
 	}
 )
 
-// HF2Handler defined
-func HF2Handler(h func(ctx *Context)) Route {
-	return Route{Handler: h}
-}
-
 func (e *Engine) allocateContext() *Context {
 	return &Context{engine: e}
-}
-
-// Group handlers
-func (e *Engine) Group(relativePath string, routes ...Route) *RouterGroup {
-	return &RouterGroup{Routes: routes, basePath: relativePath, engine: e}
 }
 
 // HandlerFunc convert to app.HandlerFunc
@@ -64,49 +52,81 @@ func (e *Engine) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 }
 
 // Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, routes ...Route) {
+func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		absPath := path.Join(rg.basePath, relativePath)
-		rs := append(rg.Routes, routes...)
+		absPath := path.Join(group.basePath, relativePath)
 		hls := []app.HandlerFunc{}
-		for j := 0; j < len(rs); j++ {
-			route := rs[j]
-			for k := 0; k < len(route.Interceptor); k++ {
-				ir := route.Interceptor[k]
-				hls = append(hls, rg.engine.HandlerFunc(ir.Handler))
-			}
-			hls = append(hls, rg.engine.HandlerFunc(route.Handler))
+		for j := 0; j < len(handlers); j++ {
+			hls = append(hls, group.engine.HandlerFunc(handlers[j]))
 		}
-		rg.engine.Http.Handle(method, absPath, hls...)
+		group.engine.Http.Handle(method, absPath, hls...)
+	}
+}
+
+func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
+	finalSize := len(group.Handlers) + len(handlers)
+	if finalSize >= int(63) {
+		panic("too many handlers")
+	}
+	mergedHandlers := make(HandlersChain, finalSize)
+	copy(mergedHandlers, group.Handlers)
+	copy(mergedHandlers[len(group.Handlers):], handlers)
+	return mergedHandlers
+}
+
+func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
+	if relativePath == "" {
+		return group.basePath
+	}
+
+	finalPath := path.Join(group.basePath, relativePath)
+	if util.LastChar(relativePath) == '/' && util.LastChar(finalPath) != '/' {
+		return finalPath + "/"
+	}
+	return finalPath
+}
+
+func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
+	return &RouterGroup{
+		Handlers: group.combineHandlers(handlers),
+		basePath: group.calculateAbsolutePath(relativePath),
+		engine:   group.engine,
 	}
 }
 
 // Auth middles
-func Auth(auth ...string) Route {
-	return HF2Handler(func(ctx *Context) {
-		app.Auth(auth...).Handler(ctx.Context)
-	})
+func Auth(auth ...string) HandlerFunc {
+	return func(ctx *Context) {
+		app.Auth(auth...)(ctx.Context)
+	}
 }
 
 // Roles middles
-func Roles(roles ...string) Route {
-	return HF2Handler(func(ctx *Context) {
-		app.Roles(roles...).Handler(ctx.Context)
-	})
+func Roles(roles ...string) HandlerFunc {
+	return func(ctx *Context) {
+		app.Roles(roles...)(ctx.Context)
+	}
 }
 
 // Cache middles
-func Cache(time time.Duration) Route {
-	return HF2Handler(func(ctx *Context) {
-		app.Cache(time).Handler(ctx.Context)
-	})
+func Cache(time time.Duration) HandlerFunc {
+	return func(ctx *Context) {
+		app.Cache(time)(ctx.Context)
+	}
 }
 
 // NewEngine defined init engine you can custom engine
 func NewEngine() *Engine {
-	e := &Engine{Engine: app.App}
+	e := &Engine{
+		Engine: app.App,
+		RouterGroup: RouterGroup{
+			Handlers: nil,
+			basePath: "/",
+		},
+	}
 	e.pool.New = func() interface{} { return e.allocateContext() }
+	e.RouterGroup.engine = e
 	return e
 }
 

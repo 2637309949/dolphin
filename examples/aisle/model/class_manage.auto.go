@@ -4,14 +4,7 @@
 package model
 
 import (
-	"encoding/json"
-	"errors"
-	"reflect"
-
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // ClassManage defined
@@ -72,65 +65,6 @@ type ClassManage struct {
 	IfClassType null.Int `xorm:"int(11) 'if_class_type'" json:"if_class_type" form:"if_class_type" xml:"if_class_type"`
 	// CmGdkbType defined
 	CmGdkbType null.Int `xorm:"int(11) 'cm_gdkb_type'" json:"cm_gdkb_type" form:"cm_gdkb_type" xml:"cm_gdkb_type"`
-}
-
-// With defined
-func (m *ClassManage) With(s interface{}) (interface{}, error) {
-	if reflect.ValueOf(s).Kind() != reflect.Ptr {
-		return nil, errors.New("ptr required")
-	}
-	mbt, err := json.Marshal(m)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(mbt, s); err != nil {
-		return nil, err
-	}
-	return s, err
-}
-
-// Marshal defined
-func (m *ClassManage) Marshal() ([]byte, error) {
-	return json.Marshal(m)
-}
-
-// Unmarshal defined
-func (m *ClassManage) Unmarshal(data []byte) error {
-	return json.Unmarshal(data, m)
-}
-
-// ToMap defined
-func (m *ClassManage) ToMap() (map[string]interface{}, error) {
-	byt, err := m.Marshal()
-	if err != nil {
-		return nil, err
-	}
-	itf := map[string]interface{}{}
-	err = json.Unmarshal(byt, &itf)
-	return itf, err
-}
-
-// FromMap defined
-func (m *ClassManage) FromMap(fm map[string]interface{}) error {
-	byt, err := json.Marshal(fm)
-	if err != nil {
-		return err
-	}
-	err = m.Unmarshal(byt)
-	return err
-}
-
-// Parser defined
-func (m *ClassManage) Parser(db *xorm.Engine) *tags.Parser {
-	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
-	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
-}
-
-// PrimaryKeys defined
-func (m *ClassManage) PrimaryKeys(db *xorm.Engine) ([]string, error) {
-	v := reflect.Indirect(reflect.ValueOf(m))
-	table, err := m.Parser(db).Parse(v)
-	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined ClassManage

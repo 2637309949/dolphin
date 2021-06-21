@@ -295,8 +295,8 @@ func (c *RedisStore) invoke(key string, value interface{}, expires time.Duration
 }
 
 // Cache middles
-func Cache(time time.Duration) Route {
-	return HF2Handler(func(ctx *Context) {
+func Cache(time time.Duration) HandlerFunc {
+	return func(ctx *Context) {
 		CachePage(CacheStore, time)(ctx.Context)
-	})
+	}
 }

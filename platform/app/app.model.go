@@ -14,7 +14,7 @@ import (
 type MSeti interface {
 	Add(interface{}, ...string)
 	Get(func(string, interface{}) bool) interface{}
-	ForEach(func(string, interface{}), ...string)
+	ForEach(func(string, interface{}) error, ...string) error
 	Name(func(string) bool) []string
 	Release()
 }
@@ -61,18 +61,25 @@ func (s *MSet) Name(cb func(string) bool) (m []string) {
 }
 
 // ForEach defined foreach models
-func (s *MSet) ForEach(cb func(name string, m interface{}), names ...string) {
+func (s *MSet) ForEach(cb func(name string, m interface{}) error, names ...string) error {
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 	for name, m := range s.m {
 		for index := 0; index < len(m); index++ {
 			if len(names) > 0 && names[0] == name {
-				cb(name, m[index])
+				err := cb(name, m[index])
+				if err != nil {
+					return err
+				}
 			} else if len(names) == 0 {
-				cb(name, m[index])
+				err := cb(name, m[index])
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
+	return nil
 }
 
 // Release defined release models

@@ -42,7 +42,7 @@ func init() {
 	viper.SetDefault("oauth.id", model.DefaultClient.Client.String)
 	viper.SetDefault("oauth.login", "/static/web/login.html")
 	viper.SetDefault("oauth.secret", model.DefaultClient.Secret.String)
-	viper.SetDefault("rd.dataSource", ":@localhost:6379/0")
+	viper.SetDefault("rd.dataSource", ":111111@localhost:6379/0")
 	viper.SetDefault("swag.authorizationUrl", "/api/sys/cas/authorize")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")

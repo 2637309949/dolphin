@@ -11,6 +11,15 @@ import (
 
 // Name project
 var Name = "aisle"
+var NopInterceptor = func(ctx *Context) { ctx.Next() }
+
+// Controller defined
+type Controller struct {
+	Method       string
+	RelativePath string
+	Interceptor  HandlerFunc
+	Handler      HandlerFunc
+}
 
 // Organ defined
 type Organ struct {
@@ -22,7 +31,7 @@ type Organ struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get Route
+	Get Controller
 }
 
 // NewOrgan defined
@@ -30,27 +39,35 @@ func NewOrgan() *Organ {
 	ctr := &Organ{Name: "organ"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/organ/add"
+	ctr.Add.Interceptor = NopInterceptor
 	ctr.Add.Handler = OrganAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/organ/batch_add"
+	ctr.BatchAdd.Interceptor = NopInterceptor
 	ctr.BatchAdd.Handler = OrganBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/organ/del"
+	ctr.Del.Interceptor = NopInterceptor
 	ctr.Del.Handler = OrganDel
 	ctr.BatchDel.Method = "PUT"
 	ctr.BatchDel.RelativePath = "/organ/batch_del"
+	ctr.BatchDel.Interceptor = NopInterceptor
 	ctr.BatchDel.Handler = OrganBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/organ/update"
+	ctr.Update.Interceptor = NopInterceptor
 	ctr.Update.Handler = OrganUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/organ/batch_update"
+	ctr.BatchUpdate.Interceptor = NopInterceptor
 	ctr.BatchUpdate.Handler = OrganBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/organ/page"
+	ctr.Page.Interceptor = NopInterceptor
 	ctr.Page.Handler = OrganPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/organ/get"
+	ctr.Get.Interceptor = NopInterceptor
 	ctr.Get.Handler = OrganGet
 	return ctr
 }
@@ -58,14 +75,14 @@ func NewOrgan() *Organ {
 // OrganRoutes defined
 func OrganRoutes(engine *Engine) {
 	group, instance := engine.Group(viper.GetString("http.prefix")), OrganInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // OrganInstance defined

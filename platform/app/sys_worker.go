@@ -87,7 +87,12 @@ func SysWorkerAdd(ctx *Context) {
 		return
 	}
 	payload.Code = uuid.New().String()
-	payload.User = ctx.LoginInInfo()
+	_, err = ctx.LoginInInfo(&payload.User)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
 	payload.Status = model.WorkerStatusInitial
 	if bs, err = json.Marshal(&payload); err != nil {
 		logrus.Error(err)

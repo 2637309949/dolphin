@@ -23,10 +23,14 @@ func (m *SysDomain) Ensure(db *xorm.Engine) {
 }
 
 // CreateDataBase defined
-func (m *SysDomain) CreateDataBase(db *xorm.Engine, driverName, database string) {
+func (m *SysDomain) CreateDataBase(db *xorm.Engine, driverName, database string) error {
 	if driverName != "sqlite3" {
-		util.EnsureLeft(db.SQL(fmt.Sprintf("create database if not exists %v default character set utf8mb4 default collate utf8mb4_general_ci", database)).Execute())
+		_, err := db.SQL(fmt.Sprintf("create database if not exists %v default character set utf8mb4 default collate utf8mb4_general_ci", database)).Execute()
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
 // InitSysData defined inital system data

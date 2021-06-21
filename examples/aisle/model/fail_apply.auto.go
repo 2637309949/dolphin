@@ -4,14 +4,7 @@
 package model
 
 import (
-	"encoding/json"
-	"errors"
-	"reflect"
-
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/caches"
-	"github.com/2637309949/dolphin/packages/xormplus/xorm/tags"
 )
 
 // FailApply defined
@@ -74,65 +67,6 @@ type FailApply struct {
 	HjTmkjlCheckstate null.Int `xorm:"int(11) 'hj_tmkjl_checkstate'" json:"hj_tmkjl_checkstate" form:"hj_tmkjl_checkstate" xml:"hj_tmkjl_checkstate"`
 	// HjTmkjlCheckDesc defined
 	HjTmkjlCheckDesc null.String `xorm:"varchar(1000) 'hj_tmkjl_check_desc'" json:"hj_tmkjl_check_desc" form:"hj_tmkjl_check_desc" xml:"hj_tmkjl_check_desc"`
-}
-
-// With defined
-func (m *FailApply) With(s interface{}) (interface{}, error) {
-	if reflect.ValueOf(s).Kind() != reflect.Ptr {
-		return nil, errors.New("ptr required")
-	}
-	mbt, err := json.Marshal(m)
-	if err != nil {
-		return nil, err
-	}
-	if err := json.Unmarshal(mbt, s); err != nil {
-		return nil, err
-	}
-	return s, err
-}
-
-// Marshal defined
-func (m *FailApply) Marshal() ([]byte, error) {
-	return json.Marshal(m)
-}
-
-// Unmarshal defined
-func (m *FailApply) Unmarshal(data []byte) error {
-	return json.Unmarshal(data, m)
-}
-
-// ToMap defined
-func (m *FailApply) ToMap() (map[string]interface{}, error) {
-	byt, err := m.Marshal()
-	if err != nil {
-		return nil, err
-	}
-	itf := map[string]interface{}{}
-	err = json.Unmarshal(byt, &itf)
-	return itf, err
-}
-
-// FromMap defined
-func (m *FailApply) FromMap(fm map[string]interface{}) error {
-	byt, err := json.Marshal(fm)
-	if err != nil {
-		return err
-	}
-	err = m.Unmarshal(byt)
-	return err
-}
-
-// Parser defined
-func (m *FailApply) Parser(db *xorm.Engine) *tags.Parser {
-	dialect, mapper, cache := db.Dialect(), db.DB().Mapper, caches.NewManager()
-	return tags.NewParser("xorm", dialect, mapper, mapper, cache)
-}
-
-// PrimaryKeys defined
-func (m *FailApply) PrimaryKeys(db *xorm.Engine) ([]string, error) {
-	v := reflect.Indirect(reflect.ValueOf(m))
-	table, err := m.Parser(db).Parse(v)
-	return table.PrimaryKeys, err
 }
 
 // TableName table name of defined FailApply

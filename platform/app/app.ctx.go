@@ -13,7 +13,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"reflect"
 	"strconv"
 	"strings"
@@ -30,34 +29,12 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-type (
-	// HandlerFunc defined
-	HandlerFunc func(ctx *Context)
-	// Context defined http handle hook context
-	Context struct {
-		*gin.Context
-		AuthInfo
-		PlatformDB *xorm.Engine
-		DB         *xorm.Engine
-	}
-	// Route defines the handler used by gin middleware as return value
-	Route struct {
-		Method       string
-		RelativePath string
-		Interceptor  []Route
-		Handler      HandlerFunc
-	}
-	// RouterGroup defines struct that extend from gin.RouterGroup
-	RouterGroup struct {
-		Routes   []Route
-		basePath string
-		engine   *Engine
-	}
-)
-
-// HF2Handler defined
-func HF2Handler(h func(ctx *Context)) Route {
-	return Route{Handler: h}
+// Context defined
+type Context struct {
+	*gin.Context
+	AuthInfo
+	PlatformDB *xorm.Engine
+	DB         *xorm.Engine
 }
 
 // reset defined clean vars in ctx
@@ -80,10 +57,9 @@ func (ctx *Context) ShouldBindWith(ptr interface{}) error {
 }
 
 // LoginInInfo defined
-func (ctx *Context) LoginInInfo() model.SysUser {
-	user := model.SysUser{}
-	ctx.PlatformDB.ID(ctx.GetToken().GetUserID()).Get(&user)
-	return user
+func (ctx *Context) LoginInInfo(user *model.SysUser) (bool, error) {
+	tk := ctx.GetToken()
+	return ctx.PlatformDB.ID(tk.GetUserID()).Get(user)
 }
 
 // InRole defined
@@ -557,13 +533,13 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 		tValue := ptrVal.Type()
 		for i := 0; i < ptrVal.NumField(); i++ {
 			sf := tValue.Field(i)
-			if (sf.PkgPath != "" && !sf.Anonymous) || sf.Tag.Get("form") == "-" { // unexported
+			if (sf.PkgPath != "" && !sf.Anonymous) || sf.Tag.Get("form") == "-" {
 				continue
 			}
 			tagValue, _ := head(sf.Tag.Get("form"), ",")
-			if tagValue == "" { // default value is FieldName
+			if tagValue == "" {
 				tagValue = sf.Name
-				if tagValue == "" { // default value is FieldName
+				if tagValue == "" {
 					continue
 				}
 			}
@@ -584,23 +560,4 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 	}
 	ctx.Request.URL.RawQuery = urls.Encode()
 	return ctx.Context.ShouldBindWith(ptr, binding.Query)
-}
-
-// Handle overwrite RouterGroup.Handle
-func (rg *RouterGroup) Handle(httpMethod, relativePath string, routes ...Route) {
-	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
-		method := methods[i]
-		absPath := path.Join(rg.basePath, relativePath)
-		rs := append(rg.Routes, routes...)
-		hls := []HandlerFunc{}
-		for j := 0; j < len(rs); j++ {
-			route := rs[j]
-			for k := 0; k < len(route.Interceptor); k++ {
-				ir := route.Interceptor[k]
-				hls = append(hls, ir.Handler)
-			}
-			hls = append(hls, route.Handler)
-		}
-		rg.engine.Http.Handle(method, absPath, hls...)
-	}
 }

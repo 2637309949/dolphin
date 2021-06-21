@@ -11,6 +11,15 @@ import (
 
 // Name project
 var Name = "mdclub"
+var NopInterceptor = func(ctx *Context) { ctx.Next() }
+
+// Controller defined
+type Controller struct {
+	Method       string
+	RelativePath string
+	Interceptor  HandlerFunc
+	Handler      HandlerFunc
+}
 
 // Article defined
 type Article struct {
@@ -22,7 +31,7 @@ type Article struct {
 	Update,
 	BatchUpdate,
 	Page,
-	Get Route
+	Get Controller
 }
 
 // NewArticle defined
@@ -30,27 +39,35 @@ func NewArticle() *Article {
 	ctr := &Article{Name: "article"}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/article/add"
+	ctr.Add.Interceptor = NopInterceptor
 	ctr.Add.Handler = ArticleAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/article/batch_add"
+	ctr.BatchAdd.Interceptor = NopInterceptor
 	ctr.BatchAdd.Handler = ArticleBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/article/del"
+	ctr.Del.Interceptor = NopInterceptor
 	ctr.Del.Handler = ArticleDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/article/batch_del"
+	ctr.BatchDel.Interceptor = NopInterceptor
 	ctr.BatchDel.Handler = ArticleBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/article/update"
+	ctr.Update.Interceptor = NopInterceptor
 	ctr.Update.Handler = ArticleUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/article/batch_update"
+	ctr.BatchUpdate.Interceptor = NopInterceptor
 	ctr.BatchUpdate.Handler = ArticleBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/article/page"
+	ctr.Page.Interceptor = NopInterceptor
 	ctr.Page.Handler = ArticlePage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/article/get"
+	ctr.Get.Interceptor = NopInterceptor
 	ctr.Get.Handler = ArticleGet
 	return ctr
 }
@@ -58,14 +75,14 @@ func NewArticle() *Article {
 // ArticleRoutes defined
 func ArticleRoutes(engine *Engine) {
 	group, instance := engine.Group(viper.GetString("http.prefix")), ArticleInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // ArticleInstance defined
