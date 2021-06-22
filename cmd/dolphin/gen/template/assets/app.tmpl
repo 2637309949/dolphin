@@ -29,18 +29,17 @@ type (
 	// Context defined http handle hook context
 	Context struct {
 		*app.Context
-		dolphin *Dolphin
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		dolphin   *Dolphin
+		dol   *Dolphin
 		Handlers []HandlerFunc
 		basePath string
 	}
 )
 
 func (dol *Dolphin) allocateContext() *Context {
-	return &Context{dolphin: dol}
+	return &Context{}
 }
 
 // HandlerFunc convert to app.HandlerFunc
@@ -62,12 +61,18 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 			panic("http method " + method + " is not valid")
 		}
 		absPath := path.Join(group.basePath, relativePath)
-		hls := []app.HandlerFunc{}
-		for j := 0; j {{.lt}} len(handlers); j++ {
-			hls = append(hls, group.dolphin.HandlerFunc(handlers[j]))
-		}
-		group.dolphin.Http.Handle(method, absPath, hls...)
+		group.handle(method, absPath, handlers...)
 	}
+}
+
+func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+	absolutePath := group.calculateAbsolutePath(relativePath)
+	handlers = group.combineHandlers(handlers)
+	hls := []app.HandlerFunc{}
+	for j := 0; j {{.lt}} len(handlers); j++ {
+		hls = append(hls, group.dol.HandlerFunc(handlers[j]))
+	}
+	group.dol.Http.Handle(httpMethod, absolutePath, hls...)
 }
 
 
@@ -94,11 +99,17 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	return finalPath
 }
 
+// Use defined TODO
+func (group *RouterGroup) Use(middleware ...HandlerFunc) {
+	group.Handlers = append(group.Handlers, middleware...)
+}
+
+// Group defined TODO
 func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
 		basePath: group.calculateAbsolutePath(relativePath),
-		dolphin:   group.dolphin,
+		dol:   group.dol,
 	}
 }
 
@@ -133,7 +144,7 @@ func NewDolphin() *Dolphin {
 		},
 	}
 	dol.pool.New = func() interface{} { return dol.allocateContext() }
-	dol.RouterGroup.dolphin = dol
+	dol.RouterGroup.dol = dol
 	return dol
 }
 

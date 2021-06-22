@@ -10,28 +10,26 @@ import (
 	"go.uber.org/multierr"
 )
 
-// A Hook is a pair of start and stop callbacks, either of which can be nil,
-// plus a string identifying the supplier of the hook.
-type Hook struct {
-	OnStart func(context.Context) error
-	OnStop  func(context.Context) error
+type lifeHook interface {
+	OnStart(context.Context) error
+	OnStop(context.Context) error
 }
 
 // Lifecycle interface coordinates application lifecycle hooks.
 type Lifecycle interface {
 	Start(ctx context.Context) error
 	Stop(ctx context.Context) error
-	Append(h Hook)
+	Append(h lifeHook)
 }
 
 // lifecycleWrapper coordinates application lifecycle hooks.
 type lifecycleWrapper struct {
-	hooks      []Hook
+	hooks      []lifeHook
 	numStarted int
 }
 
 // Append adds a Hook to the lifecycle.
-func (l *lifecycleWrapper) Append(hook Hook) {
+func (l *lifecycleWrapper) Append(hook lifeHook) {
 	l.hooks = append(l.hooks, hook)
 }
 
@@ -39,13 +37,11 @@ func (l *lifecycleWrapper) Append(hook Hook) {
 // error.
 func (l *lifecycleWrapper) Start(ctx context.Context) error {
 	for _, hook := range l.hooks {
-		if hook.OnStart != nil {
-			if err := hook.OnStart(ctx); err != nil {
-				if stopErr := hook.OnStop(ctx); stopErr != nil {
-					return multierr.Append(err, stopErr)
-				}
-				return err
+		if err := hook.OnStart(ctx); err != nil {
+			if stopErr := hook.OnStop(ctx); stopErr != nil {
+				return multierr.Append(err, stopErr)
 			}
+			return err
 		}
 		l.numStarted++
 	}
@@ -59,9 +55,6 @@ func (l *lifecycleWrapper) Stop(ctx context.Context) error {
 	// Run backward from last successful OnStart.
 	for ; l.numStarted > 0; l.numStarted-- {
 		hook := l.hooks[l.numStarted-1]
-		if hook.OnStop == nil {
-			continue
-		}
 		if err := hook.OnStop(ctx); err != nil {
 			errs = append(errs, err)
 		}

@@ -43,7 +43,7 @@ type (
 	HandlersChain []HandlerFunc
 	// RouterGroup defines
 	RouterGroup struct {
-		dolphin  *Dolphin
+		dol      *Dolphin
 		Handlers []HandlerFunc
 		basePath string
 	}
@@ -139,7 +139,7 @@ func (group *RouterGroup) createStaticHandler(relativePath string, fs nhttp.File
 func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	absolutePath := group.calculateAbsolutePath(relativePath)
 	handlers = group.combineHandlers(handlers)
-	group.dolphin.Http.Handle(httpMethod, absolutePath, handlers...)
+	group.dol.Http.Handle(httpMethod, absolutePath, handlers...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
@@ -175,7 +175,7 @@ func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *R
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
 		basePath: group.calculateAbsolutePath(relativePath),
-		dolphin:  group.dolphin,
+		dol:      group.dol,
 	}
 }
 
@@ -432,7 +432,7 @@ func NewDolphin() *Dolphin {
 			basePath: "/",
 		},
 	}
-	dol.RouterGroup.dolphin = dol
+	dol.RouterGroup.dol = dol
 	dol.Manager = NewDefaultManager()
 	dol.lifecycle = &lifecycleWrapper{}
 	dol.Http = NewGinHandler(dol)

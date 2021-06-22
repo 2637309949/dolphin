@@ -9,6 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"regexp"
+
 	"github.com/2637309949/dolphin/platform/app"
 	"github.com/2637309949/dolphin/platform/util"
 )
@@ -27,18 +29,17 @@ type (
 	// Context defined http handle hook context
 	Context struct {
 		*app.Context
-		dolphin *Dolphin
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		dolphin  *Dolphin
+		dol      *Dolphin
 		Handlers []HandlerFunc
 		basePath string
 	}
 )
 
 func (dol *Dolphin) allocateContext() *Context {
-	return &Context{dolphin: dol}
+	return &Context{}
 }
 
 // HandlerFunc convert to app.HandlerFunc
@@ -55,13 +56,23 @@ func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
-		absPath := path.Join(group.basePath, relativePath)
-		hls := []app.HandlerFunc{}
-		for j := 0; j < len(handlers); j++ {
-			hls = append(hls, group.dolphin.HandlerFunc(handlers[j]))
+		re, err := regexp.Compile("^[A-Z]+$")
+		if matches := re.MatchString(method); !matches || err != nil {
+			panic("http method " + method + " is not valid")
 		}
-		group.dolphin.Http.Handle(method, absPath, hls...)
+		absPath := path.Join(group.basePath, relativePath)
+		group.handle(method, absPath, handlers...)
 	}
+}
+
+func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+	absolutePath := group.calculateAbsolutePath(relativePath)
+	handlers = group.combineHandlers(handlers)
+	hls := []app.HandlerFunc{}
+	for j := 0; j < len(handlers); j++ {
+		hls = append(hls, group.dol.HandlerFunc(handlers[j]))
+	}
+	group.dol.Http.Handle(httpMethod, absolutePath, hls...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
@@ -91,7 +102,7 @@ func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *R
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
 		basePath: group.calculateAbsolutePath(relativePath),
-		dolphin:  group.dolphin,
+		dol:      group.dol,
 	}
 }
 
@@ -126,7 +137,7 @@ func NewDolphin() *Dolphin {
 		},
 	}
 	dol.pool.New = func() interface{} { return dol.allocateContext() }
-	dol.RouterGroup.dolphin = dol
+	dol.RouterGroup.dol = dol
 	return dol
 }
 

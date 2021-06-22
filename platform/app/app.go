@@ -12,27 +12,29 @@ import (
 	"golang.org/x/oauth2"
 )
 
+// A Hook is a pair of start and stop callbacks, either of which can be nil,
+// plus a string identifying the supplier of the hook.
+type Hook struct {
+	dol *Dolphin
+}
+
 // OnStart defined OnStart
-func OnStart(dol *Dolphin) func(context.Context) error {
-	return func(ctx context.Context) error {
-		dol.Http.OnStart(ctx)
-		dol.RPC.OnStart(ctx)
-		return nil
-	}
+func (h *Hook) OnStart(ctx context.Context) error {
+	h.dol.Http.OnStart(ctx)
+	h.dol.RPC.OnStart(ctx)
+	return nil
 }
 
 // OnStop defined OnStop
-func OnStop(dol *Dolphin) func(ctx context.Context) error {
-	return func(ctx context.Context) error {
-		dol.Http.OnStop(ctx)
-		dol.RPC.OnStop(ctx)
-		return nil
-	}
+func (h *Hook) OnStop(ctx context.Context) error {
+	h.dol.Http.OnStop(ctx)
+	h.dol.RPC.OnStop(ctx)
+	return nil
 }
 
 // NewLifeHook create lifecycle hook
-func NewLifeHook(e *Dolphin) Hook {
-	return Hook{OnStart(e), OnStop(e)}
+func NewLifeHook(e *Dolphin) lifeHook {
+	return &Hook{dol: e}
 }
 
 // init after NewEngine

@@ -86,10 +86,7 @@ func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.SetMode(viper.GetString("app.mode"))
 
-	g := gin.New()
-	// g.Use(plugin.Tracker(Tracker(dol)))
-
-	h := &ginHandler{gin: g}
+	h := &ginHandler{gin: gin.New()}
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	h.allocCtx = func(f func(*Context)) {
 		c := dol.pool.Get().(*Context)
