@@ -38,7 +38,10 @@ func (m *Bean) After(*parser.AppParser, []*pipe.TmplCfg) error {
 // Build func
 func (m *Bean) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
-	beanByte, _ := vfsutil.ReadFile(template.Assets, "bean.tmpl")
+	beanByte, err := vfsutil.ReadFile(template.Assets, "bean.tmpl")
+	if err != nil {
+		return []*pipe.TmplCfg{}, err
+	}
 	for i := range parser.Beans {
 		data := map[string]interface{}{
 			"PackageName": parser.PackageName,

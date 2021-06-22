@@ -47,7 +47,10 @@ func (auto *Auto) Build(dir string, args []string, parser *parser.AppParser) ([]
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
 	}
-	autoByte, _ := vfsutil.ReadFile(template.Assets, "auto.tmpl")
+	autoByte, err := vfsutil.ReadFile(template.Assets, "auto.tmpl")
+	if err != nil {
+		return []*pipe.TmplCfg{}, err
+	}
 	return []*pipe.TmplCfg{
 		{
 			Text:     string(autoByte),

@@ -47,48 +47,26 @@ func (dp *Deploy) Build(dir string, args []string, parser *parser.AppParser) ([]
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
 	}
-	cfgByte, _ := vfsutil.ReadFile(template.Assets, "k8s.cfg.tmpl")
-	dpyByte, _ := vfsutil.ReadFile(template.Assets, "k8s.dpy.tmpl")
-	ingByte, _ := vfsutil.ReadFile(template.Assets, "k8s.ing.tmpl")
-	srvByte, _ := vfsutil.ReadFile(template.Assets, "k8s.srv.tmpl")
-	tlsByte, _ := vfsutil.ReadFile(template.Assets, "k8s.tls.tmpl")
-	dcrByte, _ := vfsutil.ReadFile(template.Assets, "docker.tmpl")
-	return []*pipe.TmplCfg{
-		{
-			Text:     string(cfgByte),
-			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "configmap.yaml"),
+	tmpl2file := map[string]string{
+		"k8s.cfg.tmpl": "configmap.yaml",
+		"k8s.dpy.tmpl": "deployment.yaml",
+		"k8s.ing.tmpl": "ingress.yaml",
+		"k8s.srv.tmpl": "service.yaml",
+		"k8s.tls.tmpl": "tls.yaml",
+		"docker.tmpl":  "Dockerfile",
+	}
+	cfgs := []*pipe.TmplCfg{}
+	for key, value := range tmpl2file {
+		dByte, err := vfsutil.ReadFile(template.Assets, key)
+		if err != nil {
+			return []*pipe.TmplCfg{}, err
+		}
+		cfgs = append(cfgs, &pipe.TmplCfg{
+			Text:     string(dByte),
+			FilePath: path.Join(dir, viper.GetString("dir.k8s"), value),
 			Data:     data,
 			Overlap:  pipe.OverlapSkip,
-		},
-		{
-			Text:     string(dpyByte),
-			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "deployment.yaml"),
-			Data:     data,
-			Overlap:  pipe.OverlapSkip,
-		},
-		{
-			Text:     string(ingByte),
-			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "ingress.yaml"),
-			Data:     data,
-			Overlap:  pipe.OverlapSkip,
-		},
-		{
-			Text:     string(srvByte),
-			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "service.yaml"),
-			Data:     data,
-			Overlap:  pipe.OverlapSkip,
-		},
-		{
-			Text:     string(tlsByte),
-			FilePath: path.Join(dir, viper.GetString("dir.k8s"), "tls.yaml"),
-			Data:     data,
-			Overlap:  pipe.OverlapSkip,
-		},
-		{
-			Text:     string(dcrByte),
-			FilePath: path.Join(dir, "Dockerfile"),
-			Data:     data,
-			Overlap:  pipe.OverlapSkip,
-		},
-	}, nil
+		})
+	}
+	return cfgs, nil
 }

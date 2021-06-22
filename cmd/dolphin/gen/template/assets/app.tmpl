@@ -6,6 +6,7 @@ package app
 import (
 	"sync"
 
+	"regexp"
 	"google.golang.org/grpc"
 	"github.com/gin-gonic/gin"
 	"github.com/thoas/go-funk"
@@ -56,6 +57,10 @@ func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i {{.lt}} len(methods); i++ {
 		method := methods[i]
+		re, err := regexp.Compile("^[A-Z]+$")
+		if matches := re.MatchString(method); !matches || err != nil {
+			panic("http method " + method + " is not valid")
+		}
 		absPath := path.Join(group.basePath, relativePath)
 		hls := []app.HandlerFunc{}
 		for j := 0; j {{.lt}} len(handlers); j++ {
@@ -118,8 +123,8 @@ func Cache(time time.Duration) HandlerFunc {
 	}
 }
 
-// NewEngine defined init dol you can custom engine
-func NewEngine() *Dolphin {
+// NewDolphin defined init dol you can custom engine
+func NewDolphin() *Dolphin {
 	dol := &Dolphin{
 		Dolphin: app.App,
 		RouterGroup: RouterGroup{
@@ -134,7 +139,7 @@ func NewEngine() *Dolphin {
 
 var (
 	// App instance
-	App = NewEngine()
+	App = NewDolphin()
 	// Run defined
 	Run = App.Run
 )

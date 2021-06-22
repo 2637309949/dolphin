@@ -116,8 +116,8 @@ func Cache(time time.Duration) HandlerFunc {
 	}
 }
 
-// NewEngine defined init dol you can custom engine
-func NewEngine() *Dolphin {
+// NewDolphin defined init dol you can custom engine
+func NewDolphin() *Dolphin {
 	dol := &Dolphin{
 		Dolphin: app.App,
 		RouterGroup: RouterGroup{
@@ -132,7 +132,7 @@ func NewEngine() *Dolphin {
 
 var (
 	// App instance
-	App = NewEngine()
+	App = NewDolphin()
 	// Run defined
 	Run = App.Run
 )

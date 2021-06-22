@@ -4,11 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"path"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/platform/plugin"
-	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -19,8 +16,8 @@ const RootRelativePath = "/"
 
 // HttpHandler defined
 type HttpHandler interface {
+	http.Handler
 	Handle(string, string, ...HandlerFunc)
-	ServeHTTP(http.ResponseWriter, *http.Request) // For httpTest
 	OnStart(context.Context) error
 	OnStop(context.Context) error
 }
@@ -90,11 +87,7 @@ func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.SetMode(viper.GetString("app.mode"))
 
 	g := gin.New()
-	g.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
-	g.Use(plugin.HttpTrace())
-	g.Use(plugin.Cors())
-	g.Use(plugin.Recovery())
-	g.Use(plugin.Tracker(Tracker(dol)))
+	// g.Use(plugin.Tracker(Tracker(dol)))
 
 	h := &ginHandler{gin: g}
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}

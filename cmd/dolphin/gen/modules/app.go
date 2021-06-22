@@ -47,8 +47,10 @@ func (app *App) Build(dir string, args []string, parser *parser.AppParser) ([]*p
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
 	}
-
-	appByte, _ := vfsutil.ReadFile(template.Assets, "app.tmpl")
+	appByte, err := vfsutil.ReadFile(template.Assets, "app.tmpl")
+	if err != nil {
+		return []*pipe.TmplCfg{}, err
+	}
 	return []*pipe.TmplCfg{
 		{
 			Text:     string(appByte),

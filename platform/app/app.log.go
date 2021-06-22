@@ -5,6 +5,8 @@
 package app
 
 import (
+	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"path"
@@ -13,7 +15,6 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/log"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/gin-gonic/gin"
@@ -31,6 +32,54 @@ type XLogger struct {
 	*logrus.Logger
 	showSQL bool
 	level   log.LogLevel
+}
+
+// LogFormatterParams is the structure any formatter will be handed when time to log comes
+type LogFormatterParams struct {
+	gin.LogFormatterParams
+	Domain  string
+	Token   string
+	UserID  string
+	Header  []byte
+	ReqBody []byte
+	ResBody []byte
+}
+
+type bodyLogWriter struct {
+	gin.ResponseWriter
+	body *bytes.Buffer
+}
+
+func (w bodyLogWriter) Write(b []byte) (int, error) {
+	w.body.Write(b)
+	return w.ResponseWriter.Write(b)
+}
+
+func (w bodyLogWriter) WriteString(s string) (int, error) {
+	w.body.WriteString(s)
+	return w.ResponseWriter.WriteString(s)
+}
+
+// NopCloser defined
+type NopCloser struct {
+	rc io.ReadCloser
+	w  io.Writer
+}
+
+// Close defined
+func (rc *NopCloser) Close() error {
+	return rc.rc.Close()
+}
+
+// Read defined
+func (rc *NopCloser) Read(p []byte) (n int, err error) {
+	n, err = rc.rc.Read(p)
+	if n > 0 {
+		if n, err := rc.w.Write(p[:n]); err != nil {
+			return n, err
+		}
+	}
+	return n, err
 }
 
 // ShowSQL implement ILogger
@@ -59,12 +108,27 @@ func (s *XLogger) SetLevel(l log.LogLevel) {
 
 // TrackerStore store logs
 var TrackerStore func(domain string, beans *[]model.SysTracker) error
-var logWorkerPool chan chan *plugin.LogFormatterParams
-var logChannel chan *plugin.LogFormatterParams
+var logWorkerPool chan chan *LogFormatterParams
+var logChannel chan *LogFormatterParams
 
-// Tracker defined tracker recorder
-func Tracker(dol *Dolphin) func(ctx *gin.Context, p *plugin.LogFormatterParams) {
-	return func(ctx *gin.Context, p *plugin.LogFormatterParams) {
+// Formatter log formatter params
+func Formatter(param gin.LogFormatterParams) string {
+	if param.Latency > time.Minute {
+		param.Latency = param.Latency - param.Latency%time.Second
+	}
+	return fmt.Sprintf("%3d | %13v | %15s |%-7s %s%s",
+		param.StatusCode,
+		param.Latency,
+		param.ClientIP,
+		param.Method,
+		param.Path,
+		param.ErrorMessage,
+	)
+}
+
+// TrackerOpts defined tracker recorder
+func TrackerOpts(dol *Dolphin) func(ctx *Context, p *LogFormatterParams) {
+	return func(ctx *Context, p *LogFormatterParams) {
 		token, _ := dol.OAuth2.BearerAuth(ctx.Request)
 		p.Token = token
 		if tokenInfo, err := dol.OAuth2.Manager.LoadAccessToken(token); err == nil {
@@ -75,15 +139,15 @@ func Tracker(dol *Dolphin) func(ctx *gin.Context, p *plugin.LogFormatterParams) 
 		// would not be block <-logWorkerPool
 		// but <- p will
 		jobChannel := <-logWorkerPool
-		go func(p *plugin.LogFormatterParams) {
+		go func(p *LogFormatterParams) {
 			jobChannel <- p
 		}(p)
 	}
 }
 
 func initTracker() {
-	logWorkerPool = make(chan chan *plugin.LogFormatterParams, 20)
-	logChannel = make(chan *plugin.LogFormatterParams, 150)
+	logWorkerPool = make(chan chan *LogFormatterParams, 20)
+	logChannel = make(chan *LogFormatterParams, 150)
 	TrackerStore = func(domain string, beans *[]model.SysTracker) error {
 		if db := App.Manager.GetBusinessDB(domain); db != nil {
 			db, err := db.Clone()
@@ -116,7 +180,7 @@ func initTracker() {
 				logs := bucket.Reset()
 				bmp := map[string][]model.SysTracker{}
 				beans := funk.Map(logs, func(entity interface{}) SysTracker {
-					item := entity.(*plugin.LogFormatterParams)
+					item := entity.(*LogFormatterParams)
 					return SysTracker{
 						SysTracker: model.SysTracker{
 							Token:      null.StringFrom(item.Token),

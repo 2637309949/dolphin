@@ -2,42 +2,11 @@ package plugin
 
 import (
 	"context"
-	"os"
 
 	"github.com/2637309949/dolphin/packages/trace"
-	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
-
-var hostname string
-
-func init() {
-	var err error
-	hostname, err = os.Hostname()
-	if err != nil {
-		hostname = trace.RandId()
-	}
-}
-
-// Hostname returns the name of the host, if no hostname, a random id is returned.
-func Hostname() string {
-	return hostname
-}
-
-func HttpTrace() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		carrier, err := trace.Extract(trace.HttpFormat, ctx.Request.Header)
-		if err != nil && err != trace.ErrInvalidCarrier {
-			logrus.Error(err)
-		}
-		c, span := trace.StartServerSpan(ctx.Request.Context(), carrier, Hostname(), ctx.Request.RequestURI)
-		defer span.Finish()
-		ctx.Request = ctx.Request.WithContext(c)
-		ctx.Next()
-	}
-}
 
 // RpcSrvTrace is an interceptor that handles tracing.
 func RpcSrvTrace(ctx context.Context, method string, req, reply interface{},

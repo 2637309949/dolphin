@@ -38,7 +38,10 @@ func (ctr *Ctr) After(*parser.AppParser, []*pipe.TmplCfg) error {
 // Build func
 func (ctr *Ctr) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
-	ctrByte, _ := vfsutil.ReadFile(template.Assets, "ctr.tmpl")
+	ctrByte, err := vfsutil.ReadFile(template.Assets, "ctr.tmpl")
+	if err != nil {
+		return []*pipe.TmplCfg{}, err
+	}
 	for i := range parser.Controllers {
 		data := map[string]interface{}{
 			"PackageName": parser.PackageName,

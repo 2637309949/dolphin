@@ -6,10 +6,12 @@ package app
 
 import (
 	"context"
+	nhttp "net/http"
 	"os"
 	"os/signal"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"syscall"
@@ -25,6 +27,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/gin-gonic/gin"
@@ -55,15 +58,88 @@ type (
 		RPC        RPCHandler
 		pool       sync.Pool
 	}
+	onlyFilesFS struct {
+		fs nhttp.FileSystem
+	}
+	neuteredReaddirFile struct {
+		nhttp.File
+	}
 )
+
+func Dir(root string, listDirectory bool) nhttp.FileSystem {
+	fs := nhttp.Dir(root)
+	if listDirectory {
+		return fs
+	}
+	return &onlyFilesFS{fs}
+}
+
+// Open defined TODO
+func (fs onlyFilesFS) Open(name string) (nhttp.File, error) {
+	f, err := fs.fs.Open(name)
+	if err != nil {
+		return nil, err
+	}
+	return neuteredReaddirFile{f}, nil
+}
+
+// Readdir defined TODO
+func (f neuteredReaddirFile) Readdir(count int) ([]os.FileInfo, error) {
+	return nil, nil
+}
 
 // Handle overwrite RouterGroup.Handle
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		method := methods[i]
+		re, err := regexp.Compile("^[A-Z]+$")
+		if matches := re.MatchString(method); !matches || err != nil {
+			panic("http method " + method + " is not valid")
+		}
 		absPath := path.Join(group.basePath, relativePath)
-		group.dolphin.Http.Handle(method, absPath, handlerFuncs...)
+		group.handle(method, absPath, handlerFuncs...)
 	}
+}
+
+// Static defined TODO
+func (group *RouterGroup) Static(relativePath, root string) {
+	group.StaticFS(relativePath, Dir(root, false))
+}
+
+// StaticFS defined TODO
+func (group *RouterGroup) StaticFS(relativePath string, fs nhttp.FileSystem) {
+	if strings.Contains(relativePath, ":") || strings.Contains(relativePath, "*") {
+		panic("URL parameters can not be used when serving a static folder")
+	}
+	handler := group.createStaticHandler(relativePath, fs)
+	urlPattern := path.Join(relativePath, "/*filepath")
+
+	group.Handle("GET", urlPattern, handler)
+	group.Handle("HEAD", urlPattern, handler)
+}
+
+func (group *RouterGroup) createStaticHandler(relativePath string, fs nhttp.FileSystem) HandlerFunc {
+	absolutePath := group.calculateAbsolutePath(relativePath)
+	fileServer := nhttp.StripPrefix(absolutePath, nhttp.FileServer(fs))
+	return func(c *Context) {
+		if _, noListing := fs.(*onlyFilesFS); noListing {
+			c.Writer.WriteHeader(nhttp.StatusNotFound)
+		}
+		file := c.Param("filepath")
+		f, err := fs.Open(file)
+		if err != nil {
+			c.Writer.WriteHeader(nhttp.StatusNotFound)
+			return
+		}
+		f.Close()
+		fileServer.ServeHTTP(c.Writer, c.Request)
+	}
+}
+
+func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+	absolutePath := group.calculateAbsolutePath(relativePath)
+	handlers = group.combineHandlers(handlers)
+	group.dolphin.Http.Handle(httpMethod, absolutePath, handlers...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
@@ -89,6 +165,12 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	return finalPath
 }
 
+// Use defined TODO
+func (group *RouterGroup) Use(middleware ...HandlerFunc) {
+	group.Handlers = append(group.Handlers, middleware...)
+}
+
+// Group defined TODO
 func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
@@ -343,7 +425,7 @@ func (dol *Dolphin) Run() {
 	util.Ensure(dol.lifeCycle(context.Background()))
 }
 
-func NewEngine() *Dolphin {
+func NewDolphin() *Dolphin {
 	dol := &Dolphin{
 		RouterGroup: RouterGroup{
 			Handlers: nil,
@@ -368,12 +450,18 @@ func NewEngine() *Dolphin {
 	dol.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
 	dol.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
 	dol.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+
+	dol.Use(Recovery())
+	dol.Use(HttpTrace())
+	dol.Use(Cors())
+	dol.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
+	dol.Use(Tracker(TrackerOpts(dol)))
 	return dol
 }
 
 var (
 	// App defined
-	App = NewEngine()
+	App = NewDolphin()
 	// Run defined
 	Run = App.Run
 )
