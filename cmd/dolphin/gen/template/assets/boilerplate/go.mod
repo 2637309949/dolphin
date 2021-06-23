@@ -3,7 +3,7 @@ module {{.PackageName}}
 go 1.13
 
 require (
-	github.com/2637309949/dolphin v1.0.76
+	github.com/2637309949/dolphin v1.0.77
 	github.com/gin-gonic/gin v1.7.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/sirupsen/logrus v1.8.1
