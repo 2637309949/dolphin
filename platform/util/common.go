@@ -86,7 +86,7 @@ func EnsureRight(err error, right interface{}) interface{} {
 // Ensure defined
 func Ensure(err error) {
 	if err != nil {
-		logrus.Errorf("%v", errors.Wrap(err, 3).Stack())
+		logrus.Errorf("%v", string(errors.Wrap(err, 3).Stack()))
 		panic(err)
 	}
 }

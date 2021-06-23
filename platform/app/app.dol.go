@@ -27,7 +27,6 @@ import (
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/slice"
-	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
@@ -43,25 +42,6 @@ type Dolphin struct {
 	Http       HttpHandler
 	RPC        RPCHandler
 	pool       sync.Pool
-}
-
-// HandlerFunc convert to gin.HandlerFunc
-func (dol *Dolphin) HandlerFunc(h HandlerFunc) gin.HandlerFunc {
-	return gin.HandlerFunc(func(ctx *gin.Context) {
-		c := dol.pool.Get().(*Context)
-		c.reset()
-		c.Context = ctx
-		for k := range ctx.Keys {
-			switch t := ctx.Keys[k].(type) {
-			case *xorm.Engine:
-				c.DB = t
-			case AuthInfo:
-				c.AuthInfo = t
-			}
-		}
-		h(c)
-		dol.pool.Put(c)
-	})
 }
 
 // allocateContext defined new context
