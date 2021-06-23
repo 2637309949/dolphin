@@ -96,8 +96,7 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs .
 		if matches := re.MatchString(method); !matches || err != nil {
 			panic("http method " + method + " is not valid")
 		}
-		absPath := path.Join(group.basePath, relativePath)
-		group.handle(method, absPath, handlerFuncs...)
+		group.handle(method, relativePath, handlerFuncs...)
 	}
 }
 

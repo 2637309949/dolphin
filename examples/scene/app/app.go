@@ -55,17 +55,15 @@ func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 // Handle overwrite RouterGroup.Handle
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
-		method := methods[i]
-		re, err := regexp.Compile("^[A-Z]+$")
-		if matches := re.MatchString(method); !matches || err != nil {
-			panic("http method " + method + " is not valid")
-		}
-		absPath := path.Join(group.basePath, relativePath)
-		group.handle(method, absPath, handlers...)
+		group.handle(methods[i], relativePath, handlers...)
 	}
 }
 
 func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
+	re, err := regexp.Compile("^[A-Z]+$")
+	if matches := re.MatchString(httpMethod); !matches || err != nil {
+		panic("http method " + httpMethod + " is not valid")
+	}
 	absolutePath := group.calculateAbsolutePath(relativePath)
 	handlers = group.combineHandlers(handlers)
 	hls := []app.HandlerFunc{}
@@ -90,7 +88,6 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	if relativePath == "" {
 		return group.basePath
 	}
-
 	finalPath := path.Join(group.basePath, relativePath)
 	if util.LastChar(relativePath) == '/' && util.LastChar(finalPath) != '/' {
 		return finalPath + "/"
