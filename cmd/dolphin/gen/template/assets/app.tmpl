@@ -133,16 +133,10 @@ func Cache(time time.Duration) HandlerFunc {
 
 // NewDolphin defined init dol you can custom engine
 func NewDolphin() *Dolphin {
-	dol := &Dolphin{
-		Dolphin: app.App,
-		RouterGroup: RouterGroup{
-			Handlers: nil,
-			basePath: "/",
-		},
-	}
+	rg := RouterGroup{Handlers: nil, basePath: "/"}
+	dol := &Dolphin{Dolphin: app.App, RouterGroup: rg}
 	dol.pool.New = func() interface{} { return dol.allocateContext() }
 	dol.RouterGroup.dol = dol
-	return dol
 }
 
 var (

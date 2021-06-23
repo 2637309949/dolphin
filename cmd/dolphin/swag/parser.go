@@ -252,7 +252,7 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 	}
 	// inital
 	parser.swagger.Swagger = "2.0"
-	parser.swagger.Host = viper.GetString("host")
+	parser.swagger.Host = viper.GetString("app.host")
 	parser.swagger.Info.Title = viper.GetString("app.name")
 	parser.swagger.Info.Version = viper.GetString("app.version")
 	parser.swagger.Info.License.Name = viper.GetString("swag.license.name")

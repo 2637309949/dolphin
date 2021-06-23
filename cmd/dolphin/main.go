@@ -75,7 +75,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	}
 	utils.ViperSetDefault("oauth.server", strings.TrimSpace(viper.GetString("oauth.server")), fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
 	utils.ViperSetDefault("oauth.cli", strings.TrimSpace(viper.GetString("oauth.cli")), viper.GetString("http.port"))
-	utils.ViperSetDefault("host", strings.TrimSpace(viper.GetString("host")), fmt.Sprintf("localhost:%v", viper.GetString("http.port")))
+	utils.ViperSetDefault("app.host", strings.TrimSpace(viper.GetString("app.host")), fmt.Sprintf("localhost:%v", viper.GetString("http.port")))
 	if viper.GetBool("app.viper") {
 		if err := viper.WriteConfig(); err != nil {
 			logrus.Warn("failed to save configuration file")

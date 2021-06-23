@@ -5,26 +5,13 @@
 package app
 
 import (
-	"context"
-	"encoding/json"
-	"errors"
-	"net/http"
-	"regexp"
-	"sort"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
-	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/util"
-	"github.com/2637309949/dolphin/platform/util/encrypt"
 	"github.com/2637309949/dolphin/platform/util/slice"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
-	xoauth2 "golang.org/x/oauth2"
 )
 
 // TokenExpiryDelta determines how earlier a token should be considered
@@ -34,13 +21,7 @@ const (
 	TokenExpiryDelta = 10 * time.Second
 	TokenType        = "token"
 	EncryptType      = "encrypt"
-)
-
-var (
-	// TokenkeyNamespace define
-	TokenkeyNamespace = "dolphin:token:"
-	// OA2Cfg defined
-	OA2Cfg xoauth2.Config
+	JWTType          = "jwt"
 )
 
 // AuthInfo defined
@@ -48,88 +29,6 @@ type AuthInfo interface {
 	GetToken() TokenInfo
 	AuthToken(*Context) bool
 	AuthEncrypt(*Context) (bool, error)
-}
-
-// EncryptForm defines Common request parameter
-type EncryptForm struct {
-	AppID      string `form:"app_id" json:"app_id" xml:"app_id" binding:"required"`
-	Sign       string `form:"sign" json:"sign" xml:"sign" binding:"required"`
-	TimeStamp  int64  `form:"timestamp" json:"timestamp" xml:"timestamp" binding:"required"`
-	BizContent string `form:"biz_content" json:"biz_content" xml:"biz_content" binding:"required"`
-}
-
-// ParseForm defined
-func (ec *EncryptForm) ParseForm(ctx *Context) (*EncryptForm, error) {
-	puData := EncryptForm{}
-	if ctx.Request.Method != "POST" {
-		if err := ctx.BindQuery(&puData); err != nil {
-			return nil, err
-		}
-	} else {
-		if err := ctx.ShouldBindBodyWith(&puData, binding.JSON); err != nil {
-			return nil, err
-		}
-	}
-	return &puData, nil
-}
-
-// form2Uri defined
-func (ec *EncryptForm) parseForm() (string, error) {
-	var puJSON map[string]string
-	var puKeys = make([]string, 0, len(puJSON))
-	puByte, err := json.Marshal(ec)
-	if err != nil {
-		return "", err
-	}
-	err = json.Unmarshal(puByte, &puJSON)
-	if err != nil {
-		return "", err
-	}
-	for k := range puJSON {
-		if k != "sign" {
-			puKeys = append(puKeys, k)
-		}
-	}
-	sort.Strings(puKeys)
-	var signString = ""
-	for i := range puKeys {
-		if signString != "" {
-			signString = signString + "&" + puKeys[i] + "=" + puJSON[puKeys[i]]
-		} else {
-			signString = signString + puKeys[i] + "=" + puJSON[puKeys[i]]
-		}
-	}
-	return signString, nil
-}
-
-func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
-	uri, err := ec.parseForm()
-	if err != nil {
-		return []byte{}, err
-	}
-	ecyt, err := encrypt.AesEncrypt([]byte(uri), []byte(cli.GetSecret()))
-	if err != nil {
-		return []byte{}, err
-	}
-	return ecyt, nil
-}
-
-// Verify defined
-func (ec *EncryptForm) Verify(cli oauth2.ClientInfo) (bool, error) {
-	nowTs := time.Now().Unix()
-	ts := ec.TimeStamp
-	if ts > nowTs || nowTs-ts >= 60 {
-		return false, errors.New("timestamp error")
-	}
-	sn, err := ec.sign(cli)
-	if err != nil {
-		logrus.Error(err)
-		return false, err
-	}
-	if string(sn) != ec.Sign {
-		return false, errors.New("sign error")
-	}
-	return true, nil
 }
 
 // AuthOAuth2 deifned
@@ -177,12 +76,13 @@ func (auth *AuthOAuth2) AuthToken(ctx *Context) bool {
 
 // AuthEncrypt defined
 func (auth *AuthOAuth2) AuthEncrypt(ctx *Context) (bool, error) {
-	parseForm, err := new(EncryptForm).ParseForm(ctx)
+	nef := NewEncryptForm()
+	parseForm, err := nef.ParseForm(ctx)
 	if err != nil {
 		logrus.Error(err)
 		return false, err
 	}
-	cli, err := new(ClientStore).GetByID(parseForm.AppID)
+	cli, err := NewClientStore().GetByID(parseForm.AppID)
 	if err != nil {
 		logrus.Error(err)
 		return false, err
@@ -198,68 +98,6 @@ func (auth *AuthOAuth2) AuthEncrypt(ctx *Context) (bool, error) {
 // GetToken defined
 func (auth *AuthOAuth2) GetToken() TokenInfo {
 	return auth.token
-}
-
-// NewClientStore create client store
-func NewClientStore() *ClientStore {
-	return &ClientStore{}
-}
-
-// ClientStore client information store
-type ClientStore struct {
-}
-
-// GetByID according to the ID for the client information
-func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
-	cli := model.SysClient{}
-	exist, err := App.PlatformDB.Where("client=?", id).Cols("client", "domain", "secret").Get(&cli)
-	if err != nil {
-		return nil, err
-	}
-	if !exist {
-		return nil, errors.New("the record does not exist")
-	}
-	return &models.Client{
-		ID:     cli.Client.String,
-		Secret: cli.Secret.String,
-		Domain: cli.Domain.String,
-	}, nil
-}
-
-// UserAuthorizationHandler defined
-var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
-	store, err := session.Start(context.Background(), w, r)
-	if err != nil {
-		return
-	}
-	userID, uok := store.Get("LoggedInUserID")
-	domain, dok := store.Get("LoggedInDomain")
-	if !uok || !dok {
-		if r.Form == nil {
-			r.ParseForm()
-		}
-		store.Set("ReturnUri", r.Form)
-		store.Save()
-		w.Header().Set("Location", viper.GetString("oauth.login"))
-		w.WriteHeader(http.StatusFound)
-		return
-	}
-	uid = userID.(string)
-	dm = domain.(string)
-	store.Save()
-	return
-}
-
-// ValidateURIHandler defined
-var ValidateURIHandler = func(baseURI string, redirectURI string) error {
-	reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
-	base := reg.FindAllStringSubmatch(baseURI, -1)
-	redirect := reg.FindAllStringSubmatch(redirectURI, -1)
-	if base[0][2] != redirect[0][2] {
-		logrus.Errorf("baseURI=%v, redirectURI=%v", base[0][2], redirect[0][2])
-		return errors.New("invalid redirect uri")
-	}
-	return nil
 }
 
 // AuthToken defined
@@ -290,6 +128,18 @@ func AuthEncrypt(ctx *Context) {
 	ctx.Next()
 }
 
+// Roles middles
+func Roles(roles ...string) HandlerFunc {
+	return func(ctx *Context) {
+		if !ctx.InRole(roles...) {
+			ctx.Fail(util.ErrAccessDenied, 403)
+			ctx.Abort()
+			return
+		}
+		ctx.Next()
+	}
+}
+
 // Auth middles
 func Auth(auth ...string) HandlerFunc {
 	middles := []func(ctx *Context){}
@@ -303,17 +153,5 @@ func Auth(auth ...string) HandlerFunc {
 		for i := range middles {
 			middles[i](ctx)
 		}
-	}
-}
-
-// Roles middles
-func Roles(roles ...string) HandlerFunc {
-	return func(ctx *Context) {
-		if !ctx.InRole(roles...) {
-			ctx.Fail(util.ErrAccessDenied, 403)
-			ctx.Abort()
-			return
-		}
-		ctx.Next()
 	}
 }
