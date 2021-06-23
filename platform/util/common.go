@@ -10,6 +10,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/go-errors/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -85,6 +86,7 @@ func EnsureRight(err error, right interface{}) interface{} {
 // Ensure defined
 func Ensure(err error) {
 	if err != nil {
+		logrus.Errorf("%v", errors.Wrap(err, 3).Stack())
 		panic(err)
 	}
 }
@@ -117,12 +119,6 @@ func UserHomeDir() string {
 }
 
 // DeepSearch scans deep maps, following the key indexes listed in the
-// sequence "path".
-// The last value is expected to be another map, and is returned.
-//
-// In case intermediate keys do not exist, or map to a non-map value,
-// a new map is created and inserted, and the search continues from there:
-// the initial map "m" may be modified!
 func DeepSearch(m map[string]interface{}, path []string) map[string]interface{} {
 	for _, k := range path {
 		m2, ok := m[k]
@@ -136,12 +132,9 @@ func DeepSearch(m map[string]interface{}, path []string) map[string]interface{} 
 		}
 		m3, ok := m2.(map[string]interface{})
 		if !ok {
-			// intermediate key is a value
-			// => replace with a new map
 			m3 = make(map[string]interface{})
 			m[k] = m3
 		}
-		// continue search from here
 		m = m3
 	}
 	return m

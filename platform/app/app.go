@@ -39,16 +39,18 @@ func NewLifeHook(e *Dolphin) lifeHook {
 
 // init after NewEngine
 func init() {
+	// RegisterFuzzyDecoders TODO
 	extra.RegisterFuzzyDecoders()
+	endpoint := oauth2.Endpoint{
+		AuthURL:  viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath),
+		TokenURL: viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath),
+	}
 	OA2Cfg = oauth2.Config{
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),
 		Scopes:       []string{"admin"},
 		RedirectURL:  viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath),
-		Endpoint: oauth2.Endpoint{
-			AuthURL:  viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath),
-			TokenURL: viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath),
-		},
+		Endpoint:     endpoint,
 	}
 	SyncModel(App)
 	SyncController(App)

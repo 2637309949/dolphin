@@ -6,13 +6,10 @@ package app
 
 import (
 	"context"
-	nhttp "net/http"
 	"os"
 	"os/signal"
 	"path"
 	"path/filepath"
-	"regexp"
-	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -36,146 +33,16 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-type (
-	// HandlerFunc defined
-	HandlerFunc func(ctx *Context)
-	// HandlersChain defined
-	HandlersChain []HandlerFunc
-	// RouterGroup defines
-	RouterGroup struct {
-		dol      *Dolphin
-		Handlers []HandlerFunc
-		basePath string
-	}
-	// Dolphin defined parse app engine
-	Dolphin struct {
-		RouterGroup
-		PlatformDB *xorm.Engine
-		lifecycle  Lifecycle
-		Manager    Manager
-		OAuth2     *server.Server
-		Http       HttpHandler
-		RPC        RPCHandler
-		pool       sync.Pool
-	}
-	onlyFilesFS struct {
-		fs nhttp.FileSystem
-	}
-	neuteredReaddirFile struct {
-		nhttp.File
-	}
-)
-
-func Dir(root string, listDirectory bool) nhttp.FileSystem {
-	fs := nhttp.Dir(root)
-	if listDirectory {
-		return fs
-	}
-	return &onlyFilesFS{fs}
-}
-
-// Open defined TODO
-func (fs onlyFilesFS) Open(name string) (nhttp.File, error) {
-	f, err := fs.fs.Open(name)
-	if err != nil {
-		return nil, err
-	}
-	return neuteredReaddirFile{f}, nil
-}
-
-// Readdir defined TODO
-func (f neuteredReaddirFile) Readdir(count int) ([]os.FileInfo, error) {
-	return nil, nil
-}
-
-// Handle overwrite RouterGroup.Handle
-func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
-	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
-		method := methods[i]
-		re, err := regexp.Compile("^[A-Z]+$")
-		if matches := re.MatchString(method); !matches || err != nil {
-			panic("http method " + method + " is not valid")
-		}
-		group.handle(method, relativePath, handlerFuncs...)
-	}
-}
-
-// Static defined TODO
-func (group *RouterGroup) Static(relativePath, root string) {
-	group.StaticFS(relativePath, Dir(root, false))
-}
-
-// StaticFS defined TODO
-func (group *RouterGroup) StaticFS(relativePath string, fs nhttp.FileSystem) {
-	if strings.Contains(relativePath, ":") || strings.Contains(relativePath, "*") {
-		panic("URL parameters can not be used when serving a static folder")
-	}
-	handler := group.createStaticHandler(relativePath, fs)
-	urlPattern := path.Join(relativePath, "/*filepath")
-
-	group.Handle("GET", urlPattern, handler)
-	group.Handle("HEAD", urlPattern, handler)
-}
-
-func (group *RouterGroup) createStaticHandler(relativePath string, fs nhttp.FileSystem) HandlerFunc {
-	absolutePath := group.calculateAbsolutePath(relativePath)
-	fileServer := nhttp.StripPrefix(absolutePath, nhttp.FileServer(fs))
-	return func(c *Context) {
-		if _, noListing := fs.(*onlyFilesFS); noListing {
-			c.Writer.WriteHeader(nhttp.StatusNotFound)
-		}
-		file := c.Param("filepath")
-		f, err := fs.Open(file)
-		if err != nil {
-			c.Writer.WriteHeader(nhttp.StatusNotFound)
-			return
-		}
-		f.Close()
-		fileServer.ServeHTTP(c.Writer, c.Request)
-	}
-}
-
-func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
-	absolutePath := group.calculateAbsolutePath(relativePath)
-	handlers = group.combineHandlers(handlers)
-	group.dol.Http.Handle(httpMethod, absolutePath, handlers...)
-}
-
-func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
-	finalSize := len(group.Handlers) + len(handlers)
-	if finalSize >= int(63) {
-		panic("too many handlers")
-	}
-	mergedHandlers := make(HandlersChain, finalSize)
-	copy(mergedHandlers, group.Handlers)
-	copy(mergedHandlers[len(group.Handlers):], handlers)
-	return mergedHandlers
-}
-
-func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
-	if relativePath == "" {
-		return group.basePath
-	}
-
-	finalPath := path.Join(group.basePath, relativePath)
-	if util.LastChar(relativePath) == '/' && util.LastChar(finalPath) != '/' {
-		return finalPath + "/"
-	}
-	return finalPath
-}
-
-// Use defined TODO
-func (group *RouterGroup) Use(middleware ...HandlerFunc) {
-	group.Handlers = append(group.Handlers, middleware...)
-}
-
-// Group defined TODO
-func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
-	return &RouterGroup{
-		Handlers: group.combineHandlers(handlers),
-		basePath: group.calculateAbsolutePath(relativePath),
-		dol:      group.dol,
-	}
+// Dolphin defined parse app engine
+type Dolphin struct {
+	RouterGroup
+	PlatformDB *xorm.Engine
+	lifecycle  Lifecycle
+	Manager    Manager
+	OAuth2     *server.Server
+	Http       HttpHandler
+	RPC        RPCHandler
+	pool       sync.Pool
 }
 
 // HandlerFunc convert to gin.HandlerFunc
@@ -274,11 +141,11 @@ func (dol *Dolphin) Reflesh() error {
 	if err != nil {
 		return err
 	}
-	dol.PlatformDB = db
-	err = dol.PlatformDB.Ping()
+	err = db.Ping()
 	if err != nil {
 		return err
 	}
+	dol.PlatformDB = db
 	dol.PlatformDB.SetLogger(xlogger)
 	dol.PlatformDB.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
 	dol.PlatformDB.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
@@ -425,19 +292,13 @@ func (dol *Dolphin) Run() {
 }
 
 func NewDolphin() *Dolphin {
-	dol := &Dolphin{
-		RouterGroup: RouterGroup{
-			Handlers: nil,
-			basePath: "/",
-		},
-	}
+	dol := &Dolphin{}
+	dol.RouterGroup = RouterGroup{Handlers: nil, basePath: "/"}
 	dol.RouterGroup.dol = dol
 	dol.Manager = NewDefaultManager()
 	dol.lifecycle = &lifecycleWrapper{}
 	dol.Http = NewGinHandler(dol)
 	dol.RPC = NewGRPCHandler(dol)
-	dol.pool.New = func() interface{} { return dol.allocateContext() }
-	dol.lifecycle.Append(NewLifeHook(dol))
 
 	manager := manage.NewDefaultManager()
 	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
@@ -455,6 +316,9 @@ func NewDolphin() *Dolphin {
 	dol.Use(Cors())
 	dol.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	dol.Use(Tracker(TrackerOpts(dol)))
+
+	dol.lifecycle.Append(NewLifeHook(dol))
+	dol.pool.New = func() interface{} { return dol.allocateContext() }
 	return dol
 }
 

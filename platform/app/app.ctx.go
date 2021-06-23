@@ -31,10 +31,10 @@ import (
 
 // Context defined
 type Context struct {
-	*gin.Context
 	AuthInfo
-	PlatformDB *xorm.Engine
+	*gin.Context
 	DB         *xorm.Engine
+	PlatformDB *xorm.Engine
 }
 
 // reset defined clean vars in ctx
@@ -113,8 +113,7 @@ func (ctx *Context) Success(data interface{}, status ...int) {
 
 // Fail defined failt result
 func (ctx *Context) Fail(err error, status ...int) {
-	code := 500
-	msg := err.Error()
+	code, msg := 500, err.Error()
 	if mErr, ok := err.(model.Error); ok {
 		code = mErr.Code
 	}
