@@ -73,12 +73,10 @@ func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 
 func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
 	hls := []gin.HandlerFunc{}
-	group := gh.gin.Group(RootRelativePath)
 	for i := 0; i < len(handlerFuncs); i++ {
-		hlf := handlerFuncs[i]
-		hls = append(hls, gh.handlerFunc(hlf))
+		hls = append(hls, gh.handlerFunc(handlerFuncs[i]))
 	}
-	group.Handle(httpMethod, relativePath, hls...)
+	gh.gin.Handle(httpMethod, relativePath, hls...)
 }
 
 // NewGinHandler defined

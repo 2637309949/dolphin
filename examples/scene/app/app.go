@@ -55,22 +55,22 @@ func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 // Handle overwrite RouterGroup.Handle
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
-		group.handle(methods[i], relativePath, handlers...)
+		re, err := regexp.Compile("^[A-Z]+$")
+		if matches := re.MatchString(methods[i]); !matches || err != nil {
+			panic("http method " + methods[i] + " is not valid")
+		}
+		hls := []app.HandlerFunc{}
+		relativePath := group.calculateAbsolutePath(relativePath)
+		handlers = group.combineHandlers(handlers)
+		for j := 0; j < len(handlers); j++ {
+			hls = append(hls, group.dol.HandlerFunc(handlers[j]))
+		}
+		group.handle(methods[i], relativePath, hls...)
 	}
 }
 
-func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
-	re, err := regexp.Compile("^[A-Z]+$")
-	if matches := re.MatchString(httpMethod); !matches || err != nil {
-		panic("http method " + httpMethod + " is not valid")
-	}
-	absolutePath := group.calculateAbsolutePath(relativePath)
-	handlers = group.combineHandlers(handlers)
-	hls := []app.HandlerFunc{}
-	for j := 0; j < len(handlers); j++ {
-		hls = append(hls, group.dol.HandlerFunc(handlers[j]))
-	}
-	group.dol.Http.Handle(httpMethod, absolutePath, hls...)
+func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...app.HandlerFunc) {
+	group.dol.Http.Handle(httpMethod, relativePath, handlers...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
@@ -93,6 +93,11 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 		return finalPath + "/"
 	}
 	return finalPath
+}
+
+// Use defined TODO
+func (group *RouterGroup) Use(middleware ...HandlerFunc) {
+	group.Handlers = append(group.Handlers, middleware...)
 }
 
 func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {

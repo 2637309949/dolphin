@@ -54,12 +54,13 @@ func (f neuteredReaddirFile) Readdir(count int) ([]os.FileInfo, error) {
 // Handle overwrite RouterGroup.Handle
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
-		method := methods[i]
 		re, err := regexp.Compile("^[A-Z]+$")
-		if matches := re.MatchString(method); !matches || err != nil {
-			panic("http method " + method + " is not valid")
+		if matches := re.MatchString(methods[i]); !matches || err != nil {
+			panic("http method " + methods[i] + " is not valid")
 		}
-		group.handle(method, relativePath, handlerFuncs...)
+		handlerFuncs = group.combineHandlers(handlerFuncs)
+		relativePath := group.calculateAbsolutePath(relativePath)
+		group.handle(methods[i], relativePath, handlerFuncs...)
 	}
 }
 
@@ -98,9 +99,7 @@ func (group *RouterGroup) createStaticHandler(relativePath string, fs http.FileS
 }
 
 func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
-	absolutePath := group.calculateAbsolutePath(relativePath)
-	handlers = group.combineHandlers(handlers)
-	group.dol.Http.Handle(httpMethod, absolutePath, handlers...)
+	group.dol.Http.Handle(httpMethod, relativePath, handlers...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
