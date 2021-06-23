@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"github.com/thoas/go-funk"
 )
 
 // RootRelativePath defined
@@ -72,10 +73,7 @@ func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 }
 
 func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
-	hls := []gin.HandlerFunc{}
-	for i := 0; i < len(handlerFuncs); i++ {
-		hls = append(hls, gh.handlerFunc(handlerFuncs[i]))
-	}
+	hls := funk.Map(handlerFuncs, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
 	gh.gin.Handle(httpMethod, relativePath, hls...)
 }
 
@@ -83,7 +81,6 @@ func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...Ha
 func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.SetMode(viper.GetString("app.mode"))
-
 	h := &ginHandler{gin: gin.New()}
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	h.allocCtx = func(f func(*Context)) {
