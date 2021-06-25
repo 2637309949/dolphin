@@ -3,11 +3,9 @@ const axios = require('../request').default
 
 // add 添加APP功能
 module.exports.add = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/app/fun/add'
+  let url = Object.assign({ url: '/api/sys/app/fun/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,11 +22,9 @@ module.exports.add = (data = {}, opt = {}) => {
 
 // batchAdd 添加APP功能
 module.exports.batchAdd = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/app/fun/batch_add'
+  let url = Object.assign({ url: '/api/sys/app/fun/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -45,11 +41,9 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
 
 // del 删除APP功能
 module.exports.del = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/app/fun/del'
+  let url = Object.assign({ url: '/api/sys/app/fun/del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -66,11 +60,9 @@ module.exports.del = (data = {}, opt = {}) => {
 
 // batchDel 删除APP功能
 module.exports.batchDel = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/app/fun/batch_del'
+  let url = Object.assign({ url: '/api/sys/app/fun/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -87,11 +79,9 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 
 // update 更新APP功能
 module.exports.update = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/app/fun/update'
+  let url = Object.assign({ url: '/api/sys/app/fun/update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -108,11 +98,9 @@ module.exports.update = (data = {}, opt = {}) => {
 
 // batchUpdate 更新APP功能
 module.exports.batchUpdate = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/app/fun/batch_update'
+  let url = Object.assign({ url: '/api/sys/app/fun/batch_update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -129,10 +117,8 @@ module.exports.batchUpdate = (data = {}, opt = {}) => {
 
 // page APP功能分页查询
 module.exports.page = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/app/fun/page?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/app/fun/page?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -142,10 +128,8 @@ module.exports.page = (data = {}, opt = {}) => {
 
 // tree 菜单树形结构
 module.exports.tree = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/app/fun/tree?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/app/fun/tree?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -155,10 +139,8 @@ module.exports.tree = (data = {}, opt = {}) => {
 
 // get 获取APP功能信息
 module.exports.get = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/app/fun/get?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/app/fun/get?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

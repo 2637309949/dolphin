@@ -34,7 +34,7 @@ func (m *SysDomain) CreateDataBase(db *xorm.Engine, driverName, database string)
 }
 
 // InitSysData defined inital system data
-func (m *SysDomain) InitSysData(s *xorm.Session) {
+func (m *SysDomain) InitSysData(s *xorm.Engine) error {
 	domains := []SysDomain{
 		{
 			ID:         null.IntFrom(1),
@@ -62,8 +62,7 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 		occ, occLoc := "?", "_localhost?"
 		if ct, err := s.Where("id=?", domains[i].ID.Int64).Count(new(SysDomain)); ct == 0 || err != nil {
 			if err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 			if domains[i].DriverName.String == "sqlite3" {
 				occ = ".db"
@@ -71,13 +70,9 @@ func (m *SysDomain) InitSysData(s *xorm.Session) {
 			}
 			domains[i].DataSource = null.StringFrom(strings.Replace(viper.GetString("db.dataSource"), occ, occLoc, 1))
 			if _, err := s.Insert(&domains[i]); err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 		}
 	}
-
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

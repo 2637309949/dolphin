@@ -3,11 +3,9 @@ const axios = require('../request').default
 
 // add 添加权限
 module.exports.add = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/permission/add'
+  let url = Object.assign({ url: '/api/sys/permission/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,11 +22,9 @@ module.exports.add = (data = {}, opt = {}) => {
 
 // batchAdd 添加权限
 module.exports.batchAdd = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/permission/batch_add'
+  let url = Object.assign({ url: '/api/sys/permission/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -45,11 +41,9 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
 
 // del 删除权限
 module.exports.del = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/permission/del'
+  let url = Object.assign({ url: '/api/sys/permission/del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -66,11 +60,9 @@ module.exports.del = (data = {}, opt = {}) => {
 
 // batchDel 删除权限
 module.exports.batchDel = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/permission/batch_del'
+  let url = Object.assign({ url: '/api/sys/permission/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -87,11 +79,9 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 
 // update 更新权限
 module.exports.update = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/permission/update'
+  let url = Object.assign({ url: '/api/sys/permission/update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -108,11 +98,9 @@ module.exports.update = (data = {}, opt = {}) => {
 
 // batchUpdate 更新权限
 module.exports.batchUpdate = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/permission/batch_update'
+  let url = Object.assign({ url: '/api/sys/permission/batch_update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -129,10 +117,8 @@ module.exports.batchUpdate = (data = {}, opt = {}) => {
 
 // page 权限分页查询
 module.exports.page = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/permission/page?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/permission/page?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -142,10 +128,8 @@ module.exports.page = (data = {}, opt = {}) => {
 
 // get 获取权限信息
 module.exports.get = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/permission/get?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/permission/get?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

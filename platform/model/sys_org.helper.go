@@ -8,7 +8,7 @@ import (
 )
 
 // InitSysData defined
-func (m *SysOrg) InitSysData(s *xorm.Session) {
+func (m *SysOrg) InitSysData(s *xorm.Session) error {
 	orgs := []SysOrg{
 		{
 			ID:          null.IntFrom(1),
@@ -55,16 +55,12 @@ func (m *SysOrg) InitSysData(s *xorm.Session) {
 	for i := range orgs {
 		if ct, err := s.Where("id=?", orgs[i].ID.Int64).Count(new(SysOrg)); ct == 0 || err != nil {
 			if err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 			if _, err := s.InsertOne(&orgs[i]); err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

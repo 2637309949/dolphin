@@ -14,6 +14,7 @@ import (
 
 	//  "github.com/2637309949/dolphin/platform/conf"
 	_ "github.com/2637309949/dolphin/platform/conf"
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
 
 	"github.com/2637309949/dolphin/platform/app"
@@ -101,7 +102,7 @@ func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...M) {
 
 // TestMain defined
 func TestMain(m *testing.M) {
-	app.App.Reflesh()
+	util.Ensure(app.App.Reflesh())
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }

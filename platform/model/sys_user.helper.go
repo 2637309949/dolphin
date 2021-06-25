@@ -49,19 +49,15 @@ func (m *SysUser) ValidPassword(password string) bool {
 }
 
 // InitSysData defined inital system data
-func (m *SysUser) InitSysData(s *xorm.Session) {
+func (m *SysUser) InitSysData(s *xorm.Session) error {
 	if ct, err := s.Where("id=?", DefaultAdmin.ID.Int64).Count(new(SysUser)); ct == 0 || err != nil {
 		if err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 		DefaultAdmin.SetPassword(DefaultAdmin.Password.String)
 		if _, err := s.InsertOne(&DefaultAdmin); err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

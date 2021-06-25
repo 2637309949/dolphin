@@ -8,9 +8,9 @@ import (
 	"github.com/2637309949/dolphin/platform/rpc"
 	"github.com/2637309949/dolphin/platform/rpc/proto"
 	"github.com/2637309949/dolphin/platform/srv"
-	"google.golang.org/grpc"
 
 	"github.com/spf13/viper"
+	"google.golang.org/grpc"
 )
 
 // Name project

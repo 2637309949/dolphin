@@ -24,18 +24,14 @@ var DefaultClient = SysClient{
 }
 
 // InitSysData defined inital system data
-func (m *SysClient) InitSysData(s *xorm.Session) {
+func (m *SysClient) InitSysData(s *xorm.Session) error {
 	if ct, err := s.Where("id=?", DefaultClient.ID.Int64).Count(new(SysClient)); ct == 0 || err != nil {
 		if err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 		if _, err := s.Insert(&DefaultClient); err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

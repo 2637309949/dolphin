@@ -3,11 +3,9 @@ const axios = require('../request').default
 
 // add 添加角色
 module.exports.add = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/role/add'
+  let url = Object.assign({ url: '/api/sys/role/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,11 +22,9 @@ module.exports.add = (data = {}, opt = {}) => {
 
 // batchAdd 添加角色
 module.exports.batchAdd = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/role/batch_add'
+  let url = Object.assign({ url: '/api/sys/role/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -45,11 +41,9 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
 
 // del 删除角色
 module.exports.del = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/role/del'
+  let url = Object.assign({ url: '/api/sys/role/del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -66,11 +60,9 @@ module.exports.del = (data = {}, opt = {}) => {
 
 // batchDel 删除角色
 module.exports.batchDel = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/role/batch_del'
+  let url = Object.assign({ url: '/api/sys/role/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -87,11 +79,9 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 
 // update 更新角色
 module.exports.update = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/role/update'
+  let url = Object.assign({ url: '/api/sys/role/update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -108,11 +98,9 @@ module.exports.update = (data = {}, opt = {}) => {
 
 // batchUpdate 更新角色
 module.exports.batchUpdate = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/role/batch_update'
+  let url = Object.assign({ url: '/api/sys/role/batch_update' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -129,10 +117,8 @@ module.exports.batchUpdate = (data = {}, opt = {}) => {
 
 // page 角色分页查询
 module.exports.page = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/role/page?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/role/page?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -142,10 +128,8 @@ module.exports.page = (data = {}, opt = {}) => {
 
 // roleMenuTree 角色菜单树形结构
 module.exports.roleMenuTree = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/role/role_menu_tree?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/role/role_menu_tree?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -155,10 +139,8 @@ module.exports.roleMenuTree = (data = {}, opt = {}) => {
 
 // roleAppFunTree 角色App功能树形结构
 module.exports.roleAppFunTree = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/role/role_app_fun_tree?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/role/role_app_fun_tree?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -168,10 +150,8 @@ module.exports.roleAppFunTree = (data = {}, opt = {}) => {
 
 // get 获取角色信息
 module.exports.get = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/role/get?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/role/get?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

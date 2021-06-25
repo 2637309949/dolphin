@@ -22,18 +22,14 @@ var AdminRoleUser = SysRoleUser{
 }
 
 // InitSysData defined inital system data
-func (m *SysRoleUser) InitSysData(s *xorm.Session) {
+func (m *SysRoleUser) InitSysData(s *xorm.Session) error {
 	if ct, err := s.Where("user_id=? and role_id=?", AdminRoleUser.UserId, AdminRoleUser.RoleId).Count(new(SysRoleUser)); ct == 0 || err != nil {
 		if err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 		if _, err := s.InsertOne(&AdminRoleUser); err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

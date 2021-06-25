@@ -24,18 +24,14 @@ var DefaultUserTemplate = SysUserTemplate{
 }
 
 // InitSysData defined inital system data
-func (m *SysUserTemplate) InitSysData(s *xorm.Session) {
+func (m *SysUserTemplate) InitSysData(s *xorm.Session) error {
 	if ct, err := s.Where("id=?", DefaultUserTemplate.ID.Int64).Count(new(SysUserTemplate)); ct == 0 || err != nil {
 		if err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 		if _, err := s.InsertOne(&DefaultUserTemplate); err != nil {
-			s.Rollback()
-			panic(err)
+			return err
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

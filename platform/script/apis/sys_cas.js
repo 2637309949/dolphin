@@ -3,11 +3,9 @@ const axios = require('../request').default
 
 // login 用户认证
 module.exports.login = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/cas/login'
+  let url = Object.assign({ url: '/api/sys/cas/login' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,10 +22,8 @@ module.exports.login = (data = {}, opt = {}) => {
 
 // logout 注销信息
 module.exports.logout = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/logout?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/logout?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -37,11 +33,9 @@ module.exports.logout = (data = {}, opt = {}) => {
 
 // affirm 用户授权
 module.exports.affirm = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/cas/affirm'
+  let url = Object.assign({ url: '/api/sys/cas/affirm' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -58,10 +52,8 @@ module.exports.affirm = (data = {}, opt = {}) => {
 
 // authorize 用户授权
 module.exports.authorize = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/authorize?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/authorize?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -71,11 +63,9 @@ module.exports.authorize = (data = {}, opt = {}) => {
 
 // token 获取令牌
 module.exports.token = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/sys/cas/token'
+  let url = Object.assign({ url: '/api/sys/cas/token' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -92,10 +82,8 @@ module.exports.token = (data = {}, opt = {}) => {
 
 // uRL 授权地址
 module.exports.uRL = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/url?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/url?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -105,10 +93,8 @@ module.exports.uRL = (data = {}, opt = {}) => {
 
 // oauth2 授权回调
 module.exports.oauth2 = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/oauth2?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/oauth2?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -118,10 +104,8 @@ module.exports.oauth2 = (data = {}, opt = {}) => {
 
 // refresh 刷新令牌
 module.exports.refresh = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/refresh?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/refresh?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -131,10 +115,8 @@ module.exports.refresh = (data = {}, opt = {}) => {
 
 // check 检验令牌
 module.exports.check = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/check?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/check?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -144,10 +126,8 @@ module.exports.check = (data = {}, opt = {}) => {
 
 // profile 用户信息
 module.exports.profile = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/profile?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/profile?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -157,10 +137,8 @@ module.exports.profile = (data = {}, opt = {}) => {
 
 // qrcode 扫码登录(绑定第三方)
 module.exports.qrcode = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/sys/cas/qrcode?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/sys/cas/qrcode?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

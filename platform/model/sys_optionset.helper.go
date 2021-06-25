@@ -22,7 +22,7 @@ func (m *SysOptionset) Values() []struct {
 }
 
 // InitSysData defined
-func (m *SysOptionset) InitSysData(s *xorm.Session) {
+func (m *SysOptionset) InitSysData(s *xorm.Session) error {
 	options := []SysOptionset{
 		{
 			Name:       null.StringFrom("域名启用状态"),
@@ -98,16 +98,12 @@ func (m *SysOptionset) InitSysData(s *xorm.Session) {
 	for i := range options {
 		if ct, err := s.Where("code=?", options[i].Code.String).Count(new(SysOptionset)); ct == 0 || err != nil {
 			if err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 			if _, err := s.InsertOne(&options[i]); err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

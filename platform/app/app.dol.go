@@ -6,6 +6,7 @@ package app
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/signal"
 	"path"
@@ -53,17 +54,9 @@ func (dol *Dolphin) allocateContext() *Context {
 func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	tables := []model.SysTable{}
 	columns := []model.SysTableColumn{}
-	session := db.NewSession()
-	session.Begin()
-	defer session.Close()
-	defer func() {
-		if err := recover(); err != nil {
-			session.Rollback()
-			panic(err)
-		}
-	}()
 	err := db.Sync2(new(model.SysTable), new(model.SysTableColumn))
 	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	err = dol.Manager.ModelSet().ForEachWithError(func(n string, m interface{}) error {
@@ -93,24 +86,22 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	if err != nil {
 		return err
 	}
-	new(model.SysTable).TruncateTable(session, session.Engine().DriverName())
-	new(model.SysTableColumn).TruncateTable(session, session.Engine().DriverName())
+	new(model.SysTable).TruncateTable(db, db.DriverName())
+	new(model.SysTableColumn).TruncateTable(db, db.DriverName())
 	stb, stc := slice.Chunk(tables, 50).([][]model.SysTable), slice.Chunk(columns, 50).([][]model.SysTableColumn)
 	for i := range stb {
-		_, err = session.Insert(stb[i])
+		_, err = db.Insert(stb[i])
 		if err != nil {
-			session.Rollback()
 			return err
 		}
 	}
 	for i := range stc {
-		session.Insert(stc[i])
+		db.Insert(stc[i])
 		if err != nil {
-			session.Rollback()
 			return err
 		}
 	}
-	return session.Commit()
+	return nil
 }
 
 // Reflesh defined init data before bootinh
@@ -125,6 +116,7 @@ func (dol *Dolphin) Reflesh() error {
 	if err != nil {
 		return err
 	}
+
 	dol.PlatformDB = db
 	dol.PlatformDB.SetLogger(xlogger)
 	dol.PlatformDB.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
@@ -138,14 +130,26 @@ func (dol *Dolphin) Reflesh() error {
 	if err != nil {
 		return err
 	}
-	new(model.SysDomain).Ensure(dol.PlatformDB)
-	new(model.SysDomain).InitSysData(dol.PlatformDB.NewSession())
-
-	asyncOnce, domains := sync.Once{}, []model.SysDomain{}
-	err = dol.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains)
+	new(model.SysDomain).Ensure(db)
+	err = new(model.SysDomain).InitSysData(db)
 	if err != nil {
 		return err
 	}
+	asyncOnce, domains := sync.Once{}, []model.SysDomain{}
+	err = db.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains)
+	if err != nil {
+		return err
+	}
+
+	s := db.NewSession()
+	s.Begin()
+	defer s.Close()
+	defer func() {
+		if err := recover(); err != nil {
+			s.Rollback()
+			panic(err)
+		}
+	}()
 
 	for i := range domains {
 		domain := domains[i]
@@ -180,28 +184,79 @@ func (dol *Dolphin) Reflesh() error {
 	platBindModelNames := dol.Manager.ModelSet().Name(func(name string) bool { return name != Name })
 	filtedDomains := funk.Filter(domains, func(domain model.SysDomain) bool { return domain.IsSync.Int64 != 1 }).([]model.SysDomain)
 	for i := range filtedDomains {
-		domain := filtedDomains[i]
-		db := dol.Manager.GetBusinessDB(domain.Domain.String)
 		asyncOnce.Do(func() {
-			dol.migration(Name, dol.PlatformDB)
-			new(model.SysClient).InitSysData(dol.PlatformDB.NewSession())
-			new(model.SysUser).InitSysData(dol.PlatformDB.NewSession())
+			err = dol.migration(Name, dol.PlatformDB)
+			if err != nil {
+				return
+			}
+			err = new(model.SysClient).InitSysData(s)
+			if err != nil {
+				return
+			}
+			err = new(model.SysUser).InitSysData(s)
+			if err != nil {
+				return
+			}
 		})
-		funk.ForEach(platBindModelNames, func(n string) { dol.migration(n, db) })
-		new(model.SysRole).InitSysData(db.NewSession())
-		new(model.SysOrg).InitSysData(db.NewSession())
-		new(model.SysRoleUser).InitSysData(db.NewSession())
-		new(model.SysMenu).InitSysData(db.NewSession())
-		new(model.SysOptionset).InitSysData(db.NewSession())
-		new(model.SysUserTemplate).InitSysData(db.NewSession())
-		new(model.SysUserTemplateDetail).InitSysData(db.NewSession())
-		_, err = dol.PlatformDB.ID(domain.ID.Int64).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)})
 		if err != nil {
+			s.Rollback()
 			return err
 		}
+
+		domain := filtedDomains[i]
+		db := dol.Manager.GetBusinessDB(domain.Domain.String)
+		s1 := db.NewSession()
+		s1.Begin()
+		defer s1.Close()
+		funk.ForEach(platBindModelNames, func(n string) { dol.migration(n, db) })
+		err = new(model.SysRole).InitSysData(s1)
+		if err != nil {
+			fmt.Println(123, err)
+			s1.Rollback()
+			return err
+		}
+
+		err = new(model.SysOrg).InitSysData(s1)
+		if err != nil {
+			s1.Rollback()
+			return err
+		}
+		err = new(model.SysRoleUser).InitSysData(s1)
+		if err != nil {
+			s1.Rollback()
+			return err
+		}
+		err = new(model.SysMenu).InitSysData(s1)
+		if err != nil {
+			s1.Rollback()
+		}
+		err = new(model.SysOptionset).InitSysData(s1)
+		if err != nil {
+			s1.Rollback()
+			return err
+		}
+
+		err = new(model.SysUserTemplate).InitSysData(s1)
+		if err != nil {
+			s1.Rollback()
+			return err
+		}
+		err = new(model.SysUserTemplateDetail).InitSysData(s1)
+		if err != nil {
+			s1.Rollback()
+			return err
+		}
+
+		_, err = s.ID(domain.ID.Int64).Cols("is_sync").Update(&model.SysDomain{IsSync: null.IntFrom(1)})
+		if err != nil {
+			s.Rollback()
+			return err
+		}
+		s1.Commit()
 	}
+
 	dol.Manager.ModelSet().Release()
-	return err
+	return s.Commit()
 }
 
 // RegisterSQLMap defined sql

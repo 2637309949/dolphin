@@ -1,6 +1,6 @@
 app:
   name: dolphin
-  mode: debug
+  mode: release
   version: "1.0"
   host: localhost:8081
   viper: false

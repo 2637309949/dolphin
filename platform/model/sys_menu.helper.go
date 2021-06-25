@@ -8,7 +8,7 @@ import (
 )
 
 // InitSysData defined inital system data
-func (m *SysMenu) InitSysData(s *xorm.Session) {
+func (m *SysMenu) InitSysData(s *xorm.Session) error {
 	items := []SysMenu{
 		{
 			ID:         null.IntFrom(1),
@@ -217,16 +217,12 @@ func (m *SysMenu) InitSysData(s *xorm.Session) {
 	for i := range items {
 		if ct, err := s.Where("id=?", items[i].ID.Int64).Count(new(SysMenu)); ct == 0 || err != nil {
 			if err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 			if _, err := s.Insert(&items[i]); err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }

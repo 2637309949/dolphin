@@ -3,10 +3,8 @@ const axios = require('../request').default
 
 // pprof 
 module.exports.pprof = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -16,10 +14,8 @@ module.exports.pprof = (data = {}, opt = {}) => {
 
 // heap 
 module.exports.heap = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/heap?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/heap?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -29,10 +25,8 @@ module.exports.heap = (data = {}, opt = {}) => {
 
 // goroutine 
 module.exports.goroutine = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/goroutine?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/goroutine?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -42,10 +36,8 @@ module.exports.goroutine = (data = {}, opt = {}) => {
 
 // allocs 
 module.exports.allocs = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/allocs?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/allocs?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -55,10 +47,8 @@ module.exports.allocs = (data = {}, opt = {}) => {
 
 // block 
 module.exports.block = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/block?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/block?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -68,10 +58,8 @@ module.exports.block = (data = {}, opt = {}) => {
 
 // threadcreate 
 module.exports.threadcreate = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/threadcreate?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/threadcreate?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -81,10 +69,8 @@ module.exports.threadcreate = (data = {}, opt = {}) => {
 
 // cmdline 
 module.exports.cmdline = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/cmdline?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/cmdline?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -94,10 +80,8 @@ module.exports.cmdline = (data = {}, opt = {}) => {
 
 // profile 
 module.exports.profile = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/profile?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/profile?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -107,11 +91,9 @@ module.exports.profile = (data = {}, opt = {}) => {
 
 // symbol 
 module.exports.symbol = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/debug/pprof/symbol'
+  let url = Object.assign({ url: '/debug/pprof/symbol' }, opt).url
   if ((opt.method || 'get,post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -128,10 +110,8 @@ module.exports.symbol = (data = {}, opt = {}) => {
 
 // trace 
 module.exports.trace = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/trace?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/trace?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -141,10 +121,8 @@ module.exports.trace = (data = {}, opt = {}) => {
 
 // mutex 
 module.exports.mutex = (data = {}, opt = {}) => {
-  let url = opt.url || '/debug/pprof/mutex?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/debug/pprof/mutex?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

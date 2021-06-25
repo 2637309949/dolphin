@@ -28,20 +28,16 @@ var sysUserTemplateDetails = []SysUserTemplateDetail{
 }
 
 // InitSysData defined inital system data
-func (m *SysUserTemplateDetail) InitSysData(s *xorm.Session) {
+func (m *SysUserTemplateDetail) InitSysData(s *xorm.Session) error {
 	for i := range sysUserTemplateDetails {
 		if ct, err := s.Where("name=?", sysUserTemplateDetails[i].Name.String).Count(new(SysUserTemplateDetail)); ct == 0 || err != nil {
 			if err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 			if _, err := s.Insert(&sysUserTemplateDetails[i]); err != nil {
-				s.Rollback()
-				panic(err)
+				return err
 			}
 		}
 	}
-	if err := s.Commit(); err != nil {
-		panic(err)
-	}
+	return nil
 }
