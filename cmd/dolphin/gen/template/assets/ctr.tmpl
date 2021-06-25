@@ -40,7 +40,7 @@ import (
 // @Failure 500 {object} {{.Ref .Return.Failure.Type}}
 {{- end}}
 // @Router {{if and (ne $.Controller.Prefix "") (ne $.Controller.Prefix "/")}}{{$.Controller.Prefix}}{{- else if ne $.Controller.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $.Controller.Name .Name .Path}} [{{.Method}}]
-func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
+func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *Context) {
 {{- if eq .Func "page"}}
 	q := ctx.TypeQuery()
 	{{- range .Params}}
@@ -238,7 +238,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
 	q.Value()
-	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx, context.Background(), struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -257,7 +257,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.{{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx, context.Background(), struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

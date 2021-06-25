@@ -5,7 +5,6 @@ package app
 
 import (
 	"scene/model"
-	"scene/srv"
 
 	"github.com/sirupsen/logrus"
 )
@@ -20,14 +19,14 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/ami/add [post]
-func RedisMqAdd(ctx *Context) {
+func (ctr *RedisMq) RedisMqAdd(ctx *Context) {
 	var payload model.AmiInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.Producer(ctx, ctx.DB, payload)
+	ret, err := ctr.Srv.Producer(ctx, ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -45,10 +44,10 @@ func RedisMqAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/ami/get [get]
-func RedisMqGet(ctx *Context) {
+func (ctr *RedisMq) RedisMqGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
-	ret, err := srv.Consumer(ctx, ctx.DB, q.Value())
+	ret, err := ctr.Srv.Consumer(ctx, ctx.DB, q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -6,7 +6,6 @@ package app
 import (
 	"errors"
 	"scene/model"
-	"scene/srv"
 
 	"time"
 
@@ -25,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/add [post]
-func ArticleAdd(ctx *Context) {
+func (ctr *Article) ArticleAdd(ctx *Context) {
 	var payload model.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -56,7 +55,7 @@ func ArticleAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/batch_add [post]
-func ArticleBatchAdd(ctx *Context) {
+func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 	var payload []model.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -89,7 +88,7 @@ func ArticleBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/del [delete]
-func ArticleDel(ctx *Context) {
+func (ctr *Article) ArticleDel(ctx *Context) {
 	var payload model.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -119,7 +118,7 @@ func ArticleDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/batch_del [put]
-func ArticleBatchDel(ctx *Context) {
+func (ctr *Article) ArticleBatchDel(ctx *Context) {
 	var payload []model.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -150,7 +149,7 @@ func ArticleBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/update [put]
-func ArticleUpdate(ctx *Context) {
+func (ctr *Article) ArticleUpdate(ctx *Context) {
 	var payload model.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -178,7 +177,7 @@ func ArticleUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/batch_update [put]
-func ArticleBatchUpdate(ctx *Context) {
+func (ctr *Article) ArticleBatchUpdate(ctx *Context) {
 	var payload []model.Article
 	var err error
 	var ret []int64
@@ -230,7 +229,7 @@ func ArticleBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/page [get]
-func ArticlePage(ctx *Context) {
+func (ctr *Article) ArticlePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
@@ -260,7 +259,7 @@ func ArticlePage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/get [get]
-func ArticleGet(ctx *Context) {
+func (ctr *Article) ArticleGet(ctx *Context) {
 	var entity model.Article
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
@@ -289,14 +288,14 @@ func ArticleGet(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/article/payment [post]
-func ArticlePayment(ctx *Context) {
+func (ctr *Article) ArticlePayment(ctx *Context) {
 	var payload model.ArticleInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.ArticleTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

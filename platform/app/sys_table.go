@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/table/add [post]
-func SysTableAdd(ctx *Context) {
+func (ctr *SysTable) SysTableAdd(ctx *Context) {
 	var payload model.SysTable
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysTableAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/table/batch_add [post]
-func SysTableBatchAdd(ctx *Context) {
+func (ctr *SysTable) SysTableBatchAdd(ctx *Context) {
 	var payload []model.SysTable
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysTableBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/table/del [delete]
-func SysTableDel(ctx *Context) {
+func (ctr *SysTable) SysTableDel(ctx *Context) {
 	var payload model.SysTable
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -117,7 +117,7 @@ func SysTableDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/table/batch_del [delete]
-func SysTableBatchDel(ctx *Context) {
+func (ctr *SysTable) SysTableBatchDel(ctx *Context) {
 	var payload []*model.SysTable
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -148,7 +148,7 @@ func SysTableBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/table/update [put]
-func SysTableUpdate(ctx *Context) {
+func (ctr *SysTable) SysTableUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -176,7 +176,7 @@ func SysTableUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/table/batch_update [put]
-func SysTableBatchUpdate(ctx *Context) {
+func (ctr *SysTable) SysTableBatchUpdate(ctx *Context) {
 	var payload []model.SysTable
 	var err error
 	var ret []int64
@@ -226,7 +226,7 @@ func SysTableBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/table/page [get]
-func SysTablePage(ctx *Context) {
+func (ctr *SysTable) SysTablePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -261,7 +261,7 @@ func SysTablePage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/table/get [get]
-func SysTableGet(ctx *Context) {
+func (ctr *SysTable) SysTableGet(ctx *Context) {
 	var entity model.SysTable
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

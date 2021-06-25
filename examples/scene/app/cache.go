@@ -4,8 +4,6 @@
 package app
 
 import (
-	"scene/srv"
-
 	"github.com/sirupsen/logrus"
 )
 
@@ -16,10 +14,10 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/i/cache/info [get]
-func ICacheInfo(ctx *Context) {
+func (ctr *ICache) ICacheInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := srv.ICacheTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

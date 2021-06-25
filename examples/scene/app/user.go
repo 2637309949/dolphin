@@ -16,7 +16,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/user/info [get]
-func UserInfo(ctx *Context) {
+func (ctr *User) UserInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
 	articles, err := ctx.DB.SqlMapClient("selectall_article").Query().List()

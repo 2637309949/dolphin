@@ -16,7 +16,6 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -33,7 +32,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/add [post]
-func SysUserAdd(ctx *Context) {
+func (ctr *SysUser) SysUserAdd(ctx *Context) {
 	var payload model.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -69,7 +68,7 @@ func SysUserAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/user/batch_add [post]
-func SysUserBatchAdd(ctx *Context) {
+func (ctr *SysUser) SysUserBatchAdd(ctx *Context) {
 	var payload []model.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -102,7 +101,7 @@ func SysUserBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/del [delete]
-func SysUserDel(ctx *Context) {
+func (ctr *SysUser) SysUserDel(ctx *Context) {
 	var payload model.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -132,7 +131,7 @@ func SysUserDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/batch_del [delete]
-func SysUserBatchDel(ctx *Context) {
+func (ctr *SysUser) SysUserBatchDel(ctx *Context) {
 	var payload []*model.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -163,7 +162,7 @@ func SysUserBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/update [put]
-func SysUserUpdate(ctx *Context) {
+func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 	var payload struct {
 		model.SysUser `xorm:"extends"`
 		UserRole      null.String `json:"user_role" xml:"user_role"`
@@ -248,7 +247,7 @@ func SysUserUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/user/batch_update [put]
-func SysUserBatchUpdate(ctx *Context) {
+func (ctr *SysUser) SysUserBatchUpdate(ctx *Context) {
 	var payload []model.SysUser
 	var err error
 	var ret []int64
@@ -298,7 +297,7 @@ func SysUserBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/page [get]
-func SysUserPage(ctx *Context) {
+func (ctr *SysUser) SysUserPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -314,7 +313,7 @@ func SysUserPage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	if q.GetString("cn_org_id") != "" {
-		ids, err := srv.SysUserGetOrgsFromInheritance(ctx.DB, q.GetString("cn_org_id"))
+		ids, err := ctr.Srv.GetOrgsFromInheritance(ctx.DB, q.GetString("cn_org_id"))
 		if err != nil {
 			ctx.Fail(err)
 			return
@@ -329,7 +328,7 @@ func SysUserPage(ctx *Context) {
 	}
 
 	if uids, ok := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string); ok {
-		roles, err := srv.SysUserGetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
+		roles, err := ctr.Srv.GetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -344,7 +343,7 @@ func SysUserPage(ctx *Context) {
 	}
 
 	if uorgs, ok := slice.GetFieldSliceByName(ret.Data, "org_id", "'%v'").([]string); ok {
-		orgs, err := srv.SysUserGetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
+		orgs, err := ctr.Srv.GetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -389,7 +388,7 @@ func SysUserPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/get [get]
-func SysUserGet(ctx *Context) {
+func (ctr *SysUser) SysUserGet(ctx *Context) {
 	var entity model.SysUser
 	id := ctx.Query("id")
 	_, err := ctx.PlatformDB.ID(id).Get(&entity)
@@ -412,7 +411,7 @@ func SysUserGet(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/login [post]
-func SysUserLogin(ctx *Context) {
+func (ctr *SysUser) SysUserLogin(ctx *Context) {
 	var payload, account = model.Login{}, model.SysUser{}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -464,7 +463,7 @@ func SysUserLogin(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/logout [get]
-func SysUserLogout(ctx *Context) {
+func (ctr *SysUser) SysUserLogout(ctx *Context) {
 	err := App.OAuth2.Manager.RemoveAccessToken(ctx.GetToken().GetAccess())
 	if err != nil {
 		logrus.Error(err)

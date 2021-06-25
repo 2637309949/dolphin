@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/add [post]
-func SysRoleAdd(ctx *Context) {
+func (ctr *SysRole) SysRoleAdd(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -65,7 +65,7 @@ func SysRoleAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/role/batch_add [post]
-func SysRoleBatchAdd(ctx *Context) {
+func (ctr *SysRole) SysRoleBatchAdd(ctx *Context) {
 	var payload []model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -111,7 +111,7 @@ func SysRoleBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/del [delete]
-func SysRoleDel(ctx *Context) {
+func (ctr *SysRole) SysRoleDel(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -141,7 +141,7 @@ func SysRoleDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/batch_del [delete]
-func SysRoleBatchDel(ctx *Context) {
+func (ctr *SysRole) SysRoleBatchDel(ctx *Context) {
 	var payload []*model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -172,7 +172,7 @@ func SysRoleBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/update [put]
-func SysRoleUpdate(ctx *Context) {
+func (ctr *SysRole) SysRoleUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -200,7 +200,7 @@ func SysRoleUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/role/batch_update [post]
-func SysRoleBatchUpdate(ctx *Context) {
+func (ctr *SysRole) SysRoleBatchUpdate(ctx *Context) {
 	var payload []model.SysRole
 	var err error
 	var ret []int64
@@ -250,7 +250,7 @@ func SysRoleBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/page [get]
-func SysRolePage(ctx *Context) {
+func (ctr *SysRole) SysRolePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -282,7 +282,7 @@ func SysRolePage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Fail
 // @Router /api/sys/role/role_menu_tree [get]
-func SysRoleRoleMenuTree(ctx *Context) {
+func (ctr *SysRole) SysRoleRoleMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
@@ -304,7 +304,7 @@ func SysRoleRoleMenuTree(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Fail
 // @Router /api/sys/role/role_app_fun_tree [get]
-func SysRoleRoleAppFunTree(ctx *Context) {
+func (ctr *SysRole) SysRoleRoleAppFunTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
@@ -329,7 +329,7 @@ func SysRoleRoleAppFunTree(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/get [get]
-func SysRoleGet(ctx *Context) {
+func (ctr *SysRole) SysRoleGet(ctx *Context) {
 	var entity model.SysRole
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

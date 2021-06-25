@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysTableColumnTODO defined srv
-func SysTableColumnTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysTableColumn struct {
+}
+
+func NewSysTableColumn() *SysTableColumn {
+	return &SysTableColumn{}
+}
+
+// TODO defined srv
+func (srv *SysTableColumn) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

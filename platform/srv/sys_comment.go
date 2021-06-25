@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysCommentTODO defined srv
-func SysCommentTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysComment struct {
+}
+
+func NewSysComment() *SysComment {
+	return &SysComment{}
+}
+
+// TODO defined srv
+func (srv *SysComment) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

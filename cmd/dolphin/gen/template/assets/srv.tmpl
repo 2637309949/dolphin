@@ -13,8 +13,15 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
 
-// {{$.Controller.ToUpperCase $.Controller.Name}}TODO defined srv
-func {{$.Controller.ToUpperCase $.Controller.Name}}TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type {{$.Controller.ToUpperCase $.Controller.Name}} struct {
+}
+
+func New{{$.Controller.ToUpperCase $.Controller.Name}}() *{{$.Controller.ToUpperCase $.Controller.Name}} {
+	return &{{$.Controller.ToUpperCase $.Controller.Name}}{}
+}
+
+// TODO defined srv
+func (srv *{{$.Controller.ToUpperCase $.Controller.Name}})TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

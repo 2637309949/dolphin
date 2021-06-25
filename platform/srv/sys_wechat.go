@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysWechatTODO defined srv
-func SysWechatTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysWechat struct {
+}
+
+func NewSysWechat() *SysWechat {
+	return &SysWechat{}
+}
+
+// TODO defined srv
+func (srv *SysWechat) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

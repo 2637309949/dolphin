@@ -23,7 +23,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/app/fun/add [post]
-func SysAppFunAdd(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunAdd(ctx *Context) {
 	var payload model.SysAppFun
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -54,7 +54,7 @@ func SysAppFunAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/app/fun/batch_add [post]
-func SysAppFunBatchAdd(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunBatchAdd(ctx *Context) {
 	var payload []model.SysAppFun
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -87,7 +87,7 @@ func SysAppFunBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/del [delete]
-func SysAppFunDel(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunDel(ctx *Context) {
 	var payload model.SysAppFun
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -117,7 +117,7 @@ func SysAppFunDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/app/fun/batch_del [delete]
-func SysAppFunBatchDel(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunBatchDel(ctx *Context) {
 	var payload []model.SysAppFun
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -148,7 +148,7 @@ func SysAppFunBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/update [put]
-func SysAppFunUpdate(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -176,7 +176,7 @@ func SysAppFunUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/app/fun/batch_update [put]
-func SysAppFunBatchUpdate(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunBatchUpdate(ctx *Context) {
 	var payload []model.SysAppFun
 	var err error
 	var ret []int64
@@ -226,7 +226,7 @@ func SysAppFunBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/page [get]
-func SysAppFunPage(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -247,7 +247,7 @@ func SysAppFunPage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Fail
 // @Router /api/sys/app/fun/tree [get]
-func SysAppFunTree(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetRule("sys_app_fun_tree")
@@ -270,7 +270,7 @@ func SysAppFunTree(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/app/fun/get [get]
-func SysAppFunGet(ctx *Context) {
+func (ctr *SysAppFun) SysAppFunGet(ctx *Context) {
 	var entity model.SysAppFun
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

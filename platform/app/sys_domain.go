@@ -25,7 +25,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/add [post]
-func SysDomainAdd(ctx *Context) {
+func (ctr *SysDomain) SysDomainAdd(ctx *Context) {
 	var payload model.SysDomain
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -57,7 +57,7 @@ func SysDomainAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/domain/batch_add [post]
-func SysDomainBatchAdd(ctx *Context) {
+func (ctr *SysDomain) SysDomainBatchAdd(ctx *Context) {
 	var payload []model.SysDomain
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -90,7 +90,7 @@ func SysDomainBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/del [delete]
-func SysDomainDel(ctx *Context) {
+func (ctr *SysDomain) SysDomainDel(ctx *Context) {
 	var payload model.SysDomain
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -120,7 +120,7 @@ func SysDomainDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/domain/batch_del [delete]
-func SysDomainBatchDel(ctx *Context) {
+func (ctr *SysDomain) SysDomainBatchDel(ctx *Context) {
 	var payload []model.SysDomain
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -151,7 +151,7 @@ func SysDomainBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/update [put]
-func SysDomainUpdate(ctx *Context) {
+func (ctr *SysDomain) SysDomainUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -179,7 +179,7 @@ func SysDomainUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/domain/batch_update [put]
-func SysDomainBatchUpdate(ctx *Context) {
+func (ctr *SysDomain) SysDomainBatchUpdate(ctx *Context) {
 	var payload []model.SysDomain
 	var err error
 	var ret []int64
@@ -229,7 +229,7 @@ func SysDomainBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/page [get]
-func SysDomainPage(ctx *Context) {
+func (ctr *SysDomain) SysDomainPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -259,7 +259,7 @@ func SysDomainPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/domain/get [get]
-func SysDomainGet(ctx *Context) {
+func (ctr *SysDomain) SysDomainGet(ctx *Context) {
 	var entity model.SysDomain
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

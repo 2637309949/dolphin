@@ -5,7 +5,6 @@ package app
 
 import (
 	"scene/model"
-	"scene/srv"
 
 	"github.com/sirupsen/logrus"
 )
@@ -20,14 +19,14 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/nsq/add [post]
-func NsqAdd(ctx *Context) {
+func (ctr *Nsq) NsqAdd(ctx *Context) {
 	var payload model.NsqInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.NProducer(ctx, ctx.DB, payload)
+	ret, err := ctr.Srv.Producer(ctx, ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -45,7 +44,7 @@ func NsqAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/nsq/get [get]
-func NsqGet(ctx *Context) {
+func (ctr *Nsq) NsqGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()

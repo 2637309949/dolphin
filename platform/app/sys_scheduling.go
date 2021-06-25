@@ -5,7 +5,6 @@ package app
 
 import (
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/sirupsen/logrus"
 )
 
@@ -19,14 +18,14 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/add [post]
-func SysSchedulingAdd(ctx *Context) {
+func (ctr *SysScheduling) SysSchedulingAdd(ctx *Context) {
 	var payload model.Scheduling
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -45,14 +44,14 @@ func SysSchedulingAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/del [delete]
-func SysSchedulingDel(ctx *Context) {
+func (ctr *SysScheduling) SysSchedulingDel(ctx *Context) {
 	var payload model.Scheduling
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -71,14 +70,14 @@ func SysSchedulingDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/update [put]
-func SysSchedulingUpdate(ctx *Context) {
+func (ctr *SysScheduling) SysSchedulingUpdate(ctx *Context) {
 	var payload model.Scheduling
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ret, err := srv.SysSchedulingTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -97,7 +96,7 @@ func SysSchedulingUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/page [get]
-func SysSchedulingPage(ctx *Context) {
+func (ctr *SysScheduling) SysSchedulingPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -106,7 +105,7 @@ func SysSchedulingPage(ctx *Context) {
 	q.SetRange("create_time")
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
-	ret, err := srv.SysSchedulingTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -124,10 +123,10 @@ func SysSchedulingPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/scheduling/get [get]
-func SysSchedulingGet(ctx *Context) {
+func (ctr *SysScheduling) SysSchedulingGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
-	ret, err := srv.SysSchedulingTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

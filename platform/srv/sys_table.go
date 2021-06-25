@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysTableTODO defined srv
-func SysTableTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysTable struct {
+}
+
+func NewSysTable() *SysTable {
+	return &SysTable{}
+}
+
+// TODO defined srv
+func (srv *SysTable) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

@@ -4,7 +4,6 @@
 package app
 
 import (
-	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/sirupsen/logrus"
 )
 
@@ -15,10 +14,10 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/dingtalk/oauth2 [get]
-func SysDingtalkOauth2(ctx *Context) {
+func (ctr *SysDingtalk) SysDingtalkOauth2(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetUser()
-	ret, err := srv.SysDingtalkTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -74,7 +74,7 @@ func (p Job) Do() error {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/worker/add [post]
-func SysWorkerAdd(ctx *Context) {
+func (ctr *SysWorker) SysWorkerAdd(ctx *Context) {
 	var (
 		payload model.Worker
 		w       Job
@@ -123,7 +123,7 @@ func SysWorkerAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/worker/get [get]
-func SysWorkerGet(ctx *Context) {
+func (ctr *SysWorker) SysWorkerGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("code")
 	worker := App.Manager.Worker()

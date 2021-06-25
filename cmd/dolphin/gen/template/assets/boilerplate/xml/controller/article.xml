@@ -56,4 +56,11 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="todo" desc="article todo" method="get">
+        <param name="id" type="string" desc="todo id" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
 </controller>

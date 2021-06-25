@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SqlmapTODO defined srv
-func SqlmapTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type Sqlmap struct {
+}
+
+func NewSqlmap() *Sqlmap {
+	return &Sqlmap{}
+}
+
+// TODO defined srv
+func (srv *Sqlmap) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

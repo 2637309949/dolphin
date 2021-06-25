@@ -16,7 +16,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
@@ -51,7 +50,7 @@ func init() {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/login [post]
-func SysCasLogin(ctx *Context) {
+func (ctr *SysCas) SysCasLogin(ctx *Context) {
 	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasLogin/Start:%v", err)
@@ -99,7 +98,7 @@ func SysCasLogin(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/logout [get]
-func SysCasLogout(ctx *Context) {
+func (ctr *SysCas) SysCasLogout(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	session.Destroy(context.Background(), ctx.Writer, ctx.Request)
 	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
@@ -113,7 +112,7 @@ func SysCasLogout(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/affirm [post]
-func SysCasAffirm(ctx *Context) {
+func (ctr *SysCas) SysCasAffirm(ctx *Context) {
 	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAffirm/Start:%v", err)
@@ -142,7 +141,7 @@ func SysCasAffirm(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/authorize [get]
-func SysCasAuthorize(ctx *Context) {
+func (ctr *SysCas) SysCasAuthorize(ctx *Context) {
 	var form url.Values
 	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
@@ -177,7 +176,7 @@ func SysCasAuthorize(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/token [post]
-func SysCasToken(ctx *Context) {
+func (ctr *SysCas) SysCasToken(ctx *Context) {
 	err := App.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasToken/HandleTokenRequest:%v", err)
@@ -194,7 +193,7 @@ func SysCasToken(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/url [get]
-func SysCasURL(ctx *Context) {
+func (ctr *SysCas) SysCasURL(ctx *Context) {
 	state := "redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
 }
@@ -206,7 +205,7 @@ func SysCasURL(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/oauth2 [get]
-func SysCasOauth2(ctx *Context) {
+func (ctr *SysCas) SysCasOauth2(ctx *Context) {
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
 	state := f.Get("state")
@@ -245,7 +244,7 @@ func SysCasOauth2(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/refresh [get]
-func SysCasRefresh(ctx *Context) {
+func (ctr *SysCas) SysCasRefresh(ctx *Context) {
 	refreshtoken, ok := App.OAuth2.BearerAuth(ctx.Request)
 	if !ok {
 		logrus.Errorf("SysCasRefresh/BearerAuth:%v", ok)
@@ -272,10 +271,10 @@ func SysCasRefresh(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/check [get]
-func SysCasCheck(ctx *Context) {
+func (ctr *SysCas) SysCasCheck(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("openid")
-	ret, err := srv.SysCasTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -292,7 +291,7 @@ func SysCasCheck(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/profile [get]
-func SysCasProfile(ctx *Context) {
+func (ctr *SysCas) SysCasProfile(ctx *Context) {
 	user := model.SysUser{}
 	_, err := ctx.LoginInInfo(&user)
 	if err != nil {
@@ -326,7 +325,7 @@ func SysCasProfile(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/cas/qrcode [get]
-func SysCasQrcode(ctx *Context) {
+func (ctr *SysCas) SysCasQrcode(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("type", 0)
 	if q.GetInt("type") == 0 {

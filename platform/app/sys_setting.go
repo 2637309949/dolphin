@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/setting/add [post]
-func SysSettingAdd(ctx *Context) {
+func (ctr *SysSetting) SysSettingAdd(ctx *Context) {
 	var payload model.SysSetting
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysSettingAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/setting/batch_add [post]
-func SysSettingBatchAdd(ctx *Context) {
+func (ctr *SysSetting) SysSettingBatchAdd(ctx *Context) {
 	var payload []model.SysSetting
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysSettingBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/setting/del [delete]
-func SysSettingDel(ctx *Context) {
+func (ctr *SysSetting) SysSettingDel(ctx *Context) {
 	var payload model.SysSetting
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -117,7 +117,7 @@ func SysSettingDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/setting/batch_del [delete]
-func SysSettingBatchDel(ctx *Context) {
+func (ctr *SysSetting) SysSettingBatchDel(ctx *Context) {
 	var payload []*model.SysSetting
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -148,7 +148,7 @@ func SysSettingBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/setting/update [put]
-func SysSettingUpdate(ctx *Context) {
+func (ctr *SysSetting) SysSettingUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -176,7 +176,7 @@ func SysSettingUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/setting/batch_update [put]
-func SysSettingBatchUpdate(ctx *Context) {
+func (ctr *SysSetting) SysSettingBatchUpdate(ctx *Context) {
 	var payload []model.SysSetting
 	var err error
 	var ret []int64
@@ -227,7 +227,7 @@ func SysSettingBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/setting/page [get]
-func SysSettingPage(ctx *Context) {
+func (ctr *SysSetting) SysSettingPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -257,7 +257,7 @@ func SysSettingPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/setting/get [get]
-func SysSettingGet(ctx *Context) {
+func (ctr *SysSetting) SysSettingGet(ctx *Context) {
 	var entity model.SysSetting
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

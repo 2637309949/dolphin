@@ -16,7 +16,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sqlmap/selectone [get]
-func SqlmapSelectone(ctx *Context) {
+func (ctr *Sqlmap) SqlmapSelectone(ctx *Context) {
 	var user model.SysUser
 	_, err := ctx.PlatformDB.SqlMapClient("selectone_sys_user", &map[string]interface{}{"id": model.DefaultAdmin.ID.ValueOrZero()}).Get(&user)
 	if err != nil {

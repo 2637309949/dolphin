@@ -21,7 +21,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tracker/page [get]
-func SysTrackerPage(ctx *Context) {
+func (ctr *SysTracker) SysTrackerPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -74,7 +74,7 @@ func SysTrackerPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tracker/get [get]
-func SysTrackerGet(ctx *Context) {
+func (ctr *SysTracker) SysTrackerGet(ctx *Context) {
 	var entity model.SysTracker
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

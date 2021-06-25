@@ -4,8 +4,6 @@
 package app
 
 import (
-	"scene/srv"
-
 	"github.com/sirupsen/logrus"
 )
 
@@ -18,11 +16,11 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/redis/lock [get]
-func RedisLockLock(ctx *Context) {
+func (ctr *RedisLock) RedisLockLock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RedisLockTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -40,11 +38,11 @@ func RedisLockLock(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/redis/unlock [get]
-func RedisLockUnlock(ctx *Context) {
+func (ctr *RedisLock) RedisLockUnlock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := srv.RedisLockTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

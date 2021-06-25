@@ -16,7 +16,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof [GET]
-func DebugPprof(ctx *Context) {
+func (ctr *Debug) DebugPprof(ctx *Context) {
 	pprof.Index(ctx.Writer, ctx.Request)
 }
 
@@ -29,7 +29,7 @@ func DebugPprof(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/heap [GET]
-func DebugHeap(ctx *Context) {
+func (ctr *Debug) DebugHeap(ctx *Context) {
 	pprof.Handler("heap").ServeHTTP(ctx.Writer, ctx.Request)
 }
 
@@ -42,7 +42,7 @@ func DebugHeap(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/goroutine [GET]
-func DebugGoroutine(ctx *Context) {
+func (ctr *Debug) DebugGoroutine(ctx *Context) {
 	pprof.Handler("goroutine").ServeHTTP(ctx.Writer, ctx.Request)
 }
 
@@ -55,7 +55,7 @@ func DebugGoroutine(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/allocs [GET]
-func DebugAllocs(ctx *Context) {
+func (ctr *Debug) DebugAllocs(ctx *Context) {
 	pprof.Handler("allocs").ServeHTTP(ctx.Writer, ctx.Request)
 }
 
@@ -68,7 +68,7 @@ func DebugAllocs(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/block [GET]
-func DebugBlock(ctx *Context) {
+func (ctr *Debug) DebugBlock(ctx *Context) {
 	pprof.Handler("block").ServeHTTP(ctx.Writer, ctx.Request)
 }
 
@@ -81,7 +81,7 @@ func DebugBlock(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/threadcreate [GET]
-func DebugThreadcreate(ctx *Context) {
+func (ctr *Debug) DebugThreadcreate(ctx *Context) {
 	pprof.Handler("threadcreate").ServeHTTP(ctx.Writer, ctx.Request)
 }
 
@@ -94,7 +94,7 @@ func DebugThreadcreate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/cmdline [GET]
-func DebugCmdline(ctx *Context) {
+func (ctr *Debug) DebugCmdline(ctx *Context) {
 	pprof.Cmdline(ctx.Writer, ctx.Request)
 }
 
@@ -107,7 +107,7 @@ func DebugCmdline(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/profile [GET]
-func DebugProfile(ctx *Context) {
+func (ctr *Debug) DebugProfile(ctx *Context) {
 	pprof.Profile(ctx.Writer, ctx.Request)
 }
 
@@ -120,7 +120,7 @@ func DebugProfile(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/symbol [GET,POST]
-func DebugSymbol(ctx *Context) {
+func (ctr *Debug) DebugSymbol(ctx *Context) {
 	pprof.Symbol(ctx.Writer, ctx.Request)
 }
 
@@ -133,7 +133,7 @@ func DebugSymbol(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/trace [GET]
-func DebugTrace(ctx *Context) {
+func (ctr *Debug) DebugTrace(ctx *Context) {
 	pprof.Trace(ctx.Writer, ctx.Request)
 }
 
@@ -146,6 +146,6 @@ func DebugTrace(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/debug/pprof/mutex [GET]
-func DebugMutex(ctx *Context) {
+func (ctr *Debug) DebugMutex(ctx *Context) {
 	pprof.Handler("mutex").ServeHTTP(ctx.Writer, ctx.Request)
 }

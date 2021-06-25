@@ -5,7 +5,6 @@ package app
 
 import (
 	"scene/model"
-	"scene/srv"
 
 	"github.com/sirupsen/logrus"
 )
@@ -20,7 +19,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/encrypt/add [post]
-func EncryptAdd(ctx *Context) {
+func (ctr *Encrypt) EncryptAdd(ctx *Context) {
 	var payload model.EncryptInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -37,10 +36,10 @@ func EncryptAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/encrypt/info [get]
-func EncryptInfo(ctx *Context) {
+func (ctr *Encrypt) EncryptInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := srv.EncryptTODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

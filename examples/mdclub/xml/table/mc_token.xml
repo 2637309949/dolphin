@@ -1,8 +1,0 @@
-<table name="mc_token" desc="用户TOKEN" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
-	<column name="token" desc="token 字符串" type="null.String" xorm="varchar(50) pk notnull default('')" />
-	<column name="user_id" desc="用户ID" type="null.Int" xorm="int(11) notnull" />
-	<column name="device" desc="登陆设备，浏览器 UA 等信息" type="null.String" xorm="varchar(600) notnull default('')" />
-	<column name="create_time" desc="创建时间" type="null.Int" xorm="int(10) notnull default(0)" />
-	<column name="update_time" desc="更新时间" type="null.Int" xorm="int(10) notnull default(0)" />
-	<column name="expire_time" desc="过期时间" type="null.Int" xorm="int(10) notnull default(0)" />
-</table>

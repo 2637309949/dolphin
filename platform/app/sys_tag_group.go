@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/group/add [post]
-func SysTagGroupAdd(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupAdd(ctx *Context) {
 	var payload model.SysTagGroup
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysTagGroupAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/tag/group/batch_add [post]
-func SysTagGroupBatchAdd(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupBatchAdd(ctx *Context) {
 	var payload []model.SysTagGroup
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysTagGroupBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/group/del [delete]
-func SysTagGroupDel(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupDel(ctx *Context) {
 	var payload model.SysTagGroup
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -118,7 +118,7 @@ func SysTagGroupDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/tag/group/batch_del [delete]
-func SysTagGroupBatchDel(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupBatchDel(ctx *Context) {
 	var payload []model.SysTagGroup
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -149,7 +149,7 @@ func SysTagGroupBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/group/update [put]
-func SysTagGroupUpdate(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupUpdate(ctx *Context) {
 	var payload model.SysTagGroup
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -177,7 +177,7 @@ func SysTagGroupUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/tag/group/batch_update [put]
-func SysTagGroupBatchUpdate(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupBatchUpdate(ctx *Context) {
 	var payload []model.SysTagGroup
 	var err error
 	var ret []int64
@@ -227,7 +227,7 @@ func SysTagGroupBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/group/page [get]
-func SysTagGroupPage(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -256,7 +256,7 @@ func SysTagGroupPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/group/get [get]
-func SysTagGroupGet(ctx *Context) {
+func (ctr *SysTagGroup) SysTagGroupGet(ctx *Context) {
 	var entity model.SysTagGroup
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

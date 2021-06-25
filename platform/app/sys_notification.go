@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/notification/add [post]
-func SysNotificationAdd(ctx *Context) {
+func (ctr *SysNotification) SysNotificationAdd(ctx *Context) {
 	var payload model.SysNotification
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysNotificationAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/notification/batch_add [post]
-func SysNotificationBatchAdd(ctx *Context) {
+func (ctr *SysNotification) SysNotificationBatchAdd(ctx *Context) {
 	var payload []model.SysNotification
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysNotificationBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/notification/del [delete]
-func SysNotificationDel(ctx *Context) {
+func (ctr *SysNotification) SysNotificationDel(ctx *Context) {
 	var payload model.SysNotification
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -118,7 +118,7 @@ func SysNotificationDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/notification/batch_del [delete]
-func SysNotificationBatchDel(ctx *Context) {
+func (ctr *SysNotification) SysNotificationBatchDel(ctx *Context) {
 	var payload []model.SysNotification
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -149,7 +149,7 @@ func SysNotificationBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/notification/update [put]
-func SysNotificationUpdate(ctx *Context) {
+func (ctr *SysNotification) SysNotificationUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -177,7 +177,7 @@ func SysNotificationUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/notification/batch_update [put]
-func SysNotificationBatchUpdate(ctx *Context) {
+func (ctr *SysNotification) SysNotificationBatchUpdate(ctx *Context) {
 	var payload []model.SysNotification
 	var err error
 	var ret []int64
@@ -227,7 +227,7 @@ func SysNotificationBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/notification/page [get]
-func SysNotificationPage(ctx *Context) {
+func (ctr *SysNotification) SysNotificationPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -251,7 +251,7 @@ func SysNotificationPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/notification/get [get]
-func SysNotificationGet(ctx *Context) {
+func (ctr *SysNotification) SysNotificationGet(ctx *Context) {
 	var entity model.SysNotification
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

@@ -25,7 +25,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/client/add [post]
-func SysClientAdd(ctx *Context) {
+func (ctr *SysClient) SysClientAdd(ctx *Context) {
 	var payload model.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -57,7 +57,7 @@ func SysClientAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/client/batch_add [post]
-func SysClientBatchAdd(ctx *Context) {
+func (ctr *SysClient) SysClientBatchAdd(ctx *Context) {
 	var payload []model.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -90,7 +90,7 @@ func SysClientBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/client/del [delete]
-func SysClientDel(ctx *Context) {
+func (ctr *SysClient) SysClientDel(ctx *Context) {
 	var payload model.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -120,7 +120,7 @@ func SysClientDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/client/batch_del [delete]
-func SysClientBatchDel(ctx *Context) {
+func (ctr *SysClient) SysClientBatchDel(ctx *Context) {
 	var payload []model.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -151,7 +151,7 @@ func SysClientBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/client/update [put]
-func SysClientUpdate(ctx *Context) {
+func (ctr *SysClient) SysClientUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -179,7 +179,7 @@ func SysClientUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/client/batch_update [put]
-func SysClientBatchUpdate(ctx *Context) {
+func (ctr *SysClient) SysClientBatchUpdate(ctx *Context) {
 	var payload []model.SysClient
 	var err error
 	var ret []int64
@@ -229,7 +229,7 @@ func SysClientBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/client/page [get]
-func SysClientPage(ctx *Context) {
+func (ctr *SysClient) SysClientPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -259,7 +259,7 @@ func SysClientPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/client/get [get]
-func SysClientGet(ctx *Context) {
+func (ctr *SysClient) SysClientGet(ctx *Context) {
 	var entity model.SysClient
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

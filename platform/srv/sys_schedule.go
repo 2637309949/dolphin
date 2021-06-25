@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysScheduleTODO defined srv
-func SysScheduleTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysSchedule struct {
+}
+
+func NewSysSchedule() *SysSchedule {
+	return &SysSchedule{}
+}
+
+// TODO defined srv
+func (srv *SysSchedule) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

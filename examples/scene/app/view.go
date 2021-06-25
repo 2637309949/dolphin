@@ -11,7 +11,7 @@ package app
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/view/file [get]
-func ViewFile(ctx *Context) {
+func (ctr *View) ViewFile(ctx *Context) {
 	ctx.RenderFile("static/file/view.tmpl", "view.txt", map[string]interface{}{"app": 100})
 }
 
@@ -23,7 +23,7 @@ func ViewFile(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/view/html [get]
-func ViewHTML(ctx *Context) {
+func (ctr *View) ViewHTML(ctx *Context) {
 	ctx.RenderHTML("static/file/view.tmpl", map[string]interface{}{"app": 100})
 }
 
@@ -34,6 +34,6 @@ func ViewHTML(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/view/xml [get]
-func ViewXML(ctx *Context) {
+func (ctr *View) ViewXML(ctx *Context) {
 	ctx.RenderXML("static/file/view.tmpl", map[string]interface{}{"app": 100})
 }

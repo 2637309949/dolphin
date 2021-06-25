@@ -31,7 +31,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/add [post]
-func SysAttachmentAdd(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentAdd(ctx *Context) {
 	var payload model.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -62,7 +62,7 @@ func SysAttachmentAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/attachment/batch_add [post]
-func SysAttachmentBatchAdd(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentBatchAdd(ctx *Context) {
 	var payload []model.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -94,7 +94,7 @@ func SysAttachmentBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/upload [post]
-func SysAttachmentUpload(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentUpload(ctx *Context) {
 	var attachments []model.SysAttachment
 	form, err := ctx.MultipartForm()
 	if err != nil {
@@ -162,7 +162,7 @@ func SysAttachmentUpload(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/export [get]
-func SysAttachmentExport(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentExport(ctx *Context) {
 	filePath := path.Join(viper.GetString("http.static"), "files", ctx.QueryString("file_id"))
 	ctx.Header("Content-Description", "File Transfer")
 	ctx.Header("Content-Transfer-Encoding", "binary")
@@ -181,7 +181,7 @@ func SysAttachmentExport(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/del [delete]
-func SysAttachmentDel(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentDel(ctx *Context) {
 	var payload model.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -211,7 +211,7 @@ func SysAttachmentDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/attachment/batch_del [post]
-func SysAttachmentBatchDel(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentBatchDel(ctx *Context) {
 	var payload []model.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -242,7 +242,7 @@ func SysAttachmentBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/update [put]
-func SysAttachmentUpdate(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -270,7 +270,7 @@ func SysAttachmentUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/attachment/batch_update [post]
-func SysAttachmentBatchUpdate(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentBatchUpdate(ctx *Context) {
 	var payload []model.SysAttachment
 	var err error
 	var ret []int64
@@ -320,7 +320,7 @@ func SysAttachmentBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/page [get]
-func SysAttachmentPage(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -349,7 +349,7 @@ func SysAttachmentPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/attachment/get [get]
-func SysAttachmentGet(ctx *Context) {
+func (ctr *SysAttachment) SysAttachmentGet(ctx *Context) {
 	var entity model.SysAttachment
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

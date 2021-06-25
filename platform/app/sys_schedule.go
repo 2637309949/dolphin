@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/add [post]
-func SysScheduleAdd(ctx *Context) {
+func (ctr *SysSchedule) SysScheduleAdd(ctx *Context) {
 	var payload model.SysSchedule
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysScheduleAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/schedule/batch_add [post]
-func SysScheduleBatchAdd(ctx *Context) {
+func (ctr *SysSchedule) SysScheduleBatchAdd(ctx *Context) {
 	var payload []model.SysSchedule
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysScheduleBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/del [delete]
-func SysScheduleDel(ctx *Context) {
+func (ctr *SysSchedule) SysScheduleDel(ctx *Context) {
 	var payload model.SysSchedule
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -117,7 +117,7 @@ func SysScheduleDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/batch_del [delete]
-func SysScheduleBatchDel(ctx *Context) {
+func (ctr *SysSchedule) SysScheduleBatchDel(ctx *Context) {
 	var payload []*model.SysSchedule
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -148,7 +148,7 @@ func SysScheduleBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/update [put]
-func SysScheduleUpdate(ctx *Context) {
+func (ctr *SysSchedule) SysScheduleUpdate(ctx *Context) {
 	var payload model.SysSchedule
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -176,7 +176,7 @@ func SysScheduleUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/schedule/batch_update [post]
-func SysScheduleBatchUpdate(ctx *Context) {
+func (ctr *SysSchedule) SysScheduleBatchUpdate(ctx *Context) {
 	var payload []model.SysSchedule
 	var err error
 	var ret []int64
@@ -226,7 +226,7 @@ func SysScheduleBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/page [get]
-func SysSchedulePage(ctx *Context) {
+func (ctr *SysSchedule) SysSchedulePage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -255,7 +255,7 @@ func SysSchedulePage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/get [get]
-func SysScheduleGet(ctx *Context) {
+func (ctr *SysSchedule) SysScheduleGet(ctx *Context) {
 	var entity model.SysSchedule
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

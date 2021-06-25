@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysWorkerTODO defined srv
-func SysWorkerTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysWorker struct {
+}
+
+func NewSysWorker() *SysWorker {
+	return &SysWorker{}
+}
+
+// TODO defined srv
+func (srv *SysWorker) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

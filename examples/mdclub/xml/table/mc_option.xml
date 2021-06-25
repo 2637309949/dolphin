@@ -1,4 +1,0 @@
-<table name="mc_option" desc="设置表" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
-	<column name="name" desc="字段名" type="null.String" xorm="varchar(40) pk notnull default('')" />
-	<column name="value" desc="字段值" type="null.String" xorm="text(0) notnull" />
-</table>

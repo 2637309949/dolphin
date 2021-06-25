@@ -15,19 +15,17 @@ import (
 
 // Static defined
 type Static struct {
-	Domain func(ctx *Context)
 }
 
 // NewStatic defined
 func NewStatic() *Static {
 	ctr := &Static{}
-	ctr.Domain = SysAreaAdd
 	return ctr
 }
 
 // StaticRoutes defined
 func StaticRoutes(dol *Dolphin) {
-	dol.Group("/").Handle("GET", "/domain.js", Domain)
+	dol.Group("/").Handle("GET", "/domain.js", DomainInstance.Domain)
 }
 
 // DomainFormat defined
@@ -36,7 +34,7 @@ func DomainFormat(ct string) []byte {
 }
 
 // Domain defined
-func Domain(ctx *Context) {
+func (ctr *Static) Domain(ctx *Context) {
 	reg := regexp.MustCompile("^([^:?]+)(:.*)?$")
 	contentType := "application/javascript"
 	groups := reg.FindAllStringSubmatch(ctx.Request.Host, -1)

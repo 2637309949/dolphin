@@ -25,7 +25,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/add [post]
-func SysMenuAdd(ctx *Context) {
+func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 	var payload model.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -71,7 +71,7 @@ func SysMenuAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/menu/batch_add [post]
-func SysMenuBatchAdd(ctx *Context) {
+func (ctr *SysMenu) SysMenuBatchAdd(ctx *Context) {
 	var payload []model.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -104,7 +104,7 @@ func SysMenuBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/del [delete]
-func SysMenuDel(ctx *Context) {
+func (ctr *SysMenu) SysMenuDel(ctx *Context) {
 	var payload model.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -134,7 +134,7 @@ func SysMenuDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/batch_del [delete]
-func SysMenuBatchDel(ctx *Context) {
+func (ctr *SysMenu) SysMenuBatchDel(ctx *Context) {
 	var payload []model.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -165,7 +165,7 @@ func SysMenuBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/update [put]
-func SysMenuUpdate(ctx *Context) {
+func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 	var payload model.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -209,7 +209,7 @@ func SysMenuUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/menu/batch_update [put]
-func SysMenuBatchUpdate(ctx *Context) {
+func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 	var payload []model.SysMenu
 	var err error
 	var ret []int64
@@ -255,7 +255,7 @@ func SysMenuBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Fail
 // @Router /api/sys/menu/sidebar [get]
-func SysMenuSidebar(ctx *Context) {
+func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetBool("isAdmin", ctx.InAdmin())()
 	q.SetUser()
@@ -280,7 +280,7 @@ func SysMenuSidebar(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/page [get]
-func SysMenuPage(ctx *Context) {
+func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -315,7 +315,7 @@ func SysMenuPage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Fail
 // @Router /api/sys/menu/tree [get]
-func SysMenuTree(ctx *Context) {
+func (ctr *SysMenu) SysMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetRule("sys_menu_tree")
@@ -338,7 +338,7 @@ func SysMenuTree(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/menu/get [get]
-func SysMenuGet(ctx *Context) {
+func (ctr *SysMenu) SysMenuGet(ctx *Context) {
 	var entity model.SysMenu
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

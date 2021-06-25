@@ -25,7 +25,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/comment/add [post]
-func SysCommentAdd(ctx *Context) {
+func (ctr *SysComment) SysCommentAdd(ctx *Context) {
 	var payload model.SysComment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -56,7 +56,7 @@ func SysCommentAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/comment/batch_add [post]
-func SysCommentBatchAdd(ctx *Context) {
+func (ctr *SysComment) SysCommentBatchAdd(ctx *Context) {
 	var payload []model.SysComment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -89,7 +89,7 @@ func SysCommentBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/comment/del [delete]
-func SysCommentDel(ctx *Context) {
+func (ctr *SysComment) SysCommentDel(ctx *Context) {
 	var payload model.SysUserTemplate
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -118,7 +118,7 @@ func SysCommentDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/comment/batch_del [delete]
-func SysCommentBatchDel(ctx *Context) {
+func (ctr *SysComment) SysCommentBatchDel(ctx *Context) {
 	var payload []model.SysUserTemplate
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -149,7 +149,7 @@ func SysCommentBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/comment/update [put]
-func SysCommentUpdate(ctx *Context) {
+func (ctr *SysComment) SysCommentUpdate(ctx *Context) {
 	var payload model.SysComment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -177,7 +177,7 @@ func SysCommentUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/comment/batch_update [put]
-func SysCommentBatchUpdate(ctx *Context) {
+func (ctr *SysComment) SysCommentBatchUpdate(ctx *Context) {
 	var payload []model.SysComment
 	var err error
 	var ret []int64
@@ -227,7 +227,7 @@ func SysCommentBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/comment/page [get]
-func SysCommentPage(ctx *Context) {
+func (ctr *SysComment) SysCommentPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -256,7 +256,7 @@ func SysCommentPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/comment/get [get]
-func SysCommentGet(ctx *Context) {
+func (ctr *SysComment) SysCommentGet(ctx *Context) {
 	var entity model.SysComment
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

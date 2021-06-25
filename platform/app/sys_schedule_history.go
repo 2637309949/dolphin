@@ -17,7 +17,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/schedule/history/page [get]
-func SysScheduleHistoryPage(ctx *Context) {
+func (ctr *SysScheduleHistory) SysScheduleHistoryPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)

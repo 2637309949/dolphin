@@ -12,5 +12,4 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.7.1
 	github.com/thoas/go-funk v0.8.0
-	google.golang.org/grpc v1.26.0
 )

@@ -8,19 +8,17 @@ require (
 	github.com/2637309949/dolphin v1.0.57
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/gin-gonic/gin v1.7.1
-	github.com/go-errors/errors v1.1.1
-	github.com/go-redis/redis/v7 v7.4.0
-	github.com/go-redis/redis/v8 v8.8.0
-	github.com/go-redsync/redsync/v4 v4.3.0
+	github.com/go-errors/errors v1.1.1 // indirect
+	github.com/go-redis/redis/v7 v7.4.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang/protobuf v1.5.1
 	github.com/gopherjs/gopherjs v0.0.0-20210202160940-bed99a852dfe // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
-	github.com/kak-tus/ami v0.1.15
+	github.com/kak-tus/ami v0.1.15 // indirect
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
-	github.com/nsqio/go-nsq v1.0.8
+	github.com/nsqio/go-nsq v1.0.8 // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
-	github.com/segmentio/kafka-go v0.4.10
+	github.com/segmentio/kafka-go v0.4.16 // indirect
 	github.com/shopspring/decimal v1.2.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/assertions v1.2.0 // indirect

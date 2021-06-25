@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysDataPermissionTODO defined srv
-func SysDataPermissionTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysDataPermission struct {
+}
+
+func NewSysDataPermission() *SysDataPermission {
+	return &SysDataPermission{}
+}
+
+// TODO defined srv
+func (srv *SysDataPermission) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

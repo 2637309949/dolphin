@@ -5,7 +5,6 @@ package app
 
 import (
 	"scene/model"
-	"scene/srv"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/sirupsen/logrus"
@@ -21,7 +20,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/vote/like [post]
-func VoteLike(ctx *Context) {
+func (ctr *Vote) VoteLike(ctx *Context) {
 	var payload model.VoteInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -29,7 +28,7 @@ func VoteLike(ctx *Context) {
 		return
 	}
 	payload.UserId = null.StringFrom(ctx.GetToken().GetUserID())
-	ret, err := srv.VoteLike(ctx, ctx.DB, payload)
+	ret, err := ctr.Srv.Like(ctx, ctx.DB, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

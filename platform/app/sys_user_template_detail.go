@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/detail/add [post]
-func SysUserTemplateDetailAdd(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailAdd(ctx *Context) {
 	var payload model.SysUserTemplateDetail
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysUserTemplateDetailAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/user/template/detail/batch_add [post]
-func SysUserTemplateDetailBatchAdd(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailBatchAdd(ctx *Context) {
 	var payload []model.SysUserTemplateDetail
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysUserTemplateDetailBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/detail/del [delete]
-func SysUserTemplateDetailDel(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailDel(ctx *Context) {
 	var payload model.SysUserTemplateDetail
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -117,7 +117,7 @@ func SysUserTemplateDetailDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/user/template/detail/batch_del [delete]
-func SysUserTemplateDetailBatchDel(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailBatchDel(ctx *Context) {
 	var payload []model.SysUserTemplateDetail
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -148,7 +148,7 @@ func SysUserTemplateDetailBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/detail/update [put]
-func SysUserTemplateDetailUpdate(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailUpdate(ctx *Context) {
 	var payload model.SysUserTemplateDetail
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -176,7 +176,7 @@ func SysUserTemplateDetailUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/user/template/detail/batch_update [put]
-func SysUserTemplateDetailBatchUpdate(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailBatchUpdate(ctx *Context) {
 	var payload []model.SysUserTemplateDetail
 	var err error
 	var ret []int64
@@ -226,7 +226,7 @@ func SysUserTemplateDetailBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/detail/page [get]
-func SysUserTemplateDetailPage(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -256,7 +256,7 @@ func SysUserTemplateDetailPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/user/template/detail/get [get]
-func SysUserTemplateDetailGet(ctx *Context) {
+func (ctr *SysUserTemplateDetail) SysUserTemplateDetailGet(ctx *Context) {
 	var entity model.SysUserTemplateDetail
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

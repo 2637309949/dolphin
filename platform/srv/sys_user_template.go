@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysUserTemplateTODO defined srv
-func SysUserTemplateTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysUserTemplate struct {
+}
+
+func NewSysUserTemplate() *SysUserTemplate {
+	return &SysUserTemplate{}
+}
+
+// TODO defined srv
+func (srv *SysUserTemplate) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

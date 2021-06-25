@@ -54,8 +54,15 @@ func (h *messageHandler) HandleMessage(m *nsq.Message) error {
 	return nil
 }
 
-// NProducer defined srv
-func NProducer(ctx context.Context, db *xorm.Engine, params model.NsqInfo) (interface{}, error) {
+type Nsq struct {
+}
+
+func NewNsq() *Nsq {
+	return &Nsq{}
+}
+
+// Producer defined srv
+func (srv *Nsq) Producer(ctx context.Context, db *xorm.Engine, params model.NsqInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
 		return nil, err
@@ -87,8 +94,8 @@ func NConsumer() (interface{}, error) {
 	return nil, err
 }
 
-// NsqTODO defined srv
-func NsqTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+// TODO defined srv
+func (srv *Nsq) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

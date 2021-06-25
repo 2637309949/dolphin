@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysRoleMenuTODO defined srv
-func SysRoleMenuTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysRoleMenu struct {
+}
+
+func NewSysRoleMenu() *SysRoleMenu {
+	return &SysRoleMenu{}
+}
+
+// TODO defined srv
+func (srv *SysRoleMenu) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysOptionsetTODO defined srv
-func SysOptionsetTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysOptionset struct {
+}
+
+func NewSysOptionset() *SysOptionset {
+	return &SysOptionset{}
+}
+
+// TODO defined srv
+func (srv *SysOptionset) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

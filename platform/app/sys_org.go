@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/org/add [post]
-func SysOrgAdd(ctx *Context) {
+func (ctr *SysOrg) SysOrgAdd(ctx *Context) {
 	var payload model.SysOrg
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysOrgAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/org/batch_add [post]
-func SysOrgBatchAdd(ctx *Context) {
+func (ctr *SysOrg) SysOrgBatchAdd(ctx *Context) {
 	var payload []model.SysOrg
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysOrgBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/org/del [delete]
-func SysOrgDel(ctx *Context) {
+func (ctr *SysOrg) SysOrgDel(ctx *Context) {
 	var payload model.SysOrg
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -118,7 +118,7 @@ func SysOrgDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/org/batch_del [delete]
-func SysOrgBatchDel(ctx *Context) {
+func (ctr *SysOrg) SysOrgBatchDel(ctx *Context) {
 	var payload []*model.SysOrg
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -149,7 +149,7 @@ func SysOrgBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/org/update [put]
-func SysOrgUpdate(ctx *Context) {
+func (ctr *SysOrg) SysOrgUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -177,7 +177,7 @@ func SysOrgUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/org/batch_update [put]
-func SysOrgBatchUpdate(ctx *Context) {
+func (ctr *SysOrg) SysOrgBatchUpdate(ctx *Context) {
 	var payload []model.SysOrg
 	var err error
 	var ret []int64
@@ -227,7 +227,7 @@ func SysOrgBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/org/page [get]
-func SysOrgPage(ctx *Context) {
+func (ctr *SysOrg) SysOrgPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -262,7 +262,7 @@ func SysOrgPage(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Failure 403 {object} model.Fail
 // @Router /api/sys/org/tree [get]
-func SysOrgTree(ctx *Context) {
+func (ctr *SysOrg) SysOrgTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetRule("sys_org_tree")
@@ -285,7 +285,7 @@ func SysOrgTree(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/org/get [get]
-func SysOrgGet(ctx *Context) {
+func (ctr *SysOrg) SysOrgGet(ctx *Context) {
 	var entity model.SysOrg
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

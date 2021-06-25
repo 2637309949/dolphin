@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/area/add [post]
-func SysAreaAdd(ctx *Context) {
+func (ctr *SysArea) SysAreaAdd(ctx *Context) {
 	var payload model.SysArea
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -56,7 +56,7 @@ func SysAreaAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/area/batch_add [post]
-func SysAreaBatchAdd(ctx *Context) {
+func (ctr *SysArea) SysAreaBatchAdd(ctx *Context) {
 	var payload []model.SysArea
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -89,7 +89,7 @@ func SysAreaBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/area/del [delete]
-func SysAreaDel(ctx *Context) {
+func (ctr *SysArea) SysAreaDel(ctx *Context) {
 	var payload model.SysArea
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -119,7 +119,7 @@ func SysAreaDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/area/batch_del [delete]
-func SysAreaBatchDel(ctx *Context) {
+func (ctr *SysArea) SysAreaBatchDel(ctx *Context) {
 	var payload []model.SysArea
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -150,7 +150,7 @@ func SysAreaBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/area/update [put]
-func SysAreaUpdate(ctx *Context) {
+func (ctr *SysArea) SysAreaUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -178,7 +178,7 @@ func SysAreaUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/area/batch_update [put]
-func SysAreaBatchUpdate(ctx *Context) {
+func (ctr *SysArea) SysAreaBatchUpdate(ctx *Context) {
 	var payload []model.SysArea
 	var err error
 	var ret []int64
@@ -228,7 +228,7 @@ func SysAreaBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/area/page [get]
-func SysAreaPage(ctx *Context) {
+func (ctr *SysArea) SysAreaPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -257,7 +257,7 @@ func SysAreaPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/area/get [get]
-func SysAreaGet(ctx *Context) {
+func (ctr *SysArea) SysAreaGet(ctx *Context) {
 	var entity model.SysArea
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

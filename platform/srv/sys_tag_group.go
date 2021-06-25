@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysTagGroupTODO defined srv
-func SysTagGroupTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysTagGroup struct {
+}
+
+func NewSysTagGroup() *SysTagGroup {
+	return &SysTagGroup{}
+}
+
+// TODO defined srv
+func (srv *SysTagGroup) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

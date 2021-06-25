@@ -6,17 +6,21 @@ package srv
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/platform/app"
-	"github.com/2637309949/dolphin/platform/model"
 	"github.com/sirupsen/logrus"
 )
 
-// ArticleTODO defined srv
-func ArticleTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type Article struct {
+}
+
+func NewArticle() *Article {
+	return &Article{}
+}
+
+// TODO defined srv
+func (srv *Article) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)
@@ -41,18 +45,4 @@ func ArticleTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interfa
 		}
 	}
 	return nil, errors.New("no implementation found")
-}
-
-func init() {
-	id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
-		fmt.Println("hello")
-	})
-	entry, _ := app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
-	app.App.Manager.Cron().TryFunc(entry)
-	app.App.Manager.Worker().AddJobHandler("hello", func(args model.Worker) (interface{}, error) {
-		fmt.Printf("topic=%v, payload=%v", "hello", args.Payload)
-		return map[string]interface{}{
-			"score": 99,
-		}, nil
-	})
 }

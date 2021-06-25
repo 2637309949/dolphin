@@ -10,6 +10,7 @@ import (
 	"scene/model"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/go-errors/errors"
 	"github.com/segmentio/kafka-go"
@@ -50,8 +51,43 @@ func init() {
 	go KafkaConsumer(context.Background())
 }
 
-// KafkaProducer defined srv
-func KafkaProducer(ctx context.Context, params model.KafkaInfo) error {
+type Kafka struct {
+}
+
+func NewKafka() *Kafka {
+	return &Kafka{}
+}
+
+// TODO defined srv
+func (srv *Kafka) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
+	chi := func(cwt context.Context) chan interface{} {
+		chi := make(chan interface{}, 1)
+		go func() {
+			time.Sleep(1 * time.Second)
+			chi <- 100
+			cancel()
+			close(chi)
+		}()
+		return chi
+	}(cwt)
+	for range ticker.C {
+		select {
+		case <-cwt.Done():
+			logrus.Infoln("child process interrupt...")
+			return <-chi, cwt.Err()
+		default:
+			logrus.Infoln("awaiting job...")
+		}
+	}
+	return nil, errors.New("no implementation found")
+}
+
+// Producer defined srv
+func (srv *Kafka) Producer(ctx context.Context, params model.KafkaInfo) error {
 	kpStr, err := json.Marshal(&params)
 	if err != nil {
 		return err
@@ -63,7 +99,7 @@ func KafkaProducer(ctx context.Context, params model.KafkaInfo) error {
 	return nil
 }
 
-// KafkaConsumer defined srv
+// Consumer defined srv
 func KafkaConsumer(ctx context.Context) {
 	defer func() {
 		if err := recover(); err != nil {

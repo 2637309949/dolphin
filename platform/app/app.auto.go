@@ -7,6 +7,7 @@ import (
 	"github.com/2637309949/dolphin/platform/model"
 	"github.com/2637309949/dolphin/platform/rpc"
 	"github.com/2637309949/dolphin/platform/rpc/proto"
+	"github.com/2637309949/dolphin/platform/srv"
 	"google.golang.org/grpc"
 
 	"github.com/spf13/viper"
@@ -14,19 +15,23 @@ import (
 
 // Name project
 var Name = "platform"
-var NopInterceptor = func(ctx *Context) { ctx.Next() }
+var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
 
 // Controller defined
 type Controller struct {
 	Method       string
 	RelativePath string
-	Interceptor  HandlerFunc
-	Handler      HandlerFunc
+	Auth,
+	Roles,
+	Cache,
+	Interceptor,
+	Handler HandlerFunc
 }
 
 // SysAppFun defined
 type SysAppFun struct {
 	Name string
+	Srv  *srv.SysAppFun
 	Add,
 	BatchAdd,
 	Del,
@@ -40,58 +45,85 @@ type SysAppFun struct {
 
 // NewSysAppFun defined
 func NewSysAppFun() *SysAppFun {
-	ctr := &SysAppFun{Name: "sys_app_fun"}
+	ctr := &SysAppFun{Name: "sys_app_fun", Srv: srv.NewSysAppFun()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/app/fun/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysAppFunAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysAppFunAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/app/fun/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysAppFunBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysAppFunBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/app/fun/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysAppFunDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysAppFunDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/app/fun/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysAppFunBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysAppFunBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/app/fun/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysAppFunUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysAppFunUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/app/fun/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysAppFunBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysAppFunBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/app/fun/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysAppFunPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysAppFunPage
 	ctr.Tree.Method = "GET"
 	ctr.Tree.RelativePath = "/sys/app/fun/tree"
-	ctr.Tree.Interceptor = NopInterceptor
-	ctr.Tree.Handler = SysAppFunTree
+	ctr.Tree.Auth = Auth("token")
+	ctr.Tree.Roles = NopHandlerFunc
+	ctr.Tree.Cache = NopHandlerFunc
+	ctr.Tree.Interceptor = NopHandlerFunc
+	ctr.Tree.Handler = ctr.SysAppFunTree
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/app/fun/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysAppFunGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysAppFunGet
 	return ctr
 }
 
 // SysAppFunRoutes defined
 func SysAppFunRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysAppFunInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, Auth("token"), instance.Tree.Interceptor, instance.Tree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, instance.Tree.Auth, instance.Tree.Roles, instance.Tree.Cache, instance.Tree.Interceptor, instance.Tree.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysAppFunInstance defined
@@ -100,6 +132,7 @@ var SysAppFunInstance = NewSysAppFun()
 // SysArea defined
 type SysArea struct {
 	Name string
+	Srv  *srv.SysArea
 	Add,
 	BatchAdd,
 	Del,
@@ -112,53 +145,77 @@ type SysArea struct {
 
 // NewSysArea defined
 func NewSysArea() *SysArea {
-	ctr := &SysArea{Name: "sys_area"}
+	ctr := &SysArea{Name: "sys_area", Srv: srv.NewSysArea()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/area/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysAreaAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysAreaAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/area/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysAreaBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysAreaBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/area/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysAreaDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysAreaDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/area/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysAreaBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysAreaBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/area/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysAreaUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysAreaUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/area/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysAreaBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysAreaBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/area/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysAreaPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysAreaPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/area/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysAreaGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysAreaGet
 	return ctr
 }
 
 // SysAreaRoutes defined
 func SysAreaRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysAreaInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysAreaInstance defined
@@ -167,6 +224,7 @@ var SysAreaInstance = NewSysArea()
 // SysAttachment defined
 type SysAttachment struct {
 	Name string
+	Srv  *srv.SysAttachment
 	Add,
 	BatchAdd,
 	Upload,
@@ -181,63 +239,93 @@ type SysAttachment struct {
 
 // NewSysAttachment defined
 func NewSysAttachment() *SysAttachment {
-	ctr := &SysAttachment{Name: "sys_attachment"}
+	ctr := &SysAttachment{Name: "sys_attachment", Srv: srv.NewSysAttachment()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/attachment/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysAttachmentAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysAttachmentAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/attachment/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysAttachmentBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysAttachmentBatchAdd
 	ctr.Upload.Method = "POST"
 	ctr.Upload.RelativePath = "/sys/attachment/upload"
-	ctr.Upload.Interceptor = NopInterceptor
-	ctr.Upload.Handler = SysAttachmentUpload
+	ctr.Upload.Auth = Auth("token")
+	ctr.Upload.Roles = NopHandlerFunc
+	ctr.Upload.Cache = NopHandlerFunc
+	ctr.Upload.Interceptor = NopHandlerFunc
+	ctr.Upload.Handler = ctr.SysAttachmentUpload
 	ctr.Export.Method = "GET"
 	ctr.Export.RelativePath = "/sys/attachment/export"
-	ctr.Export.Interceptor = NopInterceptor
-	ctr.Export.Handler = SysAttachmentExport
+	ctr.Export.Auth = NopHandlerFunc
+	ctr.Export.Roles = NopHandlerFunc
+	ctr.Export.Cache = NopHandlerFunc
+	ctr.Export.Interceptor = NopHandlerFunc
+	ctr.Export.Handler = ctr.SysAttachmentExport
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/attachment/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysAttachmentDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysAttachmentDel
 	ctr.BatchDel.Method = "POST"
 	ctr.BatchDel.RelativePath = "/sys/attachment/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysAttachmentBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysAttachmentBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/attachment/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysAttachmentUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysAttachmentUpdate
 	ctr.BatchUpdate.Method = "POST"
 	ctr.BatchUpdate.RelativePath = "/sys/attachment/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysAttachmentBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysAttachmentBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/attachment/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysAttachmentPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysAttachmentPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/attachment/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysAttachmentGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysAttachmentGet
 	return ctr
 }
 
 // SysAttachmentRoutes defined
 func SysAttachmentRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysAttachmentInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Upload.Method, instance.Upload.RelativePath, Auth("token"), instance.Upload.Interceptor, instance.Upload.Handler)
-	group.Handle(instance.Export.Method, instance.Export.RelativePath, instance.Export.Interceptor, instance.Export.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Upload.Method, instance.Upload.RelativePath, instance.Upload.Auth, instance.Upload.Roles, instance.Upload.Cache, instance.Upload.Interceptor, instance.Upload.Handler)
+	group.Handle(instance.Export.Method, instance.Export.RelativePath, instance.Export.Auth, instance.Export.Roles, instance.Export.Cache, instance.Export.Interceptor, instance.Export.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysAttachmentInstance defined
@@ -246,6 +334,7 @@ var SysAttachmentInstance = NewSysAttachment()
 // SysCas defined
 type SysCas struct {
 	Name string
+	Srv  *srv.SysCas
 	Login,
 	Logout,
 	Affirm,
@@ -261,68 +350,101 @@ type SysCas struct {
 
 // NewSysCas defined
 func NewSysCas() *SysCas {
-	ctr := &SysCas{Name: "sys_cas"}
+	ctr := &SysCas{Name: "sys_cas", Srv: srv.NewSysCas()}
 	ctr.Login.Method = "POST"
 	ctr.Login.RelativePath = "/sys/cas/login"
-	ctr.Login.Interceptor = NopInterceptor
-	ctr.Login.Handler = SysCasLogin
+	ctr.Login.Auth = NopHandlerFunc
+	ctr.Login.Roles = NopHandlerFunc
+	ctr.Login.Cache = NopHandlerFunc
+	ctr.Login.Interceptor = NopHandlerFunc
+	ctr.Login.Handler = ctr.SysCasLogin
 	ctr.Logout.Method = "GET"
 	ctr.Logout.RelativePath = "/sys/cas/logout"
-	ctr.Logout.Interceptor = NopInterceptor
-	ctr.Logout.Handler = SysCasLogout
+	ctr.Logout.Auth = NopHandlerFunc
+	ctr.Logout.Roles = NopHandlerFunc
+	ctr.Logout.Cache = NopHandlerFunc
+	ctr.Logout.Interceptor = NopHandlerFunc
+	ctr.Logout.Handler = ctr.SysCasLogout
 	ctr.Affirm.Method = "POST"
 	ctr.Affirm.RelativePath = "/sys/cas/affirm"
-	ctr.Affirm.Interceptor = NopInterceptor
-	ctr.Affirm.Handler = SysCasAffirm
+	ctr.Affirm.Auth = NopHandlerFunc
+	ctr.Affirm.Roles = NopHandlerFunc
+	ctr.Affirm.Cache = NopHandlerFunc
+	ctr.Affirm.Interceptor = NopHandlerFunc
+	ctr.Affirm.Handler = ctr.SysCasAffirm
 	ctr.Authorize.Method = "GET"
 	ctr.Authorize.RelativePath = "/sys/cas/authorize"
-	ctr.Authorize.Interceptor = NopInterceptor
-	ctr.Authorize.Handler = SysCasAuthorize
+	ctr.Authorize.Auth = NopHandlerFunc
+	ctr.Authorize.Roles = NopHandlerFunc
+	ctr.Authorize.Cache = NopHandlerFunc
+	ctr.Authorize.Interceptor = NopHandlerFunc
+	ctr.Authorize.Handler = ctr.SysCasAuthorize
 	ctr.Token.Method = "POST"
 	ctr.Token.RelativePath = "/sys/cas/token"
-	ctr.Token.Interceptor = NopInterceptor
-	ctr.Token.Handler = SysCasToken
+	ctr.Token.Auth = NopHandlerFunc
+	ctr.Token.Roles = NopHandlerFunc
+	ctr.Token.Cache = NopHandlerFunc
+	ctr.Token.Interceptor = NopHandlerFunc
+	ctr.Token.Handler = ctr.SysCasToken
 	ctr.URL.Method = "GET"
 	ctr.URL.RelativePath = "/sys/cas/url"
-	ctr.URL.Interceptor = NopInterceptor
-	ctr.URL.Handler = SysCasURL
+	ctr.URL.Auth = NopHandlerFunc
+	ctr.URL.Roles = NopHandlerFunc
+	ctr.URL.Cache = NopHandlerFunc
+	ctr.URL.Interceptor = NopHandlerFunc
+	ctr.URL.Handler = ctr.SysCasURL
 	ctr.Oauth2.Method = "GET"
 	ctr.Oauth2.RelativePath = "/sys/cas/oauth2"
-	ctr.Oauth2.Interceptor = NopInterceptor
-	ctr.Oauth2.Handler = SysCasOauth2
+	ctr.Oauth2.Auth = NopHandlerFunc
+	ctr.Oauth2.Roles = NopHandlerFunc
+	ctr.Oauth2.Cache = NopHandlerFunc
+	ctr.Oauth2.Interceptor = NopHandlerFunc
+	ctr.Oauth2.Handler = ctr.SysCasOauth2
 	ctr.Refresh.Method = "GET"
 	ctr.Refresh.RelativePath = "/sys/cas/refresh"
-	ctr.Refresh.Interceptor = NopInterceptor
-	ctr.Refresh.Handler = SysCasRefresh
+	ctr.Refresh.Auth = NopHandlerFunc
+	ctr.Refresh.Roles = NopHandlerFunc
+	ctr.Refresh.Cache = NopHandlerFunc
+	ctr.Refresh.Interceptor = NopHandlerFunc
+	ctr.Refresh.Handler = ctr.SysCasRefresh
 	ctr.Check.Method = "GET"
 	ctr.Check.RelativePath = "/sys/cas/check"
-	ctr.Check.Interceptor = NopInterceptor
-	ctr.Check.Handler = SysCasCheck
+	ctr.Check.Auth = NopHandlerFunc
+	ctr.Check.Roles = NopHandlerFunc
+	ctr.Check.Cache = NopHandlerFunc
+	ctr.Check.Interceptor = NopHandlerFunc
+	ctr.Check.Handler = ctr.SysCasCheck
 	ctr.Profile.Method = "GET"
 	ctr.Profile.RelativePath = "/sys/cas/profile"
-	ctr.Profile.Interceptor = NopInterceptor
-	ctr.Profile.Handler = SysCasProfile
+	ctr.Profile.Auth = Auth("token")
+	ctr.Profile.Roles = NopHandlerFunc
+	ctr.Profile.Cache = NopHandlerFunc
+	ctr.Profile.Interceptor = NopHandlerFunc
+	ctr.Profile.Handler = ctr.SysCasProfile
 	ctr.Qrcode.Method = "GET"
 	ctr.Qrcode.RelativePath = "/sys/cas/qrcode"
-	ctr.Qrcode.Interceptor = NopInterceptor
-	ctr.Qrcode.Handler = SysCasQrcode
+	ctr.Qrcode.Auth = NopHandlerFunc
+	ctr.Qrcode.Roles = NopHandlerFunc
+	ctr.Qrcode.Cache = NopHandlerFunc
+	ctr.Qrcode.Interceptor = NopHandlerFunc
+	ctr.Qrcode.Handler = ctr.SysCasQrcode
 	return ctr
 }
 
 // SysCasRoutes defined
 func SysCasRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysCasInstance
-	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Interceptor, instance.Login.Handler)
-	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, instance.Logout.Interceptor, instance.Logout.Handler)
-	group.Handle(instance.Affirm.Method, instance.Affirm.RelativePath, instance.Affirm.Interceptor, instance.Affirm.Handler)
-	group.Handle(instance.Authorize.Method, instance.Authorize.RelativePath, instance.Authorize.Interceptor, instance.Authorize.Handler)
-	group.Handle(instance.Token.Method, instance.Token.RelativePath, instance.Token.Interceptor, instance.Token.Handler)
-	group.Handle(instance.URL.Method, instance.URL.RelativePath, instance.URL.Interceptor, instance.URL.Handler)
-	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
-	group.Handle(instance.Refresh.Method, instance.Refresh.RelativePath, instance.Refresh.Interceptor, instance.Refresh.Handler)
-	group.Handle(instance.Check.Method, instance.Check.RelativePath, instance.Check.Interceptor, instance.Check.Handler)
-	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, Auth("token"), instance.Profile.Interceptor, instance.Profile.Handler)
-	group.Handle(instance.Qrcode.Method, instance.Qrcode.RelativePath, instance.Qrcode.Interceptor, instance.Qrcode.Handler)
+	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Auth, instance.Login.Roles, instance.Login.Cache, instance.Login.Interceptor, instance.Login.Handler)
+	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, instance.Logout.Auth, instance.Logout.Roles, instance.Logout.Cache, instance.Logout.Interceptor, instance.Logout.Handler)
+	group.Handle(instance.Affirm.Method, instance.Affirm.RelativePath, instance.Affirm.Auth, instance.Affirm.Roles, instance.Affirm.Cache, instance.Affirm.Interceptor, instance.Affirm.Handler)
+	group.Handle(instance.Authorize.Method, instance.Authorize.RelativePath, instance.Authorize.Auth, instance.Authorize.Roles, instance.Authorize.Cache, instance.Authorize.Interceptor, instance.Authorize.Handler)
+	group.Handle(instance.Token.Method, instance.Token.RelativePath, instance.Token.Auth, instance.Token.Roles, instance.Token.Cache, instance.Token.Interceptor, instance.Token.Handler)
+	group.Handle(instance.URL.Method, instance.URL.RelativePath, instance.URL.Auth, instance.URL.Roles, instance.URL.Cache, instance.URL.Interceptor, instance.URL.Handler)
+	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Auth, instance.Oauth2.Roles, instance.Oauth2.Cache, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
+	group.Handle(instance.Refresh.Method, instance.Refresh.RelativePath, instance.Refresh.Auth, instance.Refresh.Roles, instance.Refresh.Cache, instance.Refresh.Interceptor, instance.Refresh.Handler)
+	group.Handle(instance.Check.Method, instance.Check.RelativePath, instance.Check.Auth, instance.Check.Roles, instance.Check.Cache, instance.Check.Interceptor, instance.Check.Handler)
+	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, instance.Profile.Auth, instance.Profile.Roles, instance.Profile.Cache, instance.Profile.Interceptor, instance.Profile.Handler)
+	group.Handle(instance.Qrcode.Method, instance.Qrcode.RelativePath, instance.Qrcode.Auth, instance.Qrcode.Roles, instance.Qrcode.Cache, instance.Qrcode.Interceptor, instance.Qrcode.Handler)
 }
 
 // SysCasInstance defined
@@ -331,6 +453,7 @@ var SysCasInstance = NewSysCas()
 // SysClient defined
 type SysClient struct {
 	Name string
+	Srv  *srv.SysClient
 	Add,
 	BatchAdd,
 	Del,
@@ -343,53 +466,77 @@ type SysClient struct {
 
 // NewSysClient defined
 func NewSysClient() *SysClient {
-	ctr := &SysClient{Name: "sys_client"}
+	ctr := &SysClient{Name: "sys_client", Srv: srv.NewSysClient()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/client/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysClientAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysClientAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/client/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysClientBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysClientBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/client/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysClientDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysClientDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/client/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysClientBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysClientBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/client/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysClientUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysClientUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/client/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysClientBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysClientBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/client/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysClientPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysClientPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/client/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysClientGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysClientGet
 	return ctr
 }
 
 // SysClientRoutes defined
 func SysClientRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysClientInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysClientInstance defined
@@ -398,6 +545,7 @@ var SysClientInstance = NewSysClient()
 // SysComment defined
 type SysComment struct {
 	Name string
+	Srv  *srv.SysComment
 	Add,
 	BatchAdd,
 	Del,
@@ -410,53 +558,77 @@ type SysComment struct {
 
 // NewSysComment defined
 func NewSysComment() *SysComment {
-	ctr := &SysComment{Name: "sys_comment"}
+	ctr := &SysComment{Name: "sys_comment", Srv: srv.NewSysComment()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/comment/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysCommentAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysCommentAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/comment/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysCommentBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysCommentBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/comment/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysCommentDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysCommentDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/comment/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysCommentBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysCommentBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/comment/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysCommentUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysCommentUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/comment/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysCommentBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysCommentBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/comment/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysCommentPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysCommentPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/comment/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysCommentGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysCommentGet
 	return ctr
 }
 
 // SysCommentRoutes defined
 func SysCommentRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysCommentInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysCommentInstance defined
@@ -465,6 +637,7 @@ var SysCommentInstance = NewSysComment()
 // SysDataPermission defined
 type SysDataPermission struct {
 	Name string
+	Srv  *srv.SysDataPermission
 	Add,
 	BatchAdd,
 	Del,
@@ -477,53 +650,77 @@ type SysDataPermission struct {
 
 // NewSysDataPermission defined
 func NewSysDataPermission() *SysDataPermission {
-	ctr := &SysDataPermission{Name: "sys_data_permission"}
+	ctr := &SysDataPermission{Name: "sys_data_permission", Srv: srv.NewSysDataPermission()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/data/permission/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysDataPermissionAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysDataPermissionAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/data/permission/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysDataPermissionBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysDataPermissionBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/data/permission/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysDataPermissionDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysDataPermissionDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/data/permission/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysDataPermissionBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysDataPermissionBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/data/permission/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysDataPermissionUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysDataPermissionUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/data/permission/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysDataPermissionBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysDataPermissionBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/data/permission/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysDataPermissionPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysDataPermissionPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/data/permission/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysDataPermissionGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysDataPermissionGet
 	return ctr
 }
 
 // SysDataPermissionRoutes defined
 func SysDataPermissionRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysDataPermissionInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysDataPermissionInstance defined
@@ -532,6 +729,7 @@ var SysDataPermissionInstance = NewSysDataPermission()
 // Debug defined
 type Debug struct {
 	Name string
+	Srv  *srv.Debug
 	Pprof,
 	Heap,
 	Goroutine,
@@ -547,68 +745,101 @@ type Debug struct {
 
 // NewDebug defined
 func NewDebug() *Debug {
-	ctr := &Debug{Name: "debug"}
+	ctr := &Debug{Name: "debug", Srv: srv.NewDebug()}
 	ctr.Pprof.Method = "GET"
 	ctr.Pprof.RelativePath = "/pprof/"
-	ctr.Pprof.Interceptor = NopInterceptor
-	ctr.Pprof.Handler = DebugPprof
+	ctr.Pprof.Auth = Auth("token")
+	ctr.Pprof.Roles = Roles("X8e6D3y60K")
+	ctr.Pprof.Cache = NopHandlerFunc
+	ctr.Pprof.Interceptor = NopHandlerFunc
+	ctr.Pprof.Handler = ctr.DebugPprof
 	ctr.Heap.Method = "GET"
 	ctr.Heap.RelativePath = "/pprof/heap"
-	ctr.Heap.Interceptor = NopInterceptor
-	ctr.Heap.Handler = DebugHeap
+	ctr.Heap.Auth = Auth("token")
+	ctr.Heap.Roles = Roles("X8e6D3y60K")
+	ctr.Heap.Cache = NopHandlerFunc
+	ctr.Heap.Interceptor = NopHandlerFunc
+	ctr.Heap.Handler = ctr.DebugHeap
 	ctr.Goroutine.Method = "GET"
 	ctr.Goroutine.RelativePath = "/pprof/goroutine"
-	ctr.Goroutine.Interceptor = NopInterceptor
-	ctr.Goroutine.Handler = DebugGoroutine
+	ctr.Goroutine.Auth = Auth("token")
+	ctr.Goroutine.Roles = Roles("X8e6D3y60K")
+	ctr.Goroutine.Cache = NopHandlerFunc
+	ctr.Goroutine.Interceptor = NopHandlerFunc
+	ctr.Goroutine.Handler = ctr.DebugGoroutine
 	ctr.Allocs.Method = "GET"
 	ctr.Allocs.RelativePath = "/pprof/allocs"
-	ctr.Allocs.Interceptor = NopInterceptor
-	ctr.Allocs.Handler = DebugAllocs
+	ctr.Allocs.Auth = Auth("token")
+	ctr.Allocs.Roles = Roles("X8e6D3y60K")
+	ctr.Allocs.Cache = NopHandlerFunc
+	ctr.Allocs.Interceptor = NopHandlerFunc
+	ctr.Allocs.Handler = ctr.DebugAllocs
 	ctr.Block.Method = "GET"
 	ctr.Block.RelativePath = "/pprof/block"
-	ctr.Block.Interceptor = NopInterceptor
-	ctr.Block.Handler = DebugBlock
+	ctr.Block.Auth = Auth("token")
+	ctr.Block.Roles = Roles("X8e6D3y60K")
+	ctr.Block.Cache = NopHandlerFunc
+	ctr.Block.Interceptor = NopHandlerFunc
+	ctr.Block.Handler = ctr.DebugBlock
 	ctr.Threadcreate.Method = "GET"
 	ctr.Threadcreate.RelativePath = "/pprof/threadcreate"
-	ctr.Threadcreate.Interceptor = NopInterceptor
-	ctr.Threadcreate.Handler = DebugThreadcreate
+	ctr.Threadcreate.Auth = Auth("token")
+	ctr.Threadcreate.Roles = Roles("X8e6D3y60K")
+	ctr.Threadcreate.Cache = NopHandlerFunc
+	ctr.Threadcreate.Interceptor = NopHandlerFunc
+	ctr.Threadcreate.Handler = ctr.DebugThreadcreate
 	ctr.Cmdline.Method = "GET"
 	ctr.Cmdline.RelativePath = "/pprof/cmdline"
-	ctr.Cmdline.Interceptor = NopInterceptor
-	ctr.Cmdline.Handler = DebugCmdline
+	ctr.Cmdline.Auth = Auth("token")
+	ctr.Cmdline.Roles = Roles("X8e6D3y60K")
+	ctr.Cmdline.Cache = NopHandlerFunc
+	ctr.Cmdline.Interceptor = NopHandlerFunc
+	ctr.Cmdline.Handler = ctr.DebugCmdline
 	ctr.Profile.Method = "GET"
 	ctr.Profile.RelativePath = "/pprof/profile"
-	ctr.Profile.Interceptor = NopInterceptor
-	ctr.Profile.Handler = DebugProfile
+	ctr.Profile.Auth = Auth("token")
+	ctr.Profile.Roles = Roles("X8e6D3y60K")
+	ctr.Profile.Cache = NopHandlerFunc
+	ctr.Profile.Interceptor = NopHandlerFunc
+	ctr.Profile.Handler = ctr.DebugProfile
 	ctr.Symbol.Method = "GET,POST"
 	ctr.Symbol.RelativePath = "/pprof/symbol"
-	ctr.Symbol.Interceptor = NopInterceptor
-	ctr.Symbol.Handler = DebugSymbol
+	ctr.Symbol.Auth = Auth("token")
+	ctr.Symbol.Roles = Roles("X8e6D3y60K")
+	ctr.Symbol.Cache = NopHandlerFunc
+	ctr.Symbol.Interceptor = NopHandlerFunc
+	ctr.Symbol.Handler = ctr.DebugSymbol
 	ctr.Trace.Method = "GET"
 	ctr.Trace.RelativePath = "/pprof/trace"
-	ctr.Trace.Interceptor = NopInterceptor
-	ctr.Trace.Handler = DebugTrace
+	ctr.Trace.Auth = Auth("token")
+	ctr.Trace.Roles = Roles("X8e6D3y60K")
+	ctr.Trace.Cache = NopHandlerFunc
+	ctr.Trace.Interceptor = NopHandlerFunc
+	ctr.Trace.Handler = ctr.DebugTrace
 	ctr.Mutex.Method = "GET"
 	ctr.Mutex.RelativePath = "/pprof/mutex"
-	ctr.Mutex.Interceptor = NopInterceptor
-	ctr.Mutex.Handler = DebugMutex
+	ctr.Mutex.Auth = Auth("token")
+	ctr.Mutex.Roles = Roles("X8e6D3y60K")
+	ctr.Mutex.Cache = NopHandlerFunc
+	ctr.Mutex.Interceptor = NopHandlerFunc
+	ctr.Mutex.Handler = ctr.DebugMutex
 	return ctr
 }
 
 // DebugRoutes defined
 func DebugRoutes(dol *Dolphin) {
 	group, instance := dol.Group("/debug"), DebugInstance
-	group.Handle(instance.Pprof.Method, instance.Pprof.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Pprof.Interceptor, instance.Pprof.Handler)
-	group.Handle(instance.Heap.Method, instance.Heap.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Heap.Interceptor, instance.Heap.Handler)
-	group.Handle(instance.Goroutine.Method, instance.Goroutine.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Goroutine.Interceptor, instance.Goroutine.Handler)
-	group.Handle(instance.Allocs.Method, instance.Allocs.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Allocs.Interceptor, instance.Allocs.Handler)
-	group.Handle(instance.Block.Method, instance.Block.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Block.Interceptor, instance.Block.Handler)
-	group.Handle(instance.Threadcreate.Method, instance.Threadcreate.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Threadcreate.Interceptor, instance.Threadcreate.Handler)
-	group.Handle(instance.Cmdline.Method, instance.Cmdline.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Cmdline.Interceptor, instance.Cmdline.Handler)
-	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Profile.Interceptor, instance.Profile.Handler)
-	group.Handle(instance.Symbol.Method, instance.Symbol.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Symbol.Interceptor, instance.Symbol.Handler)
-	group.Handle(instance.Trace.Method, instance.Trace.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Trace.Interceptor, instance.Trace.Handler)
-	group.Handle(instance.Mutex.Method, instance.Mutex.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Mutex.Interceptor, instance.Mutex.Handler)
+	group.Handle(instance.Pprof.Method, instance.Pprof.RelativePath, instance.Pprof.Auth, instance.Pprof.Roles, instance.Pprof.Cache, instance.Pprof.Interceptor, instance.Pprof.Handler)
+	group.Handle(instance.Heap.Method, instance.Heap.RelativePath, instance.Heap.Auth, instance.Heap.Roles, instance.Heap.Cache, instance.Heap.Interceptor, instance.Heap.Handler)
+	group.Handle(instance.Goroutine.Method, instance.Goroutine.RelativePath, instance.Goroutine.Auth, instance.Goroutine.Roles, instance.Goroutine.Cache, instance.Goroutine.Interceptor, instance.Goroutine.Handler)
+	group.Handle(instance.Allocs.Method, instance.Allocs.RelativePath, instance.Allocs.Auth, instance.Allocs.Roles, instance.Allocs.Cache, instance.Allocs.Interceptor, instance.Allocs.Handler)
+	group.Handle(instance.Block.Method, instance.Block.RelativePath, instance.Block.Auth, instance.Block.Roles, instance.Block.Cache, instance.Block.Interceptor, instance.Block.Handler)
+	group.Handle(instance.Threadcreate.Method, instance.Threadcreate.RelativePath, instance.Threadcreate.Auth, instance.Threadcreate.Roles, instance.Threadcreate.Cache, instance.Threadcreate.Interceptor, instance.Threadcreate.Handler)
+	group.Handle(instance.Cmdline.Method, instance.Cmdline.RelativePath, instance.Cmdline.Auth, instance.Cmdline.Roles, instance.Cmdline.Cache, instance.Cmdline.Interceptor, instance.Cmdline.Handler)
+	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, instance.Profile.Auth, instance.Profile.Roles, instance.Profile.Cache, instance.Profile.Interceptor, instance.Profile.Handler)
+	group.Handle(instance.Symbol.Method, instance.Symbol.RelativePath, instance.Symbol.Auth, instance.Symbol.Roles, instance.Symbol.Cache, instance.Symbol.Interceptor, instance.Symbol.Handler)
+	group.Handle(instance.Trace.Method, instance.Trace.RelativePath, instance.Trace.Auth, instance.Trace.Roles, instance.Trace.Cache, instance.Trace.Interceptor, instance.Trace.Handler)
+	group.Handle(instance.Mutex.Method, instance.Mutex.RelativePath, instance.Mutex.Auth, instance.Mutex.Roles, instance.Mutex.Cache, instance.Mutex.Interceptor, instance.Mutex.Handler)
 }
 
 // DebugInstance defined
@@ -617,23 +848,27 @@ var DebugInstance = NewDebug()
 // SysDingtalk defined
 type SysDingtalk struct {
 	Name   string
+	Srv    *srv.SysDingtalk
 	Oauth2 Controller
 }
 
 // NewSysDingtalk defined
 func NewSysDingtalk() *SysDingtalk {
-	ctr := &SysDingtalk{Name: "sys_dingtalk"}
+	ctr := &SysDingtalk{Name: "sys_dingtalk", Srv: srv.NewSysDingtalk()}
 	ctr.Oauth2.Method = "GET"
 	ctr.Oauth2.RelativePath = "/sys/dingtalk/oauth2"
-	ctr.Oauth2.Interceptor = NopInterceptor
-	ctr.Oauth2.Handler = SysDingtalkOauth2
+	ctr.Oauth2.Auth = NopHandlerFunc
+	ctr.Oauth2.Roles = NopHandlerFunc
+	ctr.Oauth2.Cache = NopHandlerFunc
+	ctr.Oauth2.Interceptor = NopHandlerFunc
+	ctr.Oauth2.Handler = ctr.SysDingtalkOauth2
 	return ctr
 }
 
 // SysDingtalkRoutes defined
 func SysDingtalkRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysDingtalkInstance
-	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
+	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Auth, instance.Oauth2.Roles, instance.Oauth2.Cache, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
 }
 
 // SysDingtalkInstance defined
@@ -642,6 +877,7 @@ var SysDingtalkInstance = NewSysDingtalk()
 // SysDomain defined
 type SysDomain struct {
 	Name string
+	Srv  *srv.SysDomain
 	Add,
 	BatchAdd,
 	Del,
@@ -654,53 +890,77 @@ type SysDomain struct {
 
 // NewSysDomain defined
 func NewSysDomain() *SysDomain {
-	ctr := &SysDomain{Name: "sys_domain"}
+	ctr := &SysDomain{Name: "sys_domain", Srv: srv.NewSysDomain()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/domain/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysDomainAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysDomainAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/domain/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysDomainBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysDomainBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/domain/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysDomainDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysDomainDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/domain/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysDomainBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysDomainBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/domain/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysDomainUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysDomainUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/domain/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysDomainBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysDomainBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/domain/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysDomainPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysDomainPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/domain/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysDomainGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysDomainGet
 	return ctr
 }
 
 // SysDomainRoutes defined
 func SysDomainRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysDomainInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysDomainInstance defined
@@ -709,6 +969,7 @@ var SysDomainInstance = NewSysDomain()
 // SysMenu defined
 type SysMenu struct {
 	Name string
+	Srv  *srv.SysMenu
 	Add,
 	BatchAdd,
 	Del,
@@ -723,63 +984,93 @@ type SysMenu struct {
 
 // NewSysMenu defined
 func NewSysMenu() *SysMenu {
-	ctr := &SysMenu{Name: "sys_menu"}
+	ctr := &SysMenu{Name: "sys_menu", Srv: srv.NewSysMenu()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/menu/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysMenuAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysMenuAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/menu/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysMenuBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysMenuBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/menu/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysMenuDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysMenuDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/menu/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysMenuBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysMenuBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/menu/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysMenuUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysMenuUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/menu/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysMenuBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysMenuBatchUpdate
 	ctr.Sidebar.Method = "GET"
 	ctr.Sidebar.RelativePath = "/sys/menu/sidebar"
-	ctr.Sidebar.Interceptor = NopInterceptor
-	ctr.Sidebar.Handler = SysMenuSidebar
+	ctr.Sidebar.Auth = Auth("token")
+	ctr.Sidebar.Roles = NopHandlerFunc
+	ctr.Sidebar.Cache = NopHandlerFunc
+	ctr.Sidebar.Interceptor = NopHandlerFunc
+	ctr.Sidebar.Handler = ctr.SysMenuSidebar
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/menu/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysMenuPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysMenuPage
 	ctr.Tree.Method = "GET"
 	ctr.Tree.RelativePath = "/sys/menu/tree"
-	ctr.Tree.Interceptor = NopInterceptor
-	ctr.Tree.Handler = SysMenuTree
+	ctr.Tree.Auth = Auth("token")
+	ctr.Tree.Roles = NopHandlerFunc
+	ctr.Tree.Cache = NopHandlerFunc
+	ctr.Tree.Interceptor = NopHandlerFunc
+	ctr.Tree.Handler = ctr.SysMenuTree
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/menu/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysMenuGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysMenuGet
 	return ctr
 }
 
 // SysMenuRoutes defined
 func SysMenuRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysMenuInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Sidebar.Method, instance.Sidebar.RelativePath, Auth("token"), instance.Sidebar.Interceptor, instance.Sidebar.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, Auth("token"), instance.Tree.Interceptor, instance.Tree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Sidebar.Method, instance.Sidebar.RelativePath, instance.Sidebar.Auth, instance.Sidebar.Roles, instance.Sidebar.Cache, instance.Sidebar.Interceptor, instance.Sidebar.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, instance.Tree.Auth, instance.Tree.Roles, instance.Tree.Cache, instance.Tree.Interceptor, instance.Tree.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysMenuInstance defined
@@ -788,6 +1079,7 @@ var SysMenuInstance = NewSysMenu()
 // SysNotification defined
 type SysNotification struct {
 	Name string
+	Srv  *srv.SysNotification
 	Add,
 	BatchAdd,
 	Del,
@@ -800,53 +1092,77 @@ type SysNotification struct {
 
 // NewSysNotification defined
 func NewSysNotification() *SysNotification {
-	ctr := &SysNotification{Name: "sys_notification"}
+	ctr := &SysNotification{Name: "sys_notification", Srv: srv.NewSysNotification()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/notification/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysNotificationAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysNotificationAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/notification/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysNotificationBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysNotificationBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/notification/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysNotificationDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysNotificationDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/notification/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysNotificationBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysNotificationBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/notification/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysNotificationUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysNotificationUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/notification/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysNotificationBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysNotificationBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/notification/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysNotificationPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysNotificationPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/notification/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysNotificationGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysNotificationGet
 	return ctr
 }
 
 // SysNotificationRoutes defined
 func SysNotificationRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysNotificationInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysNotificationInstance defined
@@ -855,6 +1171,7 @@ var SysNotificationInstance = NewSysNotification()
 // SysOptionset defined
 type SysOptionset struct {
 	Name string
+	Srv  *srv.SysOptionset
 	Add,
 	BatchAdd,
 	Del,
@@ -867,53 +1184,77 @@ type SysOptionset struct {
 
 // NewSysOptionset defined
 func NewSysOptionset() *SysOptionset {
-	ctr := &SysOptionset{Name: "sys_optionset"}
+	ctr := &SysOptionset{Name: "sys_optionset", Srv: srv.NewSysOptionset()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/optionset/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysOptionsetAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysOptionsetAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/optionset/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysOptionsetBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysOptionsetBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/optionset/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysOptionsetDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysOptionsetDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/optionset/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysOptionsetBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysOptionsetBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/optionset/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysOptionsetUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysOptionsetUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/optionset/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysOptionsetBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysOptionsetBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/optionset/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysOptionsetPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysOptionsetPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/optionset/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysOptionsetGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysOptionsetGet
 	return ctr
 }
 
 // SysOptionsetRoutes defined
 func SysOptionsetRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysOptionsetInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysOptionsetInstance defined
@@ -922,6 +1263,7 @@ var SysOptionsetInstance = NewSysOptionset()
 // SysOrg defined
 type SysOrg struct {
 	Name string
+	Srv  *srv.SysOrg
 	Add,
 	BatchAdd,
 	Del,
@@ -935,58 +1277,85 @@ type SysOrg struct {
 
 // NewSysOrg defined
 func NewSysOrg() *SysOrg {
-	ctr := &SysOrg{Name: "sys_org"}
+	ctr := &SysOrg{Name: "sys_org", Srv: srv.NewSysOrg()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/org/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysOrgAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysOrgAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/org/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysOrgBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysOrgBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/org/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysOrgDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysOrgDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/org/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysOrgBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysOrgBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/org/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysOrgUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysOrgUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/org/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysOrgBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysOrgBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/org/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysOrgPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysOrgPage
 	ctr.Tree.Method = "GET"
 	ctr.Tree.RelativePath = "/sys/org/tree"
-	ctr.Tree.Interceptor = NopInterceptor
-	ctr.Tree.Handler = SysOrgTree
+	ctr.Tree.Auth = Auth("token")
+	ctr.Tree.Roles = NopHandlerFunc
+	ctr.Tree.Cache = NopHandlerFunc
+	ctr.Tree.Interceptor = NopHandlerFunc
+	ctr.Tree.Handler = ctr.SysOrgTree
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/org/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysOrgGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysOrgGet
 	return ctr
 }
 
 // SysOrgRoutes defined
 func SysOrgRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysOrgInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, Auth("token"), instance.Tree.Interceptor, instance.Tree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, instance.Tree.Auth, instance.Tree.Roles, instance.Tree.Cache, instance.Tree.Interceptor, instance.Tree.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysOrgInstance defined
@@ -995,6 +1364,7 @@ var SysOrgInstance = NewSysOrg()
 // SysPermission defined
 type SysPermission struct {
 	Name string
+	Srv  *srv.SysPermission
 	Add,
 	BatchAdd,
 	Del,
@@ -1007,53 +1377,77 @@ type SysPermission struct {
 
 // NewSysPermission defined
 func NewSysPermission() *SysPermission {
-	ctr := &SysPermission{Name: "sys_permission"}
+	ctr := &SysPermission{Name: "sys_permission", Srv: srv.NewSysPermission()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/permission/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysPermissionAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysPermissionAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/permission/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysPermissionBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysPermissionBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/permission/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysPermissionDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysPermissionDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/permission/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysPermissionBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysPermissionBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/permission/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysPermissionUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysPermissionUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/permission/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysPermissionBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysPermissionBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/permission/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysPermissionPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysPermissionPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/permission/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysPermissionGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysPermissionGet
 	return ctr
 }
 
 // SysPermissionRoutes defined
 func SysPermissionRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysPermissionInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysPermissionInstance defined
@@ -1062,6 +1456,7 @@ var SysPermissionInstance = NewSysPermission()
 // SysRole defined
 type SysRole struct {
 	Name string
+	Srv  *srv.SysRole
 	Add,
 	BatchAdd,
 	Del,
@@ -1076,63 +1471,93 @@ type SysRole struct {
 
 // NewSysRole defined
 func NewSysRole() *SysRole {
-	ctr := &SysRole{Name: "sys_role"}
+	ctr := &SysRole{Name: "sys_role", Srv: srv.NewSysRole()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/role/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysRoleAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysRoleAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/role/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysRoleBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysRoleBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/role/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysRoleDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysRoleDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/role/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysRoleBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysRoleBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/role/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysRoleUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysRoleUpdate
 	ctr.BatchUpdate.Method = "POST"
 	ctr.BatchUpdate.RelativePath = "/sys/role/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysRoleBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysRoleBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/role/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysRolePage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysRolePage
 	ctr.RoleMenuTree.Method = "GET"
 	ctr.RoleMenuTree.RelativePath = "/sys/role/role_menu_tree"
-	ctr.RoleMenuTree.Interceptor = NopInterceptor
-	ctr.RoleMenuTree.Handler = SysRoleRoleMenuTree
+	ctr.RoleMenuTree.Auth = Auth("token")
+	ctr.RoleMenuTree.Roles = NopHandlerFunc
+	ctr.RoleMenuTree.Cache = NopHandlerFunc
+	ctr.RoleMenuTree.Interceptor = NopHandlerFunc
+	ctr.RoleMenuTree.Handler = ctr.SysRoleRoleMenuTree
 	ctr.RoleAppFunTree.Method = "GET"
 	ctr.RoleAppFunTree.RelativePath = "/sys/role/role_app_fun_tree"
-	ctr.RoleAppFunTree.Interceptor = NopInterceptor
-	ctr.RoleAppFunTree.Handler = SysRoleRoleAppFunTree
+	ctr.RoleAppFunTree.Auth = Auth("token")
+	ctr.RoleAppFunTree.Roles = NopHandlerFunc
+	ctr.RoleAppFunTree.Cache = NopHandlerFunc
+	ctr.RoleAppFunTree.Interceptor = NopHandlerFunc
+	ctr.RoleAppFunTree.Handler = ctr.SysRoleRoleAppFunTree
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/role/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysRoleGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysRoleGet
 	return ctr
 }
 
 // SysRoleRoutes defined
 func SysRoleRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysRoleInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.RoleMenuTree.Method, instance.RoleMenuTree.RelativePath, Auth("token"), instance.RoleMenuTree.Interceptor, instance.RoleMenuTree.Handler)
-	group.Handle(instance.RoleAppFunTree.Method, instance.RoleAppFunTree.RelativePath, Auth("token"), instance.RoleAppFunTree.Interceptor, instance.RoleAppFunTree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.RoleMenuTree.Method, instance.RoleMenuTree.RelativePath, instance.RoleMenuTree.Auth, instance.RoleMenuTree.Roles, instance.RoleMenuTree.Cache, instance.RoleMenuTree.Interceptor, instance.RoleMenuTree.Handler)
+	group.Handle(instance.RoleAppFunTree.Method, instance.RoleAppFunTree.RelativePath, instance.RoleAppFunTree.Auth, instance.RoleAppFunTree.Roles, instance.RoleAppFunTree.Cache, instance.RoleAppFunTree.Interceptor, instance.RoleAppFunTree.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysRoleInstance defined
@@ -1141,6 +1566,7 @@ var SysRoleInstance = NewSysRole()
 // SysRoleMenu defined
 type SysRoleMenu struct {
 	Name string
+	Srv  *srv.SysRoleMenu
 	Add,
 	BatchAdd,
 	Del,
@@ -1153,53 +1579,77 @@ type SysRoleMenu struct {
 
 // NewSysRoleMenu defined
 func NewSysRoleMenu() *SysRoleMenu {
-	ctr := &SysRoleMenu{Name: "sys_role_menu"}
+	ctr := &SysRoleMenu{Name: "sys_role_menu", Srv: srv.NewSysRoleMenu()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/role/menu/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysRoleMenuAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysRoleMenuAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/role/menu/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysRoleMenuBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysRoleMenuBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/role/menu/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysRoleMenuDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysRoleMenuDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/role/menu/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysRoleMenuBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysRoleMenuBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/role/menu/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysRoleMenuUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysRoleMenuUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/role/menu/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysRoleMenuBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysRoleMenuBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/role/menu/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysRoleMenuPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysRoleMenuPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/role/menu/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysRoleMenuGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysRoleMenuGet
 	return ctr
 }
 
 // SysRoleMenuRoutes defined
 func SysRoleMenuRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysRoleMenuInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysRoleMenuInstance defined
@@ -1208,6 +1658,7 @@ var SysRoleMenuInstance = NewSysRoleMenu()
 // SysSchedule defined
 type SysSchedule struct {
 	Name string
+	Srv  *srv.SysSchedule
 	Add,
 	BatchAdd,
 	Del,
@@ -1220,53 +1671,77 @@ type SysSchedule struct {
 
 // NewSysSchedule defined
 func NewSysSchedule() *SysSchedule {
-	ctr := &SysSchedule{Name: "sys_schedule"}
+	ctr := &SysSchedule{Name: "sys_schedule", Srv: srv.NewSysSchedule()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/schedule/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysScheduleAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysScheduleAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/schedule/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysScheduleBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysScheduleBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/schedule/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysScheduleDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysScheduleDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/schedule/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysScheduleBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysScheduleBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/schedule/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysScheduleUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysScheduleUpdate
 	ctr.BatchUpdate.Method = "POST"
 	ctr.BatchUpdate.RelativePath = "/sys/schedule/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysScheduleBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysScheduleBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/schedule/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysSchedulePage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysSchedulePage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/schedule/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysScheduleGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysScheduleGet
 	return ctr
 }
 
 // SysScheduleRoutes defined
 func SysScheduleRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysScheduleInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysScheduleInstance defined
@@ -1275,23 +1750,27 @@ var SysScheduleInstance = NewSysSchedule()
 // SysScheduleHistory defined
 type SysScheduleHistory struct {
 	Name string
+	Srv  *srv.SysScheduleHistory
 	Page Controller
 }
 
 // NewSysScheduleHistory defined
 func NewSysScheduleHistory() *SysScheduleHistory {
-	ctr := &SysScheduleHistory{Name: "sys_schedule_history"}
+	ctr := &SysScheduleHistory{Name: "sys_schedule_history", Srv: srv.NewSysScheduleHistory()}
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/schedule/history/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysScheduleHistoryPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysScheduleHistoryPage
 	return ctr
 }
 
 // SysScheduleHistoryRoutes defined
 func SysScheduleHistoryRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysScheduleHistoryInstance
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
 }
 
 // SysScheduleHistoryInstance defined
@@ -1300,6 +1779,7 @@ var SysScheduleHistoryInstance = NewSysScheduleHistory()
 // SysScheduling defined
 type SysScheduling struct {
 	Name string
+	Srv  *srv.SysScheduling
 	Add,
 	Del,
 	Update,
@@ -1309,38 +1789,53 @@ type SysScheduling struct {
 
 // NewSysScheduling defined
 func NewSysScheduling() *SysScheduling {
-	ctr := &SysScheduling{Name: "sys_scheduling"}
+	ctr := &SysScheduling{Name: "sys_scheduling", Srv: srv.NewSysScheduling()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/scheduling/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysSchedulingAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysSchedulingAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/scheduling/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysSchedulingDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysSchedulingDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/scheduling/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysSchedulingUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysSchedulingUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/scheduling/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysSchedulingPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysSchedulingPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/scheduling/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysSchedulingGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysSchedulingGet
 	return ctr
 }
 
 // SysSchedulingRoutes defined
 func SysSchedulingRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysSchedulingInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysSchedulingInstance defined
@@ -1349,6 +1844,7 @@ var SysSchedulingInstance = NewSysScheduling()
 // SysSetting defined
 type SysSetting struct {
 	Name string
+	Srv  *srv.SysSetting
 	Add,
 	BatchAdd,
 	Del,
@@ -1361,53 +1857,77 @@ type SysSetting struct {
 
 // NewSysSetting defined
 func NewSysSetting() *SysSetting {
-	ctr := &SysSetting{Name: "sys_setting"}
+	ctr := &SysSetting{Name: "sys_setting", Srv: srv.NewSysSetting()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/setting/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysSettingAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysSettingAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/setting/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysSettingBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysSettingBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/setting/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysSettingDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysSettingDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/setting/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysSettingBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysSettingBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/setting/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysSettingUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysSettingUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/setting/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysSettingBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysSettingBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/setting/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysSettingPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysSettingPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/setting/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysSettingGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysSettingGet
 	return ctr
 }
 
 // SysSettingRoutes defined
 func SysSettingRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysSettingInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysSettingInstance defined
@@ -1416,6 +1936,7 @@ var SysSettingInstance = NewSysSetting()
 // SysTable defined
 type SysTable struct {
 	Name string
+	Srv  *srv.SysTable
 	Add,
 	BatchAdd,
 	Del,
@@ -1428,53 +1949,77 @@ type SysTable struct {
 
 // NewSysTable defined
 func NewSysTable() *SysTable {
-	ctr := &SysTable{Name: "sys_table"}
+	ctr := &SysTable{Name: "sys_table", Srv: srv.NewSysTable()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/table/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysTableAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysTableAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/table/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysTableBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysTableBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/table/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysTableDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysTableDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/table/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysTableBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysTableBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/table/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysTableUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysTableUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/table/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysTableBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysTableBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/table/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysTablePage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysTablePage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/table/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysTableGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysTableGet
 	return ctr
 }
 
 // SysTableRoutes defined
 func SysTableRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysTableInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysTableInstance defined
@@ -1483,6 +2028,7 @@ var SysTableInstance = NewSysTable()
 // SysTableColumn defined
 type SysTableColumn struct {
 	Name string
+	Srv  *srv.SysTableColumn
 	Add,
 	BatchAdd,
 	Del,
@@ -1495,53 +2041,77 @@ type SysTableColumn struct {
 
 // NewSysTableColumn defined
 func NewSysTableColumn() *SysTableColumn {
-	ctr := &SysTableColumn{Name: "sys_table_column"}
+	ctr := &SysTableColumn{Name: "sys_table_column", Srv: srv.NewSysTableColumn()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/table/column/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysTableColumnAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysTableColumnAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/table/column/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysTableColumnBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysTableColumnBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/table/column/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysTableColumnDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysTableColumnDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/table/column/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysTableColumnBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysTableColumnBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/table/column/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysTableColumnUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysTableColumnUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/table/column/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysTableColumnBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysTableColumnBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/table/column/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysTableColumnPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysTableColumnPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/table/column/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysTableColumnGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysTableColumnGet
 	return ctr
 }
 
 // SysTableColumnRoutes defined
 func SysTableColumnRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysTableColumnInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysTableColumnInstance defined
@@ -1550,6 +2120,7 @@ var SysTableColumnInstance = NewSysTableColumn()
 // SysTag defined
 type SysTag struct {
 	Name string
+	Srv  *srv.SysTag
 	Add,
 	BatchAdd,
 	Del,
@@ -1562,53 +2133,77 @@ type SysTag struct {
 
 // NewSysTag defined
 func NewSysTag() *SysTag {
-	ctr := &SysTag{Name: "sys_tag"}
+	ctr := &SysTag{Name: "sys_tag", Srv: srv.NewSysTag()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/tag/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysTagAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysTagAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/tag/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysTagBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysTagBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/tag/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysTagDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysTagDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/tag/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysTagBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysTagBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/tag/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysTagUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysTagUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/tag/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysTagBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysTagBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/tag/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysTagPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysTagPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/tag/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysTagGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysTagGet
 	return ctr
 }
 
 // SysTagRoutes defined
 func SysTagRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysTagInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysTagInstance defined
@@ -1617,6 +2212,7 @@ var SysTagInstance = NewSysTag()
 // SysTagGroup defined
 type SysTagGroup struct {
 	Name string
+	Srv  *srv.SysTagGroup
 	Add,
 	BatchAdd,
 	Del,
@@ -1629,53 +2225,77 @@ type SysTagGroup struct {
 
 // NewSysTagGroup defined
 func NewSysTagGroup() *SysTagGroup {
-	ctr := &SysTagGroup{Name: "sys_tag_group"}
+	ctr := &SysTagGroup{Name: "sys_tag_group", Srv: srv.NewSysTagGroup()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/tag/group/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysTagGroupAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysTagGroupAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/tag/group/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysTagGroupBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysTagGroupBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/tag/group/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysTagGroupDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysTagGroupDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/tag/group/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysTagGroupBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysTagGroupBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/tag/group/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysTagGroupUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysTagGroupUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/tag/group/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysTagGroupBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysTagGroupBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/tag/group/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysTagGroupPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysTagGroupPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/tag/group/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysTagGroupGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysTagGroupGet
 	return ctr
 }
 
 // SysTagGroupRoutes defined
 func SysTagGroupRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysTagGroupInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysTagGroupInstance defined
@@ -1684,29 +2304,36 @@ var SysTagGroupInstance = NewSysTagGroup()
 // SysTracker defined
 type SysTracker struct {
 	Name string
+	Srv  *srv.SysTracker
 	Page,
 	Get Controller
 }
 
 // NewSysTracker defined
 func NewSysTracker() *SysTracker {
-	ctr := &SysTracker{Name: "sys_tracker"}
+	ctr := &SysTracker{Name: "sys_tracker", Srv: srv.NewSysTracker()}
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/tracker/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysTrackerPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysTrackerPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/tracker/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysTrackerGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysTrackerGet
 	return ctr
 }
 
 // SysTrackerRoutes defined
 func SysTrackerRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysTrackerInstance
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysTrackerInstance defined
@@ -1715,6 +2342,7 @@ var SysTrackerInstance = NewSysTracker()
 // SysUser defined
 type SysUser struct {
 	Name string
+	Srv  *srv.SysUser
 	Add,
 	BatchAdd,
 	Del,
@@ -1729,63 +2357,93 @@ type SysUser struct {
 
 // NewSysUser defined
 func NewSysUser() *SysUser {
-	ctr := &SysUser{Name: "sys_user"}
+	ctr := &SysUser{Name: "sys_user", Srv: srv.NewSysUser()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/user/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysUserAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = Roles("X8e6D3y60K")
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysUserAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/user/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysUserBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = Roles("X8e6D3y60K")
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysUserBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/user/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysUserDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = Roles("X8e6D3y60K")
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysUserDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/user/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysUserBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = Roles("X8e6D3y60K")
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysUserBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/user/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysUserUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = Roles("X8e6D3y60K")
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysUserUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/user/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysUserBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = Roles("X8e6D3y60K")
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysUserBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/user/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysUserPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysUserPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/user/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysUserGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysUserGet
 	ctr.Login.Method = "POST"
 	ctr.Login.RelativePath = "/sys/user/login"
-	ctr.Login.Interceptor = NopInterceptor
-	ctr.Login.Handler = SysUserLogin
+	ctr.Login.Auth = NopHandlerFunc
+	ctr.Login.Roles = NopHandlerFunc
+	ctr.Login.Cache = NopHandlerFunc
+	ctr.Login.Interceptor = NopHandlerFunc
+	ctr.Login.Handler = ctr.SysUserLogin
 	ctr.Logout.Method = "GET"
 	ctr.Logout.RelativePath = "/sys/user/logout"
-	ctr.Logout.Interceptor = NopInterceptor
-	ctr.Logout.Handler = SysUserLogout
+	ctr.Logout.Auth = Auth("token")
+	ctr.Logout.Roles = NopHandlerFunc
+	ctr.Logout.Cache = NopHandlerFunc
+	ctr.Logout.Interceptor = NopHandlerFunc
+	ctr.Logout.Handler = ctr.SysUserLogout
 	return ctr
 }
 
 // SysUserRoutes defined
 func SysUserRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysUserInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), Roles("X8e6D3y60K"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
-	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Interceptor, instance.Login.Handler)
-	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, Auth("token"), instance.Logout.Interceptor, instance.Logout.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Auth, instance.Login.Roles, instance.Login.Cache, instance.Login.Interceptor, instance.Login.Handler)
+	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, instance.Logout.Auth, instance.Logout.Roles, instance.Logout.Cache, instance.Logout.Interceptor, instance.Logout.Handler)
 }
 
 // SysUserInstance defined
@@ -1794,6 +2452,7 @@ var SysUserInstance = NewSysUser()
 // SysUserTemplate defined
 type SysUserTemplate struct {
 	Name string
+	Srv  *srv.SysUserTemplate
 	Add,
 	BatchAdd,
 	Del,
@@ -1806,53 +2465,77 @@ type SysUserTemplate struct {
 
 // NewSysUserTemplate defined
 func NewSysUserTemplate() *SysUserTemplate {
-	ctr := &SysUserTemplate{Name: "sys_user_template"}
+	ctr := &SysUserTemplate{Name: "sys_user_template", Srv: srv.NewSysUserTemplate()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/user/template/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysUserTemplateAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysUserTemplateAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/user/template/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysUserTemplateBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysUserTemplateBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/user/template/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysUserTemplateDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysUserTemplateDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/user/template/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysUserTemplateBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysUserTemplateBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/user/template/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysUserTemplateUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysUserTemplateUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/user/template/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysUserTemplateBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysUserTemplateBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/user/template/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysUserTemplatePage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysUserTemplatePage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/user/template/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysUserTemplateGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysUserTemplateGet
 	return ctr
 }
 
 // SysUserTemplateRoutes defined
 func SysUserTemplateRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysUserTemplateInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysUserTemplateInstance defined
@@ -1861,6 +2544,7 @@ var SysUserTemplateInstance = NewSysUserTemplate()
 // SysUserTemplateDetail defined
 type SysUserTemplateDetail struct {
 	Name string
+	Srv  *srv.SysUserTemplateDetail
 	Add,
 	BatchAdd,
 	Del,
@@ -1873,53 +2557,77 @@ type SysUserTemplateDetail struct {
 
 // NewSysUserTemplateDetail defined
 func NewSysUserTemplateDetail() *SysUserTemplateDetail {
-	ctr := &SysUserTemplateDetail{Name: "sys_user_template_detail"}
+	ctr := &SysUserTemplateDetail{Name: "sys_user_template_detail", Srv: srv.NewSysUserTemplateDetail()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/user/template/detail/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysUserTemplateDetailAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysUserTemplateDetailAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/sys/user/template/detail/batch_add"
-	ctr.BatchAdd.Interceptor = NopInterceptor
-	ctr.BatchAdd.Handler = SysUserTemplateDetailBatchAdd
+	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Roles = NopHandlerFunc
+	ctr.BatchAdd.Cache = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Handler = ctr.SysUserTemplateDetailBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/sys/user/template/detail/del"
-	ctr.Del.Interceptor = NopInterceptor
-	ctr.Del.Handler = SysUserTemplateDetailDel
+	ctr.Del.Auth = Auth("token")
+	ctr.Del.Roles = NopHandlerFunc
+	ctr.Del.Cache = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Handler = ctr.SysUserTemplateDetailDel
 	ctr.BatchDel.Method = "DELETE"
 	ctr.BatchDel.RelativePath = "/sys/user/template/detail/batch_del"
-	ctr.BatchDel.Interceptor = NopInterceptor
-	ctr.BatchDel.Handler = SysUserTemplateDetailBatchDel
+	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Roles = NopHandlerFunc
+	ctr.BatchDel.Cache = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Handler = ctr.SysUserTemplateDetailBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/sys/user/template/detail/update"
-	ctr.Update.Interceptor = NopInterceptor
-	ctr.Update.Handler = SysUserTemplateDetailUpdate
+	ctr.Update.Auth = Auth("token")
+	ctr.Update.Roles = NopHandlerFunc
+	ctr.Update.Cache = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Handler = ctr.SysUserTemplateDetailUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/sys/user/template/detail/batch_update"
-	ctr.BatchUpdate.Interceptor = NopInterceptor
-	ctr.BatchUpdate.Handler = SysUserTemplateDetailBatchUpdate
+	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Roles = NopHandlerFunc
+	ctr.BatchUpdate.Cache = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Handler = ctr.SysUserTemplateDetailBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/sys/user/template/detail/page"
-	ctr.Page.Interceptor = NopInterceptor
-	ctr.Page.Handler = SysUserTemplateDetailPage
+	ctr.Page.Auth = Auth("token")
+	ctr.Page.Roles = NopHandlerFunc
+	ctr.Page.Cache = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Handler = ctr.SysUserTemplateDetailPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/user/template/detail/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysUserTemplateDetailGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysUserTemplateDetailGet
 	return ctr
 }
 
 // SysUserTemplateDetailRoutes defined
 func SysUserTemplateDetailRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysUserTemplateDetailInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, Auth("token"), instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, Auth("token"), instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, Auth("token"), instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, Auth("token"), instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, Auth("token"), instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, Auth("token"), instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
+	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
+	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
+	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
+	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
+	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysUserTemplateDetailInstance defined
@@ -1928,23 +2636,27 @@ var SysUserTemplateDetailInstance = NewSysUserTemplateDetail()
 // SysWechat defined
 type SysWechat struct {
 	Name   string
+	Srv    *srv.SysWechat
 	Oauth2 Controller
 }
 
 // NewSysWechat defined
 func NewSysWechat() *SysWechat {
-	ctr := &SysWechat{Name: "sys_wechat"}
+	ctr := &SysWechat{Name: "sys_wechat", Srv: srv.NewSysWechat()}
 	ctr.Oauth2.Method = "GET"
 	ctr.Oauth2.RelativePath = "/sys/wechat/oauth2"
-	ctr.Oauth2.Interceptor = NopInterceptor
-	ctr.Oauth2.Handler = SysWechatOauth2
+	ctr.Oauth2.Auth = NopHandlerFunc
+	ctr.Oauth2.Roles = NopHandlerFunc
+	ctr.Oauth2.Cache = NopHandlerFunc
+	ctr.Oauth2.Interceptor = NopHandlerFunc
+	ctr.Oauth2.Handler = ctr.SysWechatOauth2
 	return ctr
 }
 
 // SysWechatRoutes defined
 func SysWechatRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysWechatInstance
-	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
+	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Auth, instance.Oauth2.Roles, instance.Oauth2.Cache, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
 }
 
 // SysWechatInstance defined
@@ -1953,29 +2665,36 @@ var SysWechatInstance = NewSysWechat()
 // SysWorker defined
 type SysWorker struct {
 	Name string
+	Srv  *srv.SysWorker
 	Add,
 	Get Controller
 }
 
 // NewSysWorker defined
 func NewSysWorker() *SysWorker {
-	ctr := &SysWorker{Name: "sys_worker"}
+	ctr := &SysWorker{Name: "sys_worker", Srv: srv.NewSysWorker()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/sys/worker/add"
-	ctr.Add.Interceptor = NopInterceptor
-	ctr.Add.Handler = SysWorkerAdd
+	ctr.Add.Auth = Auth("token")
+	ctr.Add.Roles = NopHandlerFunc
+	ctr.Add.Cache = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Handler = ctr.SysWorkerAdd
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/sys/worker/get"
-	ctr.Get.Interceptor = NopInterceptor
-	ctr.Get.Handler = SysWorkerGet
+	ctr.Get.Auth = Auth("token")
+	ctr.Get.Roles = NopHandlerFunc
+	ctr.Get.Cache = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Handler = ctr.SysWorkerGet
 	return ctr
 }
 
 // SysWorkerRoutes defined
 func SysWorkerRoutes(dol *Dolphin) {
 	group, instance := dol.Group(viper.GetString("http.prefix")), SysWorkerInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, Auth("token"), instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, Auth("token"), instance.Get.Interceptor, instance.Get.Handler)
+	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
+	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // SysWorkerInstance defined

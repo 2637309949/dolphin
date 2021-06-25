@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/menu/add [post]
-func SysRoleMenuAdd(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuAdd(ctx *Context) {
 	var payload model.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysRoleMenuAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/menu/batch_add [post]
-func SysRoleMenuBatchAdd(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuBatchAdd(ctx *Context) {
 	var payload []*model.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -92,7 +92,7 @@ func SysRoleMenuBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/menu/del [delete]
-func SysRoleMenuDel(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuDel(ctx *Context) {
 	var payload model.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -121,7 +121,7 @@ func SysRoleMenuDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/menu/batch_del [delete]
-func SysRoleMenuBatchDel(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuBatchDel(ctx *Context) {
 	var payload []*model.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -152,7 +152,7 @@ func SysRoleMenuBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/menu/update [put]
-func SysRoleMenuUpdate(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuUpdate(ctx *Context) {
 	var payload model.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -180,7 +180,7 @@ func SysRoleMenuUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/role/menu/batch_update [put]
-func SysRoleMenuBatchUpdate(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuBatchUpdate(ctx *Context) {
 	var payload []model.SysRoleMenu
 	var err error
 	var ret []int64
@@ -230,7 +230,7 @@ func SysRoleMenuBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/menu/page [get]
-func SysRoleMenuPage(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -259,7 +259,7 @@ func SysRoleMenuPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/role/menu/get [get]
-func SysRoleMenuGet(ctx *Context) {
+func (ctr *SysRoleMenu) SysRoleMenuGet(ctx *Context) {
 	var entity model.SysRoleMenu
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

@@ -15,8 +15,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysUserTODO defined srv
-func SysUserTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysUser struct {
+}
+
+func NewSysUser() *SysUser {
+	return &SysUser{}
+}
+
+// TODO defined srv
+func (srv *SysUser) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)
@@ -43,8 +50,8 @@ func SysUserTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interfa
 	return nil, errors.New("no implementation found")
 }
 
-// SysUserGetOrgsFromInheritance defined srv
-func SysUserGetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error) {
+// GetOrgsFromInheritance defined srv
+func (srv *SysUser) GetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error) {
 	idst := struct {
 		IDS string `xorm:"ids"`
 	}{}
@@ -60,8 +67,8 @@ func SysUserGetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string, error)
 	return ids, nil
 }
 
-// SysUserGetUserRolesByUID defined
-func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
+// GetUserRolesByUID defined
+func (srv *SysUser) GetUserRolesByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
 	roles, err := db.SqlTemplateClient("sys_role_user.tpl", &map[string]interface{}{"uids": template.HTML(ids)}).Query().List()
 	if err != nil {
 		return nil, err
@@ -69,8 +76,8 @@ func SysUserGetUserRolesByUID(db *xorm.Engine, ids string) ([]map[string]interfa
 	return roles, err
 }
 
-// SysUserGetUserOrgsByUID defined
-func SysUserGetUserOrgsByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
+// GetUserOrgsByUID defined
+func (srv *SysUser) GetUserOrgsByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
 	orgs, err := db.SqlTemplateClient("sys_user_org.tpl", &map[string]interface{}{"ne": template.HTML("<>"), "oids": template.HTML(ids)}).Query().List()
 	if err != nil {
 		return nil, err

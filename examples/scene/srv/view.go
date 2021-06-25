@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// ViewTODO defined srv
-func ViewTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type View struct {
+}
+
+func NewView() *View {
+	return &View{}
+}
+
+// TODO defined srv
+func (srv *View) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

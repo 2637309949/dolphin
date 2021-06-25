@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysAreaTODO defined srv
-func SysAreaTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysArea struct {
+}
+
+func NewSysArea() *SysArea {
+	return &SysArea{}
+}
+
+// TODO defined srv
+func (srv *SysArea) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

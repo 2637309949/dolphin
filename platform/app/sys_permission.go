@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/add [post]
-func SysPermissionAdd(ctx *Context) {
+func (ctr *SysPermission) SysPermissionAdd(ctx *Context) {
 	var payload model.SysPermission
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysPermissionAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/permission/batch_add [post]
-func SysPermissionBatchAdd(ctx *Context) {
+func (ctr *SysPermission) SysPermissionBatchAdd(ctx *Context) {
 	var payload []model.SysPermission
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysPermissionBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/del [delete]
-func SysPermissionDel(ctx *Context) {
+func (ctr *SysPermission) SysPermissionDel(ctx *Context) {
 	var payload model.SysPermission
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -118,7 +118,7 @@ func SysPermissionDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/permission/batch_del [delete]
-func SysPermissionBatchDel(ctx *Context) {
+func (ctr *SysPermission) SysPermissionBatchDel(ctx *Context) {
 	var payload []model.SysPermission
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -149,7 +149,7 @@ func SysPermissionBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/update [put]
-func SysPermissionUpdate(ctx *Context) {
+func (ctr *SysPermission) SysPermissionUpdate(ctx *Context) {
 	var payload model.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -177,7 +177,7 @@ func SysPermissionUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/permission/batch_update [put]
-func SysPermissionBatchUpdate(ctx *Context) {
+func (ctr *SysPermission) SysPermissionBatchUpdate(ctx *Context) {
 	var payload []model.SysPermission
 	var err error
 	var ret []int64
@@ -227,7 +227,7 @@ func SysPermissionBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/page [get]
-func SysPermissionPage(ctx *Context) {
+func (ctr *SysPermission) SysPermissionPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -256,7 +256,7 @@ func SysPermissionPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/permission/get [get]
-func SysPermissionGet(ctx *Context) {
+func (ctr *SysPermission) SysPermissionGet(ctx *Context) {
 	var entity model.SysPermission
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

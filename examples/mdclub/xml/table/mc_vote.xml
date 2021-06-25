@@ -1,7 +1,0 @@
-<table name="mc_vote" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
-	<column name="user_id" desc="用户ID" type="null.Int" xorm="int(11) notnull" />
-	<column name="votable_id" desc="投票目标ID" type="null.Int" xorm="int(11) notnull" />
-	<column name="votable_type" desc="投票目标类型 question、answer、article、comment" type="null.String" xorm=" notnull" />
-	<column name="type" desc="投票类型 up、down" type="null.String" xorm=" notnull" />
-	<column name="create_time" desc="投票时间" type="null.Int" xorm="int(10) notnull" />
-</table>

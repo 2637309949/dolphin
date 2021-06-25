@@ -10,7 +10,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -25,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/add [post]
-func SysOptionsetAdd(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetAdd(ctx *Context) {
 	var payload model.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -56,7 +55,7 @@ func SysOptionsetAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/optionset/batch_add [post]
-func SysOptionsetBatchAdd(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetBatchAdd(ctx *Context) {
 	var payload []model.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -89,7 +88,7 @@ func SysOptionsetBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/del [delete]
-func SysOptionsetDel(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetDel(ctx *Context) {
 	var payload model.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -119,7 +118,7 @@ func SysOptionsetDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/batch_del [delete]
-func SysOptionsetBatchDel(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetBatchDel(ctx *Context) {
 	var payload []*model.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -150,7 +149,7 @@ func SysOptionsetBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/update [put]
-func SysOptionsetUpdate(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetUpdate(ctx *Context) {
 	var payload model.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -178,7 +177,7 @@ func SysOptionsetUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/optionset/batch_update [put]
-func SysOptionsetBatchUpdate(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetBatchUpdate(ctx *Context) {
 	var payload []model.SysOptionset
 	var err error
 	var ret []int64
@@ -228,7 +227,7 @@ func SysOptionsetBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/page [get]
-func SysOptionsetPage(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -263,10 +262,9 @@ func SysOptionsetPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/optionset/get [get]
-func SysOptionsetGet(ctx *Context) {
+func (ctr *SysOptionset) SysOptionsetGet(ctx *Context) {
 	var entity model.SysOptionset
 	err := ctx.ShouldBindWith(&entity)
-	srv.SysOptionsetTODO(ctx, ctx.DB, struct{}{})
 	if err != nil {
 		logrus.Errorf("SysOptionsetGet#ShouldBindQuery#%v", err)
 		ctx.Fail(err)

@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/add [post]
-func SysTagAdd(ctx *Context) {
+func (ctr *SysTag) SysTagAdd(ctx *Context) {
 	var payload model.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func SysTagAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/tag/batch_add [post]
-func SysTagBatchAdd(ctx *Context) {
+func (ctr *SysTag) SysTagBatchAdd(ctx *Context) {
 	var payload []model.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func SysTagBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/del [delete]
-func SysTagDel(ctx *Context) {
+func (ctr *SysTag) SysTagDel(ctx *Context) {
 	var payload model.SysUserTemplate
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -118,7 +118,7 @@ func SysTagDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/batch_del [delete]
-func SysTagBatchDel(ctx *Context) {
+func (ctr *SysTag) SysTagBatchDel(ctx *Context) {
 	var payload []*model.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -149,7 +149,7 @@ func SysTagBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/update [put]
-func SysTagUpdate(ctx *Context) {
+func (ctr *SysTag) SysTagUpdate(ctx *Context) {
 	var payload model.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -177,7 +177,7 @@ func SysTagUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router/api/sys/tag/batch_update [put]
-func SysTagBatchUpdate(ctx *Context) {
+func (ctr *SysTag) SysTagBatchUpdate(ctx *Context) {
 	var payload []model.SysTag
 	var err error
 	var ret []int64
@@ -227,7 +227,7 @@ func SysTagBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/page [get]
-func SysTagPage(ctx *Context) {
+func (ctr *SysTag) SysTagPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 10)
@@ -256,7 +256,7 @@ func SysTagPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/sys/tag/get [get]
-func SysTagGet(ctx *Context) {
+func (ctr *SysTag) SysTagGet(ctx *Context) {
 	var entity model.SysTag
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

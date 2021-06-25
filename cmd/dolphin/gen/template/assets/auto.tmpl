@@ -6,20 +6,27 @@ package app
 import (
 	"time"
 	"{{.PackageName}}/model"
+	"{{.PackageName}}/srv"
+	"{{.PackageName}}/rpc"
+	"{{.PackageName}}/rpc/proto"
 
+	"google.golang.org/grpc"
 	"github.com/spf13/viper"
 )
 
 // Name project
 {{- $pName := .Name }}
 var Name = "{{.Name}}"
-var NopInterceptor = func(ctx *Context) { ctx.Next() }
+var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
 
 // Controller defined
 type Controller struct {
 	Method       string
 	RelativePath string
-	Interceptor  HandlerFunc
+	Auth,          
+	Roles,         
+	Cache, 		  
+	Interceptor,   
 	Handler      HandlerFunc
 }
 
@@ -28,6 +35,7 @@ type Controller struct {
 // {{.ToUpperCase .Name}} defined
 type {{.ToUpperCase .Name}} struct {
 	Name string
+	Srv  *srv.{{.ToUpperCase .Name}}
 	{{- $APIS := .APIS}}
 	{{- range $index, $api := .APIS}}
 	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} Controller{{- else}},{{- end}}
@@ -36,12 +44,15 @@ type {{.ToUpperCase .Name}} struct {
 
 // New{{.ToUpperCase .Name}} defined
 func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
-	ctr := &{{.ToUpperCase .Name}}{Name: "{{.Name}}"}
+	ctr := &{{.ToUpperCase .Name}}{Name: "{{.Name}}", Srv: srv.New{{.ToUpperCase .Name}}()}
 	{{- range .APIS}}
 	ctr.{{.ToUpperCase .Name}}.Method = "{{.ToUpper .Method}}"
 	ctr.{{.ToUpperCase .Name}}.RelativePath = "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"
-    ctr.{{.ToUpperCase .Name}}.Interceptor = NopInterceptor
-	ctr.{{.ToUpperCase .Name}}.Handler = {{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
+	ctr.{{.ToUpperCase .Name}}.Auth = {{- if gt (len .Auth) 0}} Auth({{.FormatString .Auth ","}}){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Roles = {{- if gt (len .Roles) 0}} Roles({{.FormatString .Roles ","}}){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Cache = {{- if gt .Cache 0}} Cache({{.Cache}}*time.Second){{- else}} NopHandlerFunc{{- end}}
+    ctr.{{.ToUpperCase .Name}}.Interceptor = NopHandlerFunc
+	ctr.{{.ToUpperCase .Name}}.Handler = ctr.{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
 	{{- end}}
 	return ctr
 }
@@ -51,7 +62,7 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 func {{.ToUpperCase .Name}}Routes(dol *Dolphin) {
 	group, instance := dol.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
-	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath{{- if gt (len .Auth) 0}}, Auth({{.FormatString .Auth ","}}){{- end}}{{- if gt (len .Roles) 0}}, Roles({{.FormatString .Roles ","}}){{- end}}{{- if gt .Cache 0}}, Cache({{.Cache}}*time.Second){{- end}}, instance.{{.ToUpperCase .Name}}.Interceptor, instance.{{.ToUpperCase .Name}}.Handler)
+	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath, instance.{{.ToUpperCase .Name}}.Auth, instance.{{.ToUpperCase .Name}}.Roles, instance.{{.ToUpperCase .Name}}.Cache, instance.{{.ToUpperCase .Name}}.Interceptor, instance.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
 }
 

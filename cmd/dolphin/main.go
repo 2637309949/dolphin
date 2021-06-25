@@ -170,8 +170,9 @@ var (
 				if err != nil {
 					return err
 				}
+			} else {
+				logrus.Warn("It is not allowed to initialize a non-empty project")
 			}
-			logrus.Warn("It is not allowed to initialize a non-empty project")
 			return nil
 		},
 	}

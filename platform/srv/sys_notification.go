@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysNotificationTODO defined srv
-func SysNotificationTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysNotification struct {
+}
+
+func NewSysNotification() *SysNotification {
+	return &SysNotification{}
+}
+
+// TODO defined srv
+func (srv *SysNotification) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

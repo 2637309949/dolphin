@@ -12,8 +12,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// SysCasTODO defined srv
-func SysCasTODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+type SysCas struct {
+}
+
+func NewSysCas() *SysCas {
+	return &SysCas{}
+}
+
+// TODO defined srv
+func (srv *SysCas) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

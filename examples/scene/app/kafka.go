@@ -6,7 +6,6 @@ package app
 import (
 	"context"
 	"scene/model"
-	"scene/srv"
 
 	"github.com/sirupsen/logrus"
 )
@@ -21,14 +20,14 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/kafka/add [post]
-func KafkaAdd(ctx *Context) {
+func (ctr *Kafka) KafkaAdd(ctx *Context) {
 	var payload model.KafkaInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	if err := srv.KafkaProducer(context.Background(), payload); err != nil {
+	if err := ctr.Srv.Producer(context.Background(), payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -44,7 +43,7 @@ func KafkaAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/kafka/get [get]
-func KafkaGet(ctx *Context) {
+func (ctr *Kafka) KafkaGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
