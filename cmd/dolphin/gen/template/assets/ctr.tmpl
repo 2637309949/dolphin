@@ -214,14 +214,14 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 	ctx.Success(ret)
 	{{- end}}
 {{- else if eq .Func "one"}}
-	var entity model.{{.ToUpperCase .Table}}
-	err := ctx.ShouldBindWith(&entity)
+	var one model.{{.ToUpperCase .Table}}
+	err := ctx.ShouldBindWith(&one)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	if ext, err := ctx.DB.Get(&entity); err != nil {
+	if ext, err := ctx.DB.Get(&one); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -229,7 +229,7 @@ func {{$.Controller.ToUpperCase $.Controller.Name}}{{.ToUpperCase .Name}}(ctx *C
 		ctx.Fail(errors.New("not found"))
 		return
 	}
-	ctx.Success(entity)
+	ctx.Success(one)
 {{- else}}
 	{{- if eq .Method "get"}}
 	q := ctx.TypeQuery()
