@@ -33,7 +33,7 @@ func (gh *grpcHandler) RegisterServer(f func(*grpc.Server)) {
 }
 
 func (gh *grpcHandler) OnStart(ctx context.Context) error {
-	logrus.Infof("grpc listen on port:%v", viper.GetString("grpc.port"))
+	logrus.Infof("grpc listen on port:%v", viper.GetString("rpc.port"))
 	go func() {
 		if err := gh.grpc.Serve(gh.net); err != nil {
 			logrus.Fatal(err)
@@ -55,6 +55,6 @@ func NewGRPCHandler(dol *Dolphin) RPCHandler {
 	options := []grpc.ServerOption{
 		grpc.UnaryInterceptor(plugin.RpcCliTrace(viper.GetString("app.name"))),
 	}
-	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("grpc.port")))).(net.Listener)
+	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("rpc.port")))).(net.Listener)
 	return &grpcHandler{net: net, grpc: grpc.NewServer(options...)}
 }

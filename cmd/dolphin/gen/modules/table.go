@@ -14,6 +14,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/sirupsen/logrus"
@@ -41,7 +42,8 @@ func (app *Table) After(*parser.AppParser, []*pipe.TmplCfg) error {
 
 // Build func
 func (app *Table) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
-	tbByte, _ := vfsutil.ReadFile(template.Assets, "table.tmpl")
+	tbByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "table.tmpl")).([]byte)
+
 	tmplCfgs := []*pipe.TmplCfg{}
 	engines := []*xorm.Engine{}
 	dataSources := []struct {

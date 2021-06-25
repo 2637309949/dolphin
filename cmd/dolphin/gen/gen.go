@@ -6,6 +6,7 @@ package gen
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"html/template"
 	"io"
@@ -25,17 +26,8 @@ import (
 
 var lines = []pipe.Pipe{
 	&modules.More{},
-	&modules.Main{},
-	&modules.App{},
-	&modules.Ctr{},
-	&modules.Proto{},
-	&modules.Srv{},
-	&modules.Model{},
-	&modules.Bean{},
-	&modules.Auto{},
+	&modules.Dolphin{},
 	&modules.Tool{},
-	&modules.SQL{},
-	&modules.SQLMap{},
 	&modules.OAuth{},
 	&modules.Script{},
 	&modules.Doc{},
@@ -111,9 +103,13 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	// fmt code
 	filePaths := funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *pipe.TmplCfg) bool { return cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" }), func(cfg *pipe.TmplCfg) (string, string) { return path.Dir(cfg.FilePath), path.Dir(cfg.FilePath) })).([]string)
 	if len(filePaths) > 0 {
-		if status := utils.NetWorkStatus(); status {
-			if err := utils.InstallPackages("golang.org/x/tools/cmd/goimports"); err != nil {
-				logrus.Error(err)
+		if !utils.HasBin("goimports") {
+			if status := utils.NetWorkStatus(); status {
+				if err := utils.InstallPackages("golang.org/x/tools/cmd/goimports"); err != nil {
+					logrus.Error(err)
+				}
+			} else {
+				utils.Ensure(errors.New("not goimports found"))
 			}
 		}
 		for i := range filePaths {
@@ -127,9 +123,13 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	// rpc code
 	filePaths = funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *pipe.TmplCfg) bool { return cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" }), func(cfg *pipe.TmplCfg) (string, string) { return cfg.FilePath, cfg.FilePath })).([]string)
 	if len(filePaths) > 0 {
-		if status := utils.NetWorkStatus(); status {
-			if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
-				logrus.Error(err)
+		if !utils.HasBin("proto") {
+			if status := utils.NetWorkStatus(); status {
+				if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
+					logrus.Error(err)
+				}
+			} else {
+				utils.Ensure(errors.New("not proto found"))
 			}
 		}
 		for i := range filePaths {

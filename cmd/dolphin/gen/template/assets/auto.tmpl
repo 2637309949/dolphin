@@ -70,7 +70,7 @@ func {{.ToUpperCase .Name}}Service(dol *Dolphin) {
 // SyncModel defined
 func SyncModel(dol *Dolphin) error {
 	{{- $tLen := len .Tables }}{{- if ne $tLen 0 }}
-	mseti := dol.Manager.MSet()
+	mseti := dol.Manager.ModelSet()
 	{{- range .Tables}}
 	mseti.Add(new(model.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
 	{{- end}}

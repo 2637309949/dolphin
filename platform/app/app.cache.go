@@ -23,6 +23,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var PageCachePrefix = "dolphin.page.cache"
+
 type responseCache struct {
 	Status int
 	Header http.Header
@@ -43,10 +45,6 @@ type RedisStore struct {
 	redisClient       *redis.Client
 	defaultExpiration time.Duration
 }
-
-var (
-	PageCachePrefix = "dolphin.page.cache"
-)
 
 // RegisterResponseCacheGob registers the responseCache type with the encoding/gob package
 func RegisterResponseCacheGob() {
@@ -276,7 +274,6 @@ func (c *RedisStore) Flush() error {
 }
 
 func (c *RedisStore) invoke(key string, value interface{}, expires time.Duration) error {
-
 	switch expires {
 	case persistence.DEFAULT:
 		expires = c.defaultExpiration

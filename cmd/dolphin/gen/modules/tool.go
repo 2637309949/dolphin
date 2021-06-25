@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -47,14 +48,12 @@ func (tool *Tool) Build(dir string, args []string, parser *parser.AppParser) ([]
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
 	}
-	toolByte, _ := vfsutil.ReadFile(template.Assets, "tool.tmpl")
-	return []*pipe.TmplCfg{
-		{
-			Text:     string(toolByte),
-			FilePath: path.Join(dir, viper.GetString("dir.util"), "common.go"),
-			Data:     data,
-			Overlap:  pipe.OverlapSkip,
-			GOFmt:    true,
-		},
-	}, nil
+	toolByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "tool.tmpl")).([]byte)
+	return []*pipe.TmplCfg{{
+		Text:     string(toolByte),
+		FilePath: path.Join(dir, viper.GetString("dir.util"), "common.go"),
+		Data:     data,
+		Overlap:  pipe.OverlapSkip,
+		GOFmt:    true,
+	}}, nil
 }

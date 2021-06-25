@@ -43,8 +43,14 @@ func (m *More) After(parser *parser.AppParser, cfgs []*pipe.TmplCfg) error {
 // Build func
 func (m *More) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
-	ctrByte, _ := vfsutil.ReadFile(template.Assets, "more.ctr.tmpl")
-	tbByte, _ := vfsutil.ReadFile(template.Assets, "more.tb.tmpl")
+	ctrByte, err := vfsutil.ReadFile(template.Assets, "more.ctr.tmpl")
+	if err != nil {
+		return []*pipe.TmplCfg{}, err
+	}
+	tbByte, err := vfsutil.ReadFile(template.Assets, "more.tb.tmpl")
+	if err != nil {
+		return []*pipe.TmplCfg{}, err
+	}
 	if len(args) < 1 {
 		logrus.Warn("Please give the path to generate the table")
 		return tmplCfgs, nil

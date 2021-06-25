@@ -4,6 +4,10 @@
 package rpc
 
 import (
+	"context"
+	"time"
+
+	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/rpc/proto"
 
 	"github.com/sirupsen/logrus"
@@ -15,10 +19,21 @@ import (
 var DomainSrvClient proto.DomainSrvClient
 
 func init() {
-	opt := grpc.WithInsecure()
-	conn, err := grpc.Dial(viper.GetString("rpc.domain_srv"), opt)
-	if err != nil {
-		logrus.Errorf("grpc dial failed: %v", err)
-	}
-	DomainSrvClient = proto.NewDomainSrvClient(conn)
+	go func() {
+		time.Sleep(1 * time.Second)
+		options := []grpc.DialOption{
+			grpc.WithInsecure(),
+			grpc.WithBlock(),
+			grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), options...)
+		if err != nil {
+			logrus.Errorf("rpc.domain_srv dial %v fail %v", viper.GetString("rpc.domain_srv"), err)
+		} else {
+			logrus.Infof("rpc.domain_srv dial %v connected", viper.GetString("rpc.domain_srv"))
+		}
+		DomainSrvClient = proto.NewDomainSrvClient(conn)
+	}()
 }

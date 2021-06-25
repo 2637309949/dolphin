@@ -40,14 +40,16 @@ func (app *Script) After(*parser.AppParser, []*pipe.TmplCfg) error {
 func (app *Script) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
 	var tmplCfgs []*pipe.TmplCfg
 	tplCache := map[string]bool{}
-	axiosByte, _ := vfsutil.ReadFile(template.Assets, "request.tmpl")
+	axiosByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "request.tmpl")).([]byte)
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text:     string(axiosByte),
 		FilePath: path.Join(viper.GetString("dir.script"), "request.js"),
 		Overlap:  pipe.OverlapWrite,
 	})
-
-	apiByte, _ := vfsutil.ReadFile(template.Assets, "api.tmpl")
+	apiByte, err := vfsutil.ReadFile(template.Assets, "api.tmpl")
+	if err != nil {
+		return []*pipe.TmplCfg{}, err
+	}
 	tmplCfgs = append(tmplCfgs, &pipe.TmplCfg{
 		Text: string(apiByte),
 		Data: map[string]interface{}{
@@ -65,7 +67,7 @@ func (app *Script) Build(dir string, args []string, parser *parser.AppParser) ([
 		Overlap:  pipe.OverlapWrite,
 	})
 
-	apisByte, _ := vfsutil.ReadFile(template.Assets, "apis.tmpl")
+	apisByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "apis.tmpl")).([]byte)
 	for i := range parser.Controllers {
 		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
 		for _, api := range parser.Controllers[i].APIS {

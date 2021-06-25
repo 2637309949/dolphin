@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -57,10 +58,7 @@ func (dp *Deploy) Build(dir string, args []string, parser *parser.AppParser) ([]
 	}
 	cfgs := []*pipe.TmplCfg{}
 	for key, value := range tmpl2file {
-		dByte, err := vfsutil.ReadFile(template.Assets, key)
-		if err != nil {
-			return []*pipe.TmplCfg{}, err
-		}
+		dByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, key)).([]byte)
 		cfgs = append(cfgs, &pipe.TmplCfg{
 			Text:     string(dByte),
 			FilePath: path.Join(dir, viper.GetString("dir.k8s"), value),

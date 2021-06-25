@@ -17,19 +17,23 @@ import (
 
 // UserSrvClient defined
 var UserSrvClient proto.UserSrvClient
-var dialTimeout time.Duration = 3000000000 // 3s
 
 func init() {
-	options := []grpc.DialOption{
-		grpc.WithInsecure(),
-		grpc.WithBlock(),
-		grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), dialTimeout)
-	defer cancel()
-	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.user_srv"), options...)
-	if err != nil {
-		logrus.Errorf("grpc dial failed: %v", err)
-	}
-	UserSrvClient = proto.NewUserSrvClient(conn)
+	go func() {
+		time.Sleep(1 * time.Second)
+		options := []grpc.DialOption{
+			grpc.WithInsecure(),
+			grpc.WithBlock(),
+			grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+		}
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		conn, err := grpc.DialContext(ctx, viper.GetString("rpc.user_srv"), options...)
+		if err != nil {
+			logrus.Errorf("rpc.user_srv dial %v fail %v", viper.GetString("rpc.user_srv"), err)
+		} else {
+			logrus.Infof("rpc.user_srv dial %v connected", viper.GetString("rpc.user_srv"))
+		}
+		UserSrvClient = proto.NewUserSrvClient(conn)
+	}()
 }

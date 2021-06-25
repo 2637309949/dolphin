@@ -1998,7 +1998,7 @@ func UserSrvService(dol *Dolphin) {
 
 // SyncModel defined
 func SyncModel(dol *Dolphin) error {
-	mseti := dol.Manager.MSet()
+	mseti := dol.Manager.ModelSet()
 	mseti.Add(new(model.SysAppFun))
 	mseti.Add(new(model.SysArea))
 	mseti.Add(new(model.SysAreaTemplate))

@@ -12,6 +12,11 @@ import (
 	"golang.org/x/oauth2"
 )
 
+var (
+	App *Dolphin
+	Run func()
+)
+
 // A Hook is a pair of start and stop callbacks, either of which can be nil,
 // plus a string identifying the supplier of the hook.
 type Hook struct {
@@ -39,19 +44,17 @@ func NewLifeHook(e *Dolphin) lifeHook {
 
 // init after NewEngine
 func init() {
-	// RegisterFuzzyDecoders TODO
 	extra.RegisterFuzzyDecoders()
-	endpoint := oauth2.Endpoint{
-		AuthURL:  viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Authorize.RelativePath),
-		TokenURL: viper.GetString("oauth.server") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Token.RelativePath),
-	}
-	OA2Cfg = oauth2.Config{
-		ClientID:     viper.GetString("oauth.id"),
-		ClientSecret: viper.GetString("oauth.secret"),
-		Scopes:       []string{"admin"},
-		RedirectURL:  viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath),
-		Endpoint:     endpoint,
-	}
+
+	osHost, httpPrefix := viper.GetString("oauth.server"), viper.GetString("http.prefix")
+	authUrl := osHost + path.Join(httpPrefix, SysCasInstance.Authorize.RelativePath)
+	tokenUrl := osHost + path.Join(httpPrefix, SysCasInstance.Token.RelativePath)
+	endpoint := oauth2.Endpoint{AuthURL: authUrl, TokenURL: tokenUrl}
+	redirectURL := viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
+	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
+
+	App = NewDolphin()
+	Run = App.Run
 	SyncModel(App)
 	SyncController(App)
 	SyncService(App)

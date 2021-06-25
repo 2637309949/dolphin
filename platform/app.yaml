@@ -21,8 +21,10 @@ dir:
   sqlmap: sqlmap
   srv: srv
   util: util
-grpc:
+rpc:
   port: "9081"
+  user_srv: "localhost:9081"
+  domain_srv: "localhost:9081"
 http:
   hash: FF61A573-82FC-478B-9AEF-93D6F506DE9A
   port: "8081"

@@ -1,13 +1,15 @@
 package utils
 
 import (
-	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
 	"reflect"
 	"strings"
+
+	"github.com/go-errors/errors"
 
 	"github.com/spf13/cobra"
 
@@ -129,4 +131,36 @@ func InstallPackages(pkgs ...string) error {
 		}
 	}
 	return nil
+}
+
+func HasBin(bins ...string) bool {
+	for i := range bins {
+		if err := exec.Command(bins[i]).Run(); err == exec.ErrNotFound {
+			return false
+		}
+	}
+	return true
+}
+
+// EnsureLeft defined return left
+func EnsureLeft(left interface{}, err error) interface{} {
+	if err != nil {
+		panic(fmt.Errorf("%v", string(errors.Wrap(err, 3).Stack())))
+	}
+	return left
+}
+
+// EnsureRight defined return right
+func EnsureRight(err error, right interface{}) interface{} {
+	if err != nil {
+		panic(fmt.Errorf("%v", string(errors.Wrap(err, 3).Stack())))
+	}
+	return right
+}
+
+// Ensure defined
+func Ensure(err error) {
+	if err != nil {
+		panic(fmt.Errorf("%v", string(errors.Wrap(err, 3).Stack())))
+	}
 }

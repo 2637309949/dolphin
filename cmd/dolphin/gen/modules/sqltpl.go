@@ -18,6 +18,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -59,7 +60,8 @@ func (app *SQLTPL) Build(dir string, args []string, parser *parser.AppParser) ([
 		Name    string
 		Content ht.HTML
 	}
-	sqlByte, _ := vfsutil.ReadFile(template.Assets, "sql.tmpl")
+	sqlByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "sql.tmpl")).([]byte)
+
 	if err := filepath.Walk(path.Join(dir, viper.GetString("dir.sql")), func(path string, info os.FileInfo, err error) error {
 		if HasSuffix(path, ".xml") {
 			ct, _ := ioutil.ReadFile(path)

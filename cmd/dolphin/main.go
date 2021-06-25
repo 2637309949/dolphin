@@ -41,7 +41,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("http.static", "static")
 	viper.SetDefault("http.temp", "temp")
-	viper.SetDefault("grpc.port", "9081")
+	viper.SetDefault("rpc.port", "9081")
 	viper.SetDefault("oauth.id", "Y76U9344RABF4")
 	viper.SetDefault("oauth.secret", "8UYO6FVB8UYO6FVB")
 	viper.SetDefault("oauth.login", "/static/web/login.html")
@@ -113,13 +113,15 @@ var (
 				}
 			}
 			if !justOne {
-				pipes = append(cupArgs, "main", "app", "ctr", "proto", "srv", "model", "bean", "auto", "tool", "sql", "sqlmap", "oauth", "script", "deploy", "doc")
+				pipes = append(cupArgs, "dol", "tool", "oauth", "script", "deploy", "doc")
 			} else {
 				pipes = cupArgs
 			}
 			g := gen.New(p)
 			g.AddPipe(gen.GetPipesByName(pipes...)...)
-			err = g.BuildDir(wd, args)
+			if err = g.BuildDir(wd, args); err != nil {
+				return err
+			}
 			return err
 		},
 	}
@@ -145,7 +147,7 @@ var (
 			}
 			p := parser.NewTpl(path.Base(wd), path.Base(wd))
 			g := gen.New(p)
-			g.AddPipe(gen.GetPipesByName("more", "ctr", "srv", "model", "bean", "sql", "script")...)
+			g.AddPipe(gen.GetPipesByName("more", "dol", "script")...)
 			return g.BuildDir(wd, args)
 		},
 	}
@@ -164,7 +166,10 @@ var (
 				}
 				g := gen.New(p)
 				g.AddPipe(gen.GetPipesByName("boilerplate")...)
-				return g.BuildDir(wd, args)
+				err := g.BuildDir(wd, args)
+				if err != nil {
+					return err
+				}
 			}
 			logrus.Warn("It is not allowed to initialize a non-empty project")
 			return nil

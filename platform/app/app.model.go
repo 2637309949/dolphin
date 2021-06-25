@@ -10,23 +10,23 @@ import (
 	"github.com/spf13/viper"
 )
 
-// MSeti model template
-type MSeti interface {
+// ModelSetter model template
+type ModelSetter interface {
 	Add(interface{}, ...string)
 	Get(func(string, interface{}) bool) interface{}
-	ForEach(func(string, interface{}) error, ...string) error
+	ForEachWithError(func(string, interface{}) error, ...string) error
 	Name(func(string) bool) []string
 	Release()
 }
 
 // MSet struct
-type MSet struct {
+type ModelSet struct {
 	lock *sync.RWMutex
 	m    map[string][]interface{}
 }
 
 // Get defined get models
-func (s *MSet) Get(cb func(string, interface{}) bool) interface{} {
+func (s *ModelSet) Get(cb func(string, interface{}) bool) interface{} {
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 	for name, m := range s.m {
@@ -40,7 +40,7 @@ func (s *MSet) Get(cb func(string, interface{}) bool) interface{} {
 }
 
 // Add defined add models
-func (s *MSet) Add(m interface{}, n ...string) {
+func (s *ModelSet) Add(m interface{}, n ...string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 	ns := viper.GetString("app.name")
@@ -51,7 +51,7 @@ func (s *MSet) Add(m interface{}, n ...string) {
 }
 
 // Name defined add models
-func (s *MSet) Name(cb func(string) bool) (m []string) {
+func (s *ModelSet) Name(cb func(string) bool) (m []string) {
 	for k := range s.m {
 		if cb(k) {
 			m = append(m, k)
@@ -60,8 +60,8 @@ func (s *MSet) Name(cb func(string) bool) (m []string) {
 	return
 }
 
-// ForEach defined foreach models
-func (s *MSet) ForEach(cb func(name string, m interface{}) error, names ...string) error {
+// ForEachWithError defined foreach models
+func (s *ModelSet) ForEachWithError(cb func(name string, m interface{}) error, names ...string) error {
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 	for name, m := range s.m {
@@ -83,7 +83,7 @@ func (s *MSet) ForEach(cb func(name string, m interface{}) error, names ...strin
 }
 
 // Release defined release models
-func (s *MSet) Release() {
+func (s *ModelSet) Release() {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 	s.m = nil

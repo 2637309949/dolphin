@@ -46,7 +46,7 @@ type Cron interface {
 
 // Manager Engine management interface
 type Manager interface {
-	MSet() MSeti
+	ModelSet() ModelSetter
 	Worker() Worker
 	Cron() Cron
 	GetBusinessDBSet() map[string]*xorm.Engine
@@ -148,14 +148,14 @@ func (d *DefaultWorker) GetJobHandler(code string) func(model.Worker) (interface
 // DefaultManager defined
 type DefaultManager struct {
 	BusinessDBSet map[string]*xorm.Engine
-	MSeti         MSeti
+	ModelSetter   ModelSetter
 	worker        Worker
 	cron          Cron
 }
 
 // MSet defined
-func (d *DefaultManager) MSet() MSeti {
-	return d.MSeti
+func (d *DefaultManager) ModelSet() ModelSetter {
+	return d.ModelSetter
 }
 
 // GetBusinessDB defined
@@ -199,7 +199,7 @@ func (d *DefaultManager) Cron() Cron {
 func NewDefaultManager() Manager {
 	mg := &DefaultManager{}
 	mg.BusinessDBSet = map[string]*xorm.Engine{}
-	mg.MSeti = &MSet{m: map[string][]interface{}{}, lock: new(sync.RWMutex)}
+	mg.ModelSetter = &ModelSet{m: map[string][]interface{}{}, lock: new(sync.RWMutex)}
 
 	dispatcher := worker.NewDispatcher(MaxWorkers)
 	dispatcher.Run()

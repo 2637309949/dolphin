@@ -14,6 +14,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -60,10 +61,7 @@ func (m *Boilerplate) Build(dir string, args []string, parser *parser.AppParser)
 		if fi.IsDir() {
 			return nil
 		}
-		b, err := vfsutil.ReadFile(template.Assets, p)
-		if err != nil {
-			return err
-		}
+		b := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, p)).([]byte)
 		filePath := strings.ReplaceAll(p, "/boilerplate/", "")
 		cfgs = append(cfgs, &pipe.TmplCfg{
 			Text:     string(b),

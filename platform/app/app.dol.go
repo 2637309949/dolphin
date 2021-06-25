@@ -35,8 +35,8 @@ import (
 // Dolphin defined parse app engine
 type Dolphin struct {
 	RouterGroup
+	Lifecycle
 	PlatformDB *xorm.Engine
-	lifecycle  Lifecycle
 	Manager    Manager
 	OAuth2     *server.Server
 	Http       HttpHandler
@@ -66,7 +66,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	if err != nil {
 		return err
 	}
-	err = dol.Manager.MSet().ForEach(func(n string, m interface{}) error {
+	err = dol.Manager.ModelSet().ForEachWithError(func(n string, m interface{}) error {
 		if viper.GetString("app.mode") == "debug" {
 			if tbn, ok := m.(interface{ TableName() string }); ok {
 				logrus.Infof("Sync Model[%v]:%v", n, tbn.TableName())
@@ -177,7 +177,7 @@ func (dol *Dolphin) Reflesh() error {
 		dol.Manager.AddBusinessDB(domain.Domain.String, db)
 	}
 
-	platBindModelNames := dol.Manager.MSet().Name(func(name string) bool { return name != Name })
+	platBindModelNames := dol.Manager.ModelSet().Name(func(name string) bool { return name != Name })
 	filtedDomains := funk.Filter(domains, func(domain model.SysDomain) bool { return domain.IsSync.Int64 != 1 }).([]model.SysDomain)
 	for i := range filtedDomains {
 		domain := filtedDomains[i]
@@ -200,7 +200,7 @@ func (dol *Dolphin) Reflesh() error {
 			return err
 		}
 	}
-	dol.Manager.MSet().Release()
+	dol.Manager.ModelSet().Release()
 	return err
 }
 
@@ -253,13 +253,13 @@ func (dol *Dolphin) lifeCycle(ctx context.Context) error {
 	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 	signal := dol.done()
-	if err := dol.lifecycle.Start(ctx); err != nil {
+	if err := dol.Start(ctx); err != nil {
 		return err
 	}
 	<-signal
 	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
-	if err := dol.lifecycle.Stop(ctx); err != nil {
+	if err := dol.Stop(ctx); err != nil {
 		return err
 	}
 	return nil
@@ -276,7 +276,7 @@ func NewDolphin() *Dolphin {
 	dol.RouterGroup = RouterGroup{Handlers: nil, basePath: "/"}
 	dol.RouterGroup.dol = dol
 	dol.Manager = NewDefaultManager()
-	dol.lifecycle = &lifecycleWrapper{}
+	dol.Lifecycle = &lifecycleWrapper{}
 	dol.Http = NewGinHandler(dol)
 	dol.RPC = NewGRPCHandler(dol)
 
@@ -297,14 +297,7 @@ func NewDolphin() *Dolphin {
 	dol.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	dol.Use(Tracker(TrackerOpts(dol)))
 
-	dol.lifecycle.Append(NewLifeHook(dol))
+	dol.Append(NewLifeHook(dol))
 	dol.pool.New = func() interface{} { return dol.allocateContext() }
 	return dol
 }
-
-var (
-	// App defined
-	App = NewDolphin()
-	// Run defined
-	Run = App.Run
-)

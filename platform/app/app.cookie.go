@@ -16,11 +16,6 @@ import (
 	"github.com/gorilla/securecookie"
 )
 
-var (
-	_ session.ManagerStore = &managerStore{}
-	_ session.Store        = &ckStore{}
-)
-
 // NewCookieStore Create an instance of a cookie store
 func NewCookieStore(opt ...Option) session.ManagerStore {
 	opts := defaultOptions
