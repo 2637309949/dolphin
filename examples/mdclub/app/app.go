@@ -9,8 +9,15 @@ import (
 	"sync"
 	"time"
 
+	"regexp"
+
 	"github.com/2637309949/dolphin/platform/app"
 	"github.com/2637309949/dolphin/platform/util"
+)
+
+var (
+	App *Dolphin
+	Run func()
 )
 
 type (
@@ -27,18 +34,17 @@ type (
 	// Context defined http handle hook context
 	Context struct {
 		*app.Context
-		dolphin *Dolphin
 	}
 	// RouterGroup defines struct that extend from gin.RouterGroup
 	RouterGroup struct {
-		dolphin  *Dolphin
+		dol      *Dolphin
 		Handlers []HandlerFunc
 		basePath string
 	}
 )
 
 func (dol *Dolphin) allocateContext() *Context {
-	return &Context{dolphin: dol}
+	return &Context{}
 }
 
 // HandlerFunc convert to app.HandlerFunc
@@ -51,17 +57,25 @@ func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 	})
 }
 
-// Handle overwrite RouterGroup.Handle
+// Handle defined TODO
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
-		method := methods[i]
-		absPath := path.Join(group.basePath, relativePath)
+		re, err := regexp.Compile("^[A-Z]+$")
+		if matches := re.MatchString(methods[i]); !matches || err != nil {
+			panic("http method " + methods[i] + " is not valid")
+		}
+		relativePath := group.calculateAbsolutePath(relativePath)
+		handlers = group.combineHandlers(handlers)
 		hls := []app.HandlerFunc{}
 		for j := 0; j < len(handlers); j++ {
-			hls = append(hls, group.dolphin.HandlerFunc(handlers[j]))
+			hls = append(hls, group.dol.HandlerFunc(handlers[j]))
 		}
-		group.dolphin.Http.Handle(method, absPath, hls...)
+		group.handle(methods[i], relativePath, hls...)
 	}
+}
+
+func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...app.HandlerFunc) {
+	group.dol.Http.Handle(httpMethod, relativePath, handlers...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
@@ -87,11 +101,17 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	return finalPath
 }
 
+// Use defined TODO
+func (group *RouterGroup) Use(middleware ...HandlerFunc) {
+	group.Handlers = append(group.Handlers, middleware...)
+}
+
+// Group defined TODO
 func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
 		basePath: group.calculateAbsolutePath(relativePath),
-		dolphin:  group.dolphin,
+		dol:      group.dol,
 	}
 }
 
@@ -116,29 +136,19 @@ func Cache(time time.Duration) HandlerFunc {
 	}
 }
 
-// NewEngine defined init dol you can custom engine
-func NewEngine() *Dolphin {
-	dol := &Dolphin{
-		Dolphin: app.App,
-		RouterGroup: RouterGroup{
-			Handlers: nil,
-			basePath: "/",
-		},
-	}
+// NewDolphin defined init dol you can custom engine
+func NewDolphin() *Dolphin {
+	rg := RouterGroup{Handlers: nil, basePath: "/"}
+	dol := Dolphin{Dolphin: app.App, RouterGroup: rg}
 	dol.pool.New = func() interface{} { return dol.allocateContext() }
-	dol.RouterGroup.dolphin = dol
-	return dol
+	dol.RouterGroup.dol = &dol
+	return &dol
 }
 
-var (
-	// App instance
-	App = NewEngine()
-	// Run defined
-	Run = App.Run
-)
-
 func init() {
-	SyncModel(App)
-	SyncController(App)
-	SyncService(App)
+	App = NewDolphin()
+	App.SyncModel()
+	App.SyncController()
+	App.SyncService()
+	Run = App.Run
 }

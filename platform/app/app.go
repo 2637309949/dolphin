@@ -54,8 +54,8 @@ func init() {
 	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
 
 	App = NewDolphin()
+	App.SyncModel()
+	App.SyncController()
+	App.SyncService()
 	Run = App.Run
-	SyncModel(App)
-	SyncController(App)
-	SyncService(App)
 }

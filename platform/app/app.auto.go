@@ -1997,7 +1997,7 @@ func UserSrvService(dol *Dolphin) {
 }
 
 // SyncModel defined
-func SyncModel(dol *Dolphin) error {
+func (dol *Dolphin) SyncModel() error {
 	mseti := dol.Manager.ModelSet()
 	mseti.Add(new(model.SysAppFun))
 	mseti.Add(new(model.SysArea))
@@ -2040,7 +2040,7 @@ func SyncModel(dol *Dolphin) error {
 }
 
 // SyncController defined
-func SyncController(dol *Dolphin) error {
+func (dol *Dolphin) SyncController() error {
 	SysAppFunRoutes(dol)
 	SysAreaRoutes(dol)
 	SysAttachmentRoutes(dol)
@@ -2076,7 +2076,7 @@ func SyncController(dol *Dolphin) error {
 }
 
 // SyncService defined
-func SyncService(dol *Dolphin) error {
+func (dol *Dolphin) SyncService() error {
 	ClientSrvService(dol)
 	DomainSrvService(dol)
 	UserSrvService(dol)

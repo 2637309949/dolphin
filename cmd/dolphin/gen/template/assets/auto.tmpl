@@ -68,7 +68,7 @@ func {{.ToUpperCase .Name}}Service(dol *Dolphin) {
 {{- end}}
 
 // SyncModel defined
-func SyncModel(dol *Dolphin) error {
+func (dol *Dolphin) SyncModel() error {
 	{{- $tLen := len .Tables }}{{- if ne $tLen 0 }}
 	mseti := dol.Manager.ModelSet()
 	{{- range .Tables}}
@@ -79,7 +79,7 @@ func SyncModel(dol *Dolphin) error {
 }
 
 // SyncController defined
-func SyncController(dol *Dolphin) error {
+func (dol *Dolphin) SyncController() error {
 	{{- range .Controllers}}
 	{{.ToUpperCase .Name}}Routes(dol)
 	{{- end}}
@@ -87,7 +87,7 @@ func SyncController(dol *Dolphin) error {
 }
 
 // SyncService defined
-func SyncService(dol *Dolphin) error {
+func (dol *Dolphin) SyncService() error {
 	{{- range .Services}}
 	{{.ToUpperCase .Name}}Service(dol)
 	{{- end}}

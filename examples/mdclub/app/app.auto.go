@@ -89,8 +89,8 @@ func ArticleRoutes(dol *Dolphin) {
 var ArticleInstance = NewArticle()
 
 // SyncModel defined
-func SyncModel(dol *Dolphin) error {
-	mseti := dol.Manager.MSet()
+func (dol *Dolphin) SyncModel() error {
+	mseti := dol.Manager.ModelSet()
 	mseti.Add(new(model.McAnswer))
 	mseti.Add(new(model.McArticle))
 	mseti.Add(new(model.McCache))
@@ -111,12 +111,12 @@ func SyncModel(dol *Dolphin) error {
 }
 
 // SyncController defined
-func SyncController(dol *Dolphin) error {
+func (dol *Dolphin) SyncController() error {
 	ArticleRoutes(dol)
 	return nil
 }
 
 // SyncService defined
-func SyncService(dol *Dolphin) error {
+func (dol *Dolphin) SyncService() error {
 	return nil
 }

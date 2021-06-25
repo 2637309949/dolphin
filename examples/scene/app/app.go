@@ -15,6 +15,11 @@ import (
 	"github.com/2637309949/dolphin/platform/util"
 )
 
+var (
+	App *Dolphin
+	Run func()
+)
+
 type (
 	// HandlerFunc defined
 	HandlerFunc func(ctx *Context)
@@ -52,16 +57,16 @@ func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf app.HandlerFunc) {
 	})
 }
 
-// Handle overwrite RouterGroup.Handle
+// Handle defined TODO
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		re, err := regexp.Compile("^[A-Z]+$")
 		if matches := re.MatchString(methods[i]); !matches || err != nil {
 			panic("http method " + methods[i] + " is not valid")
 		}
-		hls := []app.HandlerFunc{}
 		relativePath := group.calculateAbsolutePath(relativePath)
 		handlers = group.combineHandlers(handlers)
+		hls := []app.HandlerFunc{}
 		for j := 0; j < len(handlers); j++ {
 			hls = append(hls, group.dol.HandlerFunc(handlers[j]))
 		}
@@ -88,6 +93,7 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	if relativePath == "" {
 		return group.basePath
 	}
+
 	finalPath := path.Join(group.basePath, relativePath)
 	if util.LastChar(relativePath) == '/' && util.LastChar(finalPath) != '/' {
 		return finalPath + "/"
@@ -100,6 +106,7 @@ func (group *RouterGroup) Use(middleware ...HandlerFunc) {
 	group.Handlers = append(group.Handlers, middleware...)
 }
 
+// Group defined TODO
 func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
@@ -132,21 +139,16 @@ func Cache(time time.Duration) HandlerFunc {
 // NewDolphin defined init dol you can custom engine
 func NewDolphin() *Dolphin {
 	rg := RouterGroup{Handlers: nil, basePath: "/"}
-	dol := &Dolphin{Dolphin: app.App, RouterGroup: rg}
+	dol := Dolphin{Dolphin: app.App, RouterGroup: rg}
 	dol.pool.New = func() interface{} { return dol.allocateContext() }
-	dol.RouterGroup.dol = dol
-	return dol
+	dol.RouterGroup.dol = &dol
+	return &dol
 }
 
-var (
-	// App instance
-	App = NewDolphin()
-	// Run defined
-	Run = App.Run
-)
-
 func init() {
-	SyncModel(App)
-	SyncController(App)
-	SyncService(App)
+	App = NewDolphin()
+	App.SyncModel()
+	App.SyncController()
+	App.SyncService()
+	Run = App.Run
 }
