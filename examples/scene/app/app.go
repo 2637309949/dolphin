@@ -41,6 +41,11 @@ type (
 		Handlers []HandlerFunc
 		basePath string
 	}
+	// Srv defined
+	Srv interface {
+		SetCache(key string, v interface{}) error
+		GetCache(key string, v interface{}, expire time.Duration) error
+	}
 )
 
 func (dol *Dolphin) allocateContext() *Context {
@@ -146,9 +151,10 @@ func NewDolphin() *Dolphin {
 }
 
 func init() {
-	App = NewDolphin()
-	App.SyncModel()
-	App.SyncController()
-	App.SyncService()
-	Run = App.Run
+	dol, srvHelper := NewDolphin(), app.NewSrvHepler()
+	dol.SyncModel()
+	dol.SyncController()
+	dol.SyncService()
+	dol.SyncSrv(srvHelper)
+	App, Run = dol, dol.Run
 }

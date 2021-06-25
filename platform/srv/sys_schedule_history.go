@@ -13,6 +13,10 @@ import (
 )
 
 type SysScheduleHistory struct {
+	Srv interface {
+		SetCache(key string, v interface{}) error
+		GetCache(key string, v interface{}, expire time.Duration) error
+	}
 }
 
 func NewSysScheduleHistory() *SysScheduleHistory {
@@ -25,7 +29,7 @@ func (srv *SysScheduleHistory) TODO(ctx context.Context, db *xorm.Engine, params
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
-	chi := func(cwt context.Context) chan interface{} {
+	chi := func(context.Context) chan interface{} {
 		chi := make(chan interface{}, 1)
 		go func() {
 			time.Sleep(1 * time.Second)

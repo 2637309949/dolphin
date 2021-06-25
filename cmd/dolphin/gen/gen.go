@@ -6,7 +6,6 @@ package gen
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"html/template"
 	"io"
@@ -20,6 +19,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
+	"github.com/go-errors/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -77,6 +77,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 			err = fmt.Errorf("%v", rErr)
 		}
 	}()
+
 	// generate code
 	cfgs := []*pipe.TmplCfg{}
 	for i := range gen.Pipes {
@@ -100,6 +101,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 			return err
 		}
 	}
+
 	// fmt code
 	filePaths := funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *pipe.TmplCfg) bool { return cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" }), func(cfg *pipe.TmplCfg) (string, string) { return path.Dir(cfg.FilePath), path.Dir(cfg.FilePath) })).([]string)
 	if len(filePaths) > 0 {

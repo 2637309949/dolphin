@@ -95,7 +95,7 @@ var (
 	build = &cobra.Command{
 		Use:   "build",
 		Short: "Build project from xml",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			justOne := false
 			if err != nil {
@@ -128,7 +128,7 @@ var (
 	clean = &cobra.Command{
 		Use:   "clean",
 		Short: "Removing intermediate files",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(*cobra.Command, []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
 				return err
@@ -140,7 +140,7 @@ var (
 	more = &cobra.Command{
 		Use:   "more",
 		Short: "Add controller and table",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
 				return err
@@ -154,7 +154,7 @@ var (
 	setup = &cobra.Command{
 		Use:   "init",
 		Short: "Initialize a empty project",
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
 				return err

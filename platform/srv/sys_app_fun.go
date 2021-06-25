@@ -13,6 +13,10 @@ import (
 )
 
 type SysAppFun struct {
+	Srv interface {
+		SetCache(key string, v interface{}) error
+		GetCache(key string, v interface{}, expire time.Duration) error
+	}
 }
 
 func NewSysAppFun() *SysAppFun {
@@ -25,7 +29,7 @@ func (srv *SysAppFun) TODO(ctx context.Context, db *xorm.Engine, params struct{}
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
-	chi := func(cwt context.Context) chan interface{} {
+	chi := func(context.Context) chan interface{} {
 		chi := make(chan interface{}, 1)
 		go func() {
 			time.Sleep(1 * time.Second)

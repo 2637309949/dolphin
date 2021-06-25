@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/swag/gen"
+	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/spf13/viper"
 )
 
@@ -25,13 +26,15 @@ func (m *Doc) Name() string {
 
 // Pre defined
 func (m *Doc) Pre(*parser.AppParser) error {
-	cmd := exec.Command("go", "mod", "tidy")
-	if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
-		return err
-	}
-	cmd = exec.Command("go", "mod", "download")
-	if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
-		return err
+	if status := utils.NetWorkStatus(); status {
+		cmd := exec.Command("go", "mod", "tidy")
+		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
+			return err
+		}
+		cmd = exec.Command("go", "mod", "download")
+		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
+			return err
+		}
 	}
 	return nil
 }

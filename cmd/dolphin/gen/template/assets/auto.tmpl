@@ -59,8 +59,8 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 
 // {{.ToUpperCase .Name}}Routes defined
 {{- $ctrName := .Name}}
-func {{.ToUpperCase .Name}}Routes(dol *Dolphin) {
-	group, instance := dol.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
+func {{.ToUpperCase .Name}}Routes(rg *RouterGroup) {
+	group, instance := rg.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
 	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath, instance.{{.ToUpperCase .Name}}.Auth, instance.{{.ToUpperCase .Name}}.Roles, instance.{{.ToUpperCase .Name}}.Cache, instance.{{.ToUpperCase .Name}}.Interceptor, instance.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
@@ -92,7 +92,15 @@ func (dol *Dolphin) SyncModel() error {
 // SyncController defined
 func (dol *Dolphin) SyncController() error {
 	{{- range .Controllers}}
-	{{.ToUpperCase .Name}}Routes(dol)
+	{{.ToUpperCase .Name}}Routes(&dol.RouterGroup)
+	{{- end}}
+	return nil
+}
+
+// SyncSrv defined
+func (dol *Dolphin) SyncSrv(srv Srv) error {
+	{{- range .Controllers}}
+	{{.ToUpperCase .Name}}Instance.Srv.Srv = srv
 	{{- end}}
 	return nil
 }
