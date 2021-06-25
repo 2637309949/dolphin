@@ -3,11 +3,9 @@ const axios = require('../request').default
 
 // add Add ami
 module.exports.add = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/redis/mq/add'
+  let url = Object.assign({ url: '/api/redis/mq/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,10 +22,8 @@ module.exports.add = (data = {}, opt = {}) => {
 
 // get Get ami info
 module.exports.get = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/redis/mq/get?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/redis/mq/get?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

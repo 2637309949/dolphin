@@ -17,29 +17,22 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var (
+	// NsqProducer defined
+	NsqProducer *nsq.Producer
+	// NsqConsumer defined
+	NsqConsumer *nsq.Consumer
+	// tcpNsqdAddrr defined
+	tcpNsqdAddrr = "127.0.0.1:4161"
+)
+
 type messageHandler struct{}
 
-// NsqProducer defined
-var NsqProducer *nsq.Producer
+type Nsq struct {
+}
 
-// NsqConsumer defined
-var NsqConsumer *nsq.Consumer
-
-var tcpNsqdAddrr = "127.0.0.1:4161"
-
-func init() {
-	var err error
-	cfg := nsq.NewConfig()
-	// cfg.LookupdPollInterval = 10 * time.Second
-	NsqConsumer, err = nsq.NewConsumer("nsq-test", "test-channel", cfg)
-	if err != nil {
-		panic(err)
-	}
-	NsqProducer, err = nsq.NewProducer(tcpNsqdAddrr, cfg)
-	if err != nil {
-		panic(err)
-	}
-	go NConsumer()
+func NewNsq() *Nsq {
+	return &Nsq{}
 }
 
 // HandleMessage implements the Handler interface.
@@ -54,13 +47,6 @@ func (h *messageHandler) HandleMessage(m *nsq.Message) error {
 	return nil
 }
 
-type Nsq struct {
-}
-
-func NewNsq() *Nsq {
-	return &Nsq{}
-}
-
 // Producer defined srv
 func (srv *Nsq) Producer(ctx context.Context, db *xorm.Engine, params model.NsqInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
@@ -72,25 +58,6 @@ func (srv *Nsq) Producer(ctx context.Context, db *xorm.Engine, params model.NsqI
 	// 	return nil, err
 	// }
 	// NsqProducer.Stop()
-	return nil, err
-}
-
-// NConsumer defined srv
-func NConsumer() (interface{}, error) {
-	defer func() {
-		if err := recover(); err != nil {
-			goErr := errors.Wrap(err.(error), 3)
-			fmt.Print(string(goErr.Stack()))
-		}
-	}()
-
-	NsqConsumer.AddHandler(&messageHandler{})
-	err := NsqConsumer.ConnectToNSQLookupd(tcpNsqdAddrr)
-	if err != nil {
-		logrus.Error("failed to ConnectToNSQLookupd:", err)
-		return nil, err
-	}
-	// NsqConsumer.Stop()
 	return nil, err
 }
 
@@ -120,4 +87,38 @@ func (srv *Nsq) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (int
 		}
 	}
 	return nil, errors.New("no implementation found")
+}
+
+// NConsumer defined srv
+func NConsumer() (interface{}, error) {
+	defer func() {
+		if err := recover(); err != nil {
+			goErr := errors.Wrap(err.(error), 3)
+			fmt.Print(string(goErr.Stack()))
+		}
+	}()
+
+	NsqConsumer.AddHandler(&messageHandler{})
+	err := NsqConsumer.ConnectToNSQLookupd(tcpNsqdAddrr)
+	if err != nil {
+		logrus.Error("failed to ConnectToNSQLookupd:", err)
+		return nil, err
+	}
+	// NsqConsumer.Stop()
+	return nil, err
+}
+
+func init() {
+	var err error
+	cfg := nsq.NewConfig()
+	// cfg.LookupdPollInterval = 10 * time.Second
+	NsqConsumer, err = nsq.NewConsumer("nsq-test", "test-channel", cfg)
+	if err != nil {
+		panic(err)
+	}
+	NsqProducer, err = nsq.NewProducer(tcpNsqdAddrr, cfg)
+	if err != nil {
+		panic(err)
+	}
+	go NConsumer()
 }

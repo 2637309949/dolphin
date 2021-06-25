@@ -146,9 +146,9 @@ func NewDolphin() *Dolphin {
 }
 
 func init() {
-	App = NewDolphin()
-	App.SyncModel()
-	App.SyncController()
-	App.SyncService()
-	Run = App.Run
+	app := NewDolphin()
+	app.SyncModel()
+	app.SyncController()
+	app.SyncService()
+	App, Run = app, app.Run
 }

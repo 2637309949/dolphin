@@ -3,10 +3,8 @@ const axios = require('../request').default
 
 // info 
 module.exports.info = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/user/info?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/user/info?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

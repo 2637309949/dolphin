@@ -53,9 +53,9 @@ func init() {
 	redirectURL := viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
 	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
 
-	App = NewDolphin()
-	App.SyncModel()
-	App.SyncController()
-	App.SyncService()
-	Run = App.Run
+	app := NewDolphin()
+	app.SyncModel()
+	app.SyncController()
+	app.SyncService()
+	App, Run = app, app.Run
 }

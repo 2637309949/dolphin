@@ -3,11 +3,9 @@ const axios = require('../request').default
 
 // like like article
 module.exports.like = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/vote/like'
+  let url = Object.assign({ url: '/api/vote/like' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',

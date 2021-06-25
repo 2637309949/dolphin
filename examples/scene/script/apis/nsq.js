@@ -3,11 +3,9 @@ const axios = require('../request').default
 
 // add Add article
 module.exports.add = (data = {}, opt = {}) => {
-  const url = opt.url ||  '/api/nsq/add'
+  let url = Object.assign({ url: '/api/nsq/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    for (var key in data) {
-      url += key + '=' + encodeURIComponent(data[key]) + '&'
-    }
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,10 +22,8 @@ module.exports.add = (data = {}, opt = {}) => {
 
 // get Get Nsq info
 module.exports.get = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/nsq/get?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/nsq/get?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',

@@ -3,10 +3,8 @@ const axios = require('../request').default
 
 // file 文件下载
 module.exports.file = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/view/file?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/view/file?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -16,10 +14,8 @@ module.exports.file = (data = {}, opt = {}) => {
 
 // hTML HTML显示
 module.exports.hTML = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/view/html?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/view/html?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -29,10 +25,8 @@ module.exports.hTML = (data = {}, opt = {}) => {
 
 // xML XML显示
 module.exports.xML = (data = {}, opt = {}) => {
-  let url = opt.url || '/api/view/xml?'
-  for (var key in data) {
-    url += key + '=' + encodeURIComponent(data[key]) + '&'
-  }
+  let url = Object.assign({ url: '/api/view/xml?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
   return axios({
     url: url,
     method: 'get',
