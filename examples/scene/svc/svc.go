@@ -7,6 +7,7 @@ import (
 // Svc defined TODO
 type Svc interface {
 	Cache
+	Http
 	Db
 }
 

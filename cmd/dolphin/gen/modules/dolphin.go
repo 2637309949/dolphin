@@ -240,6 +240,7 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	svcByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.tmpl")).([]byte)
 	svcDbByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.db.tmpl")).([]byte)
 	svcCache := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.cache.tmpl")).([]byte)
+	svcHttp := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.http.tmpl")).([]byte)
 	tmpls = append(tmpls, &pipe.TmplCfg{
 		Text:     string(svcDbByte),
 		FilePath: path.Join(dir, viper.GetString("dir.svc"), "db.go"),
@@ -257,6 +258,13 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	tmpls = append(tmpls, &pipe.TmplCfg{
 		Text:     string(svcByte),
 		FilePath: path.Join(dir, viper.GetString("dir.svc"), "svc.go"),
+		Data:     tmplArgs,
+		Overlap:  pipe.OverlapSkip,
+		GOFmt:    true,
+	})
+	tmpls = append(tmpls, &pipe.TmplCfg{
+		Text:     string(svcHttp),
+		FilePath: path.Join(dir, viper.GetString("dir.svc"), "http.go"),
 		Data:     tmplArgs,
 		Overlap:  pipe.OverlapSkip,
 		GOFmt:    true,
