@@ -691,7 +691,7 @@ func SysClientPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetString("app_name", viper.GetString("app.name"))
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
+	ret, err := ctr.Srv.(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return

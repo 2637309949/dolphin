@@ -320,7 +320,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		}
 		q.SetString("cn_org_id", template.HTML(strings.Join(ids, ",")))()
 	}
-	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

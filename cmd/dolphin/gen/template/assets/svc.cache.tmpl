@@ -1,0 +1,9 @@
+package svc
+
+import "time"
+
+// Cache defined TODO
+type Cache interface {
+	SetCache(key string, v interface{}) error
+	GetCache(key string, v interface{}, expire time.Duration) error
+}

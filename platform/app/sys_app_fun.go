@@ -232,7 +232,7 @@ func (ctr *SysAppFun) SysAppFunPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetRule("sys_app_fun_page")
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_app_fun", "page", "sys_app_fun", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_app_fun", "page", "sys_app_fun", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -252,7 +252,7 @@ func (ctr *SysAppFun) SysAppFunTree(ctx *Context) {
 	q.SetString("name")
 	q.SetRule("sys_app_fun_tree")
 	q.SetTags()
-	ret, err := ctx.TreeSearch(ctx.DB, "sys_app_fun", "tree", "sys_app_fun", q.Value())
+	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_app_fun", "tree", "sys_app_fun", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

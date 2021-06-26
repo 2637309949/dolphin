@@ -9,14 +9,12 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/sirupsen/logrus"
 )
 
 type SysTag struct {
-	Srv interface {
-		SetCache(key string, v interface{}) error
-		GetCache(key string, v interface{}, expire time.Duration) error
-	}
+	svc.Svc
 }
 
 func NewSysTag() *SysTag {

@@ -8,6 +8,8 @@ import (
 	"errors"
 	"time"
 
+	"{{.PackageName}}/svc"
+
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -15,10 +17,7 @@ import (
 
 
 type {{$.Controller.ToUpperCase $.Controller.Name}} struct {
-	Srv interface {
-		SetCache(key string, v interface{}) error
-		GetCache(key string, v interface{}, expire time.Duration) error
-	}
+	svc.Svc
 }
 
 func New{{$.Controller.ToUpperCase $.Controller.Name}}() *{{$.Controller.ToUpperCase $.Controller.Name}} {

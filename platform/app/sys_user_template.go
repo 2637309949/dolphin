@@ -232,7 +232,7 @@ func (ctr *SysUserTemplate) SysUserTemplatePage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_user_template", "page", "sys_user_template", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_user_template", "page", "sys_user_template", q.Value())
 	if err != nil {
 		ctx.Fail(err)
 		return

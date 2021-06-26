@@ -30,6 +30,7 @@ func init() {
 	viper.SetDefault("dir.rpc", "rpc")
 	viper.SetDefault("dir.script", "script")
 	viper.SetDefault("dir.sql", "sql")
+	viper.SetDefault("dir.svc", "svc")
 	viper.SetDefault("dir.sqlmap", "sqlmap")
 	viper.SetDefault("dir.srv", "srv")
 	viper.SetDefault("dir.util", "util")

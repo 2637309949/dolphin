@@ -261,7 +261,7 @@ func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
 	q.SetUser()
 	q.SetRule("sys_menu_sidebar")
 	q.SetTags()
-	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
+	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -294,7 +294,7 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -320,7 +320,7 @@ func (ctr *SysMenu) SysMenuTree(ctx *Context) {
 	q.SetString("name")
 	q.SetRule("sys_menu_tree")
 	q.SetTags()
-	ret, err := ctx.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
+	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

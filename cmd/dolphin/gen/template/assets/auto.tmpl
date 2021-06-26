@@ -7,6 +7,7 @@ import (
 	"time"
 	"{{.PackageName}}/model"
 	"{{.PackageName}}/srv"
+	"{{.PackageName}}/svc"
 	"{{.PackageName}}/rpc"
 	"{{.PackageName}}/rpc/proto"
 
@@ -23,10 +24,10 @@ var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
 type Controller struct {
 	Method       string
 	RelativePath string
-	Auth,          
-	Roles,         
-	Cache, 		  
-	Interceptor,   
+	Auth,
+	Roles,
+	Cache,
+	Interceptor,
 	Handler      HandlerFunc
 }
 
@@ -98,9 +99,9 @@ func (dol *Dolphin) SyncController() error {
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(srv Srv) error {
+func (dol *Dolphin) SyncSrv(svc svc.Svc) error {
 	{{- range .Controllers}}
-	{{.ToUpperCase .Name}}Instance.Srv.Srv = srv
+	{{.ToUpperCase .Name}}Instance.Srv.Svc = svc
 	{{- end}}
 	return nil
 }

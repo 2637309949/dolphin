@@ -241,7 +241,7 @@ func (ctr *SysOrg) SysOrgPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_org", "page", "sys_org", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_org", "page", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -267,7 +267,7 @@ func (ctr *SysOrg) SysOrgTree(ctx *Context) {
 	q.SetString("name")
 	q.SetRule("sys_org_tree")
 	q.SetTags()
-	ret, err := ctx.TreeSearch(ctx.DB, "sys_org", "tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_org", "tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

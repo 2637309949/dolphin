@@ -13,6 +13,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
@@ -47,7 +48,7 @@ func DefaultFormat(interface{}) func(interface{}) interface{} {
 // OptionsetsFormat defiend
 func OptionsetsFormat(db *xorm.Engine) func(interface{}) func(interface{}) interface{} {
 	return func(format interface{}) func(source interface{}) interface{} {
-		optionsets, err := new(Context).GetOptions(db, fmt.Sprintf("%v", format))
+		optionsets, err := new(svc.SvcHepler).GetOptions(db, fmt.Sprintf("%v", format))
 		return func(source interface{}) interface{} {
 			if err == nil {
 				target := optionsets[fmt.Sprintf("%v", format)]

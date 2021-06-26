@@ -8,6 +8,7 @@ import (
 	"github.com/2637309949/dolphin/platform/rpc"
 	"github.com/2637309949/dolphin/platform/rpc/proto"
 	"github.com/2637309949/dolphin/platform/srv"
+	"github.com/2637309949/dolphin/platform/svc"
 
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -2795,38 +2796,38 @@ func (dol *Dolphin) SyncController() error {
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(srv Srv) error {
-	SysAppFunInstance.Srv.Srv = srv
-	SysAreaInstance.Srv.Srv = srv
-	SysAttachmentInstance.Srv.Srv = srv
-	SysCasInstance.Srv.Srv = srv
-	SysClientInstance.Srv.Srv = srv
-	SysCommentInstance.Srv.Srv = srv
-	SysDataPermissionInstance.Srv.Srv = srv
-	DebugInstance.Srv.Srv = srv
-	SysDingtalkInstance.Srv.Srv = srv
-	SysDomainInstance.Srv.Srv = srv
-	SysMenuInstance.Srv.Srv = srv
-	SysNotificationInstance.Srv.Srv = srv
-	SysOptionsetInstance.Srv.Srv = srv
-	SysOrgInstance.Srv.Srv = srv
-	SysPermissionInstance.Srv.Srv = srv
-	SysRoleInstance.Srv.Srv = srv
-	SysRoleMenuInstance.Srv.Srv = srv
-	SysScheduleInstance.Srv.Srv = srv
-	SysScheduleHistoryInstance.Srv.Srv = srv
-	SysSchedulingInstance.Srv.Srv = srv
-	SysSettingInstance.Srv.Srv = srv
-	SysTableInstance.Srv.Srv = srv
-	SysTableColumnInstance.Srv.Srv = srv
-	SysTagInstance.Srv.Srv = srv
-	SysTagGroupInstance.Srv.Srv = srv
-	SysTrackerInstance.Srv.Srv = srv
-	SysUserInstance.Srv.Srv = srv
-	SysUserTemplateInstance.Srv.Srv = srv
-	SysUserTemplateDetailInstance.Srv.Srv = srv
-	SysWechatInstance.Srv.Srv = srv
-	SysWorkerInstance.Srv.Srv = srv
+func (dol *Dolphin) SyncSrv(svc svc.Svc) error {
+	SysAppFunInstance.Srv.Svc = svc
+	SysAreaInstance.Srv.Svc = svc
+	SysAttachmentInstance.Srv.Svc = svc
+	SysCasInstance.Srv.Svc = svc
+	SysClientInstance.Srv.Svc = svc
+	SysCommentInstance.Srv.Svc = svc
+	SysDataPermissionInstance.Srv.Svc = svc
+	DebugInstance.Srv.Svc = svc
+	SysDingtalkInstance.Srv.Svc = svc
+	SysDomainInstance.Srv.Svc = svc
+	SysMenuInstance.Srv.Svc = svc
+	SysNotificationInstance.Srv.Svc = svc
+	SysOptionsetInstance.Srv.Svc = svc
+	SysOrgInstance.Srv.Svc = svc
+	SysPermissionInstance.Srv.Svc = svc
+	SysRoleInstance.Srv.Svc = svc
+	SysRoleMenuInstance.Srv.Svc = svc
+	SysScheduleInstance.Srv.Svc = svc
+	SysScheduleHistoryInstance.Srv.Svc = svc
+	SysSchedulingInstance.Srv.Svc = svc
+	SysSettingInstance.Srv.Svc = svc
+	SysTableInstance.Srv.Svc = svc
+	SysTableColumnInstance.Srv.Svc = svc
+	SysTagInstance.Srv.Svc = svc
+	SysTagGroupInstance.Srv.Svc = svc
+	SysTrackerInstance.Srv.Svc = svc
+	SysUserInstance.Srv.Svc = svc
+	SysUserTemplateInstance.Srv.Svc = svc
+	SysUserTemplateDetailInstance.Srv.Svc = svc
+	SysWechatInstance.Srv.Svc = svc
+	SysWorkerInstance.Srv.Svc = svc
 	return nil
 }
 

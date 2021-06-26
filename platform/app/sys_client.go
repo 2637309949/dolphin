@@ -241,7 +241,7 @@ func (ctr *SysClient) SysClientPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

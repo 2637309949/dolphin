@@ -12,6 +12,8 @@ import (
 
 	"github.com/go-errors/errors"
 
+	"scene/svc"
+
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/nsqio/go-nsq"
 	"github.com/sirupsen/logrus"
@@ -29,10 +31,7 @@ var (
 type messageHandler struct{}
 
 type Nsq struct {
-	Srv interface {
-		SetCache(key string, v interface{}) error
-		GetCache(key string, v interface{}, expire time.Duration) error
-	}
+	svc.Svc
 }
 
 func NewNsq() *Nsq {

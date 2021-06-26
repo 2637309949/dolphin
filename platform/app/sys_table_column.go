@@ -237,7 +237,7 @@ func (ctr *SysTableColumn) SysTableColumnPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_table_column", "page", "sys_table_column", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_table_column", "page", "sys_table_column", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

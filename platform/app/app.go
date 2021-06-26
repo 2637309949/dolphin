@@ -7,6 +7,7 @@ import (
 	"context"
 	"path"
 
+	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/json-iterator/go/extra"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
@@ -53,10 +54,10 @@ func init() {
 	redirectURL := viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
 	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
 
-	app, srvHelper := NewDolphin(), NewSrvHepler()
+	app, svcHelper := NewDolphin(), svc.NewSvcHepler(RedisClient)
 	app.SyncModel()
 	app.SyncController()
 	app.SyncService()
-	app.SyncSrv(srvHelper)
+	app.SyncSrv(svcHelper)
 	App, Run = app, app.Run
 }

@@ -239,7 +239,7 @@ func (ctr *SysSetting) SysSettingPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctx.PageSearch(ctx.DB, "sys_setting", "page", "sys_setting", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_setting", "page", "sys_setting", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

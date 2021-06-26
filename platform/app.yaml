@@ -20,6 +20,7 @@ dir:
   sql: sql
   sqlmap: sqlmap
   srv: srv
+  svc: svc
   util: util
 rpc:
   port: "9081"

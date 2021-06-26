@@ -9,9 +9,12 @@ import (
 	"sync"
 	"time"
 
+	"scene/svc"
+
 	"regexp"
 
 	"github.com/2637309949/dolphin/platform/app"
+	appSvc "github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/util"
 )
 
@@ -151,10 +154,10 @@ func NewDolphin() *Dolphin {
 }
 
 func init() {
-	dol, srvHelper := NewDolphin(), app.NewSrvHepler()
+	dol, svcHelper := NewDolphin(), svc.NewSvcHepler(appSvc.NewSvcHepler(app.RedisClient))
 	dol.SyncModel()
 	dol.SyncController()
 	dol.SyncService()
-	dol.SyncSrv(srvHelper)
+	dol.SyncSrv(svcHelper)
 	App, Run = dol, dol.Run
 }

@@ -10,6 +10,8 @@ import (
 	"scene/model"
 	"time"
 
+	"scene/svc"
+
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/go-errors/errors"
@@ -52,10 +54,7 @@ func init() {
 }
 
 type Kafka struct {
-	Srv interface {
-		SetCache(key string, v interface{}) error
-		GetCache(key string, v interface{}, expire time.Duration) error
-	}
+	svc.Svc
 }
 
 func NewKafka() *Kafka {
