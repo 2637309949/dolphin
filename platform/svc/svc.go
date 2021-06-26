@@ -5,6 +5,7 @@ import "github.com/go-redis/redis/v8"
 // Svc defined TODO
 type Svc interface {
 	Cache
+	Http
 	Db
 }
 
