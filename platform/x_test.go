@@ -3,22 +3,23 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"testing"
 	"time"
 
-	// "github.com/mattn/go-sqlite3"
-	_ "github.com/mattn/go-sqlite3"
-
 	//  "github.com/2637309949/dolphin/platform/conf"
 	_ "github.com/2637309949/dolphin/platform/conf"
+
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
 
 	"github.com/2637309949/dolphin/platform/app"
 )
+
+var Token string
 
 type (
 	testingT interface {
@@ -55,7 +56,7 @@ type (
 // handler defined
 func handler(req *http.Request, h func(w *httptest.ResponseRecorder)) {
 	w := httptest.NewRecorder()
-	req.Header.Add("Authorization", "Bearer "+AccessToken)
+	req.Header.Add("Authorization", "Bearer "+Token)
 	req.Header.Add("cache-control", "no-cache")
 	req.Header.Add("origin", "http://localhost:"+viper.GetString("http.port"))
 	req.Header.Add("accept", "application/json, text/plain, */*")
@@ -66,8 +67,14 @@ func handler(req *http.Request, h func(w *httptest.ResponseRecorder)) {
 	h(w)
 }
 
-// Get defined
-func Get(url string, h func(w *httptest.ResponseRecorder)) {
+// Get defined TODO
+func Get(url string, params []M, h func(w *httptest.ResponseRecorder)) {
+	if len(params) > 0 {
+		url += "?"
+		for k, v := range params[0] {
+			url += fmt.Sprintf("%v=%v&", k, v)
+		}
+	}
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		panic(err)
@@ -75,13 +82,27 @@ func Get(url string, h func(w *httptest.ResponseRecorder)) {
 	handler(req, h)
 }
 
-// Post defined
-func Post(url string, payform M, h func(w *httptest.ResponseRecorder)) {
-	jm, err := json.Marshal(&payform)
+// Options defined TODO
+func Options(url string, params []M, h func(w *httptest.ResponseRecorder)) {
+	if len(params) > 0 {
+		url += "?"
+		for k, v := range params[0] {
+			url += fmt.Sprintf("%v=%v&", k, v)
+		}
+	}
+	req, err := http.NewRequest("OPTIONS", url, nil)
 	if err != nil {
 		panic(err)
 	}
+	handler(req, h)
+}
 
+// Post defined TODO
+func Post(url string, params []M, h func(w *httptest.ResponseRecorder)) {
+	jm, err := json.Marshal(&params[0])
+	if err != nil {
+		panic(err)
+	}
 	req, err := http.NewRequest("POST", url, bytes.NewReader(jm))
 	if err != nil {
 		panic(err)
@@ -90,13 +111,48 @@ func Post(url string, payform M, h func(w *httptest.ResponseRecorder)) {
 	handler(req, h)
 }
 
-// HttpTest defined
-func HttpTest(reqPath string, funk func(ctx *Context), t *testing.T, p ...M) {
-	switch len(p) {
-	case 0:
-		Get(reqPath, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
-	default:
-		Post(reqPath, p[0], func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
+// Put defined TODO
+func Put(url string, params []M, h func(w *httptest.ResponseRecorder)) {
+	jm, err := json.Marshal(&params[0])
+	if err != nil {
+		panic(err)
+	}
+	req, err := http.NewRequest("PUT", url, bytes.NewReader(jm))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Add("Content-Type", "application/json")
+	handler(req, h)
+}
+
+// Head defined TODO
+func Head(url string, params []M, h func(w *httptest.ResponseRecorder)) {
+	if len(params) > 0 {
+		url += "?"
+		for k, v := range params[0] {
+			url += fmt.Sprintf("%v=%v&", k, v)
+		}
+	}
+	req, err := http.NewRequest("HEAD", url, nil)
+	if err != nil {
+		panic(err)
+	}
+	handler(req, h)
+}
+
+// HttpHandle defined
+func HttpHandle(method, reqPath string, funk func(ctx *Context), t *testing.T, params ...M) {
+	switch method {
+	case "GET":
+		Get(reqPath, params, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
+	case "HEAD":
+		Head(reqPath, params, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
+	case "OPTIONS":
+		Options(reqPath, params, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
+	case "POST":
+		Post(reqPath, params, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
+	case "PUT":
+		Put(reqPath, params, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
 	}
 }
 
@@ -109,17 +165,15 @@ func TestMain(m *testing.M) {
 
 // SetToken defined
 func SetToken(token string) {
-	AccessToken = token
+	Token = token
 }
-
-var AccessToken string
 
 // TestSysMenuPage defined
 func TestSysUserLogin(t *testing.T) {
-	HttpTest("/api/sys/user/login", XTestSysUserLogin, t, M{"domain": "localhost", "name": "admin", "password": "admin"})
+	HttpHandle("POST", "/api/sys/user/login", XTestSysUserLogin, t, M{"domain": "localhost", "name": "admin", "password": "admin"})
 }
 
 // TestSysMenuPage defined
 func TestSysMenuPage(t *testing.T) {
-	HttpTest("/api/sys/menu/page", XTestSysMenuPage, t)
+	HttpHandle("GET", "/api/sys/menu/page", XTestSysMenuPage, t)
 }

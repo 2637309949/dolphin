@@ -16,10 +16,10 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-// RootRelativePath defined
+// RootRelativePath defined TODO
 const RootRelativePath = "/"
 
-// HttpHandler defined
+// HttpHandler defined TODO
 type HttpHandler interface {
 	http.Handler
 	Handle(string, string, ...HandlerFunc)
@@ -33,12 +33,12 @@ type ginHandler struct {
 	allocCtx func(func(*Context))
 }
 
-// ServeHTTP defined
+// ServeHTTP defined TODO
 func (gh *ginHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	gh.gin.ServeHTTP(w, req)
 }
 
-// OnStart defined
+// OnStart defined TODO
 func (gh *ginHandler) OnStart(ctx context.Context) error {
 	logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 	gh.httpSrv.Handler = gh.gin
@@ -50,7 +50,7 @@ func (gh *ginHandler) OnStart(ctx context.Context) error {
 	return nil
 }
 
-// OnStop defined
+// OnStop defined TODO
 func (gh *ginHandler) OnStop(ctx context.Context) error {
 	if err := gh.httpSrv.Shutdown(ctx); err != nil {
 		logrus.Fatal(err)
@@ -81,7 +81,7 @@ func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...Ha
 	gh.gin.Handle(httpMethod, relativePath, hls...)
 }
 
-// NewGinHandler defined
+// NewGinHandler defined TODO
 func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.SetMode(viper.GetString("app.mode"))

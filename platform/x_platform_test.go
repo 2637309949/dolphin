@@ -2,6 +2,9 @@ package main
 
 import (
 	"encoding/json"
+
+	// "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 // XTestSysUserLogin defined
@@ -15,7 +18,6 @@ func XTestSysUserLogin(ctx *Context) {
 	}{}
 	json.Unmarshal(ctx.Body.Bytes(), &ret)
 	SetToken(ret.Data.AccessToken)
-
 }
 
 // XTestSysMenuPage defined

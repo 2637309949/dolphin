@@ -36,9 +36,9 @@ func (l *lifecycleWrapper) Append(hook lifeHook) {
 // Start runs all OnStart hooks, returning immediately if it encounters an
 // error.
 func (l *lifecycleWrapper) Start(ctx context.Context) error {
-	for _, hook := range l.hooks {
-		if err := hook.OnStart(ctx); err != nil {
-			if stopErr := hook.OnStop(ctx); stopErr != nil {
+	for i := range l.hooks {
+		if err := l.hooks[i].OnStart(ctx); err != nil {
+			if stopErr := l.hooks[i].OnStop(ctx); stopErr != nil {
 				return multierr.Append(err, stopErr)
 			}
 			return err
@@ -51,13 +51,12 @@ func (l *lifecycleWrapper) Start(ctx context.Context) error {
 // Stop runs any OnStop hooks whose OnStart counterpart succeeded. OnStop
 // hooks run in reverse order.
 func (l *lifecycleWrapper) Stop(ctx context.Context) error {
-	var errs []error
-	// Run backward from last successful OnStart.
+	var errs error
 	for ; l.numStarted > 0; l.numStarted-- {
 		hook := l.hooks[l.numStarted-1]
 		if err := hook.OnStop(ctx); err != nil {
-			errs = append(errs, err)
+			errs = multierr.Append(errs, err)
 		}
 	}
-	return multierr.Combine(errs...)
+	return errs
 }

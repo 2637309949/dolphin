@@ -38,7 +38,7 @@ func (h *Hook) OnStop(ctx context.Context) error {
 	return nil
 }
 
-// NewLifeHook create lifecycle hook
+// NewLifeHook defined TODO
 func NewLifeHook(e *Dolphin) lifeHook {
 	return &Hook{dol: e}
 }

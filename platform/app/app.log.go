@@ -181,26 +181,25 @@ func initTracker() {
 				bmp := map[string][]model.SysTracker{}
 				beans := funk.Map(logs, func(entity interface{}) SysTracker {
 					item := entity.(*LogFormatterParams)
-					return SysTracker{
-						SysTracker: model.SysTracker{
-							Token:      null.StringFrom(item.Token),
-							UserId:     null.StringFrom(item.UserID),
-							StatusCode: null.IntFrom(int64(item.StatusCode)),
-							Latency:    null.FloatFrom(item.Latency.Seconds()),
-							ClientIp:   null.StringFrom(item.ClientIP),
-							Method:     null.StringFrom(item.Method),
-							Path:       null.StringFrom(item.Path),
-							Header:     item.Header,
-							ReqBody:    item.ReqBody,
-							ResBody:    item.ResBody,
-							CreateTime: null.TimeFrom(time.Now()),
-							Creater:    null.IntFrom(1),
-							UpdateTime: null.TimeFrom(time.Now()),
-							Updater:    null.IntFrom(1),
-							IsDelete:   null.IntFrom(0),
-						},
-						Domain: null.StringFrom(item.Domain),
+					st := SysTracker{Domain: null.StringFrom(item.Domain)}
+					st.SysTracker = model.SysTracker{
+						Token:      null.StringFrom(item.Token),
+						UserId:     null.StringFrom(item.UserID),
+						StatusCode: null.IntFrom(int64(item.StatusCode)),
+						Latency:    null.FloatFrom(item.Latency.Seconds()),
+						ClientIp:   null.StringFrom(item.ClientIP),
+						Method:     null.StringFrom(item.Method),
+						Path:       null.StringFrom(item.Path),
+						Header:     item.Header,
+						ReqBody:    item.ReqBody,
+						ResBody:    item.ResBody,
+						CreateTime: null.TimeFrom(time.Now()),
+						Creater:    null.IntFrom(1),
+						UpdateTime: null.TimeFrom(time.Now()),
+						Updater:    null.IntFrom(1),
+						IsDelete:   null.IntFrom(0),
 					}
+					return st
 				}).([]SysTracker)
 				beans = funk.Filter(beans, func(entity SysTracker) bool {
 					return entity.Domain.String != ""

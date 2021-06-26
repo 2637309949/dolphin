@@ -33,6 +33,7 @@ type (
 	}
 )
 
+// Dir defined TODO
 func Dir(root string, listDirectory bool) http.FileSystem {
 	fs := http.Dir(root)
 	if listDirectory {
@@ -55,7 +56,7 @@ func (f neuteredReaddirFile) Readdir(count int) ([]os.FileInfo, error) {
 	return nil, nil
 }
 
-// Handle overwrite RouterGroup.Handle
+// Handle defined TODO
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
 		re, err := regexp.Compile("^[A-Z]+$")
