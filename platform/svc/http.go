@@ -18,31 +18,26 @@ type Http interface {
 }
 
 // Get returns *HttpRequest with GET method.
-// InRole defined TODO
 func (svc *SvcHepler) Get(url string) *http.HttpRequest {
 	return http.NewRequest(url, "GET")
 }
 
 // Post returns *HttpRequest with POST method.
-// InRole defined TODO
 func (svc *SvcHepler) Post(url string) *http.HttpRequest {
 	return http.NewRequest(url, "POST")
 }
 
 // Put returns *HttpRequest with PUT method.
-// InRole defined TODO
 func (svc *SvcHepler) Put(url string) *http.HttpRequest {
 	return http.NewRequest(url, "PUT")
 }
 
 // Delete returns *HttpRequest DELETE method.
-// InRole defined TODO
 func (svc *SvcHepler) Delete(url string) *http.HttpRequest {
 	return http.NewRequest(url, "DELETE")
 }
 
 // Head returns *HttpRequest with HEAD method.
-// InRole defined TODO
 func (svc *SvcHepler) Head(url string) *http.HttpRequest {
 	return http.NewRequest(url, "HEAD")
 }

@@ -26,14 +26,12 @@ func (svc *SvcHepler) InRole(db *xorm.Engine, userId string, role ...string) boo
 	var cnt int
 	role, _ = slice.RemoveStringDuplicates(role)
 	if _, err := db.SQL(
-		fmt.Sprintf(`
-		    select count(distinct(role_id)) cnt 
-			from sys_role_user 
-			left join sys_role on sys_role.id=sys_role_user.role_id 
-			where sys_role.code in (%v) and sys_role_user.user_id = ? and sys_role_user.is_delete != 1
-		`, strings.Join(funk.Map(role, func(id string) string {
-			return fmt.Sprintf("'%v'", id)
-		}).([]string), ",")),
+		fmt.Sprintf(`select 
+		count(distinct(role_id)) cnt 
+		from sys_role_user 
+		left join sys_role on sys_role.id=sys_role_user.role_id 
+		where sys_role.code in (%v) and sys_role_user.user_id = ? and sys_role_user.is_delete != 1`,
+			strings.Join(funk.Map(role, func(id string) string { return fmt.Sprintf("'%v'", id) }).([]string), ",")),
 		userId).Get(&cnt); err != nil {
 		logrus.Error(err)
 		return false
@@ -46,14 +44,12 @@ func (svc *SvcHepler) InAdmin(db *xorm.Engine, userId string, role ...string) bo
 	var cnt int
 	role, _ = slice.RemoveStringDuplicates(append(role, model.AdminRole.Code.String))
 	if _, err := db.SQL(
-		fmt.Sprintf(`
-			select count(sys_role_user.id) cnt 
-			from sys_role_user 
-			left join sys_role on sys_role.id=sys_role_user.role_id 
-			where sys_role_user.user_id = ? and sys_role.code in (%v) and sys_role_user.is_delete != 1
-		`, strings.Join(funk.Map(role, func(id string) string {
-			return fmt.Sprintf("'%v'", id)
-		}).([]string), ",")),
+		fmt.Sprintf(`select 
+		count(sys_role_user.id) cnt 
+		from sys_role_user 
+		left join sys_role on sys_role.id=sys_role_user.role_id 
+		where sys_role_user.user_id = ? and sys_role.code in (%v) and sys_role_user.is_delete != 1`,
+			strings.Join(funk.Map(role, func(id string) string { return fmt.Sprintf("'%v'", id) }).([]string), ",")),
 		userId).Get(&cnt); err != nil {
 		logrus.Error(err)
 		return false
@@ -168,26 +164,24 @@ func (svc *SvcHepler) TreeSearch(db *xorm.Engine, controller, api, table string,
 
 // GetOptions defined TODO
 func (svc *SvcHepler) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error) {
-	type Options struct {
-		Value interface{} `json:"value"`
-		Text  string      `json:"text"`
-	}
 	var optSets []model.SysOptionset
 	if err := db.Where("is_delete = 0").In("code", keys).Find(&optSets); err != nil {
 		return nil, err
 	}
-
 	optMap := make(map[string]map[string]interface{})
-	for _, v := range optSets {
-		var options []Options
-		if err := json.Unmarshal([]byte(v.Value.String), &options); err != nil {
+	for i := range optSets {
+		var options []struct {
+			Value interface{} `json:"value"`
+			Text  string      `json:"text"`
+		}
+		if err := json.Unmarshal([]byte(optSets[i].Value.String), &options); err != nil {
 			return nil, err
 		}
-		if optMap[v.Code.String] == nil {
-			optMap[v.Code.String] = map[string]interface{}{}
+		if optMap[optSets[i].Code.String] == nil {
+			optMap[optSets[i].Code.String] = map[string]interface{}{}
 		}
-		for _, item := range options {
-			optMap[v.Code.String][item.Text] = item.Value
+		for j := range options {
+			optMap[optSets[i].Code.String][options[j].Text] = options[j].Value
 		}
 	}
 	return optMap, nil
