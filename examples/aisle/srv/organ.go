@@ -8,11 +8,14 @@ import (
 	"errors"
 	"time"
 
+	"aisle/svc"
+
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/sirupsen/logrus"
 )
 
 type Organ struct {
+	svc.Svc
 }
 
 func NewOrgan() *Organ {

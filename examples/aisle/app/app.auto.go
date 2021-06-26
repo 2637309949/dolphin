@@ -6,6 +6,7 @@ package app
 import (
 	"aisle/model"
 	"aisle/srv"
+	"aisle/svc"
 
 	"github.com/spf13/viper"
 )
@@ -102,8 +103,8 @@ func NewOrgan() *Organ {
 }
 
 // OrganRoutes defined
-func OrganRoutes(dol *Dolphin) {
-	group, instance := dol.Group(viper.GetString("http.prefix")), OrganInstance
+func OrganRoutes(rg *RouterGroup) {
+	group, instance := rg.Group(viper.GetString("http.prefix")), OrganInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
 	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
@@ -535,7 +536,13 @@ func (dol *Dolphin) SyncModel() error {
 
 // SyncController defined
 func (dol *Dolphin) SyncController() error {
-	OrganRoutes(dol)
+	OrganRoutes(&dol.RouterGroup)
+	return nil
+}
+
+// SyncSrv defined
+func (dol *Dolphin) SyncSrv(svc svc.Svc) error {
+	OrganInstance.Srv.Svc = svc
 	return nil
 }
 

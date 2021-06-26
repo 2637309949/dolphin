@@ -44,11 +44,6 @@ type (
 		Handlers []HandlerFunc
 		basePath string
 	}
-	// Srv defined
-	Srv interface {
-		SetCache(key string, v interface{}) error
-		GetCache(key string, v interface{}, expire time.Duration) error
-	}
 )
 
 func (dol *Dolphin) allocateContext() *Context {
