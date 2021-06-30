@@ -3,7 +3,9 @@ package main
 import (
 	"encoding/json"
 
+	"scene/model"
 	// "github.com/mattn/go-sqlite3"
+	"github.com/2637309949/dolphin/packages/null"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -30,7 +32,7 @@ var XTestArticleAdd, XTestArticleAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, model.Article{Name: null.StringFrom("各种场景应用")}
 
 // XTestArticleBatchAdd, XTestArticleBatchAddM defined TODO
 var XTestArticleBatchAdd, XTestArticleBatchAddM = func(ctx *Context) {
@@ -51,10 +53,11 @@ var XTestArticleDel, XTestArticleDelM = func(ctx *Context) {
 		ctx.testingT.Errorf("XTestArticleDel = %v want %v", ctx.Code, 200)
 	}
 	ctx.ParseBody(&ret)
+	ctx.testingT.Log(ret)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, model.Article{ID: null.IntFrom(1)}
 
 // XTestArticleBatchDel, XTestArticleBatchDelM defined TODO
 var XTestArticleBatchDel, XTestArticleBatchDelM = func(ctx *Context) {
