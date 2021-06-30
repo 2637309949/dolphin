@@ -23,5 +23,5 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
       - run: go env -w GO111MODULE=on && go env -w GOPROXY=https://goproxy.cn,direct
-      - run: go get -v -t -d ./...
-      - run: cd platform && go test -v ./.
+      - run: go get -v -t -d ./... 
+      - run: cd platform && go test -v ./... -test.run TestSysAppFunPage

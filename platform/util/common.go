@@ -87,7 +87,7 @@ func EnsureRight(err error, right interface{}) interface{} {
 // Ensure defined
 func Ensure(err error) {
 	if err != nil {
-		panic(fmt.Errorf("%v", string(errors.Wrap(err, 3).Stack())))
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
 }
 

@@ -28,7 +28,7 @@ func init() {
 	defer cancel()
 	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.{{.Service.Name}}"), options...)
 	if err != nil {
-		logrus.Error("grpc dial failed: %v", err)
+		logrus.Errorf("grpc dial failed: %v", err)
 	}
 	{{.Service.ToUpperCase .Service.Name}}Client = proto.New{{.Service.ToUpperCase .Service.Name}}Client(conn)
 }

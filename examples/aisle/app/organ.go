@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/add [post]
-func OrganAdd(ctx *Context) {
+func (ctr *Organ) OrganAdd(ctx *Context) {
 	var payload model.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -55,7 +55,7 @@ func OrganAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/batch_add [post]
-func OrganBatchAdd(ctx *Context) {
+func (ctr *Organ) OrganBatchAdd(ctx *Context) {
 	var payload []model.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -88,7 +88,7 @@ func OrganBatchAdd(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/del [delete]
-func OrganDel(ctx *Context) {
+func (ctr *Organ) OrganDel(ctx *Context) {
 	var payload model.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -118,7 +118,7 @@ func OrganDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/batch_del [put]
-func OrganBatchDel(ctx *Context) {
+func (ctr *Organ) OrganBatchDel(ctx *Context) {
 	var payload []model.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -149,7 +149,7 @@ func OrganBatchDel(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/update [put]
-func OrganUpdate(ctx *Context) {
+func (ctr *Organ) OrganUpdate(ctx *Context) {
 	var payload model.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -177,7 +177,7 @@ func OrganUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/batch_update [put]
-func OrganBatchUpdate(ctx *Context) {
+func (ctr *Organ) OrganBatchUpdate(ctx *Context) {
 	var payload []model.Organ
 	var err error
 	var ret []int64
@@ -229,7 +229,7 @@ func OrganBatchUpdate(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/page [get]
-func OrganPage(ctx *Context) {
+func (ctr *Organ) OrganPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
@@ -259,7 +259,7 @@ func OrganPage(ctx *Context) {
 // @Success 200 {object} model.Success
 // @Failure 500 {object} model.Fail
 // @Router /api/organ/get [get]
-func OrganGet(ctx *Context) {
+func (ctr *Organ) OrganGet(ctx *Context) {
 	var entity model.Organ
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

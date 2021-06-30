@@ -269,5 +269,23 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 		Overlap:  pipe.OverlapSkip,
 		GOFmt:    true,
 	})
+
+	// x_test template
+	xTestByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "x_test.tmpl")).([]byte)
+	xPlatformByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "x_platform_test.tmpl")).([]byte)
+	tmpls = append(tmpls, &pipe.TmplCfg{
+		Text:     string(xTestByte),
+		FilePath: path.Join(dir, "x_test.go"),
+		Data:     tmplArgs,
+		Overlap:  pipe.OverlapWrite,
+		GOFmt:    true,
+	})
+	tmpls = append(tmpls, &pipe.TmplCfg{
+		Text:     string(xPlatformByte),
+		FilePath: path.Join(dir, fmt.Sprintf("x_%v_test.go", parser.Name)),
+		Data:     tmplArgs,
+		Overlap:  pipe.OverlapInc,
+		GOFmt:    true,
+	})
 	return tmpls, nil
 }

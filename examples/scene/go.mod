@@ -7,7 +7,6 @@ replace github.com/2637309949/dolphin => ../../
 require (
 	github.com/2637309949/dolphin v1.0.57
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
-	github.com/gin-gonic/gin v1.7.1
 	github.com/go-errors/errors v1.1.1
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/go-sql-driver/mysql v1.6.0
@@ -16,6 +15,7 @@ require (
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kak-tus/ami v0.1.15
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
+	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/nsqio/go-nsq v1.0.8
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/segmentio/kafka-go v0.4.16
