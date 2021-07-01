@@ -26,7 +26,7 @@ import (
 )
 
 // InitViper defined
-func InitViper(cmd *cobra.Command, args []string) {
+func InitViper(cmd *cobra.Command, _ []string) {
 	utils.SetFormatter(terminal.IsTerminal(unix.Stdout))
 	utils.SetLevel(cmd)
 	viper.SetConfigName("app")
@@ -88,14 +88,14 @@ var (
 	rootCmd = &cobra.Command{
 		Use:   "dolphin",
 		Short: "dol",
-		Long:  `dolphin, a cli tools for generate golang code`,
+		Long:  `dolphin, a code generation tool for golang`,
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			InitViper(cmd, args)
 		},
 	}
 	build = &cobra.Command{
 		Use:   "build",
-		Short: "Build project from xml",
+		Short: "build from the configuration file",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			justOne := false
@@ -128,7 +128,7 @@ var (
 	}
 	clean = &cobra.Command{
 		Use:   "clean",
-		Short: "Removing intermediate files",
+		Short: "remove temp file, such as *.go.new",
 		RunE: func(*cobra.Command, []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -140,7 +140,7 @@ var (
 	}
 	more = &cobra.Command{
 		Use:   "more",
-		Short: "Add controller and table",
+		Short: "add controller and table",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -153,13 +153,18 @@ var (
 		},
 	}
 	setup = &cobra.Command{
-		Use:   "init",
-		Short: "Initialize a empty project",
+		Use:   "new",
+		Short: "new a empty project",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
 				return err
 			}
+			if len(args) < 1 {
+				logrus.Warn("please provide the project name")
+				return nil
+			}
+			wd = path.Join(wd, args[0])
 			if files, _ := utils.WalkFileInDirWithSuffix(wd, ".xml"); len(files) == 0 {
 				p := parser.NewTpl(path.Base(wd), path.Base(wd))
 				if err := p.Walk(wd); err != nil {
@@ -172,8 +177,9 @@ var (
 					return err
 				}
 			} else {
-				logrus.Warn("It is not allowed to initialize a non-empty project")
+				logrus.Warn("it is not allowed to initialize a non-empty project")
 			}
+			logrus.Infof("new project success, cd to %v dir and run `dolphin build`", args[0])
 			return nil
 		},
 	}
