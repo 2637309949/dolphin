@@ -97,26 +97,12 @@
 <table name="article" desc="文章" 
     packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
     <column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
-    <column name="unanswered_count" desc="未答复数目" type="null.Int" />
-    <column name="best_answerers_count" desc="最佳答复数目" type="null.Int" />
-    <column name="is_super_topic_vote" desc="是否超级话题投票" type="null.Int" />
-    <column name="excerpt" desc="摘录" type="null.String" xorm="varchar(512)" />
-    <column name="is_vote" desc="是否投票" type="null.Int" />
-    <column name="is_black" type="null.Int" />
-    <column name="questions_count" desc="提问数目" type="null.Int" />
-	<column name="category" desc="分类" type="null.String" xorm="varchar(36)" />
-	<column name="name" desc="标题" type="null.String" xorm="varchar(108)" />
-    <column name="introduction" desc="简介" type="null.String" xorm="varchar(512)" />
-    <column name="url" desc="地址" type="null.String" xorm="varchar(512)" />
-    <column name="followers_count" desc="粉丝数" type="null.Int" />
-	<column name="type" desc="类别" type="null.String" xorm="varchar(36)" />
-    <column name="reward" desc="打赏" type="decimal.Decimal" xorm="decimal(6,2)" />
 
-	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
-	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
-	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
-	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
-	<column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
-	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+    <column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
+    <column name="create_time" desc="创建时间" type="null.Time" xorm="datetime" />
+    <column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
+    <column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime" />
+    <column name="is_delete" desc="删除标记" type="null.Int" xorm="notnull" />
+    <column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
 </table>
 ```
