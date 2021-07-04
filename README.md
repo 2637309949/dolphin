@@ -1472,62 +1472,62 @@ Cron is not enabled by default, You can do this by modifying the configuration`a
 
 ### Add Func
 
-Add a timer task via AddFunc.
+Add a timer task via AddCron.
 
 ```go
-AddFunc(string, func()) (int, error)
+AddCron(string, func()) (int, error)
 ```
 
 ```go
-app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 ```
 
 ### Reflesh Func
 
-Reflesh a timer task via RefreshFunc.
+Reflesh a timer task via RefreshCron.
 
 ```go
-RefreshFunc(int, string) (int, error)
+RefreshCron(int, string) (int, error)
 ```
 
 ```go
-id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+app.App.Manager.Cron().RefreshCron(id, "*/3 * * * * *")
 ```
 
 ### Del Func
 
-Remove a timer task via DelFunc.
+Remove a timer task via DelCron.
 
 ```go
-DelFunc(int) error
+DelCron(int) error
 ```
 
 ```go
-id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 
-app.App.Manager.Cron().DelFunc(id)
+app.App.Manager.Cron().DelCron(id)
 ```
 
 ### Try Func
 
-Try a timer task via TryFunc.
+Try a timer task via TryCron.
 
 ```go
-TryFunc(int) error
+TryCron(int) error
 ```
 
 ```go
-id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-app.App.Manager.Cron().TryFunc(id)
+app.App.Manager.Cron().TryCron(id)
 ```
 
 ## Load User Info

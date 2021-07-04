@@ -51,7 +51,7 @@ func init() {
 	authUrl := osHost + path.Join(httpPrefix, SysCasInstance.Authorize.RelativePath)
 	tokenUrl := osHost + path.Join(httpPrefix, SysCasInstance.Token.RelativePath)
 	endpoint := oauth2.Endpoint{AuthURL: authUrl, TokenURL: tokenUrl}
-	redirectURL := viper.GetString("oauth.cli") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
+	redirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
 	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
 
 	app, svcHelper := NewDolphin(), svc.NewSvcHepler(RedisClient)

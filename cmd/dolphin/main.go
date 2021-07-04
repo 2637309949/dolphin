@@ -33,8 +33,9 @@ func InitViper(cmd *cobra.Command, _ []string) {
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")
 	viper.SetDefault("app.name", "dolphin")
-	viper.SetDefault("app.version", "1.0")
+	viper.SetDefault("app.version", "1.1.2")
 	viper.SetDefault("app.mode", "release")
+	viper.SetDefault("app.auth", "token")
 	viper.SetDefault("app.viper", false)
 	viper.SetDefault("http.hash", "FF61A573-82FC-478B-9AEF-93D6F506DE9A")
 	viper.SetDefault("http.port", "8081")
@@ -75,7 +76,7 @@ func InitViper(cmd *cobra.Command, _ []string) {
 		logrus.Warn("configuration file not found")
 	}
 	utils.ViperSetDefault("oauth.server", strings.TrimSpace(viper.GetString("oauth.server")), fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
-	utils.ViperSetDefault("oauth.cli", strings.TrimSpace(viper.GetString("oauth.cli")), viper.GetString("http.port"))
+	utils.ViperSetDefault("oauth.client", strings.TrimSpace(viper.GetString("oauth.client")), viper.GetString("http.port"))
 	utils.ViperSetDefault("app.host", strings.TrimSpace(viper.GetString("app.host")), fmt.Sprintf("localhost:%v", viper.GetString("http.port")))
 	if viper.GetBool("app.viper") {
 		if err := viper.WriteConfig(); err != nil {

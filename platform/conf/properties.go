@@ -62,8 +62,8 @@ func init() {
 	if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
 		viper.SetDefault("oauth.server", fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
 	}
-	if strings.TrimSpace(viper.GetString("oauth.cli")) == "" {
-		viper.SetDefault("oauth.cli", fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
+	if strings.TrimSpace(viper.GetString("oauth.client")) == "" {
+		viper.SetDefault("oauth.client", fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
 	}
 	if strings.TrimSpace(viper.GetString("app.host")) == "" {
 		viper.SetDefault("app.host", fmt.Sprintf("localhost:%v", viper.GetString("http.port")))

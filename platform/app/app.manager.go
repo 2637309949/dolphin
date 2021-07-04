@@ -26,7 +26,16 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Worker defined
+var (
+	// MaxWorkers defined TODO
+	MaxWorkers = 15
+	// RedisClient defined TODO
+	RedisClient *redis.Client
+	// CacheStore defined TODO
+	CacheStore persistence.CacheStore = persistence.NewInMemoryStore(60 * time.Second)
+)
+
+// Worker defined TODO
 type Worker interface {
 	AddJob(j worker.Job)
 	AddJobHandler(string, func(model.Worker) (interface{}, error))
@@ -36,12 +45,12 @@ type Worker interface {
 	Find(string) (model.Worker, error)
 }
 
-// Cron defined
+// Cron defined TODO
 type Cron interface {
-	AddFunc(string, func()) (int, error)
-	RefreshFunc(int, string) (int, error)
-	DelFunc(int) error
-	TryFunc(int) error
+	AddCron(string, func()) (int, error)
+	RefreshCron(int, string) (int, error)
+	DelCron(int) error
+	TryCron(int) error
 }
 
 // Manager Engine management interface
@@ -55,19 +64,19 @@ type Manager interface {
 	GetTokenStore() oauth2.TokenStore
 }
 
-// DefaultCron defined
+// DefaultCron defined TODO
 type DefaultCron struct {
 	cron *cron.Cron
 }
 
-// AddFunc defined
-func (d *DefaultCron) AddFunc(spec string, cmd func()) (int, error) {
+// AddCron defined TODO
+func (d *DefaultCron) AddCron(spec string, cmd func()) (int, error) {
 	entry, err := d.cron.AddFunc(spec, cmd)
 	return int(entry), err
 }
 
-// RefreshFunc defined
-func (d *DefaultCron) RefreshFunc(id int, spec string) (int, error) {
+// RefreshCron defined TODO
+func (d *DefaultCron) RefreshCron(id int, spec string) (int, error) {
 	var entry cron.EntryID
 	s, err := cron.NewParser(cron.Second | cron.Minute | cron.Hour | cron.Dom | cron.Month | cron.Dow | cron.Descriptor).Parse(spec)
 	if err != nil {
@@ -82,14 +91,14 @@ func (d *DefaultCron) RefreshFunc(id int, spec string) (int, error) {
 	return int(entry), nil
 }
 
-// DelFunc defined
-func (d *DefaultCron) DelFunc(id int) error {
+// DelCron defined TODO
+func (d *DefaultCron) DelCron(id int) error {
 	d.cron.Remove(cron.EntryID(id))
 	return nil
 }
 
-// TryFunc defined
-func (d *DefaultCron) TryFunc(id int) error {
+// TryCron defined TODO
+func (d *DefaultCron) TryCron(id int) error {
 	entry := d.cron.Entry(cron.EntryID(id))
 	if !entry.Valid() {
 		return fmt.Errorf("invalid id#%v", id)
@@ -98,36 +107,36 @@ func (d *DefaultCron) TryFunc(id int) error {
 	return nil
 }
 
-// DefaultWorker defined
+// DefaultWorker defined TODO
 type DefaultWorker struct {
 	store       map[string]model.Worker
 	JobHandlers map[string]func(model.Worker) (interface{}, error)
 	Dispatcher  *worker.Dispatcher
 }
 
-// AddJob defined
+// AddJob defined TODO
 func (d *DefaultWorker) AddJob(j worker.Job) {
 	d.Dispatcher.AddJob(j)
 }
 
-// Find defined
+// Find defined TODO
 func (d *DefaultWorker) Find(code string) (model.Worker, error) {
 	return d.store[code], nil
 }
 
-// Save defined
+// Save defined TODO
 func (d *DefaultWorker) Save(w model.Worker) error {
 	d.store[w.Code] = w
 	return nil
 }
 
-// Update defined
+// Update defined TODO
 func (d *DefaultWorker) Update(w model.Worker) error {
 	d.store[w.Code] = w
 	return nil
 }
 
-// AddJobHandler defined
+// AddJobHandler defined TODO
 func (d *DefaultWorker) AddJobHandler(code string, funk func(model.Worker) (interface{}, error)) {
 	if d.JobHandlers[code] != nil {
 		logrus.Fatalf("JobHandlers:%v already existed", code)
@@ -135,7 +144,7 @@ func (d *DefaultWorker) AddJobHandler(code string, funk func(model.Worker) (inte
 	d.JobHandlers[code] = funk
 }
 
-// GetJobHandler defined
+// GetJobHandler defined TODO
 func (d *DefaultWorker) GetJobHandler(code string) func(model.Worker) (interface{}, error) {
 	return func(worker model.Worker) (interface{}, error) {
 		if d.JobHandlers[code] != nil {
@@ -145,7 +154,7 @@ func (d *DefaultWorker) GetJobHandler(code string) func(model.Worker) (interface
 	}
 }
 
-// DefaultManager defined
+// DefaultManager defined TODO
 type DefaultManager struct {
 	BusinessDBSet map[string]*xorm.Engine
 	ModelSetter   ModelSetter
@@ -153,22 +162,22 @@ type DefaultManager struct {
 	cron          Cron
 }
 
-// MSet defined
+// ModelSet defined TODO
 func (d *DefaultManager) ModelSet() ModelSetter {
 	return d.ModelSetter
 }
 
-// GetBusinessDB defined
+// GetBusinessDB defined TODO
 func (d *DefaultManager) GetBusinessDB(domain string) *xorm.Engine {
 	return d.BusinessDBSet[domain]
 }
 
-// GetBusinessDBSet defined
+// GetBusinessDBSet defined TODO
 func (d *DefaultManager) GetBusinessDBSet() map[string]*xorm.Engine {
 	return d.BusinessDBSet
 }
 
-// AddBusinessDB defined
+// AddBusinessDB defined TODO
 func (d *DefaultManager) AddBusinessDB(domain string, db *xorm.Engine) {
 	if d.BusinessDBSet[domain] != nil {
 		panic(fmt.Errorf("domain %v has exited", domain))
@@ -176,7 +185,7 @@ func (d *DefaultManager) AddBusinessDB(domain string, db *xorm.Engine) {
 	d.BusinessDBSet[domain] = db
 }
 
-// GetTokenStore defined
+// GetTokenStore defined TODO
 func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
 	ots, _ := store.NewMemoryTokenStore()
 	if RedisClient != nil {
@@ -185,17 +194,17 @@ func (d *DefaultManager) GetTokenStore() oauth2.TokenStore {
 	return ots
 }
 
-// Worker defined
+// Worker defined TODO
 func (d *DefaultManager) Worker() Worker {
 	return d.worker
 }
 
-// Cron defined
+// Cron defined TODO
 func (d *DefaultManager) Cron() Cron {
 	return d.cron
 }
 
-// NewDefaultManager defined
+// NewDefaultManager defined TODO
 func NewDefaultManager() Manager {
 	mg := &DefaultManager{}
 	mg.BusinessDBSet = map[string]*xorm.Engine{}
@@ -214,15 +223,6 @@ func NewDefaultManager() Manager {
 	mg.cron = &DefaultCron{corn}
 	return mg
 }
-
-// MaxWorkers defined
-var MaxWorkers = 15
-
-// RedisClient defined
-var RedisClient *redis.Client
-
-// CacheStore defined
-var CacheStore persistence.CacheStore = persistence.NewInMemoryStore(60 * time.Second)
 
 func init() {
 	uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI)

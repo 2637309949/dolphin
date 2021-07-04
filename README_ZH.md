@@ -1424,62 +1424,62 @@ Response:
 
 ### Add Func
 
-通过 AddFunc 添加计时器任务.
+通过 AddCron 添加计时器任务.
 
 ```go
-AddFunc(string, func()) (int, error)
+AddCron(string, func()) (int, error)
 ```
 
 ```go
-app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 ```
 
 ### Reflesh Func
 
-通过 RefreshFunc 重新刷新计时器任务.
+通过 RefreshCron 重新刷新计时器任务.
 
 ```go
-RefreshFunc(int, string) (int, error)
+RefreshCron(int, string) (int, error)
 ```
 
 ```go
-id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-app.App.Manager.Cron().RefreshFunc(id, "*/3 * * * * *")
+app.App.Manager.Cron().RefreshCron(id, "*/3 * * * * *")
 ```
 
 ### Del Func
 
-通过 DelFunc 删除计时器任务.
+通过 DelCron 删除计时器任务.
 
 ```go
-DelFunc(int) error
+DelCron(int) error
 ```
 
 ```go
-id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
 
-app.App.Manager.Cron().DelFunc(id)
+app.App.Manager.Cron().DelCron(id)
 ```
 
 ### Try Func
 
-尝试通过 TryFunc 的计时器任务.
+尝试通过 TryCron 的计时器任务.
 
 ```go
-TryFunc(int) error
+TryCron(int) error
 ```
 
 ```go
-id, _ := app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+id, _ := app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 	fmt.Println("hello")
 })
-app.App.Manager.Cron().TryFunc(id)
+app.App.Manager.Cron().TryCron(id)
 ```
 
 ## Load User Info

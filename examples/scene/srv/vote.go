@@ -23,7 +23,7 @@ import (
 )
 
 func init() {
-	app.App.Manager.Cron().AddFunc("*/10 * * * * *", func() {
+	app.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
 		logrus.Infoln("scan vote")
 		num1, err := app.RedisClient.SCard(context.Background(), "post_set").Result()
 		if err != nil {
