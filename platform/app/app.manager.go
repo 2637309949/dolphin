@@ -7,7 +7,6 @@ package app
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"sync"
 	"time"
 
@@ -15,8 +14,6 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/store"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/model"
-	"github.com/2637309949/dolphin/platform/util"
-	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/gin-contrib/cache/persistence"
 	"github.com/go-errors/errors"
@@ -225,17 +222,16 @@ func NewDefaultManager() Manager {
 }
 
 func init() {
-	uri := util.EnsureLeft(http.Parse(viper.GetString("rd.dataSource"))).(*http.URI)
-	if uri.Laddr != "" {
-		db := util.EnsureLeft(strconv.Atoi(uri.DbName)).(int)
-		opts := redis.Options{Addr: uri.Laddr, Password: uri.Passwd, DB: db}
+	password, addr, db := viper.GetString("redis.password"), viper.GetString("redis.addr"), viper.GetInt("redis.db")
+	if addr != "" {
+		opts := redis.Options{Addr: addr, Password: password, DB: db}
 		RedisClient = redis.NewClient(&opts)
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
-			logrus.Warnf("Redis:%v connect failed", viper.GetString("rd.dataSource"))
+			logrus.Warnf("Redis:%v connect failed", viper.GetString("redis.addr"))
 			RedisClient = nil
 		} else {
 			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
-			logrus.Infof("Redis:%v connect successfully", viper.GetString("rd.dataSource"))
+			logrus.Infof("Redis:%v connect successfully", viper.GetString("redis.addr"))
 		}
 	}
 }

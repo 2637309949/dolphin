@@ -39,8 +39,10 @@ oauth:
   server: http://localhost:8081
   affirm: /static/web/affirm.html
   login: /static/web/login.html
-rd:
-  datasource: :111111@localhost:6379/0
+redis:
+  addr: localhost:6379
+  password: 111111
+  db: 0
 swag:
   authorizationurl: /api/sys/cas/authorize
   scope:
