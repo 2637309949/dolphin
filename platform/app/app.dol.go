@@ -56,14 +56,14 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	columns := []model.SysTableColumn{}
 	err := db.Sync2(new(model.SysTable), new(model.SysTableColumn))
 	if err != nil {
-		fmt.Println(err)
 		return err
 	}
-	err = dol.Manager.ModelSet().ForEachWithError(func(n string, m interface{}) error {
+
+	items := dol.Manager.ModelSet().ByName(name)
+	for i := range items {
+		m := items[i]
 		if viper.GetString("app.mode") == "debug" {
-			if tbn, ok := m.(interface{ TableName() string }); ok {
-				logrus.Infof("Sync Model[%v]:%v", n, tbn.TableName())
-			}
+			logrus.Infof("Sync Model[%v]:%v", name, m.TableName())
 		}
 		err = db.Sync2(m)
 		if err != nil {
@@ -81,11 +81,8 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 			sc.TbId = tables[len(tables)-1].ID
 			return sc
 		}).([]model.SysTableColumn)...)
-		return nil
-	}, name)
-	if err != nil {
-		return err
 	}
+
 	new(model.SysTable).TruncateTable(db, db.DriverName())
 	new(model.SysTableColumn).TruncateTable(db, db.DriverName())
 	stb, stc := slice.Chunk(tables, 50).([][]model.SysTable), slice.Chunk(columns, 50).([][]model.SysTableColumn)
@@ -181,7 +178,7 @@ func (dol *Dolphin) Reflesh() error {
 		dol.Manager.AddBusinessDB(domain.Domain.String, db)
 	}
 
-	platBindModelNames := dol.Manager.ModelSet().Name(func(name string) bool { return name != Name })
+	platBindModelNames := dol.Manager.ModelSet().ByNotName(Name)
 	filtedDomains := funk.Filter(domains, func(domain model.SysDomain) bool { return domain.IsSync.Int64 != 1 }).([]model.SysDomain)
 	for i := range filtedDomains {
 		asyncOnce.Do(func() {

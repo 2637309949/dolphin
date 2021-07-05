@@ -10,80 +10,56 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Table defined TODO
+type Table interface {
+	TableName() string
+}
+
 // ModelSetter model template
 type ModelSetter interface {
-	Add(interface{}, ...string)
-	Get(func(string, interface{}) bool) interface{}
-	ForEachWithError(func(string, interface{}) error, ...string) error
-	Name(func(string) bool) []string
+	Add(Table, ...string)
+	ByName(string) []Table
+	ByNotName(string) []Table
 	Release()
 }
 
 // MSet struct
-type ModelSet struct {
+type defaultModelSetter struct {
 	lock *sync.RWMutex
-	m    map[string][]interface{}
-}
-
-// Get defined get models
-func (s *ModelSet) Get(cb func(string, interface{}) bool) interface{} {
-	s.lock.RLock()
-	defer s.lock.RUnlock()
-	for name, m := range s.m {
-		for index := 0; index < len(m); index++ {
-			if cb(name, m[index]) {
-				return m[index]
-			}
-		}
-	}
-	return nil
+	m    map[string][]Table
 }
 
 // Add defined add models
-func (s *ModelSet) Add(m interface{}, n ...string) {
+func (s *defaultModelSetter) Add(m Table, n ...string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
-	ns := viper.GetString("app.name")
-	if len(n) > 0 {
-		ns = n[0]
+	if len(n) == 0 {
+		n = []string{viper.GetString("app.name")}
 	}
-	s.m[ns] = append(s.m[ns], m)
+	s.m[n[0]] = append(s.m[n[0]], m)
 }
 
 // Name defined add models
-func (s *ModelSet) Name(cb func(string) bool) (m []string) {
-	for k := range s.m {
-		if cb(k) {
-			m = append(m, k)
+func (s *defaultModelSetter) ByName(name string) []Table {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	return s.m[name]
+}
+
+// Name defined add models
+func (s *defaultModelSetter) ByNotName(name string) (m []Table) {
+	s.lock.Lock()
+	defer s.lock.Unlock()
+	for k, v := range s.m {
+		if k != name {
+			m = append(m, v...)
 		}
 	}
 	return
 }
 
-// ForEachWithError defined foreach models
-func (s *ModelSet) ForEachWithError(cb func(name string, m interface{}) error, names ...string) error {
-	s.lock.RLock()
-	defer s.lock.RUnlock()
-	for name, m := range s.m {
-		for index := 0; index < len(m); index++ {
-			if len(names) > 0 && names[0] == name {
-				err := cb(name, m[index])
-				if err != nil {
-					return err
-				}
-			} else if len(names) == 0 {
-				err := cb(name, m[index])
-				if err != nil {
-					return err
-				}
-			}
-		}
-	}
-	return nil
-}
-
 // Release defined release models
-func (s *ModelSet) Release() {
+func (s *defaultModelSetter) Release() {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 	s.m = nil

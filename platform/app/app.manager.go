@@ -208,7 +208,7 @@ func (d *DefaultManager) Cron() Cron {
 func NewDefaultManager() Manager {
 	mg := &DefaultManager{}
 	mg.BusinessDBSet = map[string]*xorm.Engine{}
-	mg.ModelSetter = &ModelSet{m: map[string][]interface{}{}, lock: new(sync.RWMutex)}
+	mg.ModelSetter = &defaultModelSetter{m: map[string][]Table{}, lock: new(sync.RWMutex)}
 
 	dispatcher := worker.NewDispatcher(MaxWorkers)
 	dispatcher.Run()

@@ -51,7 +51,7 @@ func (gh *grpcHandler) OnStop(ctx context.Context) error {
 }
 
 // NewGRPCHandler defined
-func NewGRPCHandler(dol *Dolphin) RPCHandler {
+func NewGRPCHandler(*Dolphin) RPCHandler {
 	options := []grpc.ServerOption{
 		grpc.UnaryInterceptor(plugin.RpcCliTrace(viper.GetString("app.name"))),
 	}
