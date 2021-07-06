@@ -8,13 +8,13 @@ import (
 	_ "github.com/2637309949/dolphin/platform/conf"
 	// "github.com/go-sql-driver/mysql" init
 	_ "github.com/go-sql-driver/mysql"
-	// "github.com/2637309949/dolphin/platform/app" init
-	_ "github.com/2637309949/dolphin/platform/app"
-	// "{{.PackageName}}/app" init
-	"{{.PackageName}}/app"
+	// "github.com/2637309949/dolphin/platform/{{$.Viper.GetString "dir.api" }}" init
+	_ "github.com/2637309949/dolphin/platform/{{$.Viper.GetString "dir.api" }}"
+	// "{{.PackageName}}/{{$.Viper.GetString "dir.api" }}" init
+	"{{.PackageName}}/{{$.Viper.GetString "dir.api" }}"
 )
 
 //go:generate dolphin build
 func main() {
-	app.Run()
+	{{$.Viper.GetString "dir.api" }}.Run()
 }

@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/2637309949/dolphin/platform/model"
-
+	"github.com/2637309949/dolphin/platform/types"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -23,10 +22,10 @@ func init() {
 	viper.SetDefault("db.driver", "mysql")
 	viper.SetDefault("db.maxIdleConns", 15)
 	viper.SetDefault("db.maxOpenConns", 50)
-	viper.SetDefault("dir.app", "app")
+	viper.SetDefault("dir.api", "api")
 	viper.SetDefault("dir.doc", "doc")
 	viper.SetDefault("dir.log", "log")
-	viper.SetDefault("dir.model", "model")
+	viper.SetDefault("dir.types", "types")
 	viper.SetDefault("dir.rpc", "rpc")
 	viper.SetDefault("dir.script", "script")
 	viper.SetDefault("dir.sql", "sql")
@@ -42,9 +41,9 @@ func init() {
 	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("http.static", "static")
 	viper.SetDefault("oauth.affirm", "/static/web/affirm.html")
-	viper.SetDefault("oauth.id", model.DefaultClient.Client.String)
+	viper.SetDefault("oauth.id", types.DefaultClient.Client.String)
 	viper.SetDefault("oauth.login", "/static/web/login.html")
-	viper.SetDefault("oauth.secret", model.DefaultClient.Secret.String)
+	viper.SetDefault("oauth.secret", types.DefaultClient.Secret.String)
 	viper.SetDefault("redis.addr", "localhost:6379")
 	viper.SetDefault("redis.password", "111111")
 	viper.SetDefault("redis.db", 0)

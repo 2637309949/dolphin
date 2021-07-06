@@ -26,7 +26,7 @@ import (
 )
 
 // InitViper defined
-func InitViper(cmd *cobra.Command, _ []string) {
+func InitViper(cmd *cobra.Command, args []string) {
 	utils.SetFormatter(terminal.IsTerminal(unix.Stdout))
 	utils.SetLevel(cmd)
 	viper.SetConfigName("app")
@@ -50,14 +50,14 @@ func InitViper(cmd *cobra.Command, _ []string) {
 	viper.SetDefault("db.driver", "mysql")
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	viper.SetDefault("rd.dataSource", ":@localhost:6379/0")
-	viper.SetDefault("dir.app", "app")
+	viper.SetDefault("dir.api", "api")
 	viper.SetDefault("dir.doc", "doc")
 	viper.SetDefault("dir.sql", "sql")
 	viper.SetDefault("dir.sqlmap", "sqlmap")
 	viper.SetDefault("dir.script", "script")
 	viper.SetDefault("dir.log", "log")
 	viper.SetDefault("dir.util", "util")
-	viper.SetDefault("dir.model", "model")
+	viper.SetDefault("dir.types", "types")
 	viper.SetDefault("dir.srv", "srv")
 	viper.SetDefault("dir.svc", "svc")
 	viper.SetDefault("dir.rpc", "rpc")

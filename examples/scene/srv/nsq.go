@@ -7,12 +7,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"scene/model"
 	"time"
 
 	"github.com/go-errors/errors"
 
 	"scene/svc"
+	"scene/types"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/nsqio/go-nsq"
@@ -51,7 +51,7 @@ func (h *messageHandler) HandleMessage(m *nsq.Message) error {
 }
 
 // Producer defined srv
-func (srv *Nsq) Producer(ctx context.Context, db *xorm.Engine, params model.NsqInfo) (interface{}, error) {
+func (srv *Nsq) Producer(ctx context.Context, db *xorm.Engine, params types.NsqInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
 		return nil, err

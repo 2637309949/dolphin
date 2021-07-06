@@ -16,7 +16,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
 
-	"scene/app"
+	"scene/api"
 )
 
 var token string
@@ -63,7 +63,7 @@ func (ctx *Context) ParseBody(arg interface{}) error {
 
 // serveHttp defined TODO
 func (x *XTest) serveHttp(w http.ResponseWriter, req *http.Request) {
-	app.App.Http.ServeHTTP(w, req)
+	api.App.Http.ServeHTTP(w, req)
 }
 
 // handler defined TODO
@@ -180,7 +180,7 @@ func SetToken(tk string) {
 // TestMain defined
 func TestMain(m *testing.M) {
 	x = &XTest{}
-	util.Ensure(app.App.Reflesh())
+	util.Ensure(api.App.Reflesh())
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }

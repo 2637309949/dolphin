@@ -67,7 +67,7 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	appByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "app.tmpl")).([]byte)
 	tmpls = append(tmpls, &pipe.TmplCfg{
 		Text:     string(appByte),
-		FilePath: path.Join(dir, viper.GetString("dir.app"), "app.go"),
+		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.go"),
 		Data:     tmplArgs,
 		Overlap:  pipe.OverlapSkip,
 		GOFmt:    true,
@@ -77,7 +77,7 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	autoByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "auto.tmpl")).([]byte)
 	tmpls = append(tmpls, &pipe.TmplCfg{
 		Text:     string(autoByte),
-		FilePath: path.Join(dir, viper.GetString("dir.app"), "app.auto.go"),
+		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.auto.go"),
 		Data:     tmplArgs,
 		Overlap:  pipe.OverlapWrite,
 		GOFmt:    true,
@@ -88,10 +88,11 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	for i := range parser.Beans {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Bean"] = parser.Beans[i]
+		tmplArgs["Viper"] = viper.GetViper()
 		filename := utils.FileNameTrimSuffix(parser.Beans[i].Path)
 		tmpls = append(tmpls, &pipe.TmplCfg{
 			Text:     string(beanByte),
-			FilePath: path.Join(dir, viper.GetString("dir.model"), filename+".auto.go"),
+			FilePath: path.Join(dir, viper.GetString("dir.types"), filename+".auto.go"),
 			Data:     tmplArgs,
 			Overlap:  pipe.OverlapWrite,
 			GOFmt:    true,
@@ -103,10 +104,11 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	for i := range parser.Controllers {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Controller"] = parser.Controllers[i]
+		tmplArgs["Viper"] = viper.GetViper()
 		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
 		tmpls = append(tmpls, &pipe.TmplCfg{
 			Text:     string(ctrByte),
-			FilePath: path.Join(dir, viper.GetString("dir.app"), filename+".go"),
+			FilePath: path.Join(dir, viper.GetString("dir.api"), filename+".go"),
 			Data:     tmplArgs,
 			Overlap:  pipe.OverlapInc,
 			GOFmt:    true,
@@ -114,14 +116,15 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	}
 
 	// table template
-	modelByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "model.tmpl")).([]byte)
+	typesByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "types.tmpl")).([]byte)
 	for i := range parser.Tables {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Table"] = parser.Tables[i]
+		tmplArgs["Viper"] = viper.GetViper()
 		filename := utils.FileNameTrimSuffix(parser.Tables[i].Path)
 		tmpls = append(tmpls, &pipe.TmplCfg{
-			Text:     string(modelByte),
-			FilePath: path.Join(dir, viper.GetString("dir.model"), filename+".auto.go"),
+			Text:     string(typesByte),
+			FilePath: path.Join(dir, viper.GetString("dir.types"), filename+".auto.go"),
 			Data:     tmplArgs,
 			Overlap:  pipe.OverlapWrite,
 			GOFmt:    true,
@@ -135,6 +138,7 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	for i := range parser.Services {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Service"] = parser.Services[i]
+		tmplArgs["Viper"] = viper.GetViper()
 		filename := utils.FileNameTrimSuffix(parser.Services[i].Path)
 		tmpls = append(tmpls, &pipe.TmplCfg{
 			Text:     string(protoByte),
@@ -171,6 +175,7 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 			tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 			tmplArgs["Controller"] = ctr
 			tmplArgs["Api"] = ctr.APIS[j]
+			tmplArgs["Viper"] = viper.GetViper()
 			if strings.TrimSpace(table) != "" && funk == "page" {
 				cpath := path.Join(dir, viper.GetString("dir.sql"), ctr.Name, fmt.Sprintf("%v_%v_%v.tpl", ctr.Name, ctr.APIS[j].Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
@@ -212,6 +217,7 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	for i := range parser.Tables {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Table"] = parser.Tables[i]
+		tmplArgs["Viper"] = viper.GetViper()
 		filename := utils.FileNameTrimSuffix(parser.Tables[i].Path)
 		tmpls = append(tmpls, &pipe.TmplCfg{
 			Text:     string(sqlmapByte),
@@ -226,6 +232,7 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	for i := range parser.Controllers {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Controller"] = parser.Controllers[i]
+		tmplArgs["Viper"] = viper.GetViper()
 		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
 		tmpls = append(tmpls, &pipe.TmplCfg{
 			Text:     string(srvByte),

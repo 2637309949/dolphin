@@ -8,11 +8,11 @@ import (
 	_ "github.com/2637309949/dolphin/platform/conf"
 	// "github.com/mattn/go-sqlite3" init
 	_ "github.com/mattn/go-sqlite3"
-	// github.com/2637309949/dolphin/platform/app init
-	"github.com/2637309949/dolphin/platform/app"
+	// github.com/2637309949/dolphin/platform/api init
+	"github.com/2637309949/dolphin/platform/api"
 )
 
 //go:generate dolphin build sqltpl
 func main() {
-	app.Run()
+	api.Run()
 }

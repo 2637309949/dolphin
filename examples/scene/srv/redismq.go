@@ -7,10 +7,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"scene/model"
 	"time"
 
 	"scene/svc"
+	"scene/types"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/go-errors/errors"
@@ -78,7 +78,7 @@ func NewRedisMq() *RedisMq {
 }
 
 // Producer defined srv
-func (srv *RedisMq) Producer(ctx context.Context, db *xorm.Engine, params model.AmiInfo) (interface{}, error) {
+func (srv *RedisMq) Producer(ctx context.Context, db *xorm.Engine, params types.AmiInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
 		logrus.Error("failed to marshal:", err)
@@ -96,7 +96,7 @@ func (srv *RedisMq) Consumer(ctx context.Context, db *xorm.Engine, params map[st
 			fmt.Print(string(goErr.Stack()))
 		}
 	}()
-	var items []model.AmiInfo
+	var items []types.AmiInfo
 	c := RedisConsumer.Start()
 	cwt, cancel := context.WithCancel(context.TODO())
 	go func(cwt context.Context) {
@@ -108,7 +108,7 @@ func (srv *RedisMq) Consumer(ctx context.Context, db *xorm.Engine, params map[st
 					return
 				}
 				RedisConsumer.Ack(m)
-				value := model.AmiInfo{}
+				value := types.AmiInfo{}
 				if err := json.Unmarshal([]byte(m.Body), &value); err != nil {
 					logrus.Error("failed to unmarshal:", err)
 				}

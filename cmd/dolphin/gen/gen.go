@@ -147,6 +147,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 // BuildWithCfg defined
 func (gen *Gen) Build(cfg *pipe.TmplCfg) error {
 	var err error
+	var genFilePath string
 	var tpl *template.Template
 	tpl = template.New("template")
 	tpl.Funcs(template.FuncMap{
@@ -160,20 +161,22 @@ func (gen *Gen) Build(cfg *pipe.TmplCfg) error {
 	if tpl, err = tpl.Parse(cfg.Text); err != nil {
 		return err
 	}
-	if _, err = os.Stat(cfg.FilePath); err == nil {
+
+	genFilePath = cfg.FilePath
+	if _, err = os.Stat(genFilePath); !os.IsNotExist(err) {
 		if cfg.Overlap == pipe.OverlapInc {
-			cfg.FilePath = cfg.FilePath + ".new"
-			logrus.Info(fmt.Sprintf("%s inc generate", cfg.FilePath))
+			genFilePath = genFilePath + ".new"
+			logrus.Info(fmt.Sprintf("%s inc generate", genFilePath))
 		} else if cfg.Overlap == pipe.OverlapWrite {
-			logrus.Warn(fmt.Sprintf("%s over generate", cfg.FilePath))
+			logrus.Warn(fmt.Sprintf("%s over generate", genFilePath))
 		} else if cfg.Overlap == pipe.OverlapSkip {
-			logrus.Info(fmt.Sprintf("%s skip generate", cfg.FilePath))
+			logrus.Info(fmt.Sprintf("%s skip generate", genFilePath))
 			return nil
 		}
 	}
 	var bf bytes.Buffer
 	bfw := io.Writer(&bf)
-	w, err := utils.OpenFile(cfg.FilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
+	w, err := utils.OpenFile(genFilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)
 	if err != nil {
 		return err
 	}

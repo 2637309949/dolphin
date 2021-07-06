@@ -12,10 +12,10 @@ db:
   maxidleconns: 15
   maxopenconns: 50
 dir:
-  app: app
+  api: api
   doc: doc
   log: log
-  model: model
+  types: types
   rpc: rpc
   script: script
   sql: sql

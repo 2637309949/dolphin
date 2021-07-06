@@ -11,6 +11,7 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
 
@@ -335,11 +336,11 @@ func (c *Common) ToTitle(title string) string {
 func (c *Common) Ref(m string) string {
 	if strings.HasPrefix(m, "$") || strings.HasPrefix(m, "[]$") || strings.HasPrefix(m, "[]*$") {
 		if strings.HasPrefix(m, "[]$") {
-			return fmt.Sprintf("[]model.%v", c.ToUpperCase(strings.ReplaceAll(m, "[]$", "")))
+			return fmt.Sprintf("[]%v.%v", viper.GetString("dir.types"), c.ToUpperCase(strings.ReplaceAll(m, "[]$", "")))
 		} else if strings.HasPrefix(m, "[]*$") {
-			return fmt.Sprintf("[]*model.%v", c.ToUpperCase(strings.ReplaceAll(m, "[]*$", "")))
+			return fmt.Sprintf("[]*%v.%v", viper.GetString("dir.types"), c.ToUpperCase(strings.ReplaceAll(m, "[]*$", "")))
 		}
-		return fmt.Sprintf("model.%v", c.ToUpperCase(m))
+		return fmt.Sprintf("%v.%v", viper.GetString("dir.types"), c.ToUpperCase(m))
 	}
 	return m
 }
@@ -395,13 +396,13 @@ func (c *Common) TableName(app string, table string) string {
 // SplitExtends extends model,bean
 func (c *Common) SplitExtends(parent string) []string {
 	return funk.Map(strings.Split(parent, ","), func(p string) string {
-		return strings.ReplaceAll(c.Ref(p), "model.", "")
+		return strings.ReplaceAll(c.Ref(p), viper.GetString("dir.types")+".", "")
 	}).([]string)
 }
 
 // TableNameOfType defined
 func (c *Common) TableNameOfType(t string) string {
-	return strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(t, "[]", ""), "$", ""), "model.", "")
+	return strings.ReplaceAll(strings.ReplaceAll(strings.ReplaceAll(t, "[]", ""), "$", ""), viper.GetString("dir.types")+".", "")
 }
 
 // AutoIncr defined

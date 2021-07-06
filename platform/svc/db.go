@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/platform/model"
+	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
@@ -16,7 +16,7 @@ import (
 
 // Db defined TODO
 type Db interface {
-	PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*model.PageList, error)
+	PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*types.PageList, error)
 	TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error)
 	GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error)
 }
@@ -42,7 +42,7 @@ func (svc *SvcHepler) InRole(db *xorm.Engine, userId string, role ...string) boo
 // InAdmin defined TODO
 func (svc *SvcHepler) InAdmin(db *xorm.Engine, userId string, role ...string) bool {
 	var cnt int
-	role, _ = slice.RemoveStringDuplicates(append(role, model.AdminRole.Code.String))
+	role, _ = slice.RemoveStringDuplicates(append(role, types.AdminRole.Code.String))
 	if _, err := db.SQL(
 		fmt.Sprintf(`select 
 		count(sys_role_user.id) cnt 
@@ -58,7 +58,7 @@ func (svc *SvcHepler) InAdmin(db *xorm.Engine, userId string, role ...string) bo
 }
 
 // PageSearch defined TODO
-func (svc *SvcHepler) PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*model.PageList, error) {
+func (svc *SvcHepler) PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*types.PageList, error) {
 	page, ok := params["page"].(int)
 	if !ok {
 		return nil, errors.New("not found page")
@@ -76,7 +76,7 @@ func (svc *SvcHepler) PageSearch(db *xorm.Engine, ctr, api, table string, params
 	if err != nil {
 		return nil, err
 	}
-	var plt model.PageList
+	var plt types.PageList
 	if len(rowsSet) == 0 {
 		plt.Data = []map[string]interface{}{}
 		return &plt, nil
@@ -107,7 +107,7 @@ func (svc *SvcHepler) TreeSearch(db *xorm.Engine, controller, api, table string,
 
 	valueFiled, parentField, nameFiled := "id", "parent", "name"
 	treeNodeList, originNodeList := list.New(), list.New()
-	root, rootArr := "", []*model.TreeNode{}
+	root, rootArr := "", []*types.TreeNode{}
 	paramsArr, parentValue := rowsSet, root
 
 	for _, params := range paramsArr {
@@ -122,35 +122,35 @@ func (svc *SvcHepler) TreeSearch(db *xorm.Engine, controller, api, table string,
 			name = fmt.Sprintf("%v", params[nameFiled])
 		}
 		if (parentValue == "" && parent == "") || value == parentValue || parent == parentValue {
-			node := &model.TreeNode{
+			node := &types.TreeNode{
 				ID:     value,
 				Name:   name,
 				Parent: parent,
 				Tag:    params,
-				Nodes:  make([]*model.TreeNode, 0),
+				Nodes:  make([]*types.TreeNode, 0),
 			}
 			treeNodeList.PushBack(node)
 			rootArr = append(rootArr, node)
 		} else {
-			originNodeList.PushBack(&model.TreeNode{
+			originNodeList.PushBack(&types.TreeNode{
 				ID:     value,
 				Name:   name,
 				Parent: parent,
 				Tag:    params,
-				Nodes:  make([]*model.TreeNode, 0),
+				Nodes:  make([]*types.TreeNode, 0),
 			})
 		}
 	}
 
 	for ele := treeNodeList.Front(); ele != nil; ele = ele.Next() {
-		treeNode := ele.Value.(*model.TreeNode)
+		treeNode := ele.Value.(*types.TreeNode)
 		originEle := originNodeList.Front()
 		if originEle == nil {
 			break
 		}
 		for originEle != nil {
 			originNextEle := originEle.Next()
-			originNode := originEle.Value.(*model.TreeNode)
+			originNode := originEle.Value.(*types.TreeNode)
 			if originNode.Parent == treeNode.ID {
 				treeNodeList.InsertAfter(originNode, ele)
 				treeNode.Nodes = append(treeNode.Nodes, originNode)
@@ -164,7 +164,7 @@ func (svc *SvcHepler) TreeSearch(db *xorm.Engine, controller, api, table string,
 
 // GetOptions defined TODO
 func (svc *SvcHepler) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error) {
-	var optSets []model.SysOptionset
+	var optSets []types.SysOptionset
 	if err := db.Where("is_delete = 0").In("code", keys).Find(&optSets); err != nil {
 		return nil, err
 	}

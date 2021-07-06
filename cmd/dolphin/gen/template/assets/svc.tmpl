@@ -1,7 +1,7 @@
-package svc
+package {{$.Viper.GetString "dir.svc" }}
 
 import (
-	"github.com/2637309949/dolphin/platform/svc"
+	"github.com/2637309949/dolphin/platform/{{$.Viper.GetString "dir.svc" }}"
 )
 
 // Svc defined TODO
@@ -12,7 +12,7 @@ type Svc interface {
 }
 
 type SvcHepler struct {
-	svc.Svc
+	{{$.Viper.GetString "dir.svc" }}.Svc
 }
 
 func NewSvcHepler(svc svc.Svc) Svc {

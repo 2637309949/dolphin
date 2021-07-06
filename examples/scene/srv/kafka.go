@@ -7,10 +7,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"scene/model"
 	"time"
 
 	"scene/svc"
+	"scene/types"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/util/worker"
@@ -90,7 +90,7 @@ func (srv *Kafka) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (i
 }
 
 // Producer defined srv
-func (srv *Kafka) Producer(ctx context.Context, params model.KafkaInfo) error {
+func (srv *Kafka) Producer(ctx context.Context, params types.KafkaInfo) error {
 	kpStr, err := json.Marshal(&params)
 	if err != nil {
 		return err
@@ -118,7 +118,7 @@ func KafkaConsumer(ctx context.Context) {
 			logrus.Error(err)
 			break
 		}
-		value := model.KafkaInfo{}
+		value := types.KafkaInfo{}
 		if err := json.Unmarshal(msg.Value, &value); err != nil {
 			logrus.Error("failed to unmarshal:", err)
 		}
