@@ -83,6 +83,15 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 		GOFmt:    true,
 	})
 
+	// docker template
+	drByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "docker.tmpl")).([]byte)
+	tmpls = append(tmpls, &pipe.TmplCfg{
+		Text:     string(drByte),
+		FilePath: path.Join(dir, "Dockerfile"),
+		Data:     tmplArgs,
+		Overlap:  pipe.OverlapSkip,
+	})
+
 	// bean template
 	beanByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "bean.tmpl")).([]byte)
 	for i := range parser.Beans {

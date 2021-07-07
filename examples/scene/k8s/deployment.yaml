@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: Deployment
 metadata:
-  name: demo
+  name: scene
   namespace: dolphin
 spec:
   selector:
     matchLabels:
-      app: demo
+      app: scene
   template:
     metadata:
       labels:
-        app: demo
+        app: scene
     spec:
       containers:
-      - name: demo
-        image: registry.cn-hangzhou.aliyuncs.com/demo:1001
+      - name: scene
+        image: registry.cn-hangzhou.aliyuncs.com/scene:1001
         volumeMounts:
           - name: config
             mountPath: /app/app.properties
@@ -33,4 +33,4 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: demo
+            name: scene

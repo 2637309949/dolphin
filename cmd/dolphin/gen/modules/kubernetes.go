@@ -54,7 +54,6 @@ func (dp *Deploy) Build(dir string, args []string, parser *parser.AppParser) ([]
 		"k8s.ing.tmpl": "ingress.yaml",
 		"k8s.srv.tmpl": "service.yaml",
 		"k8s.tls.tmpl": "tls.yaml",
-		"docker.tmpl":  "Dockerfile",
 	}
 	cfgs := []*pipe.TmplCfg{}
 	for key, value := range tmpl2file {

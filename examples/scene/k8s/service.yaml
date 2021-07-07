@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: demo
+  name: scene
   namespace: dolphin
 spec:
   ports:
@@ -10,7 +10,7 @@ spec:
     protocol: TCP
     targetPort: 8082
   selector:
-    app: demo
+    app: scene
   sessionAffinity: None
   type: ClusterIP
 status:
