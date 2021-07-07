@@ -19,6 +19,8 @@ type Db interface {
 	PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*types.PageList, error)
 	TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error)
 	GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error)
+	InRole(db *xorm.Engine, userId string, role ...string) bool
+	InAdmin(db *xorm.Engine, userId string, role ...string) bool
 }
 
 // InRole defined TODO

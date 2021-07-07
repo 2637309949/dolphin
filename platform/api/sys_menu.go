@@ -257,7 +257,7 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 // @Router /api/sys/menu/sidebar [get]
 func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetBool("isAdmin", ctx.InAdmin())()
+	q.SetBool("isAdmin", ctr.Srv.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
 	q.SetUser()
 	q.SetRule("sys_menu_sidebar")
 	q.SetTags()

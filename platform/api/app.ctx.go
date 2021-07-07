@@ -81,26 +81,6 @@ func (ctx *Context) InRole(role ...string) bool {
 	return cnt == len(role)
 }
 
-// InAdmin defined
-func (ctx *Context) InAdmin(role ...string) bool {
-	var cnt int
-	role, _ = slice.RemoveStringDuplicates(append(role, types.AdminRole.Code.String))
-	if _, err := ctx.DB.SQL(
-		fmt.Sprintf(`
-			select count(sys_role_user.id) cnt 
-			from sys_role_user 
-			left join sys_role on sys_role.id=sys_role_user.role_id 
-			where sys_role_user.user_id = ? and sys_role.code in (%v) and sys_role_user.is_delete != 1
-		`, strings.Join(funk.Map(role, func(id string) string {
-			return fmt.Sprintf("'%v'", id)
-		}).([]string), ",")),
-		ctx.GetToken().GetUserID()).Get(&cnt); err != nil {
-		logrus.Error(err)
-		return false
-	}
-	return cnt > 0
-}
-
 // Success defined success result
 func (ctx *Context) Success(data interface{}, status ...int) {
 	code := util.SomeOne(status, 200).(int)
