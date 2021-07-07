@@ -6,14 +6,14 @@
 
 <img align="right" width="159px" src="./assets/dolphin.jpeg">
 
-Dolphin是一个Golang代码生成工具， 可以快速内聚微服功能的框架并有效减少重复的代码逻辑。
+Dolphin is a Golang code generation tool, can quickly cohesion incognito function framework, and effectively reduce repeat code logic.
 
 <img align="center" width="200px" src="https://img-blog.csdnimg.cn/2021043013451981.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM1NzEyNDM=,size_16,color_FFFFFF,t_70">
 <img align="center" width="200px" src="https://img-blog.csdnimg.cn/20210430134858440.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM1NzEyNDM=,size_16,color_FFFFFF,t_70">
 <img align="center" width="200px" src="https://img-blog.csdnimg.cn/20210430134623869.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM1NzEyNDM=,size_16,color_FFFFFF,t_70">
 
 
-## 框架特性
+## Features
 
 ```
 - Generates the code base on XML configuration
@@ -45,7 +45,7 @@ Dolphin是一个Golang代码生成工具， 可以快速内聚微服功能的框
 - Support database reverse XML generation
 ```
 
-## 教程文档
+## Tutorial document
 
 - [配置XML](./docs/配置XML.md)
 - [全局配置](./docs/全局配置.md)
