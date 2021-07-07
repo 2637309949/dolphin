@@ -99,7 +99,7 @@ func (app *Reverse) Build(dir string, args []string, parser *parser.AppParser) (
 				c.Name = strings.ToLower(cols[i3].Name)
 				c.Desc = strings.ReplaceAll(cols[i3].Comment, "\n", "")
 				switch cols[i3].SQLType.Name {
-				case "VARCHAR", "TEXT", "LONGTEXT", "CHAR":
+				case "VARCHAR", "TEXT", "LONGTEXT", "CHAR", "MEDIUMTEXT", "TINYTEXT":
 					c.Type = "null.String"
 				case "DATETIME", "TIMESTAMP":
 					c.Type = "null.Time"
