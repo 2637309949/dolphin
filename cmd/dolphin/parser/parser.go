@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/schema"
+	"github.com/spf13/viper"
 )
 
 func (parser *AppParser) parseApplication(xmlPath string, attr []xml.Attr) {
@@ -53,7 +54,7 @@ func (parser *AppParser) parseController(xmlPath string, attr []xml.Attr) *schem
 }
 
 func (parser *AppParser) parseAPI(xmlPath string, attr []xml.Attr) *schema.API {
-	api := &schema.API{Auth: []string{"token"}, Return: &schema.Return{Success: &schema.Success{}, Failure: &schema.Failure{}}}
+	api := &schema.API{Auth: []string{viper.GetString("app.auth")}, Return: &schema.Return{Success: &schema.Success{}, Failure: &schema.Failure{}}}
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value

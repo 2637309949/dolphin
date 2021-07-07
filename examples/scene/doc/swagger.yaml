@@ -1639,6 +1639,53 @@ paths:
       summary: Cache info
       tags:
       - cache controller
+  /api/jwt/check:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 验证
+      tags:
+      - jwt认证
+  /api/jwt/login:
+    post:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 登陆
+      tags:
+      - jwt认证
   /api/kafka/add:
     post:
       consumes:

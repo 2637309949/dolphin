@@ -5,6 +5,9 @@ app:
   version: "1.0"
   host: localhost:8081
   viper: false
+jwt:
+  secret: 6hy789iu87
+  expire: 604800
 db:
   driver: sqlite3
   datasource: ./x_test.db

@@ -498,16 +498,11 @@ func (s *Server) GetErrorData(err error) (map[string]interface{}, int, http.Head
 
 // BearerAuth parse bearer token
 func (s *Server) BearerAuth(r *http.Request) (string, bool) {
-	auth := r.Header.Get("Authorization")
-	prefix := "Bearer "
-	token := ""
-
-	if auth != "" && strings.HasPrefix(auth, prefix) {
-		token = auth[len(prefix):]
-	} else {
-		token = r.Header.Get("token")
+	prefix, auth := "Bearer ", r.Header.Get("Authorization")
+	if strings.HasPrefix(auth, prefix) {
+		return auth[len(prefix):], true
 	}
-	return token, token != ""
+	return "", false
 }
 
 // ValidationBearerToken validation the bearer tokens

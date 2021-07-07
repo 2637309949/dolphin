@@ -250,6 +250,11 @@ func TestEncryptInfo(t *testing.T) {
 	x.Handle("GET", "/api/encrypt/info", XTestEncryptInfo, t, XTestEncryptInfoM)
 }
 
+// TestJwtCheck defined TODO
+func TestJwtCheck(t *testing.T) {
+	x.Handle("GET", "/api/jwt/check", XTestJwtCheck, t, XTestJwtCheckM)
+}
+
 // TestKafkaAdd defined TODO
 func TestKafkaAdd(t *testing.T) {
 	x.Handle("POST", "/api/kafka/add", XTestKafkaAdd, t, XTestKafkaAddM)

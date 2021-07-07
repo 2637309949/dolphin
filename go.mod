@@ -58,7 +58,6 @@ require (
 	github.com/tidwall/buntdb v1.1.2
 	go.uber.org/multierr v1.4.0
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
-	golang.org/x/mobile v0.0.0-20190719004257-d2bd2a29d028
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea

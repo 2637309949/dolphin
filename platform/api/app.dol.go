@@ -40,6 +40,7 @@ type Dolphin struct {
 	PlatformDB *xorm.Engine
 	Manager    Manager
 	OAuth2     *server.Server
+	JWT        *JWT
 	Http       HttpHandler
 	RPC        RPCHandler
 	pool       sync.Pool
@@ -47,7 +48,7 @@ type Dolphin struct {
 
 // allocateContext defined new context
 func (dol *Dolphin) allocateContext() *Context {
-	return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{server: dol.OAuth2}}
+	return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
 }
 
 // Migration models
@@ -342,6 +343,8 @@ func NewDolphin() *Dolphin {
 	dol.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
 	dol.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
 	dol.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+
+	dol.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
 
 	dol.Use(Recovery())
 	dol.Use(HttpTrace())

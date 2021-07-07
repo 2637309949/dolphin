@@ -5,6 +5,8 @@ module.exports.article = require('./article')
 module.exports.iCache = require('./i_cache')
 // encrypt Encrypt controller
 module.exports.encrypt = require('./encrypt')
+// jwt jwt认证
+module.exports.jwt = require('./jwt')
 // kafka Kafka controller
 module.exports.kafka = require('./kafka')
 // nsq Nsq controller

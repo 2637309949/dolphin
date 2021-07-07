@@ -1,0 +1,15 @@
+<controller name="jwt" desc="jwt认证">
+    <api name="login" method="post" desc="登陆" auth="never">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="check" method="get" desc="验证" auth="jwt">
+        <param name="id" type="int" desc="id"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>
