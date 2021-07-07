@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -238,9 +237,8 @@ func init() {
 	if term.IsTerminal(unix.Stdout) {
 		writer = os.Stdout
 	}
-	dir := path.Join(viper.GetString("dir.log"), viper.GetString("app.name"))
 	logf, err := rotatelogs.New(
-		dir+".%Y%m%d%H",
+		viper.GetString("dir.log")+"/%Y%m%d%H",
 		rotatelogs.WithMaxAge(24*time.Hour),
 		rotatelogs.WithRotationTime(24*time.Hour),
 	)
