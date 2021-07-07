@@ -53,7 +53,7 @@ Dolphin, a Golang code generation tool, based on the gin and xormplus, can quick
 - [远程调用](./docs/远程调用.md)
 - [微服架构](./docs/微服架构.md)
 - [集成平台](./docs/集成平台.md)
-- [服务网各](./docs/服务网格.md)
+- [服务网格](./docs/服务网格.md)
 - [链路跟踪](./docs/链路跟踪.md)
 - [单点认证](./docs/单点认证.md)
 - [用户认证](./docs/用户认证.md)
