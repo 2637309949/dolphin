@@ -5,6 +5,7 @@
 package modules
 
 import (
+	"errors"
 	ht "html/template"
 	"log"
 	"os"
@@ -53,7 +54,14 @@ func (m *Boilerplate) Build(dir string, args []string, parser *parser.AppParser)
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
 	}
-	walkFn := func(p string, fi os.FileInfo, err error) error {
+	if len(args) < 1 {
+		return cfgs, errors.New("please provide the project name")
+	}
+	if _, err := os.Stat(dir); !os.IsNotExist(err) {
+		return cfgs, errors.New("the project folder already exists")
+	}
+
+	if err := vfsutil.Walk(template.Assets, "/boilerplate", func(p string, fi os.FileInfo, err error) error {
 		if err != nil {
 			log.Printf("can't stat file %s: %v\n", p, err)
 			return nil
@@ -71,8 +79,7 @@ func (m *Boilerplate) Build(dir string, args []string, parser *parser.AppParser)
 			GOFmt:    false,
 		})
 		return nil
-	}
-	if err := vfsutil.Walk(template.Assets, "/boilerplate", walkFn); err != nil {
+	}); err != nil {
 		return nil, err
 	}
 	return cfgs, nil

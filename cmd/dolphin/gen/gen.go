@@ -33,7 +33,7 @@ var lines = []pipe.Pipe{
 	&modules.Doc{},
 	&modules.SQLTPL{},
 	&modules.Boilerplate{},
-	&modules.Table{},
+	&modules.Reverse{},
 	&modules.Deploy{},
 }
 
@@ -93,7 +93,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 		for j := range items {
 			err = gen.Build(items[j])
 			if err != nil {
-				panic(err)
+				return err
 			}
 		}
 		err = gen.Pipes[i].After(gen.Parser, items)

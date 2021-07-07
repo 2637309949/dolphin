@@ -153,7 +153,21 @@ var (
 			return g.BuildDir(wd, args)
 		},
 	}
-	setup = &cobra.Command{
+	reverse = &cobra.Command{
+		Use:   "reverse",
+		Short: "inversion of the data model",
+		RunE: func(_ *cobra.Command, args []string) error {
+			wd, err := os.Getwd()
+			if err != nil {
+				return err
+			}
+			p := parser.NewTpl(path.Base(wd), path.Base(wd))
+			g := gen.New(p)
+			g.AddPipe(gen.GetPipesByName("reverse")...)
+			return g.BuildDir(wd, args)
+		},
+	}
+	new = &cobra.Command{
 		Use:   "new",
 		Short: "new a empty project",
 		RunE: func(_ *cobra.Command, args []string) error {
@@ -161,24 +175,16 @@ var (
 			if err != nil {
 				return err
 			}
-			if len(args) < 1 {
-				logrus.Warn("please provide the project name")
-				return nil
-			}
 			wd = path.Join(wd, args[0])
-			if files, _ := utils.WalkFileInDirWithSuffix(wd, ".xml"); len(files) == 0 {
-				p := parser.NewTpl(path.Base(wd), path.Base(wd))
-				if err := p.Walk(wd); err != nil {
-					return err
-				}
-				g := gen.New(p)
-				g.AddPipe(gen.GetPipesByName("boilerplate")...)
-				err := g.BuildDir(wd, args)
-				if err != nil {
-					return err
-				}
-			} else {
-				logrus.Warn("it is not allowed to initialize a non-empty project")
+			p := parser.NewTpl(path.Base(wd), path.Base(wd))
+			if err := p.Walk(wd); err != nil {
+				return err
+			}
+			g := gen.New(p)
+			g.AddPipe(gen.GetPipesByName("boilerplate")...)
+			err = g.BuildDir(wd, args)
+			if err != nil {
+				return err
 			}
 			logrus.Infof("new project success, cd to %v dir and run `dolphin build`", args[0])
 			return nil
@@ -187,7 +193,8 @@ var (
 )
 
 func main() {
-	rootCmd.AddCommand(setup)
+	rootCmd.AddCommand(new)
+	rootCmd.AddCommand(reverse)
 	rootCmd.AddCommand(build)
 	rootCmd.AddCommand(more)
 	rootCmd.AddCommand(clean)

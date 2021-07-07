@@ -5,8 +5,10 @@
 package modules
 
 import (
+	"errors"
 	"fmt"
 	ht "html/template"
+	"io/ioutil"
 	"path"
 	"strings"
 
@@ -21,38 +23,46 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Table struct
-type Table struct {
+// Reverse struct
+type Reverse struct {
 }
 
 // Name defined pipe name
-func (app *Table) Name() string {
-	return "table"
+func (app *Reverse) Name() string {
+	return "reverse"
 }
 
 // Pre defined
-func (app *Table) Pre(*parser.AppParser) error {
+func (app *Reverse) Pre(*parser.AppParser) error {
 	return nil
 }
 
 // After defined
-func (app *Table) After(*parser.AppParser, []*pipe.TmplCfg) error {
+func (app *Reverse) After(*parser.AppParser, []*pipe.TmplCfg) error {
 	return nil
 }
 
 // Build func
-func (app *Table) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
+func (app *Reverse) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
+	var tbPath string
 	tbByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "table.tmpl")).([]byte)
-
 	tmplCfgs := []*pipe.TmplCfg{}
 	engines := []*xorm.Engine{}
 	dataSources := []struct {
 		DataSource string `xorm:"data_source"`
 		DriverName string `xorm:"driver_name"`
 	}{}
-	if len(args) < 2 {
-		logrus.Warn("Please give the path to generate the table")
-		return tmplCfgs, nil
+	if len(args) >= 2 {
+		tbPath = path.Join(dir, args[1])
+	} else {
+		tbPath = utils.SearchFileInDirWithSuffix(dir, ".xml", func(s string) bool {
+			data, _ := ioutil.ReadFile(s)
+			return strings.Contains(string(data), "<table")
+		})
+		tbPath = path.Dir(tbPath)
+	}
+	if tbPath == "" {
+		return tmplCfgs, errors.New("please give the path to generate the table")
 	}
 	engine, err := xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	if err != nil {
@@ -63,8 +73,7 @@ func (app *Table) Build(dir string, args []string, parser *parser.AppParser) ([]
 		return tmplCfgs, err
 	}
 	if len(dataSources) == 0 {
-		logrus.Infof("Not found any datasource in app_name:%v", viper.GetString("app.name"))
-		return tmplCfgs, nil
+		return tmplCfgs, fmt.Errorf("not found any datasource in app_name:%v", viper.GetString("app.name"))
 	}
 	for i := range dataSources {
 		engine, err := xorm.NewEngine(dataSources[i].DriverName, dataSources[i].DataSource)
@@ -113,7 +122,7 @@ func (app *Table) Build(dir string, args []string, parser *parser.AppParser) ([]
 					c.Xorm = fmt.Sprintf("%v(%v)", c.Xorm, cols[i3].SQLType.DefaultLength)
 				case "DATETIME":
 					c.Xorm = fmt.Sprintf("%v", strings.ToLower(cols[i3].SQLType.Name))
-				case "ENUM", "INT", "BIGINT":
+				case "ENUM", "INT", "BIGINT", "TINYINT", "SMALLINT", "MEDIUMINT", "INTEGER":
 					if cols[i3].SQLType.Name == "ENUM" {
 						c.Xorm = fmt.Sprintf("int(%v)", 10)
 					} else {
@@ -171,7 +180,7 @@ func (app *Table) Build(dir string, args []string, parser *parser.AppParser) ([]
 			}
 			tmplCfg := &pipe.TmplCfg{
 				Text:     string(tbByte),
-				FilePath: path.Join(dir, args[1], meta.Name+".xml"),
+				FilePath: path.Join(tbPath, meta.Name+".xml"),
 				Data:     data,
 				Overlap:  pipe.OverlapSkip,
 				GOFmt:    true,
