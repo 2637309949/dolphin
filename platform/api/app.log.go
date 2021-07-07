@@ -243,7 +243,7 @@ func init() {
 		rotatelogs.WithRotationTime(24*time.Hour),
 	)
 	if err != nil {
-		logrus.Printf("failed to create rotatelogs: %s", err)
+		logrus.Printf("failed to create rotatelogs: %v", err)
 		return
 	}
 	if writer != nil {
