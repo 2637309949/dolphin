@@ -8,10 +8,10 @@ from
 where
 	{{.Api.Table}}.is_delete={{.Controller.Unescaped "{{"}}.is_delete{{.Controller.Unescaped "}}"}}
 {{.Controller.Unescaped "{{"}}if .creater{{.Controller.Unescaped "}}"}}
-	and {{.Api.Table}}.creater='{{.Controller.Unescaped "{{"}}.creater{{.Controller.Unescaped "}}"}}'
+	and {{.Api.Table}}.creater={{.Controller.Unescaped "{{"}}.creater{{.Controller.Unescaped "}}"}}
 {{.Controller.Unescaped "{{"}}end{{.Controller.Unescaped "}}"}}
 {{.Controller.Unescaped "{{"}}if .updater{{.Controller.Unescaped "}}"}}
-	and {{.Api.Table}}.updater='{{.Controller.Unescaped "{{"}}.updater{{.Controller.Unescaped "}}"}}'
+	and {{.Api.Table}}.updater={{.Controller.Unescaped "{{"}}.updater{{.Controller.Unescaped "}}"}}
 {{.Controller.Unescaped "{{"}}end{{.Controller.Unescaped "}}"}}
 {{.Controller.Unescaped "{{"}}if and .create_time_start .create_time_end{{.Controller.Unescaped "}}"}}
 	and {{.Api.Table}}.create_time between '{{.Controller.Unescaped "{{"}}.create_time_start{{.Controller.Unescaped "}}"}}' and '{{.Controller.Unescaped "{{"}}.create_time_end{{.Controller.Unescaped "}}"}}'
