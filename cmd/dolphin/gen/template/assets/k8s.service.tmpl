@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: {{.Name}}
   namespace: dolphin
+  labels:
+    app: {{.Name}}
+    service: {{.Name}}
 spec:
   ports:
   - name: 80tcp01

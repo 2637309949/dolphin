@@ -1,12 +1,16 @@
-apiVersion: v1
-kind: Deployment
+# istioctl kube-inject -f statefulset.yaml 
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: scene
   namespace: dolphin
 spec:
+  replicas: 2
+  serviceName: scene
   selector:
     matchLabels:
       app: scene
+      version: v1
   template:
     metadata:
       labels:
@@ -14,11 +18,14 @@ spec:
     spec:
       containers:
       - name: scene
-        image: registry.cn-hangzhou.aliyuncs.com/scene:1001
+        image: tutum/hello-world
         volumeMounts:
           - name: config
             mountPath: /app/app.properties
             subPath: app.properties
+          - name: storage
+            mountPath: /app/static/files
+            subPath: files
         resources:
           limits:
             memory: "2Gi"
@@ -34,3 +41,6 @@ spec:
         - name: config
           configMap:
             name: scene
+        - name: storage
+          persistentVolumeClaim:
+            claimName: scene

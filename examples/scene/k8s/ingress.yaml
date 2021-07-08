@@ -15,4 +15,4 @@ spec:
   tls:
   - hosts:
     - www.yourhost.com
-    secretName: www-tls
+    secretName: scene

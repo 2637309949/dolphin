@@ -1,24 +1,29 @@
-apiVersion: v1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: {{.Name}}
+  name: aisle
   namespace: dolphin
 spec:
+  replicas: 2
+  serviceName: aisle
   selector:
     matchLabels:
-      app: {{.Name}}
+      app: aisle
   template:
     metadata:
       labels:
-        app: {{.Name}}
+        app: aisle
     spec:
       containers:
-      - name: {{.Name}}
-        image: registry.cn-hangzhou.aliyuncs.com/{{.Name}}:1001
+      - name: aisle
+        image: tutum/hello-world
         volumeMounts:
           - name: config
             mountPath: /app/app.properties
             subPath: app.properties
+          - name: storage
+            mountPath: /app/static/files
+            subPath: files
         resources:
           limits:
             memory: "2Gi"
@@ -33,4 +38,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: {{.Name}}
+            name: aisle
+        - name: storage
+          persistentVolumeClaim:
+            claimName: aisle

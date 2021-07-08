@@ -20,6 +20,7 @@ dir:
   log: log
   types: types
   rpc: rpc
+  k8s: platform
   script: script
   sql: sql
   sqlmap: sqlmap

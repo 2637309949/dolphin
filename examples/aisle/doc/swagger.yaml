@@ -1096,7 +1096,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: aisle
-  version: "1.0"
+  version: 1.1.2
 paths:
   /api/organ/add:
     post:

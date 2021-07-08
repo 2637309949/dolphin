@@ -254,7 +254,7 @@ definitions:
         description: Parent defined 父菜单ID，一级菜单为null
         type: string
       perms:
-        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add
         type: string
       remark:
         description: Remark defined 备注
@@ -269,8 +269,7 @@ definitions:
         description: Updater defined 最后更新人
         type: number
       url:
-        description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
-          3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: URL defined 菜单URL
         type: string
     type: object
   types.SysArea:
@@ -594,7 +593,7 @@ definitions:
         description: Parent defined 父菜单ID，一级菜单为null
         type: number
       perms:
-        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add
         type: string
       remark:
         description: Remark defined 备注
@@ -609,8 +608,7 @@ definitions:
         description: Updater defined 最后更新人
         type: number
       url:
-        description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
-          3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        description: URL defined 菜单URL
         type: string
     type: object
   types.SysNotification:

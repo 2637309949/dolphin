@@ -49,11 +49,15 @@ func (dp *Deploy) Build(dir string, args []string, parser *parser.AppParser) ([]
 		"gt":          ht.HTML(">"),
 	}
 	tmpl2file := map[string]string{
-		"k8s.cfg.tmpl": "configmap.yaml",
-		"k8s.dpy.tmpl": "deployment.yaml",
-		"k8s.ing.tmpl": "ingress.yaml",
-		"k8s.srv.tmpl": "service.yaml",
-		"k8s.tls.tmpl": "tls.yaml",
+		"k8s.configmap.tmpl":       "configmap.yaml",
+		"k8s.statefulset.tmpl":     "statefulset.yaml",
+		"k8s.ingress.tmpl":         "ingress.yaml",
+		"k8s.service.tmpl":         "service.yaml",
+		"k8s.tls.tmpl":             "tls.yaml",
+		"k8s.pvc.tmpl":             "pvc.yaml",
+		"k8s.gateway.tmpl":         "gateway.yaml",
+		"k8s.virtualservice.tmpl":  "virtualservice.yaml",
+		"k8s.destinationrule.tmpl": "destinationrule.yaml",
 	}
 	cfgs := []*pipe.TmplCfg{}
 	for key, value := range tmpl2file {

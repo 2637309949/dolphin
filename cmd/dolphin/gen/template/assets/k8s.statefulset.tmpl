@@ -1,24 +1,31 @@
-apiVersion: v1
-kind: Deployment
+# istioctl kube-inject -f statefulset.yaml 
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: education
+  name: {{.Name}}
   namespace: dolphin
 spec:
+  replicas: 2
+  serviceName: {{.Name}}
   selector:
     matchLabels:
-      app: education
+      app: {{.Name}}
   template:
     metadata:
       labels:
-        app: education
+        app: {{.Name}}
+        version: v1
     spec:
       containers:
-      - name: education
-        image: registry.cn-hangzhou.aliyuncs.com/education:1001
+      - name: {{.Name}}
+        image: tutum/hello-world
         volumeMounts:
           - name: config
             mountPath: /app/app.properties
             subPath: app.properties
+          - name: storage
+            mountPath: /app/static/files
+            subPath: files
         resources:
           limits:
             memory: "2Gi"
@@ -33,4 +40,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: education
+            name: {{.Name}}
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{.Name}}

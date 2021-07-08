@@ -4,9 +4,9 @@
 package api
 
 import (
-	"aisle/model"
 	"aisle/srv"
 	"aisle/svc"
+	"aisle/types"
 
 	"github.com/spf13/viper"
 )
