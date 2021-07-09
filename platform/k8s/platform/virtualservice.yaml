@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: platform
+  namespace: dolphin
+spec:
+  hosts:
+    - "*"
+  gateways:
+  - platform
+  http:
+  - match:
+    - uri:
+        prefix: /hello
+    route:
+    - destination:
+        port:
+          number: 80
+        host: platform
+    # 超时配置
+    timeout: 10s
+    # 重试配置
+    retries:
+      attempts: 3
+      perTryTimeout: 2s

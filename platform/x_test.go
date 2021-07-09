@@ -185,6 +185,11 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+// TestSysUserLogin defined TODO
+func TestSysUserLogin(t *testing.T) {
+	x.Handle("POST", "/api/sys/user/login", XTestSysUserLogin, t, XTestSysUserLoginM)
+}
+
 // TestSysAppFunAdd defined TODO
 func TestSysAppFunAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/app/fun/add", XTestSysAppFunAdd, t, XTestSysAppFunAddM)
@@ -318,11 +323,6 @@ func TestSysAttachmentPage(t *testing.T) {
 // TestSysAttachmentGet defined TODO
 func TestSysAttachmentGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/attachment/get", XTestSysAttachmentGet, t, XTestSysAttachmentGetM)
-}
-
-// TestSysCasLogin defined TODO
-func TestSysCasLogin(t *testing.T) {
-	x.Handle("POST", "/api/sys/cas/login", XTestSysCasLogin, t, XTestSysCasLoginM)
 }
 
 // TestSysCasLogout defined TODO
@@ -1218,11 +1218,6 @@ func TestSysUserPage(t *testing.T) {
 // TestSysUserGet defined TODO
 func TestSysUserGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/get", XTestSysUserGet, t, XTestSysUserGetM)
-}
-
-// TestSysUserLogin defined TODO
-func TestSysUserLogin(t *testing.T) {
-	x.Handle("POST", "/api/sys/user/login", XTestSysUserLogin, t, XTestSysUserLoginM)
 }
 
 // TestSysUserLogout defined TODO

@@ -1,0 +1,46 @@
+# istioctl kube-inject -f statefulset.yaml 
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: platform
+  namespace: dolphin
+spec:
+  replicas: 2
+  serviceName: platform
+  selector:
+    matchLabels:
+      app: platform
+  template:
+    metadata:
+      labels:
+        app: platform
+        version: v1
+    spec:
+      containers:
+      - name: platform
+        image: tutum/hello-world
+        volumeMounts:
+          - name: config
+            mountPath: /app/app.properties
+            subPath: app.properties
+          - name: storage
+            mountPath: /app/static/files
+            subPath: files
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "10Mi"
+            cpu: "11m"
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: registrykey
+      volumes:
+        - name: config
+          configMap:
+            name: platform
+        - name: storage
+          persistentVolumeClaim:
+            claimName: platform
