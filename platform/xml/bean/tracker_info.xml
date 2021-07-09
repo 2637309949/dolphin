@@ -1,0 +1,3 @@
+<bean name="tracker_info" desc="日志信息" packages="github.com/2637309949/dolphin/packages/null" extends="$sys_tracker">
+    <prop name="domain" desc="域名" type="null.String" />
+</bean>

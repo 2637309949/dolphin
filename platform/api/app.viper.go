@@ -1,4 +1,4 @@
-package conf
+package api
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func init() {
+func InitViper() {
 	viper.SetConfigName("app")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")

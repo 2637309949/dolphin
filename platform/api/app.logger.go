@@ -168,20 +168,16 @@ func initTracker() {
 	go func() {
 		var bucket slice.SyncSlice
 		var timer = time.NewTicker(5 * time.Second)
-		type SysTracker struct {
-			types.SysTracker
-			Domain null.String `xorm:"varchar(36) comment('域名') 'domain'" json:"domain" xml:"domain"`
-		}
 		for {
 			logWorkerPool <- logChannel
 			select {
 			case <-timer.C:
 				logs := bucket.Reset()
 				bmp := map[string][]types.SysTracker{}
-				beans := funk.Map(logs, func(entity interface{}) SysTracker {
+				beans := funk.Map(logs, func(entity interface{}) types.TrackerInfo {
 					item := entity.(*LogFormatterParams)
-					st := SysTracker{Domain: null.StringFrom(item.Domain)}
-					st.SysTracker = types.SysTracker{
+					st := types.TrackerInfo{Domain: null.StringFrom(item.Domain)}
+					st.SysTracker = &types.SysTracker{
 						Token:      null.StringFrom(item.Token),
 						UserId:     null.StringFrom(item.UserID),
 						StatusCode: null.IntFrom(int64(item.StatusCode)),
@@ -199,15 +195,15 @@ func initTracker() {
 						IsDelete:   null.IntFrom(0),
 					}
 					return st
-				}).([]SysTracker)
-				beans = funk.Filter(beans, func(entity SysTracker) bool {
+				}).([]types.TrackerInfo)
+				beans = funk.Filter(beans, func(entity types.TrackerInfo) bool {
 					return entity.Domain.String != ""
-				}).([]SysTracker)
-				funk.ForEach(beans, func(entity SysTracker) {
+				}).([]types.TrackerInfo)
+				funk.ForEach(beans, func(entity types.TrackerInfo) {
 					if _, ok := bmp[entity.Domain.String]; !ok {
 						bmp[entity.Domain.String] = []types.SysTracker{}
 					}
-					bmp[entity.Domain.String] = append(bmp[entity.Domain.String], entity.SysTracker)
+					bmp[entity.Domain.String] = append(bmp[entity.Domain.String], *entity.SysTracker)
 				})
 				for k, v := range bmp {
 					err := TrackerStore(k, &v)
@@ -231,7 +227,7 @@ func createXLogger() interface{} {
 	return xlogger
 }
 
-func init() {
+func InitLogger() {
 	var writer io.Writer
 	util.SetFormatter(term.IsTerminal(unix.Stdout))
 	if term.IsTerminal(unix.Stdout) {

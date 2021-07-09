@@ -221,7 +221,7 @@ func NewDefaultManager() Manager {
 	return mg
 }
 
-func init() {
+func InitRedisCli() {
 	password, addr, db := viper.GetString("redis.password"), viper.GetString("redis.addr"), viper.GetInt("redis.db")
 	if addr != "" {
 		opts := redis.Options{Addr: addr, Password: password, DB: db}

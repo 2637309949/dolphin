@@ -10,13 +10,9 @@ import (
 	"testing"
 	"time"
 
-	//  "github.com/2637309949/dolphin/platform/conf"
-	_ "github.com/2637309949/dolphin/platform/conf"
-
+	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
-
-	"github.com/2637309949/dolphin/platform/api"
 )
 
 var token string

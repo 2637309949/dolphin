@@ -89,6 +89,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 		if err != nil {
 			return err
 		}
+
 		cfgs = append(cfgs, items...)
 		for j := range items {
 			err = gen.Build(items[j])
@@ -174,6 +175,7 @@ func (gen *Gen) Build(cfg *pipe.TmplCfg) error {
 			return nil
 		}
 	}
+
 	var bf bytes.Buffer
 	bfw := io.Writer(&bf)
 	w, err := utils.OpenFile(genFilePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, os.ModePerm)

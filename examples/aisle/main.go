@@ -4,9 +4,6 @@
 package main
 
 import (
-	// github.com/2637309949/dolphin/platform/conf init
-	_ "github.com/2637309949/dolphin/platform/conf"
-
 	// "github.com/go-sql-driver/mysql" init
 	_ "github.com/go-sql-driver/mysql"
 	// "github.com/2637309949/dolphin/platform/api" init
