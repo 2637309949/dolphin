@@ -26,7 +26,7 @@ func init() {
 	viper.SetDefault("db.maxIdleConns", 15)
 	viper.SetDefault("db.maxOpenConns", 50)
 	viper.SetDefault("dir.api", "api")
-	viper.SetDefault("dir.doc", "doc")
+	viper.SetDefault("dir.doc", "")
 	viper.SetDefault("dir.log", "log")
 	viper.SetDefault("dir.types", "types")
 	viper.SetDefault("dir.rpc", "rpc")

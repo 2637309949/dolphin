@@ -51,7 +51,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	viper.SetDefault("rd.dataSource", ":@localhost:6379/0")
 	viper.SetDefault("dir.api", "api")
-	viper.SetDefault("dir.doc", "doc")
+	viper.SetDefault("dir.doc", "")
 	viper.SetDefault("dir.sql", "sql")
 	viper.SetDefault("dir.sqlmap", "sqlmap")
 	viper.SetDefault("dir.script", "script")

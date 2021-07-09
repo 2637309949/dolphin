@@ -16,7 +16,6 @@ db:
   maxopenconns: 50
 dir:
   api: api
-  doc: doc
   log: log
   types: types
   rpc: rpc
