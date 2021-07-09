@@ -186,185 +186,143 @@ func TestMain(m *testing.M) {
 func TestSysUserLogin(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/login", XTestSysUserLogin, t, XTestSysUserLoginM)
 }
+
 // TestArticleAdd defined TODO
 func TestArticleAdd(t *testing.T) {
 	x.Handle("POST", "/api/article/add", XTestArticleAdd, t, XTestArticleAddM)
 }
-
 
 // TestArticleBatchAdd defined TODO
 func TestArticleBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/article/batch_add", XTestArticleBatchAdd, t, XTestArticleBatchAddM)
 }
 
-
 // TestArticleDel defined TODO
 func TestArticleDel(t *testing.T) {
 	x.Handle("DELETE", "/api/article/del", XTestArticleDel, t, XTestArticleDelM)
 }
-
 
 // TestArticleBatchDel defined TODO
 func TestArticleBatchDel(t *testing.T) {
 	x.Handle("PUT", "/api/article/batch_del", XTestArticleBatchDel, t, XTestArticleBatchDelM)
 }
 
-
 // TestArticleUpdate defined TODO
 func TestArticleUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/article/update", XTestArticleUpdate, t, XTestArticleUpdateM)
 }
-
 
 // TestArticleBatchUpdate defined TODO
 func TestArticleBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/article/batch_update", XTestArticleBatchUpdate, t, XTestArticleBatchUpdateM)
 }
 
-
 // TestArticlePage defined TODO
 func TestArticlePage(t *testing.T) {
 	x.Handle("GET", "/api/article/page", XTestArticlePage, t, XTestArticlePageM)
 }
-
 
 // TestArticleGet defined TODO
 func TestArticleGet(t *testing.T) {
 	x.Handle("GET", "/api/article/get", XTestArticleGet, t, XTestArticleGetM)
 }
 
-
 // TestArticlePayment defined TODO
 func TestArticlePayment(t *testing.T) {
 	x.Handle("POST", "/api/article/payment", XTestArticlePayment, t, XTestArticlePaymentM)
 }
-
-
 
 // TestICacheInfo defined TODO
 func TestICacheInfo(t *testing.T) {
 	x.Handle("GET", "/api/i/cache/info", XTestICacheInfo, t, XTestICacheInfoM)
 }
 
-
-
 // TestEncryptAdd defined TODO
 func TestEncryptAdd(t *testing.T) {
 	x.Handle("POST", "/api/encrypt/add", XTestEncryptAdd, t, XTestEncryptAddM)
 }
-
 
 // TestEncryptInfo defined TODO
 func TestEncryptInfo(t *testing.T) {
 	x.Handle("GET", "/api/encrypt/info", XTestEncryptInfo, t, XTestEncryptInfoM)
 }
 
-
-
-
 // TestJwtCheck defined TODO
 func TestJwtCheck(t *testing.T) {
 	x.Handle("GET", "/api/jwt/check", XTestJwtCheck, t, XTestJwtCheckM)
 }
-
-
 
 // TestKafkaAdd defined TODO
 func TestKafkaAdd(t *testing.T) {
 	x.Handle("POST", "/api/kafka/add", XTestKafkaAdd, t, XTestKafkaAddM)
 }
 
-
 // TestKafkaGet defined TODO
 func TestKafkaGet(t *testing.T) {
 	x.Handle("GET", "/api/kafka/get", XTestKafkaGet, t, XTestKafkaGetM)
 }
-
-
 
 // TestNsqAdd defined TODO
 func TestNsqAdd(t *testing.T) {
 	x.Handle("POST", "/api/nsq/add", XTestNsqAdd, t, XTestNsqAddM)
 }
 
-
 // TestNsqGet defined TODO
 func TestNsqGet(t *testing.T) {
 	x.Handle("GET", "/api/nsq/get", XTestNsqGet, t, XTestNsqGetM)
 }
-
-
 
 // TestRedisLockLock defined TODO
 func TestRedisLockLock(t *testing.T) {
 	x.Handle("GET", "/api/redis/lock/lock", XTestRedisLockLock, t, XTestRedisLockLockM)
 }
 
-
 // TestRedisLockUnlock defined TODO
 func TestRedisLockUnlock(t *testing.T) {
 	x.Handle("GET", "/api/redis/lock/unlock", XTestRedisLockUnlock, t, XTestRedisLockUnlockM)
 }
-
-
 
 // TestRedisMqAdd defined TODO
 func TestRedisMqAdd(t *testing.T) {
 	x.Handle("POST", "/api/redis/mq/add", XTestRedisMqAdd, t, XTestRedisMqAddM)
 }
 
-
 // TestRedisMqGet defined TODO
 func TestRedisMqGet(t *testing.T) {
 	x.Handle("GET", "/api/redis/mq/get", XTestRedisMqGet, t, XTestRedisMqGetM)
 }
-
-
 
 // TestRPCMessage defined TODO
 func TestRPCMessage(t *testing.T) {
 	x.Handle("GET", "/api/rpc/message", XTestRPCMessage, t, XTestRPCMessageM)
 }
 
-
-
 // TestSqlmapSelectone defined TODO
 func TestSqlmapSelectone(t *testing.T) {
 	x.Handle("GET", "/api/sqlmap/selectone", XTestSqlmapSelectone, t, XTestSqlmapSelectoneM)
 }
-
-
 
 // TestUserInfo defined TODO
 func TestUserInfo(t *testing.T) {
 	x.Handle("GET", "/api/user/info", XTestUserInfo, t, XTestUserInfoM)
 }
 
-
-
 // TestViewFile defined TODO
 func TestViewFile(t *testing.T) {
 	x.Handle("GET", "/api/view/file", XTestViewFile, t, XTestViewFileM)
 }
-
 
 // TestViewHTML defined TODO
 func TestViewHTML(t *testing.T) {
 	x.Handle("GET", "/api/view/html", XTestViewHTML, t, XTestViewHTMLM)
 }
 
-
 // TestViewXML defined TODO
 func TestViewXML(t *testing.T) {
 	x.Handle("GET", "/api/view/xml", XTestViewXML, t, XTestViewXMLM)
 }
 
-
-
 // TestVoteLike defined TODO
 func TestVoteLike(t *testing.T) {
 	x.Handle("POST", "/api/vote/like", XTestVoteLike, t, XTestVoteLikeM)
 }
-
-
-

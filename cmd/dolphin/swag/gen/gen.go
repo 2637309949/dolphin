@@ -110,8 +110,8 @@ func (g *Gen) Build(config *Config) error {
 	// }
 	// packageName := filepath.Base(absOutputDir)
 	// docFileName := filepath.Join(config.OutputDir, "docs.go")
-	// jsonFileName := filepath.Join(config.OutputDir, "swagger.json")
-	yamlFileName := filepath.Join(config.OutputDir, "swagger.yaml")
+	jsonFileName := filepath.Join(config.OutputDir, "swagger.json")
+	// yamlFileName := filepath.Join(config.OutputDir, "swagger.yaml")
 
 	// docs, err := os.Create(docFileName)
 	// if err != nil {
@@ -119,20 +119,20 @@ func (g *Gen) Build(config *Config) error {
 	// }
 	// defer docs.Close()
 
-	// err = g.writeFile(b, jsonFileName)
-	// if err != nil {
-	// 	return err
-	// }
-
-	y, err := g.jsonToYAML(b)
-	if err != nil {
-		return fmt.Errorf("cannot convert json to yaml error: %s", err)
-	}
-
-	err = g.writeFile(y, yamlFileName)
+	err = g.writeFile(b, jsonFileName)
 	if err != nil {
 		return err
 	}
+
+	// y, err := g.jsonToYAML(b)
+	// if err != nil {
+	// 	return fmt.Errorf("cannot convert json to yaml error: %s", err)
+	// }
+
+	// err = g.writeFile(y, yamlFileName)
+	// if err != nil {
+	// 	return err
+	// }
 
 	// Write doc
 	// err = g.writeGoDoc(packageName, docs, swagger, config)
@@ -141,8 +141,8 @@ func (g *Gen) Build(config *Config) error {
 	// }
 
 	// log.Printf("create docs.go at %+v", docFileName)
-	// log.Printf("create swagger.json at %+v", jsonFileName)
-	logrus.Printf("create swagger.yaml at %+v", yamlFileName)
+	logrus.Printf("create swagger.json at %+v", jsonFileName)
+	// logrus.Printf("create swagger.yaml at %+v", yamlFileName)
 
 	return nil
 }

@@ -6,13 +6,18 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
+	"os/exec"
 	"path"
+	"runtime"
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/gen"
+	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
+	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -24,6 +29,29 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
 )
+
+type AssetsFileSystem struct {
+	RelativePath string
+	http.FileSystem
+}
+
+func (assert *AssetsFileSystem) Open(name string) (http.File, error) {
+	if strings.Contains(name, "swagger.json") {
+		return os.Open(path.Join(viper.GetString("dir.doc"), "swagger.json"))
+	}
+	return assert.FileSystem.Open(path.Join(assert.RelativePath, name))
+}
+
+// Open calls the OS default program for uri
+func Open(uri string) error {
+	run, ok := commands[runtime.GOOS]
+	if !ok {
+		return fmt.Errorf("don't know how to open things on %s platform", runtime.GOOS)
+	}
+
+	cmd := exec.Command(run, uri)
+	return cmd.Start()
+}
 
 // InitViper defined
 func InitViper(cmd *cobra.Command, args []string) {
@@ -86,17 +114,21 @@ func InitViper(cmd *cobra.Command, args []string) {
 }
 
 var (
+	commands = map[string]string{
+		"windows": "cmd /c start",
+		"darwin":  "open",
+		"linux":   "xdg-open",
+	}
 	rootCmd = &cobra.Command{
-		Use:   "dolphin",
-		Short: "dol",
-		Long:  `dolphin, a code generation tool for golang`,
+		Use:  "dolphin",
+		Long: `Code generation tool for golang`,
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			InitViper(cmd, args)
 		},
 	}
 	build = &cobra.Command{
 		Use:   "build",
-		Short: "build from the configuration file",
+		Short: "Build from the configuration file",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			justOne := false
@@ -129,7 +161,7 @@ var (
 	}
 	clean = &cobra.Command{
 		Use:   "clean",
-		Short: "remove temp file, such as *.go.new",
+		Short: "Remove temp file, such as *.go.new",
 		RunE: func(*cobra.Command, []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -141,7 +173,7 @@ var (
 	}
 	more = &cobra.Command{
 		Use:   "more",
-		Short: "add controller and table",
+		Short: "Add controller and table",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -155,7 +187,7 @@ var (
 	}
 	reverse = &cobra.Command{
 		Use:   "reverse",
-		Short: "inversion of the data model",
+		Short: "Inversion of the data model",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -169,7 +201,7 @@ var (
 	}
 	new = &cobra.Command{
 		Use:   "new",
-		Short: "new a empty project",
+		Short: "New a empty project",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
 			if err != nil {
@@ -190,6 +222,18 @@ var (
 			return nil
 		},
 	}
+	doc = &cobra.Command{
+		Use:   "doc",
+		Short: "Serve api document",
+		RunE: func(_ *cobra.Command, args []string) error {
+			gin.SetMode("release")
+			router := gin.New()
+			router.StaticFS("/", &AssetsFileSystem{RelativePath: "/swagger", FileSystem: template.Assets})
+			Open("http://127.0.0.1:8877")
+			router.Run(":8877")
+			return nil
+		},
+	}
 )
 
 func main() {
@@ -198,6 +242,7 @@ func main() {
 	rootCmd.AddCommand(build)
 	rootCmd.AddCommand(more)
 	rootCmd.AddCommand(clean)
+	rootCmd.AddCommand(doc)
 	if err := rootCmd.Execute(); err != nil {
 		logrus.Fatal(err)
 	}
