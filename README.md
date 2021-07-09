@@ -10,7 +10,7 @@ Dolphin, a Golang code generation tool, based on the gin and xormplus, can quick
 
 <img align="center" width="200px" src="https://img-blog.csdnimg.cn/20210430134623869.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM1NzEyNDM=,size_16,color_FFFFFF,t_70">
 
-### CMD
+### Tool
 
 ```shell
 dolphin, a code generation tool for golang
@@ -64,7 +64,7 @@ Use "dolphin [command] --help" for more information about a command.
 - Support database reverse XML generation
 ```
 
-## Tutorial document
+## Tutorial
 
 - [快速入门](./docs/快速入门.md)
 - [配置XML](./docs/配置XML.md)
