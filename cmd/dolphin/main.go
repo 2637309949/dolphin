@@ -222,8 +222,8 @@ var (
 			return nil
 		},
 	}
-	doc = &cobra.Command{
-		Use:   "doc",
+	serve = &cobra.Command{
+		Use:   "serve",
 		Short: "Serve api document",
 		RunE: func(_ *cobra.Command, args []string) error {
 			gin.SetMode("release")
@@ -242,7 +242,7 @@ func main() {
 	rootCmd.AddCommand(build)
 	rootCmd.AddCommand(more)
 	rootCmd.AddCommand(clean)
-	rootCmd.AddCommand(doc)
+	rootCmd.AddCommand(serve)
 	if err := rootCmd.Execute(); err != nil {
 		logrus.Fatal(err)
 	}
