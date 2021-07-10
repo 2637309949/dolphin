@@ -81,10 +81,18 @@ func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...Ha
 	gh.gin.Handle(httpMethod, relativePath, hls...)
 }
 
+// DebugPrintRouteFunc defined TODO
+func DebugPrintRouteFunc(httpMethod, absolutePath, handlerName string, nuHandlers int) {
+	if gin.IsDebugging() {
+		logrus.Infof("%-6s %-25s --> %s (%d handlers)", httpMethod, absolutePath, handlerName, nuHandlers)
+	}
+}
+
 // NewGinHandler defined TODO
 func NewGinHandler(dol *Dolphin) HttpHandler {
-	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.SetMode(viper.GetString("app.mode"))
+	gin.DefaultWriter = logrus.StandardLogger().Out
+	gin.DebugPrintRouteFunc = DebugPrintRouteFunc
 	h := &ginHandler{gin: gin.New()}
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	h.allocCtx = func(f func(*Context)) {

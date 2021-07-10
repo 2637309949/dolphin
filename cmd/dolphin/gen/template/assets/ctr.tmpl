@@ -25,6 +25,7 @@ import (
 {{- if ne .Method "get"}}
 // @Accept {{if gt (len .Params) 1}}multipart/form-data{{else}}application/json{{end}}
 {{- end}}
+// @Produce application/json
 {{- $api := .}}
 {{- if .Auth}}
 // @Param Authorization header string false "认证令牌"

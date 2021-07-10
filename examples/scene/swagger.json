@@ -678,6 +678,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "jwt认证"
                 ],
@@ -9649,7 +9652,7 @@
                 },
                 "is_primary_key": {
                     "description": "IsPrimaryKey defined 是否主键",
-                    "type": "number"
+                    "type": "boolean"
                 },
                 "name": {
                     "description": "Name defined 表名",
@@ -9657,7 +9660,7 @@
                 },
                 "nullable": {
                     "description": "Nullable defined 是否为空",
-                    "type": "number"
+                    "type": "boolean"
                 },
                 "remark": {
                     "description": "Remark defined 备注",

@@ -11,6 +11,7 @@ import (
 // @Summary 登陆
 // @Tags jwt认证
 // @Accept application/json
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
