@@ -13,18 +13,19 @@ Dolphin, a Golang code generation tool, based on the gin and xormplus, can quick
 ### Tool
 
 ```shell
-dolphin, a code generation tool for golang
+Code generation tool for golang
 
 Usage:
   dolphin [command]
 
 Available Commands:
-  build       build from the configuration file
-  clean       remove temp file, such as *.go.new
+  build       Build from the configuration file
+  clean       Remove temp file, such as *.go.new
+  doc         Serve api document
   help        Help about any command
-  more        add controller and table
-  new         new a empty project
-  reverse     inversion of the data model
+  more        Add controller and table
+  new         New a empty project
+  reverse     Inversion of the data model
 
 Flags:
   -h, --help   help for dolphin
