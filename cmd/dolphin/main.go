@@ -229,8 +229,8 @@ var (
 			gin.SetMode("release")
 			router := gin.New()
 			router.StaticFS("/", &AssetsFileSystem{RelativePath: "/swagger", FileSystem: template.Assets})
-			Open("http://127.0.0.1:8877")
-			router.Run(":8877")
+			Open("http://127.0.0.1:8899")
+			router.Run(":8899")
 			return nil
 		},
 	}
