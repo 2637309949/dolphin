@@ -181,6 +181,7 @@ func SetFormatter(isTerminal bool) {
 	} else {
 		logrus.SetFormatter(&logrus.TextFormatter{
 			FullTimestamp:   true,
+			ForceColors:     true,
 			TimestampFormat: timeFormat,
 		})
 	}

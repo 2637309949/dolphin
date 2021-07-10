@@ -100,8 +100,9 @@ func SetFormatter(isTerminal bool) {
 	} else {
 		logrus.SetFormatter(&logrus.TextFormatter{
 			FullTimestamp:   true,
-			TimestampFormat: "02/01 15:04:05",
 			DisableQuote:    true,
+			ForceColors:     true,
+			TimestampFormat: "02/01 15:04:05",
 		})
 	}
 }
