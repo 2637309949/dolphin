@@ -21,11 +21,11 @@ Usage:
 Available Commands:
   build       Build from the configuration file
   clean       Remove temp file, such as *.go.new
-  doc         Serve api document
   help        Help about any command
   more        Add controller and table
   new         New a empty project
   reverse     Inversion of the data model
+  serve       Serve api document
 
 Flags:
   -h, --help   help for dolphin
