@@ -9,6 +9,7 @@
 Dolphin, a Golang code generation tool, based on the gin and xormplus, can quickly cohesion incognito function framework, and effectively reduce repeat code logic.
 
 <img align="center" width="200px" src="https://img-blog.csdnimg.cn/20210430134623869.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM1NzEyNDM=,size_16,color_FFFFFF,t_70">
+<img align="center" width="200px" src="./assets/docs.png">
 
 ### Tool
 
