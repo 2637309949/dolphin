@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/gin-gonic/gin"
@@ -84,7 +85,7 @@ func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...Ha
 // DebugPrintRouteFunc defined TODO
 func DebugPrintRouteFunc(httpMethod, absolutePath, handlerName string, nuHandlers int) {
 	if gin.IsDebugging() {
-		logrus.Infof("%-6s %-25s --> %s (%d handlers)", httpMethod, absolutePath, handlerName, nuHandlers)
+		logrus.Infof("%-6s %-25s --> %s (%d handlers)", httpMethod, absolutePath, strings.Split(handlerName, ".(")[0], nuHandlers)
 	}
 }
 

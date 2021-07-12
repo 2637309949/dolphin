@@ -16,7 +16,7 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-// Query defined parse struct from query
+// Query defined TODO
 type Query struct {
 	ctx *Context
 	m   map[string]interface{}

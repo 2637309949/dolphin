@@ -2,7 +2,6 @@ package slice
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"reflect"
 	"strings"
@@ -69,7 +68,7 @@ func GetFieldSliceByName(arr interface{}, name string, format ...string) interfa
 }
 
 // PatchSliceByField defined
-func PatchSliceByField(target interface{}, source interface{}, targetMatchKey string, sourceMatchKey string, key ...string) func(interface{}) error {
+func PatchSliceByField(target interface{}, source interface{}, targetMatchKey string, sourceMatchKey string, key ...string) ([]map[string]interface{}, error) {
 	if !IsIteratee(target) {
 		panic("First parameter must be an iteratee")
 	}
@@ -81,20 +80,20 @@ func PatchSliceByField(target interface{}, source interface{}, targetMatchKey st
 	tsm := []map[string]interface{}{}
 	bte, err := json.Marshal(target)
 	if err != nil {
-		return nil
+		return []map[string]interface{}{}, err
 	}
 
 	if err = json.Unmarshal(bte, &tsm); err != nil || len(tsm) == 0 {
-		return nil
+		return []map[string]interface{}{}, err
 	}
 
 	ssm := []map[string]interface{}{}
 	ste, err := json.Marshal(source)
 	if err != nil {
-		return nil
+		return []map[string]interface{}{}, err
 	}
 	if err = json.Unmarshal(ste, &ssm); err != nil {
-		return nil
+		return []map[string]interface{}{}, err
 	}
 
 	for i := range tsm {
@@ -111,22 +110,7 @@ func PatchSliceByField(target interface{}, source interface{}, targetMatchKey st
 			}
 		}
 	}
-
-	return func(v interface{}) error {
-		val := reflect.ValueOf(v)
-		if val.Kind() != reflect.Ptr {
-			return errors.New("non-pointer passed to Unmarshal")
-		}
-		btr, err := json.Marshal(tsm)
-		if err != nil {
-			return err
-		}
-		err = json.Unmarshal(btr, v)
-		if err != nil {
-			return err
-		}
-		return nil
-	}
+	return tsm, err
 }
 
 // IsIteratee returns if the argument is an iteratee.

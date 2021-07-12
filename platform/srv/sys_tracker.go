@@ -10,6 +10,8 @@ import (
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/svc"
+	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 )
 
@@ -19,6 +21,22 @@ type SysTracker struct {
 
 func NewSysTracker() *SysTracker {
 	return &SysTracker{}
+}
+
+// PageFormatter defined TODO
+func (srv *SysTracker) PageFormatter(db *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
+	if uids, ok := slice.GetFieldSliceByName(items, "user_id").([]string); ok {
+		users := []types.SysUser{}
+		err = db.Cols("id", "name").In("id", uids).Find(&users)
+		if err != nil {
+			return data, err
+		}
+		data, err = slice.PatchSliceByField(items, users, "user_id", "id", "user_name#name")
+		if err != nil {
+			return data, err
+		}
+	}
+	return data, err
 }
 
 // TODO defined srv

@@ -16,7 +16,6 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
@@ -320,43 +319,17 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		}
 		q.SetString("cn_org_id", template.HTML(strings.Join(ids, ",")))()
 	}
-	ret, err := ctr.Srv.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value())
+	ret, err := ctr.Srv.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-
-	if uids, ok := slice.GetFieldSliceByName(ret.Data, "id", "'%v'").([]string); ok {
-		roles, err := ctr.Srv.GetUserRolesByUID(ctx.DB, strings.Join(uids, ","))
-		if err != nil {
-			logrus.Error(err)
-			ctx.Fail(err)
-			return
-		}
-		err = slice.PatchSliceByField(ret.Data, roles, "id", "user_id", "role_name", "user_role")(&ret.Data)
-		if err != nil {
-			logrus.Error(err)
-			ctx.Fail(err)
-			return
-		}
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
 	}
-
-	if uorgs, ok := slice.GetFieldSliceByName(ret.Data, "org_id", "'%v'").([]string); ok {
-		orgs, err := ctr.Srv.GetUserOrgsByUID(ctx.DB, strings.Join(uorgs, ","))
-		if err != nil {
-			logrus.Error(err)
-			ctx.Fail(err)
-			return
-		}
-		err = slice.PatchSliceByField(ret.Data, orgs, "org_id", "id", "org_id#id", "org_name#name")(&ret.Data)
-		if err != nil {
-			logrus.Error(err)
-			ctx.Fail(err)
-			return
-		}
-	}
-
 	ret = ret.With(new([]struct {
 		ID        null.Int    `json:"id" xml:"id"`
 		Name      null.String `json:"name" xml:"name"`

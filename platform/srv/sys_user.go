@@ -13,6 +13,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/svc"
+	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 )
 
@@ -50,6 +51,32 @@ func (srv *SysUser) TODO(ctx context.Context, db *xorm.Engine, params struct{}) 
 		}
 	}
 	return nil, errors.New("no implementation found")
+}
+
+// PageFormatter defined TODO
+func (srv *SysUser) PageFormatter(db *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
+	if uids, ok := slice.GetFieldSliceByName(items, "id", "'%v'").([]string); ok {
+		roles, err := srv.GetUserRolesByUID(db, strings.Join(uids, ","))
+		if err != nil {
+			return data, err
+		}
+		data, err = slice.PatchSliceByField(items, roles, "id", "user_id", "role_name", "user_role")
+		if err != nil {
+			return data, err
+		}
+	}
+
+	if uorgs, ok := slice.GetFieldSliceByName(items, "org_id", "'%v'").([]string); ok {
+		orgs, err := srv.GetUserOrgsByUID(db, strings.Join(uorgs, ","))
+		if err != nil {
+			return []map[string]interface{}{}, err
+		}
+		data, err = slice.PatchSliceByField(items, orgs, "org_id", "id", "org_id#id", "org_name#name")
+		if err != nil {
+			return data, err
+		}
+	}
+	return data, err
 }
 
 // GetOrgsFromInheritance defined srv

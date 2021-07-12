@@ -7,7 +7,6 @@ import (
 	"errors"
 
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 )
 
@@ -39,21 +38,11 @@ func (ctr *SysTracker) SysTrackerPage(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-
-	if uids, ok := slice.GetFieldSliceByName(ret.Data, "user_id").([]string); ok {
-		users := []types.SysUser{}
-		err = ctx.PlatformDB.Cols("id", "name").In("id", uids).Find(&users)
-		if err != nil {
-			logrus.Error(err)
-			ctx.Fail(err)
-			return
-		}
-		err = slice.PatchSliceByField(ret.Data, users, "user_id", "id", "user_name#name")(&ret.Data)
-		if err != nil {
-			logrus.Error(err)
-			ctx.Fail(err)
-			return
-		}
+	ret.Data, err = ctr.Srv.PageFormatter(ctx.PlatformDB, ret.Data)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
 	}
 
 	if ctx.QueryBool("__export__") {

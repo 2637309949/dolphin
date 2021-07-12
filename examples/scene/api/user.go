@@ -32,7 +32,7 @@ func (ctr *User) UserInfo(ctx *Context) {
 			ctx.Fail(err)
 			return
 		}
-		err = slice.PatchSliceByField(articles, users, "creater", "id", "creater_name#name")(&articles)
+		articles, err = slice.PatchSliceByField(articles, users, "creater", "id", "creater_name#name")
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)

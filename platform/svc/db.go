@@ -3,7 +3,6 @@ package svc
 import (
 	"container/list"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"strings"
 
@@ -14,13 +13,55 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-// Db defined TODO
-type Db interface {
-	PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*types.PageList, error)
-	TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error)
-	GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error)
-	InRole(db *xorm.Engine, userId string, role ...string) bool
-	InAdmin(db *xorm.Engine, userId string, role ...string) bool
+type (
+	// Db defined TODO
+	Db interface {
+		PageSearch(*xorm.Engine, string, string, string, map[string]interface{}, ...Formatter) (*types.PageList, error)
+		TreeSearch(*xorm.Engine, string, string, string, map[string]interface{}, ...Formatter) (interface{}, error)
+		GetOptions(*xorm.Engine, ...string) (map[string]map[string]interface{}, error)
+		InRole(*xorm.Engine, string, ...string) bool
+		InAdmin(*xorm.Engine, string, ...string) bool
+	}
+	// Formatter defined TODO
+	Formatter func(*xorm.Engine, []map[string]interface{}) ([]map[string]interface{}, error)
+	// TypeMap Defined TODO
+	TypeMap map[string]interface{}
+)
+
+// MustInt64 defined TODO
+func (q *TypeMap) MustInt64(key string) int64 {
+	i, _ := (*q)[key].(int64)
+	return i
+}
+
+// MustInt defined TODO
+func (q *TypeMap) MustInt(key string) int {
+	i, _ := (*q)[key].(int)
+	return i
+}
+
+// MustFloat32 defined TODO
+func (q *TypeMap) MustFloat32(key string) float32 {
+	i, _ := (*q)[key].(float32)
+	return i
+}
+
+// MustFloat32 defined TODO
+func (q *TypeMap) MustFloat64(key string) float64 {
+	i, _ := (*q)[key].(float64)
+	return i
+}
+
+// MustBool defined TODO
+func (q *TypeMap) MustBool(key string) bool {
+	i, _ := (*q)[key].(bool)
+	return i
+}
+
+// MustString defined TODO
+func (q *TypeMap) MustString(key string) string {
+	i, _ := (*q)[key].(string)
+	return i
 }
 
 // InRole defined TODO
@@ -60,15 +101,10 @@ func (svc *SvcHepler) InAdmin(db *xorm.Engine, userId string, role ...string) bo
 }
 
 // PageSearch defined TODO
-func (svc *SvcHepler) PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}) (*types.PageList, error) {
-	page, ok := params["page"].(int)
-	if !ok {
-		return nil, errors.New("not found page")
-	}
-	size, ok := params["size"].(int)
-	if !ok {
-		return nil, errors.New("not found size")
-	}
+func (svc *SvcHepler) PageSearch(db *xorm.Engine, ctr, api, table string, params map[string]interface{}, formatters ...Formatter) (*types.PageList, error) {
+	tm := TypeMap(params)
+	page := tm.MustInt("page")
+	size := tm.MustInt("size")
 	params["offset"] = (page - 1) * size
 	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s_select.tpl", ctr, api), &params).Query().List()
 	if err != nil {
@@ -97,11 +133,18 @@ func (svc *SvcHepler) PageSearch(db *xorm.Engine, ctr, api, table string, params
 	plt.Data = rowsSet
 	plt.TotalRecords = int(records)
 	plt.TotalPages = int(totalpages)
+	for i := range formatters {
+		data, err := formatters[i](db, plt.Data)
+		if err != nil {
+			return nil, err
+		}
+		plt.Data = data
+	}
 	return &plt, nil
 }
 
 // TreeSearch defined TODO
-func (svc *SvcHepler) TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}) (interface{}, error) {
+func (svc *SvcHepler) TreeSearch(db *xorm.Engine, controller, api, table string, q map[string]interface{}, formatters ...Formatter) (interface{}, error) {
 	rowsSet, err := db.SqlTemplateClient(fmt.Sprintf("%s_%s.tpl", controller, api), &q).Query().List()
 	if err != nil {
 		return nil, err
