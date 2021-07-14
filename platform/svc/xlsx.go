@@ -11,16 +11,9 @@ import (
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/360EntSecGroup-Skylar/excelize"
-	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
 )
-
-type Export interface {
-	Check(*gin.Context) bool
-	PageExport(*xorm.Engine, string, string, string, map[string]interface{}, ...Formatter) (*types.ExportInfo, error)
-	SetOptionsetsFormat(func(interface{}) func(interface{}) interface{})
-}
 
 // Xlsx defined
 type Xlsx struct {
