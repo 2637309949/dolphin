@@ -5,7 +5,7 @@ const axios = require('../request').default
 module.exports.add = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/kafka/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -23,7 +23,7 @@ module.exports.add = (data = {}, opt = {}) => {
 // get Get kafka info
 module.exports.get = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/kafka/get?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

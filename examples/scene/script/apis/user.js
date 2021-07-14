@@ -4,7 +4,7 @@ const axios = require('../request').default
 // info 
 module.exports.info = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/user/info?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

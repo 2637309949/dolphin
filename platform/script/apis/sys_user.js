@@ -5,7 +5,7 @@ const axios = require('../request').default
 module.exports.add = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,7 +24,7 @@ module.exports.add = (data = {}, opt = {}) => {
 module.exports.batchAdd = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -43,7 +43,7 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
 module.exports.del = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -62,7 +62,7 @@ module.exports.del = (data = {}, opt = {}) => {
 module.exports.batchDel = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -81,7 +81,7 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 module.exports.update = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -100,7 +100,7 @@ module.exports.update = (data = {}, opt = {}) => {
 module.exports.batchUpdate = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/batch_update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -118,7 +118,7 @@ module.exports.batchUpdate = (data = {}, opt = {}) => {
 // page 用户分页查询
 module.exports.page = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/page?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -129,7 +129,7 @@ module.exports.page = (data = {}, opt = {}) => {
 // get 获取用户信息
 module.exports.get = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/get?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -141,7 +141,7 @@ module.exports.get = (data = {}, opt = {}) => {
 module.exports.login = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/login' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -159,7 +159,7 @@ module.exports.login = (data = {}, opt = {}) => {
 // logout 用户退出登录
 module.exports.logout = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/logout?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

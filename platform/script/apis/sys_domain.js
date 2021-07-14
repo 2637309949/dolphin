@@ -5,7 +5,7 @@ const axios = require('../request').default
 module.exports.add = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,7 +24,7 @@ module.exports.add = (data = {}, opt = {}) => {
 module.exports.batchAdd = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -43,7 +43,7 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
 module.exports.del = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -62,7 +62,7 @@ module.exports.del = (data = {}, opt = {}) => {
 module.exports.batchDel = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -81,7 +81,7 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 module.exports.update = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -100,7 +100,7 @@ module.exports.update = (data = {}, opt = {}) => {
 module.exports.batchUpdate = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/batch_update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -118,7 +118,7 @@ module.exports.batchUpdate = (data = {}, opt = {}) => {
 // page 域分页查询
 module.exports.page = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/page?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -129,7 +129,7 @@ module.exports.page = (data = {}, opt = {}) => {
 // get 获取域信息
 module.exports.get = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/domain/get?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

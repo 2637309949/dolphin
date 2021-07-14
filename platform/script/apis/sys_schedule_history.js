@@ -4,7 +4,7 @@ const axios = require('../request').default
 // page 调度分页查询
 module.exports.page = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/schedule/history/page?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

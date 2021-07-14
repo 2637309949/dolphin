@@ -4,7 +4,7 @@ const axios = require('../request').default
 // selectone 测试selectone
 module.exports.selectone = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sqlmap/selectone?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

@@ -9652,7 +9652,7 @@
                 },
                 "is_primary_key": {
                     "description": "IsPrimaryKey defined 是否主键",
-                    "type": "boolean"
+                    "type": "number"
                 },
                 "name": {
                     "description": "Name defined 表名",
@@ -9660,7 +9660,7 @@
                 },
                 "nullable": {
                     "description": "Nullable defined 是否为空",
-                    "type": "boolean"
+                    "type": "number"
                 },
                 "remark": {
                     "description": "Remark defined 备注",

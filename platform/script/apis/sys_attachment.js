@@ -5,7 +5,7 @@ const axios = require('../request').default
 module.exports.add = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,7 +24,7 @@ module.exports.add = (data = {}, opt = {}) => {
 module.exports.batchAdd = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -43,7 +43,7 @@ module.exports.batchAdd = (data = {}, opt = {}) => {
 module.exports.upload = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/upload' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -61,7 +61,7 @@ module.exports.upload = (data = {}, opt = {}) => {
 // export 附件导出
 module.exports.export = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/export?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -73,7 +73,7 @@ module.exports.export = (data = {}, opt = {}) => {
 module.exports.del = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -92,7 +92,7 @@ module.exports.del = (data = {}, opt = {}) => {
 module.exports.batchDel = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/batch_del' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -111,7 +111,7 @@ module.exports.batchDel = (data = {}, opt = {}) => {
 module.exports.update = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -130,7 +130,7 @@ module.exports.update = (data = {}, opt = {}) => {
 module.exports.batchUpdate = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/batch_update' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -148,7 +148,7 @@ module.exports.batchUpdate = (data = {}, opt = {}) => {
 // page 附件分页查询
 module.exports.page = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/page?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -159,7 +159,7 @@ module.exports.page = (data = {}, opt = {}) => {
 // get 获取附件信息
 module.exports.get = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/attachment/get?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

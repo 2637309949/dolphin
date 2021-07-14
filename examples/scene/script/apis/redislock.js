@@ -4,7 +4,7 @@ const axios = require('../request').default
 // lock Add lock
 module.exports.lock = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/redis/lock/lock?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -15,7 +15,7 @@ module.exports.lock = (data = {}, opt = {}) => {
 // unlock del lock
 module.exports.unlock = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/redis/lock/unlock?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

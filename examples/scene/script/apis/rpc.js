@@ -4,7 +4,7 @@ const axios = require('../request').default
 // message Get message
 module.exports.message = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/rpc/message?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

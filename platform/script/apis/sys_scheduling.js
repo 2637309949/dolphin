@@ -5,7 +5,7 @@ const axios = require('../request').default
 module.exports.add = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/scheduling/add' }, opt).url
   if ((opt.method || 'post') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -24,7 +24,7 @@ module.exports.add = (data = {}, opt = {}) => {
 module.exports.del = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/scheduling/del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -43,7 +43,7 @@ module.exports.del = (data = {}, opt = {}) => {
 module.exports.update = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/scheduling/update' }, opt).url
   if ((opt.method || 'put') === 'get') {
-    url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+    url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
     return axios({
       url: url,
       method: 'get',
@@ -61,7 +61,7 @@ module.exports.update = (data = {}, opt = {}) => {
 // page 调度分页查询
 module.exports.page = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/scheduling/page?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
@@ -72,7 +72,7 @@ module.exports.page = (data = {}, opt = {}) => {
 // get 获取调度信息
 module.exports.get = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/scheduling/get?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',

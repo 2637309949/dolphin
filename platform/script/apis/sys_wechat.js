@@ -4,7 +4,7 @@ const axios = require('../request').default
 // oauth2 授权回调
 module.exports.oauth2 = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/wechat/oauth2?' }, opt).url
-  url = Object.keys(data).reduce((acc, curr) => `${acc}${key}=${encodeURIComponent(data[key])}&` ,url)
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,
     method: 'get',
