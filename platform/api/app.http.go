@@ -38,17 +38,21 @@ type ginHandler struct {
 // OnStart defined TODO
 func (gh *ginHandler) OnStart(ctx context.Context) error {
 	go func() {
-		// register gin global handlers
-		hf := funk.Map(*gh.handlers, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
-		gh.NoRoute(hf...)
-		gh.NoMethod(hf...)
-		gh.httpSrv.Handler = gh
+		gh.httpSrv.Handler = gh.rebuildGlobalRoutes()
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 		if err := gh.httpSrv.ListenAndServe(); err != nil {
 			logrus.Fatal(err)
 		}
 	}()
 	return nil
+}
+
+// rebuildGlobalRoutes gin global handlers
+func (gh *ginHandler) rebuildGlobalRoutes() *ginHandler {
+	hf := funk.Map(*gh.handlers, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
+	gh.NoRoute(hf...)
+	gh.NoMethod(hf...)
+	return gh
 }
 
 // OnStop defined TODO
