@@ -27,8 +27,6 @@ import (
 var lines = []pipe.Pipe{
 	&modules.More{},
 	&modules.Dolphin{},
-	&modules.Tool{},
-	&modules.OAuth{},
 	&modules.Script{},
 	&modules.Doc{},
 	&modules.SQLTPL{},

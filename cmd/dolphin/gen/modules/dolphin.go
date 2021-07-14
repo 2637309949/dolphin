@@ -92,6 +92,33 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 		Overlap:  pipe.OverlapSkip,
 	})
 
+	// html template
+	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")
+	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
+	affirmByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "static/web/affirm.html")).([]byte)
+	loginByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "static/web/login.html")).([]byte)
+	tmpls = append(tmpls, &pipe.TmplCfg{
+		Text:     string(affirmByte),
+		FilePath: path.Join(dir, affirmPath+".html"),
+		Data:     tmplArgs,
+		Overlap:  pipe.OverlapSkip,
+	})
+	tmpls = append(tmpls, &pipe.TmplCfg{
+		Text:     string(loginByte),
+		FilePath: path.Join(dir, loginPath+".html"),
+		Data:     tmplArgs,
+		Overlap:  pipe.OverlapSkip,
+	})
+
+	// tool template
+	toolByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "tool.tmpl")).([]byte)
+	tmpls = append(tmpls, &pipe.TmplCfg{
+		Text:     string(toolByte),
+		FilePath: path.Join(dir, viper.GetString("dir.util"), "common.go"),
+		Data:     tmplArgs,
+		Overlap:  pipe.OverlapSkip,
+	})
+
 	// bean template
 	beanByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "bean.tmpl")).([]byte)
 	for i := range parser.Beans {
