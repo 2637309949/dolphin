@@ -24,7 +24,7 @@ type SysTracker struct {
 	// Method defined 请求方法
 	Method null.String `xorm:"varchar(36) comment('请求方法') 'method'" json:"method" form:"method" xml:"method"`
 	// Path defined 请求路径
-	Path null.String `xorm:"varchar(512) comment('请求路径') 'path'" json:"path" form:"path" xml:"path"`
+	Path null.String `xorm:"varchar(1024) comment('请求路径') 'path'" json:"path" form:"path" xml:"path"`
 	// Header defined 请求头
 	Header []byte `xorm:"blob comment('请求头') 'header'" json:"header" form:"header" xml:"header"`
 	// ReqBody defined 请求体

@@ -5,11 +5,13 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/platform/types"
+	"github.com/json-iterator/go/extra"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func InitViper() {
+	extra.RegisterFuzzyDecoders()
 	viper.SetConfigName("app")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("conf")

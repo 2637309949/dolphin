@@ -7,7 +7,6 @@ import (
 	"context"
 
 	"github.com/2637309949/dolphin/platform/svc"
-	"github.com/json-iterator/go/extra"
 )
 
 var (
@@ -42,13 +41,13 @@ func NewLifeHook(e *Dolphin) lifeHook {
 
 // init after NewEngine
 func init() {
-	extra.RegisterFuzzyDecoders()
 	InitViper()
 	InitLogger()
 	InitRedisCli()
 	InitOAuth2()
 
-	app, svcHelper := NewDolphin(), svc.NewSvcHepler(RedisClient)
+	svcHelper := svc.NewSvcHepler(RedisClient)
+	app := NewDolphin()
 	app.SyncModel()
 	app.SyncController()
 	app.SyncService()

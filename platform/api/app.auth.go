@@ -40,12 +40,12 @@ type AuthInfo interface {
 type AuthOAuth2 struct {
 	oauth2 *server.Server
 	jwt    *JWT
-	tk     *Token
+	ticket *Token
 }
 
 // Auth defined
 func (auth *AuthOAuth2) parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
-	auth.tk = &Token{
+	auth.ticket = &Token{
 		ClientID:        t.GetClientID(),
 		UserID:          t.GetUserID(),
 		Domain:          t.GetDomain(),
@@ -60,16 +60,16 @@ func (auth *AuthOAuth2) parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
 		Refresh:         t.GetRefresh(),
 		RefreshCreateAt: t.GetRefreshCreateAt(),
 	}
-	return auth.tk
+	return auth.ticket
 }
 
 // Auth defined
 func (auth *AuthOAuth2) parseJWTToken(t jwt.MapClaims) TokenInfo {
-	auth.tk = &Token{
+	auth.ticket = &Token{
 		UserID: t["userId"].(string),
 		Domain: t["domain"].(string),
 	}
-	return auth.tk
+	return auth.ticket
 }
 
 // VerifyToken defined
@@ -126,7 +126,7 @@ func (auth *AuthOAuth2) VerifyEncrypt(ctx *Context) bool {
 
 // GetToken defined
 func (auth *AuthOAuth2) GetToken() TokenInfo {
-	return auth.tk
+	return auth.ticket
 }
 
 // AuthToken defined

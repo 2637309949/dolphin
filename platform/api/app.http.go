@@ -28,7 +28,8 @@ type HttpHandler interface {
 	OnStop(context.Context) error
 }
 
-type ginHandler struct {
+// Restful defined TODO
+type Restful struct {
 	*gin.Engine
 	handlers        *HandlersChain
 	httpSrv         *http.Server
@@ -36,7 +37,7 @@ type ginHandler struct {
 }
 
 // OnStart defined TODO
-func (gh *ginHandler) OnStart(ctx context.Context) error {
+func (gh *Restful) OnStart(ctx context.Context) error {
 	go func() {
 		gh.httpSrv.Handler = gh.rebuildGlobalRoutes()
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
@@ -48,7 +49,7 @@ func (gh *ginHandler) OnStart(ctx context.Context) error {
 }
 
 // rebuildGlobalRoutes gin global handlers
-func (gh *ginHandler) rebuildGlobalRoutes() *ginHandler {
+func (gh *Restful) rebuildGlobalRoutes() *Restful {
 	hf := funk.Map(*gh.handlers, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
 	gh.NoRoute(hf...)
 	gh.NoMethod(hf...)
@@ -56,7 +57,7 @@ func (gh *ginHandler) rebuildGlobalRoutes() *ginHandler {
 }
 
 // OnStop defined TODO
-func (gh *ginHandler) OnStop(ctx context.Context) error {
+func (gh *Restful) OnStop(ctx context.Context) error {
 	if err := gh.httpSrv.Shutdown(ctx); err != nil {
 		logrus.Fatal(err)
 		return err
@@ -64,7 +65,7 @@ func (gh *ginHandler) OnStop(ctx context.Context) error {
 	return nil
 }
 
-func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
+func (gh *Restful) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
 		gh.allocateContext(func(c *Context) {
 			c.Context = ctx
@@ -82,16 +83,14 @@ func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 }
 
 // Handle defined TODO
-func (gh *ginHandler) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
+func (gh *Restful) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
 	hls := funk.Map(handlerFuncs, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
 	gh.Engine.Handle(httpMethod, absolutePath, hls...)
 }
 
 // DebugPrintRouteFunc defined TODO
 func DebugPrintRouteFunc(httpMethod, absolutePath, handlerName string, nuHandlers int) {
-	if gin.IsDebugging() {
-		logrus.Infof("%-6s %-25s --> %s (%d handlers)", httpMethod, absolutePath, strings.Split(handlerName, ".(")[0], nuHandlers)
-	}
+	logrus.Infof("%-6s %-25s --> %s (%d handlers)", httpMethod, absolutePath, strings.Split(handlerName, ".(")[0], nuHandlers)
 }
 
 // NewGinHandler defined TODO
@@ -99,7 +98,7 @@ func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.SetMode(viper.GetString("app.mode"))
 	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.DebugPrintRouteFunc = DebugPrintRouteFunc
-	h := &ginHandler{Engine: gin.New()}
+	h := &Restful{Engine: gin.New()}
 	h.handlers, h.allocateContext = &dol.Handlers, dol.allocateContext
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
 	return h
