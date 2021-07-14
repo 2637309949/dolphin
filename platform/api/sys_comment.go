@@ -20,6 +20,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_comment body types.SysComment false "评论信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -51,6 +52,7 @@ func (ctr *SysComment) SysCommentAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_comment body []types.SysComment false "评论信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -84,6 +86,7 @@ func (ctr *SysComment) SysCommentBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_comment body types.SysUserTemplate false "评论"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -113,6 +116,7 @@ func (ctr *SysComment) SysCommentDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_comment body []types.SysUserTemplate false "评论"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -144,6 +148,7 @@ func (ctr *SysComment) SysCommentBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_comment body types.SysComment false "评论信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -172,6 +177,7 @@ func (ctr *SysComment) SysCommentUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_comment body []types.SysComment false "评论信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -222,6 +228,7 @@ func (ctr *SysComment) SysCommentBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page  query  int false "页码"
 // @Param size  query  int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -251,6 +258,7 @@ func (ctr *SysComment) SysCommentPage(ctx *Context) {
 // @Tags 评论
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "评论id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

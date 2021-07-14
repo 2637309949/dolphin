@@ -21,6 +21,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysDomain false "域信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -53,6 +54,7 @@ func (ctr *SysDomain) SysDomainAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_domain body []types.SysDomain false "域信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -86,6 +88,7 @@ func (ctr *SysDomain) SysDomainBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_domain body types.SysDomain false "域"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -116,6 +119,7 @@ func (ctr *SysDomain) SysDomainDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_domain body []types.SysDomain false "域信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -147,6 +151,7 @@ func (ctr *SysDomain) SysDomainBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysRole false "域信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -175,6 +180,7 @@ func (ctr *SysDomain) SysDomainUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_domain body []types.SysDomain false "域信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -225,6 +231,7 @@ func (ctr *SysDomain) SysDomainBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -255,6 +262,7 @@ func (ctr *SysDomain) SysDomainPage(ctx *Context) {
 // @Tags 域
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "域id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

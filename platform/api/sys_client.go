@@ -21,6 +21,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysClient false "客户端信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -53,6 +54,7 @@ func (ctr *SysClient) SysClientAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_client body []types.SysClient false "客户端信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -86,6 +88,7 @@ func (ctr *SysClient) SysClientBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_client body types.SysClient false "客户端"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -116,6 +119,7 @@ func (ctr *SysClient) SysClientDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_client body []types.SysClient false "客户端"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -147,6 +151,7 @@ func (ctr *SysClient) SysClientBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysRole false "客户端信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -175,6 +180,7 @@ func (ctr *SysClient) SysClientUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_client body []types.SysClient false "客户端信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -225,6 +231,7 @@ func (ctr *SysClient) SysClientBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -255,6 +262,7 @@ func (ctr *SysClient) SysClientPage(ctx *Context) {
 // @Tags 客户端
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "客户端id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

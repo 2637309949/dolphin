@@ -20,6 +20,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param notification body types.SysNotification false "站内消息信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -51,6 +52,7 @@ func (ctr *SysNotification) SysNotificationAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_notification body []types.SysNotification false "站内消息信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -84,6 +86,7 @@ func (ctr *SysNotification) SysNotificationBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_notification body types.SysNotification false "站内消息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -114,6 +117,7 @@ func (ctr *SysNotification) SysNotificationDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_notification body []types.SysNotification false "站内消息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -145,6 +149,7 @@ func (ctr *SysNotification) SysNotificationBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param notification body types.SysRole false "站内消息信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -173,6 +178,7 @@ func (ctr *SysNotification) SysNotificationUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_notification body []types.SysNotification false "站内消息信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -223,6 +229,7 @@ func (ctr *SysNotification) SysNotificationBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page  query  int false "页码"
 // @Param size  query  int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -247,6 +254,7 @@ func (ctr *SysNotification) SysNotificationPage(ctx *Context) {
 // @Tags 站内消息
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "站内消息id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

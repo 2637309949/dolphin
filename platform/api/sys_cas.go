@@ -46,6 +46,7 @@ func init() {
 // @Param username formData string false "用户名称"
 // @Param password formData string false "用户密码"
 // @Param domain formData string false "用户域"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -94,6 +95,7 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param redirect_uri query string false "定向URL"
 // @Param state query string false "状态"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -108,6 +110,7 @@ func (ctr *SysCas) SysCasLogout(ctx *Context) {
 // @Summary 用户授权
 // @Tags 认证中心
 // @Accept application/json
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -137,6 +140,7 @@ func (ctr *SysCas) SysCasAffirm(ctx *Context) {
 // SysCasAuthorize api implementation
 // @Summary 用户授权
 // @Tags 认证中心
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -172,6 +176,7 @@ func (ctr *SysCas) SysCasAuthorize(ctx *Context) {
 // @Summary 获取令牌
 // @Tags 认证中心
 // @Accept application/json
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -189,6 +194,7 @@ func (ctr *SysCas) SysCasToken(ctx *Context) {
 // @Tags 认证中心
 // @Param redirect_uri query string false "定向URL"
 // @Param state query string false "状态"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -201,6 +207,7 @@ func (ctr *SysCas) SysCasURL(ctx *Context) {
 // SysCasOauth2 api implementation
 // @Summary 授权回调
 // @Tags 认证中心
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -240,6 +247,7 @@ func (ctr *SysCas) SysCasOauth2(ctx *Context) {
 // SysCasRefresh api implementation
 // @Summary 刷新令牌
 // @Tags 认证中心
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -267,6 +275,7 @@ func (ctr *SysCas) SysCasRefresh(ctx *Context) {
 // @Summary 检验令牌
 // @Tags 认证中心
 // @Param openid query string false "openid"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -287,6 +296,7 @@ func (ctr *SysCas) SysCasCheck(ctx *Context) {
 // @Summary 用户信息
 // @Tags 认证中心
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -321,6 +331,7 @@ func (ctr *SysCas) SysCasProfile(ctx *Context) {
 // @Tags 认证中心
 // @Param Authorization header string false "认证令牌"
 // @Param type query int false "类型(0: 微信 1：叮叮)"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

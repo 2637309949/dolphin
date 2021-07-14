@@ -20,6 +20,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param organ body types.Organ false "城市信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -51,6 +52,7 @@ func (ctr *Organ) OrganAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param organ body []types.Organ false "城市信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -84,6 +86,7 @@ func (ctr *Organ) OrganBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param organ body types.Organ false "城市"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -114,6 +117,7 @@ func (ctr *Organ) OrganDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param organ body []types.Organ false "城市信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -145,6 +149,7 @@ func (ctr *Organ) OrganBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param organ body types.Organ false "城市信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -173,6 +178,7 @@ func (ctr *Organ) OrganUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param organ body []types.Organ false "城市信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -225,6 +231,7 @@ func (ctr *Organ) OrganBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page  query  int false "页码"
 // @Param size  query  int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -255,6 +262,7 @@ func (ctr *Organ) OrganPage(ctx *Context) {
 // @Tags 城市
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "城市id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

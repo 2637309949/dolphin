@@ -20,6 +20,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysTableColumn false "表字段信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -51,6 +52,7 @@ func (ctr *SysTableColumn) SysTableColumnAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_table_column body []types.SysTableColumn false "表字段"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -84,6 +86,7 @@ func (ctr *SysTableColumn) SysTableColumnBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_table_column body types.SysTableColumn false "表字段"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -113,6 +116,7 @@ func (ctr *SysTableColumn) SysTableColumnDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_table_column body []types.SysTableColumn false "表字段"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -144,6 +148,7 @@ func (ctr *SysTableColumn) SysTableColumnBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysRole false "表字段信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -172,6 +177,7 @@ func (ctr *SysTableColumn) SysTableColumnUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_table_column body []types.SysTableColumn false "表字段"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -222,6 +228,7 @@ func (ctr *SysTableColumn) SysTableColumnBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page  query  int false "页码"
 // @Param size  query  int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -251,6 +258,7 @@ func (ctr *SysTableColumn) SysTableColumnPage(ctx *Context) {
 // @Tags 表字段
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "表字段id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

@@ -12,6 +12,7 @@ import (
 // @Tags rpc controller
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "rpc info"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

@@ -16,6 +16,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "城市"
                 ],
@@ -61,6 +64,9 @@
         "/api/organ/batch_add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -113,6 +119,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "城市"
                 ],
@@ -161,6 +170,9 @@
         "/api/organ/batch_update": {
             "put": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -213,6 +225,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "城市"
                 ],
@@ -257,6 +272,9 @@
         },
         "/api/organ/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "城市"
                 ],
@@ -299,6 +317,9 @@
         },
         "/api/organ/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "城市"
                 ],
@@ -350,6 +371,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "城市"
                 ],
@@ -397,6 +421,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "APP功能"
                 ],
@@ -441,6 +468,9 @@
         },
         "/api/sys/app/fun/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "APP功能"
                 ],
@@ -483,6 +513,9 @@
         },
         "/api/sys/app/fun/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "APP功能"
                 ],
@@ -531,6 +564,9 @@
         },
         "/api/sys/app/fun/tree": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "APP功能"
                 ],
@@ -556,6 +592,9 @@
         "/api/sys/app/fun/update": {
             "put": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -605,6 +644,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "区域"
                 ],
@@ -652,6 +694,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "区域"
                 ],
@@ -696,6 +741,9 @@
         },
         "/api/sys/area/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "区域"
                 ],
@@ -738,6 +786,9 @@
         },
         "/api/sys/area/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "区域"
                 ],
@@ -789,6 +840,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "区域"
                 ],
@@ -834,6 +888,9 @@
         "/api/sys/attachment/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -883,6 +940,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "附件"
                 ],
@@ -927,6 +987,9 @@
         },
         "/api/sys/attachment/export": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "附件"
                 ],
@@ -975,6 +1038,9 @@
         },
         "/api/sys/attachment/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "附件"
                 ],
@@ -1017,6 +1083,9 @@
         },
         "/api/sys/attachment/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "附件"
                 ],
@@ -1068,6 +1137,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "附件"
                 ],
@@ -1115,6 +1187,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "附件"
                 ],
@@ -1154,6 +1229,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1182,6 +1260,9 @@
         },
         "/api/sys/cas/authorize": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1210,6 +1291,9 @@
         },
         "/api/sys/cas/check": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1248,6 +1332,9 @@
             "post": {
                 "consumes": [
                     "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
                 ],
                 "tags": [
                     "认证中心"
@@ -1297,6 +1384,9 @@
         },
         "/api/sys/cas/logout": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1345,6 +1435,9 @@
         },
         "/api/sys/cas/oauth2": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1373,6 +1466,9 @@
         },
         "/api/sys/cas/profile": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1409,6 +1505,9 @@
         },
         "/api/sys/cas/qrcode": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1451,6 +1550,9 @@
         },
         "/api/sys/cas/refresh": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1482,6 +1584,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1510,6 +1615,9 @@
         },
         "/api/sys/cas/url": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "认证中心"
                 ],
@@ -1553,6 +1661,9 @@
         "/api/sys/client/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -1600,6 +1711,9 @@
         "/api/sys/client/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -1652,6 +1766,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "客户端"
                 ],
@@ -1696,6 +1813,9 @@
         },
         "/api/sys/client/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "客户端"
                 ],
@@ -1738,6 +1858,9 @@
         },
         "/api/sys/client/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "客户端"
                 ],
@@ -1789,6 +1912,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "客户端"
                 ],
@@ -1834,6 +1960,9 @@
         "/api/sys/comment/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -1883,6 +2012,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "评论"
                 ],
@@ -1927,6 +2059,9 @@
         },
         "/api/sys/comment/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "评论"
                 ],
@@ -1969,6 +2104,9 @@
         },
         "/api/sys/comment/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "评论"
                 ],
@@ -2020,6 +2158,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "评论"
                 ],
@@ -2065,6 +2206,9 @@
         "/api/sys/data/permission/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -2114,6 +2258,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "数据权限"
                 ],
@@ -2158,6 +2305,9 @@
         },
         "/api/sys/data/permission/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "数据权限"
                 ],
@@ -2200,6 +2350,9 @@
         },
         "/api/sys/data/permission/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "数据权限"
                 ],
@@ -2251,6 +2404,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "数据权限"
                 ],
@@ -2295,6 +2451,9 @@
         },
         "/api/sys/dingtalk/oauth2": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "钉钉"
                 ],
@@ -2324,6 +2483,9 @@
         "/api/sys/domain/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -2373,6 +2535,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "域"
                 ],
@@ -2417,6 +2582,9 @@
         },
         "/api/sys/domain/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "域"
                 ],
@@ -2459,6 +2627,9 @@
         },
         "/api/sys/domain/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "域"
                 ],
@@ -2510,6 +2681,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "域"
                 ],
@@ -2557,6 +2731,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "菜单"
                 ],
@@ -2602,6 +2779,9 @@
         "/api/sys/menu/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -2654,6 +2834,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "菜单"
                 ],
@@ -2698,6 +2881,9 @@
         },
         "/api/sys/menu/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "菜单"
                 ],
@@ -2740,6 +2926,9 @@
         },
         "/api/sys/menu/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "菜单"
                 ],
@@ -2788,6 +2977,9 @@
         },
         "/api/sys/menu/sidebar": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "菜单"
                 ],
@@ -2812,6 +3004,9 @@
         },
         "/api/sys/menu/tree": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "菜单"
                 ],
@@ -2837,6 +3032,9 @@
         "/api/sys/menu/update": {
             "put": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -2886,6 +3084,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "站内消息"
                 ],
@@ -2933,6 +3134,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "站内消息"
                 ],
@@ -2977,6 +3181,9 @@
         },
         "/api/sys/notification/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "站内消息"
                 ],
@@ -3019,6 +3226,9 @@
         },
         "/api/sys/notification/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "站内消息"
                 ],
@@ -3070,6 +3280,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "站内消息"
                 ],
@@ -3117,6 +3330,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "字典"
                 ],
@@ -3162,6 +3378,9 @@
         "/api/sys/optionset/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -3214,6 +3433,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "字典"
                 ],
@@ -3258,6 +3480,9 @@
         },
         "/api/sys/optionset/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "字典"
                 ],
@@ -3300,6 +3525,9 @@
         },
         "/api/sys/optionset/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "字典"
                 ],
@@ -3351,6 +3579,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "字典"
                 ],
@@ -3398,6 +3629,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "组织"
                 ],
@@ -3443,6 +3677,9 @@
         "/api/sys/org/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -3495,6 +3732,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "组织"
                 ],
@@ -3539,6 +3779,9 @@
         },
         "/api/sys/org/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "组织"
                 ],
@@ -3581,6 +3824,9 @@
         },
         "/api/sys/org/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "组织"
                 ],
@@ -3629,6 +3875,9 @@
         },
         "/api/sys/org/tree": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "组织"
                 ],
@@ -3654,6 +3903,9 @@
         "/api/sys/org/update": {
             "put": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -3703,6 +3955,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "权限"
                 ],
@@ -3750,6 +4005,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "权限"
                 ],
@@ -3794,6 +4052,9 @@
         },
         "/api/sys/permission/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "权限"
                 ],
@@ -3836,6 +4097,9 @@
         },
         "/api/sys/permission/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "权限"
                 ],
@@ -3887,6 +4151,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "权限"
                 ],
@@ -3934,6 +4201,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色"
                 ],
@@ -3979,6 +4249,9 @@
         "/api/sys/role/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -4031,6 +4304,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色"
                 ],
@@ -4075,6 +4351,9 @@
         },
         "/api/sys/role/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色"
                 ],
@@ -4118,6 +4397,9 @@
         "/api/sys/role/menu/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -4165,6 +4447,9 @@
         "/api/sys/role/menu/batch_add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -4217,6 +4502,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色菜单"
                 ],
@@ -4267,6 +4555,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色菜单"
                 ],
@@ -4311,6 +4602,9 @@
         },
         "/api/sys/role/menu/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色菜单"
                 ],
@@ -4353,6 +4647,9 @@
         },
         "/api/sys/role/menu/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色菜单"
                 ],
@@ -4404,6 +4701,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色菜单"
                 ],
@@ -4448,6 +4748,9 @@
         },
         "/api/sys/role/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色"
                 ],
@@ -4496,6 +4799,9 @@
         },
         "/api/sys/role/role_app_fun_tree": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色"
                 ],
@@ -4520,6 +4826,9 @@
         },
         "/api/sys/role/role_menu_tree": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "角色"
                 ],
@@ -4545,6 +4854,9 @@
         "/api/sys/role/update": {
             "put": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -4594,6 +4906,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -4639,6 +4954,9 @@
         "/api/sys/schedule/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -4691,6 +5009,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -4735,6 +5056,9 @@
         },
         "/api/sys/schedule/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -4777,6 +5101,9 @@
         },
         "/api/sys/schedule/history/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度历史"
                 ],
@@ -4825,6 +5152,9 @@
         },
         "/api/sys/schedule/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -4876,6 +5206,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -4921,6 +5254,9 @@
         "/api/sys/scheduling/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -4970,6 +5306,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -5014,6 +5353,9 @@
         },
         "/api/sys/scheduling/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -5055,6 +5397,9 @@
         },
         "/api/sys/scheduling/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -5106,6 +5451,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "调度"
                 ],
@@ -5153,6 +5501,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "设置"
                 ],
@@ -5198,6 +5549,9 @@
         "/api/sys/setting/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -5250,6 +5604,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "设置"
                 ],
@@ -5294,6 +5651,9 @@
         },
         "/api/sys/setting/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "设置"
                 ],
@@ -5336,6 +5696,9 @@
         },
         "/api/sys/setting/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "设置"
                 ],
@@ -5393,6 +5756,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "设置"
                 ],
@@ -5440,6 +5806,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表"
                 ],
@@ -5485,6 +5854,9 @@
         "/api/sys/table/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -5537,6 +5909,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表字段"
                 ],
@@ -5582,6 +5957,9 @@
         "/api/sys/table/column/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -5634,6 +6012,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表字段"
                 ],
@@ -5678,6 +6059,9 @@
         },
         "/api/sys/table/column/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表字段"
                 ],
@@ -5720,6 +6104,9 @@
         },
         "/api/sys/table/column/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表字段"
                 ],
@@ -5771,6 +6158,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表字段"
                 ],
@@ -5818,6 +6208,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表"
                 ],
@@ -5862,6 +6255,9 @@
         },
         "/api/sys/table/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表"
                 ],
@@ -5904,6 +6300,9 @@
         },
         "/api/sys/table/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表"
                 ],
@@ -5955,6 +6354,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "表"
                 ],
@@ -6002,6 +6404,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签"
                 ],
@@ -6047,6 +6452,9 @@
         "/api/sys/tag/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -6099,6 +6507,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签"
                 ],
@@ -6143,6 +6554,9 @@
         },
         "/api/sys/tag/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签"
                 ],
@@ -6186,6 +6600,9 @@
         "/api/sys/tag/group/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -6235,6 +6652,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签组"
                 ],
@@ -6279,6 +6699,9 @@
         },
         "/api/sys/tag/group/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签组"
                 ],
@@ -6321,6 +6744,9 @@
         },
         "/api/sys/tag/group/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签组"
                 ],
@@ -6372,6 +6798,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签组"
                 ],
@@ -6416,6 +6845,9 @@
         },
         "/api/sys/tag/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签"
                 ],
@@ -6467,6 +6899,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "标签"
                 ],
@@ -6511,6 +6946,9 @@
         },
         "/api/sys/tracker/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "日志"
                 ],
@@ -6553,6 +6991,9 @@
         },
         "/api/sys/tracker/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "日志"
                 ],
@@ -6604,6 +7045,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户"
                 ],
@@ -6649,6 +7093,9 @@
         "/api/sys/user/batch_del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -6701,6 +7148,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户"
                 ],
@@ -6745,6 +7195,9 @@
         },
         "/api/sys/user/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户"
                 ],
@@ -6790,6 +7243,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户"
                 ],
@@ -6828,6 +7284,9 @@
         },
         "/api/sys/user/logout": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户"
                 ],
@@ -6864,6 +7323,9 @@
         },
         "/api/sys/user/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户"
                 ],
@@ -6915,6 +7377,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板"
                 ],
@@ -6960,6 +7425,9 @@
         "/api/sys/user/template/del": {
             "delete": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -7009,6 +7477,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板详情"
                 ],
@@ -7056,6 +7527,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板详情"
                 ],
@@ -7100,6 +7574,9 @@
         },
         "/api/sys/user/template/detail/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板详情"
                 ],
@@ -7142,6 +7619,9 @@
         },
         "/api/sys/user/template/detail/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板详情"
                 ],
@@ -7193,6 +7673,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板详情"
                 ],
@@ -7237,6 +7720,9 @@
         },
         "/api/sys/user/template/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板"
                 ],
@@ -7279,6 +7765,9 @@
         },
         "/api/sys/user/template/page": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板"
                 ],
@@ -7330,6 +7819,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户模板"
                 ],
@@ -7377,6 +7869,9 @@
                 "consumes": [
                     "application/json"
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "用户"
                 ],
@@ -7421,6 +7916,9 @@
         },
         "/api/sys/wechat/oauth2": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "微信"
                 ],
@@ -7450,6 +7948,9 @@
         "/api/sys/worker/add": {
             "post": {
                 "consumes": [
+                    "application/json"
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
@@ -7496,6 +7997,9 @@
         },
         "/api/sys/worker/get": {
             "get": {
+                "produces": [
+                    "application/json"
+                ],
                 "tags": [
                     "worker"
                 ],

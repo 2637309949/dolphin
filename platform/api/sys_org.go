@@ -20,6 +20,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysOrg false "组织信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -51,6 +52,7 @@ func (ctr *SysOrg) SysOrgAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_org body []types.SysOrg false "组织信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -84,6 +86,7 @@ func (ctr *SysOrg) SysOrgBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_org body types.SysOrg false "组织"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -114,6 +117,7 @@ func (ctr *SysOrg) SysOrgDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_org body []types.SysOrg false "组织"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -145,6 +149,7 @@ func (ctr *SysOrg) SysOrgBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysRole false "组织信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -173,6 +178,7 @@ func (ctr *SysOrg) SysOrgUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_org body []types.SysOrg false "组织信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -223,6 +229,7 @@ func (ctr *SysOrg) SysOrgBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -265,6 +272,7 @@ func (ctr *SysOrg) SysOrgPage(ctx *Context) {
 // @Summary 菜单树形结构
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/org/tree [get]
 func (ctr *SysOrg) SysOrgTree(ctx *Context) {
@@ -286,6 +294,7 @@ func (ctr *SysOrg) SysOrgTree(ctx *Context) {
 // @Tags 组织
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "组织id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

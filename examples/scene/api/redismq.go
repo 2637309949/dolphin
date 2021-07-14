@@ -15,6 +15,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param ami_info body types.AmiInfo false "Ami info"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -40,6 +41,7 @@ func (ctr *RedisMq) RedisMqAdd(ctx *Context) {
 // @Tags Ami controller
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "ami id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

@@ -10,6 +10,7 @@ import (
 // ICacheInfo api implementation
 // @Summary Cache info
 // @Tags cache controller
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

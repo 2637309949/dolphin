@@ -12,6 +12,7 @@ import (
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -25,6 +26,7 @@ func (ctr *Debug) DebugPprof(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -38,6 +40,7 @@ func (ctr *Debug) DebugHeap(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -51,6 +54,7 @@ func (ctr *Debug) DebugGoroutine(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -64,6 +68,7 @@ func (ctr *Debug) DebugAllocs(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -77,6 +82,7 @@ func (ctr *Debug) DebugBlock(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -90,6 +96,7 @@ func (ctr *Debug) DebugThreadcreate(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -103,6 +110,7 @@ func (ctr *Debug) DebugCmdline(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -116,6 +124,7 @@ func (ctr *Debug) DebugProfile(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -129,6 +138,7 @@ func (ctr *Debug) DebugSymbol(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -142,6 +152,7 @@ func (ctr *Debug) DebugTrace(ctx *Context) {
 // @Tags pprof诊断接口
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

@@ -16,6 +16,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param id body types.VoteInfo false "like id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

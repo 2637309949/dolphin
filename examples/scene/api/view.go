@@ -7,6 +7,7 @@ package api
 // @Summary 文件下载
 // @Tags 视图
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -19,6 +20,7 @@ func (ctr *View) ViewFile(ctx *Context) {
 // @Summary HTML显示
 // @Tags 视图
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -30,6 +32,7 @@ func (ctr *View) ViewHTML(ctx *Context) {
 // ViewXML api implementation
 // @Summary XML显示
 // @Tags 视图
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

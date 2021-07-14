@@ -20,6 +20,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_role body types.SysRole false "角色信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -61,6 +62,7 @@ func (ctr *SysRole) SysRoleAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_role body []types.SysRole false "角色信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -107,6 +109,7 @@ func (ctr *SysRole) SysRoleBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_role body types.SysRole false "角色"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -137,6 +140,7 @@ func (ctr *SysRole) SysRoleDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body []types.SysRole false "用户信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -168,6 +172,7 @@ func (ctr *SysRole) SysRoleBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_role body types.SysRole false "角色信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -196,6 +201,7 @@ func (ctr *SysRole) SysRoleUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_role body []types.SysRole false "角色信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -246,6 +252,7 @@ func (ctr *SysRole) SysRoleBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -285,6 +292,7 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 // @Summary 角色菜单树形结构
 // @Tags 角色
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/role/role_menu_tree [get]
 func (ctr *SysRole) SysRoleRoleMenuTree(ctx *Context) {
@@ -307,6 +315,7 @@ func (ctr *SysRole) SysRoleRoleMenuTree(ctx *Context) {
 // @Summary 角色App功能树形结构
 // @Tags 角色
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/role/role_app_fun_tree [get]
 func (ctr *SysRole) SysRoleRoleAppFunTree(ctx *Context) {
@@ -330,6 +339,7 @@ func (ctr *SysRole) SysRoleRoleAppFunTree(ctx *Context) {
 // @Tags 角色
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "角色id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

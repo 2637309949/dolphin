@@ -70,6 +70,7 @@ func (p Job) Do() error {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param worker body types.Worker false "worker信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -119,6 +120,7 @@ func (ctr *SysWorker) SysWorkerAdd(ctx *Context) {
 // @Tags worker
 // @Param Authorization header string false "认证令牌"
 // @Param code  query  string false "worker code"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

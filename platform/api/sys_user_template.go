@@ -20,6 +20,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body types.SysUserTemplate false "用户模板信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -49,6 +50,7 @@ func (ctr *SysUserTemplate) SysUserTemplateAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body []types.SysUserTemplate false "用户模板信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -82,6 +84,7 @@ func (ctr *SysUserTemplate) SysUserTemplateBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body types.SysUserTemplate false "用户模板信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -110,6 +113,7 @@ func (ctr *SysUserTemplate) SysUserTemplateDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body []types.SysUserTemplate false "用户模板信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -141,6 +145,7 @@ func (ctr *SysUserTemplate) SysUserTemplateBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body types.SysUserTemplate false "用户模板信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -167,6 +172,7 @@ func (ctr *SysUserTemplate) SysUserTemplateUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_user_template body []types.SysUserTemplate false "用户模板信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -217,6 +223,7 @@ func (ctr *SysUserTemplate) SysUserTemplateBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -245,6 +252,7 @@ func (ctr *SysUserTemplate) SysUserTemplatePage(ctx *Context) {
 // @Tags 用户模板
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "用户模板id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

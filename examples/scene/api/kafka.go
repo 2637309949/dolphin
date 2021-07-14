@@ -16,6 +16,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param kafka body types.KafkaInfo false "Kafka info"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -39,6 +40,7 @@ func (ctr *Kafka) KafkaAdd(ctx *Context) {
 // @Summary Get kafka info
 // @Tags Kafka controller
 // @Param id  query  string false "kafka id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

@@ -21,6 +21,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body types.SysMenu false "菜单信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -67,6 +68,7 @@ func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body []types.SysMenu false "菜单信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -100,6 +102,7 @@ func (ctr *SysMenu) SysMenuBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body types.SysMenu false "菜单"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -130,6 +133,7 @@ func (ctr *SysMenu) SysMenuDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body []types.SysMenu false "菜单"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -161,6 +165,7 @@ func (ctr *SysMenu) SysMenuBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body types.SysMenu false "菜单信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -205,6 +210,7 @@ func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_menu body []types.SysMenu false "菜单信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -253,6 +259,7 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 // @Summary 系统菜单
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/menu/sidebar [get]
 func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
@@ -276,6 +283,7 @@ func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -318,6 +326,7 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 // @Summary 菜单树形结构
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/menu/tree [get]
 func (ctr *SysMenu) SysMenuTree(ctx *Context) {
@@ -339,6 +348,7 @@ func (ctr *SysMenu) SysMenuTree(ctx *Context) {
 // @Tags 菜单
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "菜单id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

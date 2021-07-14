@@ -12,6 +12,7 @@ import (
 // @Tags redis controller
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "redis info"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -34,6 +35,7 @@ func (ctr *RedisLock) RedisLockLock(ctx *Context) {
 // @Tags redis controller
 // @Param Authorization header string false "认证令牌"
 // @Param id  query  string false "redis info"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

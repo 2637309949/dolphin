@@ -19,6 +19,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_app_fun body types.SysAppFun false "APP功能信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -50,6 +51,7 @@ func (ctr *SysAppFun) SysAppFunAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_app_fun body []types.SysAppFun false "APP功能信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -83,6 +85,7 @@ func (ctr *SysAppFun) SysAppFunBatchAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_app_fun body types.SysAppFun false "APP功能"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -113,6 +116,7 @@ func (ctr *SysAppFun) SysAppFunDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_app_fun body []types.SysAppFun false "APP功能"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -144,6 +148,7 @@ func (ctr *SysAppFun) SysAppFunBatchDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param user body types.SysRole false "APP功能信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -172,6 +177,7 @@ func (ctr *SysAppFun) SysAppFunUpdate(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_app_fun body []types.SysAppFun false "APP功能信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -222,6 +228,7 @@ func (ctr *SysAppFun) SysAppFunBatchUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -245,6 +252,7 @@ func (ctr *SysAppFun) SysAppFunPage(ctx *Context) {
 // @Summary 菜单树形结构
 // @Tags APP功能
 // @Param Authorization header string false "认证令牌"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/app/fun/tree [get]
 func (ctr *SysAppFun) SysAppFunTree(ctx *Context) {
@@ -266,6 +274,7 @@ func (ctr *SysAppFun) SysAppFunTree(ctx *Context) {
 // @Tags APP功能
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "APP功能id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

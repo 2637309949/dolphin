@@ -14,6 +14,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param scheduling body types.Scheduling false "调度信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -40,6 +41,7 @@ func (ctr *SysScheduling) SysSchedulingAdd(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param scheduling body types.Scheduling false "调度"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -66,6 +68,7 @@ func (ctr *SysScheduling) SysSchedulingDel(ctx *Context) {
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param scheduling body types.Scheduling false "调度信息"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -92,6 +95,7 @@ func (ctr *SysScheduling) SysSchedulingUpdate(ctx *Context) {
 // @Param Authorization header string false "认证令牌"
 // @Param page query int false "页码"
 // @Param size query int false "单页数"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -119,6 +123,7 @@ func (ctr *SysScheduling) SysSchedulingPage(ctx *Context) {
 // @Tags 调度
 // @Param Authorization header string false "认证令牌"
 // @Param id query string false "调度id"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

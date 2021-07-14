@@ -15,6 +15,7 @@ import (
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
 // @Param encrypt_info body types.EncryptInfo false "Encrypt info"
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
@@ -32,6 +33,7 @@ func (ctr *Encrypt) EncryptAdd(ctx *Context) {
 // EncryptInfo api implementation
 // @Summary skip auth
 // @Tags Encrypt controller
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail

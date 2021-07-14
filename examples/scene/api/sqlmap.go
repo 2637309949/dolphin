@@ -12,6 +12,7 @@ import (
 // SqlmapSelectone api implementation
 // @Summary 测试selectone
 // @Tags SQL集合
+// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
