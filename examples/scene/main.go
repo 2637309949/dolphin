@@ -6,8 +6,6 @@ package main
 import (
 	// "github.com/go-sql-driver/mysql" init
 	_ "github.com/go-sql-driver/mysql"
-	// "github.com/2637309949/dolphin/platform/api" init
-	_ "github.com/2637309949/dolphin/platform/api"
 	// "scene/app" init
 	"scene/api"
 )
