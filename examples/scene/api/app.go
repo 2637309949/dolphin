@@ -51,10 +51,6 @@ type (
 	}
 )
 
-func (dol *Dolphin) allocateContext() *Context {
-	return &Context{}
-}
-
 // HandlerFunc convert to api.HandlerFunc
 func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf api.HandlerFunc) {
 	return api.HandlerFunc(func(ctx *api.Context) {
@@ -148,7 +144,7 @@ func Cache(time time.Duration) HandlerFunc {
 func NewDolphin() *Dolphin {
 	rg := RouterGroup{Handlers: nil, basePath: "/"}
 	dol := Dolphin{Dolphin: api.App, RouterGroup: rg}
-	dol.pool.New = func() interface{} { return dol.allocateContext() }
+	dol.pool.New = func() interface{} { return &Context{} }
 	dol.RouterGroup.dol = &dol
 	return &dol
 }

@@ -11,6 +11,7 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/go-errors/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -160,4 +161,34 @@ func LastChar(str string) uint8 {
 		panic("The length of the string can't be 0")
 	}
 	return str[len(str)-1]
+}
+
+// JoinObject defined TODO
+func JoinObject(arr interface{}, format ...string) (str string) {
+	if !slice.IsIteratee(arr) {
+		panic("First parameter must be an iteratee")
+	}
+
+	var (
+		ft = "%v"
+	)
+	if len(format) > 0 {
+		ft = format[0]
+	}
+
+	var (
+		arrValue = reflect.ValueOf(arr)
+		arrType  = arrValue.Type()
+	)
+	kind := arrType.Kind()
+
+	if kind == reflect.Slice || kind == reflect.Array {
+		for i := 0; i < arrValue.Len(); i++ {
+			if str != "" {
+				str += ","
+			}
+			str += fmt.Sprintf(ft, arrValue.Index(i).Interface())
+		}
+	}
+	return str
 }

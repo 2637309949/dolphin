@@ -47,8 +47,11 @@ type Dolphin struct {
 }
 
 // allocateContext defined new context
-func (dol *Dolphin) allocateContext() *Context {
-	return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
+func (dol *Dolphin) allocateContext(f func(*Context)) {
+	c := dol.pool.Get().(*Context)
+	c.reset()
+	f(c)
+	dol.pool.Put(c)
 }
 
 // Migration models
@@ -354,6 +357,8 @@ func NewDolphin() *Dolphin {
 	dol.Use(Tracker(TrackerOpts(dol)))
 
 	dol.Append(NewLifeHook(dol))
-	dol.pool.New = func() interface{} { return dol.allocateContext() }
+	dol.pool.New = func() interface{} {
+		return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
+	}
 	return dol
 }

@@ -29,21 +29,21 @@ type HttpHandler interface {
 }
 
 type ginHandler struct {
-	gin      *gin.Engine
-	httpSrv  *http.Server
-	allocCtx func(func(*Context))
-}
-
-// ServeHTTP defined TODO
-func (gh *ginHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	gh.gin.ServeHTTP(w, req)
+	*gin.Engine
+	handlers        *HandlersChain
+	httpSrv         *http.Server
+	allocateContext func(func(*Context))
 }
 
 // OnStart defined TODO
 func (gh *ginHandler) OnStart(ctx context.Context) error {
-	logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
-	gh.httpSrv.Handler = gh.gin
 	go func() {
+		// register gin global handlers
+		hf := funk.Map(*gh.handlers, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
+		gh.NoRoute(hf...)
+		gh.NoMethod(hf...)
+		gh.httpSrv.Handler = gh
+		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 		if err := gh.httpSrv.ListenAndServe(); err != nil {
 			logrus.Fatal(err)
 		}
@@ -62,7 +62,7 @@ func (gh *ginHandler) OnStop(ctx context.Context) error {
 
 func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 	return gin.HandlerFunc(func(ctx *gin.Context) {
-		gh.allocCtx(func(c *Context) {
+		gh.allocateContext(func(c *Context) {
 			c.Context = ctx
 			for k := range ctx.Keys {
 				switch t := ctx.Keys[k].(type) {
@@ -77,9 +77,10 @@ func (gh *ginHandler) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 	})
 }
 
-func (gh *ginHandler) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
+// Handle defined TODO
+func (gh *ginHandler) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
 	hls := funk.Map(handlerFuncs, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
-	gh.gin.Handle(httpMethod, relativePath, hls...)
+	gh.Engine.Handle(httpMethod, absolutePath, hls...)
 }
 
 // DebugPrintRouteFunc defined TODO
@@ -94,13 +95,8 @@ func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.SetMode(viper.GetString("app.mode"))
 	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.DebugPrintRouteFunc = DebugPrintRouteFunc
-	h := &ginHandler{gin: gin.New()}
+	h := &ginHandler{Engine: gin.New()}
+	h.handlers, h.allocateContext = &dol.Handlers, dol.allocateContext
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
-	h.allocCtx = func(f func(*Context)) {
-		c := dol.pool.Get().(*Context)
-		c.reset()
-		f(c)
-		dol.pool.Put(c)
-	}
 	return h
 }

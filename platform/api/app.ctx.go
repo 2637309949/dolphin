@@ -28,7 +28,7 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-// Context defined
+// Context defined TODO
 type Context struct {
 	AuthInfo
 	*gin.Context
@@ -42,26 +42,13 @@ func (ctx *Context) reset() {
 	ctx.Context = nil
 }
 
-// ShouldBindWith defined
-func (ctx *Context) ShouldBindWith(ptr interface{}) error {
-	req, err := ctx.Request, ctx.ShouldBindQuery(ptr)
-	if err != nil {
-		return err
-	}
-	if req.ContentLength > 0 &&
-		strings.Contains(req.Header.Get("Content-Type"), "application/json") {
-		return ctx.ShouldBindBodyWith(ptr, binding.JSON)
-	}
-	return nil
-}
-
-// LoginInInfo defined
+// LoginInInfo defined TODO
 func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
 	tk := ctx.GetToken()
 	return ctx.PlatformDB.ID(tk.GetUserID()).Get(user)
 }
 
-// InRole defined
+// InRole defined TODO
 func (ctx *Context) InRole(role ...string) bool {
 	var cnt int
 	role, _ = slice.RemoveStringDuplicates(role)
@@ -132,7 +119,7 @@ func (ctx *Context) OmitByZero(source interface{}) (target interface{}) {
 	return
 }
 
-// QueryRange defined
+// QueryRange defined TODO
 func (ctx *Context) QueryRange(key string, init ...string) (string, string) {
 	v := ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -147,7 +134,7 @@ func (ctx *Context) QueryRange(key string, init ...string) (string, string) {
 	return "", ""
 }
 
-// QueryInt defined
+// QueryInt defined TODO
 func (ctx *Context) QueryInt(key string, init ...int) int {
 	v := ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -163,7 +150,7 @@ func (ctx *Context) QueryInt(key string, init ...int) int {
 	return int(i)
 }
 
-// QueryBool defined
+// QueryBool defined TODO
 func (ctx *Context) QueryBool(key string, init ...bool) bool {
 	v := ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -179,7 +166,7 @@ func (ctx *Context) QueryBool(key string, init ...bool) bool {
 	return i
 }
 
-// QueryString defined
+// QueryString defined TODO
 func (ctx *Context) QueryString(key string, init ...string) string {
 	v := ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -190,67 +177,32 @@ func (ctx *Context) QueryString(key string, init ...string) string {
 	return v
 }
 
-// ParseExcel defined
-// []map[string]string{ map[string]string{"prop": "os_name", "label": "校区", "code": "sch_id", "align": "center", "minWidth": 100, "maxWidth": 150}}
-func (ctx *Context) ParseExcel(cfg ExcelConfig) ([]map[string]string, error) {
-	if ctx.QueryString("__columns__") != "" {
-		cstr := ctx.QueryString("__columns__")
-		columns := []map[string]interface{}{}
-		json.Unmarshal([]byte(cstr), &columns)
-		cfg.Header = columns
-	}
-	return ParseExcel(cfg)
-}
-
-// SuccessWithExcel defined
-func (ctx *Context) SuccessWithExcel(cfg ExcelConfig) {
-	if ctx.QueryString("__columns__") != "" {
-		cstr := ctx.QueryString("__columns__")
-		columns := []map[string]interface{}{}
-		err := json.Unmarshal([]byte(cstr), &columns)
-		if err != nil {
-			logrus.Error(err)
-		}
-		cfg.Header = columns
-	}
-	excelInfo, err := BuildExcel(cfg)
-	if err != nil {
-		ctx.Fail(err)
-		return
-	}
-	if ctx.QueryString("__name__") != "" {
-		cfg.FileName = ctx.QueryString("__name__")
-	}
-	excelInfo.FileName = cfg.FileName
-	ctx.Success(excelInfo)
-}
-
-// BusinessDB defined
+// BusinessDB defined TODO
 func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
 	return App.Manager.GetBusinessDB(domain)
 }
 
-// Persist defined
+// Persist defined TODO
 func (ctx *Context) Persist(db *xorm.Session, ids ...string) (int64, error) {
 	return new(types.SysAttachment).Persist(db, ids...)
 }
 
-// PersistFile defined
+// PersistFile defined TODO
 func (ctx *Context) PersistFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error) {
 	return new(types.SysAttachment).PersistFile(db, cb, ids...)
 }
 
-// Remove defined
+// Remove defined TODO
 func (ctx *Context) Remove(db *xorm.Session, ids ...string) (int64, error) {
 	return new(types.SysAttachment).Remove(db, ids...)
 }
 
-// RemoveFile defined
+// RemoveFile defined TODO
 func (ctx *Context) RemoveFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error) {
 	return new(types.SysAttachment).RemoveFile(db, cb, ids...)
 }
 
-// RenderString defined
+// String defined TODO
 func (ctx *Context) String(code int, data string, context ...interface{}) error {
 	str, err := mustache.NewTemplate().Render(data, context...)
 	if err != nil {
@@ -260,7 +212,7 @@ func (ctx *Context) String(code int, data string, context ...interface{}) error 
 	return nil
 }
 
-// RenderFile defined
+// RenderFile defined TODO
 func (ctx *Context) RenderFile(filepath string, filename string, context ...interface{}) {
 	ctx.Writer.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
 	file, err := ioutil.TempFile("", "*")
@@ -290,7 +242,7 @@ func (ctx *Context) RenderFile(filepath string, filename string, context ...inte
 	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
 }
 
-// RenderHTL defined
+// RenderHTL defined TODO
 func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
 	ctx.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
 	file, err := ioutil.TempFile("", "*")
@@ -320,7 +272,7 @@ func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
 	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
 }
 
-// RenderXML defined
+// RenderXML defined TODO
 func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 	ctx.Writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
 	file, err := ioutil.TempFile("", "*")
@@ -350,12 +302,47 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
 }
 
-// ShouldBindQuery defined
+// ShouldBindWith defined TODO
+func (ctx *Context) ShouldBindWith(ptr interface{}) error {
+	if ptr == nil {
+		return errors.New("first parameter must be an pointer")
+	}
+	err := ctx.ShouldBindQuery(ptr)
+	if err != nil {
+		return err
+	}
+	if JsonCheck(ctx.Request) {
+		return ctx.ShouldBindBody(ptr)
+	}
+	return nil
+}
+
+// ShouldBindBody defined TODO
+func (ctx *Context) ShouldBindBody(ptr interface{}) error {
+	var err error
+	var body []byte
+	if cb, ok := ctx.Get(gin.BodyBytesKey); ok {
+		if cbb, ok := cb.([]byte); ok {
+			body = cbb
+		}
+	}
+	if body == nil {
+		body, err = ioutil.ReadAll(ctx.Request.Body)
+		if err != nil {
+			return err
+		}
+		ctx.Set(gin.BodyBytesKey, body)
+	}
+	return binding.JSON.BindBody(body, ptr)
+}
+
+// ShouldBindQuery defined TODO, support for nullType
 func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 	if ptr == nil {
-		return errors.New("first parameter must be an struct")
+		return errors.New("first parameter must be an pointer")
 	}
-	urls, err := url.ParseQuery(ctx.Request.URL.RawQuery)
+	rawQuery := ctx.Request.URL.RawQuery
+	urls, err := url.ParseQuery(rawQuery)
 	if err != nil {
 		return err
 	}
@@ -365,7 +352,7 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 	}
 	if ptrVal.Kind() == reflect.Map &&
 		ptrVal.Type().Key().Kind() == reflect.String {
-		return ctx.Context.ShouldBindWith(ptr, binding.Query)
+		return binding.Query.Bind(ctx.Request, ptr)
 	}
 	var head = func(str, sep string) (head string, tail string) {
 		idx := strings.Index(str, sep)
@@ -390,20 +377,36 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 				}
 			}
 			switch sf.Type {
-			case reflect.TypeOf(null.String{}), reflect.TypeOf(null.Time{}):
+			case reflect.TypeOf(""), reflect.TypeOf(null.String{}), reflect.TypeOf(null.Time{}):
 				if u, ok := urls[tagValue]; ok {
 					urls[tagValue] = []string{}
 					for i := range u {
-						bte, err := json.Marshal(u[i])
-						if err != nil {
-							return err
+						istr := u[i]
+						if !json.Valid([]byte(istr)) {
+							bte, err := json.Marshal(u[i])
+							if err != nil {
+								return err
+							}
+							urls[tagValue] = append(urls[tagValue], string(bte))
+						} else {
+							urls[tagValue] = append(urls[tagValue], istr)
 						}
-						urls[tagValue] = append(urls[tagValue], string(bte))
 					}
 				}
 			}
 		}
 	}
 	ctx.Request.URL.RawQuery = urls.Encode()
-	return ctx.Context.ShouldBindWith(ptr, binding.Query)
+	err = binding.Query.Bind(ctx.Request, ptr)
+	ctx.Request.URL.RawQuery = rawQuery
+	return err
+}
+
+// JsonCheck defined TODO
+func JsonCheck(req *http.Request) bool {
+	jsonType := "application/json"
+	if req.ContentLength > 0 && strings.Contains(req.Header.Get("Content-Type"), jsonType) {
+		return true
+	}
+	return false
 }

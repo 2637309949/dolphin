@@ -33,8 +33,8 @@ func (gh *grpcHandler) RegisterServer(f func(*grpc.Server)) {
 }
 
 func (gh *grpcHandler) OnStart(ctx context.Context) error {
-	logrus.Infof("grpc listen on port:%v", viper.GetString("rpc.port"))
 	go func() {
+		logrus.Infof("grpc listen on port:%v", viper.GetString("rpc.port"))
 		if err := gh.grpc.Serve(gh.net); err != nil {
 			logrus.Fatal(err)
 		}

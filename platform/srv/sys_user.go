@@ -13,6 +13,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/svc"
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 )
@@ -54,29 +55,31 @@ func (srv *SysUser) TODO(ctx context.Context, db *xorm.Engine, params struct{}) 
 }
 
 // PageFormatter defined TODO
-func (srv *SysUser) PageFormatter(db *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
-	if uids, ok := slice.GetFieldSliceByName(items, "id", "'%v'").([]string); ok {
-		roles, err := srv.GetUserRolesByUID(db, strings.Join(uids, ","))
-		if err != nil {
-			return data, err
+func (srv *SysUser) PageFormatter(db1 *xorm.Engine) func(*xorm.Engine, []map[string]interface{}) ([]map[string]interface{}, error) {
+	return func(db2 *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
+		if uids, ok := slice.GetFieldSliceByName(items, "id").([]float64); ok {
+			roles, err := srv.GetUserRolesByUID(db1, uids)
+			if err != nil {
+				return data, err
+			}
+			data, err = slice.PatchSliceByField(items, roles, "id", "user_id", "role_name", "user_role")
+			if err != nil {
+				return data, err
+			}
 		}
-		data, err = slice.PatchSliceByField(items, roles, "id", "user_id", "role_name", "user_role")
-		if err != nil {
-			return data, err
-		}
-	}
 
-	if uorgs, ok := slice.GetFieldSliceByName(items, "org_id", "'%v'").([]string); ok {
-		orgs, err := srv.GetUserOrgsByUID(db, strings.Join(uorgs, ","))
-		if err != nil {
-			return []map[string]interface{}{}, err
+		if uorgs, ok := slice.GetFieldSliceByName(items, "org_id", "'%v'").([]string); ok {
+			orgs, err := srv.GetUserOrgsByUID(db1, strings.Join(uorgs, ","))
+			if err != nil {
+				return []map[string]interface{}{}, err
+			}
+			data, err = slice.PatchSliceByField(items, orgs, "org_id", "id", "org_id#id", "org_name#name")
+			if err != nil {
+				return data, err
+			}
 		}
-		data, err = slice.PatchSliceByField(items, orgs, "org_id", "id", "org_id#id", "org_name#name")
-		if err != nil {
-			return data, err
-		}
+		return data, err
 	}
-	return data, err
 }
 
 // GetOrgsFromInheritance defined srv
@@ -97,8 +100,8 @@ func (srv *SysUser) GetOrgsFromInheritance(db *xorm.Engine, cn string) ([]string
 }
 
 // GetUserRolesByUID defined
-func (srv *SysUser) GetUserRolesByUID(db *xorm.Engine, ids string) ([]map[string]interface{}, error) {
-	roles, err := db.SqlTemplateClient("sys_role_user.tpl", &map[string]interface{}{"uids": template.HTML(ids)}).Query().List()
+func (srv *SysUser) GetUserRolesByUID(db *xorm.Engine, ids []float64) ([]map[string]interface{}, error) {
+	roles, err := db.SqlTemplateClient("sys_role_user.tpl", &map[string]interface{}{"uids": template.HTML(util.JoinObject(ids))}).Query().List()
 	if err != nil {
 		return nil, err
 	}

@@ -319,12 +319,18 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		}
 		q.SetString("cn_org_id", template.HTML(strings.Join(ids, ",")))()
 	}
-	ret, err := ctr.Srv.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
+	if ctr.Srv.Check(ctx.Context) {
+		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
+		ret, err := ctr.Srv.PageExport(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
+		ctx.Success(ret)
 		return
 	}
+	ret, err := ctr.Srv.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -343,12 +349,6 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		TempID    null.Int    `json:"temp_id" xml:"temp_id"`
 		TempValue null.String `json:"temp_value" xml:"temp_value"`
 	}))
-	if ctx.QueryBool("__export__") {
-		cfg := NewBuildExcelConfig(ret.Data)
-		cfg.Format = OptionsetsFormat(ctx.DB)
-		ctx.SuccessWithExcel(cfg)
-		return
-	}
 	ctx.Success(ret)
 }
 
