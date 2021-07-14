@@ -20,26 +20,31 @@ import (
 // RootRelativePath defined TODO
 const RootRelativePath = "/"
 
-// HttpHandler defined TODO
-type HttpHandler interface {
-	http.Handler
-	Handle(string, string, ...HandlerFunc)
-	OnStart(context.Context) error
-	OnStop(context.Context) error
-}
-
-// Restful defined TODO
-type Restful struct {
-	*gin.Engine
-	handlers        *HandlersChain
-	httpSrv         *http.Server
-	allocateContext func(func(*Context))
-}
+type (
+	// HttpHandler defined TODO
+	HttpHandler interface {
+		ServeHTTP(http.ResponseWriter, *http.Request)
+		Handle(string, string, ...HandlerFunc)
+		OnStart(context.Context) error
+		OnStop(context.Context) error
+	}
+	// allocCtx defined TODO
+	allocCtx interface {
+		allocateContext(func(*Context))
+	}
+	// Restful defined TODO
+	Restful struct {
+		*gin.Engine
+		allocCtx
+		handlers *HandlersChain
+		httpSrv  *http.Server
+	}
+)
 
 // OnStart defined TODO
 func (gh *Restful) OnStart(ctx context.Context) error {
 	go func() {
-		gh.httpSrv.Handler = gh.rebuildGlobalRoutes()
+		gh.rebuildGlobalRoutes()
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 		if err := gh.httpSrv.ListenAndServe(); err != nil {
 			logrus.Fatal(err)
@@ -50,7 +55,7 @@ func (gh *Restful) OnStart(ctx context.Context) error {
 
 // rebuildGlobalRoutes gin global handlers
 func (gh *Restful) rebuildGlobalRoutes() *Restful {
-	hf := funk.Map(*gh.handlers, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
+	hf := funk.Map(*gh.handlers, func(hf HandlerFunc) gin.HandlerFunc { return gh.unWrapHandler(hf) }).([]gin.HandlerFunc)
 	gh.NoRoute(hf...)
 	gh.NoMethod(hf...)
 	return gh
@@ -65,8 +70,8 @@ func (gh *Restful) OnStop(ctx context.Context) error {
 	return nil
 }
 
-func (gh *Restful) handlerFunc(h HandlerFunc) gin.HandlerFunc {
-	return gin.HandlerFunc(func(ctx *gin.Context) {
+func (gh *Restful) unWrapHandler(h HandlerFunc) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
 		gh.allocateContext(func(c *Context) {
 			c.Context = ctx
 			for k := range ctx.Keys {
@@ -79,12 +84,12 @@ func (gh *Restful) handlerFunc(h HandlerFunc) gin.HandlerFunc {
 			}
 			h(c)
 		})
-	})
+	}
 }
 
 // Handle defined TODO
 func (gh *Restful) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
-	hls := funk.Map(handlerFuncs, func(hf HandlerFunc) gin.HandlerFunc { return gh.handlerFunc(hf) }).([]gin.HandlerFunc)
+	hls := funk.Map(handlerFuncs, func(hf HandlerFunc) gin.HandlerFunc { return gh.unWrapHandler(hf) }).([]gin.HandlerFunc)
 	gh.Engine.Handle(httpMethod, absolutePath, hls...)
 }
 
@@ -99,7 +104,8 @@ func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.DefaultWriter = logrus.StandardLogger().Out
 	gin.DebugPrintRouteFunc = DebugPrintRouteFunc
 	h := &Restful{Engine: gin.New()}
-	h.handlers, h.allocateContext = &dol.Handlers, dol.allocateContext
+	h.handlers, h.allocCtx = &dol.Handlers, dol
 	h.httpSrv = &http.Server{Addr: fmt.Sprintf(":%v", viper.GetString("http.port"))}
+	h.httpSrv.Handler = dol
 	return h
 }

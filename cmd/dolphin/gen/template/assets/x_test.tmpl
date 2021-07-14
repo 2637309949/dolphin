@@ -60,7 +60,7 @@ func (ctx *Context) ParseBody(arg interface{}) error {
 
 // serveHttp defined TODO
 func (x *XTest) serveHttp(w http.ResponseWriter, req *http.Request) {
-	{{$.Viper.GetString "dir.api" }}.App.Http.ServeHTTP(w, req)
+	{{$.Viper.GetString "dir.api" }}.App.ServeHTTP(w, req)
 }
 
 // handler defined TODO

@@ -7,6 +7,7 @@ package api
 import (
 	"context"
 	"fmt"
+	nh "net/http"
 	"os"
 	"os/signal"
 	"path"
@@ -103,6 +104,11 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 		}
 	}
 	return nil
+}
+
+// ServeHTTP defined TODO
+func (dol *Dolphin) ServeHTTP(w nh.ResponseWriter, r *nh.Request) {
+	dol.Http.ServeHTTP(w, r)
 }
 
 // Reflesh defined init data before bootinh
