@@ -11,27 +11,17 @@ Dolphin, a Golang code generation tool, based on the gin and xormplus, can quick
 <img align="center" width="200px" src="https://img-blog.csdnimg.cn/20210430134623869.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTM1NzEyNDM=,size_16,color_FFFFFF,t_70">
 <img align="center" width="200px" src="./assets/docs.png">
 
-### Tool
+### Quick start
 
-```shell
-Code generation tool for golang
+- Install dolphin
+```sh
+$ go get -u github.com/2637309949/dolphin/cmd/dolphin
+```
 
-Usage:
-  dolphin [command]
+- New project
 
-Available Commands:
-  build       Build from the configuration file
-  clean       Remove temp file, such as *.go.new
-  help        Help about any command
-  more        Add controller and table
-  new         New a empty project
-  reverse     Inversion of the data model
-  serve       Serve api document
-
-Flags:
-  -h, --help   help for dolphin
-
-Use "dolphin [command] --help" for more information about a command.
+```sh
+$ dolphin new hello && cd hello && dolphin build && go run main.go
 ```
 
 ## Features
