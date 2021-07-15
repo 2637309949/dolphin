@@ -8,7 +8,7 @@ import (
 )
 
 // XTestSysUserLogin defined TODO
-var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
+var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
 	ret := struct {
 		Code int `json:"code"`
 		Data struct {
@@ -18,24 +18,27 @@ var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
 	}{}
 	json.Unmarshal(ctx.Body.Bytes(), &ret)
 	SetToken(ret.Data.AccessToken)
-}, M{"domain": "localhost", "name": "admin", "password": "admin"}
+}, Payload{"domain": "localhost", "name": "admin", "password": "admin"}
 
 {{- range .Controllers}}
 {{- $ctr := .}}
 {{- range $ctr.APIS}}
 {{- $api := .}}
 {{- if ne $api.Name "login" }}
-// XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}M defined TODO
-var XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}M = func (ctx *Context) {
+// XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request defined TODO
+var XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request = func (ctx *Context) {
 	ret := Response{}
     if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", ctx.Code, 200)
 	}
-	ctx.ParseBody(&ret)
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 {{end }}
 {{end }}
 {{end }}

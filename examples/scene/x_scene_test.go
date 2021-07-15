@@ -10,7 +10,7 @@ import (
 )
 
 // XTestSysUserLogin defined TODO
-var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
+var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
 	ret := struct {
 		Code int `json:"code"`
 		Data struct {
@@ -20,10 +20,10 @@ var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
 	}{}
 	json.Unmarshal(ctx.Body.Bytes(), &ret)
 	SetToken(ret.Data.AccessToken)
-}, M{"domain": "localhost", "name": "admin", "password": "admin"}
+}, Payload{"domain": "localhost", "name": "admin", "password": "admin"}
 
 // XTestArticleAdd, XTestArticleAddM defined TODO
-var XTestArticleAdd, XTestArticleAddM = func(ctx *Context) {
+var XTestArticleAdd, XTestArticleAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleAdd = %v want %v", ctx.Code, 200)
@@ -35,7 +35,7 @@ var XTestArticleAdd, XTestArticleAddM = func(ctx *Context) {
 }, types.Article{Name: null.StringFrom("各种场景应用")}
 
 // XTestArticleBatchAdd, XTestArticleBatchAddM defined TODO
-var XTestArticleBatchAdd, XTestArticleBatchAddM = func(ctx *Context) {
+var XTestArticleBatchAdd, XTestArticleBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleBatchAdd = %v want %v", ctx.Code, 200)
@@ -44,10 +44,10 @@ var XTestArticleBatchAdd, XTestArticleBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestArticleDel, XTestArticleDelM defined TODO
-var XTestArticleDel, XTestArticleDelM = func(ctx *Context) {
+var XTestArticleDel, XTestArticleDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleDel = %v want %v", ctx.Code, 200)
@@ -60,7 +60,7 @@ var XTestArticleDel, XTestArticleDelM = func(ctx *Context) {
 }, types.Article{ID: null.IntFrom(1)}
 
 // XTestArticleBatchDel, XTestArticleBatchDelM defined TODO
-var XTestArticleBatchDel, XTestArticleBatchDelM = func(ctx *Context) {
+var XTestArticleBatchDel, XTestArticleBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleBatchDel = %v want %v", ctx.Code, 200)
@@ -69,10 +69,10 @@ var XTestArticleBatchDel, XTestArticleBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestArticleUpdate, XTestArticleUpdateM defined TODO
-var XTestArticleUpdate, XTestArticleUpdateM = func(ctx *Context) {
+var XTestArticleUpdate, XTestArticleUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleUpdate = %v want %v", ctx.Code, 200)
@@ -81,10 +81,10 @@ var XTestArticleUpdate, XTestArticleUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestArticleBatchUpdate, XTestArticleBatchUpdateM defined TODO
-var XTestArticleBatchUpdate, XTestArticleBatchUpdateM = func(ctx *Context) {
+var XTestArticleBatchUpdate, XTestArticleBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleBatchUpdate = %v want %v", ctx.Code, 200)
@@ -93,10 +93,10 @@ var XTestArticleBatchUpdate, XTestArticleBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestArticlePage, XTestArticlePageM defined TODO
-var XTestArticlePage, XTestArticlePageM = func(ctx *Context) {
+var XTestArticlePage, XTestArticlePageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticlePage = %v want %v", ctx.Code, 200)
@@ -105,10 +105,10 @@ var XTestArticlePage, XTestArticlePageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticlePage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestArticleGet, XTestArticleGetM defined TODO
-var XTestArticleGet, XTestArticleGetM = func(ctx *Context) {
+var XTestArticleGet, XTestArticleGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleGet = %v want %v", ctx.Code, 200)
@@ -117,10 +117,10 @@ var XTestArticleGet, XTestArticleGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticleGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestArticlePayment, XTestArticlePaymentM defined TODO
-var XTestArticlePayment, XTestArticlePaymentM = func(ctx *Context) {
+var XTestArticlePayment, XTestArticlePaymentRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestArticlePayment = %v want %v", ctx.Code, 200)
@@ -129,10 +129,10 @@ var XTestArticlePayment, XTestArticlePaymentM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestArticlePayment = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestICacheInfo, XTestICacheInfoM defined TODO
-var XTestICacheInfo, XTestICacheInfoM = func(ctx *Context) {
+var XTestICacheInfo, XTestICacheInfoRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestICacheInfo = %v want %v", ctx.Code, 200)
@@ -141,10 +141,10 @@ var XTestICacheInfo, XTestICacheInfoM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestICacheInfo = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestEncryptAdd, XTestEncryptAddM defined TODO
-var XTestEncryptAdd, XTestEncryptAddM = func(ctx *Context) {
+var XTestEncryptAdd, XTestEncryptAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestEncryptAdd = %v want %v", ctx.Code, 200)
@@ -153,10 +153,10 @@ var XTestEncryptAdd, XTestEncryptAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestEncryptAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestEncryptInfo, XTestEncryptInfoM defined TODO
-var XTestEncryptInfo, XTestEncryptInfoM = func(ctx *Context) {
+var XTestEncryptInfo, XTestEncryptInfoRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestEncryptInfo = %v want %v", ctx.Code, 200)
@@ -165,10 +165,10 @@ var XTestEncryptInfo, XTestEncryptInfoM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestEncryptInfo = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestKafkaAdd, XTestKafkaAddM defined TODO
-var XTestKafkaAdd, XTestKafkaAddM = func(ctx *Context) {
+var XTestKafkaAdd, XTestKafkaAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestKafkaAdd = %v want %v", ctx.Code, 200)
@@ -177,10 +177,10 @@ var XTestKafkaAdd, XTestKafkaAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestKafkaAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestKafkaGet, XTestKafkaGetM defined TODO
-var XTestKafkaGet, XTestKafkaGetM = func(ctx *Context) {
+var XTestKafkaGet, XTestKafkaGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestKafkaGet = %v want %v", ctx.Code, 200)
@@ -189,10 +189,10 @@ var XTestKafkaGet, XTestKafkaGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestKafkaGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestNsqAdd, XTestNsqAddM defined TODO
-var XTestNsqAdd, XTestNsqAddM = func(ctx *Context) {
+var XTestNsqAdd, XTestNsqAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestNsqAdd = %v want %v", ctx.Code, 200)
@@ -201,10 +201,10 @@ var XTestNsqAdd, XTestNsqAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestNsqAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestNsqGet, XTestNsqGetM defined TODO
-var XTestNsqGet, XTestNsqGetM = func(ctx *Context) {
+var XTestNsqGet, XTestNsqGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestNsqGet = %v want %v", ctx.Code, 200)
@@ -213,10 +213,10 @@ var XTestNsqGet, XTestNsqGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestNsqGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestRedisLockLock, XTestRedisLockLockM defined TODO
-var XTestRedisLockLock, XTestRedisLockLockM = func(ctx *Context) {
+var XTestRedisLockLock, XTestRedisLockLockRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisLockLock = %v want %v", ctx.Code, 200)
@@ -225,10 +225,10 @@ var XTestRedisLockLock, XTestRedisLockLockM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisLockLock = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestRedisLockUnlock, XTestRedisLockUnlockM defined TODO
-var XTestRedisLockUnlock, XTestRedisLockUnlockM = func(ctx *Context) {
+var XTestRedisLockUnlock, XTestRedisLockUnlockRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisLockUnlock = %v want %v", ctx.Code, 200)
@@ -237,10 +237,10 @@ var XTestRedisLockUnlock, XTestRedisLockUnlockM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisLockUnlock = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestRedisMqAdd, XTestRedisMqAddM defined TODO
-var XTestRedisMqAdd, XTestRedisMqAddM = func(ctx *Context) {
+var XTestRedisMqAdd, XTestRedisMqAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisMqAdd = %v want %v", ctx.Code, 200)
@@ -249,10 +249,10 @@ var XTestRedisMqAdd, XTestRedisMqAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisMqAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestRedisMqGet, XTestRedisMqGetM defined TODO
-var XTestRedisMqGet, XTestRedisMqGetM = func(ctx *Context) {
+var XTestRedisMqGet, XTestRedisMqGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisMqGet = %v want %v", ctx.Code, 200)
@@ -261,10 +261,10 @@ var XTestRedisMqGet, XTestRedisMqGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestRedisMqGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestRPCMessage, XTestRPCMessageM defined TODO
-var XTestRPCMessage, XTestRPCMessageM = func(ctx *Context) {
+var XTestRPCMessage, XTestRPCMessageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestRPCMessage = %v want %v", ctx.Code, 200)
@@ -273,10 +273,10 @@ var XTestRPCMessage, XTestRPCMessageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestRPCMessage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSqlmapSelectone, XTestSqlmapSelectoneM defined TODO
-var XTestSqlmapSelectone, XTestSqlmapSelectoneM = func(ctx *Context) {
+var XTestSqlmapSelectone, XTestSqlmapSelectoneRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSqlmapSelectone = %v want %v", ctx.Code, 200)
@@ -285,10 +285,10 @@ var XTestSqlmapSelectone, XTestSqlmapSelectoneM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSqlmapSelectone = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestUserInfo, XTestUserInfoM defined TODO
-var XTestUserInfo, XTestUserInfoM = func(ctx *Context) {
+var XTestUserInfo, XTestUserInfoRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestUserInfo = %v want %v", ctx.Code, 200)
@@ -297,10 +297,10 @@ var XTestUserInfo, XTestUserInfoM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestUserInfo = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestViewFile, XTestViewFileM defined TODO
-var XTestViewFile, XTestViewFileM = func(ctx *Context) {
+var XTestViewFile, XTestViewFileRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestViewFile = %v want %v", ctx.Code, 200)
@@ -309,10 +309,10 @@ var XTestViewFile, XTestViewFileM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestViewFile = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestViewHTML, XTestViewHTMLM defined TODO
-var XTestViewHTML, XTestViewHTMLM = func(ctx *Context) {
+var XTestViewHTML, XTestViewHTMLRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestViewHTML = %v want %v", ctx.Code, 200)
@@ -321,10 +321,10 @@ var XTestViewHTML, XTestViewHTMLM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestViewHTML = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestViewXML, XTestViewXMLM defined TODO
-var XTestViewXML, XTestViewXMLM = func(ctx *Context) {
+var XTestViewXML, XTestViewXMLRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestViewXML = %v want %v", ctx.Code, 200)
@@ -333,10 +333,10 @@ var XTestViewXML, XTestViewXMLM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestViewXML = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestVoteLike, XTestVoteLikeM defined TODO
-var XTestVoteLike, XTestVoteLikeM = func(ctx *Context) {
+var XTestVoteLike, XTestVoteLikeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestVoteLike = %v want %v", ctx.Code, 200)
@@ -345,4 +345,19 @@ var XTestVoteLike, XTestVoteLikeM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestVoteLike = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
+
+// XTestJwtCheck, XTestJwtCheckM defined TODO
+var XTestJwtCheck, XTestJwtCheckRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestJwtCheck = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestJwtCheck = %v want %v", ret.Code, 200)
+	}
+}, Payload{}

@@ -8,7 +8,7 @@ import (
 )
 
 // XTestSysUserLogin defined TODO
-var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
+var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
 	ret := struct {
 		Code int `json:"code"`
 		Data struct {
@@ -18,10 +18,10 @@ var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
 	}{}
 	json.Unmarshal(ctx.Body.Bytes(), &ret)
 	SetToken(ret.Data.AccessToken)
-}, M{"domain": "localhost", "name": "admin", "password": "admin"}
+}, Payload{"domain": "localhost", "name": "admin", "password": "admin"}
 
 // XTestSysAppFunAdd, XTestSysAppFunAddM defined TODO
-var XTestSysAppFunAdd, XTestSysAppFunAddM = func(ctx *Context) {
+var XTestSysAppFunAdd, XTestSysAppFunAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunAdd = %v want %v", ctx.Code, 200)
@@ -30,10 +30,10 @@ var XTestSysAppFunAdd, XTestSysAppFunAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunBatchAdd, XTestSysAppFunBatchAddM defined TODO
-var XTestSysAppFunBatchAdd, XTestSysAppFunBatchAddM = func(ctx *Context) {
+var XTestSysAppFunBatchAdd, XTestSysAppFunBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunBatchAdd = %v want %v", ctx.Code, 200)
@@ -42,10 +42,10 @@ var XTestSysAppFunBatchAdd, XTestSysAppFunBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunDel, XTestSysAppFunDelM defined TODO
-var XTestSysAppFunDel, XTestSysAppFunDelM = func(ctx *Context) {
+var XTestSysAppFunDel, XTestSysAppFunDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunDel = %v want %v", ctx.Code, 200)
@@ -54,10 +54,10 @@ var XTestSysAppFunDel, XTestSysAppFunDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunBatchDel, XTestSysAppFunBatchDelM defined TODO
-var XTestSysAppFunBatchDel, XTestSysAppFunBatchDelM = func(ctx *Context) {
+var XTestSysAppFunBatchDel, XTestSysAppFunBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunBatchDel = %v want %v", ctx.Code, 200)
@@ -66,10 +66,10 @@ var XTestSysAppFunBatchDel, XTestSysAppFunBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunUpdate, XTestSysAppFunUpdateM defined TODO
-var XTestSysAppFunUpdate, XTestSysAppFunUpdateM = func(ctx *Context) {
+var XTestSysAppFunUpdate, XTestSysAppFunUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunUpdate = %v want %v", ctx.Code, 200)
@@ -78,10 +78,10 @@ var XTestSysAppFunUpdate, XTestSysAppFunUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunBatchUpdate, XTestSysAppFunBatchUpdateM defined TODO
-var XTestSysAppFunBatchUpdate, XTestSysAppFunBatchUpdateM = func(ctx *Context) {
+var XTestSysAppFunBatchUpdate, XTestSysAppFunBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunBatchUpdate = %v want %v", ctx.Code, 200)
@@ -90,22 +90,25 @@ var XTestSysAppFunBatchUpdate, XTestSysAppFunBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunPage, XTestSysAppFunPageM defined TODO
-var XTestSysAppFunPage, XTestSysAppFunPageM = func(ctx *Context) {
+var XTestSysAppFunPage, XTestSysAppFunPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunPage = %v want %v", ctx.Code, 200)
 	}
-	ctx.ParseBody(&ret)
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunTree, XTestSysAppFunTreeM defined TODO
-var XTestSysAppFunTree, XTestSysAppFunTreeM = func(ctx *Context) {
+var XTestSysAppFunTree, XTestSysAppFunTreeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunTree = %v want %v", ctx.Code, 200)
@@ -114,10 +117,10 @@ var XTestSysAppFunTree, XTestSysAppFunTreeM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunTree = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAppFunGet, XTestSysAppFunGetM defined TODO
-var XTestSysAppFunGet, XTestSysAppFunGetM = func(ctx *Context) {
+var XTestSysAppFunGet, XTestSysAppFunGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunGet = %v want %v", ctx.Code, 200)
@@ -126,10 +129,10 @@ var XTestSysAppFunGet, XTestSysAppFunGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAppFunGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaAdd, XTestSysAreaAddM defined TODO
-var XTestSysAreaAdd, XTestSysAreaAddM = func(ctx *Context) {
+var XTestSysAreaAdd, XTestSysAreaAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaAdd = %v want %v", ctx.Code, 200)
@@ -138,10 +141,10 @@ var XTestSysAreaAdd, XTestSysAreaAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaBatchAdd, XTestSysAreaBatchAddM defined TODO
-var XTestSysAreaBatchAdd, XTestSysAreaBatchAddM = func(ctx *Context) {
+var XTestSysAreaBatchAdd, XTestSysAreaBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaBatchAdd = %v want %v", ctx.Code, 200)
@@ -150,10 +153,10 @@ var XTestSysAreaBatchAdd, XTestSysAreaBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaDel, XTestSysAreaDelM defined TODO
-var XTestSysAreaDel, XTestSysAreaDelM = func(ctx *Context) {
+var XTestSysAreaDel, XTestSysAreaDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaDel = %v want %v", ctx.Code, 200)
@@ -162,10 +165,10 @@ var XTestSysAreaDel, XTestSysAreaDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaBatchDel, XTestSysAreaBatchDelM defined TODO
-var XTestSysAreaBatchDel, XTestSysAreaBatchDelM = func(ctx *Context) {
+var XTestSysAreaBatchDel, XTestSysAreaBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaBatchDel = %v want %v", ctx.Code, 200)
@@ -174,10 +177,10 @@ var XTestSysAreaBatchDel, XTestSysAreaBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaUpdate, XTestSysAreaUpdateM defined TODO
-var XTestSysAreaUpdate, XTestSysAreaUpdateM = func(ctx *Context) {
+var XTestSysAreaUpdate, XTestSysAreaUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaUpdate = %v want %v", ctx.Code, 200)
@@ -186,10 +189,10 @@ var XTestSysAreaUpdate, XTestSysAreaUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaBatchUpdate, XTestSysAreaBatchUpdateM defined TODO
-var XTestSysAreaBatchUpdate, XTestSysAreaBatchUpdateM = func(ctx *Context) {
+var XTestSysAreaBatchUpdate, XTestSysAreaBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaBatchUpdate = %v want %v", ctx.Code, 200)
@@ -198,10 +201,10 @@ var XTestSysAreaBatchUpdate, XTestSysAreaBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaPage, XTestSysAreaPageM defined TODO
-var XTestSysAreaPage, XTestSysAreaPageM = func(ctx *Context) {
+var XTestSysAreaPage, XTestSysAreaPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaPage = %v want %v", ctx.Code, 200)
@@ -210,10 +213,10 @@ var XTestSysAreaPage, XTestSysAreaPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAreaGet, XTestSysAreaGetM defined TODO
-var XTestSysAreaGet, XTestSysAreaGetM = func(ctx *Context) {
+var XTestSysAreaGet, XTestSysAreaGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaGet = %v want %v", ctx.Code, 200)
@@ -222,10 +225,10 @@ var XTestSysAreaGet, XTestSysAreaGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAreaGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentAdd, XTestSysAttachmentAddM defined TODO
-var XTestSysAttachmentAdd, XTestSysAttachmentAddM = func(ctx *Context) {
+var XTestSysAttachmentAdd, XTestSysAttachmentAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentAdd = %v want %v", ctx.Code, 200)
@@ -234,10 +237,10 @@ var XTestSysAttachmentAdd, XTestSysAttachmentAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentBatchAdd, XTestSysAttachmentBatchAddM defined TODO
-var XTestSysAttachmentBatchAdd, XTestSysAttachmentBatchAddM = func(ctx *Context) {
+var XTestSysAttachmentBatchAdd, XTestSysAttachmentBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentBatchAdd = %v want %v", ctx.Code, 200)
@@ -246,10 +249,10 @@ var XTestSysAttachmentBatchAdd, XTestSysAttachmentBatchAddM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentUpload, XTestSysAttachmentUploadM defined TODO
-var XTestSysAttachmentUpload, XTestSysAttachmentUploadM = func(ctx *Context) {
+var XTestSysAttachmentUpload, XTestSysAttachmentUploadRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentUpload = %v want %v", ctx.Code, 200)
@@ -258,10 +261,10 @@ var XTestSysAttachmentUpload, XTestSysAttachmentUploadM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentUpload = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentExport, XTestSysAttachmentExportM defined TODO
-var XTestSysAttachmentExport, XTestSysAttachmentExportM = func(ctx *Context) {
+var XTestSysAttachmentExport, XTestSysAttachmentExportRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentExport = %v want %v", ctx.Code, 200)
@@ -270,10 +273,10 @@ var XTestSysAttachmentExport, XTestSysAttachmentExportM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentExport = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentDel, XTestSysAttachmentDelM defined TODO
-var XTestSysAttachmentDel, XTestSysAttachmentDelM = func(ctx *Context) {
+var XTestSysAttachmentDel, XTestSysAttachmentDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentDel = %v want %v", ctx.Code, 200)
@@ -282,10 +285,10 @@ var XTestSysAttachmentDel, XTestSysAttachmentDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentBatchDel, XTestSysAttachmentBatchDelM defined TODO
-var XTestSysAttachmentBatchDel, XTestSysAttachmentBatchDelM = func(ctx *Context) {
+var XTestSysAttachmentBatchDel, XTestSysAttachmentBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentBatchDel = %v want %v", ctx.Code, 200)
@@ -294,10 +297,10 @@ var XTestSysAttachmentBatchDel, XTestSysAttachmentBatchDelM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentUpdate, XTestSysAttachmentUpdateM defined TODO
-var XTestSysAttachmentUpdate, XTestSysAttachmentUpdateM = func(ctx *Context) {
+var XTestSysAttachmentUpdate, XTestSysAttachmentUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentUpdate = %v want %v", ctx.Code, 200)
@@ -306,10 +309,10 @@ var XTestSysAttachmentUpdate, XTestSysAttachmentUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentBatchUpdate, XTestSysAttachmentBatchUpdateM defined TODO
-var XTestSysAttachmentBatchUpdate, XTestSysAttachmentBatchUpdateM = func(ctx *Context) {
+var XTestSysAttachmentBatchUpdate, XTestSysAttachmentBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentBatchUpdate = %v want %v", ctx.Code, 200)
@@ -318,10 +321,10 @@ var XTestSysAttachmentBatchUpdate, XTestSysAttachmentBatchUpdateM = func(ctx *Co
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentPage, XTestSysAttachmentPageM defined TODO
-var XTestSysAttachmentPage, XTestSysAttachmentPageM = func(ctx *Context) {
+var XTestSysAttachmentPage, XTestSysAttachmentPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentPage = %v want %v", ctx.Code, 200)
@@ -330,10 +333,10 @@ var XTestSysAttachmentPage, XTestSysAttachmentPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysAttachmentGet, XTestSysAttachmentGetM defined TODO
-var XTestSysAttachmentGet, XTestSysAttachmentGetM = func(ctx *Context) {
+var XTestSysAttachmentGet, XTestSysAttachmentGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentGet = %v want %v", ctx.Code, 200)
@@ -342,10 +345,10 @@ var XTestSysAttachmentGet, XTestSysAttachmentGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysAttachmentGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasLogin, XTestSysCasLoginM defined TODO
-var XTestSysCasLogin, XTestSysCasLoginM = func(ctx *Context) {
+var XTestSysCasLogin, XTestSysCasLoginRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasLogin = %v want %v", ctx.Code, 200)
@@ -354,10 +357,10 @@ var XTestSysCasLogin, XTestSysCasLoginM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasLogin = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasLogout, XTestSysCasLogoutM defined TODO
-var XTestSysCasLogout, XTestSysCasLogoutM = func(ctx *Context) {
+var XTestSysCasLogout, XTestSysCasLogoutRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasLogout = %v want %v", ctx.Code, 200)
@@ -366,22 +369,22 @@ var XTestSysCasLogout, XTestSysCasLogoutM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasLogout = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasAffirm, XTestSysCasAffirmM defined TODO
-var XTestSysCasAffirm, XTestSysCasAffirmM = func(ctx *Context) {
+var XTestSysCasAffirm, XTestSysCasAffirmRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
-		ctx.testingT.Errorf("XTestSysCasAffirm = %v want %v", ctx.Code, 200)
+		ctx.testingT.Errorf("XTestSysCasAffirRequest = %v want %v", ctx.Code, 200)
 	}
 	ctx.ParseBody(&ret)
 	if ret.Code != 200 {
-		ctx.testingT.Errorf("XTestSysCasAffirm = %v want %v", ret.Code, 200)
+		ctx.testingT.Errorf("XTestSysCasAffirRequest = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasAuthorize, XTestSysCasAuthorizeM defined TODO
-var XTestSysCasAuthorize, XTestSysCasAuthorizeM = func(ctx *Context) {
+var XTestSysCasAuthorize, XTestSysCasAuthorizeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasAuthorize = %v want %v", ctx.Code, 200)
@@ -390,10 +393,10 @@ var XTestSysCasAuthorize, XTestSysCasAuthorizeM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasAuthorize = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasToken, XTestSysCasTokenM defined TODO
-var XTestSysCasToken, XTestSysCasTokenM = func(ctx *Context) {
+var XTestSysCasToken, XTestSysCasTokenRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasToken = %v want %v", ctx.Code, 200)
@@ -402,10 +405,10 @@ var XTestSysCasToken, XTestSysCasTokenM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasToken = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasURL, XTestSysCasURLM defined TODO
-var XTestSysCasURL, XTestSysCasURLM = func(ctx *Context) {
+var XTestSysCasURL, XTestSysCasURLRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasURL = %v want %v", ctx.Code, 200)
@@ -414,10 +417,10 @@ var XTestSysCasURL, XTestSysCasURLM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasURL = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasOauth2, XTestSysCasOauth2M defined TODO
-var XTestSysCasOauth2, XTestSysCasOauth2M = func(ctx *Context) {
+var XTestSysCasOauth2, XTestSysCasOauth2Request = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasOauth2 = %v want %v", ctx.Code, 200)
@@ -426,10 +429,10 @@ var XTestSysCasOauth2, XTestSysCasOauth2M = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasOauth2 = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasRefresh, XTestSysCasRefreshM defined TODO
-var XTestSysCasRefresh, XTestSysCasRefreshM = func(ctx *Context) {
+var XTestSysCasRefresh, XTestSysCasRefreshRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasRefresh = %v want %v", ctx.Code, 200)
@@ -438,10 +441,10 @@ var XTestSysCasRefresh, XTestSysCasRefreshM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasRefresh = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasCheck, XTestSysCasCheckM defined TODO
-var XTestSysCasCheck, XTestSysCasCheckM = func(ctx *Context) {
+var XTestSysCasCheck, XTestSysCasCheckRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasCheck = %v want %v", ctx.Code, 200)
@@ -450,10 +453,10 @@ var XTestSysCasCheck, XTestSysCasCheckM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasCheck = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasProfile, XTestSysCasProfileM defined TODO
-var XTestSysCasProfile, XTestSysCasProfileM = func(ctx *Context) {
+var XTestSysCasProfile, XTestSysCasProfileRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasProfile = %v want %v", ctx.Code, 200)
@@ -462,10 +465,10 @@ var XTestSysCasProfile, XTestSysCasProfileM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasProfile = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCasQrcode, XTestSysCasQrcodeM defined TODO
-var XTestSysCasQrcode, XTestSysCasQrcodeM = func(ctx *Context) {
+var XTestSysCasQrcode, XTestSysCasQrcodeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasQrcode = %v want %v", ctx.Code, 200)
@@ -474,10 +477,10 @@ var XTestSysCasQrcode, XTestSysCasQrcodeM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCasQrcode = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientAdd, XTestSysClientAddM defined TODO
-var XTestSysClientAdd, XTestSysClientAddM = func(ctx *Context) {
+var XTestSysClientAdd, XTestSysClientAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientAdd = %v want %v", ctx.Code, 200)
@@ -486,10 +489,10 @@ var XTestSysClientAdd, XTestSysClientAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientBatchAdd, XTestSysClientBatchAddM defined TODO
-var XTestSysClientBatchAdd, XTestSysClientBatchAddM = func(ctx *Context) {
+var XTestSysClientBatchAdd, XTestSysClientBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientBatchAdd = %v want %v", ctx.Code, 200)
@@ -498,10 +501,10 @@ var XTestSysClientBatchAdd, XTestSysClientBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientDel, XTestSysClientDelM defined TODO
-var XTestSysClientDel, XTestSysClientDelM = func(ctx *Context) {
+var XTestSysClientDel, XTestSysClientDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientDel = %v want %v", ctx.Code, 200)
@@ -510,10 +513,10 @@ var XTestSysClientDel, XTestSysClientDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientBatchDel, XTestSysClientBatchDelM defined TODO
-var XTestSysClientBatchDel, XTestSysClientBatchDelM = func(ctx *Context) {
+var XTestSysClientBatchDel, XTestSysClientBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientBatchDel = %v want %v", ctx.Code, 200)
@@ -522,10 +525,10 @@ var XTestSysClientBatchDel, XTestSysClientBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientUpdate, XTestSysClientUpdateM defined TODO
-var XTestSysClientUpdate, XTestSysClientUpdateM = func(ctx *Context) {
+var XTestSysClientUpdate, XTestSysClientUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientUpdate = %v want %v", ctx.Code, 200)
@@ -534,10 +537,10 @@ var XTestSysClientUpdate, XTestSysClientUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientBatchUpdate, XTestSysClientBatchUpdateM defined TODO
-var XTestSysClientBatchUpdate, XTestSysClientBatchUpdateM = func(ctx *Context) {
+var XTestSysClientBatchUpdate, XTestSysClientBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientBatchUpdate = %v want %v", ctx.Code, 200)
@@ -546,10 +549,10 @@ var XTestSysClientBatchUpdate, XTestSysClientBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientPage, XTestSysClientPageM defined TODO
-var XTestSysClientPage, XTestSysClientPageM = func(ctx *Context) {
+var XTestSysClientPage, XTestSysClientPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientPage = %v want %v", ctx.Code, 200)
@@ -558,10 +561,10 @@ var XTestSysClientPage, XTestSysClientPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysClientGet, XTestSysClientGetM defined TODO
-var XTestSysClientGet, XTestSysClientGetM = func(ctx *Context) {
+var XTestSysClientGet, XTestSysClientGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientGet = %v want %v", ctx.Code, 200)
@@ -570,10 +573,10 @@ var XTestSysClientGet, XTestSysClientGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysClientGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentAdd, XTestSysCommentAddM defined TODO
-var XTestSysCommentAdd, XTestSysCommentAddM = func(ctx *Context) {
+var XTestSysCommentAdd, XTestSysCommentAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentAdd = %v want %v", ctx.Code, 200)
@@ -582,10 +585,10 @@ var XTestSysCommentAdd, XTestSysCommentAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentBatchAdd, XTestSysCommentBatchAddM defined TODO
-var XTestSysCommentBatchAdd, XTestSysCommentBatchAddM = func(ctx *Context) {
+var XTestSysCommentBatchAdd, XTestSysCommentBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentBatchAdd = %v want %v", ctx.Code, 200)
@@ -594,10 +597,10 @@ var XTestSysCommentBatchAdd, XTestSysCommentBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentDel, XTestSysCommentDelM defined TODO
-var XTestSysCommentDel, XTestSysCommentDelM = func(ctx *Context) {
+var XTestSysCommentDel, XTestSysCommentDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentDel = %v want %v", ctx.Code, 200)
@@ -606,10 +609,10 @@ var XTestSysCommentDel, XTestSysCommentDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentBatchDel, XTestSysCommentBatchDelM defined TODO
-var XTestSysCommentBatchDel, XTestSysCommentBatchDelM = func(ctx *Context) {
+var XTestSysCommentBatchDel, XTestSysCommentBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentBatchDel = %v want %v", ctx.Code, 200)
@@ -618,10 +621,10 @@ var XTestSysCommentBatchDel, XTestSysCommentBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentUpdate, XTestSysCommentUpdateM defined TODO
-var XTestSysCommentUpdate, XTestSysCommentUpdateM = func(ctx *Context) {
+var XTestSysCommentUpdate, XTestSysCommentUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentUpdate = %v want %v", ctx.Code, 200)
@@ -630,10 +633,10 @@ var XTestSysCommentUpdate, XTestSysCommentUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentBatchUpdate, XTestSysCommentBatchUpdateM defined TODO
-var XTestSysCommentBatchUpdate, XTestSysCommentBatchUpdateM = func(ctx *Context) {
+var XTestSysCommentBatchUpdate, XTestSysCommentBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentBatchUpdate = %v want %v", ctx.Code, 200)
@@ -642,10 +645,10 @@ var XTestSysCommentBatchUpdate, XTestSysCommentBatchUpdateM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentPage, XTestSysCommentPageM defined TODO
-var XTestSysCommentPage, XTestSysCommentPageM = func(ctx *Context) {
+var XTestSysCommentPage, XTestSysCommentPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentPage = %v want %v", ctx.Code, 200)
@@ -654,10 +657,10 @@ var XTestSysCommentPage, XTestSysCommentPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysCommentGet, XTestSysCommentGetM defined TODO
-var XTestSysCommentGet, XTestSysCommentGetM = func(ctx *Context) {
+var XTestSysCommentGet, XTestSysCommentGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentGet = %v want %v", ctx.Code, 200)
@@ -666,10 +669,10 @@ var XTestSysCommentGet, XTestSysCommentGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysCommentGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionAdd, XTestSysDataPermissionAddM defined TODO
-var XTestSysDataPermissionAdd, XTestSysDataPermissionAddM = func(ctx *Context) {
+var XTestSysDataPermissionAdd, XTestSysDataPermissionAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionAdd = %v want %v", ctx.Code, 200)
@@ -678,10 +681,10 @@ var XTestSysDataPermissionAdd, XTestSysDataPermissionAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionBatchAdd, XTestSysDataPermissionBatchAddM defined TODO
-var XTestSysDataPermissionBatchAdd, XTestSysDataPermissionBatchAddM = func(ctx *Context) {
+var XTestSysDataPermissionBatchAdd, XTestSysDataPermissionBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionBatchAdd = %v want %v", ctx.Code, 200)
@@ -690,10 +693,10 @@ var XTestSysDataPermissionBatchAdd, XTestSysDataPermissionBatchAddM = func(ctx *
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionDel, XTestSysDataPermissionDelM defined TODO
-var XTestSysDataPermissionDel, XTestSysDataPermissionDelM = func(ctx *Context) {
+var XTestSysDataPermissionDel, XTestSysDataPermissionDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionDel = %v want %v", ctx.Code, 200)
@@ -702,10 +705,10 @@ var XTestSysDataPermissionDel, XTestSysDataPermissionDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionBatchDel, XTestSysDataPermissionBatchDelM defined TODO
-var XTestSysDataPermissionBatchDel, XTestSysDataPermissionBatchDelM = func(ctx *Context) {
+var XTestSysDataPermissionBatchDel, XTestSysDataPermissionBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionBatchDel = %v want %v", ctx.Code, 200)
@@ -714,10 +717,10 @@ var XTestSysDataPermissionBatchDel, XTestSysDataPermissionBatchDelM = func(ctx *
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionUpdate, XTestSysDataPermissionUpdateM defined TODO
-var XTestSysDataPermissionUpdate, XTestSysDataPermissionUpdateM = func(ctx *Context) {
+var XTestSysDataPermissionUpdate, XTestSysDataPermissionUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionUpdate = %v want %v", ctx.Code, 200)
@@ -726,10 +729,10 @@ var XTestSysDataPermissionUpdate, XTestSysDataPermissionUpdateM = func(ctx *Cont
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionBatchUpdate, XTestSysDataPermissionBatchUpdateM defined TODO
-var XTestSysDataPermissionBatchUpdate, XTestSysDataPermissionBatchUpdateM = func(ctx *Context) {
+var XTestSysDataPermissionBatchUpdate, XTestSysDataPermissionBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionBatchUpdate = %v want %v", ctx.Code, 200)
@@ -738,10 +741,10 @@ var XTestSysDataPermissionBatchUpdate, XTestSysDataPermissionBatchUpdateM = func
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionPage, XTestSysDataPermissionPageM defined TODO
-var XTestSysDataPermissionPage, XTestSysDataPermissionPageM = func(ctx *Context) {
+var XTestSysDataPermissionPage, XTestSysDataPermissionPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionPage = %v want %v", ctx.Code, 200)
@@ -750,10 +753,10 @@ var XTestSysDataPermissionPage, XTestSysDataPermissionPageM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDataPermissionGet, XTestSysDataPermissionGetM defined TODO
-var XTestSysDataPermissionGet, XTestSysDataPermissionGetM = func(ctx *Context) {
+var XTestSysDataPermissionGet, XTestSysDataPermissionGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionGet = %v want %v", ctx.Code, 200)
@@ -762,10 +765,10 @@ var XTestSysDataPermissionGet, XTestSysDataPermissionGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDataPermissionGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugPprof, XTestDebugPprofM defined TODO
-var XTestDebugPprof, XTestDebugPprofM = func(ctx *Context) {
+var XTestDebugPprof, XTestDebugPprofRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugPprof = %v want %v", ctx.Code, 200)
@@ -774,10 +777,10 @@ var XTestDebugPprof, XTestDebugPprofM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugPprof = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugHeap, XTestDebugHeapM defined TODO
-var XTestDebugHeap, XTestDebugHeapM = func(ctx *Context) {
+var XTestDebugHeap, XTestDebugHeapRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugHeap = %v want %v", ctx.Code, 200)
@@ -786,10 +789,10 @@ var XTestDebugHeap, XTestDebugHeapM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugHeap = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugGoroutine, XTestDebugGoroutineM defined TODO
-var XTestDebugGoroutine, XTestDebugGoroutineM = func(ctx *Context) {
+var XTestDebugGoroutine, XTestDebugGoroutineRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugGoroutine = %v want %v", ctx.Code, 200)
@@ -798,10 +801,10 @@ var XTestDebugGoroutine, XTestDebugGoroutineM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugGoroutine = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugAllocs, XTestDebugAllocsM defined TODO
-var XTestDebugAllocs, XTestDebugAllocsM = func(ctx *Context) {
+var XTestDebugAllocs, XTestDebugAllocsRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugAllocs = %v want %v", ctx.Code, 200)
@@ -810,10 +813,10 @@ var XTestDebugAllocs, XTestDebugAllocsM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugAllocs = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugBlock, XTestDebugBlockM defined TODO
-var XTestDebugBlock, XTestDebugBlockM = func(ctx *Context) {
+var XTestDebugBlock, XTestDebugBlockRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugBlock = %v want %v", ctx.Code, 200)
@@ -822,10 +825,10 @@ var XTestDebugBlock, XTestDebugBlockM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugBlock = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugThreadcreate, XTestDebugThreadcreateM defined TODO
-var XTestDebugThreadcreate, XTestDebugThreadcreateM = func(ctx *Context) {
+var XTestDebugThreadcreate, XTestDebugThreadcreateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugThreadcreate = %v want %v", ctx.Code, 200)
@@ -834,10 +837,10 @@ var XTestDebugThreadcreate, XTestDebugThreadcreateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugThreadcreate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugCmdline, XTestDebugCmdlineM defined TODO
-var XTestDebugCmdline, XTestDebugCmdlineM = func(ctx *Context) {
+var XTestDebugCmdline, XTestDebugCmdlineRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugCmdline = %v want %v", ctx.Code, 200)
@@ -846,10 +849,10 @@ var XTestDebugCmdline, XTestDebugCmdlineM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugCmdline = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugProfile, XTestDebugProfileM defined TODO
-var XTestDebugProfile, XTestDebugProfileM = func(ctx *Context) {
+var XTestDebugProfile, XTestDebugProfileRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugProfile = %v want %v", ctx.Code, 200)
@@ -858,10 +861,10 @@ var XTestDebugProfile, XTestDebugProfileM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugProfile = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugSymbol, XTestDebugSymbolM defined TODO
-var XTestDebugSymbol, XTestDebugSymbolM = func(ctx *Context) {
+var XTestDebugSymbol, XTestDebugSymbolRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugSymbol = %v want %v", ctx.Code, 200)
@@ -870,10 +873,10 @@ var XTestDebugSymbol, XTestDebugSymbolM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugSymbol = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugTrace, XTestDebugTraceM defined TODO
-var XTestDebugTrace, XTestDebugTraceM = func(ctx *Context) {
+var XTestDebugTrace, XTestDebugTraceRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugTrace = %v want %v", ctx.Code, 200)
@@ -882,10 +885,10 @@ var XTestDebugTrace, XTestDebugTraceM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugTrace = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestDebugMutex, XTestDebugMutexM defined TODO
-var XTestDebugMutex, XTestDebugMutexM = func(ctx *Context) {
+var XTestDebugMutex, XTestDebugMutexRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugMutex = %v want %v", ctx.Code, 200)
@@ -894,10 +897,10 @@ var XTestDebugMutex, XTestDebugMutexM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestDebugMutex = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDingtalkOauth2, XTestSysDingtalkOauth2M defined TODO
-var XTestSysDingtalkOauth2, XTestSysDingtalkOauth2M = func(ctx *Context) {
+var XTestSysDingtalkOauth2, XTestSysDingtalkOauth2Request = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDingtalkOauth2 = %v want %v", ctx.Code, 200)
@@ -906,10 +909,10 @@ var XTestSysDingtalkOauth2, XTestSysDingtalkOauth2M = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDingtalkOauth2 = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainAdd, XTestSysDomainAddM defined TODO
-var XTestSysDomainAdd, XTestSysDomainAddM = func(ctx *Context) {
+var XTestSysDomainAdd, XTestSysDomainAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainAdd = %v want %v", ctx.Code, 200)
@@ -918,10 +921,10 @@ var XTestSysDomainAdd, XTestSysDomainAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainBatchAdd, XTestSysDomainBatchAddM defined TODO
-var XTestSysDomainBatchAdd, XTestSysDomainBatchAddM = func(ctx *Context) {
+var XTestSysDomainBatchAdd, XTestSysDomainBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainBatchAdd = %v want %v", ctx.Code, 200)
@@ -930,10 +933,10 @@ var XTestSysDomainBatchAdd, XTestSysDomainBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainDel, XTestSysDomainDelM defined TODO
-var XTestSysDomainDel, XTestSysDomainDelM = func(ctx *Context) {
+var XTestSysDomainDel, XTestSysDomainDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainDel = %v want %v", ctx.Code, 200)
@@ -942,10 +945,10 @@ var XTestSysDomainDel, XTestSysDomainDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainBatchDel, XTestSysDomainBatchDelM defined TODO
-var XTestSysDomainBatchDel, XTestSysDomainBatchDelM = func(ctx *Context) {
+var XTestSysDomainBatchDel, XTestSysDomainBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainBatchDel = %v want %v", ctx.Code, 200)
@@ -954,10 +957,10 @@ var XTestSysDomainBatchDel, XTestSysDomainBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainUpdate, XTestSysDomainUpdateM defined TODO
-var XTestSysDomainUpdate, XTestSysDomainUpdateM = func(ctx *Context) {
+var XTestSysDomainUpdate, XTestSysDomainUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainUpdate = %v want %v", ctx.Code, 200)
@@ -966,10 +969,10 @@ var XTestSysDomainUpdate, XTestSysDomainUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainBatchUpdate, XTestSysDomainBatchUpdateM defined TODO
-var XTestSysDomainBatchUpdate, XTestSysDomainBatchUpdateM = func(ctx *Context) {
+var XTestSysDomainBatchUpdate, XTestSysDomainBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainBatchUpdate = %v want %v", ctx.Code, 200)
@@ -978,10 +981,10 @@ var XTestSysDomainBatchUpdate, XTestSysDomainBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainPage, XTestSysDomainPageM defined TODO
-var XTestSysDomainPage, XTestSysDomainPageM = func(ctx *Context) {
+var XTestSysDomainPage, XTestSysDomainPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainPage = %v want %v", ctx.Code, 200)
@@ -990,10 +993,10 @@ var XTestSysDomainPage, XTestSysDomainPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysDomainGet, XTestSysDomainGetM defined TODO
-var XTestSysDomainGet, XTestSysDomainGetM = func(ctx *Context) {
+var XTestSysDomainGet, XTestSysDomainGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainGet = %v want %v", ctx.Code, 200)
@@ -1002,10 +1005,10 @@ var XTestSysDomainGet, XTestSysDomainGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysDomainGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuAdd, XTestSysMenuAddM defined TODO
-var XTestSysMenuAdd, XTestSysMenuAddM = func(ctx *Context) {
+var XTestSysMenuAdd, XTestSysMenuAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuAdd = %v want %v", ctx.Code, 200)
@@ -1014,10 +1017,10 @@ var XTestSysMenuAdd, XTestSysMenuAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuBatchAdd, XTestSysMenuBatchAddM defined TODO
-var XTestSysMenuBatchAdd, XTestSysMenuBatchAddM = func(ctx *Context) {
+var XTestSysMenuBatchAdd, XTestSysMenuBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuBatchAdd = %v want %v", ctx.Code, 200)
@@ -1026,10 +1029,10 @@ var XTestSysMenuBatchAdd, XTestSysMenuBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuDel, XTestSysMenuDelM defined TODO
-var XTestSysMenuDel, XTestSysMenuDelM = func(ctx *Context) {
+var XTestSysMenuDel, XTestSysMenuDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuDel = %v want %v", ctx.Code, 200)
@@ -1038,10 +1041,10 @@ var XTestSysMenuDel, XTestSysMenuDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuBatchDel, XTestSysMenuBatchDelM defined TODO
-var XTestSysMenuBatchDel, XTestSysMenuBatchDelM = func(ctx *Context) {
+var XTestSysMenuBatchDel, XTestSysMenuBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuBatchDel = %v want %v", ctx.Code, 200)
@@ -1050,10 +1053,10 @@ var XTestSysMenuBatchDel, XTestSysMenuBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuUpdate, XTestSysMenuUpdateM defined TODO
-var XTestSysMenuUpdate, XTestSysMenuUpdateM = func(ctx *Context) {
+var XTestSysMenuUpdate, XTestSysMenuUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuUpdate = %v want %v", ctx.Code, 200)
@@ -1062,10 +1065,10 @@ var XTestSysMenuUpdate, XTestSysMenuUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuBatchUpdate, XTestSysMenuBatchUpdateM defined TODO
-var XTestSysMenuBatchUpdate, XTestSysMenuBatchUpdateM = func(ctx *Context) {
+var XTestSysMenuBatchUpdate, XTestSysMenuBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1074,10 +1077,10 @@ var XTestSysMenuBatchUpdate, XTestSysMenuBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuSidebar, XTestSysMenuSidebarM defined TODO
-var XTestSysMenuSidebar, XTestSysMenuSidebarM = func(ctx *Context) {
+var XTestSysMenuSidebar, XTestSysMenuSidebarRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuSidebar = %v want %v", ctx.Code, 200)
@@ -1086,10 +1089,10 @@ var XTestSysMenuSidebar, XTestSysMenuSidebarM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuSidebar = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuPage, XTestSysMenuPageM defined TODO
-var XTestSysMenuPage, XTestSysMenuPageM = func(ctx *Context) {
+var XTestSysMenuPage, XTestSysMenuPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuPage = %v want %v", ctx.Code, 200)
@@ -1098,10 +1101,10 @@ var XTestSysMenuPage, XTestSysMenuPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuTree, XTestSysMenuTreeM defined TODO
-var XTestSysMenuTree, XTestSysMenuTreeM = func(ctx *Context) {
+var XTestSysMenuTree, XTestSysMenuTreeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuTree = %v want %v", ctx.Code, 200)
@@ -1110,10 +1113,10 @@ var XTestSysMenuTree, XTestSysMenuTreeM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuTree = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysMenuGet, XTestSysMenuGetM defined TODO
-var XTestSysMenuGet, XTestSysMenuGetM = func(ctx *Context) {
+var XTestSysMenuGet, XTestSysMenuGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuGet = %v want %v", ctx.Code, 200)
@@ -1122,10 +1125,10 @@ var XTestSysMenuGet, XTestSysMenuGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysMenuGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationAdd, XTestSysNotificationAddM defined TODO
-var XTestSysNotificationAdd, XTestSysNotificationAddM = func(ctx *Context) {
+var XTestSysNotificationAdd, XTestSysNotificationAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationAdd = %v want %v", ctx.Code, 200)
@@ -1134,10 +1137,10 @@ var XTestSysNotificationAdd, XTestSysNotificationAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationBatchAdd, XTestSysNotificationBatchAddM defined TODO
-var XTestSysNotificationBatchAdd, XTestSysNotificationBatchAddM = func(ctx *Context) {
+var XTestSysNotificationBatchAdd, XTestSysNotificationBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationBatchAdd = %v want %v", ctx.Code, 200)
@@ -1146,10 +1149,10 @@ var XTestSysNotificationBatchAdd, XTestSysNotificationBatchAddM = func(ctx *Cont
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationDel, XTestSysNotificationDelM defined TODO
-var XTestSysNotificationDel, XTestSysNotificationDelM = func(ctx *Context) {
+var XTestSysNotificationDel, XTestSysNotificationDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationDel = %v want %v", ctx.Code, 200)
@@ -1158,10 +1161,10 @@ var XTestSysNotificationDel, XTestSysNotificationDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationBatchDel, XTestSysNotificationBatchDelM defined TODO
-var XTestSysNotificationBatchDel, XTestSysNotificationBatchDelM = func(ctx *Context) {
+var XTestSysNotificationBatchDel, XTestSysNotificationBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationBatchDel = %v want %v", ctx.Code, 200)
@@ -1170,10 +1173,10 @@ var XTestSysNotificationBatchDel, XTestSysNotificationBatchDelM = func(ctx *Cont
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationUpdate, XTestSysNotificationUpdateM defined TODO
-var XTestSysNotificationUpdate, XTestSysNotificationUpdateM = func(ctx *Context) {
+var XTestSysNotificationUpdate, XTestSysNotificationUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationUpdate = %v want %v", ctx.Code, 200)
@@ -1182,10 +1185,10 @@ var XTestSysNotificationUpdate, XTestSysNotificationUpdateM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationBatchUpdate, XTestSysNotificationBatchUpdateM defined TODO
-var XTestSysNotificationBatchUpdate, XTestSysNotificationBatchUpdateM = func(ctx *Context) {
+var XTestSysNotificationBatchUpdate, XTestSysNotificationBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1194,10 +1197,10 @@ var XTestSysNotificationBatchUpdate, XTestSysNotificationBatchUpdateM = func(ctx
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationPage, XTestSysNotificationPageM defined TODO
-var XTestSysNotificationPage, XTestSysNotificationPageM = func(ctx *Context) {
+var XTestSysNotificationPage, XTestSysNotificationPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationPage = %v want %v", ctx.Code, 200)
@@ -1206,10 +1209,10 @@ var XTestSysNotificationPage, XTestSysNotificationPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysNotificationGet, XTestSysNotificationGetM defined TODO
-var XTestSysNotificationGet, XTestSysNotificationGetM = func(ctx *Context) {
+var XTestSysNotificationGet, XTestSysNotificationGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationGet = %v want %v", ctx.Code, 200)
@@ -1218,10 +1221,10 @@ var XTestSysNotificationGet, XTestSysNotificationGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysNotificationGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetAdd, XTestSysOptionsetAddM defined TODO
-var XTestSysOptionsetAdd, XTestSysOptionsetAddM = func(ctx *Context) {
+var XTestSysOptionsetAdd, XTestSysOptionsetAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetAdd = %v want %v", ctx.Code, 200)
@@ -1230,10 +1233,10 @@ var XTestSysOptionsetAdd, XTestSysOptionsetAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetBatchAdd, XTestSysOptionsetBatchAddM defined TODO
-var XTestSysOptionsetBatchAdd, XTestSysOptionsetBatchAddM = func(ctx *Context) {
+var XTestSysOptionsetBatchAdd, XTestSysOptionsetBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetBatchAdd = %v want %v", ctx.Code, 200)
@@ -1242,10 +1245,10 @@ var XTestSysOptionsetBatchAdd, XTestSysOptionsetBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetDel, XTestSysOptionsetDelM defined TODO
-var XTestSysOptionsetDel, XTestSysOptionsetDelM = func(ctx *Context) {
+var XTestSysOptionsetDel, XTestSysOptionsetDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetDel = %v want %v", ctx.Code, 200)
@@ -1254,10 +1257,10 @@ var XTestSysOptionsetDel, XTestSysOptionsetDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetBatchDel, XTestSysOptionsetBatchDelM defined TODO
-var XTestSysOptionsetBatchDel, XTestSysOptionsetBatchDelM = func(ctx *Context) {
+var XTestSysOptionsetBatchDel, XTestSysOptionsetBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetBatchDel = %v want %v", ctx.Code, 200)
@@ -1266,10 +1269,10 @@ var XTestSysOptionsetBatchDel, XTestSysOptionsetBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetUpdate, XTestSysOptionsetUpdateM defined TODO
-var XTestSysOptionsetUpdate, XTestSysOptionsetUpdateM = func(ctx *Context) {
+var XTestSysOptionsetUpdate, XTestSysOptionsetUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetUpdate = %v want %v", ctx.Code, 200)
@@ -1278,10 +1281,10 @@ var XTestSysOptionsetUpdate, XTestSysOptionsetUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetBatchUpdate, XTestSysOptionsetBatchUpdateM defined TODO
-var XTestSysOptionsetBatchUpdate, XTestSysOptionsetBatchUpdateM = func(ctx *Context) {
+var XTestSysOptionsetBatchUpdate, XTestSysOptionsetBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1290,10 +1293,10 @@ var XTestSysOptionsetBatchUpdate, XTestSysOptionsetBatchUpdateM = func(ctx *Cont
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetPage, XTestSysOptionsetPageM defined TODO
-var XTestSysOptionsetPage, XTestSysOptionsetPageM = func(ctx *Context) {
+var XTestSysOptionsetPage, XTestSysOptionsetPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetPage = %v want %v", ctx.Code, 200)
@@ -1302,10 +1305,10 @@ var XTestSysOptionsetPage, XTestSysOptionsetPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOptionsetGet, XTestSysOptionsetGetM defined TODO
-var XTestSysOptionsetGet, XTestSysOptionsetGetM = func(ctx *Context) {
+var XTestSysOptionsetGet, XTestSysOptionsetGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetGet = %v want %v", ctx.Code, 200)
@@ -1314,10 +1317,10 @@ var XTestSysOptionsetGet, XTestSysOptionsetGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOptionsetGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgAdd, XTestSysOrgAddM defined TODO
-var XTestSysOrgAdd, XTestSysOrgAddM = func(ctx *Context) {
+var XTestSysOrgAdd, XTestSysOrgAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgAdd = %v want %v", ctx.Code, 200)
@@ -1326,10 +1329,10 @@ var XTestSysOrgAdd, XTestSysOrgAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgBatchAdd, XTestSysOrgBatchAddM defined TODO
-var XTestSysOrgBatchAdd, XTestSysOrgBatchAddM = func(ctx *Context) {
+var XTestSysOrgBatchAdd, XTestSysOrgBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgBatchAdd = %v want %v", ctx.Code, 200)
@@ -1338,10 +1341,10 @@ var XTestSysOrgBatchAdd, XTestSysOrgBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgDel, XTestSysOrgDelM defined TODO
-var XTestSysOrgDel, XTestSysOrgDelM = func(ctx *Context) {
+var XTestSysOrgDel, XTestSysOrgDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgDel = %v want %v", ctx.Code, 200)
@@ -1350,10 +1353,10 @@ var XTestSysOrgDel, XTestSysOrgDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgBatchDel, XTestSysOrgBatchDelM defined TODO
-var XTestSysOrgBatchDel, XTestSysOrgBatchDelM = func(ctx *Context) {
+var XTestSysOrgBatchDel, XTestSysOrgBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgBatchDel = %v want %v", ctx.Code, 200)
@@ -1362,10 +1365,10 @@ var XTestSysOrgBatchDel, XTestSysOrgBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgUpdate, XTestSysOrgUpdateM defined TODO
-var XTestSysOrgUpdate, XTestSysOrgUpdateM = func(ctx *Context) {
+var XTestSysOrgUpdate, XTestSysOrgUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgUpdate = %v want %v", ctx.Code, 200)
@@ -1374,10 +1377,10 @@ var XTestSysOrgUpdate, XTestSysOrgUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgBatchUpdate, XTestSysOrgBatchUpdateM defined TODO
-var XTestSysOrgBatchUpdate, XTestSysOrgBatchUpdateM = func(ctx *Context) {
+var XTestSysOrgBatchUpdate, XTestSysOrgBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1386,10 +1389,10 @@ var XTestSysOrgBatchUpdate, XTestSysOrgBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgPage, XTestSysOrgPageM defined TODO
-var XTestSysOrgPage, XTestSysOrgPageM = func(ctx *Context) {
+var XTestSysOrgPage, XTestSysOrgPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgPage = %v want %v", ctx.Code, 200)
@@ -1398,10 +1401,10 @@ var XTestSysOrgPage, XTestSysOrgPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgTree, XTestSysOrgTreeM defined TODO
-var XTestSysOrgTree, XTestSysOrgTreeM = func(ctx *Context) {
+var XTestSysOrgTree, XTestSysOrgTreeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgTree = %v want %v", ctx.Code, 200)
@@ -1410,10 +1413,10 @@ var XTestSysOrgTree, XTestSysOrgTreeM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgTree = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysOrgGet, XTestSysOrgGetM defined TODO
-var XTestSysOrgGet, XTestSysOrgGetM = func(ctx *Context) {
+var XTestSysOrgGet, XTestSysOrgGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgGet = %v want %v", ctx.Code, 200)
@@ -1422,10 +1425,10 @@ var XTestSysOrgGet, XTestSysOrgGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysOrgGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionAdd, XTestSysPermissionAddM defined TODO
-var XTestSysPermissionAdd, XTestSysPermissionAddM = func(ctx *Context) {
+var XTestSysPermissionAdd, XTestSysPermissionAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionAdd = %v want %v", ctx.Code, 200)
@@ -1434,10 +1437,10 @@ var XTestSysPermissionAdd, XTestSysPermissionAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionBatchAdd, XTestSysPermissionBatchAddM defined TODO
-var XTestSysPermissionBatchAdd, XTestSysPermissionBatchAddM = func(ctx *Context) {
+var XTestSysPermissionBatchAdd, XTestSysPermissionBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionBatchAdd = %v want %v", ctx.Code, 200)
@@ -1446,10 +1449,10 @@ var XTestSysPermissionBatchAdd, XTestSysPermissionBatchAddM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionDel, XTestSysPermissionDelM defined TODO
-var XTestSysPermissionDel, XTestSysPermissionDelM = func(ctx *Context) {
+var XTestSysPermissionDel, XTestSysPermissionDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionDel = %v want %v", ctx.Code, 200)
@@ -1458,10 +1461,10 @@ var XTestSysPermissionDel, XTestSysPermissionDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionBatchDel, XTestSysPermissionBatchDelM defined TODO
-var XTestSysPermissionBatchDel, XTestSysPermissionBatchDelM = func(ctx *Context) {
+var XTestSysPermissionBatchDel, XTestSysPermissionBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionBatchDel = %v want %v", ctx.Code, 200)
@@ -1470,10 +1473,10 @@ var XTestSysPermissionBatchDel, XTestSysPermissionBatchDelM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionUpdate, XTestSysPermissionUpdateM defined TODO
-var XTestSysPermissionUpdate, XTestSysPermissionUpdateM = func(ctx *Context) {
+var XTestSysPermissionUpdate, XTestSysPermissionUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionUpdate = %v want %v", ctx.Code, 200)
@@ -1482,10 +1485,10 @@ var XTestSysPermissionUpdate, XTestSysPermissionUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionBatchUpdate, XTestSysPermissionBatchUpdateM defined TODO
-var XTestSysPermissionBatchUpdate, XTestSysPermissionBatchUpdateM = func(ctx *Context) {
+var XTestSysPermissionBatchUpdate, XTestSysPermissionBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1494,10 +1497,10 @@ var XTestSysPermissionBatchUpdate, XTestSysPermissionBatchUpdateM = func(ctx *Co
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionPage, XTestSysPermissionPageM defined TODO
-var XTestSysPermissionPage, XTestSysPermissionPageM = func(ctx *Context) {
+var XTestSysPermissionPage, XTestSysPermissionPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionPage = %v want %v", ctx.Code, 200)
@@ -1506,10 +1509,10 @@ var XTestSysPermissionPage, XTestSysPermissionPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysPermissionGet, XTestSysPermissionGetM defined TODO
-var XTestSysPermissionGet, XTestSysPermissionGetM = func(ctx *Context) {
+var XTestSysPermissionGet, XTestSysPermissionGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionGet = %v want %v", ctx.Code, 200)
@@ -1518,10 +1521,10 @@ var XTestSysPermissionGet, XTestSysPermissionGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysPermissionGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleAdd, XTestSysRoleAddM defined TODO
-var XTestSysRoleAdd, XTestSysRoleAddM = func(ctx *Context) {
+var XTestSysRoleAdd, XTestSysRoleAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleAdd = %v want %v", ctx.Code, 200)
@@ -1530,10 +1533,10 @@ var XTestSysRoleAdd, XTestSysRoleAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleBatchAdd, XTestSysRoleBatchAddM defined TODO
-var XTestSysRoleBatchAdd, XTestSysRoleBatchAddM = func(ctx *Context) {
+var XTestSysRoleBatchAdd, XTestSysRoleBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleBatchAdd = %v want %v", ctx.Code, 200)
@@ -1542,10 +1545,10 @@ var XTestSysRoleBatchAdd, XTestSysRoleBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleDel, XTestSysRoleDelM defined TODO
-var XTestSysRoleDel, XTestSysRoleDelM = func(ctx *Context) {
+var XTestSysRoleDel, XTestSysRoleDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleDel = %v want %v", ctx.Code, 200)
@@ -1554,10 +1557,10 @@ var XTestSysRoleDel, XTestSysRoleDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleBatchDel, XTestSysRoleBatchDelM defined TODO
-var XTestSysRoleBatchDel, XTestSysRoleBatchDelM = func(ctx *Context) {
+var XTestSysRoleBatchDel, XTestSysRoleBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleBatchDel = %v want %v", ctx.Code, 200)
@@ -1566,10 +1569,10 @@ var XTestSysRoleBatchDel, XTestSysRoleBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleUpdate, XTestSysRoleUpdateM defined TODO
-var XTestSysRoleUpdate, XTestSysRoleUpdateM = func(ctx *Context) {
+var XTestSysRoleUpdate, XTestSysRoleUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleUpdate = %v want %v", ctx.Code, 200)
@@ -1578,10 +1581,10 @@ var XTestSysRoleUpdate, XTestSysRoleUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleBatchUpdate, XTestSysRoleBatchUpdateM defined TODO
-var XTestSysRoleBatchUpdate, XTestSysRoleBatchUpdateM = func(ctx *Context) {
+var XTestSysRoleBatchUpdate, XTestSysRoleBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1590,10 +1593,10 @@ var XTestSysRoleBatchUpdate, XTestSysRoleBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRolePage, XTestSysRolePageM defined TODO
-var XTestSysRolePage, XTestSysRolePageM = func(ctx *Context) {
+var XTestSysRolePage, XTestSysRolePageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRolePage = %v want %v", ctx.Code, 200)
@@ -1602,10 +1605,10 @@ var XTestSysRolePage, XTestSysRolePageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRolePage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleRoleMenuTree, XTestSysRoleRoleMenuTreeM defined TODO
-var XTestSysRoleRoleMenuTree, XTestSysRoleRoleMenuTreeM = func(ctx *Context) {
+var XTestSysRoleRoleMenuTree, XTestSysRoleRoleMenuTreeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleRoleMenuTree = %v want %v", ctx.Code, 200)
@@ -1614,10 +1617,10 @@ var XTestSysRoleRoleMenuTree, XTestSysRoleRoleMenuTreeM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleRoleMenuTree = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleRoleAppFunTree, XTestSysRoleRoleAppFunTreeM defined TODO
-var XTestSysRoleRoleAppFunTree, XTestSysRoleRoleAppFunTreeM = func(ctx *Context) {
+var XTestSysRoleRoleAppFunTree, XTestSysRoleRoleAppFunTreeRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleRoleAppFunTree = %v want %v", ctx.Code, 200)
@@ -1626,10 +1629,10 @@ var XTestSysRoleRoleAppFunTree, XTestSysRoleRoleAppFunTreeM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleRoleAppFunTree = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleGet, XTestSysRoleGetM defined TODO
-var XTestSysRoleGet, XTestSysRoleGetM = func(ctx *Context) {
+var XTestSysRoleGet, XTestSysRoleGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleGet = %v want %v", ctx.Code, 200)
@@ -1638,10 +1641,10 @@ var XTestSysRoleGet, XTestSysRoleGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuAdd, XTestSysRoleMenuAddM defined TODO
-var XTestSysRoleMenuAdd, XTestSysRoleMenuAddM = func(ctx *Context) {
+var XTestSysRoleMenuAdd, XTestSysRoleMenuAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuAdd = %v want %v", ctx.Code, 200)
@@ -1650,10 +1653,10 @@ var XTestSysRoleMenuAdd, XTestSysRoleMenuAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuBatchAdd, XTestSysRoleMenuBatchAddM defined TODO
-var XTestSysRoleMenuBatchAdd, XTestSysRoleMenuBatchAddM = func(ctx *Context) {
+var XTestSysRoleMenuBatchAdd, XTestSysRoleMenuBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuBatchAdd = %v want %v", ctx.Code, 200)
@@ -1662,10 +1665,10 @@ var XTestSysRoleMenuBatchAdd, XTestSysRoleMenuBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuDel, XTestSysRoleMenuDelM defined TODO
-var XTestSysRoleMenuDel, XTestSysRoleMenuDelM = func(ctx *Context) {
+var XTestSysRoleMenuDel, XTestSysRoleMenuDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuDel = %v want %v", ctx.Code, 200)
@@ -1674,10 +1677,10 @@ var XTestSysRoleMenuDel, XTestSysRoleMenuDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuBatchDel, XTestSysRoleMenuBatchDelM defined TODO
-var XTestSysRoleMenuBatchDel, XTestSysRoleMenuBatchDelM = func(ctx *Context) {
+var XTestSysRoleMenuBatchDel, XTestSysRoleMenuBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuBatchDel = %v want %v", ctx.Code, 200)
@@ -1686,10 +1689,10 @@ var XTestSysRoleMenuBatchDel, XTestSysRoleMenuBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuUpdate, XTestSysRoleMenuUpdateM defined TODO
-var XTestSysRoleMenuUpdate, XTestSysRoleMenuUpdateM = func(ctx *Context) {
+var XTestSysRoleMenuUpdate, XTestSysRoleMenuUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuUpdate = %v want %v", ctx.Code, 200)
@@ -1698,10 +1701,10 @@ var XTestSysRoleMenuUpdate, XTestSysRoleMenuUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuBatchUpdate, XTestSysRoleMenuBatchUpdateM defined TODO
-var XTestSysRoleMenuBatchUpdate, XTestSysRoleMenuBatchUpdateM = func(ctx *Context) {
+var XTestSysRoleMenuBatchUpdate, XTestSysRoleMenuBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1710,10 +1713,10 @@ var XTestSysRoleMenuBatchUpdate, XTestSysRoleMenuBatchUpdateM = func(ctx *Contex
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuPage, XTestSysRoleMenuPageM defined TODO
-var XTestSysRoleMenuPage, XTestSysRoleMenuPageM = func(ctx *Context) {
+var XTestSysRoleMenuPage, XTestSysRoleMenuPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuPage = %v want %v", ctx.Code, 200)
@@ -1722,10 +1725,10 @@ var XTestSysRoleMenuPage, XTestSysRoleMenuPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysRoleMenuGet, XTestSysRoleMenuGetM defined TODO
-var XTestSysRoleMenuGet, XTestSysRoleMenuGetM = func(ctx *Context) {
+var XTestSysRoleMenuGet, XTestSysRoleMenuGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuGet = %v want %v", ctx.Code, 200)
@@ -1734,10 +1737,10 @@ var XTestSysRoleMenuGet, XTestSysRoleMenuGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysRoleMenuGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleAdd, XTestSysScheduleAddM defined TODO
-var XTestSysScheduleAdd, XTestSysScheduleAddM = func(ctx *Context) {
+var XTestSysScheduleAdd, XTestSysScheduleAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleAdd = %v want %v", ctx.Code, 200)
@@ -1746,10 +1749,10 @@ var XTestSysScheduleAdd, XTestSysScheduleAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleBatchAdd, XTestSysScheduleBatchAddM defined TODO
-var XTestSysScheduleBatchAdd, XTestSysScheduleBatchAddM = func(ctx *Context) {
+var XTestSysScheduleBatchAdd, XTestSysScheduleBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleBatchAdd = %v want %v", ctx.Code, 200)
@@ -1758,10 +1761,10 @@ var XTestSysScheduleBatchAdd, XTestSysScheduleBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleDel, XTestSysScheduleDelM defined TODO
-var XTestSysScheduleDel, XTestSysScheduleDelM = func(ctx *Context) {
+var XTestSysScheduleDel, XTestSysScheduleDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleDel = %v want %v", ctx.Code, 200)
@@ -1770,10 +1773,10 @@ var XTestSysScheduleDel, XTestSysScheduleDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleBatchDel, XTestSysScheduleBatchDelM defined TODO
-var XTestSysScheduleBatchDel, XTestSysScheduleBatchDelM = func(ctx *Context) {
+var XTestSysScheduleBatchDel, XTestSysScheduleBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleBatchDel = %v want %v", ctx.Code, 200)
@@ -1782,10 +1785,10 @@ var XTestSysScheduleBatchDel, XTestSysScheduleBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleUpdate, XTestSysScheduleUpdateM defined TODO
-var XTestSysScheduleUpdate, XTestSysScheduleUpdateM = func(ctx *Context) {
+var XTestSysScheduleUpdate, XTestSysScheduleUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleUpdate = %v want %v", ctx.Code, 200)
@@ -1794,10 +1797,10 @@ var XTestSysScheduleUpdate, XTestSysScheduleUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleBatchUpdate, XTestSysScheduleBatchUpdateM defined TODO
-var XTestSysScheduleBatchUpdate, XTestSysScheduleBatchUpdateM = func(ctx *Context) {
+var XTestSysScheduleBatchUpdate, XTestSysScheduleBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1806,10 +1809,10 @@ var XTestSysScheduleBatchUpdate, XTestSysScheduleBatchUpdateM = func(ctx *Contex
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSchedulePage, XTestSysSchedulePageM defined TODO
-var XTestSysSchedulePage, XTestSysSchedulePageM = func(ctx *Context) {
+var XTestSysSchedulePage, XTestSysSchedulePageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulePage = %v want %v", ctx.Code, 200)
@@ -1818,10 +1821,10 @@ var XTestSysSchedulePage, XTestSysSchedulePageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulePage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleGet, XTestSysScheduleGetM defined TODO
-var XTestSysScheduleGet, XTestSysScheduleGetM = func(ctx *Context) {
+var XTestSysScheduleGet, XTestSysScheduleGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleGet = %v want %v", ctx.Code, 200)
@@ -1830,10 +1833,10 @@ var XTestSysScheduleGet, XTestSysScheduleGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysScheduleHistoryPage, XTestSysScheduleHistoryPageM defined TODO
-var XTestSysScheduleHistoryPage, XTestSysScheduleHistoryPageM = func(ctx *Context) {
+var XTestSysScheduleHistoryPage, XTestSysScheduleHistoryPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleHistoryPage = %v want %v", ctx.Code, 200)
@@ -1842,10 +1845,10 @@ var XTestSysScheduleHistoryPage, XTestSysScheduleHistoryPageM = func(ctx *Contex
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysScheduleHistoryPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSchedulingAdd, XTestSysSchedulingAddM defined TODO
-var XTestSysSchedulingAdd, XTestSysSchedulingAddM = func(ctx *Context) {
+var XTestSysSchedulingAdd, XTestSysSchedulingAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingAdd = %v want %v", ctx.Code, 200)
@@ -1854,10 +1857,10 @@ var XTestSysSchedulingAdd, XTestSysSchedulingAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSchedulingDel, XTestSysSchedulingDelM defined TODO
-var XTestSysSchedulingDel, XTestSysSchedulingDelM = func(ctx *Context) {
+var XTestSysSchedulingDel, XTestSysSchedulingDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingDel = %v want %v", ctx.Code, 200)
@@ -1866,10 +1869,10 @@ var XTestSysSchedulingDel, XTestSysSchedulingDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSchedulingUpdate, XTestSysSchedulingUpdateM defined TODO
-var XTestSysSchedulingUpdate, XTestSysSchedulingUpdateM = func(ctx *Context) {
+var XTestSysSchedulingUpdate, XTestSysSchedulingUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingUpdate = %v want %v", ctx.Code, 200)
@@ -1878,10 +1881,10 @@ var XTestSysSchedulingUpdate, XTestSysSchedulingUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSchedulingPage, XTestSysSchedulingPageM defined TODO
-var XTestSysSchedulingPage, XTestSysSchedulingPageM = func(ctx *Context) {
+var XTestSysSchedulingPage, XTestSysSchedulingPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingPage = %v want %v", ctx.Code, 200)
@@ -1890,10 +1893,10 @@ var XTestSysSchedulingPage, XTestSysSchedulingPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSchedulingGet, XTestSysSchedulingGetM defined TODO
-var XTestSysSchedulingGet, XTestSysSchedulingGetM = func(ctx *Context) {
+var XTestSysSchedulingGet, XTestSysSchedulingGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingGet = %v want %v", ctx.Code, 200)
@@ -1902,10 +1905,10 @@ var XTestSysSchedulingGet, XTestSysSchedulingGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSchedulingGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingAdd, XTestSysSettingAddM defined TODO
-var XTestSysSettingAdd, XTestSysSettingAddM = func(ctx *Context) {
+var XTestSysSettingAdd, XTestSysSettingAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingAdd = %v want %v", ctx.Code, 200)
@@ -1914,10 +1917,10 @@ var XTestSysSettingAdd, XTestSysSettingAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingBatchAdd, XTestSysSettingBatchAddM defined TODO
-var XTestSysSettingBatchAdd, XTestSysSettingBatchAddM = func(ctx *Context) {
+var XTestSysSettingBatchAdd, XTestSysSettingBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingBatchAdd = %v want %v", ctx.Code, 200)
@@ -1926,10 +1929,10 @@ var XTestSysSettingBatchAdd, XTestSysSettingBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingDel, XTestSysSettingDelM defined TODO
-var XTestSysSettingDel, XTestSysSettingDelM = func(ctx *Context) {
+var XTestSysSettingDel, XTestSysSettingDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingDel = %v want %v", ctx.Code, 200)
@@ -1938,10 +1941,10 @@ var XTestSysSettingDel, XTestSysSettingDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingBatchDel, XTestSysSettingBatchDelM defined TODO
-var XTestSysSettingBatchDel, XTestSysSettingBatchDelM = func(ctx *Context) {
+var XTestSysSettingBatchDel, XTestSysSettingBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingBatchDel = %v want %v", ctx.Code, 200)
@@ -1950,10 +1953,10 @@ var XTestSysSettingBatchDel, XTestSysSettingBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingUpdate, XTestSysSettingUpdateM defined TODO
-var XTestSysSettingUpdate, XTestSysSettingUpdateM = func(ctx *Context) {
+var XTestSysSettingUpdate, XTestSysSettingUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingUpdate = %v want %v", ctx.Code, 200)
@@ -1962,10 +1965,10 @@ var XTestSysSettingUpdate, XTestSysSettingUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingBatchUpdate, XTestSysSettingBatchUpdateM defined TODO
-var XTestSysSettingBatchUpdate, XTestSysSettingBatchUpdateM = func(ctx *Context) {
+var XTestSysSettingBatchUpdate, XTestSysSettingBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingBatchUpdate = %v want %v", ctx.Code, 200)
@@ -1974,10 +1977,10 @@ var XTestSysSettingBatchUpdate, XTestSysSettingBatchUpdateM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingPage, XTestSysSettingPageM defined TODO
-var XTestSysSettingPage, XTestSysSettingPageM = func(ctx *Context) {
+var XTestSysSettingPage, XTestSysSettingPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingPage = %v want %v", ctx.Code, 200)
@@ -1986,10 +1989,10 @@ var XTestSysSettingPage, XTestSysSettingPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysSettingGet, XTestSysSettingGetM defined TODO
-var XTestSysSettingGet, XTestSysSettingGetM = func(ctx *Context) {
+var XTestSysSettingGet, XTestSysSettingGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingGet = %v want %v", ctx.Code, 200)
@@ -1998,10 +2001,10 @@ var XTestSysSettingGet, XTestSysSettingGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysSettingGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableAdd, XTestSysTableAddM defined TODO
-var XTestSysTableAdd, XTestSysTableAddM = func(ctx *Context) {
+var XTestSysTableAdd, XTestSysTableAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableAdd = %v want %v", ctx.Code, 200)
@@ -2010,10 +2013,10 @@ var XTestSysTableAdd, XTestSysTableAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableBatchAdd, XTestSysTableBatchAddM defined TODO
-var XTestSysTableBatchAdd, XTestSysTableBatchAddM = func(ctx *Context) {
+var XTestSysTableBatchAdd, XTestSysTableBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableBatchAdd = %v want %v", ctx.Code, 200)
@@ -2022,10 +2025,10 @@ var XTestSysTableBatchAdd, XTestSysTableBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableDel, XTestSysTableDelM defined TODO
-var XTestSysTableDel, XTestSysTableDelM = func(ctx *Context) {
+var XTestSysTableDel, XTestSysTableDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableDel = %v want %v", ctx.Code, 200)
@@ -2034,10 +2037,10 @@ var XTestSysTableDel, XTestSysTableDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableBatchDel, XTestSysTableBatchDelM defined TODO
-var XTestSysTableBatchDel, XTestSysTableBatchDelM = func(ctx *Context) {
+var XTestSysTableBatchDel, XTestSysTableBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableBatchDel = %v want %v", ctx.Code, 200)
@@ -2046,10 +2049,10 @@ var XTestSysTableBatchDel, XTestSysTableBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableUpdate, XTestSysTableUpdateM defined TODO
-var XTestSysTableUpdate, XTestSysTableUpdateM = func(ctx *Context) {
+var XTestSysTableUpdate, XTestSysTableUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableUpdate = %v want %v", ctx.Code, 200)
@@ -2058,10 +2061,10 @@ var XTestSysTableUpdate, XTestSysTableUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableBatchUpdate, XTestSysTableBatchUpdateM defined TODO
-var XTestSysTableBatchUpdate, XTestSysTableBatchUpdateM = func(ctx *Context) {
+var XTestSysTableBatchUpdate, XTestSysTableBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableBatchUpdate = %v want %v", ctx.Code, 200)
@@ -2070,10 +2073,10 @@ var XTestSysTableBatchUpdate, XTestSysTableBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTablePage, XTestSysTablePageM defined TODO
-var XTestSysTablePage, XTestSysTablePageM = func(ctx *Context) {
+var XTestSysTablePage, XTestSysTablePageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTablePage = %v want %v", ctx.Code, 200)
@@ -2082,10 +2085,10 @@ var XTestSysTablePage, XTestSysTablePageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTablePage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableGet, XTestSysTableGetM defined TODO
-var XTestSysTableGet, XTestSysTableGetM = func(ctx *Context) {
+var XTestSysTableGet, XTestSysTableGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableGet = %v want %v", ctx.Code, 200)
@@ -2094,10 +2097,10 @@ var XTestSysTableGet, XTestSysTableGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnAdd, XTestSysTableColumnAddM defined TODO
-var XTestSysTableColumnAdd, XTestSysTableColumnAddM = func(ctx *Context) {
+var XTestSysTableColumnAdd, XTestSysTableColumnAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnAdd = %v want %v", ctx.Code, 200)
@@ -2106,10 +2109,10 @@ var XTestSysTableColumnAdd, XTestSysTableColumnAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnBatchAdd, XTestSysTableColumnBatchAddM defined TODO
-var XTestSysTableColumnBatchAdd, XTestSysTableColumnBatchAddM = func(ctx *Context) {
+var XTestSysTableColumnBatchAdd, XTestSysTableColumnBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnBatchAdd = %v want %v", ctx.Code, 200)
@@ -2118,10 +2121,10 @@ var XTestSysTableColumnBatchAdd, XTestSysTableColumnBatchAddM = func(ctx *Contex
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnDel, XTestSysTableColumnDelM defined TODO
-var XTestSysTableColumnDel, XTestSysTableColumnDelM = func(ctx *Context) {
+var XTestSysTableColumnDel, XTestSysTableColumnDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnDel = %v want %v", ctx.Code, 200)
@@ -2130,10 +2133,10 @@ var XTestSysTableColumnDel, XTestSysTableColumnDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnBatchDel, XTestSysTableColumnBatchDelM defined TODO
-var XTestSysTableColumnBatchDel, XTestSysTableColumnBatchDelM = func(ctx *Context) {
+var XTestSysTableColumnBatchDel, XTestSysTableColumnBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnBatchDel = %v want %v", ctx.Code, 200)
@@ -2142,10 +2145,10 @@ var XTestSysTableColumnBatchDel, XTestSysTableColumnBatchDelM = func(ctx *Contex
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnUpdate, XTestSysTableColumnUpdateM defined TODO
-var XTestSysTableColumnUpdate, XTestSysTableColumnUpdateM = func(ctx *Context) {
+var XTestSysTableColumnUpdate, XTestSysTableColumnUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnUpdate = %v want %v", ctx.Code, 200)
@@ -2154,10 +2157,10 @@ var XTestSysTableColumnUpdate, XTestSysTableColumnUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnBatchUpdate, XTestSysTableColumnBatchUpdateM defined TODO
-var XTestSysTableColumnBatchUpdate, XTestSysTableColumnBatchUpdateM = func(ctx *Context) {
+var XTestSysTableColumnBatchUpdate, XTestSysTableColumnBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnBatchUpdate = %v want %v", ctx.Code, 200)
@@ -2166,10 +2169,10 @@ var XTestSysTableColumnBatchUpdate, XTestSysTableColumnBatchUpdateM = func(ctx *
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnPage, XTestSysTableColumnPageM defined TODO
-var XTestSysTableColumnPage, XTestSysTableColumnPageM = func(ctx *Context) {
+var XTestSysTableColumnPage, XTestSysTableColumnPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnPage = %v want %v", ctx.Code, 200)
@@ -2178,10 +2181,10 @@ var XTestSysTableColumnPage, XTestSysTableColumnPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTableColumnGet, XTestSysTableColumnGetM defined TODO
-var XTestSysTableColumnGet, XTestSysTableColumnGetM = func(ctx *Context) {
+var XTestSysTableColumnGet, XTestSysTableColumnGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnGet = %v want %v", ctx.Code, 200)
@@ -2190,10 +2193,10 @@ var XTestSysTableColumnGet, XTestSysTableColumnGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTableColumnGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagAdd, XTestSysTagAddM defined TODO
-var XTestSysTagAdd, XTestSysTagAddM = func(ctx *Context) {
+var XTestSysTagAdd, XTestSysTagAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagAdd = %v want %v", ctx.Code, 200)
@@ -2202,10 +2205,10 @@ var XTestSysTagAdd, XTestSysTagAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagBatchAdd, XTestSysTagBatchAddM defined TODO
-var XTestSysTagBatchAdd, XTestSysTagBatchAddM = func(ctx *Context) {
+var XTestSysTagBatchAdd, XTestSysTagBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagBatchAdd = %v want %v", ctx.Code, 200)
@@ -2214,10 +2217,10 @@ var XTestSysTagBatchAdd, XTestSysTagBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagDel, XTestSysTagDelM defined TODO
-var XTestSysTagDel, XTestSysTagDelM = func(ctx *Context) {
+var XTestSysTagDel, XTestSysTagDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagDel = %v want %v", ctx.Code, 200)
@@ -2226,10 +2229,10 @@ var XTestSysTagDel, XTestSysTagDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagBatchDel, XTestSysTagBatchDelM defined TODO
-var XTestSysTagBatchDel, XTestSysTagBatchDelM = func(ctx *Context) {
+var XTestSysTagBatchDel, XTestSysTagBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagBatchDel = %v want %v", ctx.Code, 200)
@@ -2238,10 +2241,10 @@ var XTestSysTagBatchDel, XTestSysTagBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagUpdate, XTestSysTagUpdateM defined TODO
-var XTestSysTagUpdate, XTestSysTagUpdateM = func(ctx *Context) {
+var XTestSysTagUpdate, XTestSysTagUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagUpdate = %v want %v", ctx.Code, 200)
@@ -2250,10 +2253,10 @@ var XTestSysTagUpdate, XTestSysTagUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagBatchUpdate, XTestSysTagBatchUpdateM defined TODO
-var XTestSysTagBatchUpdate, XTestSysTagBatchUpdateM = func(ctx *Context) {
+var XTestSysTagBatchUpdate, XTestSysTagBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagBatchUpdate = %v want %v", ctx.Code, 200)
@@ -2262,10 +2265,10 @@ var XTestSysTagBatchUpdate, XTestSysTagBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagPage, XTestSysTagPageM defined TODO
-var XTestSysTagPage, XTestSysTagPageM = func(ctx *Context) {
+var XTestSysTagPage, XTestSysTagPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagPage = %v want %v", ctx.Code, 200)
@@ -2274,10 +2277,10 @@ var XTestSysTagPage, XTestSysTagPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGet, XTestSysTagGetM defined TODO
-var XTestSysTagGet, XTestSysTagGetM = func(ctx *Context) {
+var XTestSysTagGet, XTestSysTagGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGet = %v want %v", ctx.Code, 200)
@@ -2286,10 +2289,10 @@ var XTestSysTagGet, XTestSysTagGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupAdd, XTestSysTagGroupAddM defined TODO
-var XTestSysTagGroupAdd, XTestSysTagGroupAddM = func(ctx *Context) {
+var XTestSysTagGroupAdd, XTestSysTagGroupAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupAdd = %v want %v", ctx.Code, 200)
@@ -2298,10 +2301,10 @@ var XTestSysTagGroupAdd, XTestSysTagGroupAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupBatchAdd, XTestSysTagGroupBatchAddM defined TODO
-var XTestSysTagGroupBatchAdd, XTestSysTagGroupBatchAddM = func(ctx *Context) {
+var XTestSysTagGroupBatchAdd, XTestSysTagGroupBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupBatchAdd = %v want %v", ctx.Code, 200)
@@ -2310,10 +2313,10 @@ var XTestSysTagGroupBatchAdd, XTestSysTagGroupBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupDel, XTestSysTagGroupDelM defined TODO
-var XTestSysTagGroupDel, XTestSysTagGroupDelM = func(ctx *Context) {
+var XTestSysTagGroupDel, XTestSysTagGroupDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupDel = %v want %v", ctx.Code, 200)
@@ -2322,10 +2325,10 @@ var XTestSysTagGroupDel, XTestSysTagGroupDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupBatchDel, XTestSysTagGroupBatchDelM defined TODO
-var XTestSysTagGroupBatchDel, XTestSysTagGroupBatchDelM = func(ctx *Context) {
+var XTestSysTagGroupBatchDel, XTestSysTagGroupBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupBatchDel = %v want %v", ctx.Code, 200)
@@ -2334,10 +2337,10 @@ var XTestSysTagGroupBatchDel, XTestSysTagGroupBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupUpdate, XTestSysTagGroupUpdateM defined TODO
-var XTestSysTagGroupUpdate, XTestSysTagGroupUpdateM = func(ctx *Context) {
+var XTestSysTagGroupUpdate, XTestSysTagGroupUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupUpdate = %v want %v", ctx.Code, 200)
@@ -2346,10 +2349,10 @@ var XTestSysTagGroupUpdate, XTestSysTagGroupUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupBatchUpdate, XTestSysTagGroupBatchUpdateM defined TODO
-var XTestSysTagGroupBatchUpdate, XTestSysTagGroupBatchUpdateM = func(ctx *Context) {
+var XTestSysTagGroupBatchUpdate, XTestSysTagGroupBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupBatchUpdate = %v want %v", ctx.Code, 200)
@@ -2358,10 +2361,10 @@ var XTestSysTagGroupBatchUpdate, XTestSysTagGroupBatchUpdateM = func(ctx *Contex
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupPage, XTestSysTagGroupPageM defined TODO
-var XTestSysTagGroupPage, XTestSysTagGroupPageM = func(ctx *Context) {
+var XTestSysTagGroupPage, XTestSysTagGroupPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupPage = %v want %v", ctx.Code, 200)
@@ -2370,10 +2373,10 @@ var XTestSysTagGroupPage, XTestSysTagGroupPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTagGroupGet, XTestSysTagGroupGetM defined TODO
-var XTestSysTagGroupGet, XTestSysTagGroupGetM = func(ctx *Context) {
+var XTestSysTagGroupGet, XTestSysTagGroupGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupGet = %v want %v", ctx.Code, 200)
@@ -2382,10 +2385,10 @@ var XTestSysTagGroupGet, XTestSysTagGroupGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTagGroupGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTrackerPage, XTestSysTrackerPageM defined TODO
-var XTestSysTrackerPage, XTestSysTrackerPageM = func(ctx *Context) {
+var XTestSysTrackerPage, XTestSysTrackerPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTrackerPage = %v want %v", ctx.Code, 200)
@@ -2394,10 +2397,10 @@ var XTestSysTrackerPage, XTestSysTrackerPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTrackerPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysTrackerGet, XTestSysTrackerGetM defined TODO
-var XTestSysTrackerGet, XTestSysTrackerGetM = func(ctx *Context) {
+var XTestSysTrackerGet, XTestSysTrackerGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTrackerGet = %v want %v", ctx.Code, 200)
@@ -2406,10 +2409,10 @@ var XTestSysTrackerGet, XTestSysTrackerGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysTrackerGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserAdd, XTestSysUserAddM defined TODO
-var XTestSysUserAdd, XTestSysUserAddM = func(ctx *Context) {
+var XTestSysUserAdd, XTestSysUserAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserAdd = %v want %v", ctx.Code, 200)
@@ -2418,10 +2421,10 @@ var XTestSysUserAdd, XTestSysUserAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserBatchAdd, XTestSysUserBatchAddM defined TODO
-var XTestSysUserBatchAdd, XTestSysUserBatchAddM = func(ctx *Context) {
+var XTestSysUserBatchAdd, XTestSysUserBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserBatchAdd = %v want %v", ctx.Code, 200)
@@ -2430,10 +2433,10 @@ var XTestSysUserBatchAdd, XTestSysUserBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserDel, XTestSysUserDelM defined TODO
-var XTestSysUserDel, XTestSysUserDelM = func(ctx *Context) {
+var XTestSysUserDel, XTestSysUserDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserDel = %v want %v", ctx.Code, 200)
@@ -2442,10 +2445,10 @@ var XTestSysUserDel, XTestSysUserDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserBatchDel, XTestSysUserBatchDelM defined TODO
-var XTestSysUserBatchDel, XTestSysUserBatchDelM = func(ctx *Context) {
+var XTestSysUserBatchDel, XTestSysUserBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserBatchDel = %v want %v", ctx.Code, 200)
@@ -2454,10 +2457,10 @@ var XTestSysUserBatchDel, XTestSysUserBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserUpdate, XTestSysUserUpdateM defined TODO
-var XTestSysUserUpdate, XTestSysUserUpdateM = func(ctx *Context) {
+var XTestSysUserUpdate, XTestSysUserUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserUpdate = %v want %v", ctx.Code, 200)
@@ -2466,10 +2469,10 @@ var XTestSysUserUpdate, XTestSysUserUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserBatchUpdate, XTestSysUserBatchUpdateM defined TODO
-var XTestSysUserBatchUpdate, XTestSysUserBatchUpdateM = func(ctx *Context) {
+var XTestSysUserBatchUpdate, XTestSysUserBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserBatchUpdate = %v want %v", ctx.Code, 200)
@@ -2478,10 +2481,10 @@ var XTestSysUserBatchUpdate, XTestSysUserBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserPage, XTestSysUserPageM defined TODO
-var XTestSysUserPage, XTestSysUserPageM = func(ctx *Context) {
+var XTestSysUserPage, XTestSysUserPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserPage = %v want %v", ctx.Code, 200)
@@ -2490,10 +2493,10 @@ var XTestSysUserPage, XTestSysUserPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserGet, XTestSysUserGetM defined TODO
-var XTestSysUserGet, XTestSysUserGetM = func(ctx *Context) {
+var XTestSysUserGet, XTestSysUserGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserGet = %v want %v", ctx.Code, 200)
@@ -2502,10 +2505,10 @@ var XTestSysUserGet, XTestSysUserGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserLogout, XTestSysUserLogoutM defined TODO
-var XTestSysUserLogout, XTestSysUserLogoutM = func(ctx *Context) {
+var XTestSysUserLogout, XTestSysUserLogoutRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserLogout = %v want %v", ctx.Code, 200)
@@ -2514,10 +2517,10 @@ var XTestSysUserLogout, XTestSysUserLogoutM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserLogout = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateAdd, XTestSysUserTemplateAddM defined TODO
-var XTestSysUserTemplateAdd, XTestSysUserTemplateAddM = func(ctx *Context) {
+var XTestSysUserTemplateAdd, XTestSysUserTemplateAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateAdd = %v want %v", ctx.Code, 200)
@@ -2526,10 +2529,10 @@ var XTestSysUserTemplateAdd, XTestSysUserTemplateAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateBatchAdd, XTestSysUserTemplateBatchAddM defined TODO
-var XTestSysUserTemplateBatchAdd, XTestSysUserTemplateBatchAddM = func(ctx *Context) {
+var XTestSysUserTemplateBatchAdd, XTestSysUserTemplateBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateBatchAdd = %v want %v", ctx.Code, 200)
@@ -2538,10 +2541,10 @@ var XTestSysUserTemplateBatchAdd, XTestSysUserTemplateBatchAddM = func(ctx *Cont
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDel, XTestSysUserTemplateDelM defined TODO
-var XTestSysUserTemplateDel, XTestSysUserTemplateDelM = func(ctx *Context) {
+var XTestSysUserTemplateDel, XTestSysUserTemplateDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDel = %v want %v", ctx.Code, 200)
@@ -2550,10 +2553,10 @@ var XTestSysUserTemplateDel, XTestSysUserTemplateDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateBatchDel, XTestSysUserTemplateBatchDelM defined TODO
-var XTestSysUserTemplateBatchDel, XTestSysUserTemplateBatchDelM = func(ctx *Context) {
+var XTestSysUserTemplateBatchDel, XTestSysUserTemplateBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateBatchDel = %v want %v", ctx.Code, 200)
@@ -2562,10 +2565,10 @@ var XTestSysUserTemplateBatchDel, XTestSysUserTemplateBatchDelM = func(ctx *Cont
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateUpdate, XTestSysUserTemplateUpdateM defined TODO
-var XTestSysUserTemplateUpdate, XTestSysUserTemplateUpdateM = func(ctx *Context) {
+var XTestSysUserTemplateUpdate, XTestSysUserTemplateUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateUpdate = %v want %v", ctx.Code, 200)
@@ -2574,10 +2577,10 @@ var XTestSysUserTemplateUpdate, XTestSysUserTemplateUpdateM = func(ctx *Context)
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateBatchUpdate, XTestSysUserTemplateBatchUpdateM defined TODO
-var XTestSysUserTemplateBatchUpdate, XTestSysUserTemplateBatchUpdateM = func(ctx *Context) {
+var XTestSysUserTemplateBatchUpdate, XTestSysUserTemplateBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateBatchUpdate = %v want %v", ctx.Code, 200)
@@ -2586,10 +2589,10 @@ var XTestSysUserTemplateBatchUpdate, XTestSysUserTemplateBatchUpdateM = func(ctx
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplatePage, XTestSysUserTemplatePageM defined TODO
-var XTestSysUserTemplatePage, XTestSysUserTemplatePageM = func(ctx *Context) {
+var XTestSysUserTemplatePage, XTestSysUserTemplatePageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplatePage = %v want %v", ctx.Code, 200)
@@ -2598,10 +2601,10 @@ var XTestSysUserTemplatePage, XTestSysUserTemplatePageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplatePage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateGet, XTestSysUserTemplateGetM defined TODO
-var XTestSysUserTemplateGet, XTestSysUserTemplateGetM = func(ctx *Context) {
+var XTestSysUserTemplateGet, XTestSysUserTemplateGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateGet = %v want %v", ctx.Code, 200)
@@ -2610,10 +2613,10 @@ var XTestSysUserTemplateGet, XTestSysUserTemplateGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailAdd, XTestSysUserTemplateDetailAddM defined TODO
-var XTestSysUserTemplateDetailAdd, XTestSysUserTemplateDetailAddM = func(ctx *Context) {
+var XTestSysUserTemplateDetailAdd, XTestSysUserTemplateDetailAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailAdd = %v want %v", ctx.Code, 200)
@@ -2622,10 +2625,10 @@ var XTestSysUserTemplateDetailAdd, XTestSysUserTemplateDetailAddM = func(ctx *Co
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailBatchAdd, XTestSysUserTemplateDetailBatchAddM defined TODO
-var XTestSysUserTemplateDetailBatchAdd, XTestSysUserTemplateDetailBatchAddM = func(ctx *Context) {
+var XTestSysUserTemplateDetailBatchAdd, XTestSysUserTemplateDetailBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailBatchAdd = %v want %v", ctx.Code, 200)
@@ -2634,10 +2637,10 @@ var XTestSysUserTemplateDetailBatchAdd, XTestSysUserTemplateDetailBatchAddM = fu
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailDel, XTestSysUserTemplateDetailDelM defined TODO
-var XTestSysUserTemplateDetailDel, XTestSysUserTemplateDetailDelM = func(ctx *Context) {
+var XTestSysUserTemplateDetailDel, XTestSysUserTemplateDetailDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailDel = %v want %v", ctx.Code, 200)
@@ -2646,10 +2649,10 @@ var XTestSysUserTemplateDetailDel, XTestSysUserTemplateDetailDelM = func(ctx *Co
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailBatchDel, XTestSysUserTemplateDetailBatchDelM defined TODO
-var XTestSysUserTemplateDetailBatchDel, XTestSysUserTemplateDetailBatchDelM = func(ctx *Context) {
+var XTestSysUserTemplateDetailBatchDel, XTestSysUserTemplateDetailBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailBatchDel = %v want %v", ctx.Code, 200)
@@ -2658,10 +2661,10 @@ var XTestSysUserTemplateDetailBatchDel, XTestSysUserTemplateDetailBatchDelM = fu
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailUpdate, XTestSysUserTemplateDetailUpdateM defined TODO
-var XTestSysUserTemplateDetailUpdate, XTestSysUserTemplateDetailUpdateM = func(ctx *Context) {
+var XTestSysUserTemplateDetailUpdate, XTestSysUserTemplateDetailUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailUpdate = %v want %v", ctx.Code, 200)
@@ -2670,10 +2673,10 @@ var XTestSysUserTemplateDetailUpdate, XTestSysUserTemplateDetailUpdateM = func(c
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailBatchUpdate, XTestSysUserTemplateDetailBatchUpdateM defined TODO
-var XTestSysUserTemplateDetailBatchUpdate, XTestSysUserTemplateDetailBatchUpdateM = func(ctx *Context) {
+var XTestSysUserTemplateDetailBatchUpdate, XTestSysUserTemplateDetailBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailBatchUpdate = %v want %v", ctx.Code, 200)
@@ -2682,10 +2685,10 @@ var XTestSysUserTemplateDetailBatchUpdate, XTestSysUserTemplateDetailBatchUpdate
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailPage, XTestSysUserTemplateDetailPageM defined TODO
-var XTestSysUserTemplateDetailPage, XTestSysUserTemplateDetailPageM = func(ctx *Context) {
+var XTestSysUserTemplateDetailPage, XTestSysUserTemplateDetailPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailPage = %v want %v", ctx.Code, 200)
@@ -2694,10 +2697,10 @@ var XTestSysUserTemplateDetailPage, XTestSysUserTemplateDetailPageM = func(ctx *
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysUserTemplateDetailGet, XTestSysUserTemplateDetailGetM defined TODO
-var XTestSysUserTemplateDetailGet, XTestSysUserTemplateDetailGetM = func(ctx *Context) {
+var XTestSysUserTemplateDetailGet, XTestSysUserTemplateDetailGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailGet = %v want %v", ctx.Code, 200)
@@ -2706,10 +2709,10 @@ var XTestSysUserTemplateDetailGet, XTestSysUserTemplateDetailGetM = func(ctx *Co
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysUserTemplateDetailGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysWechatOauth2, XTestSysWechatOauth2M defined TODO
-var XTestSysWechatOauth2, XTestSysWechatOauth2M = func(ctx *Context) {
+var XTestSysWechatOauth2, XTestSysWechatOauth2Request = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysWechatOauth2 = %v want %v", ctx.Code, 200)
@@ -2718,10 +2721,10 @@ var XTestSysWechatOauth2, XTestSysWechatOauth2M = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysWechatOauth2 = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysWorkerAdd, XTestSysWorkerAddM defined TODO
-var XTestSysWorkerAdd, XTestSysWorkerAddM = func(ctx *Context) {
+var XTestSysWorkerAdd, XTestSysWorkerAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysWorkerAdd = %v want %v", ctx.Code, 200)
@@ -2730,10 +2733,10 @@ var XTestSysWorkerAdd, XTestSysWorkerAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysWorkerAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestSysWorkerGet, XTestSysWorkerGetM defined TODO
-var XTestSysWorkerGet, XTestSysWorkerGetM = func(ctx *Context) {
+var XTestSysWorkerGet, XTestSysWorkerGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestSysWorkerGet = %v want %v", ctx.Code, 200)
@@ -2742,4 +2745,4 @@ var XTestSysWorkerGet, XTestSysWorkerGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestSysWorkerGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}

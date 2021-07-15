@@ -8,7 +8,7 @@ import (
 )
 
 // XTestSysUserLogin defined TODO
-var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
+var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
 	ret := struct {
 		Code int `json:"code"`
 		Data struct {
@@ -18,10 +18,10 @@ var XTestSysUserLogin, XTestSysUserLoginM = func(ctx *Context) {
 	}{}
 	json.Unmarshal(ctx.Body.Bytes(), &ret)
 	SetToken(ret.Data.AccessToken)
-}, M{"domain": "localhost", "name": "admin", "password": "admin"}
+}, Payload{"domain": "localhost", "name": "admin", "password": "admin"}
 
 // XTestOrganAdd, XTestOrganAddM defined TODO
-var XTestOrganAdd, XTestOrganAddM = func(ctx *Context) {
+var XTestOrganAdd, XTestOrganAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganAdd = %v want %v", ctx.Code, 200)
@@ -30,10 +30,10 @@ var XTestOrganAdd, XTestOrganAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestOrganBatchAdd, XTestOrganBatchAddM defined TODO
-var XTestOrganBatchAdd, XTestOrganBatchAddM = func(ctx *Context) {
+var XTestOrganBatchAdd, XTestOrganBatchAddRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganBatchAdd = %v want %v", ctx.Code, 200)
@@ -42,10 +42,10 @@ var XTestOrganBatchAdd, XTestOrganBatchAddM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganBatchAdd = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestOrganDel, XTestOrganDelM defined TODO
-var XTestOrganDel, XTestOrganDelM = func(ctx *Context) {
+var XTestOrganDel, XTestOrganDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganDel = %v want %v", ctx.Code, 200)
@@ -54,10 +54,10 @@ var XTestOrganDel, XTestOrganDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestOrganBatchDel, XTestOrganBatchDelM defined TODO
-var XTestOrganBatchDel, XTestOrganBatchDelM = func(ctx *Context) {
+var XTestOrganBatchDel, XTestOrganBatchDelRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganBatchDel = %v want %v", ctx.Code, 200)
@@ -66,10 +66,10 @@ var XTestOrganBatchDel, XTestOrganBatchDelM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganBatchDel = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestOrganUpdate, XTestOrganUpdateM defined TODO
-var XTestOrganUpdate, XTestOrganUpdateM = func(ctx *Context) {
+var XTestOrganUpdate, XTestOrganUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganUpdate = %v want %v", ctx.Code, 200)
@@ -78,10 +78,10 @@ var XTestOrganUpdate, XTestOrganUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestOrganBatchUpdate, XTestOrganBatchUpdateM defined TODO
-var XTestOrganBatchUpdate, XTestOrganBatchUpdateM = func(ctx *Context) {
+var XTestOrganBatchUpdate, XTestOrganBatchUpdateRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganBatchUpdate = %v want %v", ctx.Code, 200)
@@ -90,10 +90,10 @@ var XTestOrganBatchUpdate, XTestOrganBatchUpdateM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganBatchUpdate = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestOrganPage, XTestOrganPageM defined TODO
-var XTestOrganPage, XTestOrganPageM = func(ctx *Context) {
+var XTestOrganPage, XTestOrganPageRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganPage = %v want %v", ctx.Code, 200)
@@ -102,10 +102,10 @@ var XTestOrganPage, XTestOrganPageM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganPage = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
 
 // XTestOrganGet, XTestOrganGetM defined TODO
-var XTestOrganGet, XTestOrganGetM = func(ctx *Context) {
+var XTestOrganGet, XTestOrganGetRequest = func(ctx *Context) {
 	ret := Response{}
 	if ctx.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganGet = %v want %v", ctx.Code, 200)
@@ -114,4 +114,4 @@ var XTestOrganGet, XTestOrganGetM = func(ctx *Context) {
 	if ret.Code != 200 {
 		ctx.testingT.Errorf("XTestOrganGet = %v want %v", ret.Code, 200)
 	}
-}, M{}
+}, Payload{}
