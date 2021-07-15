@@ -63,12 +63,13 @@ $ dolphin new hello && cd hello && dolphin build && go run main.go
 - [全局配置](./docs/全局配置.md)
 - [内置指令](./docs/内置指令.md)
 - [远程调用](./docs/远程调用.md)
-- [微服架构](./docs/微服架构.md)
 - [集成平台](./docs/集成平台.md)
+- [用户认证](./docs/用户认证.md)
+- [单点认证](./docs/单点认证.md)
+- [容器平台](./docs/容器平台.md)
+- [微服架构](./docs/微服架构.md)
 - [服务网格](./docs/服务网格.md)
 - [链路跟踪](./docs/链路跟踪.md)
-- [单点认证](./docs/单点认证.md)
-- [用户认证](./docs/用户认证.md)
 
 # MIT License
 
