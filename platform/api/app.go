@@ -6,7 +6,13 @@ package api
 import (
 	"context"
 
+	"github.com/2637309949/dolphin/packages/oauth2/errors"
+	"github.com/2637309949/dolphin/packages/oauth2/generates"
+	"github.com/2637309949/dolphin/packages/oauth2/manage"
+	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/platform/svc"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -39,6 +45,58 @@ func NewLifeHook(e *Dolphin) lifeHook {
 	return &Hook{dol: e}
 }
 
+// WithHttpHandler defined TODO
+func WithHttpHandler() Option {
+	return func(dol *Dolphin) {
+		dol.Http = NewGinHandler(dol)
+	}
+}
+
+// WithRpcHandler defined TODO
+func WithRpcHandler() Option {
+	return func(dol *Dolphin) {
+		dol.RPC = NewGRPCHandler(dol)
+	}
+}
+
+// WithLifecycle defined TODO
+func WithLifecycle() Option {
+	return func(dol *Dolphin) {
+		dol.Lifecycle = &lifecycleWrapper{}
+		dol.Append(NewLifeHook(dol))
+	}
+}
+
+// WithManager defined TODO
+func WithManager() Option {
+	return func(dol *Dolphin) {
+		dol.Manager = NewDefaultManager()
+	}
+}
+
+// WithJWT defined TODO
+func WithJWT() Option {
+	return func(dol *Dolphin) {
+		dol.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
+	}
+}
+
+// WithOAuth2 defined TODO
+func WithOAuth2() Option {
+	return func(dol *Dolphin) {
+		manager := manage.NewDefaultManager()
+		manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
+		manager.MapTokenStorage(dol.Manager.GetTokenStore())
+		manager.MapAccessGenerate(generates.NewAccessGenerate())
+		manager.MapClientStorage(NewClientStore())
+		manager.SetValidateURIHandler(ValidateURIHandler)
+		dol.OAuth2 = server.NewServer(server.NewConfig(), manager)
+		dol.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
+		dol.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
+		dol.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+	}
+}
+
 // init after NewEngine
 func init() {
 	InitViper()
@@ -46,8 +104,9 @@ func init() {
 	InitRedisCli()
 	InitOAuth2()
 
+	opts := []Option{WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
 	svcHelper := svc.NewSvcHepler(RedisClient)
-	app := NewDolphin()
+	app := NewDefault(opts...)
 	app.SyncModel()
 	app.SyncController()
 	app.SyncService()

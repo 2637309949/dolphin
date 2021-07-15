@@ -17,9 +17,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/oauth2/errors"
-	"github.com/2637309949/dolphin/packages/oauth2/generates"
-	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
@@ -33,6 +30,9 @@ import (
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
+
+// Option is a functional option type for Dolphin objects.
+type Option func(*Dolphin)
 
 // Dolphin defined parse app engine
 type Dolphin struct {
@@ -333,38 +333,28 @@ func (dol *Dolphin) Run() {
 	util.Ensure(dol.lifeCycle(context.Background()))
 }
 
-func NewDolphin() *Dolphin {
-	dol := &Dolphin{}
-	dol.RouterGroup = RouterGroup{Handlers: nil, basePath: "/"}
-	dol.RouterGroup.dol = dol
-	dol.Manager = NewDefaultManager()
-	dol.Lifecycle = &lifecycleWrapper{}
-	dol.Http = NewGinHandler(dol)
-	dol.RPC = NewGRPCHandler(dol)
-
-	manager := manage.NewDefaultManager()
-	manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-	manager.MapTokenStorage(dol.Manager.GetTokenStore())
-	manager.MapAccessGenerate(generates.NewAccessGenerate())
-	manager.MapClientStorage(NewClientStore())
-	manager.SetValidateURIHandler(ValidateURIHandler)
-	dol.OAuth2 = server.NewServer(server.NewConfig(), manager)
-	dol.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
-	dol.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
-	dol.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
-
-	dol.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
-
+// NewDefault defined TODO
+func NewDefault(options ...Option) *Dolphin {
+	dol := NewDolphin(options...)
 	dol.Use(Recovery())
 	dol.Use(HttpTrace())
 	dol.Use(Cors())
-
 	dol.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
 	dol.Use(Tracker(TrackerOpts(dol)))
+	return dol
+}
 
-	dol.Append(NewLifeHook(dol))
+// NewDolphin defined TODO
+func NewDolphin(options ...Option) *Dolphin {
+	dol := &Dolphin{}
+	dol.RouterGroup = RouterGroup{Handlers: nil, basePath: "/"}
+	dol.RouterGroup.dol = dol
 	dol.pool.New = func() interface{} {
 		return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
+	}
+
+	for i := range options {
+		options[i](dol)
 	}
 	return dol
 }

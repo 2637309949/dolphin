@@ -17,7 +17,7 @@ import (
 )
 
 // NewCookieStore Create an instance of a cookie store
-func NewCookieStore(opt ...Option) session.ManagerStore {
+func NewCookieStore(opt ...CookieOption) session.ManagerStore {
 	opts := defaultOptions
 	for _, o := range opt {
 		o(&opts)
@@ -268,67 +268,67 @@ type options struct {
 	minAge     int
 }
 
-// Option A cookie parameter options
-type Option func(*options)
+// CookieOption A cookie parameter options
+type CookieOption func(*options)
 
 // SetCookieName Set the cookie name
-func SetCookieName(cookieName string) Option {
+func SetCookieName(cookieName string) CookieOption {
 	return func(o *options) {
 		o.cookieName = cookieName
 	}
 }
 
 // SetSecure Set cookie security
-func SetSecure(secure bool) Option {
+func SetSecure(secure bool) CookieOption {
 	return func(o *options) {
 		o.secure = secure
 	}
 }
 
 // SetHashKey used to authenticate values using HMAC
-func SetHashKey(hashKey []byte) Option {
+func SetHashKey(hashKey []byte) CookieOption {
 	return func(o *options) {
 		o.hashKey = hashKey
 	}
 }
 
 // SetHashFunc sets the hash function used to create HMAC
-func SetHashFunc(hashFunc func() hash.Hash) Option {
+func SetHashFunc(hashFunc func() hash.Hash) CookieOption {
 	return func(o *options) {
 		o.hashFunc = hashFunc
 	}
 }
 
 // SetBlockKey used to encrypt values
-func SetBlockKey(blockKey []byte) Option {
+func SetBlockKey(blockKey []byte) CookieOption {
 	return func(o *options) {
 		o.blockKey = blockKey
 	}
 }
 
 // SetBlockFunc sets the encryption function used to create a cipher.Block
-func SetBlockFunc(blockFunc func([]byte) (cipher.Block, error)) Option {
+func SetBlockFunc(blockFunc func([]byte) (cipher.Block, error)) CookieOption {
 	return func(o *options) {
 		o.blockFunc = blockFunc
 	}
 }
 
 // SetMaxLength restricts the maximum length, in bytes, for the cookie value
-func SetMaxLength(maxLength int) Option {
+func SetMaxLength(maxLength int) CookieOption {
 	return func(o *options) {
 		o.maxLength = maxLength
 	}
 }
 
 // SetMaxAge restricts the maximum age, in seconds, for the cookie value
-func SetMaxAge(maxAge int) Option {
+func SetMaxAge(maxAge int) CookieOption {
 	return func(o *options) {
 		o.maxAge = maxAge
 	}
 }
 
 // SetMinAge restricts the minimum age, in seconds, for the cookie value
-func SetMinAge(minAge int) Option {
+func SetMinAge(minAge int) CookieOption {
 	return func(o *options) {
 		o.minAge = minAge
 	}
