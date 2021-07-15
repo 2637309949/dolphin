@@ -188,7 +188,7 @@ func (dol *Dolphin) Reflesh() error {
 		dol.Manager.AddBusinessDB(domain.Domain.String, db)
 	}
 
-	platBindModelNames := dol.Manager.ModelSet().ByNotName(Name)
+	platBindModelNames := dol.Manager.ModelSet().NameSpaces(Name)
 	filtedDomains := funk.Filter(domains, func(domain types.SysDomain) bool { return domain.IsSync.Int64 != 1 }).([]types.SysDomain)
 	for i := range filtedDomains {
 		asyncOnce.Do(func() {

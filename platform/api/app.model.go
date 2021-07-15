@@ -7,6 +7,7 @@ package api
 import (
 	"sync"
 
+	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/spf13/viper"
 )
 
@@ -20,6 +21,7 @@ type ModelSetter interface {
 	Add(Table, ...string)
 	ByName(string) []Table
 	ByNotName(string) []Table
+	NameSpaces(...string) (names []string)
 	Release()
 }
 
@@ -27,6 +29,17 @@ type ModelSetter interface {
 type defaultModelSetter struct {
 	lock *sync.RWMutex
 	m    map[string][]Table
+}
+
+// Add defined add models
+func (s *defaultModelSetter) NameSpaces(n ...string) (names []string) {
+	for k := range s.m {
+		if slice.StrSliceContains(n, k) {
+			continue
+		}
+		names = append(names, k)
+	}
+	return
 }
 
 // Add defined add models
