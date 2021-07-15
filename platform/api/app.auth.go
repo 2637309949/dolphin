@@ -105,18 +105,17 @@ func (auth *AuthOAuth2) VerifyJWT(ctx *Context) bool {
 
 // VerifyEncrypt defined
 func (auth *AuthOAuth2) VerifyEncrypt(ctx *Context) bool {
-	nef := NewEncryptForm()
-	parseForm, err := nef.ParseForm(ctx)
+	secret, err := NewSecret(ctx)
 	if err != nil {
 		logrus.Error(err)
 		return false
 	}
-	cli, err := NewClientStore().GetByID(parseForm.AppID)
+	cli, err := NewClientStore().GetByID(secret.AppID)
 	if err != nil {
 		logrus.Error(err)
 		return false
 	}
-	valid, err := parseForm.Verify(cli)
+	valid, err := secret.Verify(cli)
 	if err != nil {
 		logrus.Error(err)
 		return false

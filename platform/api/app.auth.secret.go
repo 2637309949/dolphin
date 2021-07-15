@@ -12,43 +12,31 @@ import (
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/platform/util/encrypt"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 )
 
-// EncryptForm defines Common request parameter
-type EncryptForm struct {
+// Secret defines Common request parameter
+type Secret struct {
 	AppID      string `form:"app_id" json:"app_id" xml:"app_id" binding:"required"`
 	Sign       string `form:"sign" json:"sign" xml:"sign" binding:"required"`
 	TimeStamp  int64  `form:"timestamp" json:"timestamp" xml:"timestamp" binding:"required"`
 	BizContent string `form:"biz_content" json:"biz_content" xml:"biz_content" binding:"required"`
 }
 
-// NewEncryptForm defined TODO
-func NewEncryptForm() *EncryptForm {
-	return &EncryptForm{}
-}
-
-// ParseForm defined
-func (ec *EncryptForm) ParseForm(ctx *Context) (*EncryptForm, error) {
-	puData := EncryptForm{}
-	if ctx.Request.Method != "POST" {
-		if err := ctx.BindQuery(&puData); err != nil {
-			return nil, err
-		}
-	} else {
-		if err := ctx.ShouldBindBodyWith(&puData, binding.JSON); err != nil {
-			return nil, err
-		}
+// NewSecret defined TODO
+func NewSecret(ctx *Context) (*Secret, error) {
+	secret := Secret{}
+	if err := ctx.ShouldBindWith(&secret); err != nil {
+		return nil, err
 	}
-	return &puData, nil
+	return &secret, nil
 }
 
 // form2Uri defined
-func (ec *EncryptForm) parseForm() (string, error) {
+func (secret *Secret) parseForm() (string, error) {
 	var puJSON map[string]string
 	var puKeys = make([]string, 0, len(puJSON))
-	puByte, err := json.Marshal(ec)
+	puByte, err := json.Marshal(secret)
 	if err != nil {
 		return "", err
 	}
@@ -73,8 +61,8 @@ func (ec *EncryptForm) parseForm() (string, error) {
 	return signString, nil
 }
 
-func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
-	uri, err := ec.parseForm()
+func (secret *Secret) sign(cli oauth2.ClientInfo) ([]byte, error) {
+	uri, err := secret.parseForm()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -86,18 +74,18 @@ func (ec *EncryptForm) sign(cli oauth2.ClientInfo) ([]byte, error) {
 }
 
 // Verify defined
-func (ec *EncryptForm) Verify(cli oauth2.ClientInfo) (bool, error) {
+func (secret *Secret) Verify(cli oauth2.ClientInfo) (bool, error) {
 	nowTs := time.Now().Unix()
-	ts := ec.TimeStamp
+	ts := secret.TimeStamp
 	if ts > nowTs || nowTs-ts >= 60 {
 		return false, errors.New("timestamp error")
 	}
-	sn, err := ec.sign(cli)
+	sn, err := secret.sign(cli)
 	if err != nil {
 		logrus.Error(err)
 		return false, err
 	}
-	if string(sn) != ec.Sign {
+	if string(sn) != secret.Sign {
 		return false, errors.New("sign error")
 	}
 	return true, nil

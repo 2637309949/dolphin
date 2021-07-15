@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
 )
@@ -82,7 +81,7 @@ func (ctr *SysWorker) SysWorkerAdd(ctx *Context) {
 		bs      []byte
 		err     error
 	)
-	if err = ctx.ShouldBindBodyWith(&payload, binding.JSON); err != nil {
+	if err = ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
