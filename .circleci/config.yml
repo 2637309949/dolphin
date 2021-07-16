@@ -20,11 +20,8 @@ jobs:
     working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
     steps:
       - checkout
-
       # specify any bash command here prefixed with `run: `
       - run: go env -w GO111MODULE=on
       - run: go env -w GOPROXY=https://goproxy.cn,direct
       - run: go get -v -t -d ./... 
-      - run: cd platform
-      # - run: go test -v ./... -test.run TestSysAppFunPage
-      - run: go test -v ./. -test.run TestSysAppFunPage
+      - run: go test -v ./platform -test.run TestSysAppFunPage
