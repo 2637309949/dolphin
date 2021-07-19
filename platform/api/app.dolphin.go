@@ -43,7 +43,7 @@ type Dolphin struct {
 	OAuth2     *server.Server
 	JWT        *JWT
 	Http       HttpHandler
-	RPC        RPCHandler
+	RPC        RpcHandler
 	pool       sync.Pool
 }
 

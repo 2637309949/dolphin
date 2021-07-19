@@ -18,21 +18,25 @@ import (
 // UserSrvClient defined
 var UserSrvClient proto.UserSrvClient
 
+// NewUserSrvClient defined TODO
+func NewUserSrvClient(target string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+	options := append(opts, []grpc.DialOption{
+		grpc.WithInsecure(),
+		grpc.WithBlock(),
+		grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+	}...)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), options...)
+	return conn, err
+}
+
 func init() {
 	go func() {
 		time.Sleep(1 * time.Second)
-		options := []grpc.DialOption{
-			grpc.WithInsecure(),
-			grpc.WithBlock(),
-			grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
-		}
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		defer cancel()
-		conn, err := grpc.DialContext(ctx, viper.GetString("rpc.user_srv"), options...)
+		conn, err := NewUserSrvClient(viper.GetString("rpc.user_srv"))
 		if err != nil {
-			logrus.Errorf("rpc.user_srv dial %v fail %v", viper.GetString("rpc.user_srv"), err)
-		} else {
-			logrus.Infof("rpc.user_srv dial %v connected", viper.GetString("rpc.user_srv"))
+			logrus.Errorf("grpc dial failed: %v", err)
 		}
 		UserSrvClient = proto.NewUserSrvClient(conn)
 	}()

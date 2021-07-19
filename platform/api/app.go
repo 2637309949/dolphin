@@ -55,7 +55,7 @@ func WithHttpHandler() Option {
 // WithRpcHandler defined TODO
 func WithRpcHandler() Option {
 	return func(dol *Dolphin) {
-		dol.RPC = NewGRPCHandler(dol)
+		dol.RPC = NewRpcHandler()
 	}
 }
 

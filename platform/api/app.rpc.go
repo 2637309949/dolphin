@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"time"
 
 	"github.com/2637309949/dolphin/platform/plugin"
 	"github.com/2637309949/dolphin/platform/util"
@@ -16,23 +17,23 @@ import (
 	"google.golang.org/grpc"
 )
 
-// RPCHandler defined
-type RPCHandler interface {
+// RpcHandler defined
+type RpcHandler interface {
 	RegisterServer(func(*grpc.Server))
 	OnStart(context.Context) error
 	OnStop(context.Context) error
 }
 
-type grpcHandler struct {
+type gHandler struct {
 	grpc *grpc.Server
 	net  net.Listener
 }
 
-func (gh *grpcHandler) RegisterServer(f func(*grpc.Server)) {
+func (gh *gHandler) RegisterServer(f func(*grpc.Server)) {
 	f(gh.grpc)
 }
 
-func (gh *grpcHandler) OnStart(ctx context.Context) error {
+func (gh *gHandler) OnStart(ctx context.Context) error {
 	go func() {
 		logrus.Infof("grpc listen on port:%v", viper.GetString("rpc.port"))
 		if err := gh.grpc.Serve(gh.net); err != nil {
@@ -42,7 +43,7 @@ func (gh *grpcHandler) OnStart(ctx context.Context) error {
 	return nil
 }
 
-func (gh *grpcHandler) OnStop(ctx context.Context) error {
+func (gh *gHandler) OnStop(ctx context.Context) error {
 	if err := gh.net.Close(); err != nil {
 		logrus.Fatal(err)
 		return err
@@ -50,11 +51,27 @@ func (gh *grpcHandler) OnStop(ctx context.Context) error {
 	return nil
 }
 
-// NewGRPCHandler defined
-func NewGRPCHandler(*Dolphin) RPCHandler {
+// RpcClientDailTimeOut defined TODO
+var RpcClientDailTimeOut = 3 * time.Second
+
+// NewRpcClient defined TODO
+func NewRpcClient(target string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+	options := append(opts, []grpc.DialOption{
+		grpc.WithInsecure(),
+		grpc.WithBlock(),
+		grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+	}...)
+	ctx, cancel := context.WithTimeout(context.Background(), RpcClientDailTimeOut)
+	defer cancel()
+	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), options...)
+	return conn, err
+}
+
+// NewRpcHandler defined TODO
+func NewRpcHandler() RpcHandler {
 	options := []grpc.ServerOption{
 		grpc.UnaryInterceptor(plugin.RpcCliTrace(viper.GetString("app.name"))),
 	}
 	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("rpc.port")))).(net.Listener)
-	return &grpcHandler{net: net, grpc: grpc.NewServer(options...)}
+	return &gHandler{net: net, grpc: grpc.NewServer(options...)}
 }
