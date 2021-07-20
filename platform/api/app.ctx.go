@@ -187,26 +187,6 @@ func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
 	return App.Manager.GetBusinessDB(domain)
 }
 
-// Persist defined TODO
-func (ctx *Context) Persist(db *xorm.Session, ids ...string) (int64, error) {
-	return new(types.SysAttachment).Persist(db, ids...)
-}
-
-// PersistFile defined TODO
-func (ctx *Context) PersistFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error) {
-	return new(types.SysAttachment).PersistFile(db, cb, ids...)
-}
-
-// Remove defined TODO
-func (ctx *Context) Remove(db *xorm.Session, ids ...string) (int64, error) {
-	return new(types.SysAttachment).Remove(db, ids...)
-}
-
-// RemoveFile defined TODO
-func (ctx *Context) RemoveFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error) {
-	return new(types.SysAttachment).RemoveFile(db, cb, ids...)
-}
-
 // String defined TODO
 func (ctx *Context) String(code int, data string, context ...interface{}) error {
 	str, err := mustache.NewTemplate().Render(data, context...)
@@ -316,7 +296,7 @@ func (ctx *Context) ShouldBindWith(ptr interface{}) error {
 	if err != nil {
 		return err
 	}
-	if JsonCheck(ctx.Request) {
+	if util.JsonCheck(ctx.Request) {
 		return ctx.ShouldBindBody(ptr)
 	}
 	return nil
@@ -405,13 +385,4 @@ func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
 	err = binding.Query.Bind(ctx.Request, ptr)
 	ctx.Request.URL.RawQuery = rawQuery
 	return err
-}
-
-// JsonCheck defined TODO
-func JsonCheck(req *http.Request) bool {
-	jsonType := "application/json"
-	if req.ContentLength > 0 && strings.Contains(req.Header.Get("Content-Type"), jsonType) {
-		return true
-	}
-	return false
 }

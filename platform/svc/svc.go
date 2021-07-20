@@ -30,6 +30,10 @@ type (
 		GetOptions(*xorm.Engine, ...string) (map[string]map[string]interface{}, error)
 		InRole(*xorm.Engine, string, ...string) bool
 		InAdmin(*xorm.Engine, string, ...string) bool
+		Persist(db *xorm.Session, ids ...string) (int64, error)
+		PersistFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error)
+		Remove(db *xorm.Session, ids ...string) (int64, error)
+		RemoveFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error)
 	}
 	// Formatter defined TODO
 	Formatter func(*xorm.Engine, []map[string]interface{}) ([]map[string]interface{}, error)

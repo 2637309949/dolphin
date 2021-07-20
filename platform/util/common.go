@@ -6,9 +6,11 @@ package util
 import (
 	"fmt"
 	"math/rand"
+	"net/http"
 	"os"
 	"reflect"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/2637309949/dolphin/platform/util/slice"
@@ -191,4 +193,13 @@ func JoinObject(arr interface{}, format ...string) (str string) {
 		}
 	}
 	return str
+}
+
+// JsonCheck defined TODO
+func JsonCheck(req *http.Request) bool {
+	jsonType := "application/json"
+	if req.ContentLength > 0 && strings.Contains(req.Header.Get("Content-Type"), jsonType) {
+		return true
+	}
+	return false
 }

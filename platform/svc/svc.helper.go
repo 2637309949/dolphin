@@ -189,6 +189,26 @@ func (svc *SvcHepler) TreeSearch(db *xorm.Engine, controller, api, table string,
 	return rootArr, nil
 }
 
+// Persist defined TODO
+func (svc *SvcHepler) Persist(db *xorm.Session, ids ...string) (int64, error) {
+	return new(types.SysAttachment).Persist(db, ids...)
+}
+
+// PersistFile defined TODO
+func (svc *SvcHepler) PersistFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error) {
+	return new(types.SysAttachment).PersistFile(db, cb, ids...)
+}
+
+// Remove defined TODO
+func (svc *SvcHepler) Remove(db *xorm.Session, ids ...string) (int64, error) {
+	return new(types.SysAttachment).Remove(db, ids...)
+}
+
+// RemoveFile defined TODO
+func (svc *SvcHepler) RemoveFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error) {
+	return new(types.SysAttachment).RemoveFile(db, cb, ids...)
+}
+
 // GetOptions defined TODO
 func (svc *SvcHepler) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error) {
 	var optSets []types.SysOptionset
