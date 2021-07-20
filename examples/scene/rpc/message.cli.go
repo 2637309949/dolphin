@@ -9,7 +9,7 @@ import (
 
 	"scene/rpc/proto"
 
-	"github.com/2637309949/dolphin/platform/plugin"
+	"github.com/2637309949/dolphin/platform/util/trace"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -24,7 +24,7 @@ func NewMessageSrvClient(target string, opts ...grpc.DialOption) (*grpc.ClientCo
 	options := append(opts, []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
-		grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+		grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace),
 	}...)
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()

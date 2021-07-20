@@ -7,7 +7,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/2637309949/dolphin/platform/plugin"
+    "github.com/2637309949/dolphin/platform/util/trace"
 	"{{.PackageName}}/{{$.Viper.GetString "dir.rpc" }}/proto"
 
 	"github.com/sirupsen/logrus"
@@ -23,7 +23,7 @@ func New{{.Service.ToUpperCase .Service.Name}}Client(target string, opts ...grpc
 	options := append(opts, []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
-		grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+		grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace),
 	}...)
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()

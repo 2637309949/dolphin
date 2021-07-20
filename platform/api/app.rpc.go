@@ -10,7 +10,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/2637309949/dolphin/platform/plugin"
+	"github.com/2637309949/dolphin/platform/util/trace"
+
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -59,7 +60,7 @@ func NewRpcClient(target string, opts ...grpc.DialOption) (*grpc.ClientConn, err
 	options := append(opts, []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
-		grpc.WithChainUnaryInterceptor(plugin.RpcSrvTrace),
+		grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace),
 	}...)
 	ctx, cancel := context.WithTimeout(context.Background(), RpcClientDailTimeOut)
 	defer cancel()
@@ -70,7 +71,7 @@ func NewRpcClient(target string, opts ...grpc.DialOption) (*grpc.ClientConn, err
 // NewRpcHandler defined TODO
 func NewRpcHandler() RpcHandler {
 	options := []grpc.ServerOption{
-		grpc.UnaryInterceptor(plugin.RpcCliTrace(viper.GetString("app.name"))),
+		grpc.UnaryInterceptor(trace.RpcCliTrace(viper.GetString("app.name"))),
 	}
 	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("rpc.port")))).(net.Listener)
 	return &gHandler{net: net, grpc: grpc.NewServer(options...)}
