@@ -36,6 +36,11 @@ type Context struct {
 	PlatformDB *xorm.Engine
 }
 
+// NewContext defined TODO
+func NewContext(dol *Dolphin) *Context {
+	return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
+}
+
 // reset defined clean vars in ctx
 func (ctx *Context) reset() {
 	ctx.DB = nil

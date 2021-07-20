@@ -85,6 +85,7 @@ func (group *RouterGroup) StaticFS(relativePath string, fs http.FileSystem) {
 	group.Handle("HEAD", urlPattern, handler)
 }
 
+// createStaticHandler defined TODO
 func (group *RouterGroup) createStaticHandler(relativePath string, fs http.FileSystem) HandlerFunc {
 	absolutePath := group.calculateAbsolutePath(relativePath)
 	fileServer := http.StripPrefix(absolutePath, http.FileServer(fs))
@@ -103,10 +104,12 @@ func (group *RouterGroup) createStaticHandler(relativePath string, fs http.FileS
 	}
 }
 
+// handle defined TODO
 func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	group.dol.Http.Handle(httpMethod, relativePath, handlers...)
 }
 
+// combineHandlers defined TODO
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
 	finalSize := len(group.Handlers) + len(handlers)
 	if finalSize >= int(63) {
@@ -118,6 +121,7 @@ func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain 
 	return mergedHandlers
 }
 
+// calculateAbsolutePath defined TODO
 func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	if relativePath == "" {
 		return group.basePath

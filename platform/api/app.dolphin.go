@@ -31,21 +31,22 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-// Option is a functional option type for Dolphin objects.
-type Option func(*Dolphin)
-
-// Dolphin defined parse app engine
-type Dolphin struct {
-	RouterGroup
-	Lifecycle
-	PlatformDB *xorm.Engine
-	Manager    Manager
-	OAuth2     *server.Server
-	JWT        *JWT
-	Http       HttpHandler
-	RPC        RpcHandler
-	pool       sync.Pool
-}
+type (
+	// Option is a functional option type for Dolphin objects.
+	Option func(*Dolphin)
+	// Dolphin defined parse app engine
+	Dolphin struct {
+		RouterGroup
+		Lifecycle
+		PlatformDB *xorm.Engine
+		Manager    Manager
+		OAuth2     *server.Server
+		JWT        *JWT
+		Http       HttpHandler
+		RPC        RpcHandler
+		pool       sync.Pool
+	}
+)
 
 // allocateContext defined new context
 func (dol *Dolphin) allocateContext(f func(*Context)) {
@@ -113,6 +114,7 @@ func (dol *Dolphin) ServeHTTP(w nh.ResponseWriter, r *nh.Request) {
 
 // Reflesh defined init data before bootinh
 func (dol *Dolphin) Reflesh() error {
+	defer dol.Manager.ModelSet().Release()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	xlogger := createXLogger()
 	db, err := xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
@@ -262,7 +264,6 @@ func (dol *Dolphin) Reflesh() error {
 		s1.Commit()
 	}
 
-	dol.Manager.ModelSet().Release()
 	return s.Commit()
 }
 
@@ -347,14 +348,15 @@ func NewDefault(options ...Option) *Dolphin {
 // NewDolphin defined TODO
 func NewDolphin(options ...Option) *Dolphin {
 	dol := &Dolphin{}
-	dol.RouterGroup = RouterGroup{Handlers: nil, basePath: "/"}
+	dol.RouterGroup = RouterGroup{Handlers: []HandlerFunc{}, basePath: "/"}
 	dol.RouterGroup.dol = dol
 	dol.pool.New = func() interface{} {
-		return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
+		return NewContext(dol)
 	}
 
 	for i := range options {
 		options[i](dol)
 	}
+
 	return dol
 }

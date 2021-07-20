@@ -140,11 +140,16 @@ func Cache(time time.Duration) HandlerFunc {
 	}
 }
 
+// NewContext defined TODO
+func NewContext(dol *Dolphin) *Context {
+	return &Context{}
+}
+
 // NewDolphin defined init dol you can custom engine
 func NewDolphin() *Dolphin {
 	rg := RouterGroup{Handlers: nil, basePath: "/"}
 	dol := Dolphin{Dolphin: api.App, RouterGroup: rg}
-	dol.pool.New = func() interface{} { return &Context{} }
+	dol.pool.New = func() interface{} { return NewContext(&dol) }
 	dol.RouterGroup.dol = &dol
 	return &dol
 }
