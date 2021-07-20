@@ -298,7 +298,7 @@ func (set *StringSet) Sort() {
 		return
 	}
 	set.list = make([]string, 0)
-	for s, _ := range set.set {
+	for s := range set.set {
 		set.list = append(set.list, s)
 	}
 	sort.Strings(set.list)

@@ -31,7 +31,7 @@ func NewDatabookWithData(sheetName map[string]string, data interface{}, mustMatc
 		}
 
 		databook := tablib.NewDatabook()
-		for k, _ := range dataModel1 {
+		for k := range dataModel1 {
 			if _, ok := sheetName[k]; !ok {
 				return nil, ErrParamsType
 			}
@@ -53,7 +53,7 @@ func NewDatabookWithData(sheetName map[string]string, data interface{}, mustMatc
 			return nil, ErrParamsType
 		}
 		databook := tablib.NewDatabook()
-		for k, _ := range dataModel2 {
+		for k := range dataModel2 {
 			if _, ok := sheetName[k]; !ok {
 				return nil, ErrParamsType
 			}

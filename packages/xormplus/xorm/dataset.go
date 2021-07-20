@@ -37,7 +37,7 @@ func NewDatasetWithData(headers []string, data interface{}, mustMatch bool) (*ta
 					mapHeaders[headers[i]] = i
 				}
 
-				for k, _ := range dataSlice[0] {
+				for k := range dataSlice[0] {
 					if _, ok := mapHeaders[k]; !ok {
 						return nil, ErrParamsType
 					}
@@ -45,7 +45,7 @@ func NewDatasetWithData(headers []string, data interface{}, mustMatch bool) (*ta
 
 				d := tablib.NewDataset(headers)
 				var row []interface{}
-				for i, _ := range dataSlice {
+				for i := range dataSlice {
 					row = nil
 					for j := 0; j < n; j++ {
 						row = append(row, dataSlice[i][headers[j]])

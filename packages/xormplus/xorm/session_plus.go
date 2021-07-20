@@ -545,13 +545,13 @@ func (session *Session) Query() *ResultMap {
 	pLimitN := session.statement.LimitN
 	if dialect.URI().DBType == schemas.MSSQL {
 		if session.statement.Start > 0 {
-			for i, _ := range result {
+			for i := range result {
 				delete(result[i], rownumber)
 			}
 		}
 	} else if dialect.URI().DBType == schemas.ORACLE {
 		if session.statement.Start != 0 || pLimitN != nil {
-			for i, _ := range result {
+			for i := range result {
 				delete(result[i], rownumber)
 			}
 		}
@@ -590,13 +590,13 @@ func (session *Session) QueryWithDateFormat(dateFormat string) *ResultMap {
 	pLimitN := session.statement.LimitN
 	if dialect.URI().DBType == schemas.MSSQL {
 		if session.statement.Start > 0 {
-			for i, _ := range result {
+			for i := range result {
 				delete(result[i], rownumber)
 			}
 		}
 	} else if dialect.URI().DBType == schemas.ORACLE {
 		if session.statement.Start != 0 || pLimitN != nil {
-			for i, _ := range result {
+			for i := range result {
 				delete(result[i], rownumber)
 			}
 		}

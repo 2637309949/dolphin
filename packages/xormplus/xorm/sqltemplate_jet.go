@@ -291,7 +291,7 @@ func (sqlTemplate *JetTemplate) GetSqlTemplates(keys ...interface{}) map[string]
 		resultSqlTemplates = make(map[string]*jet.Template, i)
 	}
 
-	for k, _ := range keys {
+	for k := range keys {
 		switch keys[k].(type) {
 		case string:
 			key := keys[k].(string)

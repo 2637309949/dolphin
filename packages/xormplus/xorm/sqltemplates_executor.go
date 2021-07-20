@@ -172,7 +172,7 @@ func (sqlTemplatesExecutor *SqlTemplatesExecutor) Execute() ([][]map[string]inte
 		parmaSlice := make([]map[string]interface{}, n)
 
 		if sqlTemplatesExecutor.parmas == nil {
-			for i, _ := range sqlkeysSlice {
+			for i := range sqlkeysSlice {
 				sqlTemplatesExecutor.session.isSqlFunc = true
 				sqlStr, err := sqlTemplatesExecutor.session.engine.SqlTemplate.Execute(sqlkeysSlice[i])
 				if err != nil {
@@ -265,7 +265,7 @@ func (sqlTemplatesExecutor *SqlTemplatesExecutor) Execute() ([][]map[string]inte
 				return nil, nil, ErrParamsType
 			}
 
-			for i, _ := range sqlkeysSlice {
+			for i := range sqlkeysSlice {
 				sqlTemplatesExecutor.session.isSqlFunc = true
 				sqlStr, err := sqlTemplatesExecutor.session.engine.SqlTemplate.Execute(sqlkeysSlice[i], parmaSlice[i])
 				if err != nil {
@@ -373,7 +373,7 @@ func (sqlTemplatesExecutor *SqlTemplatesExecutor) Execute() ([][]map[string]inte
 
 		if sqlTemplatesExecutor.parmas == nil {
 
-			for k, _ := range sqlkeysMap {
+			for k := range sqlkeysMap {
 				sqlTemplatesExecutor.session.isSqlFunc = true
 				sqlStr, err := sqlTemplatesExecutor.session.engine.SqlTemplate.Execute(sqlkeysMap[k])
 				if err != nil {
@@ -466,7 +466,7 @@ func (sqlTemplatesExecutor *SqlTemplatesExecutor) Execute() ([][]map[string]inte
 				return nil, nil, ErrParamsType
 			}
 
-			for k, _ := range sqlkeysMap {
+			for k := range sqlkeysMap {
 				sqlTemplatesExecutor.session.isSqlFunc = true
 				sqlStr, err := sqlTemplatesExecutor.session.engine.SqlTemplate.Execute(sqlkeysMap[k], parmasMap[k])
 				if err != nil {

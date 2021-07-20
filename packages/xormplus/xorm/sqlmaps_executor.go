@@ -159,7 +159,7 @@ func (sqlMapsExecutor *SqlMapsExecutor) Execute() ([][]map[string]interface{}, m
 		parmaSlice := make([]map[string]interface{}, n)
 
 		if sqlMapsExecutor.parmas == nil {
-			for i, _ := range sqlkeysSlice {
+			for i := range sqlkeysSlice {
 				sqlMapsExecutor.session.isSqlFunc = true
 				sqlStr := sqlMapsExecutor.session.engine.GetSql(sqlkeysSlice[i])
 				sqlStr = strings.TrimSpace(sqlStr)
@@ -241,7 +241,7 @@ func (sqlMapsExecutor *SqlMapsExecutor) Execute() ([][]map[string]interface{}, m
 				return nil, nil, ErrParamsType
 			}
 
-			for i, _ := range sqlkeysSlice {
+			for i := range sqlkeysSlice {
 				sqlMapsExecutor.session.isSqlFunc = true
 				sqlStr := sqlMapsExecutor.session.engine.GetSql(sqlkeysSlice[i])
 				sqlStr = strings.TrimSpace(sqlStr)
@@ -338,7 +338,7 @@ func (sqlMapsExecutor *SqlMapsExecutor) Execute() ([][]map[string]interface{}, m
 		parmasMap := make(map[string]map[string]interface{}, n)
 
 		if sqlMapsExecutor.parmas == nil {
-			for k, _ := range sqlkeysMap {
+			for k := range sqlkeysMap {
 				sqlMapsExecutor.session.isSqlFunc = true
 				sqlStr := sqlMapsExecutor.session.engine.GetSql(sqlkeysMap[k])
 				sqlStr = strings.TrimSpace(sqlStr)
@@ -421,7 +421,7 @@ func (sqlMapsExecutor *SqlMapsExecutor) Execute() ([][]map[string]interface{}, m
 				return nil, nil, ErrParamsType
 			}
 
-			for k, _ := range sqlkeysMap {
+			for k := range sqlkeysMap {
 				sqlMapsExecutor.session.isSqlFunc = true
 				sqlStr := sqlMapsExecutor.session.engine.GetSql(sqlkeysMap[k])
 				sqlStr = strings.TrimSpace(sqlStr)

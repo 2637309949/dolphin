@@ -171,7 +171,7 @@ func (sqlMap *SqlMap) getSqlMap(keys ...interface{}) map[string]string {
 		resultSqlMap = make(map[string]string, i)
 	}
 
-	for k, _ := range keys {
+	for k := range keys {
 		switch keys[k].(type) {
 		case string:
 			key := keys[k].(string)

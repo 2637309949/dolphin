@@ -281,7 +281,7 @@ func (sqlTemplate *Pongo2Template) GetSqlTemplates(keys ...interface{}) map[stri
 		resultSqlTemplates = make(map[string]*pongo2.Template, i)
 	}
 
-	for k, _ := range keys {
+	for k := range keys {
 		switch keys[k].(type) {
 		case string:
 			key := keys[k].(string)
