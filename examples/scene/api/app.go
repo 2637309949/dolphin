@@ -44,15 +44,10 @@ type (
 		Handlers []HandlerFunc
 		basePath string
 	}
-	// Srv defined
-	Srv interface {
-		SetCache(key string, v interface{}) error
-		GetCache(key string, v interface{}, expire time.Duration) error
-	}
 )
 
 // HandlerFunc convert to api.HandlerFunc
-func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf api.HandlerFunc) {
+func (dol *Dolphin) HandlerFunc(h HandlerFunc) api.HandlerFunc {
 	return api.HandlerFunc(func(ctx *api.Context) {
 		c := dol.pool.Get().(*Context)
 		c.Context = ctx
@@ -72,14 +67,15 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 		handlers = group.combineHandlers(handlers)
 		hls := []api.HandlerFunc{}
 		for j := 0; j < len(handlers); j++ {
-			hls = append(hls, group.dol.HandlerFunc(handlers[j]))
+			hls = append(hls, func(ctx *api.Context) {
+				c := group.dol.pool.Get().(*Context)
+				c.Context = ctx
+				handlers[j](c)
+				group.dol.pool.Put(c)
+			})
 		}
-		group.handle(methods[i], relativePath, hls...)
+		group.dol.Http.Handle(methods[i], relativePath, hls...)
 	}
-}
-
-func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...api.HandlerFunc) {
-	group.dol.Http.Handle(httpMethod, relativePath, handlers...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {

@@ -7,7 +7,7 @@ package api
 import (
 	"context"
 	"fmt"
-	nh "net/http"
+	"net/http"
 	"os"
 	"os/signal"
 	"path"
@@ -24,8 +24,9 @@ import (
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/file"
-	"github.com/2637309949/dolphin/platform/util/http"
+	"github.com/2637309949/dolphin/platform/util/http/uri"
 	"github.com/2637309949/dolphin/platform/util/slice"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
@@ -36,6 +37,7 @@ type (
 	Option func(*Dolphin)
 	// Dolphin defined parse app engine
 	Dolphin struct {
+		http.Handler
 		RouterGroup
 		Lifecycle
 		PlatformDB *xorm.Engine
@@ -48,7 +50,7 @@ type (
 	}
 )
 
-// allocateContext defined new context
+// allocateContext defined TODO
 func (dol *Dolphin) allocateContext(f func(*Context)) {
 	c := dol.pool.Get().(*Context)
 	c.reset()
@@ -56,7 +58,7 @@ func (dol *Dolphin) allocateContext(f func(*Context)) {
 	dol.pool.Put(c)
 }
 
-// Migration models
+// migration defined TODO
 func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	tables := []types.SysTable{}
 	columns := []types.SysTableColumn{}
@@ -108,7 +110,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 }
 
 // ServeHTTP defined TODO
-func (dol *Dolphin) ServeHTTP(w nh.ResponseWriter, r *nh.Request) {
+func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	dol.Http.ServeHTTP(w, r)
 }
 
@@ -163,7 +165,7 @@ func (dol *Dolphin) Reflesh() error {
 	for i := range domains {
 		domain := domains[i]
 		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
-		uri, err := http.Parse(domain.DataSource.String)
+		uri, err := uri.Parse(domain.DataSource.String)
 		if err != nil {
 			return err
 		}
@@ -267,7 +269,7 @@ func (dol *Dolphin) Reflesh() error {
 	return s.Commit()
 }
 
-// RegisterSQLMap defined sql
+// RegisterSQLMap defined TODO
 func (dol *Dolphin) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) error {
 	for key, value := range sqlMap {
 		if filepath.Ext(key) == "" {
@@ -282,7 +284,7 @@ func (dol *Dolphin) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) er
 	return nil
 }
 
-// RegisterSQLDir defined sql
+// RegisterSQLDir defined TODO
 func (dol *Dolphin) RegisterSQLDir(db *xorm.Engine, sqlDir string) error {
 	err := os.MkdirAll(sqlDir, os.ModePerm)
 	if err != nil {
@@ -328,7 +330,7 @@ func (dol *Dolphin) lifeCycle(ctx context.Context) error {
 	return nil
 }
 
-// Run booting system
+// Run defined TODO
 func (dol *Dolphin) Run() {
 	util.Ensure(dol.Reflesh())
 	util.Ensure(dol.lifeCycle(context.Background()))

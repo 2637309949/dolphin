@@ -65,7 +65,7 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs .
 		}
 		handlerFuncs = group.combineHandlers(handlerFuncs)
 		relativePath := group.calculateAbsolutePath(relativePath)
-		group.handle(methods[i], relativePath, handlerFuncs...)
+		group.dol.Http.Handle(methods[i], relativePath, handlerFuncs...)
 	}
 }
 
@@ -102,11 +102,6 @@ func (group *RouterGroup) createStaticHandler(relativePath string, fs http.FileS
 		f.Close()
 		fileServer.ServeHTTP(c.Writer, c.Request)
 	}
-}
-
-// handle defined TODO
-func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
-	group.dol.Http.Handle(httpMethod, relativePath, handlers...)
 }
 
 // combineHandlers defined TODO

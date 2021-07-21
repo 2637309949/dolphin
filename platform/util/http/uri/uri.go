@@ -1,4 +1,4 @@
-package http
+package uri
 
 import (
 	"regexp"

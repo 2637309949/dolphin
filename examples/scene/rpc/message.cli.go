@@ -33,9 +33,12 @@ func NewMessageSrvClient(target string, opts ...grpc.DialOption) (*grpc.ClientCo
 }
 
 func init() {
-	conn, err := NewMessageSrvClient(viper.GetString("rpc.message_srv"))
-	if err != nil {
-		logrus.Errorf("grpc dial failed: %v", err)
-	}
-	MessageSrvClient = proto.NewMessageSrvClient(conn)
+	go func() {
+		time.Sleep(1 * time.Second)
+		conn, err := NewMessageSrvClient(viper.GetString("rpc.message_srv"))
+		if err != nil {
+			logrus.Errorf("grpc dial rpc.message_srv failed: %v", err)
+		}
+		MessageSrvClient = proto.NewMessageSrvClient(conn)
+	}()
 }

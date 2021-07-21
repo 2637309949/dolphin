@@ -34,7 +34,7 @@ func New{{.Service.ToUpperCase .Service.Name}}Client(target string, opts ...grpc
 func init() {
 	conn, err := New{{.Service.ToUpperCase .Service.Name}}Client(viper.GetString("rpc.{{.Service.Name}}"))
 	if err != nil {
-		logrus.Errorf("grpc dial failed: %v", err)
+		logrus.Errorf("grpc dial rpc.{{.Service.Name}} failed: %v", err)
 	}
 	{{.Service.ToUpperCase .Service.Name}}Client = proto.New{{.Service.ToUpperCase .Service.Name}}Client(conn)
 }

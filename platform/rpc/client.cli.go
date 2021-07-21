@@ -36,7 +36,7 @@ func init() {
 		time.Sleep(1 * time.Second)
 		conn, err := NewClientSrvClient(viper.GetString("rpc.client_srv"))
 		if err != nil {
-			logrus.Errorf("grpc dial failed: %v", err)
+			logrus.Errorf("grpc dial rpc.client_srv failed: %v", err)
 		}
 		ClientSrvClient = proto.NewClientSrvClient(conn)
 	}()
