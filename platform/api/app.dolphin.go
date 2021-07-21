@@ -50,14 +50,6 @@ type (
 	}
 )
 
-// allocateContext defined TODO
-func (dol *Dolphin) allocateContext(f func(*Context)) {
-	c := dol.pool.Get().(*Context)
-	c.reset()
-	f(c)
-	dol.pool.Put(c)
-}
-
 // migration defined TODO
 func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	tables := []types.SysTable{}
