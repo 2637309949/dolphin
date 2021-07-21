@@ -46,16 +46,6 @@ type (
 	}
 )
 
-// HandlerFunc convert to api.HandlerFunc
-func (dol *Dolphin) HandlerFunc(h HandlerFunc) api.HandlerFunc {
-	return api.HandlerFunc(func(ctx *api.Context) {
-		c := dol.pool.Get().(*Context)
-		c.Context = ctx
-		h(c)
-		dol.pool.Put(c)
-	})
-}
-
 // Handle defined TODO
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {

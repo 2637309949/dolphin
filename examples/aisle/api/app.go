@@ -46,20 +46,6 @@ type (
 	}
 )
 
-func (dol *Dolphin) allocateContext() *Context {
-	return &Context{}
-}
-
-// HandlerFunc convert to api.HandlerFunc
-func (dol *Dolphin) HandlerFunc(h HandlerFunc) (phf api.HandlerFunc) {
-	return api.HandlerFunc(func(ctx *api.Context) {
-		c := dol.pool.Get().(*Context)
-		c.Context = ctx
-		h(c)
-		dol.pool.Put(c)
-	})
-}
-
 // Handle defined TODO
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
@@ -71,14 +57,15 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 		handlers = group.combineHandlers(handlers)
 		hls := []api.HandlerFunc{}
 		for j := 0; j < len(handlers); j++ {
-			hls = append(hls, group.dol.HandlerFunc(handlers[j]))
+			hls = append(hls, func(ctx *api.Context) {
+				c := group.dol.pool.Get().(*Context)
+				c.Context = ctx
+				handlers[j](c)
+				group.dol.pool.Put(c)
+			})
 		}
-		group.handle(methods[i], relativePath, hls...)
+		group.dol.Http.Handle(methods[i], relativePath, hls...)
 	}
-}
-
-func (group *RouterGroup) handle(httpMethod, relativePath string, handlers ...api.HandlerFunc) {
-	group.dol.Http.Handle(httpMethod, relativePath, handlers...)
 }
 
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
@@ -139,11 +126,16 @@ func Cache(time time.Duration) HandlerFunc {
 	}
 }
 
+// NewContext defined TODO
+func NewContext(dol *Dolphin) *Context {
+	return &Context{}
+}
+
 // NewDolphin defined init dol you can custom engine
 func NewDolphin() *Dolphin {
 	rg := RouterGroup{Handlers: nil, basePath: "/"}
 	dol := Dolphin{Dolphin: api.App, RouterGroup: rg}
-	dol.pool.New = func() interface{} { return dol.allocateContext() }
+	dol.pool.New = func() interface{} { return NewContext(&dol) }
 	dol.RouterGroup.dol = &dol
 	return &dol
 }
