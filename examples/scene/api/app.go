@@ -131,8 +131,8 @@ func NewContext(dol *Dolphin) *Context {
 	return &Context{}
 }
 
-// NewDolphin defined init dol you can custom engine
-func NewDolphin() *Dolphin {
+// New defined init dol you can custom engine
+func New() *Dolphin {
 	rg := RouterGroup{Handlers: nil, basePath: "/"}
 	dol := Dolphin{Dolphin: api.App, RouterGroup: rg}
 	dol.pool.New = func() interface{} { return NewContext(&dol) }
@@ -141,7 +141,7 @@ func NewDolphin() *Dolphin {
 }
 
 func init() {
-	dol, svcHelper := NewDolphin(), svc.NewSvcHepler(appSvc.NewSvcHepler(api.RedisClient))
+	dol, svcHelper := New(), svc.NewSvcHepler(appSvc.NewSvcHepler(api.RedisClient))
 	dol.SyncModel()
 	dol.SyncController()
 	dol.SyncService()

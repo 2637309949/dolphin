@@ -332,7 +332,7 @@ func (dol *Dolphin) Run() {
 
 // NewDefault defined TODO
 func NewDefault(options ...Option) *Dolphin {
-	dol := NewDolphin(options...)
+	dol := New(options...)
 	dol.Use(Recovery())
 	dol.Use(HttpTrace())
 	dol.Use(Cors("*", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization"))
@@ -342,7 +342,7 @@ func NewDefault(options ...Option) *Dolphin {
 }
 
 // NewDolphin defined TODO
-func NewDolphin(options ...Option) *Dolphin {
+func New(options ...Option) *Dolphin {
 	dol := &Dolphin{}
 	dol.RouterGroup = RouterGroup{Handlers: []HandlerFunc{}, basePath: "/"}
 	dol.RouterGroup.dol = dol
