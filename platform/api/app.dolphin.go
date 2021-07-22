@@ -335,9 +335,9 @@ func NewDefault(options ...Option) *Dolphin {
 	dol := NewDolphin(options...)
 	dol.Use(Recovery())
 	dol.Use(HttpTrace())
-	dol.Use(Cors())
+	dol.Use(Cors("*", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization"))
 	dol.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
-	dol.Use(Tracker(TrackerOpts(dol)))
+	dol.Use(DumpBody(DumpRecv(dol)))
 	return dol
 }
 

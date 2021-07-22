@@ -125,8 +125,8 @@ func Formatter(param gin.LogFormatterParams) string {
 	)
 }
 
-// TrackerOpts defined tracker recorder
-func TrackerOpts(dol *Dolphin) func(ctx *Context, p *LogFormatterParams) {
+// DumpRecv defined tracker recorder
+func DumpRecv(dol *Dolphin) func(ctx *Context, p *LogFormatterParams) {
 	return func(ctx *Context, p *LogFormatterParams) {
 		token, _ := dol.OAuth2.BearerAuth(ctx.Request)
 		p.Token = token

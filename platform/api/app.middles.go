@@ -49,12 +49,12 @@ func HttpTrace() HandlerFunc {
 }
 
 // Cors defined TODO
-func Cors() HandlerFunc {
+func Cors(origin string, headers string) HandlerFunc {
 	return func(ctx *Context) {
-		ctx.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		ctx.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 		ctx.Writer.Header().Set("Access-Control-Max-Age", "86400")
 		ctx.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
-		ctx.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		ctx.Writer.Header().Set("Access-Control-Allow-Headers", headers)
 		ctx.Writer.Header().Set("Access-Control-Expose-Headers", "Content-Length, Content-Disposition")
 		ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		if ctx.Request.Method == "OPTIONS" {
@@ -89,17 +89,12 @@ func Recovery() HandlerFunc {
 	}
 }
 
-// Tracker instance a Logger middleware with config.
-func Tracker(receiver ...func(*Context, *LogFormatterParams)) HandlerFunc {
+// DumpBody instance a Logger middleware with config.
+func DumpBody(recv func(*Context, *LogFormatterParams)) HandlerFunc {
 	notlogged := []string{}
 	// isTerm := true
 	// out := logrus.StandardLogger().Out
 	formatter := Formatter
-	recv := func(*Context, *LogFormatterParams) {}
-
-	if len(receiver) > 0 {
-		recv = receiver[0]
-	}
 
 	var skip map[string]struct{}
 
