@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"path"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
+	"github.com/2637309949/dolphin/cmd/dolphin/api/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/swag/gen"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"

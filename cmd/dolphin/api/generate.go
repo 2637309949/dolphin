@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
 
-package gen
+package api
 
 import (
 	"bytes"
@@ -15,8 +15,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/modules"
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
+	"github.com/2637309949/dolphin/cmd/dolphin/api/modules"
+	"github.com/2637309949/dolphin/cmd/dolphin/api/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/go-errors/errors"

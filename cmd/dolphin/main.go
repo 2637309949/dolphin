@@ -13,8 +13,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/gen"
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
+	gen "github.com/2637309949/dolphin/cmd/dolphin/api"
+	"github.com/2637309949/dolphin/cmd/dolphin/api/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/gin-gonic/gin"

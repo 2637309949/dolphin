@@ -8,8 +8,8 @@ import (
 	ht "html/template"
 	"path"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/pipe"
-	"github.com/2637309949/dolphin/cmd/dolphin/gen/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/api/pipe"
+	"github.com/2637309949/dolphin/cmd/dolphin/api/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
