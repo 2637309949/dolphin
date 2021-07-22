@@ -67,7 +67,7 @@ func (gh *restful) OnStop(ctx context.Context) error {
 
 // unWrapHandler defined TODO
 func (gh *restful) unWrapHandler(h ...HandlerFunc) []gin.HandlerFunc {
-	return funk.Map(gh.dol.Handlers, func(hf HandlerFunc) gin.HandlerFunc {
+	return funk.Map(h, func(hf HandlerFunc) gin.HandlerFunc {
 		return func(ctx *gin.Context) {
 			c := gh.dol.pool.Get().(*Context)
 			c.reset()
