@@ -26,8 +26,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	// "github.com/lib/pq" init
 	_ "github.com/lib/pq"
-	"golang.org/x/crypto/ssh/terminal"
 	"golang.org/x/sys/unix"
+	"golang.org/x/term"
 )
 
 type AssetsFileSystem struct {
@@ -55,7 +55,7 @@ func Open(uri string) error {
 
 // InitViper defined
 func InitViper(cmd *cobra.Command, args []string) {
-	utils.SetFormatter(terminal.IsTerminal(unix.Stdout))
+	utils.SetFormatter(term.IsTerminal(unix.Stdout))
 	utils.SetLevel(cmd)
 	viper.SetConfigName("app")
 	viper.AddConfigPath(".")

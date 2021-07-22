@@ -28,15 +28,20 @@ type (
 		ServeHTTP(http.ResponseWriter, *http.Request)
 		Handle(string, string, ...HandlerFunc)
 	}
-	// Restful defined TODO
-	Restful struct {
+	// restful defined TODO
+	restful struct {
 		*gin.Engine
 		dol *Dolphin
 	}
 )
 
+// NewRestful defined TODO
+func NewRestful(engine *gin.Engine, dol *Dolphin) *restful {
+	return &restful{Engine: engine, dol: dol}
+}
+
 // OnStart defined TODO
-func (gh *Restful) OnStart(ctx context.Context) error {
+func (gh *restful) OnStart(ctx context.Context) error {
 	go func() {
 		gh.rebuildGlobalRoutes()
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
@@ -48,41 +53,44 @@ func (gh *Restful) OnStart(ctx context.Context) error {
 }
 
 // rebuildGlobalRoutes gin global handlers
-func (gh *Restful) rebuildGlobalRoutes() *Restful {
-	hf := funk.Map(gh.dol.Handlers, func(hf HandlerFunc) gin.HandlerFunc { return gh.unWrapHandler(hf) }).([]gin.HandlerFunc)
+func (gh *restful) rebuildGlobalRoutes() *restful {
+	hf := gh.unWrapHandler(gh.dol.Handlers...)
 	gh.NoRoute(hf...)
 	gh.NoMethod(hf...)
 	return gh
 }
 
 // OnStop defined TODO
-func (gh *Restful) OnStop(ctx context.Context) error {
+func (gh *restful) OnStop(ctx context.Context) error {
 	return nil
 }
 
 // unWrapHandler defined TODO
-func (gh *Restful) unWrapHandler(h HandlerFunc) gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		c := gh.dol.pool.Get().(*Context)
-		c.reset()
-		c.Context = ctx
-		// uwrap Context
-		for k := range ctx.Keys {
-			switch t := ctx.Keys[k].(type) {
-			case *xorm.Engine:
-				c.DB = t
-			case AuthInfo:
-				c.AuthInfo = t
+func (gh *restful) unWrapHandler(h ...HandlerFunc) []gin.HandlerFunc {
+	return funk.Map(gh.dol.Handlers, func(hf HandlerFunc) gin.HandlerFunc {
+		return func(ctx *gin.Context) {
+			c := gh.dol.pool.Get().(*Context)
+			c.reset()
+			c.Context = ctx
+			// uwrap Context
+			for k := range ctx.Keys {
+				switch t := ctx.Keys[k].(type) {
+				case *xorm.Engine:
+					c.DB = t
+				case AuthInfo:
+					c.AuthInfo = t
+				}
 			}
+			hf(c)
+			gh.dol.pool.Put(c)
 		}
-		h(c)
-		gh.dol.pool.Put(c)
-	}
+
+	}).([]gin.HandlerFunc)
 }
 
 // Handle defined TODO
-func (gh *Restful) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
-	hls := funk.Map(handlerFuncs, func(hf HandlerFunc) gin.HandlerFunc { return gh.unWrapHandler(hf) }).([]gin.HandlerFunc)
+func (gh *restful) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
+	hls := gh.unWrapHandler(handlerFuncs...)
 	nuHandlers := len(handlerFuncs)
 	handlerName := nameOfFunction(handlerFuncs[nuHandlers-1])
 	DebugPrintRoute(httpMethod, absolutePath, handlerName, nuHandlers)
@@ -103,7 +111,7 @@ func nameOfFunction(f interface{}) string {
 func NewGinHandler(dol *Dolphin) HttpHandler {
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = logrus.StandardLogger().Out
-	h := &Restful{Engine: gin.New()}
+	h := &restful{Engine: gin.New()}
 	h.dol = dol
 	return h
 }
