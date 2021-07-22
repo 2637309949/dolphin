@@ -24,10 +24,9 @@ const RootRelativePath = "/"
 type (
 	// HttpHandler defined TODO
 	HttpHandler interface {
+		lifeHook
 		ServeHTTP(http.ResponseWriter, *http.Request)
 		Handle(string, string, ...HandlerFunc)
-		OnStart(context.Context) error
-		OnStop(context.Context) error
 	}
 	// Restful defined TODO
 	Restful struct {
@@ -67,6 +66,7 @@ func (gh *Restful) unWrapHandler(h HandlerFunc) gin.HandlerFunc {
 		c := gh.dol.pool.Get().(*Context)
 		c.reset()
 		c.Context = ctx
+		// uwrap Context
 		for k := range ctx.Keys {
 			switch t := ctx.Keys[k].(type) {
 			case *xorm.Engine:
@@ -85,12 +85,12 @@ func (gh *Restful) Handle(httpMethod, absolutePath string, handlerFuncs ...Handl
 	hls := funk.Map(handlerFuncs, func(hf HandlerFunc) gin.HandlerFunc { return gh.unWrapHandler(hf) }).([]gin.HandlerFunc)
 	nuHandlers := len(handlerFuncs)
 	handlerName := nameOfFunction(handlerFuncs[nuHandlers-1])
-	DebugPrintRouteFunc(httpMethod, absolutePath, handlerName, nuHandlers)
+	DebugPrintRoute(httpMethod, absolutePath, handlerName, nuHandlers)
 	gh.Engine.Handle(httpMethod, absolutePath, hls...)
 }
 
-// DebugPrintRouteFunc defined TODO
-func DebugPrintRouteFunc(httpMethod, absolutePath, handlerName string, nuHandlers int) {
+// DebugPrintRoute defined TODO
+func DebugPrintRoute(httpMethod, absolutePath, handlerName string, nuHandlers int) {
 	logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
 }
 

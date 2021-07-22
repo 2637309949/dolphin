@@ -222,9 +222,17 @@ func NewDefaultManager() Manager {
 }
 
 func InitRedisCli() {
-	password, addr, db := viper.GetString("redis.password"), viper.GetString("redis.addr"), viper.GetInt("redis.db")
+	network,
+		username,
+		password,
+		addr,
+		db := viper.GetString("redis.network"),
+		viper.GetString("redis.username"),
+		viper.GetString("redis.password"),
+		viper.GetString("redis.addr"),
+		viper.GetInt("redis.db")
 	if addr != "" {
-		opts := redis.Options{Addr: addr, Password: password, DB: db}
+		opts := redis.Options{Network: network, Addr: addr, Username: username, Password: password, DB: db}
 		RedisClient = redis.NewClient(&opts)
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
 			logrus.Warnf("Redis:%v connect failed", viper.GetString("redis.addr"))

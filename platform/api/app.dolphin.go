@@ -110,7 +110,6 @@ func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (dol *Dolphin) Reflesh() error {
 	defer dol.Manager.ModelSet().Release()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
-	xlogger := createXLogger()
 	db, err := xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	if err != nil {
 		return err
@@ -120,15 +119,18 @@ func (dol *Dolphin) Reflesh() error {
 		return err
 	}
 
+	xlogger := createXLogger()
 	dol.PlatformDB = db
 	dol.PlatformDB.SetLogger(xlogger)
 	dol.PlatformDB.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
 	dol.PlatformDB.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
 	dol.PlatformDB.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
+
 	err = dol.RegisterSQLDir(dol.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
 	if err != nil {
 		return err
 	}
+	// load map
 	err = dol.RegisterSQLMap(dol.PlatformDB, sql.SQLTPL)
 	if err != nil {
 		return err
