@@ -1,0 +1,6979 @@
+definitions:
+  types.AmiInfo:
+    properties:
+      content:
+        description: Content
+        type: string
+      title:
+        description: Title
+        type: string
+    type: object
+  types.Article:
+    properties:
+      best_answerers_count:
+        description: BestAnswerersCount defined 最佳答复数目
+        type: number
+      category:
+        description: Category defined 分类
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      excerpt:
+        description: Excerpt defined 摘录
+        type: string
+      followers_count:
+        description: FollowersCount defined 粉丝数
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      introduction:
+        description: Introduction defined 简介
+        type: string
+      is_black:
+        description: IsBlack defined
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      is_super_topic_vote:
+        description: IsSuperTopicVote defined 是否超级话题投票
+        type: number
+      is_vote:
+        description: IsVote defined 是否投票
+        type: number
+      name:
+        description: Name defined 标题
+        type: string
+      questions_count:
+        description: QuestionsCount defined 提问数目
+        type: number
+      remark:
+        description: Remark defined 备注
+        type: string
+      reward:
+        description: Reward defined 打赏
+        type: number
+      type:
+        description: Type defined 类别
+        type: string
+      unanswered_count:
+        description: UnansweredCount defined 未答复数目
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      url:
+        description: URL defined 地址
+        type: string
+    type: object
+  types.ArticleInfo:
+    properties:
+      best_answerers_count:
+        description: BestAnswerersCount defined 最佳答复数目
+        type: number
+      category:
+        description: Category defined 分类
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      excerpt:
+        description: Excerpt defined 摘录
+        type: string
+      followers_count:
+        description: FollowersCount defined 粉丝数
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      introduction:
+        description: Introduction defined 简介
+        type: string
+      is_black:
+        description: IsBlack defined
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      is_super_topic_vote:
+        description: IsSuperTopicVote defined 是否超级话题投票
+        type: number
+      is_vote:
+        description: IsVote defined 是否投票
+        type: number
+      name:
+        description: Name defined 标题
+        type: string
+      questions_count:
+        description: QuestionsCount defined 提问数目
+        type: number
+      remark:
+        description: Remark defined 备注
+        type: string
+      reward:
+        description: Reward defined 打赏
+        type: number
+      type:
+        description: Type defined 类别
+        type: string
+      unanswered_count:
+        description: UnansweredCount defined 未答复数目
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      url:
+        description: 地址
+        type: string
+    type: object
+  types.EncryptInfo:
+    properties:
+      app_id:
+        description: 应用ID
+        type: string
+      biz_content:
+        description: 请求参数
+        type: string
+      sign:
+        description: 签名数据
+        type: string
+      timestamp:
+        description: 时间戳
+        type: number
+    type: object
+  types.Fail:
+    properties:
+      code:
+        description: 错误编码
+        example: 500
+        type: integer
+      msg:
+        description: 错误信息
+        example: status bad request
+        type: string
+    type: object
+  types.KafkaInfo:
+    properties:
+      id:
+        description: id
+        type: string
+      score:
+        description: score
+        type: number
+    type: object
+  types.Login:
+    properties:
+      domain:
+        description: 域
+        type: string
+      name:
+        description: 名字
+        type: string
+      password:
+        description: 密码
+        type: string
+    type: object
+  types.NsqInfo:
+    properties:
+      id:
+        description: id
+        type: string
+      score:
+        description: score
+        type: number
+    type: object
+  types.Scheduling:
+    properties:
+      code:
+        description: 编码
+        type: integer
+      name:
+        description: 名称
+        type: string
+    type: object
+  types.Success:
+    properties:
+      code:
+        description: 编码
+        example: 200
+        type: integer
+      data:
+        description: 返回数据
+        type: object
+    type: object
+  types.SysAppFun:
+    properties:
+      code:
+        description: Code defined 编码
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      hidden:
+        description: Hidden defined 是否隐藏
+        type: number
+      icon:
+        description: Icon defined 菜单图标
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      image:
+        description: Image defined 图片
+        type: string
+      inheritance:
+        description: Inheritance defined 继承关系
+        type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      order:
+        description: Order defined 排序
+        type: number
+      parent:
+        description: Parent defined 父菜单ID，一级菜单为null
+        type: string
+      perms:
+        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      type:
+        description: Type defined 类型 0：目录 1：菜单 2：按钮
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      url:
+        description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
+          3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        type: string
+    type: object
+  types.SysArea:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      inheritance:
+        description: Inheritance defined 继承关系
+        type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      manager:
+        description: Manager defined 负责人
+        type: string
+      name:
+        description: Name defined 区域名称
+        type: string
+      org_id:
+        description: OrgId defined 组织ID
+        type: string
+      parent:
+        description: Parent defined 父节点
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      temp_id:
+        description: TempId defined 模板ID
+        type: string
+      temp_value:
+        description: TempValue defined 模板内容
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysAttachment:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      durable:
+        description: Durable defined 是否持久化 0：否 1：是
+        type: number
+      ext:
+        description: Ext defined ext
+        type: string
+      hash:
+        description: Hash defined hash
+        type: string
+      icon:
+        description: Icon defined 图标
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      path:
+        description: Path defined path
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      size:
+        description: Size defined 大小
+        type: number
+      type:
+        description: Type defined 类型
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      url:
+        description: URL defined url
+        type: string
+      uuid:
+        description: UUID defined uuid
+        type: string
+    type: object
+  types.SysClient:
+    properties:
+      app_name:
+        description: AppName defined 应用归属
+        type: string
+      client:
+        description: Client defined 应用
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      domain:
+        description: Domain defined 域
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      secret:
+        description: Secret defined 密钥
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysComment:
+    properties:
+      content:
+        description: Content defined 评论内容
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      from_uid:
+        description: FromUid defined 评论用户id
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      remark:
+        description: Remark defined 备注
+        type: string
+      topic_id:
+        description: TopicId defined 主题ID
+        type: number
+      topic_type:
+        description: TopicType defined 主题类型
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysDataPermission:
+    properties:
+      code:
+        description: Code defined 编码
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysDomain:
+    properties:
+      api_url:
+        description: ApiUrl defined 请求地址
+        type: string
+      app_name:
+        description: AppName defined 应用归属
+        type: string
+      auth_mode:
+        description: AuthMode defined 认证模式 0：集成登录 1：单点登录
+        type: number
+      contact_email:
+        description: ContactEmail defined 负责人邮箱
+        type: string
+      contact_mobile:
+        description: ContactMobile defined 负责人电话
+        type: string
+      contact_name:
+        description: ContactName defined 负责人
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      data_source:
+        description: DataSource defined 数据库链接串
+        type: string
+      domain:
+        description: Domain defined 域
+        type: string
+      domain_url:
+        description: DomainUrl defined 域绑定
+        type: string
+      driver_name:
+        description: DriverName defined 驱动名称
+        type: string
+      full_name:
+        description: FullName defined 全名
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      is_sync:
+        description: IsSync defined 是否同步了数据库标志
+        type: number
+      login_url:
+        description: LoginUrl defined 登录地址
+        type: string
+      name:
+        description: Name defined 名字
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      static_url:
+        description: StaticUrl defined 静态地址
+        type: string
+      status:
+        description: Status defined 状态 0：禁用 1：正常
+        type: number
+      theme:
+        description: Theme defined 样式
+        type: string
+      type:
+        description: Type defined 域类型
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysMenu:
+    properties:
+      code:
+        description: Code defined 编码
+        type: string
+      component:
+        description: Component defined 菜单组件
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      hidden:
+        description: Hidden defined 是否隐藏
+        type: number
+      icon:
+        description: Icon defined 菜单图标
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      inheritance:
+        description: Inheritance defined 继承关系
+        type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      order:
+        description: Order defined 排序
+        type: number
+      parent:
+        description: Parent defined 父菜单ID，一级菜单为null
+        type: number
+      perms:
+        description: Perms defined 授权(多个用逗号分隔，如：sys:user:add,sys:user:edit)
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      type:
+        description: Type defined 类型 0：目录 1：菜单 2：按钮
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      url:
+        description: URL defined 菜单URL,类型：1.普通页面（如用户管理， /sys/user） 2.嵌套完整外部页面，以http(s)开头的链接
+          3.嵌套服务器页面，使用iframe:前缀&#43;目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+        type: string
+    type: object
+  types.SysNotification:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      from_uid:
+        description: FromUid defined 发送者
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      is_read:
+        description: IsRead defined 是否已读
+        type: number
+      remark:
+        description: Remark defined 备注
+        type: string
+      to_uid:
+        description: ToUid defined 接受者
+        type: string
+      topic_id:
+        description: TopicId defined 主题ID
+        type: string
+      topic_type:
+        description: TopicType defined 主题类型
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysOptionset:
+    properties:
+      code:
+        description: Code defined 编码
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      value:
+        description: Value defined 值
+        type: string
+    type: object
+  types.SysOrg:
+    properties:
+      code:
+        description: Code defined 编码
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      full_name:
+        description: FullName defined 全名
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      inheritance:
+        description: Inheritance defined 继承关系
+        type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      leader:
+        description: Leader defined 领导人
+        type: string
+      name:
+        description: Name defined 名称
+        type: string
+      order:
+        description: Order defined 排序
+        type: number
+      parent:
+        description: Parent defined 上级组织
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      status:
+        description: Status defined 状态 0：禁用 1：正常
+        type: number
+      type:
+        description: Type defined 组织类型
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysPermission:
+    properties:
+      code:
+        description: Code defined 编码
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysRole:
+    properties:
+      admin_index:
+        description: AdminIndex defined 角色进入后台首页组件
+        type: string
+      app_index:
+        description: AppIndex defined 角色app首页url
+        type: string
+      code:
+        description: Code defined 编码
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      status:
+        description: Status defined 状态 0：禁用 1：正常
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysRoleMenu:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      menu_id:
+        description: MenuId defined 菜单ID
+        type: number
+      remark:
+        description: Remark defined 备注
+        type: string
+      role_id:
+        description: RoleId defined 用户ID
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysSchedule:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      remark:
+        description: Remark defined 备注
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysSetting:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      key:
+        description: Key defined 键
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      value:
+        description: Value defined 值
+        type: string
+    type: object
+  types.SysTable:
+    properties:
+      auto_increment:
+        description: AutoIncrement defined 自增
+        type: string
+      charset:
+        description: Charset defined 字符集
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      desc:
+        description: Desc defined 描述
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 表名
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      store_engine:
+        description: StoreEngine defined 存储引擎
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysTableColumn:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      default:
+        description: Default defined 默认值
+        type: string
+      desc:
+        description: Desc defined 描述
+        type: string
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      is_primary_key:
+        description: IsPrimaryKey defined 是否主键
+        type: boolean
+      name:
+        description: Name defined 表名
+        type: string
+      nullable:
+        description: Nullable defined 是否为空
+        type: boolean
+      remark:
+        description: Remark defined 备注
+        type: string
+      tb_id:
+        description: TbId defined 表ID
+        type: number
+      type:
+        description: Type defined 类型
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysTag:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      group_id:
+        description: GroupId defined 分组ID
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysTagGroup:
+    properties:
+      code:
+        description: Code defined 编码
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysUser:
+    properties:
+      address:
+        description: Address defined 地址
+        type: string
+      avatar:
+        description: Avatar defined 头像
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      domain:
+        description: Domain defined 域
+        type: string
+      email:
+        description: Email defined 邮箱
+        type: string
+      full_name:
+        description: FullName defined 全名
+        type: string
+      gender:
+        description: Gender defined 性别(0：女,1：男)
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      intro:
+        description: Intro defined 简介
+        type: string
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      is_email_confirmed:
+        description: IsEmailConfirmed defined 是否邮件确认(0：尚未,1：确认)
+        type: number
+      marked_all_as_read_at:
+        description: MarkedAllAsReadAt defined 标记所有已读时间
+        type: string
+      mobile:
+        description: Mobile defined 电话
+        type: string
+      name:
+        description: Name defined 名字
+        type: string
+      nickname:
+        description: Nickname defined 昵称
+        type: string
+      org_id:
+        description: OrgId defined 组织ID
+        type: number
+      password:
+        description: Password defined 密码
+        type: string
+      read_notifications_at:
+        description: ReadNotificationsAt defined 标记读取消息时间
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      salt:
+        description: Salt defined 盐噪点
+        type: string
+      status:
+        description: Status defined 状态(0：禁用,1：正常)
+        type: number
+      temp_id:
+        description: TempId defined 模板ID
+        type: number
+      temp_value:
+        description: TempValue defined 模板值
+        type: string
+      type:
+        description: Type defined 用户类型
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysUserTemplate:
+    properties:
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      default:
+        description: Default defined 是否默认 1：是 0：否
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 模板名称
+        type: string
+      remark:
+        description: Remark defined 备注
+        type: string
+      type:
+        description: Type defined 模板类型
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+    type: object
+  types.SysUserTemplateDetail:
+    properties:
+      content:
+        description: Content defined 名称
+        type: string
+      create_time:
+        description: CreateTime defined 创建时间
+        type: string
+      creater:
+        description: Creater defined 创建人
+        type: number
+      id:
+        description: ID defined 主键
+        type: number
+      is_delete:
+        description: IsDelete defined 删除标记
+        type: number
+      name:
+        description: Name defined 名称
+        type: string
+      priority:
+        description: Priority defined 优先级
+        type: number
+      remark:
+        description: Remark defined 备注
+        type: string
+      temp_id:
+        description: TempId defined 模板ID
+        type: number
+      type:
+        description: Type defined 模板类型 0:数值项 1:单选项 2:文字项 3:列表项
+        type: number
+      update_time:
+        description: UpdateTime defined 最后更新时间
+        type: string
+      updater:
+        description: Updater defined 最后更新人
+        type: number
+      value:
+        description: Value defined 值
+        type: string
+    type: object
+  types.VoteInfo:
+    properties:
+      post_id:
+        description: post id
+        type: string
+      type:
+        description: vote type
+        type: number
+      user_id:
+        description: user id
+        type: string
+    type: object
+  types.Worker:
+    properties:
+      code:
+        description: 编码
+        type: string
+      error:
+        description: 错误信息
+        type: object
+      files:
+        description: 文件
+        items:
+          type: string
+        type: array
+      name:
+        description: 名称
+        type: string
+      payload:
+        description: 表单
+        type: object
+      result:
+        description: 结果
+        type: object
+      status:
+        description: 状态
+        type: integer
+      user:
+        $ref: '#/definitions/types.SysUser'
+        description: 用户
+    type: object
+host: localhost:8082
+info:
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: scene
+  version: 1.1.2
+paths:
+  /api/ami/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: Ami info
+        in: body
+        name: ami_info
+        schema:
+          $ref: '#/definitions/types.AmiInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Add ami
+      tags:
+      - Ami controller
+  /api/ami/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: ami id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Get ami info
+      tags:
+      - Ami controller
+  /api/article/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章信息
+        in: body
+        name: article
+        schema:
+          $ref: '#/definitions/types.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加文章
+      tags:
+      - 文章
+  /api/article/batch_add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章信息
+        in: body
+        name: article
+        schema:
+          items:
+            $ref: '#/definitions/types.Article'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加文章
+      tags:
+      - 文章
+  /api/article/batch_del:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章信息
+        in: body
+        name: article
+        schema:
+          items:
+            $ref: '#/definitions/types.Article'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除文章
+      tags:
+      - 文章
+  /api/article/batch_update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章信息
+        in: body
+        name: article
+        schema:
+          items:
+            $ref: '#/definitions/types.Article'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新文章
+      tags:
+      - 文章
+  /api/article/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章
+        in: body
+        name: article
+        schema:
+          $ref: '#/definitions/types.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除文章
+      tags:
+      - 文章
+  /api/article/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取文章信息
+      tags:
+      - 文章
+  /api/article/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 文章分页查询
+      tags:
+      - 文章
+  /api/article/payment:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章
+        in: body
+        name: article
+        schema:
+          $ref: '#/definitions/types.ArticleInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 文章付费
+      tags:
+      - 文章
+  /api/article/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 文章信息
+        in: body
+        name: article
+        schema:
+          $ref: '#/definitions/types.Article'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新文章
+      tags:
+      - 文章
+  /api/encrypt/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: Encrypt info
+        in: body
+        name: encrypt_info
+        schema:
+          $ref: '#/definitions/types.EncryptInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Add Encrypt
+      tags:
+      - Encrypt controller
+  /api/encrypt/info:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: skip auth
+      tags:
+      - Encrypt controller
+  /api/i/cache/info:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Cache info
+      tags:
+      - cache controller
+  /api/jwt/check:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 验证
+      tags:
+      - jwt认证
+  /api/jwt/login:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 登陆
+      tags:
+      - jwt认证
+  /api/kafka/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: Kafka info
+        in: body
+        name: kafka
+        schema:
+          $ref: '#/definitions/types.KafkaInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Add article
+      tags:
+      - Kafka controller
+  /api/kafka/get:
+    get:
+      parameters:
+      - description: kafka id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Get kafka info
+      tags:
+      - Kafka controller
+  /api/nsq/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: nsq info
+        in: body
+        name: nsq
+        schema:
+          $ref: '#/definitions/types.NsqInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Add article
+      tags:
+      - Nsq controller
+  /api/nsq/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: nsq id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Get Nsq info
+      tags:
+      - Nsq controller
+  /api/redis/lock:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: redis info
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Add lock
+      tags:
+      - redis controller
+  /api/redis/unlock:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: redis info
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: del lock
+      tags:
+      - redis controller
+  /api/rpc/message:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: rpc info
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: Get message
+      tags:
+      - rpc controller
+  /api/sqlmap/selectone:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 测试selectone
+      tags:
+      - SQL集合
+  /api/sys/app/fun/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: APP功能
+        in: body
+        name: sys_app_fun
+        schema:
+          $ref: '#/definitions/types.SysAppFun'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除APP功能
+      tags:
+      - APP功能
+  /api/sys/app/fun/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: APP功能id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取APP功能信息
+      tags:
+      - APP功能
+  /api/sys/app/fun/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: APP功能分页查询
+      tags:
+      - APP功能
+  /api/sys/app/fun/tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 菜单树形结构
+      tags:
+      - APP功能
+  /api/sys/app/fun/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: APP功能信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新APP功能
+      tags:
+      - APP功能
+  /api/sys/area/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysArea'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加区域
+      tags:
+      - 区域
+  /api/sys/area/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域
+        in: body
+        name: sys_area
+        schema:
+          $ref: '#/definitions/types.SysArea'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除区域
+      tags:
+      - 区域
+  /api/sys/area/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取区域信息
+      tags:
+      - 区域
+  /api/sys/area/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 区域分页查询
+      tags:
+      - 区域
+  /api/sys/area/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 区域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新区域
+      tags:
+      - 区域
+  /api/sys/attachment/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysAttachment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加附件
+      tags:
+      - 附件
+  /api/sys/attachment/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件
+        in: body
+        name: sys_attachment
+        schema:
+          $ref: '#/definitions/types.SysAttachment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除附件
+      tags:
+      - 附件
+  /api/sys/attachment/export:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件名称
+        in: query
+        name: file_name
+        type: string
+      - description: 附件ID
+        in: query
+        name: file_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 附件导出
+      tags:
+      - 附件
+  /api/sys/attachment/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取附件信息
+      tags:
+      - 附件
+  /api/sys/attachment/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 附件分页查询
+      tags:
+      - 附件
+  /api/sys/attachment/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 附件信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新附件
+      tags:
+      - 附件
+  /api/sys/attachment/upload:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 上传附件
+      tags:
+      - 附件
+  /api/sys/cas/affirm:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户授权
+      tags:
+      - 认证中心
+  /api/sys/cas/authorize:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户授权
+      tags:
+      - 认证中心
+  /api/sys/cas/check:
+    get:
+      parameters:
+      - description: openid
+        in: query
+        name: openid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 检验令牌
+      tags:
+      - 认证中心
+  /api/sys/cas/login:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 用户名称
+        in: formData
+        name: username
+        type: string
+      - description: 用户密码
+        in: formData
+        name: password
+        type: string
+      - description: 用户域
+        in: formData
+        name: domain
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户认证
+      tags:
+      - 认证中心
+  /api/sys/cas/logout:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 定向URL
+        in: query
+        name: redirect_uri
+        type: string
+      - description: 状态
+        in: query
+        name: state
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 注销信息
+      tags:
+      - 认证中心
+  /api/sys/cas/oauth2:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 授权回调
+      tags:
+      - 认证中心
+  /api/sys/cas/profile:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户信息
+      tags:
+      - 认证中心
+  /api/sys/cas/qrcode:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: '类型(0: 微信 1：叮叮)'
+        in: query
+        name: type
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 扫码登录(绑定第三方)
+      tags:
+      - 认证中心
+  /api/sys/cas/refresh:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 刷新令牌
+      tags:
+      - 认证中心
+  /api/sys/cas/token:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取令牌
+      tags:
+      - 认证中心
+  /api/sys/cas/url:
+    get:
+      parameters:
+      - description: 定向URL
+        in: query
+        name: redirect_uri
+        type: string
+      - description: 状态
+        in: query
+        name: state
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 授权地址
+      tags:
+      - 认证中心
+  /api/sys/client/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysClient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加客户端
+      tags:
+      - 客户端
+  /api/sys/client/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端
+        in: body
+        name: sys_client
+        schema:
+          items:
+            $ref: '#/definitions/types.SysClient'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除客户端
+      tags:
+      - 客户端
+  /api/sys/client/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端
+        in: body
+        name: sys_client
+        schema:
+          $ref: '#/definitions/types.SysClient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除客户端
+      tags:
+      - 客户端
+  /api/sys/client/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取客户端信息
+      tags:
+      - 客户端
+  /api/sys/client/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 客户端分页查询
+      tags:
+      - 客户端
+  /api/sys/client/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 客户端信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新客户端
+      tags:
+      - 客户端
+  /api/sys/comment/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论信息
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/types.SysComment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加评论
+      tags:
+      - 评论
+  /api/sys/comment/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/types.SysUserTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除评论
+      tags:
+      - 评论
+  /api/sys/comment/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取评论信息
+      tags:
+      - 评论
+  /api/sys/comment/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 评论分页查询
+      tags:
+      - 评论
+  /api/sys/comment/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 评论信息
+        in: body
+        name: sys_comment
+        schema:
+          $ref: '#/definitions/types.SysComment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新评论
+      tags:
+      - 评论
+  /api/sys/data/permission/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysDataPermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加数据权限
+      tags:
+      - 数据权限
+  /api/sys/data/permission/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限
+        in: body
+        name: sys_data_permission
+        schema:
+          $ref: '#/definitions/types.SysDataPermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除数据权限
+      tags:
+      - 数据权限
+  /api/sys/data/permission/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取数据权限信息
+      tags:
+      - 数据权限
+  /api/sys/data/permission/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 数据权限分页查询
+      tags:
+      - 数据权限
+  /api/sys/data/permission/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 数据权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新数据权限
+      tags:
+      - 数据权限
+  /api/sys/dingtalk/oauth2:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 授权回调
+      tags:
+      - 钉钉
+  /api/sys/domain/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysDomain'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加域
+      tags:
+      - 域
+  /api/sys/domain/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域
+        in: body
+        name: sys_domain
+        schema:
+          $ref: '#/definitions/types.SysDomain'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除域
+      tags:
+      - 域
+  /api/sys/domain/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取域信息
+      tags:
+      - 域
+  /api/sys/domain/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 域分页查询
+      tags:
+      - 域
+  /api/sys/domain/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 域信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新域
+      tags:
+      - 域
+  /api/sys/menu/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单信息
+        in: body
+        name: sys_menu
+        schema:
+          $ref: '#/definitions/types.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加菜单
+      tags:
+      - 菜单
+  /api/sys/menu/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单
+        in: body
+        name: sys_menu
+        schema:
+          items:
+            $ref: '#/definitions/types.SysMenu'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除菜单
+      tags:
+      - 菜单
+  /api/sys/menu/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单
+        in: body
+        name: sys_menu
+        schema:
+          $ref: '#/definitions/types.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除菜单
+      tags:
+      - 菜单
+  /api/sys/menu/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取菜单信息
+      tags:
+      - 菜单
+  /api/sys/menu/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 菜单分页查询
+      tags:
+      - 菜单
+  /api/sys/menu/sidebar:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 系统菜单
+      tags:
+      - 菜单
+  /api/sys/menu/tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 菜单树形结构
+      tags:
+      - 菜单
+  /api/sys/menu/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 菜单信息
+        in: body
+        name: sys_menu
+        schema:
+          $ref: '#/definitions/types.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新菜单
+      tags:
+      - 菜单
+  /api/sys/notification/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息信息
+        in: body
+        name: notification
+        schema:
+          $ref: '#/definitions/types.SysNotification'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加站内消息
+      tags:
+      - 站内消息
+  /api/sys/notification/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息
+        in: body
+        name: sys_notification
+        schema:
+          $ref: '#/definitions/types.SysNotification'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除站内消息
+      tags:
+      - 站内消息
+  /api/sys/notification/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取站内消息信息
+      tags:
+      - 站内消息
+  /api/sys/notification/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 站内消息分页查询
+      tags:
+      - 站内消息
+  /api/sys/notification/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 站内消息信息
+        in: body
+        name: notification
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新站内消息
+      tags:
+      - 站内消息
+  /api/sys/optionset/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysOptionset'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加字典
+      tags:
+      - 字典
+  /api/sys/optionset/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典
+        in: body
+        name: user
+        schema:
+          items:
+            $ref: '#/definitions/types.SysOptionset'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除字典
+      tags:
+      - 字典
+  /api/sys/optionset/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典
+        in: body
+        name: sys_optionset
+        schema:
+          $ref: '#/definitions/types.SysOptionset'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除字典
+      tags:
+      - 字典
+  /api/sys/optionset/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取字典信息
+      tags:
+      - 字典
+  /api/sys/optionset/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 字典分页查询
+      tags:
+      - 字典
+  /api/sys/optionset/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 字典信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新字典
+      tags:
+      - 字典
+  /api/sys/org/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysOrg'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加组织
+      tags:
+      - 组织
+  /api/sys/org/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织
+        in: body
+        name: sys_org
+        schema:
+          items:
+            $ref: '#/definitions/types.SysOrg'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除组织
+      tags:
+      - 组织
+  /api/sys/org/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织
+        in: body
+        name: sys_org
+        schema:
+          $ref: '#/definitions/types.SysOrg'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除组织
+      tags:
+      - 组织
+  /api/sys/org/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取组织信息
+      tags:
+      - 组织
+  /api/sys/org/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 组织分页查询
+      tags:
+      - 组织
+  /api/sys/org/tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 菜单树形结构
+      tags:
+      - 组织
+  /api/sys/org/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 组织信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新组织
+      tags:
+      - 组织
+  /api/sys/permission/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysPermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加权限
+      tags:
+      - 权限
+  /api/sys/permission/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限
+        in: body
+        name: sys_permission
+        schema:
+          $ref: '#/definitions/types.SysPermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除权限
+      tags:
+      - 权限
+  /api/sys/permission/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取权限信息
+      tags:
+      - 权限
+  /api/sys/permission/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 权限分页查询
+      tags:
+      - 权限
+  /api/sys/permission/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 权限信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新权限
+      tags:
+      - 权限
+  /api/sys/role/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色信息
+        in: body
+        name: sys_role
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加角色
+      tags:
+      - 角色
+  /api/sys/role/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          items:
+            $ref: '#/definitions/types.SysRole'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除角色
+      tags:
+      - 角色
+  /api/sys/role/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色
+        in: body
+        name: sys_role
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除角色
+      tags:
+      - 角色
+  /api/sys/role/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取角色信息
+      tags:
+      - 角色
+  /api/sys/role/menu/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: sys_role_menu
+        schema:
+          $ref: '#/definitions/types.SysRoleMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/batch_add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: role_menu
+        schema:
+          items:
+            $ref: '#/definitions/types.SysRoleMenu'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: user
+        schema:
+          items:
+            $ref: '#/definitions/types.SysRoleMenu'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单
+        in: body
+        name: sys_role_menu
+        schema:
+          $ref: '#/definitions/types.SysRoleMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取角色菜单信息
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 角色菜单分页查询
+      tags:
+      - 角色菜单
+  /api/sys/role/menu/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色菜单信息
+        in: body
+        name: sys_role_menu
+        schema:
+          $ref: '#/definitions/types.SysRoleMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新角色菜单
+      tags:
+      - 角色菜单
+  /api/sys/role/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 角色分页查询
+      tags:
+      - 角色
+  /api/sys/role/role_app_fun_tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 角色App功能树形结构
+      tags:
+      - 角色
+  /api/sys/role/role_menu_tree:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 角色菜单树形结构
+      tags:
+      - 角色
+  /api/sys/role/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 角色信息
+        in: body
+        name: sys_role
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新角色
+      tags:
+      - 角色
+  /api/sys/schedule/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: sys_schedule
+        schema:
+          $ref: '#/definitions/types.SysSchedule'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加调度
+      tags:
+      - 调度
+  /api/sys/schedule/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: user
+        schema:
+          items:
+            $ref: '#/definitions/types.SysSchedule'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除调度
+      tags:
+      - 调度
+  /api/sys/schedule/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度
+        in: body
+        name: sys_schedule
+        schema:
+          $ref: '#/definitions/types.SysSchedule'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除调度
+      tags:
+      - 调度
+  /api/sys/schedule/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取调度信息
+      tags:
+      - 调度
+  /api/sys/schedule/history/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 调度分页查询
+      tags:
+      - 调度历史
+  /api/sys/schedule/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 调度分页查询
+      tags:
+      - 调度
+  /api/sys/schedule/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: sys_schedule
+        schema:
+          $ref: '#/definitions/types.SysSchedule'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新调度
+      tags:
+      - 调度
+  /api/sys/scheduling/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/types.Scheduling'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加调度
+      tags:
+      - 调度
+  /api/sys/scheduling/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/types.Scheduling'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除调度
+      tags:
+      - 调度
+  /api/sys/scheduling/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      tags:
+      - 调度
+  /api/sys/scheduling/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 调度分页查询
+      tags:
+      - 调度
+  /api/sys/scheduling/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 调度信息
+        in: body
+        name: scheduling
+        schema:
+          $ref: '#/definitions/types.Scheduling'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新调度
+      tags:
+      - 调度
+  /api/sys/setting/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysSetting'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加设置
+      tags:
+      - 设置
+  /api/sys/setting/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置
+        in: body
+        name: sys_setting
+        schema:
+          items:
+            $ref: '#/definitions/types.SysSetting'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除设置
+      tags:
+      - 设置
+  /api/sys/setting/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置
+        in: body
+        name: sys_setting
+        schema:
+          $ref: '#/definitions/types.SysSetting'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除设置
+      tags:
+      - 设置
+  /api/sys/setting/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取设置信息
+      tags:
+      - 设置
+  /api/sys/setting/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      - description: 所属应用
+        in: query
+        name: app_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 设置分页查询
+      tags:
+      - 设置
+  /api/sys/setting/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 设置信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新设置
+      tags:
+      - 设置
+  /api/sys/table/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysTable'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加表
+      tags:
+      - 表
+  /api/sys/table/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表
+        in: body
+        name: sys_table
+        schema:
+          items:
+            $ref: '#/definitions/types.SysTable'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除表
+      tags:
+      - 表
+  /api/sys/table/column/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysTableColumn'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加表字段
+      tags:
+      - 表字段
+  /api/sys/table/column/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段
+        in: body
+        name: sys_table_column
+        schema:
+          items:
+            $ref: '#/definitions/types.SysTableColumn'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除表字段
+      tags:
+      - 表字段
+  /api/sys/table/column/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段
+        in: body
+        name: sys_table_column
+        schema:
+          $ref: '#/definitions/types.SysTableColumn'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除表字段
+      tags:
+      - 表字段
+  /api/sys/table/column/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取表字段信息
+      tags:
+      - 表字段
+  /api/sys/table/column/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 表字段分页查询
+      tags:
+      - 表字段
+  /api/sys/table/column/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表字段信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新表字段
+      tags:
+      - 表字段
+  /api/sys/table/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表
+        in: body
+        name: sys_table
+        schema:
+          $ref: '#/definitions/types.SysTable'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除表
+      tags:
+      - 表
+  /api/sys/table/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取表信息
+      tags:
+      - 表
+  /api/sys/table/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 表分页查询
+      tags:
+      - 表
+  /api/sys/table/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 表信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新表
+      tags:
+      - 表
+  /api/sys/tag/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签信息
+        in: body
+        name: sys_tag
+        schema:
+          $ref: '#/definitions/types.SysTag'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加标签
+      tags:
+      - 标签
+  /api/sys/tag/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 删除标签
+        in: body
+        name: sys_tag
+        schema:
+          items:
+            $ref: '#/definitions/types.SysTag'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除标签
+      tags:
+      - 标签
+  /api/sys/tag/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签
+        in: body
+        name: sys_tag
+        schema:
+          $ref: '#/definitions/types.SysUserTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除标签
+      tags:
+      - 标签
+  /api/sys/tag/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取标签信息
+      tags:
+      - 标签
+  /api/sys/tag/group/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签组信息
+        in: body
+        name: sys_tag_group
+        schema:
+          $ref: '#/definitions/types.SysTagGroup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加标签组
+      tags:
+      - 标签组
+  /api/sys/tag/group/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签
+        in: body
+        name: sys_tag_group
+        schema:
+          $ref: '#/definitions/types.SysTagGroup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除标签组
+      tags:
+      - 标签组
+  /api/sys/tag/group/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签组id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取标签组信息
+      tags:
+      - 标签组
+  /api/sys/tag/group/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 标签组分页查询
+      tags:
+      - 标签组
+  /api/sys/tag/group/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签组信息
+        in: body
+        name: sys_tag_group
+        schema:
+          $ref: '#/definitions/types.SysTagGroup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新标签组
+      tags:
+      - 标签组
+  /api/sys/tag/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 标签分页查询
+      tags:
+      - 标签
+  /api/sys/tag/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 标签信息
+        in: body
+        name: sys_tag
+        schema:
+          $ref: '#/definitions/types.SysTag'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新标签
+      tags:
+      - 标签
+  /api/sys/tracker/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 日志id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取日志信息
+      tags:
+      - 日志
+  /api/sys/tracker/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 日志分页查询
+      tags:
+      - 日志
+  /api/sys/user/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Invalid token
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加用户
+      tags:
+      - 用户
+  /api/sys/user/batch_del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          items:
+            $ref: '#/definitions/types.SysUser'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除用户
+      tags:
+      - 用户
+  /api/sys/user/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除用户
+      tags:
+      - 用户
+  /api/sys/user/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取用户信息
+      tags:
+      - 用户
+  /api/sys/user/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户信息
+        in: body
+        name: payload
+        schema:
+          $ref: '#/definitions/types.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户认证
+      tags:
+      - 用户
+  /api/sys/user/logout:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户退出登录
+      tags:
+      - 用户
+  /api/sys/user/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户分页查询
+      tags:
+      - 用户
+  /api/sys/user/template/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板信息
+        in: body
+        name: sys_user_template
+        schema:
+          $ref: '#/definitions/types.SysUserTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加用户模板
+      tags:
+      - 用户模板
+  /api/sys/user/template/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板信息
+        in: body
+        name: sys_user_template
+        schema:
+          $ref: '#/definitions/types.SysUserTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除用户模板
+      tags:
+      - 用户模板
+  /api/sys/user/template/detail/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情信息
+        in: body
+        name: sys_user_template_detail
+        schema:
+          $ref: '#/definitions/types.SysUserTemplateDetail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加用户模板详情
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/del:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情信息
+        in: body
+        name: sys_user_template_detail
+        schema:
+          $ref: '#/definitions/types.SysUserTemplateDetail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 删除用户模板详情
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取用户模板详情信息
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户模板详情分页查询
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/detail/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板详情信息
+        in: body
+        name: sys_user_template_detail
+        schema:
+          $ref: '#/definitions/types.SysUserTemplateDetail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新用户模板详情
+      tags:
+      - 用户模板详情
+  /api/sys/user/template/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板id
+        in: query
+        name: id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取用户模板信息
+      tags:
+      - 用户模板
+  /api/sys/user/template/page:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 单页数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 用户模板分页查询
+      tags:
+      - 用户模板
+  /api/sys/user/template/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户模板信息
+        in: body
+        name: sys_user_template
+        schema:
+          $ref: '#/definitions/types.SysUserTemplate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新用户模板
+      tags:
+      - 用户模板
+  /api/sys/user/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 用户信息
+        in: body
+        name: user
+        schema:
+          $ref: '#/definitions/types.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 更新用户
+      tags:
+      - 用户
+  /api/sys/wechat/oauth2:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 授权回调
+      tags:
+      - 微信
+  /api/sys/worker/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: worker信息
+        in: body
+        name: worker
+        schema:
+          $ref: '#/definitions/types.Worker'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 添加worker
+      tags:
+      - worker
+  /api/sys/worker/get:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: worker code
+        in: query
+        name: code
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 获取worker信息
+      tags:
+      - worker
+  /api/user/info:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      tags:
+      - 用户信息
+  /api/view/file:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 文件下载
+      tags:
+      - 视图
+  /api/view/html:
+    get:
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: HTML显示
+      tags:
+      - 视图
+  /api/view/xml:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: XML显示
+      tags:
+      - 视图
+  /api/vote/like:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: like id
+        in: body
+        name: id
+        schema:
+          $ref: '#/definitions/types.VoteInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: like article
+      tags:
+      - vote controller
+securityDefinitions:
+  OAuth2AccessCode:
+    authorizationUrl: http://localhost:8082/api/sys/cas/authorize
+    flow: accessCode
+    scopes:
+      admin: Grants read and write access to administrative information
+      read: Grants read access
+      write: Grants write access
+    tokenUrl: http://localhost:8082/api/sys/cas/token
+    type: oauth2
+    x-tokenName: Authorization
+swagger: "2.0"

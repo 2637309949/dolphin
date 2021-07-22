@@ -36,8 +36,8 @@ type AssetsFileSystem struct {
 }
 
 func (assert *AssetsFileSystem) Open(name string) (http.File, error) {
-	if strings.Contains(name, "swagger.json") {
-		return os.Open(path.Join(viper.GetString("dir.doc"), "swagger.json"))
+	if strings.Contains(name, "swagger.yaml") {
+		return os.Open(path.Join(viper.GetString("dir.doc"), "swagger.yaml"))
 	}
 	return assert.FileSystem.Open(path.Join(assert.RelativePath, name))
 }
