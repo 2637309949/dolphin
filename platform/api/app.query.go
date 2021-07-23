@@ -22,13 +22,13 @@ type Query struct {
 	m   map[string]interface{}
 }
 
-// GetInt defined
+// GetInt defined TODO
 func (q *Query) GetInt(key string, init ...interface{}) int64 {
 	ret, _ := q.m[key].(int64)
 	return ret
 }
 
-// SetInt defined
+// SetInt defined TODO
 func (q *Query) SetInt(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -53,13 +53,13 @@ func (q *Query) SetInt(key string, init ...interface{}) func() {
 	}
 }
 
-// GetBool defined
+// GetBool defined TODO
 func (q *Query) GetBool(key string, init ...interface{}) bool {
 	ret, _ := q.m[key].(bool)
 	return ret
 }
 
-// SetBool defined
+// SetBool defined TODO
 func (q *Query) SetBool(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -84,13 +84,13 @@ func (q *Query) SetBool(key string, init ...interface{}) func() {
 	}
 }
 
-// GetString defined
+// GetString defined TODO
 func (q *Query) GetString(key string, init ...interface{}) string {
 	ret, _ := q.m[key].(string)
 	return ret
 }
 
-// SetString defined
+// SetString defined TODO
 func (q *Query) SetString(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -111,14 +111,14 @@ func (q *Query) SetString(key string, init ...interface{}) func() {
 	}
 }
 
-// GetRange defined
+// GetRange defined TODO
 func (q *Query) GetRange(key string, init ...interface{}) (string, string) {
 	start, _ := q.m[fmt.Sprintf("%v_start", key)].(string)
 	end, _ := q.m[fmt.Sprintf("%v_end", key)].(string)
 	return start, end
 }
 
-// SetRange defined
+// SetRange defined TODO
 func (q *Query) SetRange(key string, init ...[]string) func() {
 	v := q.ctx.Query(key)
 	q.m[fmt.Sprintf("%v_start", key)] = ""
@@ -143,7 +143,7 @@ func (q *Query) SetRange(key string, init ...[]string) func() {
 	}
 }
 
-// SetArrayString defined
+// SetArrayString defined TODO
 func (q *Query) SetArrayString(key string, init ...[]string) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -164,13 +164,13 @@ func (q *Query) SetArrayString(key string, init ...[]string) func() {
 	}
 }
 
-// GetArrayString defined
+// GetArrayString defined TODO
 func (q *Query) GetArrayString(key string, init ...[]string) []string {
 	ret, _ := q.m[key].([]string)
 	return ret
 }
 
-// SetArrayInt defined
+// SetArrayInt defined TODO
 func (q *Query) SetArrayInt(key string, init ...[]int64) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -197,13 +197,13 @@ func (q *Query) SetArrayInt(key string, init ...[]int64) func() {
 	}
 }
 
-// GetArrayInt defined
+// GetArrayInt defined TODO
 func (q *Query) GetArrayInt(key string, init ...[]int) []int64 {
 	ret, _ := q.m[key].([]int64)
 	return ret
 }
 
-// SetArrayFloat64 defined
+// SetArrayFloat64 defined TODO
 func (q *Query) SetArrayFloat64(key string, init ...[]float64) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -230,13 +230,13 @@ func (q *Query) SetArrayFloat64(key string, init ...[]float64) func() {
 	}
 }
 
-// GetArrayFloat64 defined
+// GetArrayFloat64 defined TODO
 func (q *Query) GetArrayFloat64(key string, init ...[]float64) []float64 {
 	ret, _ := q.m[key].([]float64)
 	return ret
 }
 
-// SetArrayBool defined
+// SetArrayBool defined TODO
 func (q *Query) SetArrayBool(key string, init ...[]bool) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
@@ -263,13 +263,13 @@ func (q *Query) SetArrayBool(key string, init ...[]bool) func() {
 	}
 }
 
-// GetArrayBool defined
+// GetArrayBool defined TODO
 func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
 	ret, _ := q.m[key].([]bool)
 	return ret
 }
 
-// SetRule defined
+// SetRule defined TODO
 func (q *Query) SetRule(rules ...string) {
 	rule := q.ctx.Query("rule_code")
 	if len(rules) > 0 {
@@ -287,7 +287,7 @@ func (q *Query) SetRule(rules ...string) {
 	q.m["role_rule"] = roleRule
 }
 
-// SetUser defined
+// SetUser defined TODO
 func (q *Query) SetUser(uid ...string) {
 	if len(uid) > 0 {
 		q.m["uid"] = uid[0]
@@ -296,18 +296,18 @@ func (q *Query) SetUser(uid ...string) {
 	}
 }
 
-// GetUser defined
+// GetUser defined TODO
 func (q *Query) GetUser() string {
 	ret, _ := q.m["uid"].(string)
 	return ret
 }
 
-// Value defined
+// Value defined TODO
 func (q *Query) Value() map[string]interface{} {
 	return q.m
 }
 
-// Unmarshal defined
+// Unmarshal defined TODO
 func (q *Query) Unmarshal(v interface{}) error {
 	mbyte, e := json.Marshal(q.m)
 	if e != nil {
@@ -316,12 +316,12 @@ func (q *Query) Unmarshal(v interface{}) error {
 	return json.Unmarshal(mbyte, v)
 }
 
-// Unescaped defined
+// Unescaped defined TODO
 func (q *Query) Unescaped(s string) template.HTML {
 	return template.HTML(s)
 }
 
-// SetTags defined
+// SetTags defined TODO TODO TODO TODO TODO
 func (q *Query) SetTags(params ...struct {
 	Key   string
 	Value string
@@ -337,19 +337,19 @@ func (q *Query) SetTags(params ...struct {
 	}
 }
 
-// Remove defined
+// Remove defined TODO
 func (q *Query) Remove(keys ...string) {
 	for _, k := range keys {
 		delete(q.m, k)
 	}
 }
 
-// Reset defined
+// Reset defined TODO
 func (q *Query) Reset() {
 	q.m = util.M{}
 }
 
-// ParseRule defined
+// ParseRule defined TODO
 func ParseRule(roleRules []types.SysDataPermissionDetail) interface{} {
 	roleRule := ""
 	for i, rule := range roleRules {

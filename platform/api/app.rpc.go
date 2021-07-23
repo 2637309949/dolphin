@@ -25,16 +25,16 @@ type RpcHandler interface {
 	OnStop(context.Context) error
 }
 
-type gHandler struct {
+type grpcHandler struct {
 	grpc *grpc.Server
 	net  net.Listener
 }
 
-func (gh *gHandler) RegisterServer(f func(*grpc.Server)) {
+func (gh *grpcHandler) RegisterServer(f func(*grpc.Server)) {
 	f(gh.grpc)
 }
 
-func (gh *gHandler) OnStart(ctx context.Context) error {
+func (gh *grpcHandler) OnStart(ctx context.Context) error {
 	go func() {
 		logrus.Infof("grpc listen on port:%v", viper.GetString("rpc.port"))
 		if err := gh.grpc.Serve(gh.net); err != nil {
@@ -44,7 +44,7 @@ func (gh *gHandler) OnStart(ctx context.Context) error {
 	return nil
 }
 
-func (gh *gHandler) OnStop(ctx context.Context) error {
+func (gh *grpcHandler) OnStop(ctx context.Context) error {
 	if err := gh.net.Close(); err != nil {
 		logrus.Fatal(err)
 		return err
@@ -74,5 +74,5 @@ func NewRpcHandler() RpcHandler {
 		grpc.UnaryInterceptor(trace.RpcCliTrace(viper.GetString("app.name"))),
 	}
 	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("rpc.port")))).(net.Listener)
-	return &gHandler{net: net, grpc: grpc.NewServer(options...)}
+	return &grpcHandler{net: net, grpc: grpc.NewServer(options...)}
 }

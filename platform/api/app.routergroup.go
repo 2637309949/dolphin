@@ -58,7 +58,8 @@ func (f neuteredReaddirFile) Readdir(count int) ([]os.FileInfo, error) {
 
 // Handle defined TODO
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs ...HandlerFunc) {
-	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
+	methods := strings.Split(httpMethod, ",")
+	for i := 0; i < len(methods); i++ {
 		re, err := regexp.Compile("^[A-Z]+$")
 		if matches := re.MatchString(methods[i]); !matches || err != nil {
 			panic("http method " + methods[i] + " is not valid")
