@@ -1,0 +1,22 @@
+
+<sqlMap>
+    <sql id="insert_sys_schedule">
+        insert into sys_schedule
+		(`id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
+		values
+		(?id,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
+    </sql>
+    <sql id="update_sys_schedule">
+        update sys_schedule set `id`=?id,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+		where id =?id
+    </sql>
+    <sql id="deleteone_sys_schedule">
+        delete from sys_schedule where id =?id
+    </sql>
+    <sql id="selectone_sys_schedule">
+        select `id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_schedule where id =?id
+    </sql>
+    <sql id="selectall_sys_schedule">
+        select `id`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_schedule
+    </sql>
+</sqlMap>

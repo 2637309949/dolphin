@@ -1,0 +1,20 @@
+<table name="sys_app_fun" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
+	<column name="name" desc="名称" type="null.String" xorm="varchar(36) notnull" />
+	<column name="code" desc="编码" type="null.String" xorm="varchar(36) notnull" />
+	<column name="parent" desc="父菜单ID，一级菜单为null" type="null.String" xorm="varchar(36)" />
+	<column name="inheritance" desc="继承关系" type="null.String" xorm="varchar(500)" />
+	<column name="url" desc="菜单URL" type="null.String" xorm="varchar(200) notnull" />
+	<column name="perms" desc="授权(多个用逗号分隔，如：sys:user:add" type="null.String" xorm="varchar(500)" />
+	<column name="type" desc="类型 0：目录 1：菜单 2：按钮" type="null.Int" xorm="int(11) notnull" />
+	<column name="image" desc="图片" type="null.String" xorm="varchar(200)" />
+	<column name="icon" desc="菜单图标" type="null.String" xorm="varchar(50)" />
+	<column name="order" desc="排序" type="null.Int" xorm="int(11) notnull" />
+	<column name="hidden" desc="是否隐藏" type="null.Int" xorm="int(11) notnull" />
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="int(11) notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>

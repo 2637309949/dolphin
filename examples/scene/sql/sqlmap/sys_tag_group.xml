@@ -1,0 +1,22 @@
+
+<sqlMap>
+    <sql id="insert_sys_tag_group">
+        insert into sys_tag_group
+		(`id`,`name`,`code`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
+		values
+		(?id,?name,?code,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
+    </sql>
+    <sql id="update_sys_tag_group">
+        update sys_tag_group set `id`=?id,`name`=?name,`code`=?code,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+		where id =?id
+    </sql>
+    <sql id="deleteone_sys_tag_group">
+        delete from sys_tag_group where id =?id
+    </sql>
+    <sql id="selectone_sys_tag_group">
+        select `id`,`name`,`code`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_tag_group where id =?id
+    </sql>
+    <sql id="selectall_sys_tag_group">
+        select `id`,`name`,`code`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_tag_group
+    </sql>
+</sqlMap>

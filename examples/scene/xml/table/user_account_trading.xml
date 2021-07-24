@@ -1,0 +1,7 @@
+<table name="user_account_trading" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
+	<column name="user_id" desc="" type="null.Int" xorm="int(11) notnull" />
+	<column name="trading_balance" desc="" type="decimal.Decimal" xorm="decimal(10,2) notnull default(0.00)" />
+	<column name="create_time" desc="" type="null.Time" xorm="datetime default(CURRENT_TIMESTAMP)" />
+	<column name="update_time" desc="" type="null.Time" xorm="datetime default(CURRENT_TIMESTAMP)" />
+</table>

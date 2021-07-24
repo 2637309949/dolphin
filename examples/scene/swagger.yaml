@@ -950,13 +950,13 @@ definitions:
         type: number
       is_primary_key:
         description: IsPrimaryKey defined 是否主键
-        type: boolean
+        type: number
       name:
         description: Name defined 表名
         type: string
       nullable:
         description: Nullable defined 是否为空
-        type: boolean
+        type: number
       remark:
         description: Remark defined 备注
         type: string
@@ -1190,6 +1190,18 @@ definitions:
         type: number
       value:
         description: Value defined 值
+        type: string
+    type: object
+  types.TransReq:
+    properties:
+      amount:
+        description: amount
+        type: number
+      trans_in_result:
+        description: TransInResult
+        type: string
+      trans_out_result:
+        description: TransOutResult
         type: string
     type: object
   types.VoteInfo:
@@ -1595,6 +1607,194 @@ paths:
       summary: 更新文章
       tags:
       - 文章
+  /api/dtm/tcc:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: try
+      tags:
+      - dtm controller
+  /api/dtm/trans_in:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 交易信息
+        in: body
+        name: trans_req
+        schema:
+          $ref: '#/definitions/types.TransReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: try
+      tags:
+      - dtm controller
+  /api/dtm/trans_in_confirm:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 交易信息
+        in: body
+        name: trans_req
+        schema:
+          $ref: '#/definitions/types.TransReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: confirm
+      tags:
+      - dtm controller
+  /api/dtm/trans_in_revert:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 交易信息
+        in: body
+        name: trans_req
+        schema:
+          $ref: '#/definitions/types.TransReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: cancel
+      tags:
+      - dtm controller
+  /api/dtm/trans_out:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 交易信息
+        in: body
+        name: trans_req
+        schema:
+          $ref: '#/definitions/types.TransReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: try
+      tags:
+      - dtm controller
+  /api/dtm/trans_out_confirm:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 交易信息
+        in: body
+        name: trans_req
+        schema:
+          $ref: '#/definitions/types.TransReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: confirm
+      tags:
+      - dtm controller
+  /api/dtm/trans_out_revert:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 交易信息
+        in: body
+        name: trans_req
+        schema:
+          $ref: '#/definitions/types.TransReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: cancel
+      tags:
+      - dtm controller
   /api/encrypt/add:
     post:
       consumes:

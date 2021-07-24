@@ -1,0 +1,22 @@
+
+<sqlMap>
+    <sql id="insert_user_account_trading">
+        insert into user_account_trading
+		(`id`,`user_id`,`trading_balance`,`create_time`,`update_time`)
+		values
+		(?id,?user_id,?trading_balance,?create_time,?update_time)
+    </sql>
+    <sql id="update_user_account_trading">
+        update user_account_trading set `id`=?id,`user_id`=?user_id,`trading_balance`=?trading_balance,`create_time`=?create_time,`update_time`=?update_time
+		where id =?id
+    </sql>
+    <sql id="deleteone_user_account_trading">
+        delete from user_account_trading where id =?id
+    </sql>
+    <sql id="selectone_user_account_trading">
+        select `id`,`user_id`,`trading_balance`,`create_time`,`update_time` from user_account_trading where id =?id
+    </sql>
+    <sql id="selectall_user_account_trading">
+        select `id`,`user_id`,`trading_balance`,`create_time`,`update_time` from user_account_trading
+    </sql>
+</sqlMap>

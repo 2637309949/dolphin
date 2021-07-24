@@ -1,0 +1,22 @@
+
+<sqlMap>
+    <sql id="insert_sys_notification">
+        insert into sys_notification
+		(`id`,`topic_id`,`topic_type`,`to_uid`,`from_uid`,`is_read`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
+		values
+		(?id,?topic_id,?topic_type,?to_uid,?from_uid,?is_read,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
+    </sql>
+    <sql id="update_sys_notification">
+        update sys_notification set `id`=?id,`topic_id`=?topic_id,`topic_type`=?topic_type,`to_uid`=?to_uid,`from_uid`=?from_uid,`is_read`=?is_read,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+		where id =?id
+    </sql>
+    <sql id="deleteone_sys_notification">
+        delete from sys_notification where id =?id
+    </sql>
+    <sql id="selectone_sys_notification">
+        select `id`,`topic_id`,`topic_type`,`to_uid`,`from_uid`,`is_read`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_notification where id =?id
+    </sql>
+    <sql id="selectall_sys_notification">
+        select `id`,`topic_id`,`topic_type`,`to_uid`,`from_uid`,`is_read`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_notification
+    </sql>
+</sqlMap>

@@ -13,7 +13,6 @@ require (
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang/protobuf v1.5.1
 	github.com/gopherjs/gopherjs v0.0.0-20210202160940-bed99a852dfe // indirect
-	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/kak-tus/ami v0.1.15
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
 	github.com/mattn/go-sqlite3 v1.14.7
@@ -29,6 +28,7 @@ require (
 	github.com/tidwall/buntdb v1.2.0 // indirect
 	github.com/tidwall/pretty v1.1.0 // indirect
 	github.com/ugorji/go v1.2.4 // indirect
+	github.com/yedf/dtm v0.0.0-20210724072457-bd589bb04ff6
 	go.uber.org/atomic v1.7.0 // indirect
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	google.golang.org/appengine v1.6.7 // indirect

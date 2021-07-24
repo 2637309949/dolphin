@@ -1,0 +1,19 @@
+<table name="sys_tracker" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
+	<column name="token" desc="令牌" type="null.String" xorm="varchar(72)" />
+	<column name="user_id" desc="用户ID" type="null.String" xorm="varchar(36)" />
+	<column name="status_code" desc="状态" type="null.Int" xorm="int(11)" />
+	<column name="latency" desc="反应时间" type="null.Float" xorm="float" />
+	<column name="client_ip" desc="客户端id" type="null.String" xorm="varchar(36)" />
+	<column name="method" desc="请求方法" type="null.String" xorm="varchar(36)" />
+	<column name="path" desc="请求路径" type="null.String" xorm="varchar(1024)" />
+	<column name="header" desc="请求头" type="[]byte" xorm="blob" />
+	<column name="req_body" desc="请求体" type="[]byte" xorm="mediumblob" />
+	<column name="res_body" desc="返回体" type="[]byte" xorm="mediumblob" />
+	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />
+	<column name="updater" desc="最后更新人" type="null.Int" xorm="bigint(20) notnull" />
+	<column name="update_time" desc="最后更新时间" type="null.Time" xorm="datetime notnull" />
+	<column name="is_delete" desc="删除标记" type="null.Int" xorm="int(11) notnull" />
+	<column name="remark" desc="备注" type="null.String" xorm="varchar(200)" />
+</table>

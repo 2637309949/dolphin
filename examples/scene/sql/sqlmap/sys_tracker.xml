@@ -1,0 +1,22 @@
+
+<sqlMap>
+    <sql id="insert_sys_tracker">
+        insert into sys_tracker
+		(`id`,`token`,`user_id`,`status_code`,`latency`,`client_ip`,`method`,`path`,`header`,`req_body`,`res_body`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark`)
+		values
+		(?id,?token,?user_id,?status_code,?latency,?client_ip,?method,?path,?header,?req_body,?res_body,?creater,?create_time,?updater,?update_time,?is_delete,?remark)
+    </sql>
+    <sql id="update_sys_tracker">
+        update sys_tracker set `id`=?id,`token`=?token,`user_id`=?user_id,`status_code`=?status_code,`latency`=?latency,`client_ip`=?client_ip,`method`=?method,`path`=?path,`header`=?header,`req_body`=?req_body,`res_body`=?res_body,`creater`=?creater,`create_time`=?create_time,`updater`=?updater,`update_time`=?update_time,`is_delete`=?is_delete,`remark`=?remark
+		where id =?id
+    </sql>
+    <sql id="deleteone_sys_tracker">
+        delete from sys_tracker where id =?id
+    </sql>
+    <sql id="selectone_sys_tracker">
+        select `id`,`token`,`user_id`,`status_code`,`latency`,`client_ip`,`method`,`path`,`header`,`req_body`,`res_body`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_tracker where id =?id
+    </sql>
+    <sql id="selectall_sys_tracker">
+        select `id`,`token`,`user_id`,`status_code`,`latency`,`client_ip`,`method`,`path`,`header`,`req_body`,`res_body`,`creater`,`create_time`,`updater`,`update_time`,`is_delete`,`remark` from sys_tracker
+    </sql>
+</sqlMap>

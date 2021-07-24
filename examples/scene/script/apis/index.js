@@ -3,6 +3,8 @@
 module.exports.article = require('./article')
 // iCache cache controller
 module.exports.iCache = require('./i_cache')
+// dtm dtm controller
+module.exports.dtm = require('./dtm')
 // encrypt Encrypt controller
 module.exports.encrypt = require('./encrypt')
 // jwt jwt认证

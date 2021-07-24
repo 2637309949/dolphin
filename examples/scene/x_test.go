@@ -239,6 +239,41 @@ func TestICacheInfo(t *testing.T) {
 	x.Handle("GET", "/api/i/cache/info", XTestICacheInfo, t, XTestICacheInfoRequest)
 }
 
+// TestDtmTcc defined TODO
+func TestDtmTcc(t *testing.T) {
+	x.Handle("GET", "/api/dtm/tcc", XTestDtmTcc, t, XTestDtmTccRequest)
+}
+
+// TestDtmTransOut defined TODO
+func TestDtmTransOut(t *testing.T) {
+	x.Handle("POST", "/api/dtm/trans_out", XTestDtmTransOut, t, XTestDtmTransOutRequest)
+}
+
+// TestDtmTransOutConfirm defined TODO
+func TestDtmTransOutConfirm(t *testing.T) {
+	x.Handle("POST", "/api/dtm/trans_out_confirm", XTestDtmTransOutConfirm, t, XTestDtmTransOutConfirmRequest)
+}
+
+// TestDtmTransOutRevert defined TODO
+func TestDtmTransOutRevert(t *testing.T) {
+	x.Handle("POST", "/api/dtm/trans_out_revert", XTestDtmTransOutRevert, t, XTestDtmTransOutRevertRequest)
+}
+
+// TestDtmTransIn defined TODO
+func TestDtmTransIn(t *testing.T) {
+	x.Handle("POST", "/api/dtm/trans_in", XTestDtmTransIn, t, XTestDtmTransInRequest)
+}
+
+// TestDtmTransInConfirm defined TODO
+func TestDtmTransInConfirm(t *testing.T) {
+	x.Handle("POST", "/api/dtm/trans_in_confirm", XTestDtmTransInConfirm, t, XTestDtmTransInConfirmRequest)
+}
+
+// TestDtmTransInRevert defined TODO
+func TestDtmTransInRevert(t *testing.T) {
+	x.Handle("POST", "/api/dtm/trans_in_revert", XTestDtmTransInRevert, t, XTestDtmTransInRevertRequest)
+}
+
 // TestEncryptAdd defined TODO
 func TestEncryptAdd(t *testing.T) {
 	x.Handle("POST", "/api/encrypt/add", XTestEncryptAdd, t, XTestEncryptAddRequest)

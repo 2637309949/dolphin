@@ -64,9 +64,9 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs .
 		if matches := re.MatchString(methods[i]); !matches || err != nil {
 			panic("http method " + methods[i] + " is not valid")
 		}
-		handlerFuncs = group.combineHandlers(handlerFuncs)
+		combineHandlers := group.combineHandlers(handlerFuncs)
 		relativePath := group.calculateAbsolutePath(relativePath)
-		group.dol.Http.Handle(methods[i], relativePath, handlerFuncs...)
+		group.dol.Http.Handle(methods[i], relativePath, combineHandlers...)
 	}
 }
 
