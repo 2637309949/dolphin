@@ -13,7 +13,7 @@ package api
 // @Failure 500 {object} types.Fail
 // @Router /api/view/file [get]
 func (ctr *View) ViewFile(ctx *Context) {
-	ctx.RenderFile("static/file/view.tmpl", "view.txt", map[string]interface{}{"app": 100})
+	ctx.RenderFile("static/tmpl/view.tmpl", "view.txt", map[string]interface{}{"app": 100})
 }
 
 // ViewHTML api implementation
@@ -26,7 +26,7 @@ func (ctr *View) ViewFile(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/view/html [get]
 func (ctr *View) ViewHTML(ctx *Context) {
-	ctx.RenderHTML("static/file/view.tmpl", map[string]interface{}{"app": 100})
+	ctx.RenderHTML("static/tmpl/view.tmpl", map[string]interface{}{"app": 100})
 }
 
 // ViewXML api implementation
@@ -38,5 +38,5 @@ func (ctr *View) ViewHTML(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/view/xml [get]
 func (ctr *View) ViewXML(ctx *Context) {
-	ctx.RenderXML("static/file/view.tmpl", map[string]interface{}{"app": 100})
+	ctx.RenderXML("static/tmpl/view.tmpl", map[string]interface{}{"app": 100})
 }
