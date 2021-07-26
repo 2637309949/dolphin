@@ -17,6 +17,7 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/kak-tus/ami"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 type errorLogger struct{}
@@ -41,13 +42,12 @@ func init() {
 		PipePeriod:        time.Microsecond * 1000,
 		ShardsCount:       10,
 	}, &redis.ClusterOptions{
-		Addrs:        []string{"127.0.0.1:6379"},
+		Addrs:        viper.GetStringSlice("redis.addr"),
 		ReadTimeout:  time.Second * 60,
 		WriteTimeout: time.Second * 60,
 	})
 	if err != nil {
 		logrus.Error(err)
-		// panic(err)
 	}
 	RedisConsumer, err = ami.NewConsumer(ami.ConsumerOptions{
 		Name:              "ami",
@@ -59,13 +59,12 @@ func init() {
 		PrefetchCount:     100,
 		ShardsCount:       10,
 	}, &redis.ClusterOptions{
-		Addrs:        []string{"127.0.0.1:6379"},
+		Addrs:        viper.GetStringSlice("redis.addr"),
 		ReadTimeout:  time.Second * 60,
 		WriteTimeout: time.Second * 60,
 	})
 	if err != nil {
 		logrus.Error(err)
-		// panic(err)
 	}
 }
 
