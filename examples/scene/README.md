@@ -26,6 +26,15 @@ $ go run app/main.go dtmsvr
 ```
 
 2. 启动kafka
+```shell
+docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
+docker run -d --name kafka \
+-p 9092:9092 \
+-e KAFKA_BROKER_ID=0 \
+-e KAFKA_ZOOKEEPER_CONNECT=10.0.0.101:2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.0.0.101:9092 \
+-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 wurstmeister/kafka
+```
 
 3. 启动redis
 
@@ -107,9 +116,12 @@ docker-compose  -f redis.yml  up -d
 
 创建集群
 ```shell
-docker run --rm -it inem0o/redis-trib create --replicas 1 172.16.10.191:8001 172.16.10.191:8002 172.16.10.191:8003 172.16.10.191:8004 172.16.10.191:8005 172.16.10.191:8006
+docker run --rm -it inem0o/redis-trib \n
+create --replicas 1 \n
+172.16.10.191:8001 172.16.10.191:8002 172.16.10.191:8003 172.16.10.191:8004 172.16.10.191:8005 172.16.10.191:8006
 ```
 
 4. 启动nsq
 
-
+```shell
+```
