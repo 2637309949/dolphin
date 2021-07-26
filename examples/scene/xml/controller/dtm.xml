@@ -1,27 +1,27 @@
 <controller name="dtm" desc="dtm controller">
     <!-- TCC 例子操作 -->
-    <api name="tcc" desc="try" auth="never" method="get">
+    <api name="tcc" desc="tcc" auth="never" method="get">
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
     <!-- 出账， 部署在A服务 -->
-    <api name="trans_out" desc="try" auth="never" method="post">
+    <api name="trans_out" desc="trans_out" auth="never" method="post">
         <param name="trans_req" type="$trans_req" desc="交易信息"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="trans_out_confirm" desc="confirm" auth="never" method="post">
+    <api name="trans_out_confirm" desc="trans_out_confirm" auth="never" method="post">
         <param name="trans_req" type="$trans_req" desc="交易信息"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="trans_out_revert" desc="cancel" auth="never" method="post">
+    <api name="trans_out_revert" desc="trans_out_revert" auth="never" method="post">
         <param name="trans_req" type="$trans_req" desc="交易信息"/>
         <return>
             <success type="$success"/>
@@ -29,21 +29,21 @@
         </return>
     </api>
     <!-- 入账， 部署在B服务 -->
-    <api name="trans_in" desc="try" auth="never" method="post">
+    <api name="trans_in" desc="trans_in" auth="never" method="post">
         <param name="trans_req" type="$trans_req" desc="交易信息"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="trans_in_confirm" desc="confirm" auth="never" method="post">
+    <api name="trans_in_confirm" desc="trans_in_confirm" auth="never" method="post">
         <param name="trans_req" type="$trans_req" desc="交易信息"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="trans_in_revert" desc="cancel" auth="never" method="post">
+    <api name="trans_in_revert" desc="trans_in_revert" auth="never" method="post">
         <param name="trans_req" type="$trans_req" desc="交易信息"/>
         <return>
             <success type="$success"/>

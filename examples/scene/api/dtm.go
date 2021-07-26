@@ -11,7 +11,7 @@ import (
 )
 
 // DtmTcc api implementation
-// @Summary try
+// @Summary tcc
 // @Tags dtm controller
 // @Produce application/json
 // @Failure 403 {object} types.Fail
@@ -31,7 +31,7 @@ func (ctr *Dtm) DtmTcc(ctx *Context) {
 }
 
 // DtmTransOut api implementation
-// @Summary try
+// @Summary trans_out
 // @Tags dtm controller
 // @Accept application/json
 // @Produce application/json
@@ -60,7 +60,7 @@ func (ctr *Dtm) DtmTransOut(ctx *Context) {
 }
 
 // DtmTransOutConfirm api implementation
-// @Summary confirm
+// @Summary trans_out_confirm
 // @Tags dtm controller
 // @Accept application/json
 // @Produce application/json
@@ -90,7 +90,7 @@ func (ctr *Dtm) DtmTransOutConfirm(ctx *Context) {
 }
 
 // DtmTransOutRevert api implementation
-// @Summary cancel
+// @Summary trans_out_revert
 // @Tags dtm controller
 // @Accept application/json
 // @Produce application/json
@@ -120,7 +120,7 @@ func (ctr *Dtm) DtmTransOutRevert(ctx *Context) {
 }
 
 // DtmTransIn api implementation
-// @Summary try
+// @Summary trans_in
 // @Tags dtm controller
 // @Accept application/json
 // @Produce application/json
@@ -149,7 +149,7 @@ func (ctr *Dtm) DtmTransIn(ctx *Context) {
 }
 
 // DtmTransInConfirm api implementation
-// @Summary confirm
+// @Summary trans_in_confirm
 // @Tags dtm controller
 // @Accept application/json
 // @Produce application/json
@@ -179,7 +179,7 @@ func (ctr *Dtm) DtmTransInConfirm(ctx *Context) {
 }
 
 // DtmTransInRevert api implementation
-// @Summary cancel
+// @Summary trans_in_revert
 // @Tags dtm controller
 // @Accept application/json
 // @Produce application/json

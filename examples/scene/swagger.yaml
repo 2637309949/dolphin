@@ -950,13 +950,13 @@ definitions:
         type: number
       is_primary_key:
         description: IsPrimaryKey defined 是否主键
-        type: number
+        type: boolean
       name:
         description: Name defined 表名
         type: string
       nullable:
         description: Nullable defined 是否为空
-        type: number
+        type: boolean
       remark:
         description: Remark defined 备注
         type: string
@@ -1245,14 +1245,14 @@ definitions:
         $ref: '#/definitions/types.SysUser'
         description: 用户
     type: object
-host: localhost:8082
+host: localhost:8081
 info:
   contact: {}
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: scene
-  version: 1.1.2
+  title: dolphin
+  version: "1.0"
 paths:
   /api/ami/add:
     post:
@@ -1624,7 +1624,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: try
+      summary: tcc
       tags:
       - dtm controller
   /api/dtm/trans_in:
@@ -1652,7 +1652,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: try
+      summary: trans_in
       tags:
       - dtm controller
   /api/dtm/trans_in_confirm:
@@ -1680,7 +1680,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: confirm
+      summary: trans_in_confirm
       tags:
       - dtm controller
   /api/dtm/trans_in_revert:
@@ -1708,7 +1708,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: cancel
+      summary: trans_in_revert
       tags:
       - dtm controller
   /api/dtm/trans_out:
@@ -1736,7 +1736,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: try
+      summary: trans_out
       tags:
       - dtm controller
   /api/dtm/trans_out_confirm:
@@ -1764,7 +1764,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: confirm
+      summary: trans_out_confirm
       tags:
       - dtm controller
   /api/dtm/trans_out_revert:
@@ -1792,7 +1792,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: cancel
+      summary: trans_out_revert
       tags:
       - dtm controller
   /api/encrypt/add:

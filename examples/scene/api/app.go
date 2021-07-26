@@ -70,6 +70,7 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 	}
 }
 
+// combineHandlers defined TODO
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
 	finalSize := len(group.Handlers) + len(handlers)
 	if finalSize >= int(63) {
@@ -81,6 +82,7 @@ func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain 
 	return mergedHandlers
 }
 
+// calculateAbsolutePath defined TODO
 func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	if relativePath == "" {
 		return group.basePath

@@ -1,0 +1,3 @@
+app:
+  mode: release
+  name: {{.Name}}
