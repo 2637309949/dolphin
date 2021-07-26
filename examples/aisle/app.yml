@@ -1,0 +1,8 @@
+app:
+  auth: token
+  host: localhost:8081
+  mode: release
+  name: dolphin
+  version: "1.0"
+http:
+  port: 8083

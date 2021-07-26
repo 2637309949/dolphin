@@ -222,37 +222,23 @@ func NewDefaultManager() Manager {
 }
 
 func InitRedisCli() {
-	network,
-		username,
-		password,
-		addr,
-		db,
-		mode,
-		max_redirects,
-		read_only,
-		max_retries,
-		dial_timeout,
-		read_timeout,
-		write_timeout,
-		pool_size,
-		min_idle_conns,
-		idle_conns := viper.GetString("redis.network"),
-		viper.GetString("redis.username"),
-		viper.GetString("redis.password"),
-		viper.GetStringSlice("redis.addr"),
-		viper.GetInt("redis.db"),
-		viper.GetString("redis.mode"),
-		viper.GetInt("redis.max_redirects"),
-		viper.GetBool("redis.read_only"),
-		viper.GetInt("redis.max_retries"),
-		viper.GetInt("redis.dial_timeout"),
-		viper.GetInt("redis.read_timeout"),
-		viper.GetInt("redis.write_timeout"),
-		viper.GetInt("redis.pool_size"),
-		viper.GetInt("redis.min_idle_conns"),
-		viper.GetInt("redis.idle_conns")
+	network := viper.GetString("redis.network")
+	username := viper.GetString("redis.username")
+	password := viper.GetString("redis.password")
+	addr := viper.GetStringSlice("redis.addr")
+	db := viper.GetInt("redis.db")
+	mode := viper.GetString("redis.mode")
+	max_redirects := viper.GetInt("redis.max_redirects")
+	read_only := viper.GetBool("redis.read_only")
+	max_retries := viper.GetInt("redis.max_redirects")
+	dial_timeout := viper.GetInt("redis.dial_timeout")
+	read_timeout := viper.GetInt("redis.read_timeout")
+	write_timeout := viper.GetInt("redis.write_timeout")
+	pool_size := viper.GetInt("redis.pool_size")
+	min_idle_conns := viper.GetInt("redis.min_idle_conns")
+	idle_conns := viper.GetInt("redis.idle_conns")
 
-	if len(addr) == 0 {
+	if len(addr) == 0 || mode == "" {
 		return
 	}
 	switch mode {

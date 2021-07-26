@@ -29,6 +29,87 @@ $ go run app/main.go dtmsvr
 
 3. 启动redis
 
+```yml
+version: '3'
+ 
+services:
+ redis1:
+  image: publicisworldwide/redis-cluster
+  restart: always
+  volumes:
+   - /home/double/App/docker/redis/8001/data:/data
+  environment:
+   - REDIS_PORT=8001
+  ports:
+    - '8001:8001'     #服务端口
+    - '18001:18001'   #集群端口
+ 
+ redis2:
+  image: publicisworldwide/redis-cluster
+  restart: always
+  volumes:
+   - /home/double/App/docker/redis/8002/data:/data
+  environment:
+   - REDIS_PORT=8002
+  ports:
+    - '8002:8002'
+    - '18002:18002'
+ 
+ redis3:
+  image: publicisworldwide/redis-cluster
+  restart: always
+  volumes:
+   - /home/double/App/docker/redis/8003/data:/data
+  environment:
+   - REDIS_PORT=8003
+  ports:
+    - '8003:8003'
+    - '18003:18003'
+ 
+ redis4:
+  image: publicisworldwide/redis-cluster
+  restart: always
+  volumes:
+   - /home/double/App/docker/redis/8004/data:/data
+  environment:
+   - REDIS_PORT=8004
+  ports:
+    - '8004:8004'
+    - '18004:18004'
+ 
+ redis5:
+  image: publicisworldwide/redis-cluster
+  restart: always
+  volumes:
+   - /home/double/App/docker/redis/8005/data:/data
+  environment:
+   - REDIS_PORT=8005
+  ports:
+    - '8005:8005'
+    - '18005:18005'
+ 
+ redis6:
+  image: publicisworldwide/redis-cluster
+  restart: always
+  volumes:
+   - /home/double/App/docker/redis/8006/data:/data
+  environment:
+   - REDIS_PORT=8006
+  ports:
+    - '8006:8006'
+    - '18006:18006'
+```
+
+启动redis
+```shell
+docker-compose  -f redis.yml  up -d
+```
+
+创建集群
+```shell
+docker run --rm -it inem0o/redis-trib create --replicas 1 172.16.10.191:8001 172.16.10.191:8002 172.16.10.191:8003 172.16.10.191:8004 172.16.10.191:8005 172.16.10.191:8006
+```
+
 4. 启动nsq
 
 
