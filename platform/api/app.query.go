@@ -269,22 +269,32 @@ func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
 	return ret
 }
 
-// SetRule defined TODO
-func (q *Query) SetRule(rules ...string) {
-	rule := q.ctx.Query("rule_code")
-	if len(rules) > 0 {
-		rule = rules[0]
-	}
-	var roleRule interface{}
+// // SetRule defined TODO
+// func (q *Query) SetRule(rules ...string) {
+// 	rule := q.ctx.Query("rule_code")
+// 	if len(rules) > 0 {
+// 		rule = rules[0]
+// 	}
+// 	var roleRule interface{}
+// 	var roleRules []types.SysDataPermissionDetail
+// 	userID := q.ctx.GetToken().GetUserID()
+// 	err := q.ctx.DB.SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
+// 	if err != nil {
+// 		roleRule = ""
+// 	} else {
+// 		roleRule = ParseRule(roleRules)
+// 	}
+// 	q.m["role_rule"] = roleRule
+// }
+
+// SetRule defined TODO, role_rule for data`permission
+func (q *Query) SetRule(rule string) {
 	var roleRules []types.SysDataPermissionDetail
 	userID := q.ctx.GetToken().GetUserID()
-	err := q.ctx.DB.SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
-	if err != nil {
-		roleRule = ""
-	} else {
-		roleRule = ParseRule(roleRules)
+	q.ctx.DB.SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
+	for i := range roleRules {
+		q.m["is_role_rule_"+roleRules[i].Rule.String] = true
 	}
-	q.m["role_rule"] = roleRule
 }
 
 // SetUser defined TODO
