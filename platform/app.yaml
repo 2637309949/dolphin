@@ -1,53 +1,70 @@
 app:
   auth: token
-  name: dolphin
-  mode: release
-  version: "1.0"
   host: localhost:8081
+  mode: release
+  name: dolphin
+  version: "1.0"
   viper: false
-jwt:
-  secret: 6hy789iu87
-  expire: 604800
 db:
-  driver: sqlite3
-  datasource: ./x_test.db
   connmaxlifetime: 10
+  datasource: ./x_test.db
+  driver: sqlite3
   maxidleconns: 15
   maxopenconns: 50
 dir:
   api: api
-  log: log
-  types: types
-  rpc: rpc
+  doc: ""
   k8s: k8s/platform
+  log: log
+  rpc: rpc
   script: script
   sql: sql
   sqlmap: sqlmap
   srv: srv
   svc: svc
+  types: types
   util: util
-rpc:
-  port: "9081"
-  user_srv: "localhost:9081"
-  domain_srv: "localhost:9081"
 http:
   hash: FF61A573-82FC-478B-9AEF-93D6F506DE9A
   port: "8081"
   prefix: /api
   static: static
+jwt:
+  expire: 604800
+  secret: 6hy789iu87
 oauth:
-  id: Y76U9344RABF4
-  secret: 8UYO6FVB8UYO6FVB
-  client: http://localhost:8081
-  server: http://localhost:8081
   affirm: /static/web/affirm.html
+  client: http://localhost:8081
+  id: Y76U9344RABF4
   login: /static/web/login.html
+  secret: 8UYO6FVB8UYO6FVB
+  server: http://localhost:8081
 redis:
-  addr: localhost:6379
-  password: 111111
+  addr:
+  - localhost:6379
   db: 0
+  dial_timeout: 10
+  idle_conns: 10
+  max_redirects: 0
+  max_retries: 0
+  min_idle_conns: 15
+  mode: stub
+  network: ""
+  password: 111111
+  pool_size: 15
+  read_only: true
+  read_timeout: 10
+  username: ""
+  write_timeout: 10
+rpc:
+  domain_srv: localhost:9081
+  port: "9081"
+  user_srv: localhost:9081
 swag:
   authorizationurl: /api/sys/cas/authorize
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
   scope:
     admin: Grants read and write access to administrative information
     read: Grants read access
@@ -56,6 +73,3 @@ swag:
     oauth2:
       accesscode: OAuth2AccessCode
   tokenurl: /api/sys/cas/token
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html

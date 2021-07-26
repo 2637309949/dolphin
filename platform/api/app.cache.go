@@ -42,7 +42,7 @@ type cachedWriter struct {
 
 // RedisStore represents the cache with redis persistence
 type RedisStore struct {
-	redisClient       *redis.Client
+	redisClient       redis.Cmdable
 	defaultExpiration time.Duration
 }
 
@@ -160,7 +160,7 @@ func CachePage(store persistence.CacheStore, expire time.Duration) gin.HandlerFu
 
 // NewRedisCache returns a RedisStore
 // until redigo supports sharding/clustering, only one host will be in hostList
-func NewRedisCache(redis *redis.Client, defaultExpiration time.Duration) *RedisStore {
+func NewRedisCache(redis redis.Cmdable, defaultExpiration time.Duration) *RedisStore {
 	if _, err := redis.Ping(context.Background()).Result(); err != nil {
 		logrus.Error("Redis: connect failed")
 	}
@@ -201,7 +201,7 @@ func (c *RedisStore) Get(key string, ptrValue interface{}) error {
 	return utils.Deserialize(buf, ptrValue)
 }
 
-func exists(client *redis.Client, key string) bool {
+func exists(client redis.Cmdable, key string) bool {
 	iresult := client.Exists(context.Background(), key)
 	if err := iresult.Err(); err != nil && err != redis.Nil {
 		return false

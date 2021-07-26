@@ -20,7 +20,7 @@ import (
 )
 
 type SvcHepler struct {
-	rds  *redis.Client
+	rds  redis.Cmdable
 	xlsx *Xlsx
 }
 
@@ -305,6 +305,6 @@ func (svc *SvcHepler) PageExport(db *xorm.Engine, ctr, api, table string, params
 	return svc.xlsx.ExportInfo()
 }
 
-func NewSvcHepler(rds *redis.Client) Svc {
+func NewSvcHepler(rds redis.Cmdable) Svc {
 	return &SvcHepler{rds: rds}
 }

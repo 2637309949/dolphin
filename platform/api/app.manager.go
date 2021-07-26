@@ -27,7 +27,7 @@ var (
 	// MaxWorkers defined TODO
 	MaxWorkers = 15
 	// RedisClient defined TODO
-	RedisClient *redis.Client
+	RedisClient redis.Cmdable
 	// CacheStore defined TODO
 	CacheStore persistence.CacheStore = persistence.NewInMemoryStore(60 * time.Second)
 )
@@ -226,14 +226,51 @@ func InitRedisCli() {
 		username,
 		password,
 		addr,
-		db := viper.GetString("redis.network"),
+		db,
+		mode,
+		max_redirects,
+		read_only,
+		max_retries,
+		dial_timeout,
+		read_timeout,
+		write_timeout,
+		pool_size,
+		min_idle_conns,
+		idle_conns := viper.GetString("redis.network"),
 		viper.GetString("redis.username"),
 		viper.GetString("redis.password"),
-		viper.GetString("redis.addr"),
-		viper.GetInt("redis.db")
-	if addr != "" {
-		opts := redis.Options{Network: network, Addr: addr, Username: username, Password: password, DB: db}
-		RedisClient = redis.NewClient(&opts)
+		viper.GetStringSlice("redis.addr"),
+		viper.GetInt("redis.db"),
+		viper.GetString("redis.mode"),
+		viper.GetInt("redis.max_redirects"),
+		viper.GetBool("redis.read_only"),
+		viper.GetInt("redis.max_retries"),
+		viper.GetInt("redis.dial_timeout"),
+		viper.GetInt("redis.read_timeout"),
+		viper.GetInt("redis.write_timeout"),
+		viper.GetInt("redis.pool_size"),
+		viper.GetInt("redis.min_idle_conns"),
+		viper.GetInt("redis.idle_conns")
+
+	if len(addr) == 0 {
+		return
+	}
+	switch mode {
+	case "stub":
+		RedisClient = redis.NewClient(&redis.Options{
+			Network:      network,
+			Addr:         addr[0],
+			DB:           db,
+			Username:     username,
+			Password:     password,
+			MaxRetries:   max_retries,
+			DialTimeout:  time.Duration(dial_timeout) * time.Second,
+			ReadTimeout:  time.Duration(read_timeout) * time.Second,
+			WriteTimeout: time.Duration(write_timeout) * time.Second,
+			PoolSize:     pool_size,
+			MinIdleConns: min_idle_conns,
+			IdleTimeout:  time.Duration(idle_conns) * time.Second,
+		})
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
 			logrus.Warnf("Redis:%v connect failed", viper.GetString("redis.addr"))
 			RedisClient = nil
@@ -241,5 +278,28 @@ func InitRedisCli() {
 			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
 			logrus.Infof("Redis:%v connect successfully", viper.GetString("redis.addr"))
 		}
+	case "cluster":
+		RedisClient = redis.NewClusterClient(&redis.ClusterOptions{
+			Addrs:        addr,
+			MaxRedirects: max_redirects,
+			ReadOnly:     read_only,
+			Password:     password,
+			MaxRetries:   max_retries,
+			DialTimeout:  time.Duration(dial_timeout) * time.Second,
+			ReadTimeout:  time.Duration(read_timeout) * time.Second,
+			WriteTimeout: time.Duration(write_timeout) * time.Second,
+			PoolSize:     pool_size,
+			MinIdleConns: min_idle_conns,
+			IdleTimeout:  time.Duration(idle_conns) * time.Second,
+		})
+		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
+			logrus.Warnf("Redis:%v connect failed", viper.GetString("redis.addr"))
+			RedisClient = nil
+		} else {
+			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
+			logrus.Infof("Redis:%v connect successfully", viper.GetString("redis.addr"))
+		}
+	default:
+		logrus.Fatal("redis mode must be one of (stub, cluster)")
 	}
 }

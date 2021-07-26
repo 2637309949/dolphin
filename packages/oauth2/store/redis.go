@@ -27,7 +27,7 @@ func NewRedisStore(opts *redis.Options, keyNamespace ...string) oauth2.TokenStor
 }
 
 // NewRedisStoreWithCli create an instance of a redis store
-func NewRedisStoreWithCli(cli *redis.Client, keyNamespace ...string) *RedisStore {
+func NewRedisStoreWithCli(cli redis.Cmdable, keyNamespace ...string) *RedisStore {
 	store := &RedisStore{
 		cli: cli,
 	}
@@ -58,23 +58,15 @@ func NewRedisClusterStoreWithCli(cli *redis.ClusterClient, keyNamespace ...strin
 	return store
 }
 
-type clienter interface {
-	Get(context.Context, string) *redis.StringCmd
-	Exists(context.Context, ...string) *redis.IntCmd
-	TxPipeline() redis.Pipeliner
-	Del(context.Context, ...string) *redis.IntCmd
-	Close() error
-}
-
 // RedisStore redis token store
 type RedisStore struct {
-	cli clienter
+	cli redis.Cmdable
 	ns  string
 }
 
 // Close close the store
 func (s *RedisStore) Close() error {
-	return s.cli.Close()
+	return nil
 }
 
 func (s *RedisStore) wrapperKey(key string) string {
