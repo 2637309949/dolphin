@@ -6,7 +6,6 @@ package srv
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/go-errors/errors"
@@ -25,7 +24,7 @@ var (
 	// NsqConsumer defined
 	NsqConsumer *nsq.Consumer
 	// tcpNsqdAddrr defined
-	tcpNsqdAddrr = "127.0.0.1:4161"
+	tcpNsqdAddrr = "172.16.10.191:4161"
 )
 
 type messageHandler struct{}
@@ -97,7 +96,7 @@ func NConsumer() (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
-			fmt.Print(string(goErr.Stack()))
+			logrus.Error(string(goErr.Stack()))
 		}
 	}()
 
@@ -114,7 +113,7 @@ func NConsumer() (interface{}, error) {
 func init() {
 	var err error
 	cfg := nsq.NewConfig()
-	// cfg.LookupdPollInterval = 10 * time.Second
+	cfg.LookupdPollInterval = 10 * time.Second
 	NsqConsumer, err = nsq.NewConsumer("nsq-test", "test-channel", cfg)
 	if err != nil {
 		panic(err)
