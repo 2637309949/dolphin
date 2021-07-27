@@ -32,3 +32,8 @@ wc:
   appsecret: 9cc4b7928467151acea7ab1bfa0a70a7
 rpc:
   message_srv: localhost:9081
+oss:
+  bucket: 965xx
+  endpoint: 965xx
+  accesskeyid: 965xx
+  accesskeysecret: 965xx

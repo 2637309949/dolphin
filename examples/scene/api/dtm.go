@@ -51,7 +51,10 @@ func (ctr *Dtm) DtmTransOut(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ? where a.balance + t.trading_balance + ? >= 0", 1, -payload.Amount.Int64, -payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
+		ctx.JSON(500, map[string]interface{}{
+			"code":    500,
+			"message": fmt.Errorf("update error, balance not enough"),
+		})
 	}
 	ctx.JSON(200, map[string]interface{}{
 		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
@@ -79,13 +82,14 @@ func (ctr *Dtm) DtmTransOutConfirm(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ?", 1, payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
+		ctx.JSON(500, map[string]interface{}{
+			"code":    500,
+			"message": fmt.Errorf("update error, balance not enough"),
+		})
 	}
-	dtmRet := "SUCCESS"
-	if payload.TransInResult.String != "" {
-		dtmRet = payload.TransInResult.String
-	}
-	ctx.JSON(200, map[string]interface{}{"dtm_result": dtmRet})
+	ctx.JSON(200, map[string]interface{}{
+		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
+	})
 }
 
 // DtmTransOutRevert api implementation
@@ -111,11 +115,9 @@ func (ctr *Dtm) DtmTransOutRevert(ctx *Context) {
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
 		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
 	}
-	dtmRet := "SUCCESS"
-	if payload.TransInResult.String != "" {
-		dtmRet = payload.TransInResult.String
-	}
-	ctx.JSON(200, map[string]interface{}{"dtm_result": dtmRet})
+	ctx.JSON(200, map[string]interface{}{
+		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
+	})
 }
 
 // DtmTransIn api implementation
@@ -140,11 +142,9 @@ func (ctr *Dtm) DtmTransIn(ctx *Context) {
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
 		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
 	}
-	dtmRet := "SUCCESS"
-	if payload.TransInResult.String != "" {
-		dtmRet = payload.TransInResult.String
-	}
-	ctx.JSON(200, map[string]interface{}{"dtm_result": dtmRet})
+	ctx.JSON(200, map[string]interface{}{
+		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
+	})
 }
 
 // DtmTransInConfirm api implementation
@@ -168,13 +168,14 @@ func (ctr *Dtm) DtmTransInConfirm(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ?", 2, -payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
+		ctx.JSON(500, map[string]interface{}{
+			"code":    500,
+			"message": fmt.Errorf("update error, balance not enough"),
+		})
 	}
-	dtmRet := "SUCCESS"
-	if payload.TransInResult.String != "" {
-		dtmRet = payload.TransInResult.String
-	}
-	ctx.JSON(200, map[string]interface{}{"dtm_result": dtmRet})
+	ctx.JSON(200, map[string]interface{}{
+		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
+	})
 }
 
 // DtmTransInRevert api implementation
@@ -200,9 +201,7 @@ func (ctr *Dtm) DtmTransInRevert(ctx *Context) {
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
 		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
 	}
-	dtmRet := "SUCCESS"
-	if payload.TransInResult.String != "" {
-		dtmRet = payload.TransInResult.String
-	}
-	ctx.JSON(200, map[string]interface{}{"dtm_result": dtmRet})
+	ctx.JSON(200, map[string]interface{}{
+		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
+	})
 }

@@ -20,12 +20,10 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
-	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/eriklott/mustache"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
-	"github.com/thoas/go-funk"
 )
 
 // Context defined TODO
@@ -51,26 +49,6 @@ func (ctx *Context) reset() {
 func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
 	tk := ctx.GetToken()
 	return ctx.PlatformDB.ID(tk.GetUserID()).Get(user)
-}
-
-// InRole defined TODO
-func (ctx *Context) InRole(role ...string) bool {
-	var cnt int
-	role, _ = slice.RemoveStringDuplicates(role)
-	if _, err := ctx.DB.SQL(
-		fmt.Sprintf(`
-		    select count(distinct(role_id)) cnt 
-			from sys_role_user 
-			left join sys_role on sys_role.id=sys_role_user.role_id 
-			where sys_role.code in (%v) and sys_role_user.user_id = ? and sys_role_user.is_delete != 1
-		`, strings.Join(funk.Map(role, func(id string) string {
-			return fmt.Sprintf("'%v'", id)
-		}).([]string), ",")),
-		ctx.GetToken().GetUserID()).Get(&cnt); err != nil {
-		logrus.Error(err)
-		return false
-	}
-	return cnt == len(role)
 }
 
 // Success defined success result

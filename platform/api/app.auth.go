@@ -10,6 +10,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
+	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/golang-jwt/jwt"
@@ -175,7 +176,8 @@ func AuthEncrypt(ctx *Context) {
 // Roles middles
 func Roles(roles ...string) HandlerFunc {
 	return func(ctx *Context) {
-		if !ctx.InRole(roles...) {
+		svcHelper, userId := new(svc.SvcHepler), ctx.GetToken().GetUserID()
+		if !svcHelper.InRole(ctx.DB, userId, roles...) {
 			ctx.Fail(util.ErrAccessDenied, 403)
 			ctx.Abort()
 			return

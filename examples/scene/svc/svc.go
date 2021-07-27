@@ -55,4 +55,5 @@ type Svc interface {
 	Cache
 	Http
 	Db
+	Oss
 }

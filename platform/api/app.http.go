@@ -42,8 +42,8 @@ func NewRestful(engine *gin.Engine, dol *Dolphin) *restful {
 
 // OnStart defined TODO
 func (gh *restful) OnStart(ctx context.Context) error {
+	gh.rebuildGlobalRoutes()
 	go func() {
-		gh.rebuildGlobalRoutes()
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 		if err := gh.Engine.Run(fmt.Sprintf(":%v", viper.GetString("http.port"))); err != nil {
 			logrus.Fatal(err)
