@@ -10,9 +10,7 @@ from
 where
 	sys_org.id {{.ne}} ""
     and is_delete = 0
-{{if ne .role_rule ""}}
-	and {{.role_rule}}
-{{end}}
+
 {{if ne .name ""}}
     and sys_org.name = "{{.name}}"
 {{end}}

@@ -19,9 +19,7 @@ where
 {{if and .update_time_start .update_time_end}}
 	and article.update_time between '{{.update_time_start}}' and '{{.update_time_end}}'
 {{end}}
-{{if .role_rule}}
-	and {{.role_rule}}
-{{end}}
+
 {{if .sort}}
 	order by article.{{.sort}}
 {{end}}

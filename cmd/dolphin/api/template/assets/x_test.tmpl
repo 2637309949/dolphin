@@ -23,7 +23,7 @@ var x *XTest
 
 type (
 	testingT interface {
-		Deadline() (time.Time, bool)
+		// Deadline() (time.Time, bool)
 		Error(args ...interface{})
 		Errorf(format string, args ...interface{})
 		Fail()
@@ -35,7 +35,7 @@ type (
 		Log(args ...interface{})
 		Logf(format string, args ...interface{})
 		Name() string
-		Parallel()
+		// Parallel()
 		Skip(args ...interface{})
 		SkipNow()
 		Skipf(format string, args ...interface{})
@@ -156,7 +156,7 @@ func (x *XTest) Head(url string, args interface{}, h func(w *httptest.ResponseRe
 }
 
 // HttpHandle defined TODO
-func (x *XTest) Handle(method, reqPath string, funk func(ctx *Context), t *testing.T, args interface{}) {
+func (x *XTest) Handle(method, reqPath string, funk func(ctx *Context), t testingT, args interface{}) {
 	switch method {
 	case "GET":
 		x.Get(reqPath, args, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
@@ -195,8 +195,18 @@ func TestSysUserLogin(t *testing.T) {
 {{- $api := .}}
 {{- if ne $api.Name "login" }}
 // Test{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} defined TODO
+// go test -v -test.run Test{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
 func Test{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}(t *testing.T) {
 	x.Handle("{{$ctr.ToUpper $api.Method}}", "{{if and (ne $ctr.Prefix "") (ne $ctr.Prefix "/")}}{{$ctr.Prefix}}{{- else if ne $ctr.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}", XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, t, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request)
+}
+// Benchmark{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} defined TODO
+// go test -v -test.run=none -test.bench=^Benchmark{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} -test.benchmem=true
+func Benchmark{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+			for pb.Next() {
+				x.Handle("{{$ctr.ToUpper $api.Method}}", "{{if and (ne $ctr.Prefix "") (ne $ctr.Prefix "/")}}{{$ctr.Prefix}}{{- else if ne $ctr.Prefix "/"}}{{$.Viper.GetString "http.prefix"}}{{- end}}{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}", XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, t, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request)
+			}
+	})
 }
 {{end}}
 {{end }}

@@ -98,8 +98,10 @@ func (gh *restful) Handle(httpMethod, absolutePath string, handlerFuncs ...Handl
 }
 
 // DebugPrintRoute defined TODO
-func DebugPrintRoute(httpMethod, absolutePath, handlerName string, nuHandlers int) {
-	logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
+func DebugPrintRoute(httpMethod, absolutePath, _ string, _ int) {
+	if viper.GetString("app.mode") != "release" {
+		logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
+	}
 }
 
 // nameOfFunction defined TODO

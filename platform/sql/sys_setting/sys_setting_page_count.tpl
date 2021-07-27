@@ -7,6 +7,4 @@ where
 	sys_setting.id {{.ne}} ""
 	and
 	sys_setting.is_delete {{.ne}} 1
-{{if ne .role_rule ""}}
-	and {{.role_rule}}
-{{end}}
+

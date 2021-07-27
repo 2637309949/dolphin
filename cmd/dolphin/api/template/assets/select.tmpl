@@ -19,9 +19,6 @@ where
 {{.Controller.Unescaped "{{"}}if and .update_time_start .update_time_end{{.Controller.Unescaped "}}"}}
 	and {{.Api.Table}}.update_time between '{{.Controller.Unescaped "{{"}}.update_time_start{{.Controller.Unescaped "}}"}}' and '{{.Controller.Unescaped "{{"}}.update_time_end{{.Controller.Unescaped "}}"}}'
 {{.Controller.Unescaped "{{"}}end{{.Controller.Unescaped "}}"}}
-{{.Controller.Unescaped "{{"}}if .role_rule{{.Controller.Unescaped "}}"}}
-	and {{.Controller.Unescaped "{{"}}.role_rule{{.Controller.Unescaped "}}"}}
-{{.Controller.Unescaped "{{"}}end{{.Controller.Unescaped "}}"}}
 {{.Controller.Unescaped "{{"}}if .sort{{.Controller.Unescaped "}}"}}
 	order by {{.Api.Table}}.{{.Controller.Unescaped "{{"}}.sort{{.Controller.Unescaped "}}"}}
 {{.Controller.Unescaped "{{"}}end{{.Controller.Unescaped "}}"}}

@@ -17,9 +17,7 @@ where
     and sys_role_menu.role_id = "{{.role_id}}"
 {{end}}
     and sys_menu.is_delete = 0
-{{if ne .role_rule ""}}
-	and {{.role_rule}}
-{{end}}
+
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}

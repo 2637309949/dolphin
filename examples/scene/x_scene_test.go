@@ -361,3 +361,108 @@ var XTestJwtCheck, XTestJwtCheckRequest = func(ctx *Context) {
 		ctx.testingT.Errorf("XTestJwtCheck = %v want %v", ret.Code, 200)
 	}
 }, Payload{}
+
+// XTestDtmTcc, XTestDtmTccRequest defined TODO
+var XTestDtmTcc, XTestDtmTccRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTcc = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTcc = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+
+// XTestDtmTransOut, XTestDtmTransOutRequest defined TODO
+var XTestDtmTransOut, XTestDtmTransOutRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransOut = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransOut = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+
+// XTestDtmTransOutConfirm, XTestDtmTransOutConfirmRequest defined TODO
+var XTestDtmTransOutConfirm, XTestDtmTransOutConfirmRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransOutConfirm = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransOutConfirm = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+
+// XTestDtmTransOutRevert, XTestDtmTransOutRevertRequest defined TODO
+var XTestDtmTransOutRevert, XTestDtmTransOutRevertRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransOutRevert = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransOutRevert = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+
+// XTestDtmTransIn, XTestDtmTransInRequest defined TODO
+var XTestDtmTransIn, XTestDtmTransInRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransIn = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransIn = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+
+// XTestDtmTransInConfirm, XTestDtmTransInConfirmRequest defined TODO
+var XTestDtmTransInConfirm, XTestDtmTransInConfirmRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransInConfirm = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransInConfirm = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+
+// XTestDtmTransInRevert, XTestDtmTransInRevertRequest defined TODO
+var XTestDtmTransInRevert, XTestDtmTransInRevertRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransInRevert = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestDtmTransInRevert = %v want %v", ret.Code, 200)
+	}
+}, Payload{}

@@ -10,7 +10,6 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
@@ -23,7 +22,7 @@ var x *XTest
 
 type (
 	testingT interface {
-		Deadline() (time.Time, bool)
+		// Deadline() (time.Time, bool)
 		Error(args ...interface{})
 		Errorf(format string, args ...interface{})
 		Fail()
@@ -35,7 +34,7 @@ type (
 		Log(args ...interface{})
 		Logf(format string, args ...interface{})
 		Name() string
-		Parallel()
+		// Parallel()
 		Skip(args ...interface{})
 		SkipNow()
 		Skipf(format string, args ...interface{})
@@ -156,7 +155,7 @@ func (x *XTest) Head(url string, args interface{}, h func(w *httptest.ResponseRe
 }
 
 // HttpHandle defined TODO
-func (x *XTest) Handle(method, reqPath string, funk func(ctx *Context), t *testing.T, args interface{}) {
+func (x *XTest) Handle(method, reqPath string, funk func(ctx *Context), t testingT, args interface{}) {
 	switch method {
 	case "GET":
 		x.Get(reqPath, args, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
@@ -190,1131 +189,3617 @@ func TestSysUserLogin(t *testing.T) {
 }
 
 // TestSysAppFunAdd defined TODO
+// go test -v -test.run TestSysAppFunAdd
 func TestSysAppFunAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/app/fun/add", XTestSysAppFunAdd, t, XTestSysAppFunAddRequest)
 }
 
+// BenchmarkSysAppFunAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunAdd -test.benchmem=true
+func BenchmarkSysAppFunAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/app/fun/add", XTestSysAppFunAdd, t, XTestSysAppFunAddRequest)
+		}
+	})
+}
+
 // TestSysAppFunBatchAdd defined TODO
+// go test -v -test.run TestSysAppFunBatchAdd
 func TestSysAppFunBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/app/fun/batch_add", XTestSysAppFunBatchAdd, t, XTestSysAppFunBatchAddRequest)
 }
 
+// BenchmarkSysAppFunBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunBatchAdd -test.benchmem=true
+func BenchmarkSysAppFunBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/app/fun/batch_add", XTestSysAppFunBatchAdd, t, XTestSysAppFunBatchAddRequest)
+		}
+	})
+}
+
 // TestSysAppFunDel defined TODO
+// go test -v -test.run TestSysAppFunDel
 func TestSysAppFunDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/app/fun/del", XTestSysAppFunDel, t, XTestSysAppFunDelRequest)
 }
 
+// BenchmarkSysAppFunDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunDel -test.benchmem=true
+func BenchmarkSysAppFunDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/app/fun/del", XTestSysAppFunDel, t, XTestSysAppFunDelRequest)
+		}
+	})
+}
+
 // TestSysAppFunBatchDel defined TODO
+// go test -v -test.run TestSysAppFunBatchDel
 func TestSysAppFunBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/app/fun/batch_del", XTestSysAppFunBatchDel, t, XTestSysAppFunBatchDelRequest)
 }
 
+// BenchmarkSysAppFunBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunBatchDel -test.benchmem=true
+func BenchmarkSysAppFunBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/app/fun/batch_del", XTestSysAppFunBatchDel, t, XTestSysAppFunBatchDelRequest)
+		}
+	})
+}
+
 // TestSysAppFunUpdate defined TODO
+// go test -v -test.run TestSysAppFunUpdate
 func TestSysAppFunUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/app/fun/update", XTestSysAppFunUpdate, t, XTestSysAppFunUpdateRequest)
 }
 
+// BenchmarkSysAppFunUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunUpdate -test.benchmem=true
+func BenchmarkSysAppFunUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/app/fun/update", XTestSysAppFunUpdate, t, XTestSysAppFunUpdateRequest)
+		}
+	})
+}
+
 // TestSysAppFunBatchUpdate defined TODO
+// go test -v -test.run TestSysAppFunBatchUpdate
 func TestSysAppFunBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/app/fun/batch_update", XTestSysAppFunBatchUpdate, t, XTestSysAppFunBatchUpdateRequest)
 }
 
+// BenchmarkSysAppFunBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunBatchUpdate -test.benchmem=true
+func BenchmarkSysAppFunBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/app/fun/batch_update", XTestSysAppFunBatchUpdate, t, XTestSysAppFunBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysAppFunPage defined TODO
+// go test -v -test.run TestSysAppFunPage
 func TestSysAppFunPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/app/fun/page", XTestSysAppFunPage, t, XTestSysAppFunPageRequest)
 }
 
+// BenchmarkSysAppFunPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunPage -test.benchmem=true
+func BenchmarkSysAppFunPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/app/fun/page", XTestSysAppFunPage, t, XTestSysAppFunPageRequest)
+		}
+	})
+}
+
 // TestSysAppFunTree defined TODO
+// go test -v -test.run TestSysAppFunTree
 func TestSysAppFunTree(t *testing.T) {
 	x.Handle("GET", "/api/sys/app/fun/tree", XTestSysAppFunTree, t, XTestSysAppFunTreeRequest)
 }
 
+// BenchmarkSysAppFunTree defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunTree -test.benchmem=true
+func BenchmarkSysAppFunTree(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/app/fun/tree", XTestSysAppFunTree, t, XTestSysAppFunTreeRequest)
+		}
+	})
+}
+
 // TestSysAppFunGet defined TODO
+// go test -v -test.run TestSysAppFunGet
 func TestSysAppFunGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/app/fun/get", XTestSysAppFunGet, t, XTestSysAppFunGetRequest)
 }
 
+// BenchmarkSysAppFunGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAppFunGet -test.benchmem=true
+func BenchmarkSysAppFunGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/app/fun/get", XTestSysAppFunGet, t, XTestSysAppFunGetRequest)
+		}
+	})
+}
+
 // TestSysAreaAdd defined TODO
+// go test -v -test.run TestSysAreaAdd
 func TestSysAreaAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/area/add", XTestSysAreaAdd, t, XTestSysAreaAddRequest)
 }
 
+// BenchmarkSysAreaAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaAdd -test.benchmem=true
+func BenchmarkSysAreaAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/area/add", XTestSysAreaAdd, t, XTestSysAreaAddRequest)
+		}
+	})
+}
+
 // TestSysAreaBatchAdd defined TODO
+// go test -v -test.run TestSysAreaBatchAdd
 func TestSysAreaBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/area/batch_add", XTestSysAreaBatchAdd, t, XTestSysAreaBatchAddRequest)
 }
 
+// BenchmarkSysAreaBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaBatchAdd -test.benchmem=true
+func BenchmarkSysAreaBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/area/batch_add", XTestSysAreaBatchAdd, t, XTestSysAreaBatchAddRequest)
+		}
+	})
+}
+
 // TestSysAreaDel defined TODO
+// go test -v -test.run TestSysAreaDel
 func TestSysAreaDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/area/del", XTestSysAreaDel, t, XTestSysAreaDelRequest)
 }
 
+// BenchmarkSysAreaDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaDel -test.benchmem=true
+func BenchmarkSysAreaDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/area/del", XTestSysAreaDel, t, XTestSysAreaDelRequest)
+		}
+	})
+}
+
 // TestSysAreaBatchDel defined TODO
+// go test -v -test.run TestSysAreaBatchDel
 func TestSysAreaBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/area/batch_del", XTestSysAreaBatchDel, t, XTestSysAreaBatchDelRequest)
 }
 
+// BenchmarkSysAreaBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaBatchDel -test.benchmem=true
+func BenchmarkSysAreaBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/area/batch_del", XTestSysAreaBatchDel, t, XTestSysAreaBatchDelRequest)
+		}
+	})
+}
+
 // TestSysAreaUpdate defined TODO
+// go test -v -test.run TestSysAreaUpdate
 func TestSysAreaUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/area/update", XTestSysAreaUpdate, t, XTestSysAreaUpdateRequest)
 }
 
+// BenchmarkSysAreaUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaUpdate -test.benchmem=true
+func BenchmarkSysAreaUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/area/update", XTestSysAreaUpdate, t, XTestSysAreaUpdateRequest)
+		}
+	})
+}
+
 // TestSysAreaBatchUpdate defined TODO
+// go test -v -test.run TestSysAreaBatchUpdate
 func TestSysAreaBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/area/batch_update", XTestSysAreaBatchUpdate, t, XTestSysAreaBatchUpdateRequest)
 }
 
+// BenchmarkSysAreaBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaBatchUpdate -test.benchmem=true
+func BenchmarkSysAreaBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/area/batch_update", XTestSysAreaBatchUpdate, t, XTestSysAreaBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysAreaPage defined TODO
+// go test -v -test.run TestSysAreaPage
 func TestSysAreaPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/area/page", XTestSysAreaPage, t, XTestSysAreaPageRequest)
 }
 
+// BenchmarkSysAreaPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaPage -test.benchmem=true
+func BenchmarkSysAreaPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/area/page", XTestSysAreaPage, t, XTestSysAreaPageRequest)
+		}
+	})
+}
+
 // TestSysAreaGet defined TODO
+// go test -v -test.run TestSysAreaGet
 func TestSysAreaGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/area/get", XTestSysAreaGet, t, XTestSysAreaGetRequest)
 }
 
+// BenchmarkSysAreaGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAreaGet -test.benchmem=true
+func BenchmarkSysAreaGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/area/get", XTestSysAreaGet, t, XTestSysAreaGetRequest)
+		}
+	})
+}
+
 // TestSysAttachmentAdd defined TODO
+// go test -v -test.run TestSysAttachmentAdd
 func TestSysAttachmentAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/attachment/add", XTestSysAttachmentAdd, t, XTestSysAttachmentAddRequest)
 }
 
+// BenchmarkSysAttachmentAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentAdd -test.benchmem=true
+func BenchmarkSysAttachmentAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/attachment/add", XTestSysAttachmentAdd, t, XTestSysAttachmentAddRequest)
+		}
+	})
+}
+
 // TestSysAttachmentBatchAdd defined TODO
+// go test -v -test.run TestSysAttachmentBatchAdd
 func TestSysAttachmentBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/attachment/batch_add", XTestSysAttachmentBatchAdd, t, XTestSysAttachmentBatchAddRequest)
 }
 
+// BenchmarkSysAttachmentBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentBatchAdd -test.benchmem=true
+func BenchmarkSysAttachmentBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/attachment/batch_add", XTestSysAttachmentBatchAdd, t, XTestSysAttachmentBatchAddRequest)
+		}
+	})
+}
+
 // TestSysAttachmentUpload defined TODO
+// go test -v -test.run TestSysAttachmentUpload
 func TestSysAttachmentUpload(t *testing.T) {
 	x.Handle("POST", "/api/sys/attachment/upload", XTestSysAttachmentUpload, t, XTestSysAttachmentUploadRequest)
 }
 
+// BenchmarkSysAttachmentUpload defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentUpload -test.benchmem=true
+func BenchmarkSysAttachmentUpload(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/attachment/upload", XTestSysAttachmentUpload, t, XTestSysAttachmentUploadRequest)
+		}
+	})
+}
+
 // TestSysAttachmentExport defined TODO
+// go test -v -test.run TestSysAttachmentExport
 func TestSysAttachmentExport(t *testing.T) {
 	x.Handle("GET", "/api/sys/attachment/export", XTestSysAttachmentExport, t, XTestSysAttachmentExportRequest)
 }
 
+// BenchmarkSysAttachmentExport defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentExport -test.benchmem=true
+func BenchmarkSysAttachmentExport(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/attachment/export", XTestSysAttachmentExport, t, XTestSysAttachmentExportRequest)
+		}
+	})
+}
+
 // TestSysAttachmentDel defined TODO
+// go test -v -test.run TestSysAttachmentDel
 func TestSysAttachmentDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/attachment/del", XTestSysAttachmentDel, t, XTestSysAttachmentDelRequest)
 }
 
+// BenchmarkSysAttachmentDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentDel -test.benchmem=true
+func BenchmarkSysAttachmentDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/attachment/del", XTestSysAttachmentDel, t, XTestSysAttachmentDelRequest)
+		}
+	})
+}
+
 // TestSysAttachmentBatchDel defined TODO
+// go test -v -test.run TestSysAttachmentBatchDel
 func TestSysAttachmentBatchDel(t *testing.T) {
 	x.Handle("POST", "/api/sys/attachment/batch_del", XTestSysAttachmentBatchDel, t, XTestSysAttachmentBatchDelRequest)
 }
 
+// BenchmarkSysAttachmentBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentBatchDel -test.benchmem=true
+func BenchmarkSysAttachmentBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/attachment/batch_del", XTestSysAttachmentBatchDel, t, XTestSysAttachmentBatchDelRequest)
+		}
+	})
+}
+
 // TestSysAttachmentUpdate defined TODO
+// go test -v -test.run TestSysAttachmentUpdate
 func TestSysAttachmentUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/attachment/update", XTestSysAttachmentUpdate, t, XTestSysAttachmentUpdateRequest)
 }
 
+// BenchmarkSysAttachmentUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentUpdate -test.benchmem=true
+func BenchmarkSysAttachmentUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/attachment/update", XTestSysAttachmentUpdate, t, XTestSysAttachmentUpdateRequest)
+		}
+	})
+}
+
 // TestSysAttachmentBatchUpdate defined TODO
+// go test -v -test.run TestSysAttachmentBatchUpdate
 func TestSysAttachmentBatchUpdate(t *testing.T) {
 	x.Handle("POST", "/api/sys/attachment/batch_update", XTestSysAttachmentBatchUpdate, t, XTestSysAttachmentBatchUpdateRequest)
 }
 
+// BenchmarkSysAttachmentBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentBatchUpdate -test.benchmem=true
+func BenchmarkSysAttachmentBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/attachment/batch_update", XTestSysAttachmentBatchUpdate, t, XTestSysAttachmentBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysAttachmentPage defined TODO
+// go test -v -test.run TestSysAttachmentPage
 func TestSysAttachmentPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/attachment/page", XTestSysAttachmentPage, t, XTestSysAttachmentPageRequest)
 }
 
+// BenchmarkSysAttachmentPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentPage -test.benchmem=true
+func BenchmarkSysAttachmentPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/attachment/page", XTestSysAttachmentPage, t, XTestSysAttachmentPageRequest)
+		}
+	})
+}
+
 // TestSysAttachmentGet defined TODO
+// go test -v -test.run TestSysAttachmentGet
 func TestSysAttachmentGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/attachment/get", XTestSysAttachmentGet, t, XTestSysAttachmentGetRequest)
 }
 
+// BenchmarkSysAttachmentGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysAttachmentGet -test.benchmem=true
+func BenchmarkSysAttachmentGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/attachment/get", XTestSysAttachmentGet, t, XTestSysAttachmentGetRequest)
+		}
+	})
+}
+
 // TestSysCasLogout defined TODO
+// go test -v -test.run TestSysCasLogout
 func TestSysCasLogout(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/logout", XTestSysCasLogout, t, XTestSysCasLogoutRequest)
 }
 
+// BenchmarkSysCasLogout defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasLogout -test.benchmem=true
+func BenchmarkSysCasLogout(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/logout", XTestSysCasLogout, t, XTestSysCasLogoutRequest)
+		}
+	})
+}
+
 // TestSysCasAffirm defined TODO
+// go test -v -test.run TestSysCasAffirm
 func TestSysCasAffirm(t *testing.T) {
 	x.Handle("POST", "/api/sys/cas/affirm", XTestSysCasAffirm, t, XTestSysCasAffirmRequest)
 }
 
+// BenchmarkSysCasAffirm defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasAffirm -test.benchmem=true
+func BenchmarkSysCasAffirm(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/cas/affirm", XTestSysCasAffirm, t, XTestSysCasAffirmRequest)
+		}
+	})
+}
+
 // TestSysCasAuthorize defined TODO
+// go test -v -test.run TestSysCasAuthorize
 func TestSysCasAuthorize(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/authorize", XTestSysCasAuthorize, t, XTestSysCasAuthorizeRequest)
 }
 
+// BenchmarkSysCasAuthorize defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasAuthorize -test.benchmem=true
+func BenchmarkSysCasAuthorize(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/authorize", XTestSysCasAuthorize, t, XTestSysCasAuthorizeRequest)
+		}
+	})
+}
+
 // TestSysCasToken defined TODO
+// go test -v -test.run TestSysCasToken
 func TestSysCasToken(t *testing.T) {
 	x.Handle("POST", "/api/sys/cas/token", XTestSysCasToken, t, XTestSysCasTokenRequest)
 }
 
+// BenchmarkSysCasToken defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasToken -test.benchmem=true
+func BenchmarkSysCasToken(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/cas/token", XTestSysCasToken, t, XTestSysCasTokenRequest)
+		}
+	})
+}
+
 // TestSysCasURL defined TODO
+// go test -v -test.run TestSysCasURL
 func TestSysCasURL(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/url", XTestSysCasURL, t, XTestSysCasURLRequest)
 }
 
+// BenchmarkSysCasURL defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasURL -test.benchmem=true
+func BenchmarkSysCasURL(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/url", XTestSysCasURL, t, XTestSysCasURLRequest)
+		}
+	})
+}
+
 // TestSysCasOauth2 defined TODO
+// go test -v -test.run TestSysCasOauth2
 func TestSysCasOauth2(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/oauth2", XTestSysCasOauth2, t, XTestSysCasOauth2Request)
 }
 
+// BenchmarkSysCasOauth2 defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasOauth2 -test.benchmem=true
+func BenchmarkSysCasOauth2(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/oauth2", XTestSysCasOauth2, t, XTestSysCasOauth2Request)
+		}
+	})
+}
+
 // TestSysCasRefresh defined TODO
+// go test -v -test.run TestSysCasRefresh
 func TestSysCasRefresh(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/refresh", XTestSysCasRefresh, t, XTestSysCasRefreshRequest)
 }
 
+// BenchmarkSysCasRefresh defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasRefresh -test.benchmem=true
+func BenchmarkSysCasRefresh(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/refresh", XTestSysCasRefresh, t, XTestSysCasRefreshRequest)
+		}
+	})
+}
+
 // TestSysCasCheck defined TODO
+// go test -v -test.run TestSysCasCheck
 func TestSysCasCheck(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/check", XTestSysCasCheck, t, XTestSysCasCheckRequest)
 }
 
+// BenchmarkSysCasCheck defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasCheck -test.benchmem=true
+func BenchmarkSysCasCheck(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/check", XTestSysCasCheck, t, XTestSysCasCheckRequest)
+		}
+	})
+}
+
 // TestSysCasProfile defined TODO
+// go test -v -test.run TestSysCasProfile
 func TestSysCasProfile(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/profile", XTestSysCasProfile, t, XTestSysCasProfileRequest)
 }
 
+// BenchmarkSysCasProfile defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasProfile -test.benchmem=true
+func BenchmarkSysCasProfile(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/profile", XTestSysCasProfile, t, XTestSysCasProfileRequest)
+		}
+	})
+}
+
 // TestSysCasQrcode defined TODO
+// go test -v -test.run TestSysCasQrcode
 func TestSysCasQrcode(t *testing.T) {
 	x.Handle("GET", "/api/sys/cas/qrcode", XTestSysCasQrcode, t, XTestSysCasQrcodeRequest)
 }
 
+// BenchmarkSysCasQrcode defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasQrcode -test.benchmem=true
+func BenchmarkSysCasQrcode(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/qrcode", XTestSysCasQrcode, t, XTestSysCasQrcodeRequest)
+		}
+	})
+}
+
 // TestSysClientAdd defined TODO
+// go test -v -test.run TestSysClientAdd
 func TestSysClientAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/client/add", XTestSysClientAdd, t, XTestSysClientAddRequest)
 }
 
+// BenchmarkSysClientAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientAdd -test.benchmem=true
+func BenchmarkSysClientAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/client/add", XTestSysClientAdd, t, XTestSysClientAddRequest)
+		}
+	})
+}
+
 // TestSysClientBatchAdd defined TODO
+// go test -v -test.run TestSysClientBatchAdd
 func TestSysClientBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/client/batch_add", XTestSysClientBatchAdd, t, XTestSysClientBatchAddRequest)
 }
 
+// BenchmarkSysClientBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientBatchAdd -test.benchmem=true
+func BenchmarkSysClientBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/client/batch_add", XTestSysClientBatchAdd, t, XTestSysClientBatchAddRequest)
+		}
+	})
+}
+
 // TestSysClientDel defined TODO
+// go test -v -test.run TestSysClientDel
 func TestSysClientDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/client/del", XTestSysClientDel, t, XTestSysClientDelRequest)
 }
 
+// BenchmarkSysClientDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientDel -test.benchmem=true
+func BenchmarkSysClientDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/client/del", XTestSysClientDel, t, XTestSysClientDelRequest)
+		}
+	})
+}
+
 // TestSysClientBatchDel defined TODO
+// go test -v -test.run TestSysClientBatchDel
 func TestSysClientBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/client/batch_del", XTestSysClientBatchDel, t, XTestSysClientBatchDelRequest)
 }
 
+// BenchmarkSysClientBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientBatchDel -test.benchmem=true
+func BenchmarkSysClientBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/client/batch_del", XTestSysClientBatchDel, t, XTestSysClientBatchDelRequest)
+		}
+	})
+}
+
 // TestSysClientUpdate defined TODO
+// go test -v -test.run TestSysClientUpdate
 func TestSysClientUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/client/update", XTestSysClientUpdate, t, XTestSysClientUpdateRequest)
 }
 
+// BenchmarkSysClientUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientUpdate -test.benchmem=true
+func BenchmarkSysClientUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/client/update", XTestSysClientUpdate, t, XTestSysClientUpdateRequest)
+		}
+	})
+}
+
 // TestSysClientBatchUpdate defined TODO
+// go test -v -test.run TestSysClientBatchUpdate
 func TestSysClientBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/client/batch_update", XTestSysClientBatchUpdate, t, XTestSysClientBatchUpdateRequest)
 }
 
+// BenchmarkSysClientBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientBatchUpdate -test.benchmem=true
+func BenchmarkSysClientBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/client/batch_update", XTestSysClientBatchUpdate, t, XTestSysClientBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysClientPage defined TODO
+// go test -v -test.run TestSysClientPage
 func TestSysClientPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/client/page", XTestSysClientPage, t, XTestSysClientPageRequest)
 }
 
+// BenchmarkSysClientPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientPage -test.benchmem=true
+func BenchmarkSysClientPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/client/page", XTestSysClientPage, t, XTestSysClientPageRequest)
+		}
+	})
+}
+
 // TestSysClientGet defined TODO
+// go test -v -test.run TestSysClientGet
 func TestSysClientGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/client/get", XTestSysClientGet, t, XTestSysClientGetRequest)
 }
 
+// BenchmarkSysClientGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysClientGet -test.benchmem=true
+func BenchmarkSysClientGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/client/get", XTestSysClientGet, t, XTestSysClientGetRequest)
+		}
+	})
+}
+
 // TestSysCommentAdd defined TODO
+// go test -v -test.run TestSysCommentAdd
 func TestSysCommentAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/comment/add", XTestSysCommentAdd, t, XTestSysCommentAddRequest)
 }
 
+// BenchmarkSysCommentAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentAdd -test.benchmem=true
+func BenchmarkSysCommentAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/comment/add", XTestSysCommentAdd, t, XTestSysCommentAddRequest)
+		}
+	})
+}
+
 // TestSysCommentBatchAdd defined TODO
+// go test -v -test.run TestSysCommentBatchAdd
 func TestSysCommentBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/comment/batch_add", XTestSysCommentBatchAdd, t, XTestSysCommentBatchAddRequest)
 }
 
+// BenchmarkSysCommentBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentBatchAdd -test.benchmem=true
+func BenchmarkSysCommentBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/comment/batch_add", XTestSysCommentBatchAdd, t, XTestSysCommentBatchAddRequest)
+		}
+	})
+}
+
 // TestSysCommentDel defined TODO
+// go test -v -test.run TestSysCommentDel
 func TestSysCommentDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/comment/del", XTestSysCommentDel, t, XTestSysCommentDelRequest)
 }
 
+// BenchmarkSysCommentDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentDel -test.benchmem=true
+func BenchmarkSysCommentDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/comment/del", XTestSysCommentDel, t, XTestSysCommentDelRequest)
+		}
+	})
+}
+
 // TestSysCommentBatchDel defined TODO
+// go test -v -test.run TestSysCommentBatchDel
 func TestSysCommentBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/comment/batch_del", XTestSysCommentBatchDel, t, XTestSysCommentBatchDelRequest)
 }
 
+// BenchmarkSysCommentBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentBatchDel -test.benchmem=true
+func BenchmarkSysCommentBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/comment/batch_del", XTestSysCommentBatchDel, t, XTestSysCommentBatchDelRequest)
+		}
+	})
+}
+
 // TestSysCommentUpdate defined TODO
+// go test -v -test.run TestSysCommentUpdate
 func TestSysCommentUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/comment/update", XTestSysCommentUpdate, t, XTestSysCommentUpdateRequest)
 }
 
+// BenchmarkSysCommentUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentUpdate -test.benchmem=true
+func BenchmarkSysCommentUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/comment/update", XTestSysCommentUpdate, t, XTestSysCommentUpdateRequest)
+		}
+	})
+}
+
 // TestSysCommentBatchUpdate defined TODO
+// go test -v -test.run TestSysCommentBatchUpdate
 func TestSysCommentBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/comment/batch_update", XTestSysCommentBatchUpdate, t, XTestSysCommentBatchUpdateRequest)
 }
 
+// BenchmarkSysCommentBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentBatchUpdate -test.benchmem=true
+func BenchmarkSysCommentBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/comment/batch_update", XTestSysCommentBatchUpdate, t, XTestSysCommentBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysCommentPage defined TODO
+// go test -v -test.run TestSysCommentPage
 func TestSysCommentPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/comment/page", XTestSysCommentPage, t, XTestSysCommentPageRequest)
 }
 
+// BenchmarkSysCommentPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentPage -test.benchmem=true
+func BenchmarkSysCommentPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/comment/page", XTestSysCommentPage, t, XTestSysCommentPageRequest)
+		}
+	})
+}
+
 // TestSysCommentGet defined TODO
+// go test -v -test.run TestSysCommentGet
 func TestSysCommentGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/comment/get", XTestSysCommentGet, t, XTestSysCommentGetRequest)
 }
 
+// BenchmarkSysCommentGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCommentGet -test.benchmem=true
+func BenchmarkSysCommentGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/comment/get", XTestSysCommentGet, t, XTestSysCommentGetRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionAdd defined TODO
+// go test -v -test.run TestSysDataPermissionAdd
 func TestSysDataPermissionAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/data/permission/add", XTestSysDataPermissionAdd, t, XTestSysDataPermissionAddRequest)
 }
 
+// BenchmarkSysDataPermissionAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionAdd -test.benchmem=true
+func BenchmarkSysDataPermissionAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/data/permission/add", XTestSysDataPermissionAdd, t, XTestSysDataPermissionAddRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionBatchAdd defined TODO
+// go test -v -test.run TestSysDataPermissionBatchAdd
 func TestSysDataPermissionBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/data/permission/batch_add", XTestSysDataPermissionBatchAdd, t, XTestSysDataPermissionBatchAddRequest)
 }
 
+// BenchmarkSysDataPermissionBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionBatchAdd -test.benchmem=true
+func BenchmarkSysDataPermissionBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/data/permission/batch_add", XTestSysDataPermissionBatchAdd, t, XTestSysDataPermissionBatchAddRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionDel defined TODO
+// go test -v -test.run TestSysDataPermissionDel
 func TestSysDataPermissionDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/data/permission/del", XTestSysDataPermissionDel, t, XTestSysDataPermissionDelRequest)
 }
 
+// BenchmarkSysDataPermissionDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionDel -test.benchmem=true
+func BenchmarkSysDataPermissionDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/data/permission/del", XTestSysDataPermissionDel, t, XTestSysDataPermissionDelRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionBatchDel defined TODO
+// go test -v -test.run TestSysDataPermissionBatchDel
 func TestSysDataPermissionBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/data/permission/batch_del", XTestSysDataPermissionBatchDel, t, XTestSysDataPermissionBatchDelRequest)
 }
 
+// BenchmarkSysDataPermissionBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionBatchDel -test.benchmem=true
+func BenchmarkSysDataPermissionBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/data/permission/batch_del", XTestSysDataPermissionBatchDel, t, XTestSysDataPermissionBatchDelRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionUpdate defined TODO
+// go test -v -test.run TestSysDataPermissionUpdate
 func TestSysDataPermissionUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/data/permission/update", XTestSysDataPermissionUpdate, t, XTestSysDataPermissionUpdateRequest)
 }
 
+// BenchmarkSysDataPermissionUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionUpdate -test.benchmem=true
+func BenchmarkSysDataPermissionUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/data/permission/update", XTestSysDataPermissionUpdate, t, XTestSysDataPermissionUpdateRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionBatchUpdate defined TODO
+// go test -v -test.run TestSysDataPermissionBatchUpdate
 func TestSysDataPermissionBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/data/permission/batch_update", XTestSysDataPermissionBatchUpdate, t, XTestSysDataPermissionBatchUpdateRequest)
 }
 
+// BenchmarkSysDataPermissionBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionBatchUpdate -test.benchmem=true
+func BenchmarkSysDataPermissionBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/data/permission/batch_update", XTestSysDataPermissionBatchUpdate, t, XTestSysDataPermissionBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionPage defined TODO
+// go test -v -test.run TestSysDataPermissionPage
 func TestSysDataPermissionPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/data/permission/page", XTestSysDataPermissionPage, t, XTestSysDataPermissionPageRequest)
 }
 
+// BenchmarkSysDataPermissionPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionPage -test.benchmem=true
+func BenchmarkSysDataPermissionPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/data/permission/page", XTestSysDataPermissionPage, t, XTestSysDataPermissionPageRequest)
+		}
+	})
+}
+
 // TestSysDataPermissionGet defined TODO
+// go test -v -test.run TestSysDataPermissionGet
 func TestSysDataPermissionGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/data/permission/get", XTestSysDataPermissionGet, t, XTestSysDataPermissionGetRequest)
 }
 
+// BenchmarkSysDataPermissionGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDataPermissionGet -test.benchmem=true
+func BenchmarkSysDataPermissionGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/data/permission/get", XTestSysDataPermissionGet, t, XTestSysDataPermissionGetRequest)
+		}
+	})
+}
+
 // TestDebugPprof defined TODO
+// go test -v -test.run TestDebugPprof
 func TestDebugPprof(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/", XTestDebugPprof, t, XTestDebugPprofRequest)
 }
 
+// BenchmarkDebugPprof defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugPprof -test.benchmem=true
+func BenchmarkDebugPprof(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/", XTestDebugPprof, t, XTestDebugPprofRequest)
+		}
+	})
+}
+
 // TestDebugHeap defined TODO
+// go test -v -test.run TestDebugHeap
 func TestDebugHeap(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/heap", XTestDebugHeap, t, XTestDebugHeapRequest)
 }
 
+// BenchmarkDebugHeap defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugHeap -test.benchmem=true
+func BenchmarkDebugHeap(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/heap", XTestDebugHeap, t, XTestDebugHeapRequest)
+		}
+	})
+}
+
 // TestDebugGoroutine defined TODO
+// go test -v -test.run TestDebugGoroutine
 func TestDebugGoroutine(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/goroutine", XTestDebugGoroutine, t, XTestDebugGoroutineRequest)
 }
 
+// BenchmarkDebugGoroutine defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugGoroutine -test.benchmem=true
+func BenchmarkDebugGoroutine(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/goroutine", XTestDebugGoroutine, t, XTestDebugGoroutineRequest)
+		}
+	})
+}
+
 // TestDebugAllocs defined TODO
+// go test -v -test.run TestDebugAllocs
 func TestDebugAllocs(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/allocs", XTestDebugAllocs, t, XTestDebugAllocsRequest)
 }
 
+// BenchmarkDebugAllocs defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugAllocs -test.benchmem=true
+func BenchmarkDebugAllocs(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/allocs", XTestDebugAllocs, t, XTestDebugAllocsRequest)
+		}
+	})
+}
+
 // TestDebugBlock defined TODO
+// go test -v -test.run TestDebugBlock
 func TestDebugBlock(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/block", XTestDebugBlock, t, XTestDebugBlockRequest)
 }
 
+// BenchmarkDebugBlock defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugBlock -test.benchmem=true
+func BenchmarkDebugBlock(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/block", XTestDebugBlock, t, XTestDebugBlockRequest)
+		}
+	})
+}
+
 // TestDebugThreadcreate defined TODO
+// go test -v -test.run TestDebugThreadcreate
 func TestDebugThreadcreate(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/threadcreate", XTestDebugThreadcreate, t, XTestDebugThreadcreateRequest)
 }
 
+// BenchmarkDebugThreadcreate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugThreadcreate -test.benchmem=true
+func BenchmarkDebugThreadcreate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/threadcreate", XTestDebugThreadcreate, t, XTestDebugThreadcreateRequest)
+		}
+	})
+}
+
 // TestDebugCmdline defined TODO
+// go test -v -test.run TestDebugCmdline
 func TestDebugCmdline(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/cmdline", XTestDebugCmdline, t, XTestDebugCmdlineRequest)
 }
 
+// BenchmarkDebugCmdline defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugCmdline -test.benchmem=true
+func BenchmarkDebugCmdline(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/cmdline", XTestDebugCmdline, t, XTestDebugCmdlineRequest)
+		}
+	})
+}
+
 // TestDebugProfile defined TODO
+// go test -v -test.run TestDebugProfile
 func TestDebugProfile(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/profile", XTestDebugProfile, t, XTestDebugProfileRequest)
 }
 
+// BenchmarkDebugProfile defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugProfile -test.benchmem=true
+func BenchmarkDebugProfile(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/profile", XTestDebugProfile, t, XTestDebugProfileRequest)
+		}
+	})
+}
+
 // TestDebugSymbol defined TODO
+// go test -v -test.run TestDebugSymbol
 func TestDebugSymbol(t *testing.T) {
 	x.Handle("GET,POST", "/debug/pprof/symbol", XTestDebugSymbol, t, XTestDebugSymbolRequest)
 }
 
+// BenchmarkDebugSymbol defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugSymbol -test.benchmem=true
+func BenchmarkDebugSymbol(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET,POST", "/debug/pprof/symbol", XTestDebugSymbol, t, XTestDebugSymbolRequest)
+		}
+	})
+}
+
 // TestDebugTrace defined TODO
+// go test -v -test.run TestDebugTrace
 func TestDebugTrace(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/trace", XTestDebugTrace, t, XTestDebugTraceRequest)
 }
 
+// BenchmarkDebugTrace defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugTrace -test.benchmem=true
+func BenchmarkDebugTrace(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/trace", XTestDebugTrace, t, XTestDebugTraceRequest)
+		}
+	})
+}
+
 // TestDebugMutex defined TODO
+// go test -v -test.run TestDebugMutex
 func TestDebugMutex(t *testing.T) {
 	x.Handle("GET", "/debug/pprof/mutex", XTestDebugMutex, t, XTestDebugMutexRequest)
 }
 
+// BenchmarkDebugMutex defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkDebugMutex -test.benchmem=true
+func BenchmarkDebugMutex(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/debug/pprof/mutex", XTestDebugMutex, t, XTestDebugMutexRequest)
+		}
+	})
+}
+
 // TestSysDingtalkOauth2 defined TODO
+// go test -v -test.run TestSysDingtalkOauth2
 func TestSysDingtalkOauth2(t *testing.T) {
 	x.Handle("GET", "/api/sys/dingtalk/oauth2", XTestSysDingtalkOauth2, t, XTestSysDingtalkOauth2Request)
 }
 
+// BenchmarkSysDingtalkOauth2 defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDingtalkOauth2 -test.benchmem=true
+func BenchmarkSysDingtalkOauth2(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/dingtalk/oauth2", XTestSysDingtalkOauth2, t, XTestSysDingtalkOauth2Request)
+		}
+	})
+}
+
 // TestSysDomainAdd defined TODO
+// go test -v -test.run TestSysDomainAdd
 func TestSysDomainAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/domain/add", XTestSysDomainAdd, t, XTestSysDomainAddRequest)
 }
 
+// BenchmarkSysDomainAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainAdd -test.benchmem=true
+func BenchmarkSysDomainAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/domain/add", XTestSysDomainAdd, t, XTestSysDomainAddRequest)
+		}
+	})
+}
+
 // TestSysDomainBatchAdd defined TODO
+// go test -v -test.run TestSysDomainBatchAdd
 func TestSysDomainBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/domain/batch_add", XTestSysDomainBatchAdd, t, XTestSysDomainBatchAddRequest)
 }
 
+// BenchmarkSysDomainBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainBatchAdd -test.benchmem=true
+func BenchmarkSysDomainBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/domain/batch_add", XTestSysDomainBatchAdd, t, XTestSysDomainBatchAddRequest)
+		}
+	})
+}
+
 // TestSysDomainDel defined TODO
+// go test -v -test.run TestSysDomainDel
 func TestSysDomainDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/domain/del", XTestSysDomainDel, t, XTestSysDomainDelRequest)
 }
 
+// BenchmarkSysDomainDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainDel -test.benchmem=true
+func BenchmarkSysDomainDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/domain/del", XTestSysDomainDel, t, XTestSysDomainDelRequest)
+		}
+	})
+}
+
 // TestSysDomainBatchDel defined TODO
+// go test -v -test.run TestSysDomainBatchDel
 func TestSysDomainBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/domain/batch_del", XTestSysDomainBatchDel, t, XTestSysDomainBatchDelRequest)
 }
 
+// BenchmarkSysDomainBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainBatchDel -test.benchmem=true
+func BenchmarkSysDomainBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/domain/batch_del", XTestSysDomainBatchDel, t, XTestSysDomainBatchDelRequest)
+		}
+	})
+}
+
 // TestSysDomainUpdate defined TODO
+// go test -v -test.run TestSysDomainUpdate
 func TestSysDomainUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/domain/update", XTestSysDomainUpdate, t, XTestSysDomainUpdateRequest)
 }
 
+// BenchmarkSysDomainUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainUpdate -test.benchmem=true
+func BenchmarkSysDomainUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/domain/update", XTestSysDomainUpdate, t, XTestSysDomainUpdateRequest)
+		}
+	})
+}
+
 // TestSysDomainBatchUpdate defined TODO
+// go test -v -test.run TestSysDomainBatchUpdate
 func TestSysDomainBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/domain/batch_update", XTestSysDomainBatchUpdate, t, XTestSysDomainBatchUpdateRequest)
 }
 
+// BenchmarkSysDomainBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainBatchUpdate -test.benchmem=true
+func BenchmarkSysDomainBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/domain/batch_update", XTestSysDomainBatchUpdate, t, XTestSysDomainBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysDomainPage defined TODO
+// go test -v -test.run TestSysDomainPage
 func TestSysDomainPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/domain/page", XTestSysDomainPage, t, XTestSysDomainPageRequest)
 }
 
+// BenchmarkSysDomainPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainPage -test.benchmem=true
+func BenchmarkSysDomainPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/domain/page", XTestSysDomainPage, t, XTestSysDomainPageRequest)
+		}
+	})
+}
+
 // TestSysDomainGet defined TODO
+// go test -v -test.run TestSysDomainGet
 func TestSysDomainGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/domain/get", XTestSysDomainGet, t, XTestSysDomainGetRequest)
 }
 
+// BenchmarkSysDomainGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysDomainGet -test.benchmem=true
+func BenchmarkSysDomainGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/domain/get", XTestSysDomainGet, t, XTestSysDomainGetRequest)
+		}
+	})
+}
+
 // TestSysMenuAdd defined TODO
+// go test -v -test.run TestSysMenuAdd
 func TestSysMenuAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/menu/add", XTestSysMenuAdd, t, XTestSysMenuAddRequest)
 }
 
+// BenchmarkSysMenuAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuAdd -test.benchmem=true
+func BenchmarkSysMenuAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/menu/add", XTestSysMenuAdd, t, XTestSysMenuAddRequest)
+		}
+	})
+}
+
 // TestSysMenuBatchAdd defined TODO
+// go test -v -test.run TestSysMenuBatchAdd
 func TestSysMenuBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/menu/batch_add", XTestSysMenuBatchAdd, t, XTestSysMenuBatchAddRequest)
 }
 
+// BenchmarkSysMenuBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuBatchAdd -test.benchmem=true
+func BenchmarkSysMenuBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/menu/batch_add", XTestSysMenuBatchAdd, t, XTestSysMenuBatchAddRequest)
+		}
+	})
+}
+
 // TestSysMenuDel defined TODO
+// go test -v -test.run TestSysMenuDel
 func TestSysMenuDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/menu/del", XTestSysMenuDel, t, XTestSysMenuDelRequest)
 }
 
+// BenchmarkSysMenuDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuDel -test.benchmem=true
+func BenchmarkSysMenuDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/menu/del", XTestSysMenuDel, t, XTestSysMenuDelRequest)
+		}
+	})
+}
+
 // TestSysMenuBatchDel defined TODO
+// go test -v -test.run TestSysMenuBatchDel
 func TestSysMenuBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/menu/batch_del", XTestSysMenuBatchDel, t, XTestSysMenuBatchDelRequest)
 }
 
+// BenchmarkSysMenuBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuBatchDel -test.benchmem=true
+func BenchmarkSysMenuBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/menu/batch_del", XTestSysMenuBatchDel, t, XTestSysMenuBatchDelRequest)
+		}
+	})
+}
+
 // TestSysMenuUpdate defined TODO
+// go test -v -test.run TestSysMenuUpdate
 func TestSysMenuUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/menu/update", XTestSysMenuUpdate, t, XTestSysMenuUpdateRequest)
 }
 
+// BenchmarkSysMenuUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuUpdate -test.benchmem=true
+func BenchmarkSysMenuUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/menu/update", XTestSysMenuUpdate, t, XTestSysMenuUpdateRequest)
+		}
+	})
+}
+
 // TestSysMenuBatchUpdate defined TODO
+// go test -v -test.run TestSysMenuBatchUpdate
 func TestSysMenuBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/menu/batch_update", XTestSysMenuBatchUpdate, t, XTestSysMenuBatchUpdateRequest)
 }
 
+// BenchmarkSysMenuBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuBatchUpdate -test.benchmem=true
+func BenchmarkSysMenuBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/menu/batch_update", XTestSysMenuBatchUpdate, t, XTestSysMenuBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysMenuSidebar defined TODO
+// go test -v -test.run TestSysMenuSidebar
 func TestSysMenuSidebar(t *testing.T) {
 	x.Handle("GET", "/api/sys/menu/sidebar", XTestSysMenuSidebar, t, XTestSysMenuSidebarRequest)
 }
 
+// BenchmarkSysMenuSidebar defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuSidebar -test.benchmem=true
+func BenchmarkSysMenuSidebar(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/menu/sidebar", XTestSysMenuSidebar, t, XTestSysMenuSidebarRequest)
+		}
+	})
+}
+
 // TestSysMenuPage defined TODO
+// go test -v -test.run TestSysMenuPage
 func TestSysMenuPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/menu/page", XTestSysMenuPage, t, XTestSysMenuPageRequest)
 }
 
+// BenchmarkSysMenuPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuPage -test.benchmem=true
+func BenchmarkSysMenuPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/menu/page", XTestSysMenuPage, t, XTestSysMenuPageRequest)
+		}
+	})
+}
+
 // TestSysMenuTree defined TODO
+// go test -v -test.run TestSysMenuTree
 func TestSysMenuTree(t *testing.T) {
 	x.Handle("GET", "/api/sys/menu/tree", XTestSysMenuTree, t, XTestSysMenuTreeRequest)
 }
 
+// BenchmarkSysMenuTree defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuTree -test.benchmem=true
+func BenchmarkSysMenuTree(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/menu/tree", XTestSysMenuTree, t, XTestSysMenuTreeRequest)
+		}
+	})
+}
+
 // TestSysMenuGet defined TODO
+// go test -v -test.run TestSysMenuGet
 func TestSysMenuGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/menu/get", XTestSysMenuGet, t, XTestSysMenuGetRequest)
 }
 
+// BenchmarkSysMenuGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysMenuGet -test.benchmem=true
+func BenchmarkSysMenuGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/menu/get", XTestSysMenuGet, t, XTestSysMenuGetRequest)
+		}
+	})
+}
+
 // TestSysNotificationAdd defined TODO
+// go test -v -test.run TestSysNotificationAdd
 func TestSysNotificationAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/notification/add", XTestSysNotificationAdd, t, XTestSysNotificationAddRequest)
 }
 
+// BenchmarkSysNotificationAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationAdd -test.benchmem=true
+func BenchmarkSysNotificationAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/notification/add", XTestSysNotificationAdd, t, XTestSysNotificationAddRequest)
+		}
+	})
+}
+
 // TestSysNotificationBatchAdd defined TODO
+// go test -v -test.run TestSysNotificationBatchAdd
 func TestSysNotificationBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/notification/batch_add", XTestSysNotificationBatchAdd, t, XTestSysNotificationBatchAddRequest)
 }
 
+// BenchmarkSysNotificationBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationBatchAdd -test.benchmem=true
+func BenchmarkSysNotificationBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/notification/batch_add", XTestSysNotificationBatchAdd, t, XTestSysNotificationBatchAddRequest)
+		}
+	})
+}
+
 // TestSysNotificationDel defined TODO
+// go test -v -test.run TestSysNotificationDel
 func TestSysNotificationDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/notification/del", XTestSysNotificationDel, t, XTestSysNotificationDelRequest)
 }
 
+// BenchmarkSysNotificationDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationDel -test.benchmem=true
+func BenchmarkSysNotificationDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/notification/del", XTestSysNotificationDel, t, XTestSysNotificationDelRequest)
+		}
+	})
+}
+
 // TestSysNotificationBatchDel defined TODO
+// go test -v -test.run TestSysNotificationBatchDel
 func TestSysNotificationBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/notification/batch_del", XTestSysNotificationBatchDel, t, XTestSysNotificationBatchDelRequest)
 }
 
+// BenchmarkSysNotificationBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationBatchDel -test.benchmem=true
+func BenchmarkSysNotificationBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/notification/batch_del", XTestSysNotificationBatchDel, t, XTestSysNotificationBatchDelRequest)
+		}
+	})
+}
+
 // TestSysNotificationUpdate defined TODO
+// go test -v -test.run TestSysNotificationUpdate
 func TestSysNotificationUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/notification/update", XTestSysNotificationUpdate, t, XTestSysNotificationUpdateRequest)
 }
 
+// BenchmarkSysNotificationUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationUpdate -test.benchmem=true
+func BenchmarkSysNotificationUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/notification/update", XTestSysNotificationUpdate, t, XTestSysNotificationUpdateRequest)
+		}
+	})
+}
+
 // TestSysNotificationBatchUpdate defined TODO
+// go test -v -test.run TestSysNotificationBatchUpdate
 func TestSysNotificationBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/notification/batch_update", XTestSysNotificationBatchUpdate, t, XTestSysNotificationBatchUpdateRequest)
 }
 
+// BenchmarkSysNotificationBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationBatchUpdate -test.benchmem=true
+func BenchmarkSysNotificationBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/notification/batch_update", XTestSysNotificationBatchUpdate, t, XTestSysNotificationBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysNotificationPage defined TODO
+// go test -v -test.run TestSysNotificationPage
 func TestSysNotificationPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/notification/page", XTestSysNotificationPage, t, XTestSysNotificationPageRequest)
 }
 
+// BenchmarkSysNotificationPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationPage -test.benchmem=true
+func BenchmarkSysNotificationPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/notification/page", XTestSysNotificationPage, t, XTestSysNotificationPageRequest)
+		}
+	})
+}
+
 // TestSysNotificationGet defined TODO
+// go test -v -test.run TestSysNotificationGet
 func TestSysNotificationGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/notification/get", XTestSysNotificationGet, t, XTestSysNotificationGetRequest)
 }
 
+// BenchmarkSysNotificationGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysNotificationGet -test.benchmem=true
+func BenchmarkSysNotificationGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/notification/get", XTestSysNotificationGet, t, XTestSysNotificationGetRequest)
+		}
+	})
+}
+
 // TestSysOptionsetAdd defined TODO
+// go test -v -test.run TestSysOptionsetAdd
 func TestSysOptionsetAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/optionset/add", XTestSysOptionsetAdd, t, XTestSysOptionsetAddRequest)
 }
 
+// BenchmarkSysOptionsetAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetAdd -test.benchmem=true
+func BenchmarkSysOptionsetAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/optionset/add", XTestSysOptionsetAdd, t, XTestSysOptionsetAddRequest)
+		}
+	})
+}
+
 // TestSysOptionsetBatchAdd defined TODO
+// go test -v -test.run TestSysOptionsetBatchAdd
 func TestSysOptionsetBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/optionset/batch_add", XTestSysOptionsetBatchAdd, t, XTestSysOptionsetBatchAddRequest)
 }
 
+// BenchmarkSysOptionsetBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetBatchAdd -test.benchmem=true
+func BenchmarkSysOptionsetBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/optionset/batch_add", XTestSysOptionsetBatchAdd, t, XTestSysOptionsetBatchAddRequest)
+		}
+	})
+}
+
 // TestSysOptionsetDel defined TODO
+// go test -v -test.run TestSysOptionsetDel
 func TestSysOptionsetDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/optionset/del", XTestSysOptionsetDel, t, XTestSysOptionsetDelRequest)
 }
 
+// BenchmarkSysOptionsetDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetDel -test.benchmem=true
+func BenchmarkSysOptionsetDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/optionset/del", XTestSysOptionsetDel, t, XTestSysOptionsetDelRequest)
+		}
+	})
+}
+
 // TestSysOptionsetBatchDel defined TODO
+// go test -v -test.run TestSysOptionsetBatchDel
 func TestSysOptionsetBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/optionset/batch_del", XTestSysOptionsetBatchDel, t, XTestSysOptionsetBatchDelRequest)
 }
 
+// BenchmarkSysOptionsetBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetBatchDel -test.benchmem=true
+func BenchmarkSysOptionsetBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/optionset/batch_del", XTestSysOptionsetBatchDel, t, XTestSysOptionsetBatchDelRequest)
+		}
+	})
+}
+
 // TestSysOptionsetUpdate defined TODO
+// go test -v -test.run TestSysOptionsetUpdate
 func TestSysOptionsetUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/optionset/update", XTestSysOptionsetUpdate, t, XTestSysOptionsetUpdateRequest)
 }
 
+// BenchmarkSysOptionsetUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetUpdate -test.benchmem=true
+func BenchmarkSysOptionsetUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/optionset/update", XTestSysOptionsetUpdate, t, XTestSysOptionsetUpdateRequest)
+		}
+	})
+}
+
 // TestSysOptionsetBatchUpdate defined TODO
+// go test -v -test.run TestSysOptionsetBatchUpdate
 func TestSysOptionsetBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/optionset/batch_update", XTestSysOptionsetBatchUpdate, t, XTestSysOptionsetBatchUpdateRequest)
 }
 
+// BenchmarkSysOptionsetBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetBatchUpdate -test.benchmem=true
+func BenchmarkSysOptionsetBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/optionset/batch_update", XTestSysOptionsetBatchUpdate, t, XTestSysOptionsetBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysOptionsetPage defined TODO
+// go test -v -test.run TestSysOptionsetPage
 func TestSysOptionsetPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/optionset/page", XTestSysOptionsetPage, t, XTestSysOptionsetPageRequest)
 }
 
+// BenchmarkSysOptionsetPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetPage -test.benchmem=true
+func BenchmarkSysOptionsetPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/optionset/page", XTestSysOptionsetPage, t, XTestSysOptionsetPageRequest)
+		}
+	})
+}
+
 // TestSysOptionsetGet defined TODO
+// go test -v -test.run TestSysOptionsetGet
 func TestSysOptionsetGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/optionset/get", XTestSysOptionsetGet, t, XTestSysOptionsetGetRequest)
 }
 
+// BenchmarkSysOptionsetGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOptionsetGet -test.benchmem=true
+func BenchmarkSysOptionsetGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/optionset/get", XTestSysOptionsetGet, t, XTestSysOptionsetGetRequest)
+		}
+	})
+}
+
 // TestSysOrgAdd defined TODO
+// go test -v -test.run TestSysOrgAdd
 func TestSysOrgAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/org/add", XTestSysOrgAdd, t, XTestSysOrgAddRequest)
 }
 
+// BenchmarkSysOrgAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgAdd -test.benchmem=true
+func BenchmarkSysOrgAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/org/add", XTestSysOrgAdd, t, XTestSysOrgAddRequest)
+		}
+	})
+}
+
 // TestSysOrgBatchAdd defined TODO
+// go test -v -test.run TestSysOrgBatchAdd
 func TestSysOrgBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/org/batch_add", XTestSysOrgBatchAdd, t, XTestSysOrgBatchAddRequest)
 }
 
+// BenchmarkSysOrgBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgBatchAdd -test.benchmem=true
+func BenchmarkSysOrgBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/org/batch_add", XTestSysOrgBatchAdd, t, XTestSysOrgBatchAddRequest)
+		}
+	})
+}
+
 // TestSysOrgDel defined TODO
+// go test -v -test.run TestSysOrgDel
 func TestSysOrgDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/org/del", XTestSysOrgDel, t, XTestSysOrgDelRequest)
 }
 
+// BenchmarkSysOrgDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgDel -test.benchmem=true
+func BenchmarkSysOrgDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/org/del", XTestSysOrgDel, t, XTestSysOrgDelRequest)
+		}
+	})
+}
+
 // TestSysOrgBatchDel defined TODO
+// go test -v -test.run TestSysOrgBatchDel
 func TestSysOrgBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/org/batch_del", XTestSysOrgBatchDel, t, XTestSysOrgBatchDelRequest)
 }
 
+// BenchmarkSysOrgBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgBatchDel -test.benchmem=true
+func BenchmarkSysOrgBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/org/batch_del", XTestSysOrgBatchDel, t, XTestSysOrgBatchDelRequest)
+		}
+	})
+}
+
 // TestSysOrgUpdate defined TODO
+// go test -v -test.run TestSysOrgUpdate
 func TestSysOrgUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/org/update", XTestSysOrgUpdate, t, XTestSysOrgUpdateRequest)
 }
 
+// BenchmarkSysOrgUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgUpdate -test.benchmem=true
+func BenchmarkSysOrgUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/org/update", XTestSysOrgUpdate, t, XTestSysOrgUpdateRequest)
+		}
+	})
+}
+
 // TestSysOrgBatchUpdate defined TODO
+// go test -v -test.run TestSysOrgBatchUpdate
 func TestSysOrgBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/org/batch_update", XTestSysOrgBatchUpdate, t, XTestSysOrgBatchUpdateRequest)
 }
 
+// BenchmarkSysOrgBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgBatchUpdate -test.benchmem=true
+func BenchmarkSysOrgBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/org/batch_update", XTestSysOrgBatchUpdate, t, XTestSysOrgBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysOrgPage defined TODO
+// go test -v -test.run TestSysOrgPage
 func TestSysOrgPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/org/page", XTestSysOrgPage, t, XTestSysOrgPageRequest)
 }
 
+// BenchmarkSysOrgPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgPage -test.benchmem=true
+func BenchmarkSysOrgPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/org/page", XTestSysOrgPage, t, XTestSysOrgPageRequest)
+		}
+	})
+}
+
 // TestSysOrgTree defined TODO
+// go test -v -test.run TestSysOrgTree
 func TestSysOrgTree(t *testing.T) {
 	x.Handle("GET", "/api/sys/org/tree", XTestSysOrgTree, t, XTestSysOrgTreeRequest)
 }
 
+// BenchmarkSysOrgTree defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgTree -test.benchmem=true
+func BenchmarkSysOrgTree(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/org/tree", XTestSysOrgTree, t, XTestSysOrgTreeRequest)
+		}
+	})
+}
+
 // TestSysOrgGet defined TODO
+// go test -v -test.run TestSysOrgGet
 func TestSysOrgGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/org/get", XTestSysOrgGet, t, XTestSysOrgGetRequest)
 }
 
+// BenchmarkSysOrgGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysOrgGet -test.benchmem=true
+func BenchmarkSysOrgGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/org/get", XTestSysOrgGet, t, XTestSysOrgGetRequest)
+		}
+	})
+}
+
 // TestSysPermissionAdd defined TODO
+// go test -v -test.run TestSysPermissionAdd
 func TestSysPermissionAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/permission/add", XTestSysPermissionAdd, t, XTestSysPermissionAddRequest)
 }
 
+// BenchmarkSysPermissionAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionAdd -test.benchmem=true
+func BenchmarkSysPermissionAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/permission/add", XTestSysPermissionAdd, t, XTestSysPermissionAddRequest)
+		}
+	})
+}
+
 // TestSysPermissionBatchAdd defined TODO
+// go test -v -test.run TestSysPermissionBatchAdd
 func TestSysPermissionBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/permission/batch_add", XTestSysPermissionBatchAdd, t, XTestSysPermissionBatchAddRequest)
 }
 
+// BenchmarkSysPermissionBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionBatchAdd -test.benchmem=true
+func BenchmarkSysPermissionBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/permission/batch_add", XTestSysPermissionBatchAdd, t, XTestSysPermissionBatchAddRequest)
+		}
+	})
+}
+
 // TestSysPermissionDel defined TODO
+// go test -v -test.run TestSysPermissionDel
 func TestSysPermissionDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/permission/del", XTestSysPermissionDel, t, XTestSysPermissionDelRequest)
 }
 
+// BenchmarkSysPermissionDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionDel -test.benchmem=true
+func BenchmarkSysPermissionDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/permission/del", XTestSysPermissionDel, t, XTestSysPermissionDelRequest)
+		}
+	})
+}
+
 // TestSysPermissionBatchDel defined TODO
+// go test -v -test.run TestSysPermissionBatchDel
 func TestSysPermissionBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/permission/batch_del", XTestSysPermissionBatchDel, t, XTestSysPermissionBatchDelRequest)
 }
 
+// BenchmarkSysPermissionBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionBatchDel -test.benchmem=true
+func BenchmarkSysPermissionBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/permission/batch_del", XTestSysPermissionBatchDel, t, XTestSysPermissionBatchDelRequest)
+		}
+	})
+}
+
 // TestSysPermissionUpdate defined TODO
+// go test -v -test.run TestSysPermissionUpdate
 func TestSysPermissionUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/permission/update", XTestSysPermissionUpdate, t, XTestSysPermissionUpdateRequest)
 }
 
+// BenchmarkSysPermissionUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionUpdate -test.benchmem=true
+func BenchmarkSysPermissionUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/permission/update", XTestSysPermissionUpdate, t, XTestSysPermissionUpdateRequest)
+		}
+	})
+}
+
 // TestSysPermissionBatchUpdate defined TODO
+// go test -v -test.run TestSysPermissionBatchUpdate
 func TestSysPermissionBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/permission/batch_update", XTestSysPermissionBatchUpdate, t, XTestSysPermissionBatchUpdateRequest)
 }
 
+// BenchmarkSysPermissionBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionBatchUpdate -test.benchmem=true
+func BenchmarkSysPermissionBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/permission/batch_update", XTestSysPermissionBatchUpdate, t, XTestSysPermissionBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysPermissionPage defined TODO
+// go test -v -test.run TestSysPermissionPage
 func TestSysPermissionPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/permission/page", XTestSysPermissionPage, t, XTestSysPermissionPageRequest)
 }
 
+// BenchmarkSysPermissionPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionPage -test.benchmem=true
+func BenchmarkSysPermissionPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/permission/page", XTestSysPermissionPage, t, XTestSysPermissionPageRequest)
+		}
+	})
+}
+
 // TestSysPermissionGet defined TODO
+// go test -v -test.run TestSysPermissionGet
 func TestSysPermissionGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/permission/get", XTestSysPermissionGet, t, XTestSysPermissionGetRequest)
 }
 
+// BenchmarkSysPermissionGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysPermissionGet -test.benchmem=true
+func BenchmarkSysPermissionGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/permission/get", XTestSysPermissionGet, t, XTestSysPermissionGetRequest)
+		}
+	})
+}
+
 // TestSysRoleAdd defined TODO
+// go test -v -test.run TestSysRoleAdd
 func TestSysRoleAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/role/add", XTestSysRoleAdd, t, XTestSysRoleAddRequest)
 }
 
+// BenchmarkSysRoleAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleAdd -test.benchmem=true
+func BenchmarkSysRoleAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/role/add", XTestSysRoleAdd, t, XTestSysRoleAddRequest)
+		}
+	})
+}
+
 // TestSysRoleBatchAdd defined TODO
+// go test -v -test.run TestSysRoleBatchAdd
 func TestSysRoleBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/role/batch_add", XTestSysRoleBatchAdd, t, XTestSysRoleBatchAddRequest)
 }
 
+// BenchmarkSysRoleBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleBatchAdd -test.benchmem=true
+func BenchmarkSysRoleBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/role/batch_add", XTestSysRoleBatchAdd, t, XTestSysRoleBatchAddRequest)
+		}
+	})
+}
+
 // TestSysRoleDel defined TODO
+// go test -v -test.run TestSysRoleDel
 func TestSysRoleDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/role/del", XTestSysRoleDel, t, XTestSysRoleDelRequest)
 }
 
+// BenchmarkSysRoleDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleDel -test.benchmem=true
+func BenchmarkSysRoleDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/role/del", XTestSysRoleDel, t, XTestSysRoleDelRequest)
+		}
+	})
+}
+
 // TestSysRoleBatchDel defined TODO
+// go test -v -test.run TestSysRoleBatchDel
 func TestSysRoleBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/role/batch_del", XTestSysRoleBatchDel, t, XTestSysRoleBatchDelRequest)
 }
 
+// BenchmarkSysRoleBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleBatchDel -test.benchmem=true
+func BenchmarkSysRoleBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/role/batch_del", XTestSysRoleBatchDel, t, XTestSysRoleBatchDelRequest)
+		}
+	})
+}
+
 // TestSysRoleUpdate defined TODO
+// go test -v -test.run TestSysRoleUpdate
 func TestSysRoleUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/role/update", XTestSysRoleUpdate, t, XTestSysRoleUpdateRequest)
 }
 
+// BenchmarkSysRoleUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleUpdate -test.benchmem=true
+func BenchmarkSysRoleUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/role/update", XTestSysRoleUpdate, t, XTestSysRoleUpdateRequest)
+		}
+	})
+}
+
 // TestSysRoleBatchUpdate defined TODO
+// go test -v -test.run TestSysRoleBatchUpdate
 func TestSysRoleBatchUpdate(t *testing.T) {
 	x.Handle("POST", "/api/sys/role/batch_update", XTestSysRoleBatchUpdate, t, XTestSysRoleBatchUpdateRequest)
 }
 
+// BenchmarkSysRoleBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleBatchUpdate -test.benchmem=true
+func BenchmarkSysRoleBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/role/batch_update", XTestSysRoleBatchUpdate, t, XTestSysRoleBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysRolePage defined TODO
+// go test -v -test.run TestSysRolePage
 func TestSysRolePage(t *testing.T) {
 	x.Handle("GET", "/api/sys/role/page", XTestSysRolePage, t, XTestSysRolePageRequest)
 }
 
+// BenchmarkSysRolePage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRolePage -test.benchmem=true
+func BenchmarkSysRolePage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/role/page", XTestSysRolePage, t, XTestSysRolePageRequest)
+		}
+	})
+}
+
 // TestSysRoleRoleMenuTree defined TODO
+// go test -v -test.run TestSysRoleRoleMenuTree
 func TestSysRoleRoleMenuTree(t *testing.T) {
 	x.Handle("GET", "/api/sys/role/role_menu_tree", XTestSysRoleRoleMenuTree, t, XTestSysRoleRoleMenuTreeRequest)
 }
 
+// BenchmarkSysRoleRoleMenuTree defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleRoleMenuTree -test.benchmem=true
+func BenchmarkSysRoleRoleMenuTree(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/role/role_menu_tree", XTestSysRoleRoleMenuTree, t, XTestSysRoleRoleMenuTreeRequest)
+		}
+	})
+}
+
 // TestSysRoleRoleAppFunTree defined TODO
+// go test -v -test.run TestSysRoleRoleAppFunTree
 func TestSysRoleRoleAppFunTree(t *testing.T) {
 	x.Handle("GET", "/api/sys/role/role_app_fun_tree", XTestSysRoleRoleAppFunTree, t, XTestSysRoleRoleAppFunTreeRequest)
 }
 
+// BenchmarkSysRoleRoleAppFunTree defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleRoleAppFunTree -test.benchmem=true
+func BenchmarkSysRoleRoleAppFunTree(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/role/role_app_fun_tree", XTestSysRoleRoleAppFunTree, t, XTestSysRoleRoleAppFunTreeRequest)
+		}
+	})
+}
+
 // TestSysRoleGet defined TODO
+// go test -v -test.run TestSysRoleGet
 func TestSysRoleGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/role/get", XTestSysRoleGet, t, XTestSysRoleGetRequest)
 }
 
+// BenchmarkSysRoleGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleGet -test.benchmem=true
+func BenchmarkSysRoleGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/role/get", XTestSysRoleGet, t, XTestSysRoleGetRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuAdd defined TODO
+// go test -v -test.run TestSysRoleMenuAdd
 func TestSysRoleMenuAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/role/menu/add", XTestSysRoleMenuAdd, t, XTestSysRoleMenuAddRequest)
 }
 
+// BenchmarkSysRoleMenuAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuAdd -test.benchmem=true
+func BenchmarkSysRoleMenuAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/role/menu/add", XTestSysRoleMenuAdd, t, XTestSysRoleMenuAddRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuBatchAdd defined TODO
+// go test -v -test.run TestSysRoleMenuBatchAdd
 func TestSysRoleMenuBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/role/menu/batch_add", XTestSysRoleMenuBatchAdd, t, XTestSysRoleMenuBatchAddRequest)
 }
 
+// BenchmarkSysRoleMenuBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuBatchAdd -test.benchmem=true
+func BenchmarkSysRoleMenuBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/role/menu/batch_add", XTestSysRoleMenuBatchAdd, t, XTestSysRoleMenuBatchAddRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuDel defined TODO
+// go test -v -test.run TestSysRoleMenuDel
 func TestSysRoleMenuDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/role/menu/del", XTestSysRoleMenuDel, t, XTestSysRoleMenuDelRequest)
 }
 
+// BenchmarkSysRoleMenuDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuDel -test.benchmem=true
+func BenchmarkSysRoleMenuDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/role/menu/del", XTestSysRoleMenuDel, t, XTestSysRoleMenuDelRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuBatchDel defined TODO
+// go test -v -test.run TestSysRoleMenuBatchDel
 func TestSysRoleMenuBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/role/menu/batch_del", XTestSysRoleMenuBatchDel, t, XTestSysRoleMenuBatchDelRequest)
 }
 
+// BenchmarkSysRoleMenuBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuBatchDel -test.benchmem=true
+func BenchmarkSysRoleMenuBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/role/menu/batch_del", XTestSysRoleMenuBatchDel, t, XTestSysRoleMenuBatchDelRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuUpdate defined TODO
+// go test -v -test.run TestSysRoleMenuUpdate
 func TestSysRoleMenuUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/role/menu/update", XTestSysRoleMenuUpdate, t, XTestSysRoleMenuUpdateRequest)
 }
 
+// BenchmarkSysRoleMenuUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuUpdate -test.benchmem=true
+func BenchmarkSysRoleMenuUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/role/menu/update", XTestSysRoleMenuUpdate, t, XTestSysRoleMenuUpdateRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuBatchUpdate defined TODO
+// go test -v -test.run TestSysRoleMenuBatchUpdate
 func TestSysRoleMenuBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/role/menu/batch_update", XTestSysRoleMenuBatchUpdate, t, XTestSysRoleMenuBatchUpdateRequest)
 }
 
+// BenchmarkSysRoleMenuBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuBatchUpdate -test.benchmem=true
+func BenchmarkSysRoleMenuBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/role/menu/batch_update", XTestSysRoleMenuBatchUpdate, t, XTestSysRoleMenuBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuPage defined TODO
+// go test -v -test.run TestSysRoleMenuPage
 func TestSysRoleMenuPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/role/menu/page", XTestSysRoleMenuPage, t, XTestSysRoleMenuPageRequest)
 }
 
+// BenchmarkSysRoleMenuPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuPage -test.benchmem=true
+func BenchmarkSysRoleMenuPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/role/menu/page", XTestSysRoleMenuPage, t, XTestSysRoleMenuPageRequest)
+		}
+	})
+}
+
 // TestSysRoleMenuGet defined TODO
+// go test -v -test.run TestSysRoleMenuGet
 func TestSysRoleMenuGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/role/menu/get", XTestSysRoleMenuGet, t, XTestSysRoleMenuGetRequest)
 }
 
+// BenchmarkSysRoleMenuGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysRoleMenuGet -test.benchmem=true
+func BenchmarkSysRoleMenuGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/role/menu/get", XTestSysRoleMenuGet, t, XTestSysRoleMenuGetRequest)
+		}
+	})
+}
+
 // TestSysScheduleAdd defined TODO
+// go test -v -test.run TestSysScheduleAdd
 func TestSysScheduleAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/schedule/add", XTestSysScheduleAdd, t, XTestSysScheduleAddRequest)
 }
 
+// BenchmarkSysScheduleAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleAdd -test.benchmem=true
+func BenchmarkSysScheduleAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/schedule/add", XTestSysScheduleAdd, t, XTestSysScheduleAddRequest)
+		}
+	})
+}
+
 // TestSysScheduleBatchAdd defined TODO
+// go test -v -test.run TestSysScheduleBatchAdd
 func TestSysScheduleBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/schedule/batch_add", XTestSysScheduleBatchAdd, t, XTestSysScheduleBatchAddRequest)
 }
 
+// BenchmarkSysScheduleBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleBatchAdd -test.benchmem=true
+func BenchmarkSysScheduleBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/schedule/batch_add", XTestSysScheduleBatchAdd, t, XTestSysScheduleBatchAddRequest)
+		}
+	})
+}
+
 // TestSysScheduleDel defined TODO
+// go test -v -test.run TestSysScheduleDel
 func TestSysScheduleDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/schedule/del", XTestSysScheduleDel, t, XTestSysScheduleDelRequest)
 }
 
+// BenchmarkSysScheduleDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleDel -test.benchmem=true
+func BenchmarkSysScheduleDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/schedule/del", XTestSysScheduleDel, t, XTestSysScheduleDelRequest)
+		}
+	})
+}
+
 // TestSysScheduleBatchDel defined TODO
+// go test -v -test.run TestSysScheduleBatchDel
 func TestSysScheduleBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/schedule/batch_del", XTestSysScheduleBatchDel, t, XTestSysScheduleBatchDelRequest)
 }
 
+// BenchmarkSysScheduleBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleBatchDel -test.benchmem=true
+func BenchmarkSysScheduleBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/schedule/batch_del", XTestSysScheduleBatchDel, t, XTestSysScheduleBatchDelRequest)
+		}
+	})
+}
+
 // TestSysScheduleUpdate defined TODO
+// go test -v -test.run TestSysScheduleUpdate
 func TestSysScheduleUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/schedule/update", XTestSysScheduleUpdate, t, XTestSysScheduleUpdateRequest)
 }
 
+// BenchmarkSysScheduleUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleUpdate -test.benchmem=true
+func BenchmarkSysScheduleUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/schedule/update", XTestSysScheduleUpdate, t, XTestSysScheduleUpdateRequest)
+		}
+	})
+}
+
 // TestSysScheduleBatchUpdate defined TODO
+// go test -v -test.run TestSysScheduleBatchUpdate
 func TestSysScheduleBatchUpdate(t *testing.T) {
 	x.Handle("POST", "/api/sys/schedule/batch_update", XTestSysScheduleBatchUpdate, t, XTestSysScheduleBatchUpdateRequest)
 }
 
+// BenchmarkSysScheduleBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleBatchUpdate -test.benchmem=true
+func BenchmarkSysScheduleBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/schedule/batch_update", XTestSysScheduleBatchUpdate, t, XTestSysScheduleBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysSchedulePage defined TODO
+// go test -v -test.run TestSysSchedulePage
 func TestSysSchedulePage(t *testing.T) {
 	x.Handle("GET", "/api/sys/schedule/page", XTestSysSchedulePage, t, XTestSysSchedulePageRequest)
 }
 
+// BenchmarkSysSchedulePage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSchedulePage -test.benchmem=true
+func BenchmarkSysSchedulePage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/schedule/page", XTestSysSchedulePage, t, XTestSysSchedulePageRequest)
+		}
+	})
+}
+
 // TestSysScheduleGet defined TODO
+// go test -v -test.run TestSysScheduleGet
 func TestSysScheduleGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/schedule/get", XTestSysScheduleGet, t, XTestSysScheduleGetRequest)
 }
 
+// BenchmarkSysScheduleGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleGet -test.benchmem=true
+func BenchmarkSysScheduleGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/schedule/get", XTestSysScheduleGet, t, XTestSysScheduleGetRequest)
+		}
+	})
+}
+
 // TestSysScheduleHistoryPage defined TODO
+// go test -v -test.run TestSysScheduleHistoryPage
 func TestSysScheduleHistoryPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/schedule/history/page", XTestSysScheduleHistoryPage, t, XTestSysScheduleHistoryPageRequest)
 }
 
+// BenchmarkSysScheduleHistoryPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysScheduleHistoryPage -test.benchmem=true
+func BenchmarkSysScheduleHistoryPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/schedule/history/page", XTestSysScheduleHistoryPage, t, XTestSysScheduleHistoryPageRequest)
+		}
+	})
+}
+
 // TestSysSchedulingAdd defined TODO
+// go test -v -test.run TestSysSchedulingAdd
 func TestSysSchedulingAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/scheduling/add", XTestSysSchedulingAdd, t, XTestSysSchedulingAddRequest)
 }
 
+// BenchmarkSysSchedulingAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSchedulingAdd -test.benchmem=true
+func BenchmarkSysSchedulingAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/scheduling/add", XTestSysSchedulingAdd, t, XTestSysSchedulingAddRequest)
+		}
+	})
+}
+
 // TestSysSchedulingDel defined TODO
+// go test -v -test.run TestSysSchedulingDel
 func TestSysSchedulingDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/scheduling/del", XTestSysSchedulingDel, t, XTestSysSchedulingDelRequest)
 }
 
+// BenchmarkSysSchedulingDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSchedulingDel -test.benchmem=true
+func BenchmarkSysSchedulingDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/scheduling/del", XTestSysSchedulingDel, t, XTestSysSchedulingDelRequest)
+		}
+	})
+}
+
 // TestSysSchedulingUpdate defined TODO
+// go test -v -test.run TestSysSchedulingUpdate
 func TestSysSchedulingUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/scheduling/update", XTestSysSchedulingUpdate, t, XTestSysSchedulingUpdateRequest)
 }
 
+// BenchmarkSysSchedulingUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSchedulingUpdate -test.benchmem=true
+func BenchmarkSysSchedulingUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/scheduling/update", XTestSysSchedulingUpdate, t, XTestSysSchedulingUpdateRequest)
+		}
+	})
+}
+
 // TestSysSchedulingPage defined TODO
+// go test -v -test.run TestSysSchedulingPage
 func TestSysSchedulingPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/scheduling/page", XTestSysSchedulingPage, t, XTestSysSchedulingPageRequest)
 }
 
+// BenchmarkSysSchedulingPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSchedulingPage -test.benchmem=true
+func BenchmarkSysSchedulingPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/scheduling/page", XTestSysSchedulingPage, t, XTestSysSchedulingPageRequest)
+		}
+	})
+}
+
 // TestSysSchedulingGet defined TODO
+// go test -v -test.run TestSysSchedulingGet
 func TestSysSchedulingGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/scheduling/get", XTestSysSchedulingGet, t, XTestSysSchedulingGetRequest)
 }
 
+// BenchmarkSysSchedulingGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSchedulingGet -test.benchmem=true
+func BenchmarkSysSchedulingGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/scheduling/get", XTestSysSchedulingGet, t, XTestSysSchedulingGetRequest)
+		}
+	})
+}
+
 // TestSysSettingAdd defined TODO
+// go test -v -test.run TestSysSettingAdd
 func TestSysSettingAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/setting/add", XTestSysSettingAdd, t, XTestSysSettingAddRequest)
 }
 
+// BenchmarkSysSettingAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingAdd -test.benchmem=true
+func BenchmarkSysSettingAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/setting/add", XTestSysSettingAdd, t, XTestSysSettingAddRequest)
+		}
+	})
+}
+
 // TestSysSettingBatchAdd defined TODO
+// go test -v -test.run TestSysSettingBatchAdd
 func TestSysSettingBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/setting/batch_add", XTestSysSettingBatchAdd, t, XTestSysSettingBatchAddRequest)
 }
 
+// BenchmarkSysSettingBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingBatchAdd -test.benchmem=true
+func BenchmarkSysSettingBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/setting/batch_add", XTestSysSettingBatchAdd, t, XTestSysSettingBatchAddRequest)
+		}
+	})
+}
+
 // TestSysSettingDel defined TODO
+// go test -v -test.run TestSysSettingDel
 func TestSysSettingDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/setting/del", XTestSysSettingDel, t, XTestSysSettingDelRequest)
 }
 
+// BenchmarkSysSettingDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingDel -test.benchmem=true
+func BenchmarkSysSettingDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/setting/del", XTestSysSettingDel, t, XTestSysSettingDelRequest)
+		}
+	})
+}
+
 // TestSysSettingBatchDel defined TODO
+// go test -v -test.run TestSysSettingBatchDel
 func TestSysSettingBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/setting/batch_del", XTestSysSettingBatchDel, t, XTestSysSettingBatchDelRequest)
 }
 
+// BenchmarkSysSettingBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingBatchDel -test.benchmem=true
+func BenchmarkSysSettingBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/setting/batch_del", XTestSysSettingBatchDel, t, XTestSysSettingBatchDelRequest)
+		}
+	})
+}
+
 // TestSysSettingUpdate defined TODO
+// go test -v -test.run TestSysSettingUpdate
 func TestSysSettingUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/setting/update", XTestSysSettingUpdate, t, XTestSysSettingUpdateRequest)
 }
 
+// BenchmarkSysSettingUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingUpdate -test.benchmem=true
+func BenchmarkSysSettingUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/setting/update", XTestSysSettingUpdate, t, XTestSysSettingUpdateRequest)
+		}
+	})
+}
+
 // TestSysSettingBatchUpdate defined TODO
+// go test -v -test.run TestSysSettingBatchUpdate
 func TestSysSettingBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/setting/batch_update", XTestSysSettingBatchUpdate, t, XTestSysSettingBatchUpdateRequest)
 }
 
+// BenchmarkSysSettingBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingBatchUpdate -test.benchmem=true
+func BenchmarkSysSettingBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/setting/batch_update", XTestSysSettingBatchUpdate, t, XTestSysSettingBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysSettingPage defined TODO
+// go test -v -test.run TestSysSettingPage
 func TestSysSettingPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/setting/page", XTestSysSettingPage, t, XTestSysSettingPageRequest)
 }
 
+// BenchmarkSysSettingPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingPage -test.benchmem=true
+func BenchmarkSysSettingPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/setting/page", XTestSysSettingPage, t, XTestSysSettingPageRequest)
+		}
+	})
+}
+
 // TestSysSettingGet defined TODO
+// go test -v -test.run TestSysSettingGet
 func TestSysSettingGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/setting/get", XTestSysSettingGet, t, XTestSysSettingGetRequest)
 }
 
+// BenchmarkSysSettingGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysSettingGet -test.benchmem=true
+func BenchmarkSysSettingGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/setting/get", XTestSysSettingGet, t, XTestSysSettingGetRequest)
+		}
+	})
+}
+
 // TestSysTableAdd defined TODO
+// go test -v -test.run TestSysTableAdd
 func TestSysTableAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/table/add", XTestSysTableAdd, t, XTestSysTableAddRequest)
 }
 
+// BenchmarkSysTableAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableAdd -test.benchmem=true
+func BenchmarkSysTableAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/table/add", XTestSysTableAdd, t, XTestSysTableAddRequest)
+		}
+	})
+}
+
 // TestSysTableBatchAdd defined TODO
+// go test -v -test.run TestSysTableBatchAdd
 func TestSysTableBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/table/batch_add", XTestSysTableBatchAdd, t, XTestSysTableBatchAddRequest)
 }
 
+// BenchmarkSysTableBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableBatchAdd -test.benchmem=true
+func BenchmarkSysTableBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/table/batch_add", XTestSysTableBatchAdd, t, XTestSysTableBatchAddRequest)
+		}
+	})
+}
+
 // TestSysTableDel defined TODO
+// go test -v -test.run TestSysTableDel
 func TestSysTableDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/table/del", XTestSysTableDel, t, XTestSysTableDelRequest)
 }
 
+// BenchmarkSysTableDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableDel -test.benchmem=true
+func BenchmarkSysTableDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/table/del", XTestSysTableDel, t, XTestSysTableDelRequest)
+		}
+	})
+}
+
 // TestSysTableBatchDel defined TODO
+// go test -v -test.run TestSysTableBatchDel
 func TestSysTableBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/table/batch_del", XTestSysTableBatchDel, t, XTestSysTableBatchDelRequest)
 }
 
+// BenchmarkSysTableBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableBatchDel -test.benchmem=true
+func BenchmarkSysTableBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/table/batch_del", XTestSysTableBatchDel, t, XTestSysTableBatchDelRequest)
+		}
+	})
+}
+
 // TestSysTableUpdate defined TODO
+// go test -v -test.run TestSysTableUpdate
 func TestSysTableUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/table/update", XTestSysTableUpdate, t, XTestSysTableUpdateRequest)
 }
 
+// BenchmarkSysTableUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableUpdate -test.benchmem=true
+func BenchmarkSysTableUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/table/update", XTestSysTableUpdate, t, XTestSysTableUpdateRequest)
+		}
+	})
+}
+
 // TestSysTableBatchUpdate defined TODO
+// go test -v -test.run TestSysTableBatchUpdate
 func TestSysTableBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/table/batch_update", XTestSysTableBatchUpdate, t, XTestSysTableBatchUpdateRequest)
 }
 
+// BenchmarkSysTableBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableBatchUpdate -test.benchmem=true
+func BenchmarkSysTableBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/table/batch_update", XTestSysTableBatchUpdate, t, XTestSysTableBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysTablePage defined TODO
+// go test -v -test.run TestSysTablePage
 func TestSysTablePage(t *testing.T) {
 	x.Handle("GET", "/api/sys/table/page", XTestSysTablePage, t, XTestSysTablePageRequest)
 }
 
+// BenchmarkSysTablePage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTablePage -test.benchmem=true
+func BenchmarkSysTablePage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/table/page", XTestSysTablePage, t, XTestSysTablePageRequest)
+		}
+	})
+}
+
 // TestSysTableGet defined TODO
+// go test -v -test.run TestSysTableGet
 func TestSysTableGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/table/get", XTestSysTableGet, t, XTestSysTableGetRequest)
 }
 
+// BenchmarkSysTableGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableGet -test.benchmem=true
+func BenchmarkSysTableGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/table/get", XTestSysTableGet, t, XTestSysTableGetRequest)
+		}
+	})
+}
+
 // TestSysTableColumnAdd defined TODO
+// go test -v -test.run TestSysTableColumnAdd
 func TestSysTableColumnAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/table/column/add", XTestSysTableColumnAdd, t, XTestSysTableColumnAddRequest)
 }
 
+// BenchmarkSysTableColumnAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnAdd -test.benchmem=true
+func BenchmarkSysTableColumnAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/table/column/add", XTestSysTableColumnAdd, t, XTestSysTableColumnAddRequest)
+		}
+	})
+}
+
 // TestSysTableColumnBatchAdd defined TODO
+// go test -v -test.run TestSysTableColumnBatchAdd
 func TestSysTableColumnBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/table/column/batch_add", XTestSysTableColumnBatchAdd, t, XTestSysTableColumnBatchAddRequest)
 }
 
+// BenchmarkSysTableColumnBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnBatchAdd -test.benchmem=true
+func BenchmarkSysTableColumnBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/table/column/batch_add", XTestSysTableColumnBatchAdd, t, XTestSysTableColumnBatchAddRequest)
+		}
+	})
+}
+
 // TestSysTableColumnDel defined TODO
+// go test -v -test.run TestSysTableColumnDel
 func TestSysTableColumnDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/table/column/del", XTestSysTableColumnDel, t, XTestSysTableColumnDelRequest)
 }
 
+// BenchmarkSysTableColumnDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnDel -test.benchmem=true
+func BenchmarkSysTableColumnDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/table/column/del", XTestSysTableColumnDel, t, XTestSysTableColumnDelRequest)
+		}
+	})
+}
+
 // TestSysTableColumnBatchDel defined TODO
+// go test -v -test.run TestSysTableColumnBatchDel
 func TestSysTableColumnBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/table/column/batch_del", XTestSysTableColumnBatchDel, t, XTestSysTableColumnBatchDelRequest)
 }
 
+// BenchmarkSysTableColumnBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnBatchDel -test.benchmem=true
+func BenchmarkSysTableColumnBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/table/column/batch_del", XTestSysTableColumnBatchDel, t, XTestSysTableColumnBatchDelRequest)
+		}
+	})
+}
+
 // TestSysTableColumnUpdate defined TODO
+// go test -v -test.run TestSysTableColumnUpdate
 func TestSysTableColumnUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/table/column/update", XTestSysTableColumnUpdate, t, XTestSysTableColumnUpdateRequest)
 }
 
+// BenchmarkSysTableColumnUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnUpdate -test.benchmem=true
+func BenchmarkSysTableColumnUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/table/column/update", XTestSysTableColumnUpdate, t, XTestSysTableColumnUpdateRequest)
+		}
+	})
+}
+
 // TestSysTableColumnBatchUpdate defined TODO
+// go test -v -test.run TestSysTableColumnBatchUpdate
 func TestSysTableColumnBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/table/column/batch_update", XTestSysTableColumnBatchUpdate, t, XTestSysTableColumnBatchUpdateRequest)
 }
 
+// BenchmarkSysTableColumnBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnBatchUpdate -test.benchmem=true
+func BenchmarkSysTableColumnBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/table/column/batch_update", XTestSysTableColumnBatchUpdate, t, XTestSysTableColumnBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysTableColumnPage defined TODO
+// go test -v -test.run TestSysTableColumnPage
 func TestSysTableColumnPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/table/column/page", XTestSysTableColumnPage, t, XTestSysTableColumnPageRequest)
 }
 
+// BenchmarkSysTableColumnPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnPage -test.benchmem=true
+func BenchmarkSysTableColumnPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/table/column/page", XTestSysTableColumnPage, t, XTestSysTableColumnPageRequest)
+		}
+	})
+}
+
 // TestSysTableColumnGet defined TODO
+// go test -v -test.run TestSysTableColumnGet
 func TestSysTableColumnGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/table/column/get", XTestSysTableColumnGet, t, XTestSysTableColumnGetRequest)
 }
 
+// BenchmarkSysTableColumnGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTableColumnGet -test.benchmem=true
+func BenchmarkSysTableColumnGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/table/column/get", XTestSysTableColumnGet, t, XTestSysTableColumnGetRequest)
+		}
+	})
+}
+
 // TestSysTagAdd defined TODO
+// go test -v -test.run TestSysTagAdd
 func TestSysTagAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/tag/add", XTestSysTagAdd, t, XTestSysTagAddRequest)
 }
 
+// BenchmarkSysTagAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagAdd -test.benchmem=true
+func BenchmarkSysTagAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/tag/add", XTestSysTagAdd, t, XTestSysTagAddRequest)
+		}
+	})
+}
+
 // TestSysTagBatchAdd defined TODO
+// go test -v -test.run TestSysTagBatchAdd
 func TestSysTagBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/tag/batch_add", XTestSysTagBatchAdd, t, XTestSysTagBatchAddRequest)
 }
 
+// BenchmarkSysTagBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagBatchAdd -test.benchmem=true
+func BenchmarkSysTagBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/tag/batch_add", XTestSysTagBatchAdd, t, XTestSysTagBatchAddRequest)
+		}
+	})
+}
+
 // TestSysTagDel defined TODO
+// go test -v -test.run TestSysTagDel
 func TestSysTagDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/tag/del", XTestSysTagDel, t, XTestSysTagDelRequest)
 }
 
+// BenchmarkSysTagDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagDel -test.benchmem=true
+func BenchmarkSysTagDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/tag/del", XTestSysTagDel, t, XTestSysTagDelRequest)
+		}
+	})
+}
+
 // TestSysTagBatchDel defined TODO
+// go test -v -test.run TestSysTagBatchDel
 func TestSysTagBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/tag/batch_del", XTestSysTagBatchDel, t, XTestSysTagBatchDelRequest)
 }
 
+// BenchmarkSysTagBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagBatchDel -test.benchmem=true
+func BenchmarkSysTagBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/tag/batch_del", XTestSysTagBatchDel, t, XTestSysTagBatchDelRequest)
+		}
+	})
+}
+
 // TestSysTagUpdate defined TODO
+// go test -v -test.run TestSysTagUpdate
 func TestSysTagUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/tag/update", XTestSysTagUpdate, t, XTestSysTagUpdateRequest)
 }
 
+// BenchmarkSysTagUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagUpdate -test.benchmem=true
+func BenchmarkSysTagUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/tag/update", XTestSysTagUpdate, t, XTestSysTagUpdateRequest)
+		}
+	})
+}
+
 // TestSysTagBatchUpdate defined TODO
+// go test -v -test.run TestSysTagBatchUpdate
 func TestSysTagBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/tag/batch_update", XTestSysTagBatchUpdate, t, XTestSysTagBatchUpdateRequest)
 }
 
+// BenchmarkSysTagBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagBatchUpdate -test.benchmem=true
+func BenchmarkSysTagBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/tag/batch_update", XTestSysTagBatchUpdate, t, XTestSysTagBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysTagPage defined TODO
+// go test -v -test.run TestSysTagPage
 func TestSysTagPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/tag/page", XTestSysTagPage, t, XTestSysTagPageRequest)
 }
 
+// BenchmarkSysTagPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagPage -test.benchmem=true
+func BenchmarkSysTagPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/tag/page", XTestSysTagPage, t, XTestSysTagPageRequest)
+		}
+	})
+}
+
 // TestSysTagGet defined TODO
+// go test -v -test.run TestSysTagGet
 func TestSysTagGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/tag/get", XTestSysTagGet, t, XTestSysTagGetRequest)
 }
 
+// BenchmarkSysTagGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGet -test.benchmem=true
+func BenchmarkSysTagGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/tag/get", XTestSysTagGet, t, XTestSysTagGetRequest)
+		}
+	})
+}
+
 // TestSysTagGroupAdd defined TODO
+// go test -v -test.run TestSysTagGroupAdd
 func TestSysTagGroupAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/tag/group/add", XTestSysTagGroupAdd, t, XTestSysTagGroupAddRequest)
 }
 
+// BenchmarkSysTagGroupAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupAdd -test.benchmem=true
+func BenchmarkSysTagGroupAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/tag/group/add", XTestSysTagGroupAdd, t, XTestSysTagGroupAddRequest)
+		}
+	})
+}
+
 // TestSysTagGroupBatchAdd defined TODO
+// go test -v -test.run TestSysTagGroupBatchAdd
 func TestSysTagGroupBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/tag/group/batch_add", XTestSysTagGroupBatchAdd, t, XTestSysTagGroupBatchAddRequest)
 }
 
+// BenchmarkSysTagGroupBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupBatchAdd -test.benchmem=true
+func BenchmarkSysTagGroupBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/tag/group/batch_add", XTestSysTagGroupBatchAdd, t, XTestSysTagGroupBatchAddRequest)
+		}
+	})
+}
+
 // TestSysTagGroupDel defined TODO
+// go test -v -test.run TestSysTagGroupDel
 func TestSysTagGroupDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/tag/group/del", XTestSysTagGroupDel, t, XTestSysTagGroupDelRequest)
 }
 
+// BenchmarkSysTagGroupDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupDel -test.benchmem=true
+func BenchmarkSysTagGroupDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/tag/group/del", XTestSysTagGroupDel, t, XTestSysTagGroupDelRequest)
+		}
+	})
+}
+
 // TestSysTagGroupBatchDel defined TODO
+// go test -v -test.run TestSysTagGroupBatchDel
 func TestSysTagGroupBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/tag/group/batch_del", XTestSysTagGroupBatchDel, t, XTestSysTagGroupBatchDelRequest)
 }
 
+// BenchmarkSysTagGroupBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupBatchDel -test.benchmem=true
+func BenchmarkSysTagGroupBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/tag/group/batch_del", XTestSysTagGroupBatchDel, t, XTestSysTagGroupBatchDelRequest)
+		}
+	})
+}
+
 // TestSysTagGroupUpdate defined TODO
+// go test -v -test.run TestSysTagGroupUpdate
 func TestSysTagGroupUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/tag/group/update", XTestSysTagGroupUpdate, t, XTestSysTagGroupUpdateRequest)
 }
 
+// BenchmarkSysTagGroupUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupUpdate -test.benchmem=true
+func BenchmarkSysTagGroupUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/tag/group/update", XTestSysTagGroupUpdate, t, XTestSysTagGroupUpdateRequest)
+		}
+	})
+}
+
 // TestSysTagGroupBatchUpdate defined TODO
+// go test -v -test.run TestSysTagGroupBatchUpdate
 func TestSysTagGroupBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/tag/group/batch_update", XTestSysTagGroupBatchUpdate, t, XTestSysTagGroupBatchUpdateRequest)
 }
 
+// BenchmarkSysTagGroupBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupBatchUpdate -test.benchmem=true
+func BenchmarkSysTagGroupBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/tag/group/batch_update", XTestSysTagGroupBatchUpdate, t, XTestSysTagGroupBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysTagGroupPage defined TODO
+// go test -v -test.run TestSysTagGroupPage
 func TestSysTagGroupPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/tag/group/page", XTestSysTagGroupPage, t, XTestSysTagGroupPageRequest)
 }
 
+// BenchmarkSysTagGroupPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupPage -test.benchmem=true
+func BenchmarkSysTagGroupPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/tag/group/page", XTestSysTagGroupPage, t, XTestSysTagGroupPageRequest)
+		}
+	})
+}
+
 // TestSysTagGroupGet defined TODO
+// go test -v -test.run TestSysTagGroupGet
 func TestSysTagGroupGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/tag/group/get", XTestSysTagGroupGet, t, XTestSysTagGroupGetRequest)
 }
 
+// BenchmarkSysTagGroupGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTagGroupGet -test.benchmem=true
+func BenchmarkSysTagGroupGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/tag/group/get", XTestSysTagGroupGet, t, XTestSysTagGroupGetRequest)
+		}
+	})
+}
+
 // TestSysTrackerPage defined TODO
+// go test -v -test.run TestSysTrackerPage
 func TestSysTrackerPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/tracker/page", XTestSysTrackerPage, t, XTestSysTrackerPageRequest)
 }
 
+// BenchmarkSysTrackerPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTrackerPage -test.benchmem=true
+func BenchmarkSysTrackerPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/tracker/page", XTestSysTrackerPage, t, XTestSysTrackerPageRequest)
+		}
+	})
+}
+
 // TestSysTrackerGet defined TODO
+// go test -v -test.run TestSysTrackerGet
 func TestSysTrackerGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/tracker/get", XTestSysTrackerGet, t, XTestSysTrackerGetRequest)
 }
 
+// BenchmarkSysTrackerGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysTrackerGet -test.benchmem=true
+func BenchmarkSysTrackerGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/tracker/get", XTestSysTrackerGet, t, XTestSysTrackerGetRequest)
+		}
+	})
+}
+
 // TestSysUserAdd defined TODO
+// go test -v -test.run TestSysUserAdd
 func TestSysUserAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/add", XTestSysUserAdd, t, XTestSysUserAddRequest)
 }
 
+// BenchmarkSysUserAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserAdd -test.benchmem=true
+func BenchmarkSysUserAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/user/add", XTestSysUserAdd, t, XTestSysUserAddRequest)
+		}
+	})
+}
+
 // TestSysUserBatchAdd defined TODO
+// go test -v -test.run TestSysUserBatchAdd
 func TestSysUserBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/batch_add", XTestSysUserBatchAdd, t, XTestSysUserBatchAddRequest)
 }
 
+// BenchmarkSysUserBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserBatchAdd -test.benchmem=true
+func BenchmarkSysUserBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/user/batch_add", XTestSysUserBatchAdd, t, XTestSysUserBatchAddRequest)
+		}
+	})
+}
+
 // TestSysUserDel defined TODO
+// go test -v -test.run TestSysUserDel
 func TestSysUserDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/user/del", XTestSysUserDel, t, XTestSysUserDelRequest)
 }
 
+// BenchmarkSysUserDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserDel -test.benchmem=true
+func BenchmarkSysUserDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/user/del", XTestSysUserDel, t, XTestSysUserDelRequest)
+		}
+	})
+}
+
 // TestSysUserBatchDel defined TODO
+// go test -v -test.run TestSysUserBatchDel
 func TestSysUserBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/user/batch_del", XTestSysUserBatchDel, t, XTestSysUserBatchDelRequest)
 }
 
+// BenchmarkSysUserBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserBatchDel -test.benchmem=true
+func BenchmarkSysUserBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/user/batch_del", XTestSysUserBatchDel, t, XTestSysUserBatchDelRequest)
+		}
+	})
+}
+
 // TestSysUserUpdate defined TODO
+// go test -v -test.run TestSysUserUpdate
 func TestSysUserUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/user/update", XTestSysUserUpdate, t, XTestSysUserUpdateRequest)
 }
 
+// BenchmarkSysUserUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserUpdate -test.benchmem=true
+func BenchmarkSysUserUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/user/update", XTestSysUserUpdate, t, XTestSysUserUpdateRequest)
+		}
+	})
+}
+
 // TestSysUserBatchUpdate defined TODO
+// go test -v -test.run TestSysUserBatchUpdate
 func TestSysUserBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/user/batch_update", XTestSysUserBatchUpdate, t, XTestSysUserBatchUpdateRequest)
 }
 
+// BenchmarkSysUserBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserBatchUpdate -test.benchmem=true
+func BenchmarkSysUserBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/user/batch_update", XTestSysUserBatchUpdate, t, XTestSysUserBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysUserPage defined TODO
+// go test -v -test.run TestSysUserPage
 func TestSysUserPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/page", XTestSysUserPage, t, XTestSysUserPageRequest)
 }
 
+// BenchmarkSysUserPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserPage -test.benchmem=true
+func BenchmarkSysUserPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/user/page", XTestSysUserPage, t, XTestSysUserPageRequest)
+		}
+	})
+}
+
 // TestSysUserGet defined TODO
+// go test -v -test.run TestSysUserGet
 func TestSysUserGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/get", XTestSysUserGet, t, XTestSysUserGetRequest)
 }
 
+// BenchmarkSysUserGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserGet -test.benchmem=true
+func BenchmarkSysUserGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/user/get", XTestSysUserGet, t, XTestSysUserGetRequest)
+		}
+	})
+}
+
 // TestSysUserLogout defined TODO
+// go test -v -test.run TestSysUserLogout
 func TestSysUserLogout(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/logout", XTestSysUserLogout, t, XTestSysUserLogoutRequest)
 }
 
+// BenchmarkSysUserLogout defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserLogout -test.benchmem=true
+func BenchmarkSysUserLogout(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/user/logout", XTestSysUserLogout, t, XTestSysUserLogoutRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateAdd defined TODO
+// go test -v -test.run TestSysUserTemplateAdd
 func TestSysUserTemplateAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/template/add", XTestSysUserTemplateAdd, t, XTestSysUserTemplateAddRequest)
 }
 
+// BenchmarkSysUserTemplateAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateAdd -test.benchmem=true
+func BenchmarkSysUserTemplateAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/user/template/add", XTestSysUserTemplateAdd, t, XTestSysUserTemplateAddRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateBatchAdd defined TODO
+// go test -v -test.run TestSysUserTemplateBatchAdd
 func TestSysUserTemplateBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/template/batch_add", XTestSysUserTemplateBatchAdd, t, XTestSysUserTemplateBatchAddRequest)
 }
 
+// BenchmarkSysUserTemplateBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateBatchAdd -test.benchmem=true
+func BenchmarkSysUserTemplateBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/user/template/batch_add", XTestSysUserTemplateBatchAdd, t, XTestSysUserTemplateBatchAddRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDel defined TODO
+// go test -v -test.run TestSysUserTemplateDel
 func TestSysUserTemplateDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/user/template/del", XTestSysUserTemplateDel, t, XTestSysUserTemplateDelRequest)
 }
 
+// BenchmarkSysUserTemplateDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDel -test.benchmem=true
+func BenchmarkSysUserTemplateDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/user/template/del", XTestSysUserTemplateDel, t, XTestSysUserTemplateDelRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateBatchDel defined TODO
+// go test -v -test.run TestSysUserTemplateBatchDel
 func TestSysUserTemplateBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/user/template/batch_del", XTestSysUserTemplateBatchDel, t, XTestSysUserTemplateBatchDelRequest)
 }
 
+// BenchmarkSysUserTemplateBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateBatchDel -test.benchmem=true
+func BenchmarkSysUserTemplateBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/user/template/batch_del", XTestSysUserTemplateBatchDel, t, XTestSysUserTemplateBatchDelRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateUpdate defined TODO
+// go test -v -test.run TestSysUserTemplateUpdate
 func TestSysUserTemplateUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/user/template/update", XTestSysUserTemplateUpdate, t, XTestSysUserTemplateUpdateRequest)
 }
 
+// BenchmarkSysUserTemplateUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateUpdate -test.benchmem=true
+func BenchmarkSysUserTemplateUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/user/template/update", XTestSysUserTemplateUpdate, t, XTestSysUserTemplateUpdateRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateBatchUpdate defined TODO
+// go test -v -test.run TestSysUserTemplateBatchUpdate
 func TestSysUserTemplateBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/user/template/batch_update", XTestSysUserTemplateBatchUpdate, t, XTestSysUserTemplateBatchUpdateRequest)
 }
 
+// BenchmarkSysUserTemplateBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateBatchUpdate -test.benchmem=true
+func BenchmarkSysUserTemplateBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/user/template/batch_update", XTestSysUserTemplateBatchUpdate, t, XTestSysUserTemplateBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysUserTemplatePage defined TODO
+// go test -v -test.run TestSysUserTemplatePage
 func TestSysUserTemplatePage(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/template/page", XTestSysUserTemplatePage, t, XTestSysUserTemplatePageRequest)
 }
 
+// BenchmarkSysUserTemplatePage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplatePage -test.benchmem=true
+func BenchmarkSysUserTemplatePage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/user/template/page", XTestSysUserTemplatePage, t, XTestSysUserTemplatePageRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateGet defined TODO
+// go test -v -test.run TestSysUserTemplateGet
 func TestSysUserTemplateGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/template/get", XTestSysUserTemplateGet, t, XTestSysUserTemplateGetRequest)
 }
 
+// BenchmarkSysUserTemplateGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateGet -test.benchmem=true
+func BenchmarkSysUserTemplateGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/user/template/get", XTestSysUserTemplateGet, t, XTestSysUserTemplateGetRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailAdd defined TODO
+// go test -v -test.run TestSysUserTemplateDetailAdd
 func TestSysUserTemplateDetailAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/template/detail/add", XTestSysUserTemplateDetailAdd, t, XTestSysUserTemplateDetailAddRequest)
 }
 
+// BenchmarkSysUserTemplateDetailAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailAdd -test.benchmem=true
+func BenchmarkSysUserTemplateDetailAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/user/template/detail/add", XTestSysUserTemplateDetailAdd, t, XTestSysUserTemplateDetailAddRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailBatchAdd defined TODO
+// go test -v -test.run TestSysUserTemplateDetailBatchAdd
 func TestSysUserTemplateDetailBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/template/detail/batch_add", XTestSysUserTemplateDetailBatchAdd, t, XTestSysUserTemplateDetailBatchAddRequest)
 }
 
+// BenchmarkSysUserTemplateDetailBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailBatchAdd -test.benchmem=true
+func BenchmarkSysUserTemplateDetailBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/user/template/detail/batch_add", XTestSysUserTemplateDetailBatchAdd, t, XTestSysUserTemplateDetailBatchAddRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailDel defined TODO
+// go test -v -test.run TestSysUserTemplateDetailDel
 func TestSysUserTemplateDetailDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/user/template/detail/del", XTestSysUserTemplateDetailDel, t, XTestSysUserTemplateDetailDelRequest)
 }
 
+// BenchmarkSysUserTemplateDetailDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailDel -test.benchmem=true
+func BenchmarkSysUserTemplateDetailDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/user/template/detail/del", XTestSysUserTemplateDetailDel, t, XTestSysUserTemplateDetailDelRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailBatchDel defined TODO
+// go test -v -test.run TestSysUserTemplateDetailBatchDel
 func TestSysUserTemplateDetailBatchDel(t *testing.T) {
 	x.Handle("DELETE", "/api/sys/user/template/detail/batch_del", XTestSysUserTemplateDetailBatchDel, t, XTestSysUserTemplateDetailBatchDelRequest)
 }
 
+// BenchmarkSysUserTemplateDetailBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailBatchDel -test.benchmem=true
+func BenchmarkSysUserTemplateDetailBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/sys/user/template/detail/batch_del", XTestSysUserTemplateDetailBatchDel, t, XTestSysUserTemplateDetailBatchDelRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailUpdate defined TODO
+// go test -v -test.run TestSysUserTemplateDetailUpdate
 func TestSysUserTemplateDetailUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/user/template/detail/update", XTestSysUserTemplateDetailUpdate, t, XTestSysUserTemplateDetailUpdateRequest)
 }
 
+// BenchmarkSysUserTemplateDetailUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailUpdate -test.benchmem=true
+func BenchmarkSysUserTemplateDetailUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/user/template/detail/update", XTestSysUserTemplateDetailUpdate, t, XTestSysUserTemplateDetailUpdateRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailBatchUpdate defined TODO
+// go test -v -test.run TestSysUserTemplateDetailBatchUpdate
 func TestSysUserTemplateDetailBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/sys/user/template/detail/batch_update", XTestSysUserTemplateDetailBatchUpdate, t, XTestSysUserTemplateDetailBatchUpdateRequest)
 }
 
+// BenchmarkSysUserTemplateDetailBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailBatchUpdate -test.benchmem=true
+func BenchmarkSysUserTemplateDetailBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/sys/user/template/detail/batch_update", XTestSysUserTemplateDetailBatchUpdate, t, XTestSysUserTemplateDetailBatchUpdateRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailPage defined TODO
+// go test -v -test.run TestSysUserTemplateDetailPage
 func TestSysUserTemplateDetailPage(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/template/detail/page", XTestSysUserTemplateDetailPage, t, XTestSysUserTemplateDetailPageRequest)
 }
 
+// BenchmarkSysUserTemplateDetailPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailPage -test.benchmem=true
+func BenchmarkSysUserTemplateDetailPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/user/template/detail/page", XTestSysUserTemplateDetailPage, t, XTestSysUserTemplateDetailPageRequest)
+		}
+	})
+}
+
 // TestSysUserTemplateDetailGet defined TODO
+// go test -v -test.run TestSysUserTemplateDetailGet
 func TestSysUserTemplateDetailGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/user/template/detail/get", XTestSysUserTemplateDetailGet, t, XTestSysUserTemplateDetailGetRequest)
 }
 
+// BenchmarkSysUserTemplateDetailGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysUserTemplateDetailGet -test.benchmem=true
+func BenchmarkSysUserTemplateDetailGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/user/template/detail/get", XTestSysUserTemplateDetailGet, t, XTestSysUserTemplateDetailGetRequest)
+		}
+	})
+}
+
 // TestSysWechatOauth2 defined TODO
+// go test -v -test.run TestSysWechatOauth2
 func TestSysWechatOauth2(t *testing.T) {
 	x.Handle("GET", "/api/sys/wechat/oauth2", XTestSysWechatOauth2, t, XTestSysWechatOauth2Request)
 }
 
+// BenchmarkSysWechatOauth2 defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysWechatOauth2 -test.benchmem=true
+func BenchmarkSysWechatOauth2(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/wechat/oauth2", XTestSysWechatOauth2, t, XTestSysWechatOauth2Request)
+		}
+	})
+}
+
 // TestSysWorkerAdd defined TODO
+// go test -v -test.run TestSysWorkerAdd
 func TestSysWorkerAdd(t *testing.T) {
 	x.Handle("POST", "/api/sys/worker/add", XTestSysWorkerAdd, t, XTestSysWorkerAddRequest)
 }
 
+// BenchmarkSysWorkerAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysWorkerAdd -test.benchmem=true
+func BenchmarkSysWorkerAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/sys/worker/add", XTestSysWorkerAdd, t, XTestSysWorkerAddRequest)
+		}
+	})
+}
+
 // TestSysWorkerGet defined TODO
+// go test -v -test.run TestSysWorkerGet
 func TestSysWorkerGet(t *testing.T) {
 	x.Handle("GET", "/api/sys/worker/get", XTestSysWorkerGet, t, XTestSysWorkerGetRequest)
+}
+
+// BenchmarkSysWorkerGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysWorkerGet -test.benchmem=true
+func BenchmarkSysWorkerGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/worker/get", XTestSysWorkerGet, t, XTestSysWorkerGetRequest)
+		}
+	})
 }

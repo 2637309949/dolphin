@@ -11,9 +11,7 @@ where
 	sys_user_template_detail.id {{.ne}} ""
 	and
 	sys_user_template_detail.is_delete {{.ne}} 1
-{{if ne .role_rule ""}}
-	and {{.role_rule}}
-{{end}}
+
 {{if ne .temp_id ""}}
 	and sys_user_template_detail.temp_id="{{.temp_id}}"
 {{end}}

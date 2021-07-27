@@ -1095,8 +1095,8 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: aisle
-  version: 1.1.2
+  title: dolphin
+  version: "1.0"
 paths:
   /api/organ/add:
     post:
@@ -6256,13 +6256,13 @@ paths:
       - worker
 securityDefinitions:
   OAuth2AccessCode:
-    authorizationUrl: http://localhost:8081/api/sys/cas/authorize
+    authorizationUrl: http://localhost:8083/api/sys/cas/authorize
     flow: accessCode
     scopes:
       admin: Grants read and write access to administrative information
       read: Grants read access
       write: Grants write access
-    tokenUrl: http://localhost:8081/api/sys/cas/token
+    tokenUrl: http://localhost:8083/api/sys/cas/token
     type: oauth2
     x-tokenName: Authorization
 swagger: "2.0"

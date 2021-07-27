@@ -7,6 +7,4 @@ where
 	sys_schedule.id {{.ne}} ""
 	and
 	sys_schedule.is_delete {{.ne}} 1
-{{if ne .role_rule ""}}
-	and {{.role_rule}}
-{{end}}
+

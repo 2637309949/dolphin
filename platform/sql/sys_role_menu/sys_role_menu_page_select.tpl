@@ -7,7 +7,5 @@ where
 	sys_role_menu.id {{.ne}} ""
 	and
 	sys_role_menu.is_delete {{.ne}} 1
-{{if ne .role_rule ""}}
-	and {{.role_rule}}
-{{end}}
+
 	LIMIT {{.size}} OFFSET {{.offset}}

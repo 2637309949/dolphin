@@ -10,7 +10,6 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
@@ -23,7 +22,7 @@ var x *XTest
 
 type (
 	testingT interface {
-		Deadline() (time.Time, bool)
+		// Deadline() (time.Time, bool)
 		Error(args ...interface{})
 		Errorf(format string, args ...interface{})
 		Fail()
@@ -35,7 +34,7 @@ type (
 		Log(args ...interface{})
 		Logf(format string, args ...interface{})
 		Name() string
-		Parallel()
+		// Parallel()
 		Skip(args ...interface{})
 		SkipNow()
 		Skipf(format string, args ...interface{})
@@ -156,7 +155,7 @@ func (x *XTest) Head(url string, args interface{}, h func(w *httptest.ResponseRe
 }
 
 // HttpHandle defined TODO
-func (x *XTest) Handle(method, reqPath string, funk func(ctx *Context), t *testing.T, args interface{}) {
+func (x *XTest) Handle(method, reqPath string, funk func(ctx *Context), t testingT, args interface{}) {
 	switch method {
 	case "GET":
 		x.Get(reqPath, args, func(w *httptest.ResponseRecorder) { funk(&Context{w, t}) })
@@ -190,41 +189,129 @@ func TestSysUserLogin(t *testing.T) {
 }
 
 // TestOrganAdd defined TODO
+// go test -v -test.run TestOrganAdd
 func TestOrganAdd(t *testing.T) {
 	x.Handle("POST", "/api/organ/add", XTestOrganAdd, t, XTestOrganAddRequest)
 }
 
+// BenchmarkOrganAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganAdd -test.benchmem=true
+func BenchmarkOrganAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/organ/add", XTestOrganAdd, t, XTestOrganAddRequest)
+		}
+	})
+}
+
 // TestOrganBatchAdd defined TODO
+// go test -v -test.run TestOrganBatchAdd
 func TestOrganBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/organ/batch_add", XTestOrganBatchAdd, t, XTestOrganBatchAddRequest)
 }
 
+// BenchmarkOrganBatchAdd defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganBatchAdd -test.benchmem=true
+func BenchmarkOrganBatchAdd(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/organ/batch_add", XTestOrganBatchAdd, t, XTestOrganBatchAddRequest)
+		}
+	})
+}
+
 // TestOrganDel defined TODO
+// go test -v -test.run TestOrganDel
 func TestOrganDel(t *testing.T) {
 	x.Handle("DELETE", "/api/organ/del", XTestOrganDel, t, XTestOrganDelRequest)
 }
 
+// BenchmarkOrganDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganDel -test.benchmem=true
+func BenchmarkOrganDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("DELETE", "/api/organ/del", XTestOrganDel, t, XTestOrganDelRequest)
+		}
+	})
+}
+
 // TestOrganBatchDel defined TODO
+// go test -v -test.run TestOrganBatchDel
 func TestOrganBatchDel(t *testing.T) {
 	x.Handle("PUT", "/api/organ/batch_del", XTestOrganBatchDel, t, XTestOrganBatchDelRequest)
 }
 
+// BenchmarkOrganBatchDel defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganBatchDel -test.benchmem=true
+func BenchmarkOrganBatchDel(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/organ/batch_del", XTestOrganBatchDel, t, XTestOrganBatchDelRequest)
+		}
+	})
+}
+
 // TestOrganUpdate defined TODO
+// go test -v -test.run TestOrganUpdate
 func TestOrganUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/organ/update", XTestOrganUpdate, t, XTestOrganUpdateRequest)
 }
 
+// BenchmarkOrganUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganUpdate -test.benchmem=true
+func BenchmarkOrganUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/organ/update", XTestOrganUpdate, t, XTestOrganUpdateRequest)
+		}
+	})
+}
+
 // TestOrganBatchUpdate defined TODO
+// go test -v -test.run TestOrganBatchUpdate
 func TestOrganBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/organ/batch_update", XTestOrganBatchUpdate, t, XTestOrganBatchUpdateRequest)
 }
 
+// BenchmarkOrganBatchUpdate defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganBatchUpdate -test.benchmem=true
+func BenchmarkOrganBatchUpdate(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("PUT", "/api/organ/batch_update", XTestOrganBatchUpdate, t, XTestOrganBatchUpdateRequest)
+		}
+	})
+}
+
 // TestOrganPage defined TODO
+// go test -v -test.run TestOrganPage
 func TestOrganPage(t *testing.T) {
 	x.Handle("GET", "/api/organ/page", XTestOrganPage, t, XTestOrganPageRequest)
 }
 
+// BenchmarkOrganPage defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganPage -test.benchmem=true
+func BenchmarkOrganPage(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/organ/page", XTestOrganPage, t, XTestOrganPageRequest)
+		}
+	})
+}
+
 // TestOrganGet defined TODO
+// go test -v -test.run TestOrganGet
 func TestOrganGet(t *testing.T) {
 	x.Handle("GET", "/api/organ/get", XTestOrganGet, t, XTestOrganGetRequest)
+}
+
+// BenchmarkOrganGet defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkOrganGet -test.benchmem=true
+func BenchmarkOrganGet(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/organ/get", XTestOrganGet, t, XTestOrganGetRequest)
+		}
+	})
 }

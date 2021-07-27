@@ -19,6 +19,4 @@ where
 {{if and .update_time_start .update_time_end}}
 	and organ.update_date between '{{.update_time_start}}' and '{{.update_time_end}}'
 {{end}}
-{{if .role_rule}}
-	and {{.role_rule}}
-{{end}}
+

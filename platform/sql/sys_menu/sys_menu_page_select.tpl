@@ -21,8 +21,5 @@ where
 {{end}}
 	and
 	sys_menu.is_delete {{.ne}} 1
-{{if ne .role_rule ""}}
-	and {{.role_rule}}
-{{end}}
-order by {{.sort}}
-LIMIT {{.size}} OFFSET {{.offset}}
+
+order by {{.sort}}LIMIT {{.size}} OFFSET {{.offset}}
