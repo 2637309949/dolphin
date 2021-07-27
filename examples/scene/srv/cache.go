@@ -6,8 +6,7 @@ package srv
 import (
 	"context"
 	"errors"
-	"log"
-	"sync"
+	"time"
 
 	"scene/svc"
 
@@ -25,47 +24,28 @@ func NewICache() *ICache {
 
 // TODO defined srv
 func (srv *ICache) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
-	logrus.Infoln("ICacheAction")
-	fatalErrors := make(chan error)
-	wgDone := make(chan bool)
-
-	var wg sync.WaitGroup
-	wg.Add(2)
-
-	go func() {
-		log.Println("Waitgroup 1")
-		// Do Something...
-		wg.Done()
-	}()
-	go func() {
-		log.Println("Waitgroup 2")
-		// Example function which returns an error
-		err := ReturnsError()
-		if err != nil {
-			fatalErrors <- err
+	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+	ticker := time.NewTicker(1 * time.Second)
+	defer ticker.Stop()
+	chi := func(context.Context) chan interface{} {
+		chi := make(chan interface{}, 1)
+		go func() {
+			time.Sleep(1 * time.Second)
+			chi <- 100
+			cancel()
+			close(chi)
+		}()
+		return chi
+	}(cwt)
+	for range ticker.C {
+		select {
+		case <-cwt.Done():
+			logrus.Infoln("child process interrupt...")
+			return <-chi, cwt.Err()
+		default:
+			logrus.Infoln("awaiting job...")
 		}
-		wg.Done()
-	}()
-
-	// Important final goroutine to wait until WaitGroup is done
-	go func() {
-		wg.Wait()
-		close(wgDone)
-	}()
-
-	// Wait until either WaitGroup is done or an error is received through the channel
-	select {
-	case <-wgDone:
-		// carry on
-		break
-	case err := <-fatalErrors:
-		close(fatalErrors)
-		return nil, err
 	}
-	log.Println("Program executed successfully")
-	return 100, nil
-}
-
-func ReturnsError() error {
-	return errors.New("example error")
+	return nil, errors.New("no implementation found")
 }

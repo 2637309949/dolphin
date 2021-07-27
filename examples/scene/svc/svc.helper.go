@@ -1,13 +1,17 @@
 package svc
 
 import (
+	"time"
+
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	"github.com/segmentio/kafka-go"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 type SvcHepler struct {
+	dialer *kafka.Dialer
 	bucket *oss.Bucket
 	svc.Svc
 }
@@ -26,5 +30,10 @@ func NewSvcHepler(svc svc.Svc) Svc {
 	if err != nil {
 		logrus.Errorln(err)
 	}
-	return &SvcHepler{Svc: svc, bucket: bk}
+
+	dialer := &kafka.Dialer{
+		Timeout:   10 * time.Second,
+		DualStack: true,
+	}
+	return &SvcHepler{Svc: svc, bucket: bk, dialer: dialer}
 }

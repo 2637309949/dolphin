@@ -28,7 +28,7 @@ func (ctr *Kafka) KafkaAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	if err := ctr.Srv.Producer(context.Background(), payload); err != nil {
+	if err := ctr.Srv.WriteMessages(context.Background(), payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

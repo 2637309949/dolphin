@@ -57,4 +57,5 @@ type Svc interface {
 	Db
 	Oss
 	Weapp
+	Kafka
 }

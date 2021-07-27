@@ -2,7 +2,7 @@ app:
   auth: token
   host: localhost:8081
   mode: release
-  name: dolphin
+  name: scene
   version: "1.0"
 http:
   port: 8082
@@ -37,3 +37,6 @@ oss:
   endpoint: 965xx
   accesskeyid: 965xx
   accesskeysecret: 965xx
+kafka:
+  broker:
+  - 172.16.10.191:9092
