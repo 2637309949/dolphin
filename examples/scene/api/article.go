@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/platform/api"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -248,6 +249,17 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
+	if ctr.Srv.Check(ctx.Context.Context) {
+		ctr.Srv.SetOptionsetsFormat(api.OptionsetsFormat(ctx.DB))
+		ret, err := ctr.Srv.PageExport(ctx.DB, "article", "page", "article", q.Value())
+		if err != nil {
+			logrus.Error(err)
+			ctx.Fail(err)
+			return
+		}
+		ctx.Success(ret)
+		return
+	}
 	ret, err := ctr.Srv.PageSearch(ctx.DB, "article", "page", "article", q.Value())
 	if err != nil {
 		logrus.Error(err)
