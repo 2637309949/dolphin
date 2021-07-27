@@ -56,4 +56,5 @@ type Svc interface {
 	Http
 	Db
 	Oss
+	Weapp
 }

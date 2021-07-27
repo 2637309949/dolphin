@@ -17,6 +17,7 @@ require (
 	github.com/kak-tus/ami v0.1.15
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
 	github.com/mattn/go-sqlite3 v1.14.7
+	github.com/medivhzhan/weapp/v2 v2.4.2 // indirect
 	github.com/nsqio/go-nsq v1.0.8
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/segmentio/kafka-go v0.4.16
