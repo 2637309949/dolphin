@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"scene/types"
 
+	"github.com/2637309949/dolphin/platform/util/reflect"
 	"github.com/sirupsen/logrus"
 )
 
@@ -52,11 +53,9 @@ func (ctr *Dtm) DtmTransOut(ctx *Context) {
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
 		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
 	}
-	dtmRet := "SUCCESS"
-	if payload.TransInResult.String != "" {
-		dtmRet = payload.TransInResult.String
-	}
-	ctx.JSON(200, map[string]interface{}{"dtm_result": dtmRet})
+	ctx.JSON(200, map[string]interface{}{
+		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
+	})
 }
 
 // DtmTransOutConfirm api implementation

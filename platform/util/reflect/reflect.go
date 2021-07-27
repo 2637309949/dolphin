@@ -24,6 +24,17 @@ func IsBlank(value reflect.Value) bool {
 	return reflect.DeepEqual(value.Interface(), reflect.Zero(value.Type()).Interface())
 }
 
+// OrOne defined TODO
+func OrOne(arr ...interface{}) interface{} {
+	for i := range arr {
+		item := arr[i]
+		if !IsBlank(reflect.ValueOf(item)) {
+			return item
+		}
+	}
+	return reflect.Zero(SliceElem(reflect.TypeOf(arr))).Interface()
+}
+
 // SliceElem defined
 func SliceElem(rtype reflect.Type) reflect.Type {
 	for {
