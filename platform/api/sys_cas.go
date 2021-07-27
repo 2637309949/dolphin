@@ -5,7 +5,6 @@ package api
 
 import (
 	"context"
-	"encoding/gob"
 	"errors"
 	"fmt"
 	"net/http"
@@ -23,21 +22,6 @@ import (
 	"github.com/thoas/go-funk"
 	xoauth2 "golang.org/x/oauth2"
 )
-
-func init() {
-	var hashKey = []byte(viper.GetString("http.hash"))
-	session.InitManager(
-		session.SetCookieName("session_id"),
-		session.SetStore(
-			NewCookieStore(
-				SetCookieName("store_id"),
-				SetHashKey(hashKey),
-			),
-		),
-	)
-	// fix: store.Set("ReturnUri", r.Form) can not be parsed.
-	gob.Register(url.Values{})
-}
 
 // SysCasLogin api implementation
 // @Summary 用户认证

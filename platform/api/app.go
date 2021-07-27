@@ -102,6 +102,7 @@ func init() {
 	InitViper()
 	InitLogger()
 	InitRedisCli()
+	InitSession()
 	InitOAuth2()
 
 	opts := []Option{WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
