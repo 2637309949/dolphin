@@ -80,6 +80,7 @@ $ dolphin new hello && cd hello && dolphin build && go run main.go
 
 - [快速入门](./docs/快速入门.md)
 - [配置XML](./docs/配置XML.md)
+- [数据权限](./docs/数据权限.md)
 - [全局配置](./docs/全局配置.md)
 - [内置指令](./docs/内置指令.md)
 - [远程调用](./docs/远程调用.md)
