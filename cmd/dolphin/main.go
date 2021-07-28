@@ -13,9 +13,8 @@ import (
 	"runtime"
 	"strings"
 
-	gen "github.com/2637309949/dolphin/cmd/dolphin/api"
-	"github.com/2637309949/dolphin/cmd/dolphin/api/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
+	"github.com/2637309949/dolphin/cmd/dolphin/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -151,8 +150,8 @@ var (
 			} else {
 				pipes = cupArgs
 			}
-			g := gen.New(p)
-			g.AddPipe(gen.GetPipesByName(pipes...)...)
+			g := New(p)
+			g.AddPipe(GetPipesByName(pipes...)...)
 			if err = g.BuildDir(wd, args); err != nil {
 				return err
 			}
@@ -180,8 +179,8 @@ var (
 				return err
 			}
 			p := parser.NewTpl(path.Base(wd), path.Base(wd))
-			g := gen.New(p)
-			g.AddPipe(gen.GetPipesByName("more", "dol", "script")...)
+			g := New(p)
+			g.AddPipe(GetPipesByName("more", "dol", "script")...)
 			return g.BuildDir(wd, args)
 		},
 	}
@@ -194,8 +193,8 @@ var (
 				return err
 			}
 			p := parser.NewTpl(path.Base(wd), path.Base(wd))
-			g := gen.New(p)
-			g.AddPipe(gen.GetPipesByName("reverse")...)
+			g := New(p)
+			g.AddPipe(GetPipesByName("reverse")...)
 			return g.BuildDir(wd, args)
 		},
 	}
@@ -212,8 +211,8 @@ var (
 			if err := p.Walk(wd); err != nil {
 				return err
 			}
-			g := gen.New(p)
-			g.AddPipe(gen.GetPipesByName("boilerplate")...)
+			g := New(p)
+			g.AddPipe(GetPipesByName("boilerplate")...)
 			err = g.BuildDir(wd, args)
 			if err != nil {
 				return err
@@ -225,7 +224,7 @@ var (
 	serve = &cobra.Command{
 		Use:   "serve",
 		Short: "Serve api document",
-		RunE: func(_ *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, _ []string) error {
 			gin.SetMode("release")
 			router := gin.New()
 			router.StaticFS("/", &AssetsFileSystem{RelativePath: "/swagger", FileSystem: template.Assets})

@@ -26,10 +26,10 @@ func (l *errorLogger) AmiError(err error) {
 	println("Got error from Ami:", err.Error())
 }
 
-// RedisProducer defined
+// RedisProducer defined TODO
 var RedisProducer *ami.Producer
 
-// RedisConsumer defined
+// RedisConsumer defined TODO
 var RedisConsumer *ami.Consumer
 
 func init() {
@@ -76,7 +76,7 @@ func NewRedisMq() *RedisMq {
 	return &RedisMq{}
 }
 
-// Producer defined srv
+// Producer defined TODO
 func (srv *RedisMq) Producer(ctx context.Context, db *xorm.Engine, params types.AmiInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
@@ -87,7 +87,7 @@ func (srv *RedisMq) Producer(ctx context.Context, db *xorm.Engine, params types.
 	return nil, nil
 }
 
-// Consumer defined srv
+// Consumer defined TODO
 func (srv *RedisMq) Consumer(ctx context.Context, db *xorm.Engine, params map[string]interface{}) (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
@@ -98,7 +98,7 @@ func (srv *RedisMq) Consumer(ctx context.Context, db *xorm.Engine, params map[st
 	var items []types.AmiInfo
 	c := RedisConsumer.Start()
 	cwt, cancel := context.WithCancel(context.TODO())
-	go func(cwt context.Context) {
+	go func(context.Context) {
 		for {
 			select {
 			case m, ok := <-c:
@@ -123,7 +123,7 @@ func (srv *RedisMq) Consumer(ctx context.Context, db *xorm.Engine, params map[st
 	return items, nil
 }
 
-// TODO defined srv
+// TODO defined TODO
 func (srv *RedisMq) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()

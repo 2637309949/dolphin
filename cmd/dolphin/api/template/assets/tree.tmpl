@@ -1,8 +1,0 @@
-select
-    {{.Api.Table}}.id
-from
-	{{.Api.Table}}
-where
-	{{.Api.Table}}.id {{.Controller.Unescaped "{{.ne}}"}} ""
-	and
-	{{.Api.Table}}.is_delete {{.Controller.Unescaped "{{.ne}}"}} 1

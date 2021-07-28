@@ -19,4 +19,3 @@ where
 {{if and .update_time_start .update_time_end}}
 	and article.update_time between '{{.update_time_start}}' and '{{.update_time_end}}'
 {{end}}
-

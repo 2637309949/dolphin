@@ -14,7 +14,6 @@ import (
 	"regexp"
 
 	"github.com/2637309949/dolphin/platform/api"
-	appSvc "github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/util"
 )
 
@@ -145,7 +144,7 @@ func New() *Dolphin {
 }
 
 func init() {
-	dol, svcHelper := New(), svc.NewSvcHepler(appSvc.NewSvcHepler(api.RedisClient))
+	dol, svcHelper := New(), svc.NewSvcHepler(api.RedisClient)
 	dol.SyncModel()
 	dol.SyncController()
 	dol.SyncService()

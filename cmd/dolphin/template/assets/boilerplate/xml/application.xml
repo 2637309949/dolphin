@@ -1,0 +1,3 @@
+<!-- dolphin xml'profile -->
+{{.lt}}?xml version="1.0" encoding="utf-8" ?>
+<application name="{{.Name}}" desc="{{.Desc}}" packagename="{{.PackageName}}"/>

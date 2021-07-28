@@ -1,0 +1,6 @@
+<service name="article_srv" desc="文章服务">
+    <rpc name="list" desc="文章列表">
+        <request type="$article_cond" desc="查询"/>
+        <reply type="$article_reply" desc="反馈"/>
+    </rpc>
+</service>

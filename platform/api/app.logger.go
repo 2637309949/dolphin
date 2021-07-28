@@ -144,7 +144,7 @@ func DumpRecv(dol *Dolphin) func(ctx *Context, p *LogFormatterParams) {
 	}
 }
 
-func initTracker() {
+func InitTracker() {
 	logWorkerPool = make(chan chan *LogFormatterParams, 20)
 	logChannel = make(chan *LogFormatterParams, 150)
 	TrackerStore = func(domain string, beans *[]types.SysTracker) error {
@@ -246,5 +246,5 @@ func InitLogger() {
 		writer = logf
 	}
 	logrus.SetOutput(writer)
-	initTracker()
+	InitTracker()
 }

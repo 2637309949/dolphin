@@ -33,8 +33,7 @@ func (l *lifecycleWrapper) Append(hook lifeHook) {
 	l.hooks = append(l.hooks, hook)
 }
 
-// Start runs all OnStart hooks, returning immediately if it encounters an
-// error.
+// Start runs all OnStart hooks, returning immediately if it encounters an error.
 func (l *lifecycleWrapper) Start(ctx context.Context) error {
 	for i := range l.hooks {
 		if err := l.hooks[i].OnStart(ctx); err != nil {

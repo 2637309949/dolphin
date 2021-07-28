@@ -1,0 +1,45 @@
+package main
+
+import (
+	"encoding/json"
+
+	// "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
+)
+
+// XTestSysUserLogin defined TODO
+var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
+	ret := struct {
+		Code int `json:"code"`
+		Data struct {
+			AccessToken  string `json:"access_token"`
+			RefreshToken string `json:"refresh_token"`
+		} `json:"data"`
+	}{}
+	json.Unmarshal(ctx.Body.Bytes(), &ret)
+	SetToken(ret.Data.AccessToken)
+}, Payload{"domain": "localhost", "name": "admin", "password": "admin"}
+
+{{- range .Controllers}}
+{{- $ctr := .}}
+{{- range $ctr.APIS}}
+{{- $api := .}}
+{{- if ne $api.Name "login" }}
+// XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request defined TODO
+var XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request = func (ctx *Context) {
+	ret := Response{}
+    if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+{{end }}
+{{end }}
+{{end }}
+
