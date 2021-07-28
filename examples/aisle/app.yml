@@ -6,3 +6,8 @@ app:
   version: "1.0"
 http:
   port: 8083
+redis:
+  mode: cluster
+  addr:
+  - localhost:8001
+  password: ""

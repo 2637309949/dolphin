@@ -258,7 +258,7 @@ func InitRedisCli() {
 			IdleTimeout:  time.Duration(idle_conns) * time.Second,
 		})
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
-			logrus.Warnf("Redis:%v connect failed", viper.GetString("redis.addr"))
+			logrus.Warnf("Redis:%v connect failed, %v", viper.GetString("redis.addr"), err)
 			RedisClient = nil
 		} else {
 			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
@@ -279,7 +279,7 @@ func InitRedisCli() {
 			IdleTimeout:  time.Duration(idle_conns) * time.Second,
 		})
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
-			logrus.Warnf("Redis:%v connect failed", viper.GetString("redis.addr"))
+			logrus.Warnf("Redis:%v connect failed, %v", viper.GetString("redis.addr"), err)
 			RedisClient = nil
 		} else {
 			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
