@@ -10,9 +10,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/2637309949/dolphin/platform/util/trace"
-
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/trace"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -56,7 +55,7 @@ func (gh *grpcHandler) OnStop(ctx context.Context) error {
 var RpcClientDailTimeOut = 3 * time.Second
 
 // NewRpcClient defined TODO
-func NewRpcClient(target string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+func NewRpcClient(_ string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	options := append(opts, []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),

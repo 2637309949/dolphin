@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// InitSession defined TODO, just for sso
+// InitSession defined TODO, just for cas server
 func InitSession() {
 	var hashKey = []byte(viper.GetString("http.hash"))
 	session.InitManager(
