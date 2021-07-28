@@ -53,19 +53,24 @@ func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
 
 // Success defined success result
 func (ctx *Context) Success(data interface{}, status ...int) {
-	code := util.SomeOne(status, 200).(int)
 	ctx.JSON(http.StatusOK, types.Success{
-		Code: code,
+		Code: util.SomeOne(status, 200).(int),
 		Data: data,
 	})
+}
+
+// unWrapError defined TODO
+func unWrapError(err error) int {
+	if mErr, ok := err.(types.Error); ok {
+		return mErr.Code
+	}
+	return 0
 }
 
 // Fail defined failt result
 func (ctx *Context) Fail(err error, status ...int) {
 	code, msg := 500, err.Error()
-	if mErr, ok := err.(types.Error); ok {
-		code = mErr.Code
-	}
+	code = util.SomeOne([]int{unWrapError(err)}, code).(int)
 	code = util.SomeOne(status, code).(int)
 	ctx.JSON(http.StatusOK, types.Fail{
 		Code: code,
@@ -266,16 +271,22 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 }
 
 // ShouldBindWith defined TODO
+// ShouldBindWith is done in following order: 1) path params; 2) query params; 3) request body.
 func (ctx *Context) ShouldBindWith(ptr interface{}) error {
-	if ptr == nil {
-		return errors.New("first parameter must be an pointer")
+	if len(ctx.Params) > 0 {
+		if err := ctx.ShouldBindUri(ptr); err != nil {
+			return err
+		}
 	}
-	err := ctx.ShouldBindQuery(ptr)
-	if err != nil {
-		return err
+	if util.QueryCheck(ctx.Request) {
+		if err := ctx.ShouldBindQuery(ptr); err != nil {
+			return err
+		}
 	}
 	if util.JsonCheck(ctx.Request) {
-		return ctx.ShouldBindBody(ptr)
+		if err := ctx.ShouldBindBody(ptr); err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -284,6 +295,10 @@ func (ctx *Context) ShouldBindWith(ptr interface{}) error {
 func (ctx *Context) ShouldBindBody(ptr interface{}) error {
 	var err error
 	var body []byte
+
+	if ptr == nil {
+		return errors.New("first parameter must be an pointer")
+	}
 	if cb, ok := ctx.Get(gin.BodyBytesKey); ok {
 		if cbb, ok := cb.([]byte); ok {
 			body = cbb

@@ -203,3 +203,8 @@ func JsonCheck(req *http.Request) bool {
 	}
 	return false
 }
+
+// QueryCheck defined TODO
+func QueryCheck(req *http.Request) bool {
+	return req.Method == http.MethodGet || req.Method == http.MethodDelete
+}
