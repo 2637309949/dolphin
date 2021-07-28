@@ -14,7 +14,6 @@ import (
 	"regexp"
 
 	"github.com/2637309949/dolphin/platform/api"
-	appSvc "github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/util"
 )
 
@@ -54,15 +53,17 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 			panic("http method " + methods[i] + " is not valid")
 		}
 		relativePath := group.calculateAbsolutePath(relativePath)
-		handlers = group.combineHandlers(handlers)
+		combineHandlers := group.combineHandlers(handlers)
 		hls := []api.HandlerFunc{}
-		for j := 0; j < len(handlers); j++ {
-			hls = append(hls, func(ctx *api.Context) {
-				c := group.dol.pool.Get().(*Context)
-				c.Context = ctx
-				handlers[j](c)
-				group.dol.pool.Put(c)
-			})
+		for j := 0; j < len(combineHandlers); j++ {
+			hls = append(hls, func(h HandlerFunc) func(ctx *api.Context) {
+				return func(ctx *api.Context) {
+					c := group.dol.pool.Get().(*Context)
+					c.Context = ctx
+					h(c)
+					group.dol.pool.Put(c)
+				}
+			}(combineHandlers[j]))
 		}
 		group.dol.Http.Handle(methods[i], relativePath, hls...)
 	}
@@ -141,7 +142,7 @@ func New() *Dolphin {
 }
 
 func init() {
-	dol, svcHelper := New(), svc.NewSvcHepler(appSvc.NewSvcHepler(api.RedisClient))
+	dol, svcHelper := New(), svc.NewSvcHepler(api.RedisClient)
 	dol.SyncModel()
 	dol.SyncController()
 	dol.SyncService()
