@@ -16,14 +16,9 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// init kafka read task
 func init() {
-	go new(svc.SvcHepler).ReadMessage(context.Background(), "score-topic", func(data []byte) {
-		value := types.KafkaInfo{}
-		if err := json.Unmarshal(data, &value); err != nil {
-			logrus.Error("failed to unmarshal:", err)
-		}
-		logrus.Infof("kafka#%v", value)
-	}, 2)
+	new(Kafka).ReadMessage(context.Background())
 }
 
 type Kafka struct {
@@ -34,7 +29,7 @@ func NewKafka() *Kafka {
 	return &Kafka{}
 }
 
-// TODO defined srv
+// TODO defined TODO
 func (srv *Kafka) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
@@ -62,11 +57,25 @@ func (srv *Kafka) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (i
 	return nil, errors.New("no implementation found")
 }
 
-// WriteMessages defined srv
+// WriteMessages defined TODO
 func (srv *Kafka) WriteMessages(ctx context.Context, params types.KafkaInfo) error {
 	err := srv.Svc.WriteMessages(ctx, "score-topic", params)
 	if err != nil {
 		return err
 	}
 	return nil
+}
+
+// ReadMessage defined TODO
+func (srv *Kafka) ReadMessage(ctx context.Context) {
+	go func() {
+		time.Sleep(3 * time.Second)
+		new(svc.SvcHepler).ReadMessage(ctx, "score-topic", func(data []byte) {
+			value := types.KafkaInfo{}
+			if err := json.Unmarshal(data, &value); err != nil {
+				logrus.Error("failed to unmarshal:", err)
+			}
+			logrus.Infof("kafka#%v", value)
+		}, 2)
+	}()
 }
