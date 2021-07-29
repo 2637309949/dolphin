@@ -161,9 +161,6 @@ func CachePage(store persistence.CacheStore, expire time.Duration) gin.HandlerFu
 // NewRedisCache returns a RedisStore
 // until redigo supports sharding/clustering, only one host will be in hostList
 func NewRedisCache(redis redis.Cmdable, defaultExpiration time.Duration) *RedisStore {
-	if _, err := redis.Ping(context.Background()).Result(); err != nil {
-		logrus.Error("Redis: connect failed")
-	}
 	return &RedisStore{redis, defaultExpiration}
 }
 

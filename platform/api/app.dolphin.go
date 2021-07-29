@@ -109,8 +109,10 @@ func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // Reflesh defined init data before bootinh
 func (dol *Dolphin) Reflesh() error {
 	defer dol.Manager.ModelSet().Release()
+	xlogger := createXLogger()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	db, err := xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
+	db.SetLogger(xlogger)
 	if err != nil {
 		return err
 	}
@@ -119,9 +121,7 @@ func (dol *Dolphin) Reflesh() error {
 		return err
 	}
 
-	xlogger := createXLogger()
 	dol.PlatformDB = db
-	dol.PlatformDB.SetLogger(xlogger)
 	dol.PlatformDB.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
 	dol.PlatformDB.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
 	dol.PlatformDB.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
@@ -168,10 +168,15 @@ func (dol *Dolphin) Reflesh() error {
 			return err
 		}
 		db, err := xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)
+		db.SetLogger(xlogger)
 		if err != nil {
 			return err
 		}
-		db.SetLogger(xlogger)
+		err = db.Ping()
+		if err != nil {
+			return err
+		}
+
 		db.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
 		db.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
 		db.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
