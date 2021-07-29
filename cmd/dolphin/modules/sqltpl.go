@@ -16,7 +16,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -38,7 +37,7 @@ func HasSuffix(s string, suffix ...string) bool {
 type SQLTPL struct {
 }
 
-// Name defined pipe name
+// Name defined parser name
 func (app *SQLTPL) Name() string {
 	return "sqltpl"
 }
@@ -49,13 +48,13 @@ func (app *SQLTPL) Pre(*parser.AppParser) error {
 }
 
 // After defined
-func (app *SQLTPL) After(*parser.AppParser, []*pipe.TmplCfg) error {
+func (app *SQLTPL) After(*parser.AppParser, []*parser.TmplCfg) error {
 	return nil
 }
 
 // Build func
-func (app *SQLTPL) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
-	var tmplCfgs []*pipe.TmplCfg
+func (app *SQLTPL) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
+	var tmplCfgs []*parser.TmplCfg
 	var files []struct {
 		Name    string
 		Content ht.HTML
@@ -108,22 +107,22 @@ func (app *SQLTPL) Build(dir string, args []string, parser *parser.AppParser) ([
 		return tmplCfgs, err
 	}
 	data := map[string]interface{}{
-		"PackageName": parser.PackageName,
-		"Name":        parser.Name,
-		"Controllers": parser.Controllers,
-		"Services":    parser.Services,
-		"Tables":      parser.Tables,
-		"Beans":       parser.Beans,
+		"PackageName": appParser.PackageName,
+		"Name":        appParser.Name,
+		"Controllers": appParser.Controllers,
+		"Services":    appParser.Services,
+		"Tables":      appParser.Tables,
+		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
 		"Files":       files,
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
 	}
-	tmplCfg := &pipe.TmplCfg{
+	tmplCfg := &parser.TmplCfg{
 		Text:     string(sqlByte),
 		FilePath: path.Join(dir, viper.GetString("dir.sql"), "sql.auto.go"),
 		Data:     data,
-		Overlap:  pipe.OverlapWrite,
+		Overlap:  parser.OverlapWrite,
 	}
 	tmplCfgs = append(tmplCfgs, tmplCfg)
 	return tmplCfgs, nil

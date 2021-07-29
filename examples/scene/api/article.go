@@ -4,7 +4,6 @@
 package api
 
 import (
-	"errors"
 	"scene/types"
 
 	"time"
@@ -292,7 +291,7 @@ func (ctr *Article) ArticleGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	} else if !ext {
-		ctx.Fail(errors.New("not found"))
+		ctx.Fail(types.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

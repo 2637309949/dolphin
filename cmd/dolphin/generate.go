@@ -17,14 +17,13 @@ import (
 
 	"github.com/2637309949/dolphin/cmd/dolphin/modules"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/go-errors/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
-var lines = []pipe.Pipe{
+var lines = []parser.Pipe{
 	&modules.More{},
 	&modules.Dolphin{},
 	&modules.Script{},
@@ -36,26 +35,26 @@ var lines = []pipe.Pipe{
 }
 
 // AddPipe defined addPipe
-func AddPipe(p pipe.Pipe) {
+func AddPipe(p parser.Pipe) {
 	lines = append(lines, p)
 }
 
 // GetPipesByName defined getbyname
-func GetPipesByName(nm ...string) []pipe.Pipe {
-	return funk.Chain(lines).Filter(func(pipe pipe.Pipe) bool {
+func GetPipesByName(nm ...string) []parser.Pipe {
+	return funk.Chain(lines).Filter(func(parser parser.Pipe) bool {
 		for i := range nm {
-			if pipe.Name() == nm[i] {
+			if parser.Name() == nm[i] {
 				return true
 			}
 		}
 		return false
-	}).Value().([]pipe.Pipe)
+	}).Value().([]parser.Pipe)
 }
 
 // Gen struct
 type Gen struct {
 	Parser *parser.AppParser
-	Pipes  []pipe.Pipe
+	Pipes  []parser.Pipe
 }
 
 // New defined gen
@@ -63,8 +62,8 @@ func New(parser *parser.AppParser) *Gen {
 	return &Gen{Parser: parser}
 }
 
-// AddPipe add pipe
-func (gen *Gen) AddPipe(modules ...pipe.Pipe) {
+// AddPipe add parser
+func (gen *Gen) AddPipe(modules ...parser.Pipe) {
 	gen.Pipes = append(gen.Pipes, modules...)
 }
 
@@ -77,7 +76,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	}()
 
 	// generate code
-	cfgs := []*pipe.TmplCfg{}
+	cfgs := []*parser.TmplCfg{}
 	for i := range gen.Pipes {
 		err := gen.Pipes[i].Pre(gen.Parser)
 		if err != nil {
@@ -102,7 +101,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	}
 
 	// fmt code
-	filePaths := funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *pipe.TmplCfg) bool { return cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" }), func(cfg *pipe.TmplCfg) (string, string) { return path.Dir(cfg.FilePath), path.Dir(cfg.FilePath) })).([]string)
+	filePaths := funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *parser.TmplCfg) bool { return cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" }), func(cfg *parser.TmplCfg) (string, string) { return path.Dir(cfg.FilePath), path.Dir(cfg.FilePath) })).([]string)
 	if len(filePaths) > 0 {
 		if !utils.HasBin("goimports") {
 			if status := utils.NetWorkStatus(); status {
@@ -122,7 +121,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	}
 
 	// rpc code
-	filePaths = funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *pipe.TmplCfg) bool { return cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" }), func(cfg *pipe.TmplCfg) (string, string) { return cfg.FilePath, cfg.FilePath })).([]string)
+	filePaths = funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *parser.TmplCfg) bool { return cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" }), func(cfg *parser.TmplCfg) (string, string) { return cfg.FilePath, cfg.FilePath })).([]string)
 	if len(filePaths) > 0 {
 		if !utils.HasBin("proto") {
 			if status := utils.NetWorkStatus(); status {
@@ -144,7 +143,7 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 }
 
 // BuildWithCfg defined
-func (gen *Gen) Build(cfg *pipe.TmplCfg) error {
+func (gen *Gen) Build(cfg *parser.TmplCfg) error {
 	var err error
 	var genFilePath string
 	var tpl *template.Template
@@ -163,12 +162,12 @@ func (gen *Gen) Build(cfg *pipe.TmplCfg) error {
 
 	genFilePath = cfg.FilePath
 	if _, err = os.Stat(genFilePath); !os.IsNotExist(err) {
-		if cfg.Overlap == pipe.OverlapInc {
+		if cfg.Overlap == parser.OverlapInc {
 			genFilePath = genFilePath + ".new"
 			logrus.Info(fmt.Sprintf("%s inc generate", genFilePath))
-		} else if cfg.Overlap == pipe.OverlapWrite {
+		} else if cfg.Overlap == parser.OverlapWrite {
 			logrus.Warn(fmt.Sprintf("%s over generate", genFilePath))
-		} else if cfg.Overlap == pipe.OverlapSkip {
+		} else if cfg.Overlap == parser.OverlapSkip {
 			logrus.Info(fmt.Sprintf("%s skip generate", genFilePath))
 			return nil
 		}

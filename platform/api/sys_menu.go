@@ -368,7 +368,7 @@ func (ctr *SysMenu) SysMenuGet(ctx *Context) {
 		return
 	}
 	if !ext {
-		ctx.Fail(errors.New("not found"))
+		ctx.Fail(types.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

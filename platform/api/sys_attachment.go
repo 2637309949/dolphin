@@ -4,7 +4,6 @@
 package api
 
 import (
-	"errors"
 	"fmt"
 	"path"
 	"path/filepath"
@@ -374,7 +373,7 @@ func (ctr *SysAttachment) SysAttachmentGet(ctx *Context) {
 		return
 	}
 	if !ext {
-		ctx.Fail(errors.New("not found"))
+		ctx.Fail(types.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

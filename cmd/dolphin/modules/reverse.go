@@ -13,8 +13,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/2637309949/dolphin/cmd/dolphin/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -27,7 +25,7 @@ import (
 type Reverse struct {
 }
 
-// Name defined pipe name
+// Name defined parser name
 func (app *Reverse) Name() string {
 	return "reverse"
 }
@@ -38,15 +36,15 @@ func (app *Reverse) Pre(*parser.AppParser) error {
 }
 
 // After defined
-func (app *Reverse) After(*parser.AppParser, []*pipe.TmplCfg) error {
+func (app *Reverse) After(*parser.AppParser, []*parser.TmplCfg) error {
 	return nil
 }
 
 // Build func
-func (app *Reverse) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
+func (app *Reverse) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
 	var tbPath string
 	tbByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "table.tmpl")).([]byte)
-	tmplCfgs := []*pipe.TmplCfg{}
+	tmplCfgs := []*parser.TmplCfg{}
 	engines := []*xorm.Engine{}
 	dataSources := []struct {
 		DataSource string `xorm:"data_source"`
@@ -89,13 +87,13 @@ func (app *Reverse) Build(dir string, args []string, parser *parser.AppParser) (
 		}
 		for i2 := range tables {
 			logrus.Infoln(tables[i2].Name)
-			meta := schema.Table{}
+			meta := parser.Table{}
 			meta.Name = tables[i2].Name
 			meta.Desc = strings.ReplaceAll(tables[i2].Comment, "\n", "")
-			meta.Columns = []*schema.Column{}
+			meta.Columns = []*parser.Column{}
 			cols := tables[i2].Columns()
 			for i3 := range cols {
-				c := schema.Column{}
+				c := parser.Column{}
 				c.Name = strings.ToLower(cols[i3].Name)
 				c.Desc = strings.ReplaceAll(cols[i3].Comment, "\n", "")
 				switch cols[i3].SQLType.Name {
@@ -167,22 +165,22 @@ func (app *Reverse) Build(dir string, args []string, parser *parser.AppParser) (
 				meta.Columns = append(meta.Columns, &c)
 			}
 			data := map[string]interface{}{
-				"PackageName": parser.PackageName,
-				"Name":        parser.Name,
-				"Controllers": parser.Controllers,
-				"Services":    parser.Services,
-				"Tables":      parser.Tables,
+				"PackageName": appParser.PackageName,
+				"Name":        appParser.Name,
+				"Controllers": appParser.Controllers,
+				"Services":    appParser.Services,
+				"Tables":      appParser.Tables,
 				"Table":       meta,
-				"Beans":       parser.Beans,
+				"Beans":       appParser.Beans,
 				"Viper":       viper.GetViper(),
 				"lt":          ht.HTML("<"),
 				"gt":          ht.HTML(">"),
 			}
-			tmplCfg := &pipe.TmplCfg{
+			tmplCfg := &parser.TmplCfg{
 				Text:     string(tbByte),
 				FilePath: path.Join(tbPath, meta.Name+".xml"),
 				Data:     data,
-				Overlap:  pipe.OverlapSkip,
+				Overlap:  parser.OverlapSkip,
 				GOFmt:    true,
 			}
 			tmplCfgs = append(tmplCfgs, tmplCfg)

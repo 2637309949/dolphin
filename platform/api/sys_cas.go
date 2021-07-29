@@ -15,7 +15,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/2637309949/dolphin/platform/util"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -64,7 +63,7 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 	if !ext || !account.ValidPassword(password) {
 		err = errors.New("account doesn't exist or password error")
 		logrus.Errorf("SysCasLogin/ValidPassword:%v", err)
-		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+util.ErrInvalidGrant.Error())
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+types.ErrInvalidGrant.Error())
 		return
 	}
 	store.Set("LoggedInUserID", fmt.Sprintf("%v", account.ID.Int64))
@@ -240,7 +239,7 @@ func (ctr *SysCas) SysCasRefresh(ctx *Context) {
 	refreshtoken, ok := App.OAuth2.BearerAuth(ctx.Request)
 	if !ok {
 		logrus.Errorf("SysCasRefresh/BearerAuth:%v", ok)
-		ctx.Fail(util.ErrInvalidAccessToken)
+		ctx.Fail(types.ErrInvalidAccessToken)
 		return
 	}
 	token := xoauth2.Token{}

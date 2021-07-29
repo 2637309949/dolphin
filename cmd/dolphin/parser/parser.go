@@ -6,13 +6,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/spf13/viper"
 )
 
 func (parser *AppParser) parseApplication(xmlPath string, attr []xml.Attr) {
 	if parser.Application == nil {
-		parser.Application = &schema.Application{}
+		parser.Application = &Application{}
 	}
 	parser.Application.Path = xmlPath
 	for _, attr := range attr {
@@ -32,8 +31,8 @@ func (parser *AppParser) parseApplication(xmlPath string, attr []xml.Attr) {
 	}
 }
 
-func (parser *AppParser) parseController(xmlPath string, attr []xml.Attr) *schema.Controller {
-	controller := &schema.Controller{}
+func (parser *AppParser) parseController(xmlPath string, attr []xml.Attr) *Controller {
+	controller := &Controller{}
 	controller.Path = xmlPath
 	for _, attr := range attr {
 		attrName := attr.Name.Local
@@ -53,8 +52,8 @@ func (parser *AppParser) parseController(xmlPath string, attr []xml.Attr) *schem
 	return controller
 }
 
-func (parser *AppParser) parseAPI(xmlPath string, attr []xml.Attr) *schema.API {
-	api := &schema.API{Auth: []string{viper.GetString("app.auth")}, Return: &schema.Return{Success: &schema.Success{}, Failure: &schema.Failure{}}}
+func (parser *AppParser) parseAPI(xmlPath string, attr []xml.Attr) *API {
+	api := &API{Auth: []string{viper.GetString("app.auth")}, Return: &Return{Success: &Success{}, Failure: &Failure{}}}
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -106,7 +105,7 @@ func (parser *AppParser) parseAPI(xmlPath string, attr []xml.Attr) *schema.API {
 	return api
 }
 
-func (parser *AppParser) parseSuccess(xmlPath string, attr []xml.Attr, api *schema.API) {
+func (parser *AppParser) parseSuccess(xmlPath string, attr []xml.Attr, api *API) {
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -120,7 +119,7 @@ func (parser *AppParser) parseSuccess(xmlPath string, attr []xml.Attr, api *sche
 	}
 }
 
-func (parser *AppParser) parseFailure(xmlPath string, attr []xml.Attr, api *schema.API) {
+func (parser *AppParser) parseFailure(xmlPath string, attr []xml.Attr, api *API) {
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -134,8 +133,8 @@ func (parser *AppParser) parseFailure(xmlPath string, attr []xml.Attr, api *sche
 	}
 }
 
-func (parser *AppParser) parseParam(xmlPath string, attr []xml.Attr) *schema.Param {
-	param := &schema.Param{}
+func (parser *AppParser) parseParam(xmlPath string, attr []xml.Attr) *Param {
+	param := &Param{}
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -156,8 +155,8 @@ func (parser *AppParser) parseParam(xmlPath string, attr []xml.Attr) *schema.Par
 	return param
 }
 
-func (parser *AppParser) parseService(xmlPath string, attr []xml.Attr) *schema.Service {
-	service := &schema.Service{}
+func (parser *AppParser) parseService(xmlPath string, attr []xml.Attr) *Service {
+	service := &Service{}
 	service.Path = xmlPath
 	for _, attr := range attr {
 		attrName := attr.Name.Local
@@ -175,8 +174,8 @@ func (parser *AppParser) parseService(xmlPath string, attr []xml.Attr) *schema.S
 	return service
 }
 
-func (parser *AppParser) parseRPC(xmlPath string, attr []xml.Attr) *schema.RPC {
-	rpc := &schema.RPC{Request: &schema.Request{}, Reply: &schema.Reply{}}
+func (parser *AppParser) parseRPC(xmlPath string, attr []xml.Attr) *RPC {
+	rpc := &RPC{Request: &Request{}, Reply: &Reply{}}
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -193,7 +192,7 @@ func (parser *AppParser) parseRPC(xmlPath string, attr []xml.Attr) *schema.RPC {
 	return rpc
 }
 
-func (parser *AppParser) parseRequest(xmlPath string, attr []xml.Attr, rpc *schema.RPC) {
+func (parser *AppParser) parseRequest(xmlPath string, attr []xml.Attr, rpc *RPC) {
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -209,7 +208,7 @@ func (parser *AppParser) parseRequest(xmlPath string, attr []xml.Attr, rpc *sche
 	}
 }
 
-func (parser *AppParser) parseReply(xmlPath string, attr []xml.Attr, rpc *schema.RPC) {
+func (parser *AppParser) parseReply(xmlPath string, attr []xml.Attr, rpc *RPC) {
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -225,8 +224,8 @@ func (parser *AppParser) parseReply(xmlPath string, attr []xml.Attr, rpc *schema
 	}
 }
 
-func (parser *AppParser) parseBean(xmlPath string, attr []xml.Attr) *schema.Bean {
-	bean := &schema.Bean{}
+func (parser *AppParser) parseBean(xmlPath string, attr []xml.Attr) *Bean {
+	bean := &Bean{}
 	bean.Path = xmlPath
 	for _, attr := range attr {
 		attrName := attr.Name.Local
@@ -248,8 +247,8 @@ func (parser *AppParser) parseBean(xmlPath string, attr []xml.Attr) *schema.Bean
 	return bean
 }
 
-func (parser *AppParser) parseProp(xmlPath string, attr []xml.Attr) *schema.Prop {
-	prop := &schema.Prop{}
+func (parser *AppParser) parseProp(xmlPath string, attr []xml.Attr) *Prop {
+	prop := &Prop{}
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value
@@ -274,8 +273,8 @@ func (parser *AppParser) parseProp(xmlPath string, attr []xml.Attr) *schema.Prop
 	return prop
 }
 
-func (parser *AppParser) parseTable(xmlPath string, attr []xml.Attr) *schema.Table {
-	table := &schema.Table{}
+func (parser *AppParser) parseTable(xmlPath string, attr []xml.Attr) *Table {
+	table := &Table{}
 	table.Path = xmlPath
 	for _, attr := range attr {
 		attrName := attr.Name.Local
@@ -299,8 +298,8 @@ func (parser *AppParser) parseTable(xmlPath string, attr []xml.Attr) *schema.Tab
 	return table
 }
 
-func (parser *AppParser) parseColumn(xmlPath string, attr []xml.Attr) *schema.Column {
-	column := &schema.Column{}
+func (parser *AppParser) parseColumn(xmlPath string, attr []xml.Attr) *Column {
+	column := &Column{}
 	for _, attr := range attr {
 		attrName := attr.Name.Local
 		attrValue := attr.Value

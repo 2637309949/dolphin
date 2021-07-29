@@ -9,7 +9,6 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/swag/gen"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/spf13/viper"
@@ -19,7 +18,7 @@ import (
 type Doc struct {
 }
 
-// Name defined pipe name
+// Name defined parser name
 func (m *Doc) Name() string {
 	return "doc"
 }
@@ -40,13 +39,13 @@ func (m *Doc) Pre(*parser.AppParser) error {
 }
 
 // After defined
-func (m *Doc) After(*parser.AppParser, []*pipe.TmplCfg) error {
+func (m *Doc) After(*parser.AppParser, []*parser.TmplCfg) error {
 	return nil
 }
 
 // Build func
-func (m *Doc) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
-	return []*pipe.TmplCfg{}, gen.New().Build(&gen.Config{
+func (m *Doc) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
+	return []*parser.TmplCfg{}, gen.New().Build(&gen.Config{
 		SearchDir:          dir,
 		MainAPIFile:        "main.go",
 		PropNamingStrategy: "camelcase",

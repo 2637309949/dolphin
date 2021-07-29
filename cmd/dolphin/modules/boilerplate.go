@@ -13,7 +13,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -24,7 +23,7 @@ import (
 type Boilerplate struct {
 }
 
-// Name defined pipe name
+// Name defined parser name
 func (m *Boilerplate) Name() string {
 	return "boilerplate"
 }
@@ -35,21 +34,21 @@ func (m *Boilerplate) Pre(*parser.AppParser) error {
 }
 
 // After defined
-func (m *Boilerplate) After(*parser.AppParser, []*pipe.TmplCfg) error {
+func (m *Boilerplate) After(*parser.AppParser, []*parser.TmplCfg) error {
 	return nil
 }
 
 // Build func
-func (m *Boilerplate) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
-	cfgs := []*pipe.TmplCfg{}
+func (m *Boilerplate) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
+	cfgs := []*parser.TmplCfg{}
 	data := map[string]interface{}{
-		"PackageName": parser.PackageName,
-		"Name":        parser.Name,
-		"Desc":        parser.Desc,
-		"Controllers": parser.Controllers,
-		"Services":    parser.Services,
-		"Tables":      parser.Tables,
-		"Beans":       parser.Beans,
+		"PackageName": appParser.PackageName,
+		"Name":        appParser.Name,
+		"Desc":        appParser.Desc,
+		"Controllers": appParser.Controllers,
+		"Services":    appParser.Services,
+		"Tables":      appParser.Tables,
+		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
@@ -71,11 +70,11 @@ func (m *Boilerplate) Build(dir string, args []string, parser *parser.AppParser)
 		}
 		b := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, p)).([]byte)
 		filePath := strings.ReplaceAll(p, "/boilerplate/", "")
-		cfgs = append(cfgs, &pipe.TmplCfg{
+		cfgs = append(cfgs, &parser.TmplCfg{
 			Text:     string(b),
 			FilePath: path.Join(dir, filePath),
 			Data:     data,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  parser.OverlapSkip,
 			GOFmt:    false,
 		})
 		return nil

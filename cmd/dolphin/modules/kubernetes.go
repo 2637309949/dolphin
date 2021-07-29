@@ -9,7 +9,6 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -20,7 +19,7 @@ import (
 type Deploy struct {
 }
 
-// Name defined pipe name
+// Name defined parser name
 func (dp *Deploy) Name() string {
 	return "deploy"
 }
@@ -31,19 +30,19 @@ func (dp *Deploy) Pre(*parser.AppParser) error {
 }
 
 // After defined
-func (dp *Deploy) After(*parser.AppParser, []*pipe.TmplCfg) error {
+func (dp *Deploy) After(*parser.AppParser, []*parser.TmplCfg) error {
 	return nil
 }
 
 // Build func
-func (dp *Deploy) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
+func (dp *Deploy) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
 	data := map[string]interface{}{
-		"PackageName": parser.PackageName,
-		"Name":        parser.Name,
-		"Controllers": parser.Controllers,
-		"Services":    parser.Services,
-		"Tables":      parser.Tables,
-		"Beans":       parser.Beans,
+		"PackageName": appParser.PackageName,
+		"Name":        appParser.Name,
+		"Controllers": appParser.Controllers,
+		"Services":    appParser.Services,
+		"Tables":      appParser.Tables,
+		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
@@ -59,14 +58,14 @@ func (dp *Deploy) Build(dir string, args []string, parser *parser.AppParser) ([]
 		"k8s.virtualservice.tmpl":  "virtualservice.yaml",
 		"k8s.destinationrule.tmpl": "destinationrule.yaml",
 	}
-	cfgs := []*pipe.TmplCfg{}
+	cfgs := []*parser.TmplCfg{}
 	for key, value := range tmpl2file {
 		dByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, key)).([]byte)
-		cfgs = append(cfgs, &pipe.TmplCfg{
+		cfgs = append(cfgs, &parser.TmplCfg{
 			Text:     string(dByte),
 			FilePath: path.Join(dir, viper.GetString("dir.k8s"), value),
 			Data:     data,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  parser.OverlapSkip,
 		})
 	}
 	return cfgs, nil

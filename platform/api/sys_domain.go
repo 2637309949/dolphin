@@ -4,8 +4,6 @@
 package api
 
 import (
-	"errors"
-
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -282,7 +280,7 @@ func (ctr *SysDomain) SysDomainGet(ctx *Context) {
 		return
 	}
 	if !ext {
-		ctx.Fail(errors.New("not found"))
+		ctx.Fail(types.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

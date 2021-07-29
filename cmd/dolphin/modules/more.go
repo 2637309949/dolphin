@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -24,7 +23,7 @@ import (
 type More struct {
 }
 
-// Name defined pipe name
+// Name defined parser name
 func (m *More) Name() string {
 	return "more"
 }
@@ -35,21 +34,21 @@ func (m *More) Pre(*parser.AppParser) error {
 }
 
 // After defined
-func (m *More) After(parser *parser.AppParser, cfgs []*pipe.TmplCfg) error {
-	parser.WalkXML(funk.Map(cfgs, func(cfg *pipe.TmplCfg) string { return cfg.FilePath }).([]string)...)
+func (m *More) After(appParser *parser.AppParser, cfgs []*parser.TmplCfg) error {
+	appParser.WalkXML(funk.Map(cfgs, func(cfg *parser.TmplCfg) string { return cfg.FilePath }).([]string)...)
 	return nil
 }
 
 // Build func
-func (m *More) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
-	var tmplCfgs []*pipe.TmplCfg
+func (m *More) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
+	var tmplCfgs []*parser.TmplCfg
 	ctrByte, err := vfsutil.ReadFile(template.Assets, "more.ctr.tmpl")
 	if err != nil {
-		return []*pipe.TmplCfg{}, err
+		return []*parser.TmplCfg{}, err
 	}
 	tbByte, err := vfsutil.ReadFile(template.Assets, "more.tb.tmpl")
 	if err != nil {
-		return []*pipe.TmplCfg{}, err
+		return []*parser.TmplCfg{}, err
 	}
 	if len(args) < 1 {
 		logrus.Warn("Please give the path to generate the table")
@@ -64,30 +63,30 @@ func (m *More) Build(dir string, args []string, parser *parser.AppParser) ([]*pi
 		return strings.Contains(string(data), "<table")
 	})
 	data := map[string]interface{}{
-		"PackageName": parser.PackageName,
-		"Name":        parser.Name,
-		"Controllers": parser.Controllers,
-		"Services":    parser.Services,
-		"Tables":      parser.Tables,
-		"Beans":       parser.Beans,
+		"PackageName": appParser.PackageName,
+		"Name":        appParser.Name,
+		"Controllers": appParser.Controllers,
+		"Services":    appParser.Services,
+		"Tables":      appParser.Tables,
+		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
 		"more":        args[0],
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
 	}
 	tmplCfgs = append(tmplCfgs,
-		&pipe.TmplCfg{
+		&parser.TmplCfg{
 			Text:     string(ctrByte),
 			FilePath: path.Join(path.Dir(ctrPath), args[0]+".xml"),
 			Data:     data,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  parser.OverlapSkip,
 			GOFmt:    false,
 		},
-		&pipe.TmplCfg{
+		&parser.TmplCfg{
 			Text:     string(tbByte),
 			FilePath: path.Join(path.Dir(tbPath), args[0]+".xml"),
 			Data:     data,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  parser.OverlapSkip,
 			GOFmt:    false,
 		},
 	)

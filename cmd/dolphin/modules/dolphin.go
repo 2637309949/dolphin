@@ -12,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/pipe"
 	"github.com/2637309949/dolphin/cmd/dolphin/template"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -23,7 +22,7 @@ import (
 type Dolphin struct {
 }
 
-// Name defined pipe name
+// Name defined parser name
 func (m *Dolphin) Name() string {
 	return "dol"
 }
@@ -34,20 +33,20 @@ func (m *Dolphin) Pre(*parser.AppParser) error {
 }
 
 // After defined
-func (m *Dolphin) After(*parser.AppParser, []*pipe.TmplCfg) error {
+func (m *Dolphin) After(*parser.AppParser, []*parser.TmplCfg) error {
 	return nil
 }
 
 // Build func
-func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]*pipe.TmplCfg, error) {
-	tmpls := []*pipe.TmplCfg{}
+func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
+	tmpls := []*parser.TmplCfg{}
 	tmplArgs := map[string]interface{}{
-		"PackageName": parser.PackageName,
-		"Name":        parser.Name,
-		"Controllers": parser.Controllers,
-		"Services":    parser.Services,
-		"Tables":      parser.Tables,
-		"Beans":       parser.Beans,
+		"PackageName": appParser.PackageName,
+		"Name":        appParser.Name,
+		"Controllers": appParser.Controllers,
+		"Services":    appParser.Services,
+		"Tables":      appParser.Tables,
+		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
 		"lt":          ht.HTML("<"),
 		"gt":          ht.HTML(">"),
@@ -55,41 +54,41 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 
 	// main template
 	mainByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "main.tmpl")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(mainByte),
 		FilePath: path.Join(dir, "main.go"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 		GOFmt:    true,
 	})
 
 	// app template
 	appByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "app.tmpl")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(appByte),
 		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.go"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 		GOFmt:    true,
 	})
 
 	// auto template
 	autoByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "auto.tmpl")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(autoByte),
 		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.auto.go"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapWrite,
+		Overlap:  parser.OverlapWrite,
 		GOFmt:    true,
 	})
 
 	// docker template
 	drByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "docker.tmpl")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(drByte),
 		FilePath: path.Join(dir, "Dockerfile"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 	})
 
 	// html template
@@ -97,105 +96,114 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
 	affirmByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "static/web/affirm.html")).([]byte)
 	loginByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "static/web/login.html")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(affirmByte),
 		FilePath: path.Join(dir, affirmPath+".html"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 	})
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(loginByte),
 		FilePath: path.Join(dir, loginPath+".html"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 	})
 
 	// tool template
 	toolByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "tool.tmpl")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(toolByte),
 		FilePath: path.Join(dir, viper.GetString("dir.util"), "common.go"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 	})
 
 	// bean template
 	beanByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "bean.tmpl")).([]byte)
-	for i := range parser.Beans {
+	for i := range appParser.Beans {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Bean"] = parser.Beans[i]
+		tmplArgs["Bean"] = appParser.Beans[i]
 		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(parser.Beans[i].Path)
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		filename := utils.FileNameTrimSuffix(appParser.Beans[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(beanByte),
 			FilePath: path.Join(dir, viper.GetString("dir.types"), filename+".auto.go"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapWrite,
+			Overlap:  parser.OverlapWrite,
 			GOFmt:    true,
 		})
 	}
 
 	// ctr template
 	ctrByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "ctr.tmpl")).([]byte)
-	for i := range parser.Controllers {
+	for i := range appParser.Controllers {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Controller"] = parser.Controllers[i]
+		tmplArgs["Controller"] = appParser.Controllers[i]
 		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		filename := utils.FileNameTrimSuffix(appParser.Controllers[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(ctrByte),
 			FilePath: path.Join(dir, viper.GetString("dir.api"), filename+".go"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapInc,
+			Overlap:  parser.OverlapInc,
 			GOFmt:    true,
 		})
 	}
 
 	// table template
 	typesByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "types.tmpl")).([]byte)
-	for i := range parser.Tables {
+	for i := range appParser.Tables {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Table"] = parser.Tables[i]
+		tmplArgs["Table"] = appParser.Tables[i]
 		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(parser.Tables[i].Path)
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		filename := utils.FileNameTrimSuffix(appParser.Tables[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(typesByte),
 			FilePath: path.Join(dir, viper.GetString("dir.types"), filename+".auto.go"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapWrite,
+			Overlap:  parser.OverlapWrite,
 			GOFmt:    true,
 		})
 	}
+
+	// errors template
+	errByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "errors.tmpl")).([]byte)
+	tmpls = append(tmpls, &parser.TmplCfg{
+		Text:     string(errByte),
+		FilePath: path.Join(dir, viper.GetString("dir.types"), "errors.go"),
+		Data:     tmplArgs,
+		Overlap:  parser.OverlapSkip,
+	})
 
 	// proto template
 	protoByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "proto.tmpl")).([]byte)
 	rpcByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "rpc.tmpl")).([]byte)
 	rpcCliByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "rpc.cli.tmpl")).([]byte)
-	for i := range parser.Services {
+	for i := range appParser.Services {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Service"] = parser.Services[i]
+		tmplArgs["Service"] = appParser.Services[i]
 		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(parser.Services[i].Path)
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		filename := utils.FileNameTrimSuffix(appParser.Services[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(protoByte),
 			FilePath: path.Join(dir, viper.GetString("dir.rpc"), "proto", filename+".proto"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapInc,
+			Overlap:  parser.OverlapInc,
 			GOFmt:    false,
 			GOProto:  true,
 		})
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(rpcByte),
 			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".go"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapInc,
+			Overlap:  parser.OverlapInc,
 			GOFmt:    true,
 		})
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(rpcCliByte),
 			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".cli.go"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  parser.OverlapSkip,
 			GOFmt:    true,
 		})
 	}
@@ -205,9 +213,9 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	countByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "count.tmpl")).([]byte)
 	selectByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "select.tmpl")).([]byte)
 	treeByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "tree.tmpl")).([]byte)
-	for i := range parser.Controllers {
-		for j := range parser.Controllers[i].APIS {
-			ctr, table, funk := parser.Controllers[i], parser.Controllers[i].APIS[j].Table, parser.Controllers[i].APIS[j].Func
+	for i := range appParser.Controllers {
+		for j := range appParser.Controllers[i].APIS {
+			ctr, table, funk := appParser.Controllers[i], appParser.Controllers[i].APIS[j].Table, appParser.Controllers[i].APIS[j].Func
 			tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 			tmplArgs["Controller"] = ctr
 			tmplArgs["Api"] = ctr.APIS[j]
@@ -215,32 +223,32 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 			if strings.TrimSpace(table) != "" && funk == "page" {
 				cpath := path.Join(dir, viper.GetString("dir.sql"), ctr.Name, fmt.Sprintf("%v_%v_%v.tpl", ctr.Name, ctr.APIS[j].Name, "count"))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
-					tmpls = append(tmpls, &pipe.TmplCfg{
+					tmpls = append(tmpls, &parser.TmplCfg{
 						Text:     string(countByte),
 						FilePath: cpath,
 						Data:     tmplArgs,
-						Overlap:  pipe.OverlapSkip,
+						Overlap:  parser.OverlapSkip,
 					})
 					tplCache[filepath.Base(cpath)] = true
 				}
 				spath := path.Join(dir, viper.GetString("dir.sql"), ctr.Name, fmt.Sprintf("%v_%v_%v.tpl", ctr.Name, ctr.APIS[j].Name, "select"))
 				if _, ok := tplCache[filepath.Base(spath)]; !ok {
-					tmpls = append(tmpls, &pipe.TmplCfg{
+					tmpls = append(tmpls, &parser.TmplCfg{
 						Text:     string(selectByte),
 						FilePath: spath,
 						Data:     tmplArgs,
-						Overlap:  pipe.OverlapSkip,
+						Overlap:  parser.OverlapSkip,
 					})
 					tplCache[filepath.Base(spath)] = true
 				}
 			} else if strings.TrimSpace(table) != "" && funk == "tree" {
-				cpath := path.Join(dir, viper.GetString("dir.sql"), parser.Controllers[i].Name, fmt.Sprintf("%v_%v.tpl", ctr.Name, ctr.APIS[j].Name))
+				cpath := path.Join(dir, viper.GetString("dir.sql"), appParser.Controllers[i].Name, fmt.Sprintf("%v_%v.tpl", ctr.Name, ctr.APIS[j].Name))
 				if _, ok := tplCache[filepath.Base(cpath)]; !ok {
-					tmpls = append(tmpls, &pipe.TmplCfg{
+					tmpls = append(tmpls, &parser.TmplCfg{
 						Text:     string(treeByte),
 						FilePath: cpath,
 						Data:     tmplArgs,
-						Overlap:  pipe.OverlapSkip,
+						Overlap:  parser.OverlapSkip,
 					})
 					tplCache[filepath.Base(cpath)] = true
 				}
@@ -250,31 +258,31 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 
 	// sqlmap template
 	sqlmapByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "sqlmap.tmpl")).([]byte)
-	for i := range parser.Tables {
+	for i := range appParser.Tables {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Table"] = parser.Tables[i]
+		tmplArgs["Table"] = appParser.Tables[i]
 		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(parser.Tables[i].Path)
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		filename := utils.FileNameTrimSuffix(appParser.Tables[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(sqlmapByte),
 			FilePath: path.Join(dir, viper.GetString("dir.sql"), viper.GetString("dir.sqlmap"), filename+".xml"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  parser.OverlapSkip,
 		})
 	}
 
 	// srv template
 	srvByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "srv.tmpl")).([]byte)
-	for i := range parser.Controllers {
+	for i := range appParser.Controllers {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Controller"] = parser.Controllers[i]
+		tmplArgs["Controller"] = appParser.Controllers[i]
 		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(parser.Controllers[i].Path)
-		tmpls = append(tmpls, &pipe.TmplCfg{
+		filename := utils.FileNameTrimSuffix(appParser.Controllers[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
 			Text:     string(srvByte),
 			FilePath: path.Join(dir, viper.GetString("dir.srv"), filename+".go"),
 			Data:     tmplArgs,
-			Overlap:  pipe.OverlapSkip,
+			Overlap:  parser.OverlapSkip,
 			GOFmt:    true,
 		})
 	}
@@ -282,36 +290,36 @@ func (m *Dolphin) Build(dir string, args []string, parser *parser.AppParser) ([]
 	// svc template
 	svcByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.tmpl")).([]byte)
 	helperByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.helper.tmpl")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(svcByte),
 		FilePath: path.Join(dir, viper.GetString("dir.svc"), "svc.go"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 		GOFmt:    true,
 	})
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(helperByte),
 		FilePath: path.Join(dir, viper.GetString("dir.svc"), "svc.helper.go"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapSkip,
+		Overlap:  parser.OverlapSkip,
 		GOFmt:    true,
 	})
 
 	// x_test template
 	xTestByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "x_test.tmpl")).([]byte)
 	xPlatformByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "x_platform_test.tmpl")).([]byte)
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(xTestByte),
 		FilePath: path.Join(dir, "x_test.go"),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapWrite,
+		Overlap:  parser.OverlapWrite,
 		GOFmt:    true,
 	})
-	tmpls = append(tmpls, &pipe.TmplCfg{
+	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(xPlatformByte),
-		FilePath: path.Join(dir, fmt.Sprintf("x_%v_test.go", parser.Name)),
+		FilePath: path.Join(dir, fmt.Sprintf("x_%v_test.go", appParser.Name)),
 		Data:     tmplArgs,
-		Overlap:  pipe.OverlapInc,
+		Overlap:  parser.OverlapInc,
 		GOFmt:    true,
 	})
 	return tmpls, nil

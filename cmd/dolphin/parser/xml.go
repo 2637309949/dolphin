@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/schema"
 	"github.com/pkg/errors"
 	"gopkg.in/go-playground/validator.v9"
 )
@@ -23,21 +22,21 @@ var validate = validator.New()
 
 // AppParser defined AppParser struct
 type AppParser struct {
-	*schema.Application
+	*Application
 }
 
 // New defined AppParser
 func New() *AppParser {
 	parser := AppParser{}
-	parser.Application = &schema.Application{}
+	parser.Application = &Application{}
 	return &parser
 }
 
 // NewTpl defined AppParser
 func NewTpl(name string, pkg string) *AppParser {
 	parser := AppParser{}
-	parser.Application = &schema.Application{
-		Common: schema.Common{
+	parser.Application = &Application{
+		Common: Common{
 			Name: name,
 			Desc: "dolphin boilerplate",
 		},
@@ -54,16 +53,16 @@ func (parser *AppParser) parse(xmlPath string) error {
 		return err
 	}
 	decoder := xml.NewDecoder(reader)
-	var controller *schema.Controller
-	var api *schema.API
-	var param *schema.Param
-	var bean *schema.Bean
-	var prop *schema.Prop
-	var table *schema.Table
-	var column *schema.Column
+	var controller *Controller
+	var api *API
+	var param *Param
+	var bean *Bean
+	var prop *Prop
+	var table *Table
+	var column *Column
 
-	var service *schema.Service
-	var rpc *schema.RPC
+	var service *Service
+	var rpc *RPC
 	var t xml.Token
 	for t, err = decoder.Token(); err == nil; t, err = decoder.Token() {
 		switch token := t.(type) {

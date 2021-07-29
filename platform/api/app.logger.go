@@ -225,6 +225,7 @@ func createXLogger() interface{} {
 	return xlogger
 }
 
+// InitLogger defined TODO
 func InitLogger() {
 	var writer io.Writer
 	util.SetFormatter(term.IsTerminal(unix.Stdout))
