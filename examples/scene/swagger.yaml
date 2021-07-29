@@ -1975,6 +1975,46 @@ paths:
       summary: Get kafka info
       tags:
       - Kafka controller
+  /api/middles/globalTest:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 全局中间件测试
+      tags:
+      - middles controller
+  /api/middles/localTest:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 局部中间件测试
+      tags:
+      - middles controller
   /api/nsq/add:
     post:
       consumes:

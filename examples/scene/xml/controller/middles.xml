@@ -1,0 +1,14 @@
+<controller name="middles" desc="middles controller">
+    <api name="globalTest" desc="全局中间件测试" auth="never" method="get">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="localTest" desc="局部中间件测试" auth="never" method="get">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

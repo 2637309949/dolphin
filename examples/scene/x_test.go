@@ -332,18 +332,18 @@ func BenchmarkArticlePayment(t *testing.B) {
 	})
 }
 
-// TestICacheInfo defined TODO
-// go test -v -test.run TestICacheInfo
-func TestICacheInfo(t *testing.T) {
-	x.Handle("GET", "/api/i/cache/info", XTestICacheInfo, t, XTestICacheInfoRequest)
+// TestCachingInfo defined TODO
+// go test -v -test.run TestCachingInfo
+func TestCachingInfo(t *testing.T) {
+	x.Handle("GET", "/api/caching/info", XTestCachingInfo, t, XTestCachingInfoRequest)
 }
 
-// BenchmarkICacheInfo defined TODO
-// go test -v -test.run=none -test.bench=^BenchmarkICacheInfo -test.benchmem=true
-func BenchmarkICacheInfo(t *testing.B) {
+// BenchmarkCachingInfo defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkCachingInfo -test.benchmem=true
+func BenchmarkCachingInfo(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
-			x.Handle("GET", "/api/i/cache/info", XTestICacheInfo, t, XTestICacheInfoRequest)
+			x.Handle("GET", "/api/caching/info", XTestCachingInfo, t, XTestCachingInfoRequest)
 		}
 	})
 }
@@ -536,6 +536,38 @@ func BenchmarkKafkaGet(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			x.Handle("GET", "/api/kafka/get", XTestKafkaGet, t, XTestKafkaGetRequest)
+		}
+	})
+}
+
+// TestMiddlesGlobalTest defined TODO
+// go test -v -test.run TestMiddlesGlobalTest
+func TestMiddlesGlobalTest(t *testing.T) {
+	x.Handle("GET", "/api/middles/globalTest", XTestMiddlesGlobalTest, t, XTestMiddlesGlobalTestRequest)
+}
+
+// BenchmarkMiddlesGlobalTest defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkMiddlesGlobalTest -test.benchmem=true
+func BenchmarkMiddlesGlobalTest(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/middles/globalTest", XTestMiddlesGlobalTest, t, XTestMiddlesGlobalTestRequest)
+		}
+	})
+}
+
+// TestMiddlesLocalTest defined TODO
+// go test -v -test.run TestMiddlesLocalTest
+func TestMiddlesLocalTest(t *testing.T) {
+	x.Handle("GET", "/api/middles/localTest", XTestMiddlesLocalTest, t, XTestMiddlesLocalTestRequest)
+}
+
+// BenchmarkMiddlesLocalTest defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkMiddlesLocalTest -test.benchmem=true
+func BenchmarkMiddlesLocalTest(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/middles/localTest", XTestMiddlesLocalTest, t, XTestMiddlesLocalTestRequest)
 		}
 	})
 }

@@ -15,7 +15,8 @@
     user.xml       // 用户信息加载  
     view.xml       // view视图函数  
     vote.xml       // vote投票
-
+    middles.xml    // 自定义中间件
+  
 ## Preparation
 
 1. 启动事务管理器dtmsrv

@@ -20,6 +20,7 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
+	rft "github.com/2637309949/dolphin/platform/util/reflect"
 	"github.com/eriklott/mustache"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -70,7 +71,7 @@ func unWrapError(err error) int {
 // Fail defined failt result
 func (ctx *Context) Fail(err error, status ...int) {
 	code, msg := 500, err.Error()
-	code = util.SomeOne([]int{unWrapError(err)}, code).(int)
+	code = rft.OrOne(unWrapError(err), code).(int)
 	code = util.SomeOne(status, code).(int)
 	ctx.JSON(http.StatusOK, types.Fail{
 		Code: code,

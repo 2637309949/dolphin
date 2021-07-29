@@ -3,7 +3,7 @@ const axios = require('../request').default
 
 // info Cache info
 module.exports.info = (data = {}, opt = {}) => {
-  let url = Object.assign({ url: '/api/i/cache/info?' }, opt).url
+  let url = Object.assign({ url: '/api/caching/info?' }, opt).url
   url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,

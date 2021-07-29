@@ -15,6 +15,7 @@ import (
 
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -145,6 +146,14 @@ func New() *Dolphin {
 
 func init() {
 	dol, svcHelper := New(), svc.NewSvcHepler(api.RedisClient)
+	// Dolphin local middles
+	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) {
+		logrus.Infoln("Dolphin local middles")
+	}
+	// Dolphin global middles
+	dol.Use(func(ctx *Context) {
+		logrus.Infoln("Dolphin global middles")
+	})
 	dol.SyncModel()
 	dol.SyncController()
 	dol.SyncService()
