@@ -19,18 +19,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var hostname string
-
-func init() {
+// Hostname returns the name of the host, if no hostname, a random id is returned.
+func Hostname() string {
 	var err error
+	var hostname string
 	hostname, err = os.Hostname()
 	if err != nil {
 		hostname = trace.RandId()
 	}
-}
-
-// Hostname returns the name of the host, if no hostname, a random id is returned.
-func Hostname() string {
 	return hostname
 }
 

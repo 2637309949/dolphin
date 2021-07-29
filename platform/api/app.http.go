@@ -31,7 +31,8 @@ type (
 	// restful defined TODO
 	restful struct {
 		*gin.Engine
-		dol *Dolphin
+		server *http.Server
+		dol    *Dolphin
 	}
 )
 
@@ -40,12 +41,38 @@ func NewRestful(engine *gin.Engine, dol *Dolphin) *restful {
 	return &restful{Engine: engine, dol: dol}
 }
 
+// resolveAddress defined TODO
+func (gh *restful) resolveAddress(addr []string) string {
+	switch len(addr) {
+	case 0:
+		return ":8080"
+	case 1:
+		return addr[0]
+	default:
+		panic("too many parameters")
+	}
+}
+
+// Shutdown defined TODO
+func (gh *restful) Shutdown(ctx context.Context) error {
+	return gh.server.Shutdown(ctx)
+}
+
+// Run defined TODO
+func (gh *restful) Run(addr ...string) error {
+	address := gh.resolveAddress(addr)
+	if gh.server == nil {
+		gh.server = &http.Server{Addr: address, Handler: gh.Engine}
+	}
+	gh.rebuildGlobalRoutes()
+	return gh.server.ListenAndServe()
+}
+
 // OnStart defined TODO
 func (gh *restful) OnStart(ctx context.Context) error {
-	gh.rebuildGlobalRoutes()
 	go func() {
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
-		if err := gh.Engine.Run(fmt.Sprintf(":%v", viper.GetString("http.port"))); err != nil {
+		if err := gh.Run(fmt.Sprintf(":%v", viper.GetString("http.port"))); err != nil {
 			logrus.Fatal(err)
 		}
 	}()
@@ -62,7 +89,7 @@ func (gh *restful) rebuildGlobalRoutes() *restful {
 
 // OnStop defined TODO
 func (gh *restful) OnStop(ctx context.Context) error {
-	return nil
+	return gh.Shutdown(ctx)
 }
 
 // unWrapHandler defined TODO
