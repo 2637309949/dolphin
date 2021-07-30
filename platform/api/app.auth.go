@@ -5,7 +5,6 @@
 package api
 
 import (
-	"path"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
@@ -15,8 +14,6 @@ import (
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/golang-jwt/jwt"
 	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
-	xoauth2 "golang.org/x/oauth2"
 )
 
 // TokenExpiryDelta determines how earlier a token should be considered
@@ -203,14 +200,4 @@ func Auth(auth ...string) HandlerFunc {
 			middles[i](ctx)
 		}
 	}
-}
-
-// InitOAuth2 defined TODO
-func InitOAuth2() {
-	osHost, httpPrefix := viper.GetString("oauth.server"), viper.GetString("http.prefix")
-	authUrl := osHost + path.Join(httpPrefix, SysCasInstance.Authorize.RelativePath)
-	tokenUrl := osHost + path.Join(httpPrefix, SysCasInstance.Token.RelativePath)
-	endpoint := xoauth2.Endpoint{AuthURL: authUrl, TokenURL: tokenUrl}
-	redirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
-	OA2Cfg = xoauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
 }
