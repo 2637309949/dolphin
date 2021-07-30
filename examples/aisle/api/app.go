@@ -15,6 +15,7 @@ import (
 
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/thoas/go-funk"
 )
 
 var (
@@ -45,6 +46,23 @@ type (
 	}
 )
 
+// unWrapContext defined TODO
+func (group *RouterGroup) unWrapContext(h HandlerFunc) api.HandlerFunc {
+	return func(ctx *api.Context) {
+		c := group.dol.pool.Get().(*Context)
+		c.Context = ctx
+		h(c)
+		group.dol.pool.Put(c)
+	}
+}
+
+// wrapContext defined TODO
+func (group *RouterGroup) wrapContext(h api.HandlerFunc) HandlerFunc {
+	return func(ctx *Context) {
+		h(ctx.Context)
+	}
+}
+
 // Handle defined TODO
 func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...HandlerFunc) {
 	for i, methods := 0, strings.Split(httpMethod, ","); i < len(methods); i++ {
@@ -56,19 +74,13 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 		combineHandlers := group.combineHandlers(handlers)
 		hls := []api.HandlerFunc{}
 		for j := 0; j < len(combineHandlers); j++ {
-			hls = append(hls, func(h HandlerFunc) func(ctx *api.Context) {
-				return func(ctx *api.Context) {
-					c := group.dol.pool.Get().(*Context)
-					c.Context = ctx
-					h(c)
-					group.dol.pool.Put(c)
-				}
-			}(combineHandlers[j]))
+			hls = append(hls, group.unWrapContext(combineHandlers[j]))
 		}
 		group.dol.Http.Handle(methods[i], relativePath, hls...)
 	}
 }
 
+// combineHandlers defined TODO
 func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain {
 	finalSize := len(group.Handlers) + len(handlers)
 	if finalSize >= int(63) {
@@ -80,6 +92,7 @@ func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain 
 	return mergedHandlers
 }
 
+// calculateAbsolutePath defined TODO
 func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	if relativePath == "" {
 		return group.basePath
@@ -95,10 +108,12 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 // Use defined TODO
 func (group *RouterGroup) Use(middleware ...HandlerFunc) {
 	group.Handlers = append(group.Handlers, middleware...)
+	group.dol.Dolphin.Handlers = append(group.dol.Dolphin.Handlers, funk.Map(middleware, group.unWrapContext).([]api.HandlerFunc)...)
 }
 
 // Group defined TODO
 func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
+	handlers = append(funk.Map(group.dol.Dolphin.Handlers, group.wrapContext).([]HandlerFunc), handlers...)
 	return &RouterGroup{
 		Handlers: group.combineHandlers(handlers),
 		basePath: group.calculateAbsolutePath(relativePath),
