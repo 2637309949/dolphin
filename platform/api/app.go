@@ -105,9 +105,8 @@ func init() {
 	InitSession()
 	InitOAuth2()
 
-	opts := []Option{WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
 	svcHelper := svc.NewSvcHepler(RedisClient)
-	app := NewDefault(opts...)
+	app := NewDefault(WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT())
 	app.SyncModel()
 	app.SyncController()
 	app.SyncService()

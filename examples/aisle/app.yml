@@ -7,7 +7,7 @@ app:
 http:
   port: 8083
 redis:
-  mode: cluster
+  mode: stub
   addr:
-  - localhost:8001
+  - localhost:6379
   password: ""
