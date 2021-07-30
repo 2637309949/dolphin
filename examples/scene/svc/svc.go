@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"io"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -21,6 +22,7 @@ type (
 	Export interface {
 		Check(*gin.Context) bool
 		PageExport(*xorm.Engine, string, string, string, map[string]interface{}, ...svc.Formatter) (*types.ExportInfo, error)
+		ParseExcel(r io.Reader, sheet interface{}, header ...[]map[string]interface{}) ([]map[string]string, error)
 		SetOptionsetsFormat(func(interface{}) func(interface{}) interface{})
 	}
 

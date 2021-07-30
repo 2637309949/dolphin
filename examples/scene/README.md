@@ -16,7 +16,8 @@
     view.xml       // view视图函数  
     vote.xml       // vote投票
     middles.xml    // 自定义中间件
-  
+    xlsx.xml       // excel解析
+
 ## Preparation
 
 1. 启动事务管理器dtmsrv

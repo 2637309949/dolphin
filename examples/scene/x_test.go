@@ -779,3 +779,19 @@ func BenchmarkVoteLike(t *testing.B) {
 		}
 	})
 }
+
+// TestXlsxImport defined TODO
+// go test -v -test.run TestXlsxImport
+func TestXlsxImport(t *testing.T) {
+	x.Handle("POST", "/api/xlsx/import", XTestXlsxImport, t, XTestXlsxImportRequest)
+}
+
+// BenchmarkXlsxImport defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkXlsxImport -test.benchmem=true
+func BenchmarkXlsxImport(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("POST", "/api/xlsx/import", XTestXlsxImport, t, XTestXlsxImportRequest)
+		}
+	})
+}

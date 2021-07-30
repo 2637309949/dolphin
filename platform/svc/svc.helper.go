@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"strings"
 	"time"
 
@@ -303,6 +304,15 @@ func (svc *SvcHepler) PageExport(db *xorm.Engine, ctr, api, table string, params
 		page += 1
 	}
 	return svc.xlsx.ExportInfo()
+}
+
+// ParseExcel defined TODO
+func (svc *SvcHepler) ParseExcel(r io.Reader, sheet interface{}, header ...[]map[string]interface{}) ([]map[string]string, error) {
+	if svc.xlsx == nil {
+		svc.xlsx = NewXlsx()
+	}
+	svc.xlsx.SheetIndex = sheet
+	return svc.xlsx.ParseExcel(r)
 }
 
 func NewSvcHepler(rds redis.Cmdable) Svc {

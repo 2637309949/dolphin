@@ -29,3 +29,5 @@ module.exports.user = require('./user')
 module.exports.view = require('./view')
 // vote vote controller
 module.exports.vote = require('./vote')
+// xlsx xlsx controller
+module.exports.xlsx = require('./xlsx')

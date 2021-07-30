@@ -1,0 +1,8 @@
+<controller name="xlsx" desc="xlsx controller">
+    <api name="import" desc="import xlsx" auth="never" method="post">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+</controller>

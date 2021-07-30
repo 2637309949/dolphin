@@ -95,11 +95,30 @@ func (xlsx *Xlsx) ExportInfo() (*types.ExportInfo, error) {
 }
 
 // ParseExcel defined TODO
-func (xlsx *Xlsx) ParseExcel(r io.Reader) ([]map[string]string, error) {
+func (xlsx *Xlsx) ParseExcel(r io.Reader, header ...[]map[string]interface{}) ([]map[string]string, error) {
+	// file.EnsureDir(path.Join(viper.GetString("http.static"), "files"))
+	// uuid := uuid.New().String()
+	// filePath := path.Join(viper.GetString("http.static"), "files", uuid+".xlsx")
+
+	// out, err := os.Create(filePath)
+	// if err != nil {
+	// 	return []map[string]string{}, err
+	// }
+	// defer out.Close()
+
+	// _, err = io.Copy(out, r)
+	// if err != nil {
+	// 	return []map[string]string{}, err
+	// }
+	// xFile, err := os.Open(filePath)
+	// if err != nil {
+	// 	return []map[string]string{}, err
+	// }
 	eFile, err := excelize.OpenReader(r)
 	if err != nil {
 		return nil, err
 	}
+	xlsx.Header = util.SomeOne(header, xlsx.Header).([]map[string]interface{})
 	sheetName := ""
 	switch sn := xlsx.SheetIndex.(type) {
 	case int:
@@ -107,8 +126,8 @@ func (xlsx *Xlsx) ParseExcel(r io.Reader) ([]map[string]string, error) {
 	case string:
 		sheetName = sn
 	}
-	rows := eFile.GetRows(sheetName)
 
+	rows := eFile.GetRows(sheetName)
 	data := []map[string]string{}
 	iTitle := map[int]string{}
 	for ri, row := range rows {

@@ -64,7 +64,6 @@ func InitViper() {
 	viper.SetDefault("redis.pool_size", 15)
 	viper.SetDefault("redis.min_idle_conns", 15)
 	viper.SetDefault("redis.idle_conns", 10)
-
 	viper.SetDefault("swag.authorizationUrl", "/api/sys/cas/authorize")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
