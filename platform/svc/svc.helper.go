@@ -20,6 +20,7 @@ import (
 	"github.com/thoas/go-funk"
 )
 
+// SvcHepler defined TODO
 type SvcHepler struct {
 	rds  redis.Cmdable
 	xlsx *Xlsx
@@ -315,6 +316,7 @@ func (svc *SvcHepler) ParseExcel(r io.Reader, sheet interface{}, header ...[]map
 	return svc.xlsx.ParseExcel(r)
 }
 
+// NewSvcHepler defined TODO
 func NewSvcHepler(rds redis.Cmdable) Svc {
 	return &SvcHepler{rds: rds}
 }
