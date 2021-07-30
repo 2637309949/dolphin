@@ -112,5 +112,7 @@ func init() {
 	app.SyncController()
 	app.SyncService()
 	app.SyncSrv(svcHelper)
+
+	StaticRoutes(app)
 	App, Run = app, app.Run
 }

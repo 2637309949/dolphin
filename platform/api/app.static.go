@@ -25,7 +25,8 @@ func NewStatic() *Static {
 
 // StaticRoutes defined
 func StaticRoutes(dol *Dolphin) {
-	dol.Group("/").Handle("GET", "/domain.js", DomainInstance.Domain)
+	group := dol.Group("/")
+	group.Handle("GET", "/domain.js", DomainInstance.Domain)
 }
 
 // DomainFormat defined
@@ -58,10 +59,5 @@ func (ctr *Static) Domain(ctx *Context) {
 	})).([]byte))))
 }
 
-// DomainInstance defined
+// DomainInstance defined TODO
 var DomainInstance = NewStatic()
-
-func init() {
-	// StaticRoutes defined
-	StaticRoutes(App)
-}
