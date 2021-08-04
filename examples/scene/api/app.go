@@ -31,8 +31,8 @@ type (
 	HandlersChain []HandlerFunc
 	// Dolphin defined parse app engine
 	Dolphin struct {
-		RouterGroup
 		*api.Dolphin
+		RouterGroup
 		pool sync.Pool
 	}
 	// Context defined http handle hook context
@@ -47,20 +47,19 @@ type (
 	}
 )
 
-// unWrapContext defined TODO
-func (group *RouterGroup) unWrapContext(h HandlerFunc) api.HandlerFunc {
-	return func(ctx *api.Context) {
-		c := group.dol.pool.Get().(*Context)
-		c.Context = ctx
-		h(c)
-		group.dol.pool.Put(c)
-	}
+// Use defined TODO
+func (group *RouterGroup) Use(middleware ...HandlerFunc) {
+	group.Handlers = append(group.Handlers, middleware...)
+	group.dol.Dolphin.Handlers = append(group.dol.Dolphin.Handlers, funk.Map(middleware, group.unWrapContext).([]api.HandlerFunc)...)
 }
 
-// wrapContext defined TODO
-func (group *RouterGroup) wrapContext(h api.HandlerFunc) HandlerFunc {
-	return func(ctx *Context) {
-		h(ctx.Context)
+// Group defined TODO
+func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
+	handlers = append(funk.Map(group.dol.Dolphin.Handlers, group.wrapContext).([]HandlerFunc), handlers...)
+	return &RouterGroup{
+		Handlers: group.combineHandlers(handlers),
+		basePath: group.calculateAbsolutePath(relativePath),
+		dol:      group.dol,
 	}
 }
 
@@ -78,6 +77,23 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 			hls = append(hls, group.unWrapContext(combineHandlers[j]))
 		}
 		group.dol.Http.Handle(methods[i], relativePath, hls...)
+	}
+}
+
+// unWrapContext defined TODO
+func (group *RouterGroup) unWrapContext(h HandlerFunc) api.HandlerFunc {
+	return func(ctx *api.Context) {
+		c := group.dol.pool.Get().(*Context)
+		c.Context = ctx
+		h(c)
+		group.dol.pool.Put(c)
+	}
+}
+
+// wrapContext defined TODO
+func (group *RouterGroup) wrapContext(h api.HandlerFunc) HandlerFunc {
+	return func(ctx *Context) {
+		h(ctx.Context)
 	}
 }
 
@@ -106,37 +122,21 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	return finalPath
 }
 
-// Use defined TODO
-func (group *RouterGroup) Use(middleware ...HandlerFunc) {
-	group.Handlers = append(group.Handlers, middleware...)
-	group.dol.Dolphin.Handlers = append(group.dol.Dolphin.Handlers, funk.Map(middleware, group.unWrapContext).([]api.HandlerFunc)...)
-}
-
-// Group defined TODO
-func (group *RouterGroup) Group(relativePath string, handlers ...HandlerFunc) *RouterGroup {
-	handlers = append(funk.Map(group.dol.Dolphin.Handlers, group.wrapContext).([]HandlerFunc), handlers...)
-	return &RouterGroup{
-		Handlers: group.combineHandlers(handlers),
-		basePath: group.calculateAbsolutePath(relativePath),
-		dol:      group.dol,
-	}
-}
-
-// Auth middles
+// Auth defined TODO
 func Auth(auth ...string) HandlerFunc {
 	return func(ctx *Context) {
 		api.Auth(auth...)(ctx.Context)
 	}
 }
 
-// Roles middles
+// Roles defined TODO
 func Roles(roles ...string) HandlerFunc {
 	return func(ctx *Context) {
 		api.Roles(roles...)(ctx.Context)
 	}
 }
 
-// Cache middles
+// Cache defined TODO
 func Cache(time time.Duration) HandlerFunc {
 	return func(ctx *Context) {
 		api.Cache(time)(ctx.Context)
@@ -158,18 +158,18 @@ func New() *Dolphin {
 }
 
 func init() {
-	dol, svcHelper := New(), svc.NewSvcHepler(api.RedisClient)
-	// Dolphin local middles
 	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) {
-		logrus.Infoln("Dolphin local middles")
+		logrus.Infoln("Dolphin local middles") // Dolphin local middles
 	}
-	// Dolphin global middles
+
+	dol := New()
 	dol.Use(func(ctx *Context) {
-		logrus.Infoln("Dolphin global middles")
+		logrus.Infoln("Dolphin global middles") // Dolphin global middles
 	})
 	dol.SyncModel()
-	dol.SyncController()
+	dol.SyncSrv(svc.NewSvcHepler(api.RedisClient))
 	dol.SyncService()
-	dol.SyncSrv(svcHelper)
+	dol.SyncController()
+
 	App, Run = dol, dol.Run
 }

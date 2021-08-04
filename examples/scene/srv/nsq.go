@@ -56,10 +56,9 @@ func (srv *Nsq) Producer(ctx context.Context, db *xorm.Engine, params types.NsqI
 		return nil, err
 	}
 	err = NsqProducer.Publish("nsq-test", aiStr)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// NsqProducer.Stop()
+	if err != nil {
+		return nil, err
+	}
 	return nil, err
 }
 
@@ -103,10 +102,8 @@ func NConsumer() (interface{}, error) {
 	NsqConsumer.AddHandler(&messageHandler{})
 	err := NsqConsumer.ConnectToNSQLookupd(tcpNsqdAddrr)
 	if err != nil {
-		logrus.Error("failed to ConnectToNSQLookupd:", err)
 		return nil, err
 	}
-	// NsqConsumer.Stop()
 	return nil, err
 }
 
@@ -116,11 +113,11 @@ func init() {
 	cfg.LookupdPollInterval = 10 * time.Second
 	NsqConsumer, err = nsq.NewConsumer("nsq-test", "test-channel", cfg)
 	if err != nil {
-		panic(err)
+		logrus.Errorf(err.Error())
 	}
 	NsqProducer, err = nsq.NewProducer(tcpNsqdAddrr, cfg)
 	if err != nil {
-		panic(err)
+		logrus.Errorf(err.Error())
 	}
 	go NConsumer()
 }

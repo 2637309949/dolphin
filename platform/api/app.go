@@ -14,7 +14,7 @@ import (
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	xoauth2 "golang.org/x/oauth2"
+	"golang.org/x/oauth2"
 )
 
 var (
@@ -88,9 +88,9 @@ func WithOAuth2() Option {
 	osHost, httpPrefix := viper.GetString("oauth.server"), viper.GetString("http.prefix")
 	authUrl := osHost + path.Join(httpPrefix, SysCasInstance.Authorize.RelativePath)
 	tokenUrl := osHost + path.Join(httpPrefix, SysCasInstance.Token.RelativePath)
-	endpoint := xoauth2.Endpoint{AuthURL: authUrl, TokenURL: tokenUrl}
+	endpoint := oauth2.Endpoint{AuthURL: authUrl, TokenURL: tokenUrl}
 	redirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
-	OA2Cfg = xoauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
+	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
 	return func(dol *Dolphin) {
 		manager := manage.NewDefaultManager()
 		manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
@@ -112,13 +112,12 @@ func init() {
 	InitRedisCli()
 	InitSession()
 
-	svcHelper := svc.NewSvcHepler(RedisClient)
 	app := NewDefault(WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT())
+	StaticRoutes(app)
+
 	app.SyncModel()
 	app.SyncController()
 	app.SyncService()
-	app.SyncSrv(svcHelper)
-
-	StaticRoutes(app)
+	app.SyncSrv(svc.NewSvcHepler(RedisClient))
 	App, Run = app, app.Run
 }

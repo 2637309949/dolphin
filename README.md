@@ -90,6 +90,7 @@ $ dolphin new hello && cd hello && dolphin build && go run main.go
 - [容器平台](./docs/容器平台.md)
 - [微服架构](./docs/微服架构.md)
 - [服务网格](./docs/服务网格.md)
+- [解放服务](./docs/解放服务.md)
 - [链路跟踪](./docs/链路跟踪.md)
 
 # MIT License
