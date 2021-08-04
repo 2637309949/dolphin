@@ -46,6 +46,21 @@ type (
 	}
 )
 
+// Reflesh defined TODO
+func (dol *Dolphin) Reflesh() error {
+	dol.SyncModel()
+	dol.SyncSrv({{$.Viper.GetString "dir.svc" }}.NewSvcHepler({{$.Viper.GetString "dir.api" }}.RedisClient))
+	dol.SyncService()
+	dol.SyncController()
+	return nil
+}
+
+// Run defined TODO
+func (dol *Dolphin) Run() {
+	util.Ensure(dol.Reflesh())
+	dol.Dolphin.Run()
+}
+
 // Use defined TODO
 func (group *RouterGroup) Use(middleware ...HandlerFunc) {
 	group.Handlers = append(group.Handlers, middleware...)
@@ -157,11 +172,7 @@ func New() *Dolphin {
 }
 
 func init() {
-	dol := New()
-	dol.SyncModel()
-	dol.SyncSrv({{$.Viper.GetString "dir.svc" }}.NewSvcHepler({{$.Viper.GetString "dir.api" }}.RedisClient))
-	dol.SyncService()
-	dol.SyncController()
-
-	App, Run = dol, dol.Run
+	app := New()
+	App, Run = app, app.Run
 }
+

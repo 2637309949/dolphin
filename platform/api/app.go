@@ -11,7 +11,6 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
@@ -115,9 +114,5 @@ func init() {
 	app := NewDefault(WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT())
 	StaticRoutes(app)
 
-	app.SyncModel()
-	app.SyncController()
-	app.SyncService()
-	app.SyncSrv(svc.NewSvcHepler(RedisClient))
 	App, Run = app, app.Run
 }

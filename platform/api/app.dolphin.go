@@ -21,6 +21,7 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
 	"github.com/2637309949/dolphin/platform/sql"
+	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/file"
@@ -109,6 +110,12 @@ func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // Reflesh defined init data before bootinh
 func (dol *Dolphin) Reflesh() error {
 	defer dol.Manager.ModelSet().Release()
+
+	dol.SyncModel()
+	dol.SyncController()
+	dol.SyncService()
+	dol.SyncSrv(svc.NewSvcHepler(RedisClient))
+
 	xlogger := createXLogger()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	db, err := xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))

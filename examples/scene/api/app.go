@@ -48,6 +48,21 @@ type (
 	}
 )
 
+// Reflesh defined TODO
+func (dol *Dolphin) Reflesh() error {
+	dol.SyncModel()
+	dol.SyncSrv(svc.NewSvcHepler(api.RedisClient))
+	dol.SyncService()
+	dol.SyncController()
+	return nil
+}
+
+// Run defined TODO
+func (dol *Dolphin) Run() {
+	util.Ensure(dol.Reflesh())
+	dol.Dolphin.Run()
+}
+
 // Use defined TODO
 func (group *RouterGroup) Use(middleware ...HandlerFunc) {
 	group.Handlers = append(group.Handlers, middleware...)
@@ -162,15 +177,9 @@ func init() {
 	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) {
 		logrus.Infoln("Dolphin local middles") // Dolphin local middles
 	}
-
-	dol := New()
-	dol.Use(func(ctx *Context) {
+	app := New()
+	app.Use(func(ctx *Context) {
 		logrus.Infoln("Dolphin global middles") // Dolphin global middles
 	})
-	dol.SyncModel()
-	dol.SyncSrv(svc.NewSvcHepler(api.RedisClient))
-	dol.SyncService()
-	dol.SyncController()
-
-	App, Run = dol, dol.Run
+	App, Run = app, app.Run
 }
