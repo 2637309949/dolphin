@@ -6,13 +6,13 @@ package modules
 
 import (
 	"fmt"
-	ht "html/template"
+	"html/template"
 	"path"
 	"path/filepath"
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -48,12 +48,12 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		"Tables":      appParser.Tables,
 		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
-		"lt":          ht.HTML("<"),
-		"gt":          ht.HTML(">"),
+		"lt":          template.HTML("<"),
+		"gt":          template.HTML(">"),
 	}
 
 	// main template
-	mainByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "main.tmpl")).([]byte)
+	mainByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "main.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(mainByte),
 		FilePath: path.Join(dir, "main.go"),
@@ -63,7 +63,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// app template
-	appByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "app.tmpl")).([]byte)
+	appByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "app.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(appByte),
 		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.go"),
@@ -73,7 +73,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// auto template
-	autoByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "auto.tmpl")).([]byte)
+	autoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "auto.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(autoByte),
 		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.auto.go"),
@@ -83,7 +83,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// docker template
-	drByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "docker.tmpl")).([]byte)
+	drByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "docker.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(drByte),
 		FilePath: path.Join(dir, "Dockerfile"),
@@ -94,8 +94,8 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	// html template
 	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")
 	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
-	affirmByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "static/web/affirm.html")).([]byte)
-	loginByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "static/web/login.html")).([]byte)
+	affirmByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/affirm.html")).([]byte)
+	loginByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/login.html")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(affirmByte),
 		FilePath: path.Join(dir, affirmPath+".html"),
@@ -110,7 +110,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// tool template
-	toolByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "tool.tmpl")).([]byte)
+	toolByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "tool.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(toolByte),
 		FilePath: path.Join(dir, viper.GetString("dir.util"), "common.go"),
@@ -119,7 +119,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// bean template
-	beanByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "bean.tmpl")).([]byte)
+	beanByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "bean.tmpl")).([]byte)
 	for i := range appParser.Beans {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Bean"] = appParser.Beans[i]
@@ -135,7 +135,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 
 	// ctr template
-	ctrByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "ctr.tmpl")).([]byte)
+	ctrByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "ctr.tmpl")).([]byte)
 	for i := range appParser.Controllers {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Controller"] = appParser.Controllers[i]
@@ -151,7 +151,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 
 	// table template
-	typesByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "types.tmpl")).([]byte)
+	typesByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "types.tmpl")).([]byte)
 	for i := range appParser.Tables {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Table"] = appParser.Tables[i]
@@ -167,7 +167,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 
 	// errors template
-	errByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "errors.tmpl")).([]byte)
+	errByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "errors.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(errByte),
 		FilePath: path.Join(dir, viper.GetString("dir.types"), "errors.go"),
@@ -176,9 +176,9 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// proto template
-	protoByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "proto.tmpl")).([]byte)
-	rpcByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "rpc.tmpl")).([]byte)
-	rpcCliByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "rpc.cli.tmpl")).([]byte)
+	protoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "proto.tmpl")).([]byte)
+	rpcByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "rpc.tmpl")).([]byte)
+	rpcCliByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "rpc.cli.tmpl")).([]byte)
 	for i := range appParser.Services {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Service"] = appParser.Services[i]
@@ -210,9 +210,9 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 
 	// sql template
 	tplCache := map[string]bool{}
-	countByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "count.tmpl")).([]byte)
-	selectByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "select.tmpl")).([]byte)
-	treeByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "tree.tmpl")).([]byte)
+	countByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "count.tmpl")).([]byte)
+	selectByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "select.tmpl")).([]byte)
+	treeByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "tree.tmpl")).([]byte)
 	for i := range appParser.Controllers {
 		for j := range appParser.Controllers[i].APIS {
 			ctr, table, funk := appParser.Controllers[i], appParser.Controllers[i].APIS[j].Table, appParser.Controllers[i].APIS[j].Func
@@ -257,7 +257,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 
 	// sqlmap template
-	sqlmapByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "sqlmap.tmpl")).([]byte)
+	sqlmapByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "sqlmap.tmpl")).([]byte)
 	for i := range appParser.Tables {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Table"] = appParser.Tables[i]
@@ -272,7 +272,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 
 	// srv template
-	srvByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "srv.tmpl")).([]byte)
+	srvByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "srv.tmpl")).([]byte)
 	for i := range appParser.Controllers {
 		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
 		tmplArgs["Controller"] = appParser.Controllers[i]
@@ -288,8 +288,8 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 
 	// svc template
-	svcByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.tmpl")).([]byte)
-	helperByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "svc.helper.tmpl")).([]byte)
+	svcByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "svc.tmpl")).([]byte)
+	helperByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "svc.helper.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(svcByte),
 		FilePath: path.Join(dir, viper.GetString("dir.svc"), "svc.go"),
@@ -306,8 +306,8 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// x_test template
-	xTestByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "x_test.tmpl")).([]byte)
-	xPlatformByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "x_platform_test.tmpl")).([]byte)
+	xTestByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "x_test.tmpl")).([]byte)
+	xPlatformByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "x_platform_test.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(xTestByte),
 		FilePath: path.Join(dir, "x_test.go"),

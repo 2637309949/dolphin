@@ -7,7 +7,7 @@ package modules
 import (
 	"encoding/xml"
 	"fmt"
-	ht "html/template"
+	"html/template"
 	"io/ioutil"
 	"os"
 	"path"
@@ -16,7 +16,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -57,9 +57,9 @@ func (app *SQLTPL) Build(dir string, args []string, appParser *parser.AppParser)
 	var tmplCfgs []*parser.TmplCfg
 	var files []struct {
 		Name    string
-		Content ht.HTML
+		Content template.HTML
 	}
-	sqlByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "sql.tmpl")).([]byte)
+	sqlByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "sql.tmpl")).([]byte)
 
 	if err := filepath.Walk(path.Join(dir, viper.GetString("dir.sql")), func(path string, info os.FileInfo, err error) error {
 		if HasSuffix(path, ".xml") {
@@ -82,8 +82,8 @@ func (app *SQLTPL) Build(dir string, args []string, appParser *parser.AppParser)
 				}
 				files = append(files, struct {
 					Name    string
-					Content ht.HTML
-				}{Name: sql.Id, Content: ht.HTML(ctstr)})
+					Content template.HTML
+				}{Name: sql.Id, Content: template.HTML(ctstr)})
 			}
 		} else if HasSuffix(path, ".tpl", ".stpl", ".jet") {
 			ct, _ := ioutil.ReadFile(path)
@@ -99,8 +99,8 @@ func (app *SQLTPL) Build(dir string, args []string, appParser *parser.AppParser)
 			}
 			files = append(files, struct {
 				Name    string
-				Content ht.HTML
-			}{Name: filepath.Base(path), Content: ht.HTML(ctstr)})
+				Content template.HTML
+			}{Name: filepath.Base(path), Content: template.HTML(ctstr)})
 		}
 		return nil
 	}); err != nil {
@@ -115,8 +115,8 @@ func (app *SQLTPL) Build(dir string, args []string, appParser *parser.AppParser)
 		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
 		"Files":       files,
-		"lt":          ht.HTML("<"),
-		"gt":          ht.HTML(">"),
+		"lt":          template.HTML("<"),
+		"gt":          template.HTML(">"),
 	}
 	tmplCfg := &parser.TmplCfg{
 		Text:     string(sqlByte),

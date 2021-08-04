@@ -5,11 +5,11 @@
 package modules
 
 import (
-	ht "html/template"
+	"html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -44,8 +44,8 @@ func (dp *Deploy) Build(dir string, args []string, appParser *parser.AppParser) 
 		"Tables":      appParser.Tables,
 		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
-		"lt":          ht.HTML("<"),
-		"gt":          ht.HTML(">"),
+		"lt":          template.HTML("<"),
+		"gt":          template.HTML(">"),
 	}
 	tmpl2file := map[string]string{
 		"k8s.configmap.tmpl":       "configmap.yaml",
@@ -60,7 +60,7 @@ func (dp *Deploy) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 	cfgs := []*parser.TmplCfg{}
 	for key, value := range tmpl2file {
-		dByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, key)).([]byte)
+		dByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, key)).([]byte)
 		cfgs = append(cfgs, &parser.TmplCfg{
 			Text:     string(dByte),
 			FilePath: path.Join(dir, viper.GetString("dir.k8s"), value),

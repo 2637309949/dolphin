@@ -19,6 +19,7 @@ import (
 	"github.com/thoas/go-funk"
 )
 
+// vars defined
 var (
 	App *Dolphin
 	Run func()

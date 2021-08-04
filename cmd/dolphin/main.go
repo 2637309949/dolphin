@@ -14,7 +14,7 @@ import (
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -227,7 +227,7 @@ var (
 		RunE: func(_ *cobra.Command, _ []string) error {
 			gin.SetMode("release")
 			router := gin.New()
-			router.StaticFS("/", &AssetsFileSystem{RelativePath: "/swagger", FileSystem: template.Assets})
+			router.StaticFS("/", &AssetsFileSystem{RelativePath: "/swagger", FileSystem: dist.Assets})
 			Open("http://localhost:7799")
 			router.Run(":7799")
 			return nil

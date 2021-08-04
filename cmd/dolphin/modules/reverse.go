@@ -7,13 +7,13 @@ package modules
 import (
 	"errors"
 	"fmt"
-	ht "html/template"
+	"html/template"
 	"io/ioutil"
 	"path"
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
@@ -43,7 +43,7 @@ func (app *Reverse) After(*parser.AppParser, []*parser.TmplCfg) error {
 // Build func
 func (app *Reverse) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
 	var tbPath string
-	tbByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "table.tmpl")).([]byte)
+	tbByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "table.tmpl")).([]byte)
 	tmplCfgs := []*parser.TmplCfg{}
 	engines := []*xorm.Engine{}
 	dataSources := []struct {
@@ -173,8 +173,8 @@ func (app *Reverse) Build(dir string, args []string, appParser *parser.AppParser
 				"Table":       meta,
 				"Beans":       appParser.Beans,
 				"Viper":       viper.GetViper(),
-				"lt":          ht.HTML("<"),
-				"gt":          ht.HTML(">"),
+				"lt":          template.HTML("<"),
+				"gt":          template.HTML(">"),
 			}
 			tmplCfg := &parser.TmplCfg{
 				Text:     string(tbByte),

@@ -6,11 +6,11 @@ package modules
 
 import (
 	"fmt"
-	ht "html/template"
+	"html/template"
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -39,13 +39,13 @@ func (app *Script) After(*parser.AppParser, []*parser.TmplCfg) error {
 func (app *Script) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
 	var tmplCfgs []*parser.TmplCfg
 	tplCache := map[string]bool{}
-	axiosByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "request.tmpl")).([]byte)
+	axiosByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "request.tmpl")).([]byte)
 	tmplCfgs = append(tmplCfgs, &parser.TmplCfg{
 		Text:     string(axiosByte),
 		FilePath: path.Join(viper.GetString("dir.script"), "request.js"),
 		Overlap:  parser.OverlapWrite,
 	})
-	apiByte, err := vfsutil.ReadFile(template.Assets, "api.tmpl")
+	apiByte, err := vfsutil.ReadFile(dist.Assets, "api.tmpl")
 	if err != nil {
 		return []*parser.TmplCfg{}, err
 	}
@@ -59,14 +59,14 @@ func (app *Script) Build(dir string, args []string, appParser *parser.AppParser)
 			"Tables":      appParser.Tables,
 			"Beans":       appParser.Beans,
 			"Viper":       viper.GetViper(),
-			"lt":          ht.HTML("<"),
-			"gt":          ht.HTML(">"),
+			"lt":          template.HTML("<"),
+			"gt":          template.HTML(">"),
 		},
 		FilePath: path.Join(viper.GetString("dir.script"), "apis", "index.js"),
 		Overlap:  parser.OverlapWrite,
 	})
 
-	apisByte := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, "apis.tmpl")).([]byte)
+	apisByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "apis.tmpl")).([]byte)
 	for i := range appParser.Controllers {
 		filename := utils.FileNameTrimSuffix(appParser.Controllers[i].Path)
 		for _, api := range appParser.Controllers[i].APIS {

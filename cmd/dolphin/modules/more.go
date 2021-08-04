@@ -5,13 +5,13 @@
 package modules
 
 import (
-	ht "html/template"
+	"html/template"
 	"io/ioutil"
 	"path"
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/sirupsen/logrus"
@@ -42,11 +42,11 @@ func (m *More) After(appParser *parser.AppParser, cfgs []*parser.TmplCfg) error 
 // Build func
 func (m *More) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
 	var tmplCfgs []*parser.TmplCfg
-	ctrByte, err := vfsutil.ReadFile(template.Assets, "more.ctr.tmpl")
+	ctrByte, err := vfsutil.ReadFile(dist.Assets, "more.ctr.tmpl")
 	if err != nil {
 		return []*parser.TmplCfg{}, err
 	}
-	tbByte, err := vfsutil.ReadFile(template.Assets, "more.tb.tmpl")
+	tbByte, err := vfsutil.ReadFile(dist.Assets, "more.tb.tmpl")
 	if err != nil {
 		return []*parser.TmplCfg{}, err
 	}
@@ -71,8 +71,8 @@ func (m *More) Build(dir string, args []string, appParser *parser.AppParser) ([]
 		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
 		"more":        args[0],
-		"lt":          ht.HTML("<"),
-		"gt":          ht.HTML(">"),
+		"lt":          template.HTML("<"),
+		"gt":          template.HTML(">"),
 	}
 	tmplCfgs = append(tmplCfgs,
 		&parser.TmplCfg{

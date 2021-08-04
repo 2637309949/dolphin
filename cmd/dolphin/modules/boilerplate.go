@@ -6,14 +6,14 @@ package modules
 
 import (
 	"errors"
-	ht "html/template"
+	"html/template"
 	"log"
 	"os"
 	"path"
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/template"
+	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
@@ -50,8 +50,8 @@ func (m *Boilerplate) Build(dir string, args []string, appParser *parser.AppPars
 		"Tables":      appParser.Tables,
 		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),
-		"lt":          ht.HTML("<"),
-		"gt":          ht.HTML(">"),
+		"lt":          template.HTML("<"),
+		"gt":          template.HTML(">"),
 	}
 	if len(args) < 1 {
 		return cfgs, errors.New("please provide the project name")
@@ -60,7 +60,7 @@ func (m *Boilerplate) Build(dir string, args []string, appParser *parser.AppPars
 		return cfgs, errors.New("the project folder already exists")
 	}
 
-	if err := vfsutil.Walk(template.Assets, "/boilerplate", func(p string, fi os.FileInfo, err error) error {
+	if err := vfsutil.Walk(dist.Assets, "/boilerplate", func(p string, fi os.FileInfo, err error) error {
 		if err != nil {
 			log.Printf("can't stat file %s: %v\n", p, err)
 			return nil
@@ -68,7 +68,7 @@ func (m *Boilerplate) Build(dir string, args []string, appParser *parser.AppPars
 		if fi.IsDir() {
 			return nil
 		}
-		b := utils.EnsureLeft(vfsutil.ReadFile(template.Assets, p)).([]byte)
+		b := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, p)).([]byte)
 		filePath := strings.ReplaceAll(p, "/boilerplate/", "")
 		cfgs = append(cfgs, &parser.TmplCfg{
 			Text:     string(b),
