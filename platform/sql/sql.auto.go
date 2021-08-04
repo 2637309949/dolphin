@@ -928,8 +928,8 @@ where
 {{end}}
 	and
 	sys_menu.is_delete {{.ne}} 1
-
-order by {{.sort}}LIMIT {{.size}} OFFSET {{.offset}}
+order by {{.sort}}
+LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_menu_sidebar.tpl"] = `select
     distinct sys_menu.id, sys_menu.parent, sys_menu.code, sys_menu.component, sys_menu.hidden, sys_menu.icon, sys_menu.name, sys_menu.order, sys_menu.url

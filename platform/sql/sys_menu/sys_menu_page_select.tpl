@@ -21,5 +21,5 @@ where
 {{end}}
 	and
 	sys_menu.is_delete {{.ne}} 1
-
-order by {{.sort}}LIMIT {{.size}} OFFSET {{.offset}}
+order by {{.sort}}
+LIMIT {{.size}} OFFSET {{.offset}}
