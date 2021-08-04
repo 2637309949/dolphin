@@ -27,3 +27,4 @@ func SplitNNoCase(s, sep string, n int) []string {
 	}
 	return strings.SplitN(s, s[idx:idx+len(sep)], n)
 }
+

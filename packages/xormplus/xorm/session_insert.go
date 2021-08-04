@@ -153,7 +153,7 @@ func (session *Session) innerInsertMulti(rowsSlicePtr interface{}) (int64, error
 
 			if zeroType, ok := fieldValue.Interface().(interface {
 				IsZero() bool
-			}); ok && zeroType.IsZero() {
+			}); ok && (zeroType == nil || zeroType.IsZero()) {
 				continue
 			}
 
@@ -454,7 +454,6 @@ func (session *Session) innerInsert(bean interface{}) (int64, error) {
 
 	var id int64
 	id, err = res.LastInsertId()
-
 	if err != nil || id <= 0 {
 		return res.RowsAffected()
 	}
@@ -533,12 +532,6 @@ func (session *Session) genInsertColumns(bean interface{}) ([]string, []interfac
 			return nil, nil, err
 		}
 		fieldValue := *fieldValuePtr
-
-		if zeroType, ok := fieldValue.Interface().(interface {
-			IsZero() bool
-		}); ok && zeroType.IsZero() {
-			continue
-		}
 
 		if col.IsAutoIncrement && utils.IsValueZero(fieldValue) {
 			continue

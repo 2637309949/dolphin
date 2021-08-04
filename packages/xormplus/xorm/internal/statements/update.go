@@ -97,7 +97,7 @@ func (statement *Statement) BuildUpdates(tableValue reflect.Value,
 
 		if zeroType, ok := fieldValue.Interface().(interface {
 			IsZero() bool
-		}); ok && zeroType.IsZero() {
+		}); ok && (zeroType == nil || zeroType.IsZero()) {
 			continue
 		}
 
