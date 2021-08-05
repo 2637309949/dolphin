@@ -101,13 +101,13 @@ func (xlsx *Xlsx) zipPacked(last ...bool) *Xlsx {
 
 // ExportInfo defined TODO
 func (xlsx *Xlsx) ExportInfo() *types.ExportInfo {
+	defer xlsx.resetZip()
 	xlsx.zipPacked(true)
 	item := types.ExportInfo{
 		FileId:   file.RemoveExt(path.Base(xlsx.zipPath)),
 		FilePath: xlsx.zipPath,
 		FileName: xlsx.FileName,
 	}
-	xlsx.resetZip()
 	return &item
 }
 
