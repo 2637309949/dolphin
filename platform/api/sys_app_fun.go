@@ -4,8 +4,6 @@
 package api
 
 import (
-	"time"
-
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/sirupsen/logrus"
@@ -30,9 +28,9 @@ func (ctr *SysAppFun) SysAppFunAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.CreateTime = null.TimeFrom(time.Now())
+	payload.CreateTime = null.TimeFromNow()
 	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFrom(time.Now())
+	payload.UpdateTime = null.TimeFromNow()
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.DB.Insert(&payload)
@@ -63,9 +61,9 @@ func (ctr *SysAppFun) SysAppFunBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].CreateTime = null.TimeFrom(time.Now())
+		payload[i].CreateTime = null.TimeFromNow()
 		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
-		payload[i].UpdateTime = null.TimeFrom(time.Now())
+		payload[i].UpdateTime = null.TimeFromNow()
 		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
@@ -97,7 +95,7 @@ func (ctr *SysAppFun) SysAppFunDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&types.SysAppFun{
-		UpdateTime: null.TimeFrom(time.Now()),
+		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
@@ -129,7 +127,7 @@ func (ctr *SysAppFun) SysAppFunBatchDel(ctx *Context) {
 	}
 	var ids = funk.Map(payload, func(form types.SysAppFun) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.DB.In("id", ids).Update(&types.SysAppFun{
-		UpdateTime: null.TimeFrom(time.Now()),
+		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
@@ -160,7 +158,7 @@ func (ctr *SysAppFun) SysAppFunUpdate(ctx *Context) {
 		return
 	}
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFrom(time.Now())
+	payload.UpdateTime = null.TimeFromNow()
 	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
@@ -195,7 +193,7 @@ func (ctr *SysAppFun) SysAppFunBatchUpdate(ctx *Context) {
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
-		payload[i].UpdateTime = null.TimeFrom(time.Now())
+		payload[i].UpdateTime = null.TimeFromNow()
 		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {

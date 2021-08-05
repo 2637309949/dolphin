@@ -53,6 +53,11 @@ func TimeFrom(t time.Time) Time {
 	return NewTime(t, true)
 }
 
+// TimeFromNow creates a new Time that will always be valid.
+func TimeFromNow() Time {
+	return TimeFrom(time.Now())
+}
+
 // TimeFromPtr creates a new Time that will be null if t is nil.
 func TimeFromPtr(t *time.Time) Time {
 	if t == nil {

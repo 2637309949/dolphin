@@ -1,8 +1,6 @@
 package types
 
 import (
-	"time"
-
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/spf13/viper"
@@ -17,9 +15,9 @@ var DefaultClient = SysClient{
 	Secret:     null.StringFrom("8UYO6FVB8UYO6FVB"),
 	Domain:     null.StringFrom("localhost"),
 	Creater:    null.IntFrom(1),
-	CreateTime: null.TimeFrom(time.Now()),
+	CreateTime: null.TimeFromNow(),
 	Updater:    null.IntFrom(1),
-	UpdateTime: null.TimeFrom(time.Now()),
+	UpdateTime: null.TimeFromNow(),
 	IsDelete:   null.IntFrom(0),
 }
 

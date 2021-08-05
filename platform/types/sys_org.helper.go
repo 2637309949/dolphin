@@ -1,8 +1,6 @@
 package types
 
 import (
-	"time"
-
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
@@ -18,9 +16,9 @@ func (m *SysOrg) InitSysData(s *xorm.Session) error {
 			Order:       null.IntFrom(0),
 			Status:      null.IntFrom(1),
 			Creater:     null.IntFrom(1),
-			CreateTime:  null.TimeFrom(time.Now()),
+			CreateTime:  null.TimeFromNow(),
 			Updater:     null.IntFrom(1),
-			UpdateTime:  null.TimeFrom(time.Now()),
+			UpdateTime:  null.TimeFromNow(),
 			IsDelete:    null.IntFrom(0),
 		},
 		{
@@ -32,9 +30,9 @@ func (m *SysOrg) InitSysData(s *xorm.Session) error {
 			Order:       null.IntFrom(0),
 			Status:      null.IntFrom(1),
 			Creater:     null.IntFrom(1),
-			CreateTime:  null.TimeFrom(time.Now()),
+			CreateTime:  null.TimeFromNow(),
 			Updater:     null.IntFrom(1),
-			UpdateTime:  null.TimeFrom(time.Now()),
+			UpdateTime:  null.TimeFromNow(),
 			IsDelete:    null.IntFrom(0),
 		},
 		{
@@ -46,9 +44,9 @@ func (m *SysOrg) InitSysData(s *xorm.Session) error {
 			Order:       null.IntFrom(1),
 			Status:      null.IntFrom(1),
 			Creater:     null.IntFrom(1),
-			CreateTime:  null.TimeFrom(time.Now()),
+			CreateTime:  null.TimeFromNow(),
 			Updater:     null.IntFrom(1),
-			UpdateTime:  null.TimeFrom(time.Now()),
+			UpdateTime:  null.TimeFromNow(),
 			IsDelete:    null.IntFrom(0),
 		},
 	}

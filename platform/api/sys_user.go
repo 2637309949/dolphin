@@ -11,8 +11,6 @@ import (
 	"strconv"
 	"strings"
 
-	"time"
-
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/platform/types"
@@ -40,9 +38,9 @@ func (ctr *SysUser) SysUserAdd(ctx *Context) {
 		return
 	}
 	payload.Domain = null.StringFrom(ctx.GetToken().GetDomain())
-	payload.CreateTime = null.TimeFrom(time.Now())
+	payload.CreateTime = null.TimeFromNow()
 	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFrom(time.Now())
+	payload.UpdateTime = null.TimeFromNow()
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	if payload.Avatar.IsZero() {
@@ -77,9 +75,9 @@ func (ctr *SysUser) SysUserBatchAdd(ctx *Context) {
 		return
 	}
 	for i := range payload {
-		payload[i].CreateTime = null.TimeFrom(time.Now())
+		payload[i].CreateTime = null.TimeFromNow()
 		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
-		payload[i].UpdateTime = null.TimeFrom(time.Now())
+		payload[i].UpdateTime = null.TimeFromNow()
 		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
@@ -111,7 +109,7 @@ func (ctr *SysUser) SysUserDel(ctx *Context) {
 		return
 	}
 	ret, err := ctx.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysUser{
-		UpdateTime: null.TimeFrom(time.Now()),
+		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
@@ -143,7 +141,7 @@ func (ctr *SysUser) SysUserBatchDel(ctx *Context) {
 	}
 	var ids = funk.Map(payload, func(form types.SysUser) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := ctx.PlatformDB.In("id", ids).Update(&types.SysUser{
-		UpdateTime: null.TimeFrom(time.Now()),
+		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
@@ -177,7 +175,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 		return
 	}
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
-	payload.UpdateTime = null.TimeFrom(time.Now())
+	payload.UpdateTime = null.TimeFromNow()
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
 
@@ -207,9 +205,9 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 		return types.SysRoleUser{
 			UserId:     payload.ID,
 			RoleId:     null.IntFrom(r),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Creater:    null.IntFromStr(ctx.GetToken().GetUserID()),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 			IsDelete:   null.IntFrom(0),
 		}
@@ -266,7 +264,7 @@ func (ctr *SysUser) SysUserBatchUpdate(ctx *Context) {
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
-		payload[i].UpdateTime = null.TimeFrom(time.Now())
+		payload[i].UpdateTime = null.TimeFromNow()
 		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {

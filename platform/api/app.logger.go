@@ -188,9 +188,9 @@ func InitTracker() {
 						Header:     item.Header,
 						ReqBody:    item.ReqBody,
 						ResBody:    item.ResBody,
-						CreateTime: null.TimeFrom(time.Now()),
+						CreateTime: null.TimeFromNow(),
 						Creater:    null.IntFrom(1),
-						UpdateTime: null.TimeFrom(time.Now()),
+						UpdateTime: null.TimeFromNow(),
 						Updater:    null.IntFrom(1),
 						IsDelete:   null.IntFrom(0),
 					}

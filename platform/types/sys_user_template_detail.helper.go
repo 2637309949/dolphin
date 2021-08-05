@@ -4,8 +4,6 @@
 package types
 
 import (
-	"time"
-
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
@@ -20,9 +18,9 @@ var sysUserTemplateDetails = []SysUserTemplateDetail{
 		Content:    null.StringFrom(""),
 		Priority:   null.IntFrom(1),
 		Creater:    null.IntFrom(1),
-		CreateTime: null.TimeFrom(time.Now()),
+		CreateTime: null.TimeFromNow(),
 		Updater:    null.IntFrom(1),
-		UpdateTime: null.TimeFrom(time.Now()),
+		UpdateTime: null.TimeFromNow(),
 		IsDelete:   null.IntFrom(0),
 	},
 }

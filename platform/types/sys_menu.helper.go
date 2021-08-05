@@ -1,8 +1,6 @@
 package types
 
 import (
-	"time"
-
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 )
@@ -21,9 +19,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Order:      null.IntFrom(0),
 			Hidden:     null.IntFrom(0),
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 			Remark:     null.String{},
 		},
@@ -38,9 +36,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Hidden: null.IntFrom(0),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -57,9 +55,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|2|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -76,9 +74,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|3|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -94,9 +92,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Hidden:      null.IntFrom(0),
 			Inheritance: null.StringFrom("|1|4|"),
 			Creater:     null.IntFrom(1),
-			CreateTime:  null.TimeFrom(time.Now()),
+			CreateTime:  null.TimeFromNow(),
 			Updater:     null.IntFrom(1),
-			UpdateTime:  null.TimeFrom(time.Now()),
+			UpdateTime:  null.TimeFromNow(),
 			IsDelete:    null.IntFrom(0),
 		},
 		{
@@ -113,9 +111,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|5|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -132,9 +130,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|6|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -151,9 +149,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|7|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -170,9 +168,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|8|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -189,9 +187,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|9|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 		{
@@ -208,9 +206,9 @@ func (m *SysMenu) InitSysData(s *xorm.Session) error {
 			Inheritance: null.StringFrom("|1|10|"),
 
 			Creater:    null.IntFrom(1),
-			CreateTime: null.TimeFrom(time.Now()),
+			CreateTime: null.TimeFromNow(),
 			Updater:    null.IntFrom(1),
-			UpdateTime: null.TimeFrom(time.Now()),
+			UpdateTime: null.TimeFromNow(),
 			IsDelete:   null.IntFrom(0),
 		},
 	}

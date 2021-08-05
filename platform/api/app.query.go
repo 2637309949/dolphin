@@ -32,11 +32,7 @@ func (q *Query) GetInt(key string, init ...interface{}) int64 {
 func (q *Query) SetInt(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = 0
-		}
+		q.m[key] = util.SomeOne(init, 0).(int)
 	} else {
 		i, err := strconv.ParseInt(v, 10, 64)
 		if err != nil {
@@ -45,11 +41,7 @@ func (q *Query) SetInt(key string, init ...interface{}) func() {
 		q.m[key] = int(i)
 	}
 	return func() {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = 0
-		}
+		q.m[key] = util.SomeOne(init, 0).(int)
 	}
 }
 
@@ -63,11 +55,7 @@ func (q *Query) GetBool(key string, init ...interface{}) bool {
 func (q *Query) SetBool(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = false
-		}
+		q.m[key] = util.SomeOne(init, false).(bool)
 	} else {
 		i, err := strconv.ParseBool(v)
 		if err != nil {
@@ -76,11 +64,7 @@ func (q *Query) SetBool(key string, init ...interface{}) func() {
 		q.m[key] = i
 	}
 	return func() {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = false
-		}
+		q.m[key] = util.SomeOne(init, false).(bool)
 	}
 }
 
@@ -94,20 +78,12 @@ func (q *Query) GetString(key string, init ...interface{}) string {
 func (q *Query) SetString(key string, init ...interface{}) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = ""
-		}
+		q.m[key] = util.SomeOne(init, "").(string)
 	} else {
 		q.m[key] = v
 	}
 	return func() {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = ""
-		}
+		q.m[key] = util.SomeOne(init, "").(string)
 	}
 }
 
@@ -147,20 +123,12 @@ func (q *Query) SetRange(key string, init ...[]string) func() {
 func (q *Query) SetArrayString(key string, init ...[]string) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []string{}
-		}
+		q.m[key] = util.SomeOne(init, []string{}).([]string)
 	} else {
 		q.m[key] = strings.Split(v, ",")
 	}
 	return func() {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []string{}
-		}
+		q.m[key] = util.SomeOne(init, []string{}).([]string)
 	}
 }
 
@@ -174,11 +142,7 @@ func (q *Query) GetArrayString(key string, init ...[]string) []string {
 func (q *Query) SetArrayInt(key string, init ...[]int64) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []int64{}
-		}
+		q.m[key] = util.SomeOne(init, []int64{}).([]int64)
 	} else {
 		q.m[key] = funk.Map(strings.Split(v, ","), func(i string) int64 {
 			it, err := strconv.ParseInt(i, 10, 64)
@@ -189,11 +153,7 @@ func (q *Query) SetArrayInt(key string, init ...[]int64) func() {
 		}).([]int64)
 	}
 	return func() {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []int64{}
-		}
+		q.m[key] = util.SomeOne(init, []int64{}).([]int64)
 	}
 }
 
@@ -207,11 +167,7 @@ func (q *Query) GetArrayInt(key string, init ...[]int) []int64 {
 func (q *Query) SetArrayFloat64(key string, init ...[]float64) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []float64{}
-		}
+		q.m[key] = util.SomeOne(init, []float64{}).([]float64)
 	} else {
 		q.m[key] = funk.Map(strings.Split(v, ","), func(i string) float64 {
 			it, err := strconv.ParseFloat(i, 64)
@@ -222,11 +178,7 @@ func (q *Query) SetArrayFloat64(key string, init ...[]float64) func() {
 		}).([]float64)
 	}
 	return func() {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []float64{}
-		}
+		q.m[key] = util.SomeOne(init, []float64{}).([]float64)
 	}
 }
 
@@ -240,11 +192,7 @@ func (q *Query) GetArrayFloat64(key string, init ...[]float64) []float64 {
 func (q *Query) SetArrayBool(key string, init ...[]bool) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []bool{}
-		}
+		q.m[key] = util.SomeOne(init, []bool{}).([]bool)
 	} else {
 		q.m[key] = funk.Map(strings.Split(v, ","), func(i string) bool {
 			it, err := strconv.ParseBool(i)
@@ -255,11 +203,7 @@ func (q *Query) SetArrayBool(key string, init ...[]bool) func() {
 		}).([]bool)
 	}
 	return func() {
-		if len(init) > 0 {
-			q.m[key] = init[0]
-		} else {
-			q.m[key] = []bool{}
-		}
+		q.m[key] = util.SomeOne(init, []bool{}).([]bool)
 	}
 }
 
@@ -268,24 +212,6 @@ func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
 	ret, _ := q.m[key].([]bool)
 	return ret
 }
-
-// // SetRule defined TODO
-// func (q *Query) SetRule(rules ...string) {
-// 	rule := q.ctx.Query("rule_code")
-// 	if len(rules) > 0 {
-// 		rule = rules[0]
-// 	}
-// 	var roleRule interface{}
-// 	var roleRules []types.SysDataPermissionDetail
-// 	userID := q.ctx.GetToken().GetUserID()
-// 	err := q.ctx.DB.SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
-// 	if err != nil {
-// 		roleRule = ""
-// 	} else {
-// 		roleRule = ParseRule(roleRules)
-// 	}
-// 	q.m["role_rule"] = roleRule
-// }
 
 // SetRule defined TODO, role_rule for data`permission
 func (q *Query) SetRule(rule string) {
@@ -299,11 +225,7 @@ func (q *Query) SetRule(rule string) {
 
 // SetUser defined TODO
 func (q *Query) SetUser(uid ...string) {
-	if len(uid) > 0 {
-		q.m["uid"] = uid[0]
-	} else {
-		q.m["uid"] = q.ctx.GetToken().GetUserID()
-	}
+	q.m["uid"] = util.SomeOne(uid, q.ctx.GetToken().GetUserID()).(string)
 }
 
 // GetUser defined TODO
@@ -357,24 +279,4 @@ func (q *Query) Remove(keys ...string) {
 // Reset defined TODO
 func (q *Query) Reset() {
 	q.m = util.M{}
-}
-
-// ParseRule defined TODO
-func ParseRule(roleRules []types.SysDataPermissionDetail) interface{} {
-	roleRule := ""
-	for i, rule := range roleRules {
-		if i == 0 {
-			roleRule = rule.Rule.String
-		} else if i > 0 {
-			if roleRule != "" {
-				roleRule = roleRule + " or " + rule.Rule.String
-			} else {
-				roleRule = rule.Rule.String
-			}
-		}
-	}
-	if len(roleRules) > 1 {
-		roleRule = "(" + roleRule + ")"
-	}
-	return template.HTML(roleRule)
 }

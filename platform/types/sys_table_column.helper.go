@@ -2,7 +2,6 @@ package types
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -28,9 +27,9 @@ func (m *SysTableColumn) ColumnInfo(info *schemas.Column) SysTableColumn {
 		IsPrimaryKey: null.BoolFrom(info.IsPrimaryKey),
 		Nullable:     null.BoolFrom(info.Nullable),
 		Default:      null.StringFrom(info.Default),
-		CreateTime:   null.TimeFrom(time.Now()),
+		CreateTime:   null.TimeFromNow(),
 		Creater:      null.IntFrom(0),
-		UpdateTime:   null.TimeFrom(time.Now()),
+		UpdateTime:   null.TimeFromNow(),
 		Updater:      null.IntFrom(0),
 		IsDelete:     null.IntFrom(0),
 	}
