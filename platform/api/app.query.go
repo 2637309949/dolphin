@@ -23,13 +23,13 @@ type Query struct {
 }
 
 // GetInt defined TODO
-func (q *Query) GetInt(key string, init ...interface{}) int64 {
+func (q *Query) GetInt(key string, init ...int64) int64 {
 	ret, _ := q.m[key].(int64)
 	return ret
 }
 
 // SetInt defined TODO
-func (q *Query) SetInt(key string, init ...interface{}) func() {
+func (q *Query) SetInt(key string, init ...int) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		q.m[key] = util.SomeOne(init, 0).(int)
@@ -46,13 +46,13 @@ func (q *Query) SetInt(key string, init ...interface{}) func() {
 }
 
 // GetBool defined TODO
-func (q *Query) GetBool(key string, init ...interface{}) bool {
+func (q *Query) GetBool(key string, init ...bool) bool {
 	ret, _ := q.m[key].(bool)
 	return ret
 }
 
 // SetBool defined TODO
-func (q *Query) SetBool(key string, init ...interface{}) func() {
+func (q *Query) SetBool(key string, init ...bool) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		q.m[key] = util.SomeOne(init, false).(bool)
@@ -69,13 +69,18 @@ func (q *Query) SetBool(key string, init ...interface{}) func() {
 }
 
 // GetString defined TODO
-func (q *Query) GetString(key string, init ...interface{}) string {
+func (q *Query) GetString(key string, init ...string) string {
 	ret, _ := q.m[key].(string)
 	return ret
 }
 
+// SetUnescaped defined TODO
+func (q *Query) SetUnescaped(key string, value string) {
+	q.m[key] = template.HTML(value)
+}
+
 // SetString defined TODO
-func (q *Query) SetString(key string, init ...interface{}) func() {
+func (q *Query) SetString(key string, init ...string) func() {
 	v := q.ctx.Query(key)
 	if strings.TrimSpace(v) == "" {
 		q.m[key] = util.SomeOne(init, "").(string)
@@ -88,7 +93,7 @@ func (q *Query) SetString(key string, init ...interface{}) func() {
 }
 
 // GetRange defined TODO
-func (q *Query) GetRange(key string, init ...interface{}) (string, string) {
+func (q *Query) GetRange(key string, init ...string) (string, string) {
 	start, _ := q.m[fmt.Sprintf("%v_start", key)].(string)
 	end, _ := q.m[fmt.Sprintf("%v_end", key)].(string)
 	return start, end
@@ -248,22 +253,17 @@ func (q *Query) Unmarshal(v interface{}) error {
 	return json.Unmarshal(mbyte, v)
 }
 
-// Unescaped defined TODO
-func (q *Query) Unescaped(s string) template.HTML {
-	return template.HTML(s)
-}
-
 // SetTags defined TODO TODO TODO TODO TODO
 func (q *Query) SetTags(params ...struct {
 	Key   string
 	Value string
 }) {
-	q.SetString("eq", q.Unescaped("="))
-	q.SetString("ne", q.Unescaped("<>"))
-	q.SetString("lt", q.Unescaped("<"))
-	q.SetString("lte", q.Unescaped("<="))
-	q.SetString("gt", q.Unescaped(">"))
-	q.SetString("gte", q.Unescaped(">="))
+	q.SetUnescaped("eq", "=")
+	q.SetUnescaped("ne", "<>")
+	q.SetUnescaped("lt", "<")
+	q.SetUnescaped("lte", "<=")
+	q.SetUnescaped("gt", ">")
+	q.SetUnescaped("gte", ">=")
 	for i := range params {
 		q.SetString(params[i].Key, params[i].Value)
 	}

@@ -6,7 +6,6 @@ package api
 import (
 	"errors"
 	"fmt"
-	"html/template"
 	"regexp"
 	"strconv"
 	"strings"
@@ -322,7 +321,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 			ctx.Fail(err)
 			return
 		}
-		q.SetString("cn_org_id", template.HTML(strings.Join(ids, ",")))()
+		q.SetUnescaped("cn_org_id", strings.Join(ids, ","))
 	}
 	if ctr.Srv.Check(ctx.Context) {
 		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
