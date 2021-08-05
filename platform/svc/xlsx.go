@@ -1,6 +1,7 @@
 package svc
 
 import (
+	"archive/zip"
 	"fmt"
 	"io"
 	"os"
@@ -10,14 +11,20 @@ import (
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/google/uuid"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-// Xlsx defined
+// Xlsx defined TODO
 type Xlsx struct {
+	zipIndex   int
+	zipPath    string
+	zipFile    *zip.Writer
 	xlsxFile   *excelize.File
+	xlsxSize   int
 	SheetIndex interface{}
 	FileName   string
 	SheetName  string
@@ -27,7 +34,7 @@ type Xlsx struct {
 	Handler    func(map[string]interface{}) map[string]interface{}
 }
 
-// AddRows defined
+// DumpRows defined TODO
 func (xlsx *Xlsx) DumpRows(rows ...map[string]interface{}) *Xlsx {
 	formats := map[interface{}]func(interface{}) interface{}{}
 	titles := []interface{}{}
@@ -80,40 +87,54 @@ func (xlsx *Xlsx) DumpRows(rows ...map[string]interface{}) *Xlsx {
 			cells = []interface{}{}
 		}
 	}
+	return xlsx.zipPacked(false)
+}
+
+// zipPacked defined TODO
+func (xlsx *Xlsx) zipPacked(last ...bool) *Xlsx {
+	isOver, isLast := xlsx.isSheetOverSize(), util.SomeOne(last, false).(bool)
+	if isOver || isLast {
+		xlsx.resetSheet()
+	}
 	return xlsx
 }
 
-// AddRows defined
-func (xlsx *Xlsx) ExportInfo() (*types.ExportInfo, error) {
-	uuid := uuid.New().String()
-	filePath := path.Join(xlsx.TmplPath, fmt.Sprintf("%v.xlsx", uuid))
-	if err := os.MkdirAll(path.Dir(filePath), os.ModePerm); err != nil {
-		return &types.ExportInfo{}, err
+// ExportInfo defined TODO
+func (xlsx *Xlsx) ExportInfo() *types.ExportInfo {
+	xlsx.zipPacked(true)
+	item := types.ExportInfo{
+		FileId:   file.RemoveExt(path.Base(xlsx.zipPath)),
+		FilePath: xlsx.zipPath,
+		FileName: xlsx.FileName,
 	}
-	err := xlsx.xlsxFile.SaveAs(filePath)
-	return &types.ExportInfo{FileId: uuid, FilePath: filePath, FileName: xlsx.FileName}, err
+	xlsx.resetZip()
+	return &item
+}
+
+// isSheetOverSize defined TODO
+func (xlsx *Xlsx) isSheetOverSize() bool {
+	return len(xlsx.xlsxFile.GetRows(xlsx.SheetName)) > xlsx.xlsxSize
+}
+
+// resetSheet defined TODO
+func (xlsx *Xlsx) resetSheet() {
+	w, _ := xlsx.zipFile.Create(fmt.Sprintf("%v.xlsx", xlsx.zipIndex))
+	xlsx.xlsxFile.WriteTo(w)
+	xlsx.xlsxFile.DeleteSheet(xlsx.SheetName)
+	index := xlsx.xlsxFile.NewSheet(xlsx.SheetName)
+	xlsx.xlsxFile.SetActiveSheet(index)
+	xlsx.zipIndex += 1
+}
+
+// resetZip defined TODO
+func (xlsx *Xlsx) resetZip() {
+	xlsx.zipIndex = 1
+	xlsx.zipFile.Close()
+	xlsx.zipPath = ""
 }
 
 // ParseExcel defined TODO
 func (xlsx *Xlsx) ParseExcel(r io.Reader, header ...[]map[string]interface{}) ([]map[string]string, error) {
-	// file.EnsureDir(path.Join(viper.GetString("http.static"), "files"))
-	// uuid := uuid.New().String()
-	// filePath := path.Join(viper.GetString("http.static"), "files", uuid+".xlsx")
-
-	// out, err := os.Create(filePath)
-	// if err != nil {
-	// 	return []map[string]string{}, err
-	// }
-	// defer out.Close()
-
-	// _, err = io.Copy(out, r)
-	// if err != nil {
-	// 	return []map[string]string{}, err
-	// }
-	// xFile, err := os.Open(filePath)
-	// if err != nil {
-	// 	return []map[string]string{}, err
-	// }
 	eFile, err := excelize.OpenReader(r)
 	if err != nil {
 		return nil, err
@@ -173,8 +194,21 @@ func NewXlsx(header ...[]map[string]interface{}) *Xlsx {
 	}
 	xlsx.Header = util.SomeOne(header, []map[string]interface{}{}).([]map[string]interface{})
 	xlsx.xlsxFile = excelize.NewFile()
-	index := xlsx.xlsxFile.NewSheet("Sheet1")
+	index := xlsx.xlsxFile.NewSheet(xlsx.SheetName)
 	xlsx.xlsxFile.SetActiveSheet(index)
+	xlsx.xlsxSize = 10000
+	uuid := uuid.New().String()
+	filePath := path.Join(xlsx.TmplPath, fmt.Sprintf("%v.zip", uuid))
+	if err := os.MkdirAll(path.Dir(filePath), os.ModePerm); err != nil {
+		logrus.Errorln(err)
+	}
+	zipFile, err := os.Create(filePath)
+	if err != nil {
+		logrus.Errorln(err)
+	}
+	xlsx.zipFile = zip.NewWriter(zipFile)
+	xlsx.zipPath = filePath
+	xlsx.zipIndex = 1
 	return &xlsx
 }
 

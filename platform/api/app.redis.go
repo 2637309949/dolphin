@@ -51,11 +51,11 @@ func InitRedisClient() {
 			IdleTimeout:  time.Duration(idle_conns) * time.Second,
 		})
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
-			logrus.Warnf("Redis:%v connect failed, %v", viper.GetString("redis.addr"), err)
+			logrus.Warnf("Redis:%v connect failed, %v", addr[0], err)
 			RedisClient = nil
 		} else {
 			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
-			logrus.Infof("Redis:%v connect successfully", viper.GetString("redis.addr"))
+			logrus.Infof("Redis:%v connect successfully", addr[0])
 		}
 	case "cluster":
 		RedisClient = redis.NewClusterClient(&redis.ClusterOptions{
@@ -72,10 +72,10 @@ func InitRedisClient() {
 			IdleTimeout:  time.Duration(idle_conns) * time.Second,
 		})
 		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
-			logrus.Warnf("Redis:%v connect failed, %v", viper.GetString("redis.addr"), err)
+			logrus.Warnf("Redis:%v connect failed, %v", addr, err)
 			RedisClient = nil
 		} else {
-			logrus.Infof("Redis:%v connect successfully", viper.GetString("redis.addr"))
+			logrus.Infof("Redis:%v connect successfully", addr)
 			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
 		}
 	default:

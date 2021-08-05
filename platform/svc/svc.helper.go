@@ -304,7 +304,7 @@ func (svc *SvcHepler) PageExport(db *xorm.Engine, ctr, api, table string, params
 		svc.xlsx.DumpRows(rowsSet...)
 		page += 1
 	}
-	return svc.xlsx.ExportInfo()
+	return svc.xlsx.ExportInfo(), nil
 }
 
 // ParseExcel defined TODO
