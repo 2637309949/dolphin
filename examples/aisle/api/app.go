@@ -87,10 +87,7 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 		}
 		relativePath := group.calculateAbsolutePath(relativePath)
 		combineHandlers := group.combineHandlers(handlers)
-		hls := []api.HandlerFunc{}
-		for j := 0; j < len(combineHandlers); j++ {
-			hls = append(hls, group.unWrapContext(combineHandlers[j]))
-		}
+		hls := funk.Map(combineHandlers, func(h HandlerFunc) api.HandlerFunc { return group.unWrapContext(h) }).([]api.HandlerFunc)
 		group.dol.Http.Handle(methods[i], relativePath, hls...)
 	}
 }

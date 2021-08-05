@@ -89,10 +89,7 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlers ...Ha
 		}
 		relativePath := group.calculateAbsolutePath(relativePath)
 		combineHandlers := group.combineHandlers(handlers)
-		hls := []{{$.Viper.GetString "dir.api" }}.HandlerFunc{}
-		for j := 0; j {{.lt}} len(combineHandlers); j++ {
-			hls = append(hls, group.unWrapContext(combineHandlers[j]))
-		}
+	    hls := funk.Map(combineHandlers, func(h HandlerFunc) {{$.Viper.GetString "dir.api" }}.HandlerFunc { return group.unWrapContext(h) }).([]{{$.Viper.GetString "dir.api" }}.HandlerFunc)
 		group.dol.Http.Handle(methods[i], relativePath, hls...)
 	}
 }
