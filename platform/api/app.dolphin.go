@@ -23,7 +23,6 @@ import (
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/2637309949/dolphin/platform/util/http/uri"
 	"github.com/2637309949/dolphin/platform/util/slice"
@@ -337,9 +336,16 @@ func (dol *Dolphin) lifeCycle(ctx context.Context) error {
 }
 
 // Run defined TODO
-func (dol *Dolphin) Run() {
-	util.Ensure(dol.Reflesh())
-	util.Ensure(dol.lifeCycle(context.Background()))
+func (dol *Dolphin) Run() error {
+	if err := dol.Reflesh(); err != nil {
+		logrus.Errorln(err)
+		return err
+	}
+	if err := dol.lifeCycle(context.Background()); err != nil {
+		logrus.Errorln(err)
+		return err
+	}
+	return nil
 }
 
 // NewDefault defined TODO

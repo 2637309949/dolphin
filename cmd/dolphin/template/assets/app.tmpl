@@ -20,7 +20,7 @@ import (
 // vars defined
 var (
 	App *Dolphin
-	Run func()
+	Run func() error
 )
 
 type (
@@ -56,9 +56,12 @@ func (dol *Dolphin) Reflesh() error {
 }
 
 // Run defined TODO
-func (dol *Dolphin) Run() {
-	util.Ensure(dol.Reflesh())
-	dol.Dolphin.Run()
+func (dol *Dolphin) Run() error {
+	if err := dol.Reflesh(); err != nil {
+		logrus.Errorln(err)
+		return err
+	}
+	return dol.Dolphin.Run()
 }
 
 // Use defined TODO

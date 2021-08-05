@@ -18,7 +18,7 @@ import (
 
 var (
 	App *Dolphin
-	Run func()
+	Run func() error
 )
 
 // A Hook is a pair of start and stop callbacks, either of which can be nil,
@@ -108,10 +108,11 @@ func WithOAuth2() Option {
 func init() {
 	InitViper()
 	InitLogger()
-	InitRedisCli()
+	InitRedisClient()
 	InitSession()
 
-	app := NewDefault(WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT())
+	opts := []Option{WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
+	app := NewDefault(opts...)
 	StaticRoutes(app)
 
 	App, Run = app, app.Run

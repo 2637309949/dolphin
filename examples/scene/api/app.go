@@ -22,7 +22,7 @@ import (
 // vars defined
 var (
 	App *Dolphin
-	Run func()
+	Run func() error
 )
 
 type (
@@ -58,9 +58,12 @@ func (dol *Dolphin) Reflesh() error {
 }
 
 // Run defined TODO
-func (dol *Dolphin) Run() {
-	util.Ensure(dol.Reflesh())
-	dol.Dolphin.Run()
+func (dol *Dolphin) Run() error {
+	if err := dol.Reflesh(); err != nil {
+		logrus.Errorln(err)
+		return err
+	}
+	return dol.Dolphin.Run()
 }
 
 // Use defined TODO
@@ -173,13 +176,17 @@ func New() *Dolphin {
 	return &dol
 }
 
-func init() {
-	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) {
-		logrus.Infoln("Dolphin local middles") // Dolphin local middles
-	}
+// Default defined TODO
+func Default() *Dolphin {
+	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) { logrus.Infoln("Dolphin local middles") }
+
 	app := New()
-	app.Use(func(ctx *Context) {
-		logrus.Infoln("Dolphin global middles") // Dolphin global middles
-	})
+	app.Use(func(ctx *Context) { logrus.Infoln("Dolphin global middles") })
+	return app
+}
+
+func init() {
+	app := Default()
+
 	App, Run = app, app.Run
 }

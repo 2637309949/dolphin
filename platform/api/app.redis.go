@@ -13,8 +13,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-// InitRedisCli defined TODO
-func InitRedisCli() {
+// InitRedisClient defined TODO
+func InitRedisClient() {
 	network := viper.GetString("redis.network")
 	username := viper.GetString("redis.username")
 	password := viper.GetString("redis.password")
@@ -75,8 +75,8 @@ func InitRedisCli() {
 			logrus.Warnf("Redis:%v connect failed, %v", viper.GetString("redis.addr"), err)
 			RedisClient = nil
 		} else {
-			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
 			logrus.Infof("Redis:%v connect successfully", viper.GetString("redis.addr"))
+			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
 		}
 	default:
 		logrus.Fatal("redis mode must be one of (stub, cluster)")
