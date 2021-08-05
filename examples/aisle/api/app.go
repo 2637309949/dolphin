@@ -31,8 +31,8 @@ type (
 	HandlersChain []HandlerFunc
 	// Dolphin defined parse app engine
 	Dolphin struct {
-		RouterGroup
 		*api.Dolphin
+		RouterGroup
 		pool sync.Pool
 	}
 	// Context defined http handle hook context
@@ -126,7 +126,6 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 	if relativePath == "" {
 		return group.basePath
 	}
-
 	finalPath := path.Join(group.basePath, relativePath)
 	if util.LastChar(relativePath) == '/' && util.LastChar(finalPath) != '/' {
 		return finalPath + "/"

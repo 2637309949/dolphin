@@ -30,6 +30,5 @@ where
 {{if and .update_time_start .update_time_end}}
 	and organ.update_date between '{{.update_time_start}}' and '{{.update_time_end}}'
 {{end}}
-
-	order by organ.update_date desc
-	limit {{.size}} offset {{.offset}}
+order by organ.update_date desc
+limit {{.size}} offset {{.offset}}

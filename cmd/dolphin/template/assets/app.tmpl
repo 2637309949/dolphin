@@ -30,8 +30,8 @@ type (
 	HandlersChain []HandlerFunc
 	// Dolphin defined parse app engine
 	Dolphin struct {
-		RouterGroup
 		*{{$.Viper.GetString "dir.api" }}.Dolphin
+		RouterGroup
 		pool    sync.Pool
 	}
 	// Context defined http handle hook context
