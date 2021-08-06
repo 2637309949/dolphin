@@ -65,7 +65,8 @@ func (dol *Dolphin) Run() {
 // Use defined TODO
 func (group *RouterGroup) Use(middleware ...HandlerFunc) {
 	group.Handlers = append(group.Handlers, middleware...)
-	group.dol.Dolphin.Handlers = append(group.dol.Dolphin.Handlers, funk.Map(middleware, group.unWrapContext).([]api.HandlerFunc)...)
+	hls := funk.Map(middleware, group.unWrapContext).([]api.HandlerFunc)
+	group.dol.Dolphin.Handlers = append(group.dol.Dolphin.Handlers, hls...)
 }
 
 // Group defined TODO
