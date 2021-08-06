@@ -17,6 +17,7 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/shurcooL/vfsgen"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -25,6 +26,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	// "github.com/lib/pq" init
 	_ "github.com/lib/pq"
+	// "github.com/mattn/go-sqlite3" init
+	_ "github.com/mattn/go-sqlite3"
+
 	"golang.org/x/sys/unix"
 	"golang.org/x/term"
 )
@@ -122,6 +126,9 @@ var (
 		Use:  "dolphin",
 		Long: `Code generation tool for golang`,
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			if cmd.Use == "assert" || cmd.Use == "new" || cmd.Use == "clean" {
+				return
+			}
 			InitViper(cmd, args)
 		},
 		CompletionOptions: cobra.CompletionOptions{DisableDefaultCmd: true},
@@ -234,6 +241,27 @@ var (
 			return nil
 		},
 	}
+	assert = &cobra.Command{
+		Use:   "assert",
+		Short: "",
+		RunE: func(_ *cobra.Command, _ []string) error {
+			if err := os.MkdirAll("../dist", os.ModePerm); err != nil {
+				if err != nil {
+					return err
+				}
+			}
+			err := vfsgen.Generate(http.Dir("./"), vfsgen.Options{
+				Filename:     "../dist/assets.go",
+				PackageName:  "dist",
+				BuildTags:    "!dev",
+				VariableName: "Assets",
+			})
+			if err != nil {
+				return err
+			}
+			return nil
+		},
+	}
 )
 
 func main() {
@@ -243,6 +271,7 @@ func main() {
 	rootCmd.AddCommand(more)
 	rootCmd.AddCommand(clean)
 	rootCmd.AddCommand(serve)
+	rootCmd.AddCommand(assert)
 	if err := rootCmd.Execute(); err != nil {
 		logrus.Fatal(err)
 	}
