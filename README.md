@@ -23,9 +23,9 @@ Usage:
   dolphin [command]
 
 Available Commands:
+  assert      Generate Go code that statically implements input filesystem
   build       Build from the configuration file
   clean       Remove temp file, such as *.go.new
-  completion  generate the autocompletion script for the specified shell
   help        Help about any command
   more        Add controller and table
   new         New a empty project
