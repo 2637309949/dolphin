@@ -33,11 +33,13 @@ import (
 	"golang.org/x/term"
 )
 
+// AssetsFileSystem defined TODO
 type AssetsFileSystem struct {
 	RelativePath string
 	http.FileSystem
 }
 
+// Open defined TODO
 func (assert *AssetsFileSystem) Open(name string) (http.File, error) {
 	if strings.Contains(name, "swagger.yaml") {
 		return os.Open(path.Join(viper.GetString("dir.doc"), "swagger.yaml"))
@@ -56,7 +58,7 @@ func Open(uri string) error {
 	return cmd.Start()
 }
 
-// InitViper defined
+// InitViper defined TODO
 func InitViper(cmd *cobra.Command, args []string) {
 	utils.SetFormatter(term.IsTerminal(unix.Stdout))
 	utils.SetLevel(cmd)
@@ -243,7 +245,7 @@ var (
 	}
 	assert = &cobra.Command{
 		Use:   "assert",
-		Short: "",
+		Short: "Generate Go code that statically implements input filesystem",
 		RunE: func(_ *cobra.Command, _ []string) error {
 			if err := os.MkdirAll("../dist", os.ModePerm); err != nil {
 				if err != nil {
