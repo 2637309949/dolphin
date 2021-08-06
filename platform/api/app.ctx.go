@@ -29,8 +29,8 @@ import (
 
 // Context defined TODO
 type Context struct {
-	AuthInfo
 	*gin.Context
+	AuthInfo
 	DB         *xorm.Engine
 	PlatformDB *xorm.Engine
 }

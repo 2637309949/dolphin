@@ -124,6 +124,7 @@ var (
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			InitViper(cmd, args)
 		},
+		CompletionOptions: cobra.CompletionOptions{DisableDefaultCmd: true},
 	}
 	build = &cobra.Command{
 		Use:   "build",
