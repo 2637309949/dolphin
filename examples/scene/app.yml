@@ -1,6 +1,6 @@
 app:
   auth: token
-  host: localhost:8081
+  host: localhost:8082
   mode: debug
   name: scene
   version: "1.0"

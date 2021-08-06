@@ -1245,7 +1245,7 @@ definitions:
         $ref: '#/definitions/types.SysUser'
         description: 用户
     type: object
-host: localhost:8081
+host: localhost:8082
 info:
   contact: {}
   license:
@@ -1262,10 +1262,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: Ami info
         in: body
         name: ami_info
+        required: false
         schema:
           $ref: '#/definitions/types.AmiInfo'
       produces:
@@ -1292,10 +1294,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: ami id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -1323,10 +1327,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章信息
         in: body
         name: article
+        required: false
         schema:
           $ref: '#/definitions/types.Article'
       produces:
@@ -1355,10 +1361,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章信息
         in: body
         name: article
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.Article'
@@ -1389,10 +1397,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章信息
         in: body
         name: article
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.Article'
@@ -1423,10 +1433,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章信息
         in: body
         name: article
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.Article'
@@ -1457,10 +1469,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章
         in: body
         name: article
+        required: false
         schema:
           $ref: '#/definitions/types.Article'
       produces:
@@ -1487,10 +1501,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -1516,14 +1532,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -1551,10 +1570,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章
         in: body
         name: article
+        required: false
         schema:
           $ref: '#/definitions/types.ArticleInfo'
       produces:
@@ -1583,10 +1604,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 文章信息
         in: body
         name: article
+        required: false
         schema:
           $ref: '#/definitions/types.Article'
       produces:
@@ -1655,6 +1678,7 @@ paths:
       - description: 交易信息
         in: body
         name: trans_req
+        required: false
         schema:
           $ref: '#/definitions/types.TransReq'
       produces:
@@ -1683,6 +1707,7 @@ paths:
       - description: 交易信息
         in: body
         name: trans_req
+        required: false
         schema:
           $ref: '#/definitions/types.TransReq'
       produces:
@@ -1711,6 +1736,7 @@ paths:
       - description: 交易信息
         in: body
         name: trans_req
+        required: false
         schema:
           $ref: '#/definitions/types.TransReq'
       produces:
@@ -1739,6 +1765,7 @@ paths:
       - description: 交易信息
         in: body
         name: trans_req
+        required: false
         schema:
           $ref: '#/definitions/types.TransReq'
       produces:
@@ -1767,6 +1794,7 @@ paths:
       - description: 交易信息
         in: body
         name: trans_req
+        required: false
         schema:
           $ref: '#/definitions/types.TransReq'
       produces:
@@ -1795,6 +1823,7 @@ paths:
       - description: 交易信息
         in: body
         name: trans_req
+        required: false
         schema:
           $ref: '#/definitions/types.TransReq'
       produces:
@@ -1823,10 +1852,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: Encrypt info
         in: body
         name: encrypt_info
+        required: false
         schema:
           $ref: '#/definitions/types.EncryptInfo'
       produces:
@@ -1873,10 +1904,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: id
         in: query
         name: id
+        required: false
         type: integer
       produces:
       - application/json
@@ -1926,10 +1959,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: Kafka info
         in: body
         name: kafka
+        required: false
         schema:
           $ref: '#/definitions/types.KafkaInfo'
       produces:
@@ -1956,6 +1991,7 @@ paths:
       - description: kafka id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2023,10 +2059,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: nsq info
         in: body
         name: nsq
+        required: false
         schema:
           $ref: '#/definitions/types.NsqInfo'
       produces:
@@ -2053,10 +2091,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: nsq id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2082,10 +2122,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: redis info
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2111,10 +2153,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: redis info
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2140,10 +2184,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: rpc info
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2191,10 +2237,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: APP功能
         in: body
         name: sys_app_fun
+        required: false
         schema:
           $ref: '#/definitions/types.SysAppFun'
       produces:
@@ -2221,10 +2269,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: APP功能id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2250,14 +2300,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -2283,6 +2336,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -2302,10 +2356,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: APP功能信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -2334,10 +2390,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 区域信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysArea'
       produces:
@@ -2366,10 +2424,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 区域
         in: body
         name: sys_area
+        required: false
         schema:
           $ref: '#/definitions/types.SysArea'
       produces:
@@ -2396,10 +2456,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 区域id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2425,14 +2487,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -2460,10 +2525,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 区域信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -2492,10 +2559,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 附件信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysAttachment'
       produces:
@@ -2524,10 +2593,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 附件
         in: body
         name: sys_attachment
+        required: false
         schema:
           $ref: '#/definitions/types.SysAttachment'
       produces:
@@ -2554,14 +2625,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 附件名称
         in: query
         name: file_name
+        required: false
         type: string
       - description: 附件ID
         in: query
         name: file_id
+        required: false
         type: string
       produces:
       - application/json
@@ -2587,10 +2661,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 附件id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -2616,14 +2692,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -2651,10 +2730,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 附件信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -2683,6 +2764,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -2750,6 +2832,7 @@ paths:
       - description: openid
         in: query
         name: openid
+        required: false
         type: string
       produces:
       - application/json
@@ -2777,14 +2860,17 @@ paths:
       - description: 用户名称
         in: formData
         name: username
+        required: false
         type: string
       - description: 用户密码
         in: formData
         name: password
+        required: false
         type: string
       - description: 用户域
         in: formData
         name: domain
+        required: false
         type: string
       produces:
       - application/json
@@ -2810,14 +2896,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 定向URL
         in: query
         name: redirect_uri
+        required: false
         type: string
       - description: 状态
         in: query
         name: state
+        required: false
         type: string
       produces:
       - application/json
@@ -2863,6 +2952,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -2888,10 +2978,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: '类型(0: 微信 1：叮叮)'
         in: query
         name: type
+        required: false
         type: integer
       produces:
       - application/json
@@ -2959,10 +3051,12 @@ paths:
       - description: 定向URL
         in: query
         name: redirect_uri
+        required: false
         type: string
       - description: 状态
         in: query
         name: state
+        required: false
         type: string
       produces:
       - application/json
@@ -2990,10 +3084,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 客户端信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysClient'
       produces:
@@ -3022,10 +3118,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 客户端
         in: body
         name: sys_client
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysClient'
@@ -3056,10 +3154,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 客户端
         in: body
         name: sys_client
+        required: false
         schema:
           $ref: '#/definitions/types.SysClient'
       produces:
@@ -3086,10 +3186,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 客户端id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -3115,14 +3217,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -3150,10 +3255,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 客户端信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -3182,10 +3289,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 评论信息
         in: body
         name: sys_comment
+        required: false
         schema:
           $ref: '#/definitions/types.SysComment'
       produces:
@@ -3214,10 +3323,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 评论
         in: body
         name: sys_comment
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplate'
       produces:
@@ -3244,10 +3355,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 评论id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -3273,14 +3386,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -3308,10 +3424,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 评论信息
         in: body
         name: sys_comment
+        required: false
         schema:
           $ref: '#/definitions/types.SysComment'
       produces:
@@ -3340,10 +3458,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 数据权限信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysDataPermission'
       produces:
@@ -3372,10 +3492,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 数据权限
         in: body
         name: sys_data_permission
+        required: false
         schema:
           $ref: '#/definitions/types.SysDataPermission'
       produces:
@@ -3402,10 +3524,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 数据权限id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -3431,14 +3555,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -3466,10 +3593,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 数据权限信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -3518,10 +3647,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 域信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysDomain'
       produces:
@@ -3550,10 +3681,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 域
         in: body
         name: sys_domain
+        required: false
         schema:
           $ref: '#/definitions/types.SysDomain'
       produces:
@@ -3580,10 +3713,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 域id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -3609,14 +3744,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -3644,10 +3782,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 域信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -3676,10 +3816,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 菜单信息
         in: body
         name: sys_menu
+        required: false
         schema:
           $ref: '#/definitions/types.SysMenu'
       produces:
@@ -3708,10 +3850,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 菜单
         in: body
         name: sys_menu
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysMenu'
@@ -3742,10 +3886,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 菜单
         in: body
         name: sys_menu
+        required: false
         schema:
           $ref: '#/definitions/types.SysMenu'
       produces:
@@ -3772,10 +3918,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 菜单id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -3801,14 +3949,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -3834,6 +3985,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -3851,6 +4003,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -3870,10 +4023,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 菜单信息
         in: body
         name: sys_menu
+        required: false
         schema:
           $ref: '#/definitions/types.SysMenu'
       produces:
@@ -3902,10 +4057,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 站内消息信息
         in: body
         name: notification
+        required: false
         schema:
           $ref: '#/definitions/types.SysNotification'
       produces:
@@ -3934,10 +4091,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 站内消息
         in: body
         name: sys_notification
+        required: false
         schema:
           $ref: '#/definitions/types.SysNotification'
       produces:
@@ -3964,10 +4123,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 站内消息id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -3993,14 +4154,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -4028,10 +4192,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 站内消息信息
         in: body
         name: notification
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -4060,10 +4226,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 字典信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysOptionset'
       produces:
@@ -4092,10 +4260,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 字典
         in: body
         name: user
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysOptionset'
@@ -4126,10 +4296,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 字典
         in: body
         name: sys_optionset
+        required: false
         schema:
           $ref: '#/definitions/types.SysOptionset'
       produces:
@@ -4156,10 +4328,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 字典id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -4185,14 +4359,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -4220,10 +4397,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 字典信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -4252,10 +4431,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 组织信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysOrg'
       produces:
@@ -4284,10 +4465,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 组织
         in: body
         name: sys_org
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysOrg'
@@ -4318,10 +4501,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 组织
         in: body
         name: sys_org
+        required: false
         schema:
           $ref: '#/definitions/types.SysOrg'
       produces:
@@ -4348,10 +4533,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 组织id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -4377,14 +4564,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -4410,6 +4600,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -4429,10 +4620,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 组织信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -4461,10 +4654,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 权限信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysPermission'
       produces:
@@ -4493,10 +4688,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 权限
         in: body
         name: sys_permission
+        required: false
         schema:
           $ref: '#/definitions/types.SysPermission'
       produces:
@@ -4523,10 +4720,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 权限id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -4552,14 +4751,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -4587,10 +4789,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 权限信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -4619,10 +4823,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色信息
         in: body
         name: sys_role
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -4651,10 +4857,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户信息
         in: body
         name: user
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysRole'
@@ -4685,10 +4893,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色
         in: body
         name: sys_role
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -4715,10 +4925,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -4746,10 +4958,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色菜单信息
         in: body
         name: sys_role_menu
+        required: false
         schema:
           $ref: '#/definitions/types.SysRoleMenu'
       produces:
@@ -4778,10 +4992,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色菜单信息
         in: body
         name: role_menu
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysRoleMenu'
@@ -4812,10 +5028,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色菜单信息
         in: body
         name: user
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysRoleMenu'
@@ -4846,10 +5064,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色菜单
         in: body
         name: sys_role_menu
+        required: false
         schema:
           $ref: '#/definitions/types.SysRoleMenu'
       produces:
@@ -4876,10 +5096,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色菜单id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -4905,14 +5127,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -4940,10 +5165,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色菜单信息
         in: body
         name: sys_role_menu
+        required: false
         schema:
           $ref: '#/definitions/types.SysRoleMenu'
       produces:
@@ -4970,14 +5197,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -5003,6 +5233,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -5020,6 +5251,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -5039,10 +5271,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 角色信息
         in: body
         name: sys_role
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -5071,10 +5305,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度信息
         in: body
         name: sys_schedule
+        required: false
         schema:
           $ref: '#/definitions/types.SysSchedule'
       produces:
@@ -5103,10 +5339,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度信息
         in: body
         name: user
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysSchedule'
@@ -5137,10 +5375,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度
         in: body
         name: sys_schedule
+        required: false
         schema:
           $ref: '#/definitions/types.SysSchedule'
       produces:
@@ -5167,10 +5407,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -5196,14 +5438,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -5229,14 +5474,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -5264,10 +5512,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度信息
         in: body
         name: sys_schedule
+        required: false
         schema:
           $ref: '#/definitions/types.SysSchedule'
       produces:
@@ -5296,10 +5546,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度信息
         in: body
         name: scheduling
+        required: false
         schema:
           $ref: '#/definitions/types.Scheduling'
       produces:
@@ -5328,10 +5580,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度
         in: body
         name: scheduling
+        required: false
         schema:
           $ref: '#/definitions/types.Scheduling'
       produces:
@@ -5358,10 +5612,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -5386,14 +5642,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -5421,10 +5680,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 调度信息
         in: body
         name: scheduling
+        required: false
         schema:
           $ref: '#/definitions/types.Scheduling'
       produces:
@@ -5453,10 +5714,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 设置信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysSetting'
       produces:
@@ -5485,10 +5748,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 设置
         in: body
         name: sys_setting
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysSetting'
@@ -5519,10 +5784,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 设置
         in: body
         name: sys_setting
+        required: false
         schema:
           $ref: '#/definitions/types.SysSetting'
       produces:
@@ -5549,10 +5816,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 设置id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -5578,18 +5847,22 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       - description: 所属应用
         in: query
         name: app_name
+        required: false
         type: string
       produces:
       - application/json
@@ -5617,10 +5890,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 设置信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -5649,10 +5924,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysTable'
       produces:
@@ -5681,10 +5958,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表
         in: body
         name: sys_table
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysTable'
@@ -5715,10 +5994,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表字段信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysTableColumn'
       produces:
@@ -5747,10 +6028,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表字段
         in: body
         name: sys_table_column
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysTableColumn'
@@ -5781,10 +6064,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表字段
         in: body
         name: sys_table_column
+        required: false
         schema:
           $ref: '#/definitions/types.SysTableColumn'
       produces:
@@ -5811,10 +6096,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表字段id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -5840,14 +6127,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -5875,10 +6165,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表字段信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -5907,10 +6199,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表
         in: body
         name: sys_table
+        required: false
         schema:
           $ref: '#/definitions/types.SysTable'
       produces:
@@ -5937,10 +6231,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -5966,14 +6262,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -6001,10 +6300,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 表信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysRole'
       produces:
@@ -6033,10 +6334,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签信息
         in: body
         name: sys_tag
+        required: false
         schema:
           $ref: '#/definitions/types.SysTag'
       produces:
@@ -6065,10 +6368,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 删除标签
         in: body
         name: sys_tag
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysTag'
@@ -6099,10 +6404,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签
         in: body
         name: sys_tag
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplate'
       produces:
@@ -6129,10 +6436,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -6160,10 +6469,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签组信息
         in: body
         name: sys_tag_group
+        required: false
         schema:
           $ref: '#/definitions/types.SysTagGroup'
       produces:
@@ -6192,10 +6503,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签
         in: body
         name: sys_tag_group
+        required: false
         schema:
           $ref: '#/definitions/types.SysTagGroup'
       produces:
@@ -6222,10 +6535,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签组id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -6251,14 +6566,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -6286,10 +6604,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签组信息
         in: body
         name: sys_tag_group
+        required: false
         schema:
           $ref: '#/definitions/types.SysTagGroup'
       produces:
@@ -6316,14 +6636,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -6351,10 +6674,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 标签信息
         in: body
         name: sys_tag
+        required: false
         schema:
           $ref: '#/definitions/types.SysTag'
       produces:
@@ -6381,10 +6706,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 日志id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -6410,14 +6737,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -6445,10 +6775,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysUser'
       produces:
@@ -6477,10 +6809,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户信息
         in: body
         name: user
+        required: false
         schema:
           items:
             $ref: '#/definitions/types.SysUser'
@@ -6511,10 +6845,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysUser'
       produces:
@@ -6541,10 +6877,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -6572,6 +6910,7 @@ paths:
       - description: 用户信息
         in: body
         name: payload
+        required: false
         schema:
           $ref: '#/definitions/types.Login'
       produces:
@@ -6598,6 +6937,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -6623,14 +6963,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -6658,10 +7001,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板信息
         in: body
         name: sys_user_template
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplate'
       produces:
@@ -6690,10 +7035,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板信息
         in: body
         name: sys_user_template
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplate'
       produces:
@@ -6722,10 +7069,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板详情信息
         in: body
         name: sys_user_template_detail
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplateDetail'
       produces:
@@ -6754,10 +7103,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板详情信息
         in: body
         name: sys_user_template_detail
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplateDetail'
       produces:
@@ -6784,10 +7135,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板详情id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -6813,14 +7166,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -6848,10 +7204,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板详情信息
         in: body
         name: sys_user_template_detail
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplateDetail'
       produces:
@@ -6878,10 +7236,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板id
         in: query
         name: id
+        required: false
         type: string
       produces:
       - application/json
@@ -6907,14 +7267,17 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 页码
         in: query
         name: page
+        required: false
         type: integer
       - description: 单页数
         in: query
         name: size
+        required: false
         type: integer
       produces:
       - application/json
@@ -6942,10 +7305,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户模板信息
         in: body
         name: sys_user_template
+        required: false
         schema:
           $ref: '#/definitions/types.SysUserTemplate'
       produces:
@@ -6974,10 +7339,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: 用户信息
         in: body
         name: user
+        required: false
         schema:
           $ref: '#/definitions/types.SysUser'
       produces:
@@ -7026,10 +7393,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: worker信息
         in: body
         name: worker
+        required: false
         schema:
           $ref: '#/definitions/types.Worker'
       produces:
@@ -7056,10 +7425,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: worker code
         in: query
         name: code
+        required: false
         type: string
       produces:
       - application/json
@@ -7085,6 +7456,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -7109,6 +7481,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -7134,6 +7507,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
@@ -7181,10 +7555,12 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       - description: like id
         in: body
         name: id
+        required: false
         schema:
           $ref: '#/definitions/types.VoteInfo'
       produces:
@@ -7213,6 +7589,7 @@ paths:
       - description: 认证令牌
         in: header
         name: Authorization
+        required: false
         type: string
       produces:
       - application/json
