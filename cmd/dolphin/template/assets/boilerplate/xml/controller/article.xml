@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="article" desc="Add article" method="post">
+    <api name="batch_add" func="add" table="article" desc="Batch add article" method="post">
         <param name="article" type="[]$article" desc="Article info" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="article" desc="Delete article" method="delete">
+    <api name="batch_del" func="delete" table="article" desc="Batch delete article" method="delete">
         <param name="article" type="[]$article" desc="article" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="article" desc="Update article" method="put">
+    <api name="batch_update" func="update" table="article" desc="Batch update article" method="put">
         <param name="article" type="[]$article" desc="Article info" />
         <return>
             <success type="$success"/>

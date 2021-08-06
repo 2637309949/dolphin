@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"go/ast"
 	"go/build"
-	goparser "go/parser"
+	"go/parser"
 	"go/token"
 	"io/ioutil"
 	"net/http"
@@ -244,19 +244,19 @@ func initIfEmpty(license *spec.License) *spec.License {
 }
 
 // ParseGeneralAPIInfo parses general api info for given mainAPIFile path
-func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
+func (p *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 	fileSet := token.NewFileSet()
-	fileTree, err := goparser.ParseFile(fileSet, mainAPIFile, nil, goparser.ParseComments)
+	fileTree, err := parser.ParseFile(fileSet, mainAPIFile, nil, parser.ParseComments)
 	if err != nil {
 		return fmt.Errorf("cannot parse source files %s: %s", mainAPIFile, err)
 	}
 	// inital
-	parser.swagger.Swagger = "2.0"
-	parser.swagger.Host = viper.GetString("app.host")
-	parser.swagger.Info.Title = viper.GetString("app.name")
-	parser.swagger.Info.Version = viper.GetString("app.version")
-	parser.swagger.Info.License.Name = viper.GetString("swag.license.name")
-	parser.swagger.Info.License.URL = viper.GetString("swag.license.url")
+	p.swagger.Swagger = "2.0"
+	p.swagger.Host = viper.GetString("app.host")
+	p.swagger.Info.Title = viper.GetString("app.name")
+	p.swagger.Info.Version = viper.GetString("app.version")
+	p.swagger.Info.License.Name = viper.GetString("swag.license.name")
+	p.swagger.Info.License.URL = viper.GetString("swag.license.url")
 	securityMap := map[string]*spec.SecurityScheme{}
 	securityMap[viper.GetString("swag.securitydefinitions.oauth2.accessCode")] = securitySchemeOAuth2AccessToken(viper.GetString("oauth.server")+viper.GetString("swag.authorizationurl"), viper.GetString("oauth.server")+viper.GetString("swag.tokenUrl"), map[string]string{
 		"read":  viper.GetString("swag.scope.read"),
@@ -282,72 +282,72 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 			}
 			switch attribute {
 			case "@version":
-				parser.swagger.Info.Version = value
+				p.swagger.Info.Version = value
 			case "@title":
-				parser.swagger.Info.Title = value
+				p.swagger.Info.Title = value
 			case "@description":
 				if multilineBlock {
-					parser.swagger.Info.Description += "\n" + value
+					p.swagger.Info.Description += "\n" + value
 					continue
 				}
-				parser.swagger.Info.Description = value
+				p.swagger.Info.Description = value
 			case "@description.markdown":
-				commentInfo, err := getMarkdownForTag("api", parser.markdownFileDir)
+				commentInfo, err := getMarkdownForTag("api", p.markdownFileDir)
 				if err != nil {
 					return err
 				}
-				parser.swagger.Info.Description = string(commentInfo)
+				p.swagger.Info.Description = string(commentInfo)
 			case "@termsofservice":
-				parser.swagger.Info.TermsOfService = value
+				p.swagger.Info.TermsOfService = value
 			case "@contact.name":
-				parser.swagger.Info.Contact.Name = value
+				p.swagger.Info.Contact.Name = value
 			case "@contact.email":
-				parser.swagger.Info.Contact.Email = value
+				p.swagger.Info.Contact.Email = value
 			case "@contact.url":
-				parser.swagger.Info.Contact.URL = value
+				p.swagger.Info.Contact.URL = value
 			case "@license.name":
-				parser.swagger.Info.License = initIfEmpty(parser.swagger.Info.License)
-				parser.swagger.Info.License.Name = value
+				p.swagger.Info.License = initIfEmpty(p.swagger.Info.License)
+				p.swagger.Info.License.Name = value
 			case "@license.url":
-				parser.swagger.Info.License = initIfEmpty(parser.swagger.Info.License)
-				parser.swagger.Info.License.URL = value
+				p.swagger.Info.License = initIfEmpty(p.swagger.Info.License)
+				p.swagger.Info.License.URL = value
 			case "@host":
-				parser.swagger.Host = value
+				p.swagger.Host = value
 			case "@basepath":
-				parser.swagger.BasePath = value
+				p.swagger.BasePath = value
 			case "@schemes":
-				parser.swagger.Schemes = getSchemes(commentLine)
+				p.swagger.Schemes = getSchemes(commentLine)
 			case "@tag.name":
-				parser.swagger.Tags = append(parser.swagger.Tags, spec.Tag{
+				p.swagger.Tags = append(p.swagger.Tags, spec.Tag{
 					TagProps: spec.TagProps{
 						Name: value,
 					},
 				})
 			case "@tag.description":
-				tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
+				tag := p.swagger.Tags[len(p.swagger.Tags)-1]
 				tag.TagProps.Description = value
-				replaceLastTag(parser.swagger.Tags, tag)
+				replaceLastTag(p.swagger.Tags, tag)
 			case "@tag.description.markdown":
-				tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
-				commentInfo, err := getMarkdownForTag(tag.TagProps.Name, parser.markdownFileDir)
+				tag := p.swagger.Tags[len(p.swagger.Tags)-1]
+				commentInfo, err := getMarkdownForTag(tag.TagProps.Name, p.markdownFileDir)
 				if err != nil {
 					return err
 				}
 				tag.TagProps.Description = string(commentInfo)
-				replaceLastTag(parser.swagger.Tags, tag)
+				replaceLastTag(p.swagger.Tags, tag)
 			case "@tag.docs.url":
-				tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
+				tag := p.swagger.Tags[len(p.swagger.Tags)-1]
 				tag.TagProps.ExternalDocs = &spec.ExternalDocumentation{
 					URL: value,
 				}
-				replaceLastTag(parser.swagger.Tags, tag)
+				replaceLastTag(p.swagger.Tags, tag)
 			case "@tag.docs.description":
-				tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
+				tag := p.swagger.Tags[len(p.swagger.Tags)-1]
 				if tag.TagProps.ExternalDocs == nil {
 					return fmt.Errorf("%s needs to come after a @tags.docs.url", attribute)
 				}
 				tag.TagProps.ExternalDocs.Description = value
-				replaceLastTag(parser.swagger.Tags, tag)
+				replaceLastTag(p.swagger.Tags, tag)
 			case "@securitydefinitions.basic":
 				securityMap[value] = spec.BasicAuth()
 			case "@securitydefinitions.apikey":
@@ -384,7 +384,7 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 				// ignore this
 				break
 			case "@query.collection.format":
-				parser.collectionFormatInQuery = value
+				p.collectionFormatInQuery = value
 			default:
 				prefixExtension := "@x-"
 				if len(attribute) > 5 { // Prefix extension + 1 char + 1 space  + 1 char
@@ -400,9 +400,9 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 						}
 
 						if strings.Contains(extensionName, "logo") {
-							parser.swagger.Info.Extensions.Add(extensionName, valueJSON)
+							p.swagger.Info.Extensions.Add(extensionName, valueJSON)
 						} else {
-							parser.swagger.AddExtension(extensionName, valueJSON)
+							p.swagger.AddExtension(extensionName, valueJSON)
 						}
 					}
 				}
@@ -412,7 +412,7 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 	}
 
 	if len(securityMap) > 0 {
-		parser.swagger.SecurityDefinitions = securityMap
+		p.swagger.SecurityDefinitions = securityMap
 	}
 
 	return nil
@@ -1379,17 +1379,17 @@ func (parser *Parser) getAllGoFileInfoFromDeps(pkg *depth.Pkg) error {
 	return nil
 }
 
-func (parser *Parser) parseFile(packageDir, path string, src interface{}) error {
+func (p *Parser) parseFile(packageDir, path string, src interface{}) error {
 	if strings.HasSuffix(strings.ToLower(path), "_test.go") || filepath.Ext(path) != ".go" {
 		return nil
 	}
 
 	// positions are relative to FileSet
-	astFile, err := goparser.ParseFile(token.NewFileSet(), path, src, goparser.ParseComments)
+	astFile, err := parser.ParseFile(token.NewFileSet(), path, src, parser.ParseComments)
 	if err != nil {
 		return fmt.Errorf("ParseFile error:%+v", err)
 	}
-	parser.packages.CollectAstFile(packageDir, path, astFile)
+	p.packages.CollectAstFile(packageDir, path, astFile)
 	return nil
 }
 

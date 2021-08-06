@@ -45,13 +45,15 @@ func (m *Doc) After(*parser.AppParser, []*parser.TmplCfg) error {
 
 // Build func
 func (m *Doc) Build(dir string, args []string, appParser *parser.AppParser) ([]*parser.TmplCfg, error) {
-	return []*parser.TmplCfg{}, gen.New().Build(&gen.Config{
-		SearchDir:          dir,
-		MainAPIFile:        "main.go",
-		PropNamingStrategy: "camelcase",
-		MarkdownFilesDir:   "",
-		OutputDir:          path.Join(dir, viper.GetString("dir.doc")),
-		ParseVendor:        true,
-		ParseDependency:    true,
-	})
+	swagger := gen.New()
+	return []*parser.TmplCfg{},
+		swagger.Build(&gen.Config{
+			SearchDir:          dir,
+			MainAPIFile:        "main.go",
+			PropNamingStrategy: "camelcase",
+			MarkdownFilesDir:   "",
+			OutputDir:          path.Join(dir, viper.GetString("dir.doc")),
+			ParseVendor:        true,
+			ParseDependency:    true,
+		})
 }
