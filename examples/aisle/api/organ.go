@@ -44,7 +44,7 @@ func (ctr *Organ) OrganAdd(ctx *Context) {
 }
 
 // OrganBatchAdd api implementation
-// @Summary 添加城市
+// @Summary 批量添加城市
 // @Tags 城市
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -109,7 +109,7 @@ func (ctr *Organ) OrganDel(ctx *Context) {
 }
 
 // OrganBatchDel api implementation
-// @Summary 删除城市
+// @Summary 批量删除城市
 // @Tags 城市
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -170,7 +170,7 @@ func (ctr *Organ) OrganUpdate(ctx *Context) {
 }
 
 // OrganBatchUpdate api implementation
-// @Summary 更新城市
+// @Summary 批量更新城市
 // @Tags 城市
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

@@ -45,7 +45,7 @@ func (ctr *SysOptionset) SysOptionsetAdd(ctx *Context) {
 }
 
 // SysOptionsetBatchAdd api implementation
-// @Summary 添加字典
+// @Summary 批量添加字典
 // @Tags 字典
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -110,7 +110,7 @@ func (ctr *SysOptionset) SysOptionsetDel(ctx *Context) {
 }
 
 // SysOptionsetBatchDel api implementation
-// @Summary 删除字典
+// @Summary 批量删除字典
 // @Tags 字典
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -171,7 +171,7 @@ func (ctr *SysOptionset) SysOptionsetUpdate(ctx *Context) {
 }
 
 // SysOptionsetBatchUpdate api implementation
-// @Summary 更新字典
+// @Summary 批量更新字典
 // @Tags 字典
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

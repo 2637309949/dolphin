@@ -43,7 +43,7 @@ func (ctr *SysTagGroup) SysTagGroupAdd(ctx *Context) {
 }
 
 // SysTagGroupBatchAdd api implementation
-// @Summary 添加标签组
+// @Summary 批量添加标签组
 // @Tags 标签组
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -108,7 +108,7 @@ func (ctr *SysTagGroup) SysTagGroupDel(ctx *Context) {
 }
 
 // SysTagGroupBatchDel api implementation
-// @Summary 删除标签组
+// @Summary 批量删除标签组
 // @Tags 标签组
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -169,7 +169,7 @@ func (ctr *SysTagGroup) SysTagGroupUpdate(ctx *Context) {
 }
 
 // SysTagGroupBatchUpdate api implementation
-// @Summary 更新标签组
+// @Summary 批量更新标签组
 // @Tags 标签组
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

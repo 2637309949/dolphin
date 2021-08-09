@@ -43,7 +43,7 @@ func (ctr *SysComment) SysCommentAdd(ctx *Context) {
 }
 
 // SysCommentBatchAdd api implementation
-// @Summary 添加评论
+// @Summary 批量添加评论
 // @Tags 评论
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -168,7 +168,7 @@ func (ctr *SysComment) SysCommentUpdate(ctx *Context) {
 }
 
 // SysCommentBatchUpdate api implementation
-// @Summary 更新评论
+// @Summary 批量更新评论
 // @Tags 评论
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

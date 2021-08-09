@@ -51,7 +51,7 @@ func (ctr *SysAttachment) SysAttachmentAdd(ctx *Context) {
 }
 
 // SysAttachmentBatchAdd api implementation
-// @Summary 添加附件
+// @Summary 批量添加附件
 // @Tags 附件
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -204,7 +204,7 @@ func (ctr *SysAttachment) SysAttachmentDel(ctx *Context) {
 }
 
 // SysAttachmentBatchDel api implementation
-// @Summary 删除附件
+// @Summary 批量删除附件
 // @Tags 附件
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -265,7 +265,7 @@ func (ctr *SysAttachment) SysAttachmentUpdate(ctx *Context) {
 }
 
 // SysAttachmentBatchUpdate api implementation
-// @Summary 添加附件
+// @Summary 批量添加附件
 // @Tags 附件
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

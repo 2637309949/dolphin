@@ -61,7 +61,7 @@ func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 }
 
 // SysMenuBatchAdd api implementation
-// @Summary 添加菜单
+// @Summary 批量添加菜单
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -203,7 +203,7 @@ func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 }
 
 // SysMenuBatchUpdate api implementation
-// @Summary 更新菜单
+// @Summary 批量更新菜单
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

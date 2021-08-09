@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_setting" method="post" desc="添加设置">
+    <api name="batch_add" func="add" table="sys_setting" method="post" desc="批量添加设置">
         <param name="sys_setting" type="[]$sys_setting" desc="设置信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_setting" method="delete" desc="删除设置">
+    <api name="batch_del" func="delete" table="sys_setting" method="delete" desc="批量删除设置">
         <param name="sys_setting" type="[]$sys_setting" desc="设置" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_setting" method="put" desc="更新设置">
+    <api name="batch_update" func="update" table="sys_setting" method="put" desc="批量更新设置">
         <param name="sys_setting" type="[]$sys_setting" desc="设置信息" />
         <return>
             <success type="$success"/>

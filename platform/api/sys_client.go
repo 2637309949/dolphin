@@ -45,7 +45,7 @@ func (ctr *SysClient) SysClientAdd(ctx *Context) {
 }
 
 // SysClientBatchAdd api implementation
-// @Summary 添加客户端
+// @Summary 批量添加客户端
 // @Tags 客户端
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -110,7 +110,7 @@ func (ctr *SysClient) SysClientDel(ctx *Context) {
 }
 
 // SysClientBatchDel api implementation
-// @Summary 删除客户端
+// @Summary 批量删除客户端
 // @Tags 客户端
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -171,7 +171,7 @@ func (ctr *SysClient) SysClientUpdate(ctx *Context) {
 }
 
 // SysClientBatchUpdate api implementation
-// @Summary 更新客户端
+// @Summary 批量更新客户端
 // @Tags 客户端
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

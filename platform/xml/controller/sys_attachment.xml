@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_attachment" method="post" desc="添加附件">
+    <api name="batch_add" func="add" table="sys_attachment" method="post" desc="批量添加附件">
         <param name="sys_attachment" type="[]$sys_attachment" desc="附件信息" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_attachment" method="post" desc="删除附件">
+    <api name="batch_del" func="delete" table="sys_attachment" method="post" desc="批量删除附件">
         <param name="sys_attachment" type="[]$sys_attachment" desc="附件" />
         <return>
             <success type="$success"/>
@@ -48,7 +48,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_attachment" method="post" desc="添加附件">
+    <api name="batch_update" func="update" table="sys_attachment" method="post" desc="批量添加附件">
         <param name="sys_attachment" type="[]$sys_attachment" desc="附件信息" />
         <return>
             <success type="$success"/>

@@ -43,7 +43,7 @@ func (ctr *SysRoleMenu) SysRoleMenuAdd(ctx *Context) {
 }
 
 // SysRoleMenuBatchAdd api implementation
-// @Summary 添加角色菜单
+// @Summary 批量添加角色菜单
 // @Tags 角色菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -111,7 +111,7 @@ func (ctr *SysRoleMenu) SysRoleMenuDel(ctx *Context) {
 }
 
 // SysRoleMenuBatchDel api implementation
-// @Summary 删除角色菜单
+// @Summary 批量删除角色菜单
 // @Tags 角色菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -172,7 +172,7 @@ func (ctr *SysRoleMenu) SysRoleMenuUpdate(ctx *Context) {
 }
 
 // SysRoleMenuBatchUpdate api implementation
-// @Summary 更新角色菜单
+// @Summary 批量更新角色菜单
 // @Tags 角色菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

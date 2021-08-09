@@ -43,7 +43,7 @@ func (ctr *SysTag) SysTagAdd(ctx *Context) {
 }
 
 // SysTagBatchAdd api implementation
-// @Summary 添加标签
+// @Summary 批量添加标签
 // @Tags 标签
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -169,7 +169,7 @@ func (ctr *SysTag) SysTagUpdate(ctx *Context) {
 }
 
 // SysTagBatchUpdate api implementation
-// @Summary 更新标签
+// @Summary 批量更新标签
 // @Tags 标签
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

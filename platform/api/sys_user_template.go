@@ -41,7 +41,7 @@ func (ctr *SysUserTemplate) SysUserTemplateAdd(ctx *Context) {
 }
 
 // SysUserTemplateBatchAdd api implementation
-// @Summary 添加用户模板
+// @Summary 批量添加用户模板
 // @Tags 用户模板
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -104,7 +104,7 @@ func (ctr *SysUserTemplate) SysUserTemplateDel(ctx *Context) {
 }
 
 // SysUserTemplateBatchDel api implementation
-// @Summary 删除用户模板
+// @Summary 批量删除用户模板
 // @Tags 用户模板
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -163,7 +163,7 @@ func (ctr *SysUserTemplate) SysUserTemplateUpdate(ctx *Context) {
 }
 
 // SysUserTemplateBatchUpdate api implementation
-// @Summary 更新用户模板
+// @Summary 批量更新用户模板
 // @Tags 用户模板
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

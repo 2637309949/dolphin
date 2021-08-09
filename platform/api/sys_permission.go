@@ -43,7 +43,7 @@ func (ctr *SysPermission) SysPermissionAdd(ctx *Context) {
 }
 
 // SysPermissionBatchAdd api implementation
-// @Summary 添加权限
+// @Summary 批量添加权限
 // @Tags 权限
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -108,7 +108,7 @@ func (ctr *SysPermission) SysPermissionDel(ctx *Context) {
 }
 
 // SysPermissionBatchDel api implementation
-// @Summary 删除权限
+// @Summary 批量删除权限
 // @Tags 权限
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -169,7 +169,7 @@ func (ctr *SysPermission) SysPermissionUpdate(ctx *Context) {
 }
 
 // SysPermissionBatchUpdate api implementation
-// @Summary 更新权限
+// @Summary 批量更新权限
 // @Tags 权限
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

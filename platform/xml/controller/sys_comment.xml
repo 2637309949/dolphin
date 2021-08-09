@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_comment" method="post" desc="添加评论">
+    <api name="batch_add" func="add" table="sys_comment" method="post" desc="批量添加评论">
         <param name="sys_comment" type="[]$sys_comment" desc="评论信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_comment"  method="delete" desc="删除评论">
+    <api name="batch_del" func="delete" table="sys_comment"  method="delete" desc="批量删除评论">
         <param name="sys_comment" type="[]$sys_user_template" desc="评论" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_comment" method="put" desc="更新评论">
+    <api name="batch_update" func="update" table="sys_comment" method="put" desc="批量更新评论">
         <param name="sys_comment" type="[]$sys_comment" desc="评论信息" />
         <return>
             <success type="$success"/>

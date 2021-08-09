@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_domain" method="post" desc="添加域">
+    <api name="batch_add" func="add" table="sys_domain" method="post" desc="批量添加域">
         <param name="sys_domain" type="[]$sys_domain" desc="域信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_domain" method="delete" desc="删除域">
+    <api name="batch_del" func="delete" table="sys_domain" method="delete" desc="批量删除域">
         <param name="sys_domain" type="[]$sys_domain" desc="域信息" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_domain" method="put" desc="更新域">
+    <api name="batch_update" func="update" table="sys_domain" method="put" desc="批量更新域">
         <param name="sys_domain" type="[]$sys_domain" desc="域信息" />
         <return>
             <success type="$success"/>

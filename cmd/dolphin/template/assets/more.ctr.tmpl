@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="{{.more}}" method="post" desc="添加{{.more}}">
+    <api name="batch_add" func="add" table="{{.more}}" method="post" desc="批量添加{{.more}}">
         <param name="{{.more}}" type="[]${{.more}}" desc="{{.more}}信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="{{.more}}" method="delete" desc="删除{{.more}}">
+    <api name="batch_del" func="delete" table="{{.more}}" method="delete" desc="批量删除{{.more}}">
         <param name="{{.more}}" type="[]${{.more}}" desc="{{.more}}" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="{{.more}}" method="put" desc="更新{{.more}}">
+    <api name="batch_update" func="update" table="{{.more}}" method="put" desc="批量更新{{.more}}">
         <param name="{{.more}}" type="[]${{.more}}" desc="{{.more}}信息" />
         <return>
             <success type="$success"/>

@@ -43,7 +43,7 @@ func (ctr *SysSchedule) SysScheduleAdd(ctx *Context) {
 }
 
 // SysScheduleBatchAdd api implementation
-// @Summary 添加调度
+// @Summary 批量添加调度
 // @Tags 调度
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -107,7 +107,7 @@ func (ctr *SysSchedule) SysScheduleDel(ctx *Context) {
 }
 
 // SysScheduleBatchDel api implementation
-// @Summary 删除调度
+// @Summary 批量删除调度
 // @Tags 调度
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -168,7 +168,7 @@ func (ctr *SysSchedule) SysScheduleUpdate(ctx *Context) {
 }
 
 // SysScheduleBatchUpdate api implementation
-// @Summary 更新调度
+// @Summary 批量更新调度
 // @Tags 调度
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

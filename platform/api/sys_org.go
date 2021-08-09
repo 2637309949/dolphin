@@ -43,7 +43,7 @@ func (ctr *SysOrg) SysOrgAdd(ctx *Context) {
 }
 
 // SysOrgBatchAdd api implementation
-// @Summary 添加组织
+// @Summary 批量添加组织
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -108,7 +108,7 @@ func (ctr *SysOrg) SysOrgDel(ctx *Context) {
 }
 
 // SysOrgBatchDel api implementation
-// @Summary 删除组织
+// @Summary 批量删除组织
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -169,7 +169,7 @@ func (ctr *SysOrg) SysOrgUpdate(ctx *Context) {
 }
 
 // SysOrgBatchUpdate api implementation
-// @Summary 更新组织
+// @Summary 批量更新组织
 // @Tags 组织
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

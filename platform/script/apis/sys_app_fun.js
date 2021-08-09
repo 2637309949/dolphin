@@ -20,7 +20,7 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
-// batchAdd 添加APP功能
+// batchAdd 批量添加APP功能
 module.exports.batchAdd = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/app/fun/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
@@ -58,7 +58,7 @@ module.exports.del = (data = {}, opt = {}) => {
   })
 }
 
-// batchDel 删除APP功能
+// batchDel 批量删除APP功能
 module.exports.batchDel = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/app/fun/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
@@ -96,7 +96,7 @@ module.exports.update = (data = {}, opt = {}) => {
   })
 }
 
-// batchUpdate 更新APP功能
+// batchUpdate 批量更新APP功能
 module.exports.batchUpdate = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/app/fun/batch_update' }, opt).url
   if ((opt.method || 'put') === 'get') {

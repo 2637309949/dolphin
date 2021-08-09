@@ -43,7 +43,7 @@ func (ctr *SysTableColumn) SysTableColumnAdd(ctx *Context) {
 }
 
 // SysTableColumnBatchAdd api implementation
-// @Summary 添加表字段
+// @Summary 批量添加表字段
 // @Tags 表字段
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -107,7 +107,7 @@ func (ctr *SysTableColumn) SysTableColumnDel(ctx *Context) {
 }
 
 // SysTableColumnBatchDel api implementation
-// @Summary 删除表字段
+// @Summary 批量删除表字段
 // @Tags 表字段
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -168,7 +168,7 @@ func (ctr *SysTableColumn) SysTableColumnUpdate(ctx *Context) {
 }
 
 // SysTableColumnBatchUpdate api implementation
-// @Summary 更新表字段
+// @Summary 批量更新表字段
 // @Tags 表字段
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

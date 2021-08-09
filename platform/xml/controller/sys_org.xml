@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_org" method="post" desc="添加组织">
+    <api name="batch_add" func="add" table="sys_org" method="post" desc="批量添加组织">
         <param name="sys_org" type="[]$sys_org" desc="组织信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_org" method="delete" desc="删除组织">
+    <api name="batch_del" func="delete" table="sys_org" method="delete" desc="批量删除组织">
         <param name="sys_org" type="[]$sys_org" desc="组织" />
         <return>
             <success type="$response" />
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_org" method="put" desc="更新组织">
+    <api name="batch_update" func="update" table="sys_org" method="put" desc="批量更新组织">
         <param name="sys_org" type="[]$sys_org" desc="组织信息" />
         <return>
             <success type="$success"/>

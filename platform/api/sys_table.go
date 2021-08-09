@@ -43,7 +43,7 @@ func (ctr *SysTable) SysTableAdd(ctx *Context) {
 }
 
 // SysTableBatchAdd api implementation
-// @Summary 添加表
+// @Summary 批量添加表
 // @Tags 表
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -107,7 +107,7 @@ func (ctr *SysTable) SysTableDel(ctx *Context) {
 }
 
 // SysTableBatchDel api implementation
-// @Summary 删除表
+// @Summary 批量删除表
 // @Tags 表
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -168,7 +168,7 @@ func (ctr *SysTable) SysTableUpdate(ctx *Context) {
 }
 
 // SysTableBatchUpdate api implementation
-// @Summary 更新表
+// @Summary 批量更新表
 // @Tags 表
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

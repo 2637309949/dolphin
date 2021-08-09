@@ -43,7 +43,7 @@ func (ctr *SysSetting) SysSettingAdd(ctx *Context) {
 }
 
 // SysSettingBatchAdd api implementation
-// @Summary 添加设置
+// @Summary 批量添加设置
 // @Tags 设置
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -107,7 +107,7 @@ func (ctr *SysSetting) SysSettingDel(ctx *Context) {
 }
 
 // SysSettingBatchDel api implementation
-// @Summary 删除设置
+// @Summary 批量删除设置
 // @Tags 设置
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -168,7 +168,7 @@ func (ctr *SysSetting) SysSettingUpdate(ctx *Context) {
 }
 
 // SysSettingBatchUpdate api implementation
-// @Summary 更新设置
+// @Summary 批量更新设置
 // @Tags 设置
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

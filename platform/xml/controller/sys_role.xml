@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_role" method="post" desc="添加角色">
+    <api name="batch_add" func="add" table="sys_role" method="post" desc="批量添加角色">
         <param name="sys_role" type="[]$sys_role" desc="角色信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_role" method="delete" desc="删除角色">
+    <api name="batch_del" func="delete" table="sys_role" method="delete" desc="批量删除角色">
         <param name="user" type="[]$sys_role" desc="角色信息" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_role" method="post" desc="更新角色">
+    <api name="batch_update" func="update" table="sys_role" method="post" desc="批量更新角色">
         <param name="sys_role" type="[]$sys_role" desc="角色信息" />
         <return>
             <success type="$success"/>

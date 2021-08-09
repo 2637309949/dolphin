@@ -56,7 +56,7 @@ func (ctr *SysUser) SysUserAdd(ctx *Context) {
 }
 
 // SysUserBatchAdd api implementation
-// @Summary 添加用户
+// @Summary 批量添加用户
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -121,7 +121,7 @@ func (ctr *SysUser) SysUserDel(ctx *Context) {
 }
 
 // SysUserBatchDel api implementation
-// @Summary 删除用户
+// @Summary 批量删除用户
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -239,7 +239,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 }
 
 // SysUserBatchUpdate api implementation
-// @Summary 更新用户
+// @Summary 批量更新用户
 // @Tags 用户
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

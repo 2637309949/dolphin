@@ -33,14 +33,14 @@ type ArticleInfo struct {
 ### controller
 ```xml
 <controller name="article" desc="文章">
-    <api name="add" func="add" table="article" method="post" desc="添加文章">
+    <api name="add" func="add" table="article" method="post" desc="批量添加文章">
         <param name="article" type="$article" desc="文章信息"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="article" desc="添加文章" method="post">
+    <api name="batch_add" func="add" table="article" desc="批量添加文章" method="post">
         <param name="article" type="[]$article" desc="文章信息" />
         <return>
             <success type="$success"/>
@@ -54,7 +54,7 @@ type ArticleInfo struct {
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="article" desc="删除文章" method="put">
+    <api name="batch_del" func="delete" table="article" desc="批量删除文章" method="put">
         <param name="article" type="[]$article" desc="文章信息" />
         <return>
             <success type="$success"/>
@@ -68,7 +68,7 @@ type ArticleInfo struct {
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="article" desc="更新文章" method="put">
+    <api name="batch_update" func="update" table="article" desc="批量更新文章" method="put">
         <param name="article" type="[]$article" desc="文章信息" />
         <return>
             <success type="$success"/>
@@ -150,7 +150,7 @@ func (ctr *Article) ArticleAdd(ctx *Context) {
 }
 
 // ArticleBatchAdd api implementation
-// @Summary 添加文章
+// @Summary 批量添加文章
 // @Tags 文章
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -215,7 +215,7 @@ func (ctr *Article) ArticleDel(ctx *Context) {
 }
 
 // ArticleBatchDel api implementation
-// @Summary 删除文章
+// @Summary 批量删除文章
 // @Tags 文章
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -276,7 +276,7 @@ func (ctr *Article) ArticleUpdate(ctx *Context) {
 }
 
 // ArticleBatchUpdate api implementation
-// @Summary 更新文章
+// @Summary 批量更新文章
 // @Tags 文章
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

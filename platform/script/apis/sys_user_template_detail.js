@@ -20,7 +20,7 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
-// batchAdd 添加用户模板详情
+// batchAdd 批量添加用户模板详情
 module.exports.batchAdd = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/template/detail/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
@@ -58,7 +58,7 @@ module.exports.del = (data = {}, opt = {}) => {
   })
 }
 
-// batchDel 删除用户模板详情
+// batchDel 批量删除用户模板详情
 module.exports.batchDel = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/template/detail/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
@@ -96,7 +96,7 @@ module.exports.update = (data = {}, opt = {}) => {
   })
 }
 
-// batchUpdate 更新用户模板详情
+// batchUpdate 批量更新用户模板详情
 module.exports.batchUpdate = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/user/template/detail/batch_update' }, opt).url
   if ((opt.method || 'put') === 'get') {

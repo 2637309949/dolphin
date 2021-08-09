@@ -20,7 +20,7 @@ module.exports.add = (data = {}, opt = {}) => {
   })
 }
 
-// batchAdd 添加表
+// batchAdd 批量添加表
 module.exports.batchAdd = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/table/batch_add' }, opt).url
   if ((opt.method || 'post') === 'get') {
@@ -58,7 +58,7 @@ module.exports.del = (data = {}, opt = {}) => {
   })
 }
 
-// batchDel 删除表
+// batchDel 批量删除表
 module.exports.batchDel = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/table/batch_del' }, opt).url
   if ((opt.method || 'delete') === 'get') {
@@ -96,7 +96,7 @@ module.exports.update = (data = {}, opt = {}) => {
   })
 }
 
-// batchUpdate 更新表
+// batchUpdate 批量更新表
 module.exports.batchUpdate = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/table/batch_update' }, opt).url
   if ((opt.method || 'put') === 'get') {

@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_user_template_detail" method="post" desc="添加用户模板详情">
+    <api name="batch_add" func="add" table="sys_user_template_detail" method="post" desc="批量添加用户模板详情">
         <param name="sys_user_template_detail" type="[]$sys_user_template_detail" desc="用户模板详情信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_user_template_detail" method="delete" desc="删除用户模板详情">
+    <api name="batch_del" func="delete" table="sys_user_template_detail" method="delete" desc="批量删除用户模板详情">
         <param name="sys_user_template_detail" type="[]$sys_user_template_detail" desc="用户模板详情信息" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_user_template_detail" method="put" desc="更新用户模板详情">
+    <api name="batch_update" func="update" table="sys_user_template_detail" method="put" desc="批量更新用户模板详情">
         <param name="sys_user_template_detail" type="[]$sys_user_template_detail" desc="用户模板详情信息" />
         <return>
             <success type="$success"/>

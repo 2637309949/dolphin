@@ -43,16 +43,16 @@ func (ctr *SysAppFun) SysAppFunAdd(ctx *Context) {
 }
 
 // SysAppFunBatchAdd api implementation
-// @Summary 添加APP功能
+// @Summary 批量批量添加APP功能
 // @Tags APP功能
 // @Accept application/json
+// @Produce application/json
 // @Param Authorization header string false "认证令牌"
 // @Param sys_app_fun body []types.SysAppFun false "APP功能信息"
-// @Produce application/json
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router/api/sys/app/fun/batch_add [post]
+// @Router /api/sys/app/fun/batch_add [post]
 func (ctr *SysAppFun) SysAppFunBatchAdd(ctx *Context) {
 	var payload []types.SysAppFun
 	if err := ctx.ShouldBindWith(&payload); err != nil {
@@ -108,7 +108,7 @@ func (ctr *SysAppFun) SysAppFunDel(ctx *Context) {
 }
 
 // SysAppFunBatchDel api implementation
-// @Summary 删除APP功能
+// @Summary 批量删除APP功能
 // @Tags APP功能
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -169,7 +169,7 @@ func (ctr *SysAppFun) SysAppFunUpdate(ctx *Context) {
 }
 
 // SysAppFunBatchUpdate api implementation
-// @Summary 更新APP功能
+// @Summary 批量更新APP功能
 // @Tags APP功能
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

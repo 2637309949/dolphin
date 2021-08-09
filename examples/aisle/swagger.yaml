@@ -1165,7 +1165,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 添加城市
+      summary: 批量添加城市
       tags:
       - 城市
   /api/organ/batch_del:
@@ -1201,7 +1201,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除城市
+      summary: 批量删除城市
       tags:
       - 城市
   /api/organ/batch_update:
@@ -1237,7 +1237,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 更新城市
+      summary: 批量更新城市
       tags:
       - 城市
   /api/organ/del:
@@ -1375,6 +1375,42 @@ paths:
       summary: 更新城市
       tags:
       - 城市
+  /api/sys/app/fun/batch_add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 认证令牌
+        in: header
+        name: Authorization
+        required: false
+        type: string
+      - description: APP功能信息
+        in: body
+        name: sys_app_fun
+        required: false
+        schema:
+          items:
+            $ref: '#/definitions/types.SysAppFun'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 批量批量添加APP功能
+      tags:
+      - APP功能
   /api/sys/app/fun/del:
     delete:
       consumes:
@@ -2289,7 +2325,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除客户端
+      summary: 批量删除客户端
       tags:
       - 客户端
   /api/sys/client/del:
@@ -3431,7 +3467,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除字典
+      summary: 批量删除字典
       tags:
       - 字典
   /api/sys/optionset/del:
@@ -3636,7 +3672,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除组织
+      summary: 批量删除组织
       tags:
       - 组织
   /api/sys/org/del:
@@ -4028,7 +4064,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除角色
+      summary: 批量删除角色
       tags:
       - 角色
   /api/sys/role/del:
@@ -4163,7 +4199,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 添加角色菜单
+      summary: 批量添加角色菜单
       tags:
       - 角色菜单
   /api/sys/role/menu/batch_del:
@@ -4199,7 +4235,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除角色菜单
+      summary: 批量删除角色菜单
       tags:
       - 角色菜单
   /api/sys/role/menu/del:
@@ -4510,7 +4546,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除调度
+      summary: 批量删除调度
       tags:
       - 调度
   /api/sys/schedule/del:
@@ -4919,7 +4955,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除设置
+      summary: 批量删除设置
       tags:
       - 设置
   /api/sys/setting/del:
@@ -5129,7 +5165,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除表
+      summary: 批量删除表
       tags:
       - 表
   /api/sys/table/column/add:
@@ -5199,7 +5235,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除表字段
+      summary: 批量删除表字段
       tags:
       - 表字段
   /api/sys/table/column/del:
@@ -5980,7 +6016,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除用户
+      summary: 批量删除用户
       tags:
       - 用户
   /api/sys/user/del:

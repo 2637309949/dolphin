@@ -55,7 +55,7 @@ func (ctr *SysRole) SysRoleAdd(ctx *Context) {
 }
 
 // SysRoleBatchAdd api implementation
-// @Summary 添加角色
+// @Summary 批量添加角色
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -133,7 +133,7 @@ func (ctr *SysRole) SysRoleDel(ctx *Context) {
 }
 
 // SysRoleBatchDel api implementation
-// @Summary 删除角色
+// @Summary 批量删除角色
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -194,7 +194,7 @@ func (ctr *SysRole) SysRoleUpdate(ctx *Context) {
 }
 
 // SysRoleBatchUpdate api implementation
-// @Summary 更新角色
+// @Summary 批量更新角色
 // @Tags 角色
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

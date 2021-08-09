@@ -44,7 +44,7 @@ func (ctr *SysArea) SysAreaAdd(ctx *Context) {
 }
 
 // SysAreaBatchAdd api implementation
-// @Summary 添加区域
+// @Summary 批量添加区域
 // @Tags 区域
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -109,7 +109,7 @@ func (ctr *SysArea) SysAreaDel(ctx *Context) {
 }
 
 // SysAreaBatchDel api implementation
-// @Summary 删除文章
+// @Summary 批量删除文章
 // @Tags 区域
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -170,7 +170,7 @@ func (ctr *SysArea) SysAreaUpdate(ctx *Context) {
 }
 
 // SysAreaBatchUpdate api implementation
-// @Summary 更新文章
+// @Summary 批量更新文章
 // @Tags 区域
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

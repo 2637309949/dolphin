@@ -43,7 +43,7 @@ func (ctr *SysDataPermission) SysDataPermissionAdd(ctx *Context) {
 }
 
 // SysDataPermissionBatchAdd api implementation
-// @Summary 添加数据权限
+// @Summary 批量添加数据权限
 // @Tags 数据权限
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -108,7 +108,7 @@ func (ctr *SysDataPermission) SysDataPermissionDel(ctx *Context) {
 }
 
 // SysDataPermissionBatchDel api implementation
-// @Summary 删除数据权限
+// @Summary 批量删除数据权限
 // @Tags 数据权限
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -169,7 +169,7 @@ func (ctr *SysDataPermission) SysDataPermissionUpdate(ctx *Context) {
 }
 
 // SysDataPermissionBatchUpdate api implementation
-// @Summary 更新数据权限
+// @Summary 批量更新数据权限
 // @Tags 数据权限
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

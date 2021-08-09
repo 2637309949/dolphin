@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="organ" desc="添加城市" method="post">
+    <api name="batch_add" func="add" table="organ" desc="批量添加城市" method="post">
         <param name="organ" type="[]$organ" desc="城市信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="organ" desc="删除城市" method="put">
+    <api name="batch_del" func="delete" table="organ" desc="批量删除城市" method="put">
         <param name="organ" type="[]$organ" desc="城市信息" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="organ" desc="更新城市" method="put">
+    <api name="batch_update" func="update" table="organ" desc="批量更新城市" method="put">
         <param name="organ" type="[]$organ" desc="城市信息" />
         <return>
             <success type="$success"/>

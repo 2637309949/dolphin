@@ -43,7 +43,7 @@ func (ctr *SysNotification) SysNotificationAdd(ctx *Context) {
 }
 
 // SysNotificationBatchAdd api implementation
-// @Summary 添加站内消息
+// @Summary 批量添加站内消息
 // @Tags 站内消息
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -108,7 +108,7 @@ func (ctr *SysNotification) SysNotificationDel(ctx *Context) {
 }
 
 // SysNotificationBatchDel api implementation
-// @Summary 删除站内消息
+// @Summary 批量删除站内消息
 // @Tags 站内消息
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -169,7 +169,7 @@ func (ctr *SysNotification) SysNotificationUpdate(ctx *Context) {
 }
 
 // SysNotificationBatchUpdate api implementation
-// @Summary 更新站内消息
+// @Summary 批量更新站内消息
 // @Tags 站内消息
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

@@ -45,7 +45,7 @@ func (ctr *SysDomain) SysDomainAdd(ctx *Context) {
 }
 
 // SysDomainBatchAdd api implementation
-// @Summary 添加域
+// @Summary 批量添加域
 // @Tags 域
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -110,7 +110,7 @@ func (ctr *SysDomain) SysDomainDel(ctx *Context) {
 }
 
 // SysDomainBatchDel api implementation
-// @Summary 删除域
+// @Summary 批量删除域
 // @Tags 域
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -171,7 +171,7 @@ func (ctr *SysDomain) SysDomainUpdate(ctx *Context) {
 }
 
 // SysDomainBatchUpdate api implementation
-// @Summary 更新域
+// @Summary 批量更新域
 // @Tags 域
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

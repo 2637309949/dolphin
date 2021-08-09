@@ -6,7 +6,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_add" func="add" table="sys_data_permission" method="post" desc="添加数据权限">
+    <api name="batch_add" func="add" table="sys_data_permission" method="post" desc="批量添加数据权限">
         <param name="sys_data_permission" type="[]$sys_data_permission" desc="数据权限信息" />
         <return>
             <success type="$success"/>
@@ -20,7 +20,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_del" func="delete" table="sys_data_permission" method="delete" desc="删除数据权限">
+    <api name="batch_del" func="delete" table="sys_data_permission" method="delete" desc="批量删除数据权限">
         <param name="sys_data_permission" type="[]$sys_data_permission" desc="数据权限" />
         <return>
             <success type="$success"/>
@@ -34,7 +34,7 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="batch_update" func="update" table="sys_data_permission" method="put" desc="更新数据权限">
+    <api name="batch_update" func="update" table="sys_data_permission" method="put" desc="批量更新数据权限">
         <param name="sys_data_permission" type="[]$sys_data_permission" desc="数据权限信息" />
         <return>
             <success type="$success"/>

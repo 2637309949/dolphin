@@ -45,7 +45,7 @@ func (ctr *Article) ArticleAdd(ctx *Context) {
 }
 
 // ArticleBatchAdd api implementation
-// @Summary 添加文章
+// @Summary 批量添加文章
 // @Tags 文章
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -110,7 +110,7 @@ func (ctr *Article) ArticleDel(ctx *Context) {
 }
 
 // ArticleBatchDel api implementation
-// @Summary 删除文章
+// @Summary 批量删除文章
 // @Tags 文章
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
@@ -171,7 +171,7 @@ func (ctr *Article) ArticleUpdate(ctx *Context) {
 }
 
 // ArticleBatchUpdate api implementation
-// @Summary 更新文章
+// @Summary 批量更新文章
 // @Tags 文章
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"
