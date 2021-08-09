@@ -104,6 +104,11 @@ func WithOAuth2() Option {
 	}
 }
 
+// IsDebugging returns true if the framework is running in debug mode.
+func IsDebugging() bool {
+	return viper.GetString("app.mode") != "release"
+}
+
 // init after NewEngine
 func init() {
 	InitViper()

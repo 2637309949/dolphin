@@ -126,7 +126,7 @@ func (gh *restful) Handle(httpMethod, absolutePath string, handlerFuncs ...Handl
 
 // DebugPrintRoute defined TODO
 func DebugPrintRoute(httpMethod, absolutePath, _ string, _ int) {
-	if viper.GetString("app.mode") != "release" {
+	if IsDebugging() {
 		logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
 	}
 }

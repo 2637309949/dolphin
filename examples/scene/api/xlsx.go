@@ -34,8 +34,8 @@ func (ctr *Xlsx) XlsxImport(ctx *Context) {
 	file, headers, _ := ctx.Request.FormFile("file")
 	defer file.Close()
 
-	isXlsx := strings.Index(headers.Filename, ".xlsx")
-	if isXlsx == -1 {
+	isXlsx := strings.Contains(headers.Filename, ".xlsx")
+	if !isXlsx {
 		ctx.Fail(errors.New("上传格式必须是xlsx格式"))
 		return
 	}

@@ -221,7 +221,7 @@ func InitTracker() {
 func createXLogger() interface{} {
 	xlogger := &XLogger{Logger: logrus.StandardLogger()}
 	xlogger.SetLevel(log.DEFAULT_LOG_LEVEL)
-	xlogger.ShowSQL(viper.GetString("app.mode") == "debug")
+	xlogger.ShowSQL(IsDebugging())
 	return xlogger
 }
 

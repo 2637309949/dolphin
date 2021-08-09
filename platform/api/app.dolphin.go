@@ -61,15 +61,14 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 
 	items := dol.Manager.ModelSet().ByName(name)
 	for i := range items {
-		m := items[i]
-		if viper.GetString("app.mode") == "debug" {
-			logrus.Infof("Sync Model[%v]:%v", name, m.TableName())
+		if IsDebugging() {
+			logrus.Infof("Sync Model[%v]:%v", name, items[i].TableName())
 		}
-		err = db.Sync2(m)
+		err = db.Sync2(items[i])
 		if err != nil {
 			return err
 		}
-		tableInfo, err := db.TableInfo(m)
+		tableInfo, err := db.TableInfo(items[i])
 		if err != nil {
 			return err
 		}
