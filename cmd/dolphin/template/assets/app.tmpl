@@ -3,7 +3,8 @@
 
 package {{$.Viper.GetString "dir.api" }}
 
-import (
+import (	
+	"context"
 	"sync"
 
 	"{{.PackageName}}/{{$.Viper.GetString "dir.svc" }}"
@@ -52,7 +53,7 @@ func (dol *Dolphin) Reflesh() error {
 	dol.SyncSrv({{$.Viper.GetString "dir.svc" }}.NewSvcHepler({{$.Viper.GetString "dir.api" }}.RedisClient))
 	dol.SyncService()
 	dol.SyncController()
-	return nil
+	return dol.Dolphin.Reflesh()
 }
 
 // Run defined TODO
@@ -61,7 +62,11 @@ func (dol *Dolphin) Run() error {
 		logrus.Errorln(err)
 		return err
 	}
-	return dol.Dolphin.Run()
+	if err := dol.LifeCycle(context.Background()); err != nil {
+		logrus.Errorln(err)
+		return err
+	}
+	return nil
 }
 
 // Use defined TODO

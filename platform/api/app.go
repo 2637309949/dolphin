@@ -114,6 +114,5 @@ func init() {
 	opts := []Option{WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
 	app := NewDefault(opts...)
 	StaticRoutes(app)
-
 	App, Run = app, app.Run
 }

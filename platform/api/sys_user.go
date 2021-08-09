@@ -404,8 +404,6 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 	}
 	account.Domain = payload.Domain
 	account.Name = payload.Name
-
-	ctx.PlatformDB.ShowSQL(true)
 	ext, err := ctx.PlatformDB.Where("is_delete != 1 and status = 1").Get(&account)
 	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
 		if err == nil {

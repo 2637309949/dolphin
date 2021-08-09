@@ -318,8 +318,8 @@ func (dol *Dolphin) done() <-chan os.Signal {
 	return c
 }
 
-// lifeCycle start liftcycle hooks
-func (dol *Dolphin) lifeCycle(ctx context.Context) error {
+// LifeCycle start LifeCycle hooks
+func (dol *Dolphin) LifeCycle(ctx context.Context) error {
 	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 	signal := dol.done()
@@ -341,7 +341,7 @@ func (dol *Dolphin) Run() error {
 		logrus.Errorln(err)
 		return err
 	}
-	if err := dol.lifeCycle(context.Background()); err != nil {
+	if err := dol.LifeCycle(context.Background()); err != nil {
 		logrus.Errorln(err)
 		return err
 	}
@@ -367,7 +367,6 @@ func New(options ...Option) *Dolphin {
 	dol.pool.New = func() interface{} {
 		return NewContext(dol)
 	}
-
 	for i := range options {
 		options[i](dol)
 	}

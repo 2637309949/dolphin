@@ -4,6 +4,7 @@
 package api
 
 import (
+	"context"
 	"path"
 	"strings"
 	"sync"
@@ -54,7 +55,7 @@ func (dol *Dolphin) Reflesh() error {
 	dol.SyncSrv(svc.NewSvcHepler(api.RedisClient))
 	dol.SyncService()
 	dol.SyncController()
-	return nil
+	return dol.Dolphin.Reflesh()
 }
 
 // Run defined TODO
@@ -63,7 +64,11 @@ func (dol *Dolphin) Run() error {
 		logrus.Errorln(err)
 		return err
 	}
-	return dol.Dolphin.Run()
+	if err := dol.LifeCycle(context.Background()); err != nil {
+		logrus.Errorln(err)
+		return err
+	}
+	return nil
 }
 
 // Use defined TODO

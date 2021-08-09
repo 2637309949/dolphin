@@ -74,7 +74,7 @@ func RandomInt(min, max int) int {
 // EnsureLeft defined return left
 func EnsureLeft(left interface{}, err error) interface{} {
 	if err != nil {
-		logrus.Fatal(fmt.Errorf("%v", string(errors.Wrap(err, 2).Stack())))
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
 	return left
 }
@@ -82,7 +82,7 @@ func EnsureLeft(left interface{}, err error) interface{} {
 // EnsureRight defined return right
 func EnsureRight(err error, right interface{}) interface{} {
 	if err != nil {
-		logrus.Fatal(fmt.Errorf("%v", string(errors.Wrap(err, 2).Stack())))
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
 	return right
 }
@@ -90,7 +90,7 @@ func EnsureRight(err error, right interface{}) interface{} {
 // Ensure defined
 func Ensure(err error) {
 	if err != nil {
-		logrus.Fatal(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
 }
 
