@@ -47,8 +47,7 @@ func (l *lifecycleWrapper) Start(ctx context.Context) error {
 	return nil
 }
 
-// Stop runs any OnStop hooks whose OnStart counterpart succeeded. OnStop
-// hooks run in reverse order.
+// Stop runs any OnStop hooks whose OnStart counterpart succeeded. OnStop hooks run in reverse order.
 func (l *lifecycleWrapper) Stop(ctx context.Context) error {
 	var errs error
 	for ; l.numStarted > 0; l.numStarted-- {

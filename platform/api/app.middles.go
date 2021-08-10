@@ -61,7 +61,7 @@ func Cors(origin string, headers string) HandlerFunc {
 	}
 }
 
-// Recovery defined gin recovery middle
+// Recovery defined TODO
 func Recovery() HandlerFunc {
 	return func(ctx *Context) {
 		defer func() {
