@@ -59,16 +59,16 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 		return err
 	}
 
-	items := dol.Manager.ModelSet().ByName(name)
-	for i := range items {
+	models := dol.Manager.ModelSet().ByName(name)
+	for i := range models {
 		if IsDebugging() {
-			logrus.Infof("Sync Model[%v]:%v", name, items[i].TableName())
+			logrus.Infof("Sync Model[%v]:%v", name, models[i].TableName())
 		}
-		err = db.Sync2(items[i])
+		err = db.Sync2(models[i])
 		if err != nil {
 			return err
 		}
-		tableInfo, err := db.TableInfo(items[i])
+		tableInfo, err := db.TableInfo(models[i])
 		if err != nil {
 			return err
 		}
@@ -82,9 +82,10 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 		}).([]types.SysTableColumn)...)
 	}
 
-	new(types.SysTable).TruncateTable(db, db.DriverName())
-	new(types.SysTableColumn).TruncateTable(db, db.DriverName())
+	new(types.SysTable).TruncateTable(db)
+	new(types.SysTableColumn).TruncateTable(db)
 	stb, stc := slice.Chunk(tables, 50).([][]types.SysTable), slice.Chunk(columns, 50).([][]types.SysTableColumn)
+
 	for i := range stb {
 		_, err = db.Insert(stb[i])
 		if err != nil {
@@ -92,7 +93,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 		}
 	}
 	for i := range stc {
-		db.Insert(stc[i])
+		_, err = db.Insert(stc[i])
 		if err != nil {
 			return err
 		}

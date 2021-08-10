@@ -10,11 +10,13 @@ import (
 )
 
 // TruncateTable defined
-func (m *SysTable) TruncateTable(session *xorm.Engine, driverName string) {
-	if driverName != "sqlite3" {
-		util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(SysTable).TableName())))
-	} else {
+func (m *SysTable) TruncateTable(session *xorm.Engine) {
+	switch session.DriverName() {
+	case "sqlite3":
 		util.EnsureLeft(session.Exec(fmt.Sprintf("delete from %v", new(SysTable).TableName())))
+	default:
+		util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(SysTable).TableName())))
+
 	}
 }
 
