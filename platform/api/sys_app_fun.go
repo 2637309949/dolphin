@@ -43,7 +43,7 @@ func (ctr *SysAppFun) SysAppFunAdd(ctx *Context) {
 }
 
 // SysAppFunBatchAdd api implementation
-// @Summary 批量批量添加APP功能
+// @Summary 批量添加APP功能
 // @Tags APP功能
 // @Accept application/json
 // @Produce application/json

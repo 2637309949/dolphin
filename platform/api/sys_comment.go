@@ -107,7 +107,7 @@ func (ctr *SysComment) SysCommentDel(ctx *Context) {
 }
 
 // SysCommentBatchDel api implementation
-// @Summary 删除评论
+// @Summary 批量删除评论
 // @Tags 评论
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

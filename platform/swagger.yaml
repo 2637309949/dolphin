@@ -1089,7 +1089,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 批量批量添加APP功能
+      summary: 批量添加APP功能
       tags:
       - APP功能
   /api/sys/app/fun/del:
@@ -2738,7 +2738,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除菜单
+      summary: 批量删除菜单
       tags:
       - 菜单
   /api/sys/menu/del:
@@ -5256,7 +5256,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除标签
+      summary: 批量删除标签
       tags:
       - 标签
   /api/sys/tag/del:

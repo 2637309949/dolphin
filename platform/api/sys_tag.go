@@ -108,7 +108,7 @@ func (ctr *SysTag) SysTagDel(ctx *Context) {
 }
 
 // SysTagBatchDel api implementation
-// @Summary 删除标签
+// @Summary 批量删除标签
 // @Tags 标签
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

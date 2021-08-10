@@ -126,7 +126,7 @@ func (ctr *SysMenu) SysMenuDel(ctx *Context) {
 }
 
 // SysMenuBatchDel api implementation
-// @Summary 删除菜单
+// @Summary 批量删除菜单
 // @Tags 菜单
 // @Accept application/json
 // @Param Authorization header string false "认证令牌"

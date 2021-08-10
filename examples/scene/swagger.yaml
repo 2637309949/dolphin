@@ -950,13 +950,13 @@ definitions:
         type: number
       is_primary_key:
         description: IsPrimaryKey defined 是否主键
-        type: boolean
+        type: number
       name:
         description: Name defined 表名
         type: string
       nullable:
         description: Nullable defined 是否为空
-        type: boolean
+        type: number
       remark:
         description: Remark defined 备注
         type: string
@@ -2262,7 +2262,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 批量批量添加APP功能
+      summary: 批量添加APP功能
       tags:
       - APP功能
   /api/sys/app/fun/del:
@@ -3911,7 +3911,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除菜单
+      summary: 批量删除菜单
       tags:
       - 菜单
   /api/sys/menu/del:
@@ -6429,7 +6429,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/types.Fail'
-      summary: 删除标签
+      summary: 批量删除标签
       tags:
       - 标签
   /api/sys/tag/del:
