@@ -24,7 +24,7 @@ var (
 	// NsqConsumer defined
 	NsqConsumer *nsq.Consumer
 	// tcpNsqdAddrr defined
-	tcpNsqdAddrr = "172.16.10.191:4161"
+	tcpNsqdAddrr = "172.20.10.3:4161"
 )
 
 type messageHandler struct{}

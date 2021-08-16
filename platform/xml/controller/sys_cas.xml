@@ -48,6 +48,14 @@
             <failure type="$fail"/>
         </return>
     </api>
+    <api name="qr_oauth2" method="get" auth="never" desc="授权回调">
+        <param name="state" type="string" desc="状态码" />
+        <param name="code" type="string" desc="临时令牌" />
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
     <api name="refresh" method="get" auth="never" desc="刷新令牌">
         <return>
             <success type="$success"/>
@@ -67,8 +75,22 @@
             <failure type="$fail"/>
         </return>
     </api>
-    <api name="qrcode" method="get" auth="never" desc="扫码登录(绑定第三方)">
+    <api name="qrcode" method="get" auth="never" desc="生成Qrcode">
         <param name="type" type="int" value="0" desc="类型(0: 微信 1：叮叮)"/>
+        <param name="uuid" type="string" value="abc" desc="唯一id"/>
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="qrconnect" method="get" auth="never" desc="扫码地址">
+        <return>
+            <success type="$success"/>
+            <failure type="$fail"/>
+        </return>
+    </api>
+    <api name="qrcode_login" method="get" auth="never" desc="扫码登陆">
+        <param name="uuid" type="string" value="abc" desc="唯一id"/>
         <return>
             <success type="$success"/>
             <failure type="$fail"/>

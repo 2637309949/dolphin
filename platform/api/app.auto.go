@@ -343,10 +343,13 @@ type SysCas struct {
 	Token,
 	URL,
 	Oauth2,
+	QrOauth2,
 	Refresh,
 	Check,
 	Profile,
-	Qrcode Controller
+	Qrcode,
+	Qrconnect,
+	QrcodeLogin Controller
 }
 
 // NewSysCas defined
@@ -401,6 +404,13 @@ func NewSysCas() *SysCas {
 	ctr.Oauth2.Cache = NopHandlerFunc
 	ctr.Oauth2.Interceptor = NopHandlerFunc
 	ctr.Oauth2.Handler = ctr.SysCasOauth2
+	ctr.QrOauth2.Method = "GET"
+	ctr.QrOauth2.RelativePath = "/sys/cas/qr_oauth2"
+	ctr.QrOauth2.Auth = NopHandlerFunc
+	ctr.QrOauth2.Roles = NopHandlerFunc
+	ctr.QrOauth2.Cache = NopHandlerFunc
+	ctr.QrOauth2.Interceptor = NopHandlerFunc
+	ctr.QrOauth2.Handler = ctr.SysCasQrOauth2
 	ctr.Refresh.Method = "GET"
 	ctr.Refresh.RelativePath = "/sys/cas/refresh"
 	ctr.Refresh.Auth = NopHandlerFunc
@@ -429,6 +439,20 @@ func NewSysCas() *SysCas {
 	ctr.Qrcode.Cache = NopHandlerFunc
 	ctr.Qrcode.Interceptor = NopHandlerFunc
 	ctr.Qrcode.Handler = ctr.SysCasQrcode
+	ctr.Qrconnect.Method = "GET"
+	ctr.Qrconnect.RelativePath = "/sys/cas/qrconnect"
+	ctr.Qrconnect.Auth = NopHandlerFunc
+	ctr.Qrconnect.Roles = NopHandlerFunc
+	ctr.Qrconnect.Cache = NopHandlerFunc
+	ctr.Qrconnect.Interceptor = NopHandlerFunc
+	ctr.Qrconnect.Handler = ctr.SysCasQrconnect
+	ctr.QrcodeLogin.Method = "GET"
+	ctr.QrcodeLogin.RelativePath = "/sys/cas/qrcode_login"
+	ctr.QrcodeLogin.Auth = NopHandlerFunc
+	ctr.QrcodeLogin.Roles = NopHandlerFunc
+	ctr.QrcodeLogin.Cache = NopHandlerFunc
+	ctr.QrcodeLogin.Interceptor = NopHandlerFunc
+	ctr.QrcodeLogin.Handler = ctr.SysCasQrcodeLogin
 	return ctr
 }
 
@@ -442,10 +466,13 @@ func SysCasRoutes(rg *RouterGroup) {
 	group.Handle(instance.Token.Method, instance.Token.RelativePath, instance.Token.Auth, instance.Token.Roles, instance.Token.Cache, instance.Token.Interceptor, instance.Token.Handler)
 	group.Handle(instance.URL.Method, instance.URL.RelativePath, instance.URL.Auth, instance.URL.Roles, instance.URL.Cache, instance.URL.Interceptor, instance.URL.Handler)
 	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Auth, instance.Oauth2.Roles, instance.Oauth2.Cache, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
+	group.Handle(instance.QrOauth2.Method, instance.QrOauth2.RelativePath, instance.QrOauth2.Auth, instance.QrOauth2.Roles, instance.QrOauth2.Cache, instance.QrOauth2.Interceptor, instance.QrOauth2.Handler)
 	group.Handle(instance.Refresh.Method, instance.Refresh.RelativePath, instance.Refresh.Auth, instance.Refresh.Roles, instance.Refresh.Cache, instance.Refresh.Interceptor, instance.Refresh.Handler)
 	group.Handle(instance.Check.Method, instance.Check.RelativePath, instance.Check.Auth, instance.Check.Roles, instance.Check.Cache, instance.Check.Interceptor, instance.Check.Handler)
 	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, instance.Profile.Auth, instance.Profile.Roles, instance.Profile.Cache, instance.Profile.Interceptor, instance.Profile.Handler)
 	group.Handle(instance.Qrcode.Method, instance.Qrcode.RelativePath, instance.Qrcode.Auth, instance.Qrcode.Roles, instance.Qrcode.Cache, instance.Qrcode.Interceptor, instance.Qrcode.Handler)
+	group.Handle(instance.Qrconnect.Method, instance.Qrconnect.RelativePath, instance.Qrconnect.Auth, instance.Qrconnect.Roles, instance.Qrconnect.Cache, instance.Qrconnect.Interceptor, instance.Qrconnect.Handler)
+	group.Handle(instance.QrcodeLogin.Method, instance.QrcodeLogin.RelativePath, instance.QrcodeLogin.Auth, instance.QrcodeLogin.Roles, instance.QrcodeLogin.Cache, instance.QrcodeLogin.Interceptor, instance.QrcodeLogin.Handler)
 }
 
 // SysCasInstance defined

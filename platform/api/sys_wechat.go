@@ -4,6 +4,12 @@
 package api
 
 import (
+	"errors"
+	"net/url"
+	"time"
+
+	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/platform/types"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,12 +23,49 @@ import (
 // @Router /api/sys/wechat/oauth2 [get]
 func (ctr *SysWechat) SysWechatOauth2(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetUser()
-	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
+	q.SetString("code")
+	q.SetString("state")
+
+	state := q.GetString("state")
+	uri, err := url.ParseQuery(state)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(ret)
+
+	redirect_uri := uri.Get("redirect_uri")
+	uuid := uri.Get("uuid")
+	domain := uri.Get("domain")
+	qrAuth := types.QrAuth{}
+	err = CacheStore.Get("wechat:qrcode:"+uuid, &qrAuth)
+	if err == nil {
+		logrus.Error(errors.New("invalid qrcode"))
+		ctx.Fail(errors.New("invalid qrcode"))
+		return
+	}
+
+	db := App.Manager.GetBusinessDB(domain)
+	if db == nil {
+		ctx.Fail(errors.New("invalid domain"))
+		return
+	}
+
+	user, err := ctr.Srv.WinXinBindCheck(ctx, ctx.PlatformDB, db, domain, q.GetString("code"))
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+
+	qrAuth.RedirectUri = null.StringFrom(redirect_uri)
+	qrAuth.Domain = null.StringFrom(domain)
+	qrAuth.UserId = user.ID
+	err = CacheStore.Set("wechat:qrcode:"+uuid, qrAuth, 30*time.Second)
+	if err != nil {
+		logrus.Error(err)
+		ctx.Fail(err)
+		return
+	}
+	ctx.Success("success")
 }

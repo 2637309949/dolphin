@@ -102,6 +102,17 @@ module.exports.oauth2 = (data = {}, opt = {}) => {
   })
 }
 
+// qrOauth2 授权回调
+module.exports.qrOauth2 = (data = {}, opt = {}) => {
+  let url = Object.assign({ url: '/api/sys/cas/qr_oauth2?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
+  return axios({
+    url: url,
+    method: 'get',
+    ...opt
+  })
+}
+
 // refresh 刷新令牌
 module.exports.refresh = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/cas/refresh?' }, opt).url
@@ -135,9 +146,31 @@ module.exports.profile = (data = {}, opt = {}) => {
   })
 }
 
-// qrcode 扫码登录(绑定第三方)
+// qrcode 生成Qrcode
 module.exports.qrcode = (data = {}, opt = {}) => {
   let url = Object.assign({ url: '/api/sys/cas/qrcode?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
+  return axios({
+    url: url,
+    method: 'get',
+    ...opt
+  })
+}
+
+// qrconnect 扫码地址
+module.exports.qrconnect = (data = {}, opt = {}) => {
+  let url = Object.assign({ url: '/api/sys/cas/qrconnect?' }, opt).url
+  url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
+  return axios({
+    url: url,
+    method: 'get',
+    ...opt
+  })
+}
+
+// qrcodeLogin 扫码登陆
+module.exports.qrcodeLogin = (data = {}, opt = {}) => {
+  let url = Object.assign({ url: '/api/sys/cas/qrcode_login?' }, opt).url
   url = Object.keys(data).reduce((acc, curr) => `${acc}${curr}=${encodeURIComponent(data[curr])}&` ,url)
   return axios({
     url: url,

@@ -10,9 +10,7 @@ select
 from
 	sys_menu
 where
-	sys_menu.id {{.ne}} ""
-    and is_delete = 0
-
+	sys_menu.is_delete {{.ne}} 1
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}

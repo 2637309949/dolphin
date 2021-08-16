@@ -6,19 +6,66 @@ package srv
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/svc"
+	"github.com/2637309949/dolphin/platform/types"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
+// SysWechat defined TODO
 type SysWechat struct {
 	svc.Svc
 }
 
+// WeiXinToken defined TODO
+type WeiXinToken struct {
+	Errcode      int64  `json:"errcode"`
+	Errmsg       string `json:"errmsg"`
+	AccessToken  string `json:"access_token"`
+	ExpiresIn    int64  `json:"expires_in"`
+	RefreshToken string `json:"refresh_token"`
+	Openid       string `json:"openid"`
+	Scope        string `json:"scope"`
+}
+
 func NewSysWechat() *SysWechat {
 	return &SysWechat{}
+}
+
+// WinXinBindCheck defined TODO
+func (srv *SysWechat) WinXinBindCheck(ctx context.Context, platformDB *xorm.Engine, db *xorm.Engine, domain string, code string) (*types.SysUser, error) {
+	wcToken := WeiXinToken{}
+	userInfo := types.SysUser{}
+	req := srv.Svc.Get(fmt.Sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%v&secret=%v&code=%v&grant_type=authorization_code", viper.GetString("wc.appid"), viper.GetString("wc.appsecret"), code))
+	err := req.ToJSON(&wcToken)
+	if err != nil {
+		return nil, err
+	}
+	if wcToken.Errcode != 0 {
+		return nil, errors.New(wcToken.Errmsg)
+	}
+
+	uid := []int{}
+	err = db.SQL(`select user_id from sys_user_binding where is_delete !=1 and type=0 and open_id=?`, wcToken.Openid).Find(&uid)
+	if err != nil {
+		return nil, err
+	}
+	if len(uid) == 0 {
+		return nil, errors.New("用户未绑定微信")
+	}
+
+	ext, err := platformDB.In("id", uid).Where("domain=? and is_delete !=1", domain).Get(&userInfo)
+	if err != nil {
+		return nil, err
+	}
+	if !ext {
+		return nil, errors.New("用户未绑定微信")
+	}
+	return &userInfo, nil
 }
 
 // TODO defined srv

@@ -1,6 +1,6 @@
 app:
   auth: token
-  host: localhost:8082
+  host: http://172.20.10.3:8082
   mode: debug
   name: scene
   version: "1.0"
@@ -20,11 +20,11 @@ jwt:
   secret: 6hy789iu87
   expire: 604800
 oauth:
-  server: http://localhost:8082
-  client: http://localhost:8082
+  server: http://172.20.10.3:8082
+  client: http://172.20.10.3:8082
 wc:
-  appid: wx756d2f0339adf67c
-  appsecret: 9cc4b7928467151acea7ab1bfa0a70a7
+  appid: wxd1153e6068a5987d
+  appsecret: 81cfff836726a497e0df15a7f9350725
 rpc:
   message_srv: localhost:9081
 oss:
@@ -34,4 +34,4 @@ oss:
   accesskeysecret: 965xx
 kafka:
   broker:
-  - 172.16.10.191:9092
+  - 172.20.10.3:9092

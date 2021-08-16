@@ -11,6 +11,7 @@ require (
 	github.com/agrison/go-tablib v0.0.0-20160310143025-4930582c22ee
 	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/bndr/gotabulate v1.1.2 // indirect
+	github.com/boombuler/barcode v1.0.1
 	github.com/clbanning/mxj v1.8.4 // indirect
 	github.com/eriklott/mustache v0.10.1
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect

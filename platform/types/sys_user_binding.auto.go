@@ -12,11 +12,11 @@ type SysUserBinding struct {
 	// ID defined 主键
 	ID null.Int `xorm:"bigint(20) notnull autoincr unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
 	// UserId defined 用户ID
-	UserId null.String `xorm:"varchar(36) notnull comment('用户ID') 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"bigint(20) notnull comment('用户ID') 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	// OpenId defined open_id
 	OpenId null.String `xorm:"varchar(36) notnull comment('open_id') 'open_id'" json:"open_id" form:"open_id" xml:"open_id"`
 	// UnionId defined union_id
-	UnionId null.String `xorm:"varchar(36) notnull comment('union_id') 'union_id'" json:"union_id" form:"union_id" xml:"union_id"`
+	UnionId null.String `xorm:"varchar(36) comment('union_id') 'union_id'" json:"union_id" form:"union_id" xml:"union_id"`
 	// Type defined 类型(0: 微信 1：叮叮)
 	Type null.Int `xorm:"comment('类型(0: 微信 1：叮叮)') 'type'" json:"type" form:"type" xml:"type"`
 	// Creater defined 创建人

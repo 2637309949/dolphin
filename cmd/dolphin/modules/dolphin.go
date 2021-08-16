@@ -92,9 +92,10 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	})
 
 	// html template
-	affirm, login := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/")
-	affirmPath, loginPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))]
+	affirm, login, qrconnect := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.qrconnect"), "/"), "/")
+	affirmPath, loginPath, qrconnectPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))], qrconnect[0:len(qrconnect)-len(filepath.Ext(qrconnect))]
 	affirmByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/affirm.html")).([]byte)
+	qrconnectByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/qrconnect.html")).([]byte)
 	loginByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/login.html")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(affirmByte),
@@ -108,7 +109,12 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		Data:     tmplArgs,
 		Overlap:  parser.OverlapSkip,
 	})
-
+	tmpls = append(tmpls, &parser.TmplCfg{
+		Text:     string(qrconnectByte),
+		FilePath: path.Join(dir, qrconnectPath+".html"),
+		Data:     tmplArgs,
+		Overlap:  parser.OverlapSkip,
+	})
 	// tool template
 	toolByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "tool.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{

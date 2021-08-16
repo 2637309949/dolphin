@@ -8,6 +8,7 @@ require (
 	github.com/2637309949/dolphin v1.0.57
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.9+incompatible
 	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
+	github.com/boombuler/barcode v1.0.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/gin-gonic/gin v1.7.1
 	github.com/go-errors/errors v1.1.1

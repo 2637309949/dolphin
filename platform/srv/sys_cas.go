@@ -13,9 +13,18 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// SysCasQrType defined TODO
+type SysCasQrType int
+
+// SysCas defined TODO
 type SysCas struct {
 	svc.Svc
 }
+
+const (
+	SysCasQrTypeWeiXin = iota
+	SysCasQrTypeDingTalk
+)
 
 func NewSysCas() *SysCas {
 	return &SysCas{}

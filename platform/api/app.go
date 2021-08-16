@@ -90,6 +90,8 @@ func WithOAuth2() Option {
 	endpoint := oauth2.Endpoint{AuthURL: authUrl, TokenURL: tokenUrl}
 	redirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
 	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
+	qrRedirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.QrOauth2.RelativePath)
+	QrOA2Cfg = oauth2.Config{Scopes: []string{"admin"}, RedirectURL: qrRedirectURL}
 	return func(dol *Dolphin) {
 		manager := manage.NewDefaultManager()
 		manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)

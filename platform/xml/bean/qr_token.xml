@@ -1,0 +1,7 @@
+<bean name="qr_token" desc="扫码tk" packages="github.com/2637309949/dolphin/packages/null">
+	<prop name="redirect_uri" desc="回调地址" type="null.String" />
+    <prop name="token_uri" desc="tk地址" type="null.String" />
+	<prop name="code" desc="令牌" type="null.String" />
+	<prop name="domain" desc="域" type="null.String" />
+	<prop name="user_id" desc="用户ID" type="null.Int" />
+</bean>

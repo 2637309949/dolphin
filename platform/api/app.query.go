@@ -23,8 +23,8 @@ type Query struct {
 }
 
 // GetInt defined TODO
-func (q *Query) GetInt(key string, init ...int64) int64 {
-	ret, _ := q.m[key].(int64)
+func (q *Query) GetInt(key string, init ...int) int {
+	ret, _ := q.m[key].(int)
 	return ret
 }
 
@@ -229,13 +229,14 @@ func (q *Query) SetRule(rule string) {
 }
 
 // SetUser defined TODO
-func (q *Query) SetUser(uid ...string) {
-	q.m["uid"] = util.SomeOne(uid, q.ctx.GetToken().GetUserID()).(string)
+func (q *Query) SetUser(uid ...int64) {
+	it, _ := strconv.ParseInt(q.ctx.GetToken().GetUserID(), 10, 64)
+	q.m["uid"] = util.SomeOne(uid, it).(int64)
 }
 
 // GetUser defined TODO
-func (q *Query) GetUser() string {
-	ret, _ := q.m["uid"].(string)
+func (q *Query) GetUser() int64 {
+	ret, _ := q.m["uid"].(int64)
 	return ret
 }
 

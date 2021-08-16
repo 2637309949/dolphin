@@ -7,12 +7,14 @@ package api
 import (
 	"context"
 	"errors"
+	"net"
 	"net/http"
 	"regexp"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -20,10 +22,12 @@ import (
 )
 
 var (
-	// TokenkeyNamespace define
+	// TokenkeyNamespace define TODO
 	TokenkeyNamespace = "dolphin:token:"
-	// OA2Cfg defined
+	// OA2Cfg defined TODO
 	OA2Cfg xoauth2.Config
+	// QrOA2Cfg defined TODO
+	QrOA2Cfg xoauth2.Config
 )
 
 // ClientStore client information store
@@ -66,7 +70,18 @@ var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid
 		}
 		store.Set("ReturnUri", r.Form)
 		store.Save()
+
+		// load domain
+		// var domain string
+		// var redirect_uri string
+		// if v, ok := store.Get("ReturnUri"); ok {
+		// 	uri, _ := url.ParseQuery(v.(url.Values).Get("state"))
+		// 	domain = uri.Get("domain")
+		// 	redirect_uri = uri.Get("redirect_uri")
+		// }
 		w.Header().Set("Location", viper.GetString("oauth.login"))
+		// w.Header().Add("Set-Cookie", (&http.Cookie{Name: "domain", Value: url.QueryEscape(domain), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
+		// w.Header().Add("Set-Cookie", (&http.Cookie{Name: "redirect_uri", Value: url.QueryEscape(redirect_uri), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
 		w.WriteHeader(http.StatusFound)
 		return
 	}
@@ -81,6 +96,14 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 	reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
 	base := reg.FindAllStringSubmatch(baseURI, -1)
 	redirect := reg.FindAllStringSubmatch(redirectURI, -1)
+
+	// Skip check for ip redirect
+	if util.IsIp(redirect[0][2]) {
+		ip := net.ParseIP(redirect[0][2])
+		if util.IsPrivate(ip) {
+			return nil
+		}
+	}
 	if base[0][2] != redirect[0][2] {
 		logrus.Errorf("baseURI=%v, redirectURI=%v", base[0][2], redirect[0][2])
 		return errors.New("invalid redirect uri")

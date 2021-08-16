@@ -11,13 +11,11 @@ select
 from
 	sys_menu{{if ne .is_admin true}}, sys_role_menu{{end}}
 where
-	sys_menu.id {{.ne}} ""
+	sys_menu.is_delete {{.ne}} 0
 {{if ne .is_admin true}}
     and sys_menu.id = sys_role_menu.menu_id
     and sys_role_menu.role_id = "{{.role_id}}"
 {{end}}
-    and sys_menu.is_delete = 0
-
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}

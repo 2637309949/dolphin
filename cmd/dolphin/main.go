@@ -80,6 +80,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("oauth.secret", "8UYO6FVB8UYO6FVB")
 	viper.SetDefault("oauth.login", "/static/web/login.html")
 	viper.SetDefault("oauth.affirm", "/static/web/affirm.html")
+	viper.SetDefault("oauth.qrconnect", "/static/web/qrconnect.html")
 	viper.SetDefault("db.driver", "mysql")
 	viper.SetDefault("db.dataSource", "root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local")
 	viper.SetDefault("rd.dataSource", ":@localhost:6379/0")

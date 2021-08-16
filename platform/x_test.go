@@ -716,6 +716,22 @@ func BenchmarkSysCasOauth2(t *testing.B) {
 	})
 }
 
+// TestSysCasQrOauth2 defined TODO
+// go test -v -test.run TestSysCasQrOauth2
+func TestSysCasQrOauth2(t *testing.T) {
+	x.Handle("GET", "/api/sys/cas/qr_oauth2", XTestSysCasQrOauth2, t, XTestSysCasQrOauth2Request)
+}
+
+// BenchmarkSysCasQrOauth2 defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasQrOauth2 -test.benchmem=true
+func BenchmarkSysCasQrOauth2(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/qr_oauth2", XTestSysCasQrOauth2, t, XTestSysCasQrOauth2Request)
+		}
+	})
+}
+
 // TestSysCasRefresh defined TODO
 // go test -v -test.run TestSysCasRefresh
 func TestSysCasRefresh(t *testing.T) {
@@ -776,6 +792,38 @@ func BenchmarkSysCasQrcode(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			x.Handle("GET", "/api/sys/cas/qrcode", XTestSysCasQrcode, t, XTestSysCasQrcodeRequest)
+		}
+	})
+}
+
+// TestSysCasQrconnect defined TODO
+// go test -v -test.run TestSysCasQrconnect
+func TestSysCasQrconnect(t *testing.T) {
+	x.Handle("GET", "/api/sys/cas/qrconnect", XTestSysCasQrconnect, t, XTestSysCasQrconnectRequest)
+}
+
+// BenchmarkSysCasQrconnect defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasQrconnect -test.benchmem=true
+func BenchmarkSysCasQrconnect(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/qrconnect", XTestSysCasQrconnect, t, XTestSysCasQrconnectRequest)
+		}
+	})
+}
+
+// TestSysCasQrcodeLogin defined TODO
+// go test -v -test.run TestSysCasQrcodeLogin
+func TestSysCasQrcodeLogin(t *testing.T) {
+	x.Handle("GET", "/api/sys/cas/qrcode_login", XTestSysCasQrcodeLogin, t, XTestSysCasQrcodeLoginRequest)
+}
+
+// BenchmarkSysCasQrcodeLogin defined TODO
+// go test -v -test.run=none -test.bench=^BenchmarkSysCasQrcodeLogin -test.benchmem=true
+func BenchmarkSysCasQrcodeLogin(t *testing.B) {
+	t.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			x.Handle("GET", "/api/sys/cas/qrcode_login", XTestSysCasQrcodeLogin, t, XTestSysCasQrcodeLoginRequest)
 		}
 	})
 }

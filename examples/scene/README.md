@@ -120,7 +120,7 @@ $ docker-compose  -f redis.yml  up -d
 ```shell
 $ docker run --rm -it inem0o/redis-trib \
 create --replicas 1 \
-172.16.10.191:8001 172.16.10.191:8002 172.16.10.191:8003 172.16.10.191:8004 172.16.10.191:8005 172.16.10.191:8006
+172.20.10.3:8001 172.20.10.3:8002 172.20.10.3:8003 172.20.10.3:8004 172.20.10.3:8005 172.20.10.3:8006
 ```
 
 4. 启动nsq
@@ -130,10 +130,10 @@ nsq 主要有三个组件: nsqlookupd, nsqd, nsqadmin。这三个组件都包含
 $ docker run --name lookupd -p 4160:4160 -p 4161:4161 -d nsqio/nsq /nsqlookupd
 $ docker inspect -f '{{ .NetworkSettings.IPAddress }}' lookupd
 $ docker run --name nsqd -p 4150:4150 -p 4151:4151 -p 4152:4152 -p 4153:4153  -d nsqio/nsq /nsqd \
---broadcast-address=172.16.10.191 \
---lookupd-tcp-address=172.16.10.191:4160 \
+--broadcast-address=172.20.10.3 \
+--lookupd-tcp-address=172.20.10.3:4160 \
 -tcp-address=0.0.0.0:4152 \
 -http-address=0.0.0.0:4153
 $ docker run -d --name nsqadmin -p 4171:4171 nsqio/nsq /nsqadmin \
---lookupd-http-address=172.16.10.191:4161
+--lookupd-http-address=172.20.10.3:4161
 ```
