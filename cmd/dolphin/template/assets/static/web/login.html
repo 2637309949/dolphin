@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Dolphin</title>
+    <title>login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="zh-CN" />
     <meta name="Author" content="网页作者" />
@@ -130,10 +130,10 @@
         -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
         -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
         -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-        padding-right: 55px;
-        padding-left: 55px;
-        padding-bottom: 50px;
-        padding-top: 65px;
+        padding-right: 45px;
+        padding-left: 45px;
+        padding-bottom: 40px;
+        padding-top: 55px;
       }
 
       .form-group {
@@ -141,7 +141,7 @@
         width: 100%;
         position: relative;
         background-color: #fff;
-        border: 1px solid #e6e6e6;
+        border-bottom: 1px solid #e6e6e6;
       }
 
       .form-control {
@@ -187,6 +187,11 @@
         margin-top: 20px;
       }
 
+      .form-group-social {
+        margin-top: 20px;
+        border: 0px solid #e6e6e6;
+      }
+
       .login-box-title {
         display: block;
         font-family: OpenSans-Regular;
@@ -210,6 +215,15 @@
       }
     </style>
     <script type="text/javascript">
+      function getCookie(name) {
+        var name = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+          var c = ca[i].trim();
+          if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+        }
+        return "";
+      }
       function queryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
@@ -226,10 +240,17 @@
       window.onload = function () {
         var errMsg = queryString('error')
         if (!!errMsg) {
-            var lbe = document.getElementsByClassName("login-box-error")[0];
-            lbe.innerText = 'ERROR: ' + errMsg;
-            lbe.style.display = 'block';
+            var lbe = document.getElementsByClassName("login-box-error")[0]
+            lbe.innerText = 'ERROR: ' + errMsg
+            lbe.style.display = 'block'
         }
+        var domain = queryString('domain') || getCookie('domain') || 'localhost'
+        var dom = document.getElementsByClassName("form-domain")[0]
+        dom.value = domain
+
+        var state = queryString('state') || getCookie('state') || ''
+        var winxin = document.getElementsByClassName("social-winxin")[0]
+        winxin.href = "./qrconnect.html?state=" + state
       };
     </script>
   </head>
@@ -243,7 +264,7 @@
           <div class="form-group">
             <input
               type="text"
-              class="form-control"
+              class="form-control form-domain"
               name="domain"
               placeholder="Please enter your domain"
             />
@@ -266,6 +287,9 @@
           </div>
           <div class="form-group form-group-submit">
             <button type="submit" class="btn btn-success">Sign in</button>
+          </div>
+          <div class="form-group form-group-social">
+            <a class="social-winxin" href="./qrconnect.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAwtJREFUWEft1k+I1HUYx/HXd3YxjKCo9GQW0SFcyIXKmVllSQIvxsYa1a0soTSLsK1TQUbUyfVUFmLkIfZQYILVoYsZ7M6MxVamCV2COkRQkiLBtst84/cbZ2fnT/5mxgU79MDv8ns+z/O8v8/v9/0+3+AqW7jK9f3HAWatMmdIsA5DWCc6acCseWdsdPpKO9i5A2VrRC8I9mQU+B5TBk25x8/9wLQDVOxJi7Omh4TnBVPynukhJpU2A1QcFj3ea5JFffSRokd6iW8AlL2OV3oJ7qjtEaIGMGOHnEMtCY9YYac5twvKHYo9reCgsifxXpM/elnRm90spgZQ9i3WtyTZrOiLS/7juK/JX1jy+cpiS7GzCunOybRgxo1y/uig/NEKm8zZKni/zR+9pmivkr2CV9v8wTZ5H2cRBCeNqjqRJbysP/pG8JWQngu/iwZEq0QVc07Z7OK/xQeldL9P9gnwp2CfqorgOUExLdxs8ykcb8ubaq2TAOwUvNMHwGcG7bPgQTzfVXx0RDRpxExdn/zfSYKjXSVoiH6Tc7+qDzDcYyxVG+sQwdfWWnAK1/eQ6DFsxaM9xDSk0Wnzthj1a20bVhwQ7eoqWXQMs21/fvSEa3zqb+9i25JcuxUcUE530vbF98nnKHqocRKWnBXcmQkR7BfdgbEW7ZCCH5QcEuxY9FWNG3FUyfaW7XzBoJubZ0HZX1iZAbEbb+CGDrrDTausC5Izo9NZEW1qHUY34YSYzv7OVvWsnLcyO9WNIJpoH8czHpBLv3Nni54SHOwmf6Ym2tUOUPKh4OE0uNa6W3HbkudFyTEbjWQWyBZsaQeoDZZkhS8puNAxR8mkkF5a+rfgmLyxZoBpRQPOp3/z5aw2wD7H3X0S/CQYl/dd/7fiafcaSMf1tT1CnJMzboMvk7j+AZLokjE5E6LRLiEWLq38k7r+ygDqWcrpMJrALRkg5xQkW33RlgcgSXfcdVYaVjVswHpVqzGdPkXTSvan1/yctTb4ZXk70GX/ld0lGJVvHGTL14FuIVp0/wP8A8HfwWk69LF+AAAAAElFTkSuQmCC"> </a>
           </div>
         </form>
       </div>

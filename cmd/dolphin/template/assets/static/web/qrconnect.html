@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>qrconnect</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta name="Author" content="网页作者" />
+    <meta name="Copyright" content="网站版权" />
+    <meta name="keywords" content="网站关键字" />
+    <meta name="description" content="网站描述" />
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            margin: 0;
+            font: 12px"\5B8B\4F53", sans-serif;
+            background: #f0f2f5;
+        }
+
+        div,
+        dl,
+        dt,
+        dd,
+        ul,
+        ol,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        pre,
+        form,
+        fieldset,
+        input,
+        textarea,
+        blockquote,
+        p {
+            padding: 0;
+            margin: 0;
+        }
+
+        table,
+        td,
+        tr,
+        th {
+            font-size: 12px;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        img {
+            vertical-align: top;
+            border: 0;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        address,
+        cite,
+        code,
+        em,
+        th {
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .qr-box {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+        }
+        .tip-message-wrap{
+            position: fixed;
+            text-align: center;
+            top:20%;
+            left: 0;
+            z-index: 99999999;
+            width: 100%;
+        }
+        
+        .tip-message {
+            -webkit-animation-name: fadeInAndFadeOut;
+            animation-name: fadeInAndFadeOut;
+            animation-duration: 2s;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+            pointer-events: none;
+            margin: 0 auto;
+            font-size: 13px;
+            color: white;
+            border-radius: 3px;
+            line-height: 2;
+            padding: 8px 30px;
+            background-color: rgba(0,0,0,.7);
+            display: inline-block;
+        }
+        
+        @keyframes fadeInAndFadeOut {
+            0% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+                -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+            }
+            60% {
+                opacity: 1;
+                -webkit-transform: scale(1.0);
+                transform: scale(1.0);
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        @-webkit-keyframes fadeInAndFadeOut {
+            0% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+                -webkit-transform: scale(1.1);
+                transform: scale(1.1);
+            }
+            60% {
+                opacity: 1;
+                -webkit-transform: scale(1.0);
+                transform: scale(1.0);
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+    <script type="text/javascript">
+      var time
+      function ajaxFunction(){
+          var xmlHttp;
+          try { // Firefox, Opera 8.0+, Safari
+              xmlHttp=new XMLHttpRequest();
+          } catch (e){
+              try{// Internet Explorer
+                  xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+              } catch (e){
+                  try {
+                      xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+                  } catch (e){}
+              }
+          }
+          return xmlHttp;
+      }
+      function randomString(len) {
+      　　len = len || 32;
+      　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+      　　var maxPos = $chars.length;
+      　　var pwd = '';
+      　　for (i = 0; i < len; i++) {
+      　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+      　　}
+      　　return pwd;
+      }
+      function Message(message, time) {
+        this.message = message;
+        this.time = time;
+      };
+      Message.prototype = {
+          showAndHide() {
+          var messageWR = document.createElement('div')
+          var messageEl = document.createElement('p')
+          var main = document.getElementsByTagName('body')[0]
+          messageWR.appendChild(messageEl)    
+          main.appendChild(messageWR)
+          messageEl.innerHTML = this.message  
+          messageWR.className='tip-message-wrap'
+          messageEl.className = 'tip-message'
+          setTimeout(() => {
+            messageWR.remove();
+          }, this.time * 1000);
+        },
+      }
+      function getCookie(name) {
+        var name = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+          var c = ca[i].trim();
+          if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+        }
+        return "";
+      }
+      function qrcodeLogin() {
+          var xhr = ajaxFunction()
+          xhr.onreadystatechange = function(){
+              if(xhr.readyState==4 && xhr.status==200){
+                var data = JSON.parse(xhr.responseText)
+                var code = data && data.code || 500
+                var msg = data && data.msg || '内部错误'
+                if (code == 200) {
+                    clearInterval(time)
+                    window.location.href = getCookie('redirect_host')+"/qroauth.html?code="+ (data && data.data.code)
+                } else if (code == 500){
+                    new Message(msg, 3).showAndHide()
+                }
+              }
+          }
+          var uuid = localStorage.getItem("uuid", uuid)
+          xhr.open("GET","/api/sys/cas/qrcode_login?uuid="+uuid,true)
+          xhr.send(null)
+      }
+      window.onload = function () {
+        var query = window.location.search.substring(1)
+        var uuid = randomString(11)
+        if (typeof(Storage) !== "undefined") {
+          localStorage.setItem("uuid", uuid)
+        }
+        document.getElementsByClassName("qr-image")[0].src = '/api/sys/cas/qrcode?uuid=' + uuid + "&" + query
+        qrcodeLogin()
+        time = setInterval(qrcodeLogin, 25000)
+      }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="qr-box">
+            <img class="qr-image" alt="扫码二维码"><img/>
+        </div>
+    </div>
+</body>
+
+</html>
