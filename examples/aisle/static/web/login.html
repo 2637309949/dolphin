@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <title>Login</title>
+  <head>
+    <title>Dolphin</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="zh-CN" />
     <meta name="Author" content="网页作者" />
@@ -10,200 +9,290 @@
     <meta name="keywords" content="网站关键字" />
     <meta name="description" content="网站描述" />
     <style>
-        html,
-        body {
-            height: 100%;
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
         }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
 
-        html {
-            overflow-y: scroll;
-        }
+      html,
+      body {
+        height: 100%;
+      }
 
-        body {
-            margin: 0;
-            font: 12px"\5B8B\4F53", sans-serif;
-            background: #f0f2f5;
-        }
+      html {
+        overflow-y: scroll;
+      }
 
-        div,
-        dl,
-        dt,
-        dd,
-        ul,
-        ol,
-        li,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        pre,
-        form,
-        fieldset,
-        input,
-        textarea,
-        blockquote,
-        p {
-            padding: 0;
-            margin: 0;
-        }
+      body {
+        margin: 0;
+        font: 12px "\5B8B\4F53", sans-serif;
+        background: #f0f2f5;
+        font-family: "Exo", sans-serif;
+        color: #fff;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+      }
 
-        table,
-        td,
-        tr,
-        th {
-            font-size: 12px;
-        }
+      div,
+      dl,
+      dt,
+      dd,
+      ul,
+      ol,
+      li,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      pre,
+      form,
+      fieldset,
+      input,
+      textarea,
+      blockquote,
+      p {
+        padding: 0;
+        margin: 0;
+      }
 
-        li {
-            list-style-type: none;
-        }
+      table,
+      td,
+      tr,
+      th {
+        font-size: 12px;
+      }
 
-        img {
-            vertical-align: top;
-            border: 0;
-        }
+      li {
+        list-style-type: none;
+      }
 
-        ol,
-        ul {
-            list-style: none;
-        }
+      img {
+        vertical-align: top;
+        border: 0;
+      }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            font-size: 12px;
-            font-weight: normal;
-        }
+      ol,
+      ul {
+        list-style: none;
+      }
 
-        address,
-        cite,
-        code,
-        em,
-        th {
-            font-weight: normal;
-            font-style: normal;
-        }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-size: 12px;
+        font-weight: normal;
+      }
 
-        * {
-            margin: 0px;
-            padding: 0px;
-            box-sizing: border-box;
-        }
+      address,
+      cite,
+      code,
+      em,
+      th {
+        font-weight: normal;
+        font-style: normal;
+      }
 
-        .container {
-            display: -webkit-flex;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-        }
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
 
-        .login-box {
-            width: 500px;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-            -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-            -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-            -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-            -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
-            padding-right: 55px;
-            padding-left: 55px;
-            padding-bottom: 50px;
-            padding-top: 65px;
-        }
+      .container {
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
 
-        .form-group {
-            position: relative;
-            width: 100%;
-            position: relative;
-            background-color: #fff;
-            border: 1px solid #e6e6e6;
-        }
+      .login-box {
+        width: 500px;
+        background: #fff;
+        border-radius: 7px;
+        overflow: hidden;
+        box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+        -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+        -o-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+        -ms-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
+        padding-right: 45px;
+        padding-left: 45px;
+        padding-bottom: 40px;
+        padding-top: 55px;
+      }
 
-        .form-control {
-            display: block;
-            width: 100%;
-            background: transparent;
-            font-family: OpenSans-Regular;
-            font-size: 15px;
-            color: #666666;
-            line-height: 1.2;
-            height: 50px;
-            padding: 0 20px 0 20px;
-            outline: none;
-            border: none;
-        }
+      .form-group {
+        position: relative;
+        width: 100%;
+        position: relative;
+        background-color: #fff;
+        border-bottom: 1px solid #e6e6e6;
+      }
 
-        .btn-success {
-            display: -webkit-box;
-            display: -webkit-flex;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 20px;
-            width: 100%;
-            height: 60px;
-            background-color: #4272d7;
-            font-family: OpenSans-Regular;
-            font-size: 14px;
-            color: #fff;
-            line-height: 1.2;
-            text-transform: uppercase;
-            -webkit-transition: all 0.4s;
-            -o-transition: all 0.4s;
-            -moz-transition: all 0.4s;
-            transition: all 0.4s;
-            outline: none !important;
-            border: none;
-        }
+      .form-control {
+        display: block;
+        width: 100%;
+        background: transparent;
+        font-family: OpenSans-Regular;
+        font-size: 15px;
+        color: #666666;
+        line-height: 1.2;
+        height: 50px;
+        padding: 0 20px 0 20px;
+        outline: none;
+        border: none;
+      }
 
-        .form-group-submit {
-            margin-top: 20px;
-        }
+      .btn-success {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+        width: 100%;
+        height: 60px;
+        background-color: #4272d7;
+        font-family: OpenSans-Regular;
+        font-size: 14px;
+        color: #fff;
+        line-height: 1.2;
+        text-transform: uppercase;
+        -webkit-transition: all 0.4s;
+        -o-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+        outline: none !important;
+        border: none;
+      }
 
-        .login-box-title {
-            display: block;
-            font-family: OpenSans-Regular;
-            font-size: 30px;
-            color: #555555;
-            line-height: 1.2;
-            text-align: center;
-            padding-bottom: 28px;
-        }
+      .form-group-submit {
+        margin-top: 20px;
+      }
+
+      .form-group-social {
+        margin-top: 20px;
+        border: 0px solid #e6e6e6;
+      }
+
+      .login-box-title {
+        display: block;
+        font-family: OpenSans-Regular;
+        font-size: 30px;
+        color: #555555;
+        line-height: 1.2;
+        text-align: center;
+        padding-bottom: 28px;
+      }
+
+      .login-box-error {
+        display: none;
+        font-family: OpenSans-Regular;
+        font-size: 15px;
+        color: #555555;
+        line-height: 1.2;
+        text-align: left;
+        margin-bottom: 8px;
+        padding: 8px;
+        background-color: pink;
+      }
     </style>
-</head>
+    <script type="text/javascript">
+      function getCookie(name) {
+        var name = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i<ca.length; i++) {
+          var c = ca[i].trim();
+          if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+        }
+        return "";
+      }
+      function queryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        var q = window.location.pathname.substr(1).match(reg_rewrite);
+        if (r != null) {
+          return unescape(r[2]);
+        } else if (q != null) {
+          return unescape(q[2]);
+        } else {
+          return null;
+        }
+      }
+      window.onload = function () {
+        var errMsg = queryString('error')
+        if (!!errMsg) {
+            var lbe = document.getElementsByClassName("login-box-error")[0]
+            lbe.innerText = 'ERROR: ' + errMsg
+            lbe.style.display = 'block'
+        }
+        var domain = queryString('domain') || getCookie('domain') || 'localhost'
+        var dom = document.getElementsByClassName("form-domain")[0]
+        dom.value = domain
 
-<body>
+        var state = queryString('state') || getCookie('state') || ''
+        var winxin = document.getElementsByClassName("social-winxin")[0]
+        winxin.href = "./qrconnect.html?state=" + state
+      };
+    </script>
+  </head>
+
+  <body>
     <div class="container">
-        <div class="login-box">
-            <span class="login-box-title">Account Login</span>
-            <form action="/api/sys/cas/login" method="POST">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="domain" placeholder="Please enter your domain">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="username" placeholder="Please enter your user name">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" name="password"
-                        placeholder="Please enter your password">
-                </div>
-                <div class="form-group form-group-submit">
-                    <button type="submit" class="btn btn-success">Sign in</button>
-                </div>
-            </form>
-        </div>
+      <div class="login-box">
+        <span class="login-box-title">Account Login</span>
+        <span class="login-box-error">ERROR: </span>
+        <form action="/api/sys/cas/login" method="POST">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control form-domain"
+              name="domain"
+              placeholder="Please enter your domain"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              placeholder="Please enter your user name"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Please enter your password"
+            />
+          </div>
+          <div class="form-group form-group-submit">
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </div>
+          <div class="form-group form-group-social">
+            <a class="social-winxin" href="./qrconnect.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAwtJREFUWEft1k+I1HUYx/HXd3YxjKCo9GQW0SFcyIXKmVllSQIvxsYa1a0soTSLsK1TQUbUyfVUFmLkIfZQYILVoYsZ7M6MxVamCV2COkRQkiLBtst84/cbZ2fnT/5mxgU79MDv8ns+z/O8v8/v9/0+3+AqW7jK9f3HAWatMmdIsA5DWCc6acCseWdsdPpKO9i5A2VrRC8I9mQU+B5TBk25x8/9wLQDVOxJi7Omh4TnBVPynukhJpU2A1QcFj3ea5JFffSRokd6iW8AlL2OV3oJ7qjtEaIGMGOHnEMtCY9YYac5twvKHYo9reCgsifxXpM/elnRm90spgZQ9i3WtyTZrOiLS/7juK/JX1jy+cpiS7GzCunOybRgxo1y/uig/NEKm8zZKni/zR+9pmivkr2CV9v8wTZ5H2cRBCeNqjqRJbysP/pG8JWQngu/iwZEq0QVc07Z7OK/xQeldL9P9gnwp2CfqorgOUExLdxs8ykcb8ubaq2TAOwUvNMHwGcG7bPgQTzfVXx0RDRpxExdn/zfSYKjXSVoiH6Tc7+qDzDcYyxVG+sQwdfWWnAK1/eQ6DFsxaM9xDSk0Wnzthj1a20bVhwQ7eoqWXQMs21/fvSEa3zqb+9i25JcuxUcUE530vbF98nnKHqocRKWnBXcmQkR7BfdgbEW7ZCCH5QcEuxY9FWNG3FUyfaW7XzBoJubZ0HZX1iZAbEbb+CGDrrDTausC5Izo9NZEW1qHUY34YSYzv7OVvWsnLcyO9WNIJpoH8czHpBLv3Nni54SHOwmf6Ym2tUOUPKh4OE0uNa6W3HbkudFyTEbjWQWyBZsaQeoDZZkhS8puNAxR8mkkF5a+rfgmLyxZoBpRQPOp3/z5aw2wD7H3X0S/CQYl/dd/7fiafcaSMf1tT1CnJMzboMvk7j+AZLokjE5E6LRLiEWLq38k7r+ygDqWcrpMJrALRkg5xQkW33RlgcgSXfcdVYaVjVswHpVqzGdPkXTSvan1/yctTb4ZXk70GX/ld0lGJVvHGTL14FuIVp0/wP8A8HfwWk69LF+AAAAAElFTkSuQmCC"> </a>
+          </div>
+        </form>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
