@@ -1835,6 +1835,37 @@ paths:
       summary: 用户信息
       tags:
       - 认证中心
+  /api/sys/cas/qr_oauth2:
+    get:
+      parameters:
+      - description: 状态码
+        in: query
+        name: state
+        required: false
+        type: string
+      - description: 临时令牌
+        in: query
+        name: code
+        required: false
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 授权回调
+      tags:
+      - 认证中心
   /api/sys/cas/qrcode:
     get:
       parameters:
@@ -6292,32 +6323,6 @@ paths:
           schema:
             $ref: '#/definitions/types.Fail'
       summary: 授权回调
-      tags:
-      - 微信
-  /api/sys/wechat/token:
-    post:
-      parameters:
-      - description: 状态
-        in: query
-        name: code
-        required: false
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/types.Success'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/types.Fail'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/types.Fail'
-      summary: 获取令牌
       tags:
       - 微信
   /api/sys/worker/add:
