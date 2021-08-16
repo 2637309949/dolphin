@@ -223,8 +223,6 @@ func (ctr *SysCas) SysCasURL(ctx *Context) {
 	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "domain", Value: url.QueryEscape(ctx.Query("domain")), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
 	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "state", Value: url.QueryEscape(state), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
 	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "redirect_host", Value: uri.Scheme + "://" + uri.Host, MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
-	// ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "redirect_uri", Value: url.QueryEscape(OA2Cfg.RedirectURL), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
-	// ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "qr_redirect_uri", Value: url.QueryEscape(QrOA2Cfg.RedirectURL), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
 	OA2Cfg.RedirectURL = uri.Scheme + "://" + uri.Host + "/oauth.html"
 	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
 }
@@ -240,9 +238,8 @@ func (ctr *SysCas) SysCasURL(ctx *Context) {
 func (ctr *SysCas) SysCasOauth2(ctx *Context) {
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
-	state := f.Get("state")
-	code := f.Get("code")
-	state, _ = url.QueryUnescape(state)
+	state, _ := url.QueryUnescape(f.Get("state"))
+	code, _ := url.QueryUnescape(f.Get("code"))
 
 	if code == "" {
 		logrus.Errorf("SysCasOauth2/code:%v", errors.New("code not found"))
@@ -251,20 +248,18 @@ func (ctr *SysCas) SysCasOauth2(ctx *Context) {
 	}
 	ret, err := OA2Cfg.Exchange(context.Background(), code)
 	if err != nil {
-		logrus.Errorf("SysCasOauth2/Exchange:%v", errors.New("code not found"))
+		logrus.Errorf("SysCasOauth2/Exchange:%v", err)
 		ctx.Fail(err)
 		return
 	}
 	reg := regexp.MustCompile("redirect_uri=([^&]*)?&state=([^&]*)?$")
 	groups := reg.FindAllStringSubmatch(state, -1)
-	rawRedirect := groups[0][1]
-	rawState := groups[0][2]
-	// ctx.SetCookie("access_token", ret.AccessToken, 60*60*30, "/", "", false, false)
-	// ctx.SetCookie("refresh_token", ret.RefreshToken, 60*60*30, "/", "", false, false)
+	redirect := groups[0][1]
+	state = groups[0][2]
 	ctx.Success(map[string]interface{}{
 		"access_token":  ret.AccessToken,
 		"refresh_token": ret.RefreshToken,
-		"redirect_uri":  rawRedirect + "?state=" + rawState,
+		"redirect_uri":  redirect + "?state=" + state,
 	})
 }
 
@@ -295,7 +290,6 @@ func (ctr *SysCas) SysCasQrOauth2(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-
 	token, err := App.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
 		UserID:       fmt.Sprintf("%v", qrToken.UserId.Int64),
 		Domain:       qrToken.Domain.String,
@@ -303,12 +297,11 @@ func (ctr *SysCas) SysCasQrOauth2(ctx *Context) {
 		ClientSecret: viper.GetString("oauth.secret"),
 		Request:      ctx.Request,
 	})
+
 	if err != nil {
 		ctx.Fail(err)
 		return
 	}
-	// ctx.SetCookie("access_token", token.GetAccess(), 60*60*30, "/", "", false, false)
-	// ctx.SetCookie("refresh_token", token.GetRefresh(), 60*60*30, "/", "", false, false)
 	ctx.Success(map[string]interface{}{
 		"access_token":  token.GetAccess(),
 		"refresh_token": token.GetRefresh(),
@@ -331,6 +324,7 @@ func (ctr *SysCas) SysCasRefresh(ctx *Context) {
 		ctx.Fail(types.ErrInvalidAccessToken)
 		return
 	}
+
 	token := xoauth2.Token{}
 	token.Expiry = time.Now()
 	token.RefreshToken = refreshtoken
@@ -410,25 +404,28 @@ func (ctr *SysCas) SysCasProfile(ctx *Context) {
 // @Router /api/sys/cas/qrcode [get]
 func (ctr *SysCas) SysCasQrcode(ctx *Context) {
 	q, qrconnect := ctx.TypeQuery(), ""
-	q.SetInt("type", 0)
 	q.SetInt("width", 320)
 	q.SetInt("height", 320)
 	q.SetString("state")
 	q.SetString("uuid")
+	q.SetInt("type", 0)
 
 	if q.GetString("uuid") == "" {
 		ctx.Fail(errors.New("not found uuid"))
 		return
 	}
-
+	if len(q.GetString("uuid")) < 10 {
+		ctx.Fail(errors.New("invalid uuid"))
+		return
+	}
 	if q.GetString("state") == "" {
 		ctx.Fail(errors.New("not found state"))
 		return
 	}
 
-	osHost, httpPrefix := viper.GetString("oauth.server"), viper.GetString("http.prefix")
-	wechatAuthUrl := osHost + path.Join(httpPrefix, SysWechatInstance.Oauth2.RelativePath)
-	dingtalkAuthUrl := osHost + path.Join(httpPrefix, SysDingtalkInstance.Oauth2.RelativePath)
+	appHost, httpPrefix := viper.GetString("app.host"), viper.GetString("http.prefix")
+	wechatAuthUrl := appHost + path.Join(httpPrefix, SysWechatInstance.Oauth2.RelativePath)
+	dingtalkAuthUrl := appHost + path.Join(httpPrefix, SysDingtalkInstance.Oauth2.RelativePath)
 
 	state := url.QueryEscape("uuid=" + q.GetString("uuid") + "&" + q.GetString("state"))
 	switch t := srv.SysCasQrType(q.GetInt("type")); t {

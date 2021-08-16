@@ -27,16 +27,16 @@ func (ctr *SysWechat) SysWechatOauth2(ctx *Context) {
 	q.SetString("state")
 
 	state := q.GetString("state")
-	uri, err := url.ParseQuery(state)
+	sri, err := url.ParseQuery(state)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
 	}
 
-	redirect_uri := uri.Get("redirect_uri")
-	uuid := uri.Get("uuid")
-	domain := uri.Get("domain")
+	redirect_uri := sri.Get("redirect_uri")
+	uuid := sri.Get("uuid")
+	domain := sri.Get("domain")
 	qrAuth := types.QrAuth{}
 	err = CacheStore.Get("wechat:qrcode:"+uuid, &qrAuth)
 	if err == nil {
