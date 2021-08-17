@@ -58,13 +58,13 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 	// load domain from state
 	if account.Domain.String == "" {
 		if v, ok := store.Get("ReturnUri"); ok {
-			uri, err := url.ParseQuery(v.(url.Values).Get("state"))
+			sri, err := url.ParseQuery(v.(url.Values).Get("state"))
 			if err != nil {
 				logrus.Errorf("SysCasLogin/url.Parse:%v", err)
 				ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
 				return
 			}
-			account.Domain.String = uri.Get("domain")
+			account.Domain.String = sri.Get("domain")
 		}
 	}
 
@@ -106,6 +106,16 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 // @Router /api/sys/cas/logout [get]
 func (ctr *SysCas) SysCasLogout(ctx *Context) {
 	state := "domain=" + ctx.Query("domain") + "&redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
+	if ctx.Query("domain") == "" {
+		logrus.Errorf("SysCasLogout/domain:%v", errors.New("domain not found"))
+		ctx.Fail(errors.New("domain not found"))
+		return
+	}
+	if ctx.Query("redirect_uri") == "" {
+		logrus.Errorf("SysCasLogout/redirect_uri:%v", errors.New("redirect_uri not found"))
+		ctx.Fail(errors.New("redirect_uri not found"))
+		return
+	}
 	session.Destroy(context.Background(), ctx.Writer, ctx.Request)
 	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
 }
@@ -220,10 +230,12 @@ func (ctr *SysCas) SysCasURL(ctx *Context) {
 	if uri.Scheme == "" {
 		uri.Scheme = "http"
 	}
+	redirectURL := uri.Scheme + "://" + uri.Host + "/oauth.html"
 	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "domain", Value: url.QueryEscape(ctx.Query("domain")), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
 	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "state", Value: url.QueryEscape(state), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
 	ctx.Writer.Header().Add("Set-Cookie", (&http.Cookie{Name: "redirect_host", Value: uri.Scheme + "://" + uri.Host, MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
-	OA2Cfg.RedirectURL = uri.Scheme + "://" + uri.Host + "/oauth.html"
+
+	OA2Cfg.RedirectURL = redirectURL
 	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
 }
 
@@ -385,6 +397,7 @@ func (ctr *SysCas) SysCasProfile(ctx *Context) {
 	rolesArr := funk.Map(roles, func(role types.SysRole) string {
 		return role.Code.String
 	}).([]string)
+
 	ctx.Success(map[string]interface{}{
 		"roles":  rolesArr,
 		"avatar": user.Avatar.String,
@@ -406,9 +419,9 @@ func (ctr *SysCas) SysCasQrcode(ctx *Context) {
 	q, qrconnect := ctx.TypeQuery(), ""
 	q.SetInt("width", 320)
 	q.SetInt("height", 320)
+	q.SetInt("type", 0)
 	q.SetString("state")
 	q.SetString("uuid")
-	q.SetInt("type", 0)
 
 	if q.GetString("uuid") == "" {
 		ctx.Fail(errors.New("not found uuid"))
