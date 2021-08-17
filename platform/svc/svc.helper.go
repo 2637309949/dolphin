@@ -2,7 +2,6 @@ package svc
 
 import (
 	"container/list"
-	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -14,36 +13,56 @@ import (
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/maps"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/gin-contrib/cache/persistence"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
 // SvcHepler defined TODO
 type SvcHepler struct {
-	rds  redis.Cmdable
-	xlsx *Xlsx
-}
-
-// SetCache defined TODO
-func (svc *SvcHepler) SetCache(key string, v interface{}, expire time.Duration) error {
-	bytes, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-	err = svc.rds.Set(context.Background(), key, string(bytes), expire).Err()
-	return err
+	cacheStore persistence.CacheStore
+	xlsx       *Xlsx
 }
 
 // GetCache defined TODO
-func (svc *SvcHepler) GetCache(key string, v interface{}) error {
-	str, err := svc.rds.Get(context.Background(), key).Result()
-	if err != nil {
-		return err
-	}
-	err = json.Unmarshal([]byte(str), v)
-	return err
+func (svc *SvcHepler) GetCache(key string, value interface{}) error {
+	return svc.cacheStore.Get(key, value)
+}
+
+// SetCache defined TODO
+func (svc *SvcHepler) SetCache(key string, value interface{}, expire time.Duration) error {
+	return svc.cacheStore.Set(key, value, expire)
+}
+
+// AddCache defined TODO
+func (svc *SvcHepler) AddCache(key string, value interface{}, expire time.Duration) error {
+	return svc.cacheStore.Add(key, value, expire)
+}
+
+// ReplaceCache defined TODO
+func (svc *SvcHepler) ReplaceCache(key string, data interface{}, expire time.Duration) error {
+	return svc.cacheStore.Replace(key, data, expire)
+}
+
+// DeleteCache defined TODO
+func (svc *SvcHepler) DeleteCache(key string) error {
+	return svc.cacheStore.Delete(key)
+}
+
+// IncrementCache defined TODO
+func (svc *SvcHepler) IncrementCache(key string, data uint64) (uint64, error) {
+	return svc.cacheStore.Increment(key, data)
+}
+
+// DecrementCache defined TODO
+func (svc *SvcHepler) DecrementCache(key string, data uint64) (uint64, error) {
+	return svc.cacheStore.Decrement(key, data)
+}
+
+// FlushCache defined TODO
+func (svc *SvcHepler) FlushCache() error {
+	return svc.cacheStore.Flush()
 }
 
 // InRole defined TODO
@@ -317,6 +336,6 @@ func (svc *SvcHepler) ParseExcel(r io.Reader, sheet interface{}, header ...[]map
 }
 
 // NewSvcHepler defined TODO
-func NewSvcHepler(rds redis.Cmdable) Svc {
-	return &SvcHepler{rds: rds}
+func NewSvcHepler(cacheStore persistence.CacheStore) Svc {
+	return &SvcHepler{cacheStore: cacheStore}
 }

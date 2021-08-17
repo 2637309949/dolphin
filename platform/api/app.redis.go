@@ -8,13 +8,20 @@ import (
 	"context"
 	"time"
 
+	"github.com/gin-contrib/cache/persistence"
 	"github.com/go-redis/redis/v8"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-// InitRedisClient defined TODO
-func InitRedisClient() {
+// RedisClient defined TODO
+var RedisClient redis.Cmdable
+
+// CacheStore defined TODO
+var CacheStore persistence.CacheStore
+
+// NewRedisClient defined TODO
+func NewRedisClient() redis.Cmdable {
 	network := viper.GetString("redis.network")
 	username := viper.GetString("redis.username")
 	password := viper.GetString("redis.password")
@@ -32,11 +39,14 @@ func InitRedisClient() {
 	idle_conns := viper.GetInt("redis.idle_conns")
 
 	if len(addr) == 0 || mode == "" {
-		return
+		return nil
 	}
+
+	var rdsCli redis.Cmdable
+	var err error
 	switch mode {
 	case "stub":
-		RedisClient = redis.NewClient(&redis.Options{
+		rdsCli = redis.NewClient(&redis.Options{
 			Network:      network,
 			Addr:         addr[0],
 			DB:           db,
@@ -50,15 +60,9 @@ func InitRedisClient() {
 			MinIdleConns: min_idle_conns,
 			IdleTimeout:  time.Duration(idle_conns) * time.Second,
 		})
-		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
-			logrus.Warnf("Redis:%v connect failed, %v", addr[0], err)
-			RedisClient = nil
-		} else {
-			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
-			logrus.Infof("Redis:%v connect successfully", addr[0])
-		}
+		_, err = rdsCli.Ping(context.Background()).Result()
 	case "cluster":
-		RedisClient = redis.NewClusterClient(&redis.ClusterOptions{
+		rdsCli = redis.NewClusterClient(&redis.ClusterOptions{
 			Addrs:        addr,
 			MaxRedirects: max_redirects,
 			ReadOnly:     read_only,
@@ -71,14 +75,24 @@ func InitRedisClient() {
 			MinIdleConns: min_idle_conns,
 			IdleTimeout:  time.Duration(idle_conns) * time.Second,
 		})
-		if _, err := RedisClient.Ping(context.Background()).Result(); err != nil {
-			logrus.Warnf("Redis:%v connect failed, %v", addr, err)
-			RedisClient = nil
-		} else {
-			logrus.Infof("Redis:%v connect successfully", addr)
-			CacheStore = NewRedisCache(RedisClient, 60*time.Second)
-		}
+		_, err = rdsCli.Ping(context.Background()).Result()
 	default:
 		logrus.Fatal("redis mode must be one of (stub, cluster)")
+	}
+
+	if err != nil {
+		logrus.Warnf("Redis:%v connect failed, %v", addr[0], err)
+		return nil
+	}
+	logrus.Infof("Redis:%v connect successfully", addr[0])
+	return rdsCli
+}
+
+// InitCacheStore defined TODO
+func InitCacheStore() {
+	CacheStore = persistence.NewInMemoryStore(60 * time.Second)
+	RedisClient = NewRedisClient()
+	if RedisClient != nil {
+		CacheStore = NewRedisCache(RedisClient, 60*time.Second)
 	}
 }

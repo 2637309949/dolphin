@@ -115,7 +115,7 @@ func IsDebugging() bool {
 func init() {
 	InitViper()
 	InitLogger()
-	InitRedisClient()
+	InitCacheStore()
 	InitSession()
 
 	opts := []Option{WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}

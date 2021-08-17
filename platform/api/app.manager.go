@@ -7,29 +7,20 @@ package api
 import (
 	"fmt"
 	"sync"
-	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/worker"
-	"github.com/gin-contrib/cache/persistence"
 	"github.com/go-errors/errors"
-	"github.com/go-redis/redis/v8"
 	"github.com/robfig/cron/v3"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-var (
-	// MaxWorkers defined TODO
-	MaxWorkers = 15
-	// RedisClient defined TODO
-	RedisClient redis.Cmdable
-	// CacheStore defined TODO
-	CacheStore persistence.CacheStore = persistence.NewInMemoryStore(60 * time.Second)
-)
+// MaxWorkers defined TODO
+var MaxWorkers = 15
 
 // Worker defined TODO
 type Worker interface {

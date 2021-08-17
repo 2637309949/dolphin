@@ -5,7 +5,7 @@ import (
 
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/go-redis/redis/v8"
+	"github.com/gin-contrib/cache/persistence"
 	"github.com/segmentio/kafka-go"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -17,7 +17,7 @@ type SvcHepler struct {
 	svc.Svc
 }
 
-func NewSvcHepler(rds redis.Cmdable) Svc {
+func NewSvcHepler(cacheStore persistence.CacheStore) Svc {
 	bucket := viper.GetString("oss.bucket")
 	endpoint := viper.GetString("oss.endpoint")
 	accesskeyid := viper.GetString("oss.accesskeyid")
@@ -36,5 +36,5 @@ func NewSvcHepler(rds redis.Cmdable) Svc {
 		Timeout:   10 * time.Second,
 		DualStack: true,
 	}
-	return &SvcHepler{Svc: svc.NewSvcHepler(rds), bucket: bk, dialer: dialer}
+	return &SvcHepler{Svc: svc.NewSvcHepler(cacheStore), bucket: bk, dialer: dialer}
 }

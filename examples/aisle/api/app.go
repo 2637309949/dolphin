@@ -50,7 +50,7 @@ type (
 // Reflesh defined TODO
 func (dol *Dolphin) Reflesh() error {
 	dol.SyncModel()
-	dol.SyncSrv(svc.NewSvcHepler(api.RedisClient))
+	dol.SyncSrv(svc.NewSvcHepler(api.CacheStore))
 	dol.SyncService()
 	dol.SyncController()
 	return nil

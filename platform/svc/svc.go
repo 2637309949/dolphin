@@ -13,8 +13,14 @@ import (
 type (
 	// Cache defined TODO
 	Cache interface {
-		SetCache(key string, v interface{}, expire time.Duration) error
-		GetCache(key string, v interface{}) error
+		GetCache(key string, value interface{}) error
+		SetCache(key string, value interface{}, expire time.Duration) error
+		AddCache(key string, value interface{}, expire time.Duration) error
+		ReplaceCache(key string, data interface{}, expire time.Duration) error
+		DeleteCache(key string) error
+		IncrementCache(key string, data uint64) (uint64, error)
+		DecrementCache(key string, data uint64) (uint64, error)
+		FlushCache() error
 	}
 
 	// Export defined TODO

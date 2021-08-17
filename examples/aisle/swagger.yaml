@@ -2154,6 +2154,37 @@ paths:
       summary: 用户信息
       tags:
       - 认证中心
+  /api/sys/cas/qr_oauth2:
+    get:
+      parameters:
+      - description: 状态码
+        in: query
+        name: state
+        required: false
+        type: string
+      - description: 临时令牌
+        in: query
+        name: code
+        required: false
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 授权回调
+      tags:
+      - 认证中心
   /api/sys/cas/qrcode:
     get:
       parameters:
@@ -2183,6 +2214,52 @@ paths:
           schema:
             $ref: '#/definitions/types.Fail'
       summary: 扫码登录(绑定第三方)
+      tags:
+      - 认证中心
+  /api/sys/cas/qrcode_login:
+    get:
+      parameters:
+      - description: 唯一id
+        in: query
+        name: uuid
+        required: false
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 扫码登陆
+      tags:
+      - 认证中心
+  /api/sys/cas/qrconnect:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 扫码地址
       tags:
       - 认证中心
   /api/sys/cas/refresh:

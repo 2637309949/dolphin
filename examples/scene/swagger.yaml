@@ -950,13 +950,13 @@ definitions:
         type: number
       is_primary_key:
         description: IsPrimaryKey defined 是否主键
-        type: number
+        type: boolean
       name:
         description: Name defined 表名
         type: string
       nullable:
         description: Nullable defined 是否为空
-        type: number
+        type: boolean
       remark:
         description: Remark defined 备注
         type: string
@@ -1245,7 +1245,7 @@ definitions:
         $ref: '#/definitions/types.SysUser'
         description: 用户
     type: object
-host: localhost:8082
+host: http://172.20.10.3:8082
 info:
   contact: {}
   license:
@@ -3008,6 +3008,37 @@ paths:
       summary: 用户信息
       tags:
       - 认证中心
+  /api/sys/cas/qr_oauth2:
+    get:
+      parameters:
+      - description: 状态码
+        in: query
+        name: state
+        required: false
+        type: string
+      - description: 临时令牌
+        in: query
+        name: code
+        required: false
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 授权回调
+      tags:
+      - 认证中心
   /api/sys/cas/qrcode:
     get:
       parameters:
@@ -3037,6 +3068,52 @@ paths:
           schema:
             $ref: '#/definitions/types.Fail'
       summary: 扫码登录(绑定第三方)
+      tags:
+      - 认证中心
+  /api/sys/cas/qrcode_login:
+    get:
+      parameters:
+      - description: 唯一id
+        in: query
+        name: uuid
+        required: false
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 扫码登陆
+      tags:
+      - 认证中心
+  /api/sys/cas/qrconnect:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/types.Success'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/types.Fail'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/types.Fail'
+      summary: 扫码地址
       tags:
       - 认证中心
   /api/sys/cas/refresh:
@@ -7647,13 +7724,13 @@ paths:
       - xlsx controller
 securityDefinitions:
   OAuth2AccessCode:
-    authorizationUrl: http://localhost:8082/api/sys/cas/authorize
+    authorizationUrl: http://172.20.10.3:8082/api/sys/cas/authorize
     flow: accessCode
     scopes:
       admin: Grants read and write access to administrative information
       read: Grants read access
       write: Grants write access
-    tokenUrl: http://localhost:8082/api/sys/cas/token
+    tokenUrl: http://172.20.10.3:8082/api/sys/cas/token
     type: oauth2
     x-tokenName: Authorization
 swagger: "2.0"
