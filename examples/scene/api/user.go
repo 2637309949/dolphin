@@ -4,6 +4,7 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/sirupsen/logrus"
 )
@@ -26,8 +27,9 @@ func (ctr *User) UserInfo(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	if uids, ok := slice.GetFieldSliceByName(articles, "creater", "%v").([]string); ok {
-		users, err := ctx.PlatformDB.Table("sys_user").In("id", uids).Where("is_delete != !").Cols("id", "name").QueryString()
+	if uids, ok := slice.GetFieldSliceByName(articles, "creater", "%v").([]float64); ok {
+		users := []types.SysUser{}
+		err := ctx.PlatformDB.Table("sys_user").In("id", uids).Where("is_delete != !").Cols("id", "name").Find(&users)
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
