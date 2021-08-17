@@ -2776,3 +2776,18 @@ var XTestSysCasQrconnect, XTestSysCasQrconnectRequest = func(ctx *Context) {
 		ctx.testingT.Errorf("XTestSysCasQrconnect = %v want %v", ret.Code, 200)
 	}
 }, Payload{}
+
+// XTestSysCasQrcodeLogin, XTestSysCasQrcodeLoginRequest defined TODO
+var XTestSysCasQrcodeLogin, XTestSysCasQrcodeLoginRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestSysCasQrcodeLogin = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestSysCasQrcodeLogin = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
