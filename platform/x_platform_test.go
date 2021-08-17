@@ -2746,3 +2746,33 @@ var XTestSysWorkerGet, XTestSysWorkerGetRequest = func(ctx *Context) {
 		ctx.testingT.Errorf("XTestSysWorkerGet = %v want %v", ret.Code, 200)
 	}
 }, Payload{}
+
+// XTestSysCasQrOauth2, XTestSysCasQrOauth2Request defined TODO
+var XTestSysCasQrOauth2, XTestSysCasQrOauth2Request = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestSysCasQrOauth2 = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestSysCasQrOauth2 = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
+
+// XTestSysCasQrconnect, XTestSysCasQrconnectRequest defined TODO
+var XTestSysCasQrconnect, XTestSysCasQrconnectRequest = func(ctx *Context) {
+	ret := Response{}
+	if ctx.Code != 200 {
+		ctx.testingT.Errorf("XTestSysCasQrconnect = %v want %v", ctx.Code, 200)
+	}
+	err := ctx.ParseBody(&ret)
+	if err != nil {
+		ctx.testingT.Error(err)
+	}
+	if ret.Code != 200 {
+		ctx.testingT.Errorf("XTestSysCasQrconnect = %v want %v", ret.Code, 200)
+	}
+}, Payload{}
