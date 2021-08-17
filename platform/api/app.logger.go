@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
@@ -38,7 +39,7 @@ type LogFormatterParams struct {
 	gin.LogFormatterParams
 	Domain  string
 	Token   string
-	UserID  string
+	UserID  int64
 	Header  []byte
 	ReqBody []byte
 	ResBody []byte
@@ -132,7 +133,8 @@ func DumpRecv(dol *Dolphin) func(ctx *Context, p *LogFormatterParams) {
 		p.Token = token
 		if tokenInfo, err := dol.OAuth2.Manager.LoadAccessToken(token); err == nil {
 			p.Domain = tokenInfo.GetDomain()
-			p.UserID = tokenInfo.GetUserID()
+			it, _ := strconv.ParseInt(tokenInfo.GetUserID(), 10, 64)
+			p.UserID = it
 		}
 
 		// would not be block <-logWorkerPool
@@ -179,7 +181,7 @@ func InitTracker() {
 					st := types.TrackerInfo{Domain: null.StringFrom(item.Domain)}
 					st.SysTracker = &types.SysTracker{
 						Token:      null.StringFrom(item.Token),
-						UserId:     null.StringFrom(item.UserID),
+						UserId:     null.IntFrom(item.UserID),
 						StatusCode: null.IntFrom(int64(item.StatusCode)),
 						Latency:    null.FloatFrom(item.Latency.Seconds()),
 						ClientIp:   null.StringFrom(item.ClientIP),

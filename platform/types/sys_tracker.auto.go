@@ -14,7 +14,7 @@ type SysTracker struct {
 	// Token defined 令牌
 	Token null.String `xorm:"varchar(72) comment('令牌') 'token'" json:"token" form:"token" xml:"token"`
 	// UserId defined 用户ID
-	UserId null.String `xorm:"varchar(36) comment('用户ID') 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
+	UserId null.Int `xorm:"bigint(20) notnull comment('用户ID') 'user_id'" json:"user_id" form:"user_id" xml:"user_id"`
 	// StatusCode defined 状态
 	StatusCode null.Int `xorm:"int comment('状态') 'status_code'" json:"status_code" form:"status_code" xml:"status_code"`
 	// Latency defined 反应时间

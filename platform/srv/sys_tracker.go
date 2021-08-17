@@ -25,8 +25,8 @@ func NewSysTracker() *SysTracker {
 
 // PageFormatter defined TODO
 func (srv *SysTracker) PageFormatter(db1 *xorm.Engine) func(*xorm.Engine, []map[string]interface{}) ([]map[string]interface{}, error) {
-	return func(db2 *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
-		if uids, ok := slice.GetFieldSliceByName(items, "user_id").([]string); ok {
+	return func(_ *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
+		if uids, ok := slice.GetFieldSliceByName(items, "user_id").([]float64); ok {
 			users := []types.SysUser{}
 			err := db1.Cols("id", "name").In("id", uids).Find(&users)
 			if err != nil {

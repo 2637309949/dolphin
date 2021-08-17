@@ -56,7 +56,7 @@ func (srv *SysUser) TODO(ctx context.Context, db *xorm.Engine, params struct{}) 
 
 // PageFormatter defined TODO
 func (srv *SysUser) PageFormatter(db1 *xorm.Engine) func(*xorm.Engine, []map[string]interface{}) ([]map[string]interface{}, error) {
-	return func(db2 *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
+	return func(_ *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {
 		if uids, ok := slice.GetFieldSliceByName(items, "id").([]float64); ok {
 			roles, err := srv.GetUserRolesByUID(db1, uids)
 			if err != nil {

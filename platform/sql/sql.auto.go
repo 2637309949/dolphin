@@ -902,7 +902,12 @@ from
 	sys_menu
 where
 	sys_menu.is_delete {{.ne}} 1
-`
+{{if ne .name ""}}
+    and sys_menu.name like "%{{.name}}%"
+{{end}}
+{{if ne .code ""}}
+    and sys_menu.code like "%{{.code}}%"
+{{end}}`
 	SQLTPL["sys_menu_page_select.tpl"] = `select
     sys_menu.id,
     sys_menu.parent,
@@ -917,15 +922,13 @@ where
 from
 	sys_menu
 where
-	sys_menu.id {{.ne}} ""
+	sys_menu.is_delete {{.ne}} 1
 {{if ne .name ""}}
     and sys_menu.name like "%{{.name}}%"
 {{end}}
 {{if ne .code ""}}
     and sys_menu.code like "%{{.code}}%"
 {{end}}
-	and
-	sys_menu.is_delete {{.ne}} 1
 order by {{.sort}}
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -938,7 +941,7 @@ left join sys_role_menu on sys_menu.id = sys_role_menu.menu_id
 inner join sys_role_user on sys_role_menu.role_id = sys_role_user.role_id and sys_role_user.user_id = {{.uid}}
 {{end}}
 where
-	sys_menu.is_delete = 0
+    sys_menu.is_delete {{.ne}} 1
 	and
 	sys_menu.hidden = 0
 order by ` + "`order`" + `
@@ -955,9 +958,7 @@ order by ` + "`order`" + `
 from
 	sys_menu
 where
-	sys_menu.id {{.ne}} ""
-    and is_delete = 0
-
+	sys_menu.is_delete {{.ne}} 1
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}
@@ -1107,7 +1108,7 @@ order by ` + "`order`" + `
 from
 	sys_menu{{if ne .is_admin true}}, sys_role_menu{{end}}
 where
-sys_menu.is_delete = 0
+	sys_menu.is_delete {{.ne}} 0
 {{if ne .is_admin true}}
     and sys_menu.id = sys_role_menu.menu_id
     and sys_role_menu.role_id = "{{.role_id}}"
@@ -1367,8 +1368,7 @@ LIMIT {{.size}} OFFSET {{.offset}}
 from
 	sys_tracker
 where
-	sys_tracker.id {{.ne}} ""
-	and sys_tracker.is_delete {{.ne}} 1
+	sys_tracker.is_delete {{.ne}} 1
 
 `
 	SQLTPL["sys_tracker_page_select.tpl"] = `select
@@ -1383,9 +1383,7 @@ where
 from
 	sys_tracker
 where
-	sys_tracker.id {{.ne}} ""
-	and sys_tracker.is_delete {{.ne}} 1
-
+	sys_tracker.is_delete {{.ne}} 1
 {{if ne .sort ""}}
 	order by {{.sort}}
 {{else}}
