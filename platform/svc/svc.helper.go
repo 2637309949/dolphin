@@ -8,13 +8,14 @@ import (
 	"strings"
 	"time"
 
+	nh "net/http"
+
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/http"
 	"github.com/2637309949/dolphin/platform/util/maps"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/gin-contrib/cache/persistence"
-	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -281,19 +282,19 @@ func (svc *SvcHepler) Head(url string) *http.HttpRequest {
 }
 
 // Check defined TODO
-func (svc *SvcHepler) Check(ctx *gin.Context) bool {
+func (svc *SvcHepler) Check(request *nh.Request) bool {
 	xlsx := NewXlsx()
-	if ctx.Query("__columns__") != "" {
-		cstr := ctx.Query("__columns__")
+	if request.URL.Query().Get("__columns__") != "" {
+		cstr := request.URL.Query().Get("__columns__")
 		columns := []map[string]interface{}{}
 		json.Unmarshal([]byte(cstr), &columns)
 		xlsx.Header = columns
 	}
-	if ctx.Query("__name__") != "" {
-		xlsx.FileName = ctx.Query("__name__")
+	if request.URL.Query().Get("__name__") != "" {
+		xlsx.FileName = request.URL.Query().Get("__name__")
 	}
 	svc.xlsx = xlsx
-	return ctx.Query("__export__") == "true"
+	return request.URL.Query().Get("__export__") == "true"
 }
 
 // SetOptionsetsFormat definedTODO

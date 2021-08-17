@@ -240,7 +240,7 @@ func (ctr *SysTable) SysTablePage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	if ctr.Srv.Check(ctx.Context) {
+	if ctr.Srv.Check(ctx.Request) {
 		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
 		ret, err := ctr.Srv.PageExport(ctx.DB, "sys_table", "page", "sys_table", q.Value())
 		if err != nil {

@@ -323,7 +323,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		}
 		q.SetUnescaped("cn_org_id", strings.Join(ids, ","))
 	}
-	if ctr.Srv.Check(ctx.Context) {
+	if ctr.Srv.Check(ctx.Request) {
 		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
 		ret, err := ctr.Srv.PageExport(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
 		if err != nil {

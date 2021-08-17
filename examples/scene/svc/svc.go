@@ -4,11 +4,12 @@ import (
 	"io"
 	"time"
 
+	nh "net/http"
+
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/http"
-	"github.com/gin-gonic/gin"
 )
 
 type (
@@ -20,7 +21,7 @@ type (
 
 	// Export defined TODO
 	Export interface {
-		Check(*gin.Context) bool
+		Check(*nh.Request) bool
 		PageExport(*xorm.Engine, string, string, string, map[string]interface{}, ...svc.Formatter) (*types.ExportInfo, error)
 		ParseExcel(r io.Reader, sheet interface{}, header ...[]map[string]interface{}) ([]map[string]string, error)
 		SetOptionsetsFormat(func(interface{}) func(interface{}) interface{})

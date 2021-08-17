@@ -246,7 +246,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	if ctr.Srv.Check(ctx.Context.Context) {
+	if ctr.Srv.Check(ctx.Request) {
 		ctr.Srv.SetOptionsetsFormat(api.OptionsetsFormat(ctx.DB))
 		ret, err := ctr.Srv.PageExport(ctx.DB, "article", "page", "article", q.Value())
 		if err != nil {

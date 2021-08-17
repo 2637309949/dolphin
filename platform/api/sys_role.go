@@ -266,7 +266,7 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	if ctr.Srv.Check(ctx.Context) {
+	if ctr.Srv.Check(ctx.Request) {
 		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
 		ret, err := ctr.Srv.PageExport(ctx.DB, "sys_role", "page", "sys_role", q.Value())
 		if err != nil {
