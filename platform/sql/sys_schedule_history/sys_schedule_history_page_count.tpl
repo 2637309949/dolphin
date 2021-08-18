@@ -4,7 +4,5 @@ select
 from
 	sys_schedule
 where
-	sys_schedule.id {{.ne}} ""
-	and
 	sys_schedule.is_delete {{.ne}} 1
 

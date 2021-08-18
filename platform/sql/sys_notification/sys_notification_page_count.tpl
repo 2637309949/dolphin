@@ -3,6 +3,4 @@ select
 from
 	sys_notification
 where
-	sys_notification.id {{.ne}} ""
-	and
 	sys_notification.is_delete {{.ne}} 1

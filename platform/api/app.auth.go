@@ -41,7 +41,7 @@ type AuthOAuth2 struct {
 	ticket *Token
 }
 
-// Auth defined
+// parseOAuth2Token defined TODO
 func (auth *AuthOAuth2) parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
 	auth.ticket = &Token{
 		ClientID:        t.GetClientID(),
@@ -61,7 +61,7 @@ func (auth *AuthOAuth2) parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
 	return auth.ticket
 }
 
-// Auth defined
+// parseJWTToken defined TODO
 func (auth *AuthOAuth2) parseJWTToken(t jwt.MapClaims) TokenInfo {
 	auth.ticket = &Token{
 		UserID: t["userId"].(string),
@@ -70,7 +70,7 @@ func (auth *AuthOAuth2) parseJWTToken(t jwt.MapClaims) TokenInfo {
 	return auth.ticket
 }
 
-// VerifyToken defined
+// VerifyToken defined TODO
 func (auth *AuthOAuth2) VerifyToken(ctx *Context) bool {
 	if bearer, ok := auth.oauth2.BearerAuth(ctx.Request); ok {
 		accessToken, err := auth.oauth2.Manager.LoadAccessToken(bearer)
@@ -87,7 +87,7 @@ func (auth *AuthOAuth2) VerifyToken(ctx *Context) bool {
 	return false
 }
 
-// VerifyJWT defined
+// VerifyJWT defined TODO
 func (auth *AuthOAuth2) VerifyJWT(ctx *Context) bool {
 	if bearer, ok := auth.jwt.BearerAuth(ctx.Request); ok {
 		accessToken, err := auth.jwt.LoadAccessToken(bearer)
@@ -101,7 +101,7 @@ func (auth *AuthOAuth2) VerifyJWT(ctx *Context) bool {
 	return false
 }
 
-// VerifyEncrypt defined
+// VerifyEncrypt defined TODO
 func (auth *AuthOAuth2) VerifyEncrypt(ctx *Context) bool {
 	secret, err := NewSecret(ctx)
 	if err != nil {
@@ -121,12 +121,12 @@ func (auth *AuthOAuth2) VerifyEncrypt(ctx *Context) bool {
 	return valid
 }
 
-// GetToken defined
+// GetToken defined TODO
 func (auth *AuthOAuth2) GetToken() TokenInfo {
 	return auth.ticket
 }
 
-// AuthToken defined
+// AuthToken defined TODO
 func AuthToken(ctx *Context) {
 	if !ctx.VerifyToken(ctx) {
 		ctx.Fail(types.ErrInvalidAccessToken, 401)
@@ -143,7 +143,7 @@ func AuthToken(ctx *Context) {
 	ctx.Next()
 }
 
-// AuthJWT defined
+// AuthJWT defined TODO
 func AuthJWT(ctx *Context) {
 	if !ctx.VerifyJWT(ctx) {
 		ctx.Fail(types.ErrInvalidAccessToken, 401)
@@ -160,7 +160,7 @@ func AuthJWT(ctx *Context) {
 	ctx.Next()
 }
 
-// AuthEncrypt defined
+// AuthEncrypt defined TODO
 func AuthEncrypt(ctx *Context) {
 	if !ctx.VerifyEncrypt(ctx) {
 		ctx.Fail(types.ErrInvalidEncryData, 401)
@@ -170,11 +170,11 @@ func AuthEncrypt(ctx *Context) {
 	ctx.Next()
 }
 
-// Roles middles
+// Roles middles TODO
 func Roles(roles ...string) HandlerFunc {
 	return func(ctx *Context) {
-		svcHelper, userId := new(svc.SvcHepler), ctx.GetToken().GetUserID()
-		if !svcHelper.InRole(ctx.DB, userId, roles...) {
+		svc, userId := new(svc.SvcHepler), ctx.GetToken().GetUserID()
+		if !svc.InRole(ctx.DB, userId, roles...) {
 			ctx.Fail(types.ErrAccessDenied, 403)
 			ctx.Abort()
 			return
@@ -183,21 +183,21 @@ func Roles(roles ...string) HandlerFunc {
 	}
 }
 
-// Auth middles
+// Auth middles TODO
 func Auth(auth ...string) HandlerFunc {
-	middles := []func(ctx *Context){}
+	hlfs := []HandlerFunc{}
 	if slice.StrSliceContains(auth, TokenType) {
-		middles = append(middles, AuthToken)
+		hlfs = append(hlfs, AuthToken)
 	}
 	if slice.StrSliceContains(auth, EncryptType) {
-		middles = append(middles, AuthEncrypt)
+		hlfs = append(hlfs, AuthEncrypt)
 	}
 	if slice.StrSliceContains(auth, JWTType) {
-		middles = append(middles, AuthJWT)
+		hlfs = append(hlfs, AuthJWT)
 	}
 	return func(ctx *Context) {
-		for i := range middles {
-			middles[i](ctx)
+		for i := range hlfs {
+			hlfs[i](ctx)
 		}
 	}
 }

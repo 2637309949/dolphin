@@ -56,22 +56,16 @@ var RpcClientDailTimeOut = 3 * time.Second
 
 // NewRpcClient defined TODO
 func NewRpcClient(_ string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
-	options := append(opts, []grpc.DialOption{
-		grpc.WithInsecure(),
-		grpc.WithBlock(),
-		grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace),
-	}...)
+	opts = append(opts, []grpc.DialOption{grpc.WithInsecure(), grpc.WithBlock(), grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace)}...)
 	ctx, cancel := context.WithTimeout(context.Background(), RpcClientDailTimeOut)
 	defer cancel()
-	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), options...)
+	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), opts...)
 	return conn, err
 }
 
 // NewRpcHandler defined TODO
 func NewRpcHandler() RpcHandler {
-	options := []grpc.ServerOption{
-		grpc.UnaryInterceptor(trace.RpcCliTrace(viper.GetString("app.name"))),
-	}
+	opts := []grpc.ServerOption{grpc.UnaryInterceptor(trace.RpcCliTrace(viper.GetString("app.name")))}
 	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("rpc.port")))).(net.Listener)
-	return &grpcHandler{net: net, grpc: grpc.NewServer(options...)}
+	return &grpcHandler{net: net, grpc: grpc.NewServer(opts...)}
 }

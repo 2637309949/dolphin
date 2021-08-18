@@ -10,8 +10,5 @@ select
 from
 	sys_table_column
 where
-	sys_table_column.id {{.ne}} ""
-	and
 	sys_table_column.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}

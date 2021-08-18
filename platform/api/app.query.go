@@ -272,8 +272,8 @@ func (q *Query) SetTags(params ...struct {
 
 // Remove defined TODO
 func (q *Query) Remove(keys ...string) {
-	for _, k := range keys {
-		delete(q.m, k)
+	for i := range keys {
+		delete(q.m, keys[i])
 	}
 }
 

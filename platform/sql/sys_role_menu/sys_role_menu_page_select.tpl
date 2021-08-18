@@ -4,8 +4,5 @@ select
 from
 	sys_role_menu
 where
-	sys_role_menu.id {{.ne}} ""
-	and
 	sys_role_menu.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}

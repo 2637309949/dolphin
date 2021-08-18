@@ -56,7 +56,7 @@ func (cs *ClientStore) GetByID(id string) (oauth2.ClientInfo, error) {
 	}, nil
 }
 
-// UserAuthorizationHandler defined
+// UserAuthorizationHandler defined TODO
 var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid string, dm string, err error) {
 	store, err := session.Start(context.Background(), w, r)
 	if err != nil {
@@ -70,18 +70,7 @@ var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid
 		}
 		store.Set("ReturnUri", r.Form)
 		store.Save()
-
-		// load domain
-		// var domain string
-		// var redirect_uri string
-		// if v, ok := store.Get("ReturnUri"); ok {
-		// 	uri, _ := url.ParseQuery(v.(url.Values).Get("state"))
-		// 	domain = uri.Get("domain")
-		// 	redirect_uri = uri.Get("redirect_uri")
-		// }
 		w.Header().Set("Location", viper.GetString("oauth.login"))
-		// w.Header().Add("Set-Cookie", (&http.Cookie{Name: "domain", Value: url.QueryEscape(domain), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
-		// w.Header().Add("Set-Cookie", (&http.Cookie{Name: "redirect_uri", Value: url.QueryEscape(redirect_uri), MaxAge: 60 * 60 * 30, Path: "/", Domain: "", Secure: false, HttpOnly: false}).String())
 		w.WriteHeader(http.StatusFound)
 		return
 	}
@@ -91,7 +80,7 @@ var UserAuthorizationHandler = func(w http.ResponseWriter, r *http.Request) (uid
 	return
 }
 
-// ValidateURIHandler defined
+// ValidateURIHandler defined TODO
 var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 	reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
 	base := reg.FindAllStringSubmatch(baseURI, -1)

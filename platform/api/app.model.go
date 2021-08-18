@@ -25,13 +25,13 @@ type ModelSetter interface {
 	Release()
 }
 
-// MSet struct
+// defaultModelSetter struct
 type defaultModelSetter struct {
 	lock *sync.RWMutex
 	m    map[string][]Table
 }
 
-// Add defined add models
+// NameSpaces defined TODO
 func (s *defaultModelSetter) NameSpaces(n ...string) (names []string) {
 	for k := range s.m {
 		if slice.StrSliceContains(n, k) {
@@ -42,7 +42,7 @@ func (s *defaultModelSetter) NameSpaces(n ...string) (names []string) {
 	return
 }
 
-// Add defined add models
+// Add defined TODO
 func (s *defaultModelSetter) Add(m Table, n ...string) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -52,14 +52,14 @@ func (s *defaultModelSetter) Add(m Table, n ...string) {
 	s.m[n[0]] = append(s.m[n[0]], m)
 }
 
-// Name defined add models
+// ByName defined TODO
 func (s *defaultModelSetter) ByName(name string) []Table {
 	s.lock.Lock()
 	defer s.lock.Unlock()
 	return s.m[name]
 }
 
-// Name defined add models
+// ByNotName defined TODO
 func (s *defaultModelSetter) ByNotName(name string) (m []Table) {
 	s.lock.Lock()
 	defer s.lock.Unlock()
@@ -71,7 +71,7 @@ func (s *defaultModelSetter) ByNotName(name string) (m []Table) {
 	return
 }
 
-// Release defined release models
+// Release defined TODO
 func (s *defaultModelSetter) Release() {
 	s.lock.Lock()
 	defer s.lock.Unlock()

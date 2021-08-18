@@ -7,13 +7,11 @@ package api
 import (
 	"bytes"
 	"fmt"
-	"net/http"
 	"net/http/httputil"
 	"os"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/trace"
-	"github.com/2637309949/dolphin/platform/types"
 	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
 	"github.com/sirupsen/logrus"
@@ -70,15 +68,7 @@ func Recovery() HandlerFunc {
 				goErr := errors.Wrap(err, 3)
 				reset := string([]byte{27, 91, 48, 109})
 				logrus.Errorf("[Nice Recovery] panic recovered:\n\n%s%s\n\n%s%s", httprequest, goErr.Error(), goErr.Stack(), reset)
-				code := 500
-				msg := fmt.Sprintf("%v", err)
-				if err, ok := err.(types.Error); ok {
-					code = err.Code
-				}
-				ctx.JSON(http.StatusOK, types.Fail{
-					Code: code,
-					Msg:  msg,
-				})
+				ctx.Fail(fmt.Errorf("%v", err))
 			}
 		}()
 		ctx.Next()
@@ -86,13 +76,10 @@ func Recovery() HandlerFunc {
 }
 
 // DumpBody instance a Logger middleware with config.
-func DumpBody(recv func(*Context, *LogFormatterParams)) HandlerFunc {
-	notlogged := []string{}
-	// isTerm := true
-	// out := logrus.StandardLogger().Out
+func DumpBody(dumpCall func(*Context, *LogFormatterParams)) HandlerFunc {
 	formatter := Formatter
-
-	var skip map[string]struct{}
+	notlogged := []string{}
+	skip := map[string]struct{}{}
 
 	if length := len(notlogged); length > 0 {
 		skip = make(map[string]struct{}, length)
@@ -103,7 +90,6 @@ func DumpBody(recv func(*Context, *LogFormatterParams)) HandlerFunc {
 	}
 
 	return func(c *Context) {
-		// bytes buffer
 		var bufWriter bytes.Buffer
 		var bufReader bytes.Buffer
 		var buf []byte
@@ -167,7 +153,7 @@ func DumpBody(recv func(*Context, *LogFormatterParams)) HandlerFunc {
 			logrus.Info(formatter(param.LogFormatterParams))
 
 			// LogFormatterParams defined recorder
-			recv(c, &param)
+			dumpCall(c, &param)
 		}
 	}
 }

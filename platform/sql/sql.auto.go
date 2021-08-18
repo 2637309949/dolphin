@@ -726,8 +726,6 @@ func init() {
 from
 	sys_app_fun
 where
-	sys_app_fun.id {{.ne}} ""
-	and
 	sys_app_fun.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_app_fun_page_select.tpl"] = `select
@@ -735,8 +733,6 @@ where
 from
 	sys_app_fun
 where
-	sys_app_fun.id {{.ne}} ""
-	and
 	sys_app_fun.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -752,13 +748,10 @@ LIMIT {{.size}} OFFSET {{.offset}}
 from
 	sys_app_fun
 where
-	sys_app_fun.id {{.ne}} ""
-    and is_delete = 0
-
+	sys_app_fun.is_delete = 0
     {{if ne .name ""}}
     and sys_app_fun.name = "{{.name}}"
     {{end}}
-
 order by ` + "`order`" + `
 `
 	SQLTPL["sys_area_page_count.tpl"] = `select
@@ -766,8 +759,6 @@ order by ` + "`order`" + `
 from
 	sys_area
 where
-	sys_area.id {{.ne}} ""
-	and
 	sys_area.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_area_page_select.tpl"] = `select
@@ -775,8 +766,6 @@ where
 from
 	sys_area
 where
-	sys_area.id {{.ne}} ""
-	and
 	sys_area.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -785,8 +774,6 @@ LIMIT {{.size}} OFFSET {{.offset}}
 from
 	sys_attachment
 where
-	sys_attachment.id {{.ne}} ""
-	and
 	sys_attachment.is_delete {{.ne}} 1
 
 `
@@ -795,8 +782,6 @@ where
 from
 	sys_attachment
 where
-	sys_attachment.id {{.ne}} ""
-	and
 	sys_attachment.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -811,8 +796,6 @@ on sys_role.id = sys_role_user.role_id and sys_role_user.user_id = {{.user_id}}`
 from
 	sys_client
 where
-	sys_client.id {{.ne}} ""
-	and
 	sys_client.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_client_page_select.tpl"] = `select
@@ -820,8 +803,6 @@ where
 from
 	sys_client
 where
-	sys_client.id {{.ne}} ""
-	and
 	sys_client.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -831,8 +812,6 @@ select
 from
 	sys_comment
 where
-	sys_comment.id {{.ne}} ""
-	and
 	sys_comment.is_delete {{.ne}} 1
 
 `
@@ -842,10 +821,7 @@ select
 from
 	sys_comment
 where
-	sys_comment.id {{.ne}} ""
-	and
 	sys_comment.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_data_permission_page_count.tpl"] = `select
@@ -853,8 +829,6 @@ where
 from
 	sys_data_permission
 where
-	sys_data_permission.id {{.ne}} ""
-	and
 	sys_data_permission.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_data_permission_page_select.tpl"] = `select
@@ -862,8 +836,6 @@ where
 from
 	sys_data_permission
 where
-	sys_data_permission.id {{.ne}} ""
-	and
 	sys_data_permission.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -882,8 +854,6 @@ where
 from
 	sys_domain
 where
-	sys_domain.id {{.ne}} ""
-	and
 	sys_domain.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_domain_page_select.tpl"] = `select
@@ -891,8 +861,6 @@ where
 from
 	sys_domain
 where
-	sys_domain.id {{.ne}} ""
-	and
 	sys_domain.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -962,7 +930,6 @@ where
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}
-
 order by ` + "`order`" + `
 `
 	SQLTPL["sys_notification_page_count.tpl"] = `select
@@ -970,8 +937,6 @@ order by ` + "`order`" + `
 from
 	sys_notification
 where
-	sys_notification.id {{.ne}} ""
-	and
 	sys_notification.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_notification_page_select.tpl"] = `select
@@ -979,8 +944,6 @@ where
 from
 	sys_notification
 where
-	sys_notification.id {{.ne}} ""
-	and
 	sys_notification.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -989,8 +952,6 @@ LIMIT {{.size}} OFFSET {{.offset}}
 from
 	sys_optionset
 where
-	sys_optionset.id {{.ne}} ""
-	and
 	sys_optionset.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_optionset_page_select.tpl"] = `select
@@ -1002,8 +963,6 @@ where
 from
 	sys_optionset
 where
-	sys_optionset.id {{.ne}} ""
-	and
 	sys_optionset.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -1012,8 +971,6 @@ LIMIT {{.size}} OFFSET {{.offset}}
 from
 	sys_org
 where
-	sys_org.id {{.ne}} ""
-	and
 	sys_org.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_org_page_select.tpl"] = `select
@@ -1026,8 +983,6 @@ where
 from
 	sys_org
 where
-	sys_org.id {{.ne}} ""
-	and
 	sys_org.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -1055,8 +1010,6 @@ order by ` + "`order`" + `
 from
 	sys_permission
 where
-	sys_permission.id {{.ne}} ""
-	and
 	sys_permission.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_permission_page_select.tpl"] = `select
@@ -1064,8 +1017,6 @@ where
 from
 	sys_permission
 where
-	sys_permission.id {{.ne}} ""
-	and
 	sys_permission.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -1124,8 +1075,6 @@ order by ` + "`order`" + `
 from
 	sys_role
 where
-	sys_role.id {{.ne}} ""
-	and
 	sys_role.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_role_page_select.tpl"] = `select
@@ -1138,8 +1087,6 @@ where
 from
 	sys_role
 where
-	sys_role.id {{.ne}} ""
-	and
 	sys_role.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -1167,8 +1114,6 @@ select
 from
 	sys_role_menu
 where
-	sys_role_menu.id {{.ne}} ""
-	and
 	sys_role_menu.is_delete {{.ne}} 1
 
 `
@@ -1178,10 +1123,7 @@ select
 from
 	sys_role_menu
 where
-	sys_role_menu.id {{.ne}} ""
-	and
 	sys_role_menu.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_schedule_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
@@ -1190,8 +1132,6 @@ select
 from
 	sys_schedule
 where
-	sys_schedule.id {{.ne}} ""
-	and
 	sys_schedule.is_delete {{.ne}} 1
 
 `
@@ -1201,10 +1141,7 @@ select
 from
 	sys_schedule
 where
-	sys_schedule.id {{.ne}} ""
-	and
 	sys_schedule.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_schedule_history_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
@@ -1213,8 +1150,6 @@ select
 from
 	sys_schedule
 where
-	sys_schedule.id {{.ne}} ""
-	and
 	sys_schedule.is_delete {{.ne}} 1
 
 `
@@ -1224,10 +1159,7 @@ select
 from
 	sys_schedule
 where
-	sys_schedule.id {{.ne}} ""
-	and
 	sys_schedule.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_setting_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
@@ -1236,8 +1168,6 @@ select
 from
 	sys_setting
 where
-	sys_setting.id {{.ne}} ""
-	and
 	sys_setting.is_delete {{.ne}} 1
 
 `
@@ -1247,10 +1177,7 @@ select
 from
 	sys_setting
 where
-	sys_setting.id {{.ne}} ""
-	and
 	sys_setting.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_table_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
@@ -1259,10 +1186,7 @@ select
 from
 	sys_table
 where
-	sys_table.id {{.ne}} ""
-	and
 	sys_table.is_delete {{.ne}} 1
-
 {{if ne .is_delete ""}}
 	and sys_table.is_delete={{.is_delete}}
 {{end}}
@@ -1290,10 +1214,7 @@ select
 from
 	sys_table
 where
-	sys_table.id {{.ne}} ""
-	and
 	sys_table.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_table_column_page_count.tpl"] = `-- Code generated by dol build. Only Generate by tools if not existed.
@@ -1302,8 +1223,6 @@ select
 from
 	sys_table_column
 where
-	sys_table_column.id {{.ne}} ""
-	and
 	sys_table_column.is_delete {{.ne}} 1
 
 `
@@ -1319,10 +1238,7 @@ select
 from
 	sys_table_column
 where
-	sys_table_column.id {{.ne}} ""
-	and
 	sys_table_column.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_tag_page_count.tpl"] = `select
@@ -1330,8 +1246,6 @@ where
 from
 	sys_tag
 where
-	sys_tag.id {{.ne}} ""
-	and
 	sys_tag.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_tag_page_select.tpl"] = `select
@@ -1339,8 +1253,6 @@ where
 from
 	sys_tag
 where
-	sys_tag.id {{.ne}} ""
-	and
 	sys_tag.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -1349,8 +1261,6 @@ LIMIT {{.size}} OFFSET {{.offset}}
 from
 	sys_tag_group
 where
-	sys_tag_group.id {{.ne}} ""
-	and
 	sys_tag_group.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_tag_group_page_select.tpl"] = `select
@@ -1358,8 +1268,6 @@ where
 from
 	sys_tag_group
 where
-	sys_tag_group.id {{.ne}} ""
-	and
 	sys_tag_group.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -1435,9 +1343,7 @@ where
 from
 	sys_user
 where
-	sys_user.id {{.ne}} ""
-	and sys_user.is_delete {{.ne}} 1
-
+	sys_user.is_delete {{.ne}} 1
 {{if ne .org_id ""}}
 	and sys_user.org_id = "{{.org_id}}"
 {{end}}
@@ -1449,15 +1355,14 @@ where
 {{end}}
 {{if ne .name ""}}
 	and sys_user.name like "%{{.name}}%"
-{{end}}LIMIT {{.size}} OFFSET {{.offset}}
+{{end}}
+LIMIT {{.size}} OFFSET {{.offset}}
 `
 	SQLTPL["sys_user_template_page_count.tpl"] = `select
     count(*) records
 from
 	sys_user_template
 where
-	sys_user_template.id {{.ne}} ""
-	and
 	sys_user_template.is_delete {{.ne}} 1
 `
 	SQLTPL["sys_user_template_page_select.tpl"] = `select
@@ -1468,8 +1373,6 @@ where
 from
 	sys_user_template
 where
-	sys_user_template.id {{.ne}} ""
-	and
 	sys_user_template.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}
 `
@@ -1479,10 +1382,7 @@ select
 from
 	sys_user_template_detail
 where
-	sys_user_template_detail.id {{.ne}} ""
-	and
 	sys_user_template_detail.is_delete {{.ne}} 1
-
 {{if ne .temp_id ""}}
 	and sys_user_template_detail.temp_id="{{.temp_id}}"
 {{end}}
@@ -1497,10 +1397,7 @@ select
 from
 	sys_user_template_detail
 where
-	sys_user_template_detail.id {{.ne}} ""
-	and
 	sys_user_template_detail.is_delete {{.ne}} 1
-
 {{if ne .temp_id ""}}
 	and sys_user_template_detail.temp_id="{{.temp_id}}"
 {{end}}

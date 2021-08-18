@@ -14,5 +14,4 @@ where
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}
-
 order by `order`

@@ -26,7 +26,7 @@ func NewJWT(secret string, expire int64) *JWT {
 	}
 }
 
-// BearerAuth parse bearer token
+// BearerAuth defined TODO
 func (j *JWT) BearerAuth(r *http.Request) (string, bool) {
 	prefix, auth := "Bearer ", r.Header.Get("Authorization")
 	if strings.HasPrefix(auth, prefix) {
@@ -35,6 +35,7 @@ func (j *JWT) BearerAuth(r *http.Request) (string, bool) {
 	return "", false
 }
 
+// LoadAccessToken defined TODO
 func (j *JWT) LoadAccessToken(tk string) (*jwt.MapClaims, error) {
 	jc := jwt.MapClaims{}
 	_, err := jwt.ParseWithClaims(tk, jc, func(token *jwt.Token) (interface{}, error) {
@@ -46,6 +47,7 @@ func (j *JWT) LoadAccessToken(tk string) (*jwt.MapClaims, error) {
 	return &jc, nil
 }
 
+// GenerateAccessToken defined TODO
 func (j *JWT) GenerateAccessToken(userId, domain string) (string, error) {
 	payloads, now, claims := map[string]interface{}{
 		"userId": userId,

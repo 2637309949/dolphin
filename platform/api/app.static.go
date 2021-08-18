@@ -23,18 +23,18 @@ func NewStatic() *Static {
 	return ctr
 }
 
-// StaticRoutes defined
+// StaticRoutes defined TODO
 func StaticRoutes(dol *Dolphin) {
 	group := dol.Group("/")
 	group.Handle("GET", "/domain.js", DomainInstance.Domain)
 }
 
-// DomainFormat defined
+// DomainFormat defined TODO
 func DomainFormat(ct string) []byte {
 	return []byte(fmt.Sprintf("window.Domain=%v", ct))
 }
 
-// Domain defined
+// Domain defined TODO
 func (ctr *Static) Domain(ctx *Context) {
 	reg := regexp.MustCompile("^([^:?]+)(:.*)?$")
 	contentType := "application/javascript"

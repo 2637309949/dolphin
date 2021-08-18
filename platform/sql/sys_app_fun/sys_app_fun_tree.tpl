@@ -10,11 +10,8 @@ select
 from
 	sys_app_fun
 where
-	sys_app_fun.id {{.ne}} ""
-    and is_delete = 0
-
+	sys_app_fun.is_delete = 0
     {{if ne .name ""}}
     and sys_app_fun.name = "{{.name}}"
     {{end}}
-
 order by `order`

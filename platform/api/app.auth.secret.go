@@ -32,7 +32,7 @@ func NewSecret(ctx *Context) (*Secret, error) {
 	return &secret, nil
 }
 
-// form2Uri defined
+// parseForm defined TODO
 func (secret *Secret) parseForm() (string, error) {
 	var puJSON map[string]string
 	var puKeys = make([]string, 0, len(puJSON))
@@ -61,6 +61,7 @@ func (secret *Secret) parseForm() (string, error) {
 	return signString, nil
 }
 
+// sign defined TODO
 func (secret *Secret) sign(cli oauth2.ClientInfo) ([]byte, error) {
 	uri, err := secret.parseForm()
 	if err != nil {
@@ -73,7 +74,7 @@ func (secret *Secret) sign(cli oauth2.ClientInfo) ([]byte, error) {
 	return ecyt, nil
 }
 
-// Verify defined
+// Verify defined TODO
 func (secret *Secret) Verify(cli oauth2.ClientInfo) (bool, error) {
 	nowTs := time.Now().Unix()
 	ts := secret.TimeStamp

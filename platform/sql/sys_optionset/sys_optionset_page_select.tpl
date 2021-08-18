@@ -7,7 +7,5 @@ select
 from
 	sys_optionset
 where
-	sys_optionset.id {{.ne}} ""
-	and
 	sys_optionset.is_delete {{.ne}} 1
 LIMIT {{.size}} OFFSET {{.offset}}

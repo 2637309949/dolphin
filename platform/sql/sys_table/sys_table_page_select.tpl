@@ -9,8 +9,5 @@ select
 from
 	sys_table
 where
-	sys_table.id {{.ne}} ""
-	and
 	sys_table.is_delete {{.ne}} 1
-
 	LIMIT {{.size}} OFFSET {{.offset}}
