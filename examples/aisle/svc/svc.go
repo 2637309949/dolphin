@@ -33,11 +33,6 @@ type (
 		SetOptionsetsFormat(func(interface{}) func(interface{}) interface{})
 	}
 
-	// XReport defined TODO
-	XReport struct {
-		xlsx *svc.Xlsx
-	}
-
 	// DB defined TODO
 	DB interface {
 		PageSearch(*xorm.Engine, string, string, string, map[string]interface{}, ...svc.Formatter) (*types.PageList, error)
@@ -50,9 +45,6 @@ type (
 		Remove(db *xorm.Session, ids ...string) (int64, error)
 		RemoveFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error)
 	}
-
-	// XDB defined TODO
-	XDB struct{}
 
 	// XClient defined TODO
 	Client interface {
