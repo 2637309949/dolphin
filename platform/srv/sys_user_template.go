@@ -14,7 +14,7 @@ import (
 )
 
 type SysUserTemplate struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysUserTemplate() *SysUserTemplate {

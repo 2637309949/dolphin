@@ -15,7 +15,7 @@ import (
 )
 
 type Caching struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewCaching() *Caching {

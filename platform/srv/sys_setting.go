@@ -14,7 +14,7 @@ import (
 )
 
 type SysSetting struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysSetting() *SysSetting {

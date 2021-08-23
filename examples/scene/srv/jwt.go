@@ -18,7 +18,7 @@ import (
 )
 
 type Jwt struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewJwt() *Jwt {

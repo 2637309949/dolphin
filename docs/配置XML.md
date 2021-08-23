@@ -351,7 +351,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "article", "page", "article", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "article", "page", "article", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

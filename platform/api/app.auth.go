@@ -173,7 +173,7 @@ func AuthEncrypt(ctx *Context) {
 // Roles middles TODO
 func Roles(roles ...string) HandlerFunc {
 	return func(ctx *Context) {
-		svc, userId := new(svc.SvcHepler), ctx.GetToken().GetUserID()
+		svc, userId := svc.NewXDB(), ctx.GetToken().GetUserID()
 		if !svc.InRole(ctx.DB, userId, roles...) {
 			ctx.Fail(types.ErrAccessDenied, 403)
 			ctx.Abort()

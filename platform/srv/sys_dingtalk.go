@@ -14,7 +14,7 @@ import (
 )
 
 type SysDingtalk struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysDingtalk() *SysDingtalk {

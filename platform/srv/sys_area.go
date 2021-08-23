@@ -14,7 +14,7 @@ import (
 )
 
 type SysArea struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysArea() *SysArea {

@@ -17,7 +17,7 @@ import (
 
 
 type {{$.Controller.ToUpperCase $.Controller.Name}} struct {
-	{{$.Viper.GetString "dir.svc" }}.Svc
+	*{{$.Viper.GetString "dir.svc" }}.ServiceContext
 }
 
 func New{{$.Controller.ToUpperCase $.Controller.Name}}() *{{$.Controller.ToUpperCase $.Controller.Name}} {

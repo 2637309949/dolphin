@@ -14,7 +14,7 @@ import (
 )
 
 type SysComment struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysComment() *SysComment {

@@ -15,7 +15,7 @@ import (
 )
 
 type Encrypt struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewEncrypt() *Encrypt {

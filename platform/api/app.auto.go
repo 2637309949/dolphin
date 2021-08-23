@@ -2823,38 +2823,38 @@ func (dol *Dolphin) SyncController() error {
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(svc svc.Svc) error {
-	SysAppFunInstance.Srv.Svc = svc
-	SysAreaInstance.Srv.Svc = svc
-	SysAttachmentInstance.Srv.Svc = svc
-	SysCasInstance.Srv.Svc = svc
-	SysClientInstance.Srv.Svc = svc
-	SysCommentInstance.Srv.Svc = svc
-	SysDataPermissionInstance.Srv.Svc = svc
-	DebugInstance.Srv.Svc = svc
-	SysDingtalkInstance.Srv.Svc = svc
-	SysDomainInstance.Srv.Svc = svc
-	SysMenuInstance.Srv.Svc = svc
-	SysNotificationInstance.Srv.Svc = svc
-	SysOptionsetInstance.Srv.Svc = svc
-	SysOrgInstance.Srv.Svc = svc
-	SysPermissionInstance.Srv.Svc = svc
-	SysRoleInstance.Srv.Svc = svc
-	SysRoleMenuInstance.Srv.Svc = svc
-	SysScheduleInstance.Srv.Svc = svc
-	SysScheduleHistoryInstance.Srv.Svc = svc
-	SysSchedulingInstance.Srv.Svc = svc
-	SysSettingInstance.Srv.Svc = svc
-	SysTableInstance.Srv.Svc = svc
-	SysTableColumnInstance.Srv.Svc = svc
-	SysTagInstance.Srv.Svc = svc
-	SysTagGroupInstance.Srv.Svc = svc
-	SysTrackerInstance.Srv.Svc = svc
-	SysUserInstance.Srv.Svc = svc
-	SysUserTemplateInstance.Srv.Svc = svc
-	SysUserTemplateDetailInstance.Srv.Svc = svc
-	SysWechatInstance.Srv.Svc = svc
-	SysWorkerInstance.Srv.Svc = svc
+func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
+	SysAppFunInstance.Srv.ServiceContext = svc
+	SysAreaInstance.Srv.ServiceContext = svc
+	SysAttachmentInstance.Srv.ServiceContext = svc
+	SysCasInstance.Srv.ServiceContext = svc
+	SysClientInstance.Srv.ServiceContext = svc
+	SysCommentInstance.Srv.ServiceContext = svc
+	SysDataPermissionInstance.Srv.ServiceContext = svc
+	DebugInstance.Srv.ServiceContext = svc
+	SysDingtalkInstance.Srv.ServiceContext = svc
+	SysDomainInstance.Srv.ServiceContext = svc
+	SysMenuInstance.Srv.ServiceContext = svc
+	SysNotificationInstance.Srv.ServiceContext = svc
+	SysOptionsetInstance.Srv.ServiceContext = svc
+	SysOrgInstance.Srv.ServiceContext = svc
+	SysPermissionInstance.Srv.ServiceContext = svc
+	SysRoleInstance.Srv.ServiceContext = svc
+	SysRoleMenuInstance.Srv.ServiceContext = svc
+	SysScheduleInstance.Srv.ServiceContext = svc
+	SysScheduleHistoryInstance.Srv.ServiceContext = svc
+	SysSchedulingInstance.Srv.ServiceContext = svc
+	SysSettingInstance.Srv.ServiceContext = svc
+	SysTableInstance.Srv.ServiceContext = svc
+	SysTableColumnInstance.Srv.ServiceContext = svc
+	SysTagInstance.Srv.ServiceContext = svc
+	SysTagGroupInstance.Srv.ServiceContext = svc
+	SysTrackerInstance.Srv.ServiceContext = svc
+	SysUserInstance.Srv.ServiceContext = svc
+	SysUserTemplateInstance.Srv.ServiceContext = svc
+	SysUserTemplateDetailInstance.Srv.ServiceContext = svc
+	SysWechatInstance.Srv.ServiceContext = svc
+	SysWorkerInstance.Srv.ServiceContext = svc
 	return nil
 }
 

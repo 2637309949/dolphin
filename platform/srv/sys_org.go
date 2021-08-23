@@ -14,7 +14,7 @@ import (
 )
 
 type SysOrg struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysOrg() *SysOrg {

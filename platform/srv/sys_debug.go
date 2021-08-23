@@ -14,7 +14,7 @@ import (
 )
 
 type Debug struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewDebug() *Debug {

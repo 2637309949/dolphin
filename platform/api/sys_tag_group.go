@@ -241,7 +241,7 @@ func (ctr *SysTagGroup) SysTagGroupPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_tag_group", "page", "sys_tag_group", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_tag_group", "page", "sys_tag_group", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

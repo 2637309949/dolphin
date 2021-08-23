@@ -236,7 +236,7 @@ func (ctr *SysNotification) SysNotificationPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetRule("sys_notification_page")
 	q.SetTags()
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_notification", "page", "sys_notification", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_notification", "page", "sys_notification", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

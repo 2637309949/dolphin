@@ -113,7 +113,7 @@ func (dol *Dolphin) Reflesh() error {
 	dol.SyncModel()
 	dol.SyncController()
 	dol.SyncService()
-	dol.SyncSrv(svc.NewSvcHepler(CacheStore))
+	dol.SyncSrv(svc.NewServiceContext(CacheStore))
 
 	xlogger := createXLogger()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))

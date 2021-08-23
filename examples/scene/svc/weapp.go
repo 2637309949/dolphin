@@ -14,8 +14,11 @@ type Weapp interface {
 	CreateQRCode(path string, width int) ([]byte, error)
 }
 
+type XWeapp struct {
+}
+
 // GetAccessToken defined TODO
-func (svc *SvcHepler) CreateQRCode(path string, width int) ([]byte, error) {
+func (x *XWeapp) CreateQRCode(path string, width int) ([]byte, error) {
 	creator := weapp.QRCodeCreator{
 		Path:  path,
 		Width: width,
@@ -32,7 +35,7 @@ func (svc *SvcHepler) CreateQRCode(path string, width int) ([]byte, error) {
 }
 
 // Code2Session defined TODO
-func (svc *SvcHepler) Code2Session(code string) (*weapp.LoginResponse, error) {
+func (x *XWeapp) Code2Session(code string) (*weapp.LoginResponse, error) {
 	appid := viper.GetString("weapp.appid")
 	secret := viper.GetString("weapp.secret")
 	res, err := weapp.Login(appid, secret, code)
@@ -46,7 +49,7 @@ func (svc *SvcHepler) Code2Session(code string) (*weapp.LoginResponse, error) {
 }
 
 // GetAccessToken defined TODO
-func (svc *SvcHepler) GetAccessToken() (*weapp.TokenResponse, error) {
+func (x *XWeapp) GetAccessToken() (*weapp.TokenResponse, error) {
 	appid := viper.GetString("weapp.appid")
 	secret := viper.GetString("weapp.secret")
 	res, err := weapp.GetAccessToken(appid, secret)
@@ -57,4 +60,8 @@ func (svc *SvcHepler) GetAccessToken() (*weapp.TokenResponse, error) {
 		return nil, err
 	}
 	return res, err
+}
+
+func NewXWeapp() *XWeapp {
+	return &XWeapp{}
 }

@@ -246,9 +246,9 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	if ctr.Srv.Check(ctx.Request) {
-		ctr.Srv.SetOptionsetsFormat(api.OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.PageExport(ctx.DB, "article", "page", "article", q.Value())
+	if ctr.Srv.Report.Check(ctx.Request) {
+		ctr.Srv.Report.SetOptionsetsFormat(api.OptionsetsFormat(ctx.DB))
+		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "article", "page", "article", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -257,7 +257,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "article", "page", "article", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "article", "page", "article", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

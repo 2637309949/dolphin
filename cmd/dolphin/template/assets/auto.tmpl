@@ -99,9 +99,9 @@ func (dol *Dolphin) SyncController() error {
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(svc {{$.Viper.GetString "dir.svc" }}.Svc) error {
+func (dol *Dolphin) SyncSrv(svc *{{$.Viper.GetString "dir.svc" }}.ServiceContext) error {
 	{{- range .Controllers}}
-	{{.ToUpperCase .Name}}Instance.Srv.Svc = svc
+	{{.ToUpperCase .Name}}Instance.Srv.ServiceContext = svc
 	{{- end}}
 	return nil
 }

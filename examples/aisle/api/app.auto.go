@@ -541,8 +541,8 @@ func (dol *Dolphin) SyncController() error {
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(svc svc.Svc) error {
-	OrganInstance.Srv.Svc = svc
+func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
+	OrganInstance.Srv.ServiceContext = svc
 	return nil
 }
 

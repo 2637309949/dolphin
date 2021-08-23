@@ -14,7 +14,7 @@ import (
 )
 
 type SysAppFun struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysAppFun() *SysAppFun {

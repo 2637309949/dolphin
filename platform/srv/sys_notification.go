@@ -14,7 +14,7 @@ import (
 )
 
 type SysNotification struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysNotification() *SysNotification {

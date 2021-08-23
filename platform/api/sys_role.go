@@ -266,9 +266,9 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	if ctr.Srv.Check(ctx.Request) {
-		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.PageExport(ctx.DB, "sys_role", "page", "sys_role", q.Value())
+	if ctr.Srv.Report.Check(ctx.Request) {
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
+		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "sys_role", "page", "sys_role", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -277,7 +277,7 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -297,10 +297,10 @@ func (ctr *SysRole) SysRoleRoleMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", ctr.Srv.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
+	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
 	q.SetRule("sys_role_menu_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_role", "menu_tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_role", "menu_tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -320,10 +320,10 @@ func (ctr *SysRole) SysRoleRoleAppFunTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", ctr.Srv.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
+	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
 	q.SetRule("sys_role_app_fun_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_role", "app_fun_tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_role", "app_fun_tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

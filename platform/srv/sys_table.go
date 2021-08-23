@@ -14,7 +14,7 @@ import (
 )
 
 type SysTable struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysTable() *SysTable {

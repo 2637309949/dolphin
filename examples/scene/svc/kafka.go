@@ -17,10 +17,14 @@ type Kafka interface {
 	ReadMessage(ctx context.Context, topic string, cb func([]byte), cnt ...int) error
 }
 
+type XKafka struct {
+	dialer *kafka.Dialer
+}
+
 // WriteMessages defined TODO
-func (svc *SvcHepler) WriteMessages(ctx context.Context, topic string, message interface{}) error {
+func (x *XKafka) WriteMessages(ctx context.Context, topic string, message interface{}) error {
 	writer := kafka.NewWriter(kafka.WriterConfig{
-		Dialer:       svc.dialer,
+		Dialer:       x.dialer,
 		Brokers:      viper.GetStringSlice("kafka.broker"),
 		Topic:        topic,
 		BatchSize:    2,
@@ -40,11 +44,11 @@ func (svc *SvcHepler) WriteMessages(ctx context.Context, topic string, message i
 }
 
 // ReadMessage defined TODO
-func (svc *SvcHepler) ReadMessage(ctx context.Context, topic string, cb func([]byte), cnt ...int) error {
+func (x *XKafka) ReadMessage(ctx context.Context, topic string, cb func([]byte), cnt ...int) error {
 	cch := util.SomeOne(cnt, int(1)).(int)
 	var WokerCntChannel = make(chan bool, cch)
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Dialer:      svc.dialer,
+		Dialer:      x.dialer,
 		Brokers:     viper.GetStringSlice("kafka.broker"),
 		Topic:       topic,
 		GroupID:     "group",
@@ -66,4 +70,12 @@ func (svc *SvcHepler) ReadMessage(ctx context.Context, topic string, cb func([]b
 			<-WokerCntChannel
 		}()
 	}
+}
+
+func NewXKafka() *XKafka {
+	dialer := &kafka.Dialer{
+		Timeout:   10 * time.Second,
+		DualStack: true,
+	}
+	return &XKafka{dialer: dialer}
 }

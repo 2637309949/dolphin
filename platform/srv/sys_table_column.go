@@ -14,7 +14,7 @@ import (
 )
 
 type SysTableColumn struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysTableColumn() *SysTableColumn {

@@ -18,7 +18,7 @@ import (
 
 // SysWechat defined TODO
 type SysWechat struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 // WeiXinToken defined TODO
@@ -40,7 +40,7 @@ func NewSysWechat() *SysWechat {
 func (srv *SysWechat) WinXinBindCheck(ctx context.Context, platformDB *xorm.Engine, db *xorm.Engine, domain string, code string) (*types.SysUser, error) {
 	wcToken := WeiXinToken{}
 	userInfo := types.SysUser{}
-	req := srv.Svc.Get(fmt.Sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%v&secret=%v&code=%v&grant_type=authorization_code", viper.GetString("wc.appid"), viper.GetString("wc.appsecret"), code))
+	req := srv.Client.Get(fmt.Sprintf("https://api.weixin.qq.com/sns/oauth2/access_token?appid=%v&secret=%v&code=%v&grant_type=authorization_code", viper.GetString("wc.appid"), viper.GetString("wc.appsecret"), code))
 	err := req.ToJSON(&wcToken)
 	if err != nil {
 		return nil, err

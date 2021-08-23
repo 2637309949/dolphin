@@ -152,7 +152,7 @@ func init() {
 }
 
 type Vote struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewVote() *Vote {

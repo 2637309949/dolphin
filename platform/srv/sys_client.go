@@ -14,7 +14,7 @@ import (
 )
 
 type SysClient struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysClient() *SysClient {

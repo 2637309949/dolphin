@@ -10,9 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"scene/svc"
-
 	"regexp"
+	"scene/svc"
 
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/util"
@@ -52,7 +51,7 @@ type (
 // Reflesh defined TODO
 func (dol *Dolphin) Reflesh() error {
 	dol.SyncModel()
-	dol.SyncSrv(svc.NewSvcHepler(api.CacheStore))
+	dol.SyncSrv(svc.NewServiceContext(api.CacheStore))
 	dol.SyncService()
 	dol.SyncController()
 	return dol.Dolphin.Reflesh()

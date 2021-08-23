@@ -14,7 +14,7 @@ import (
 )
 
 type SysOptionset struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysOptionset() *SysOptionset {

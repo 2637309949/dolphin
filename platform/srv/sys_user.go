@@ -19,7 +19,7 @@ import (
 )
 
 type SysUser struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysUser() *SysUser {

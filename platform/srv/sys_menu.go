@@ -14,7 +14,7 @@ import (
 )
 
 type SysMenu struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysMenu() *SysMenu {

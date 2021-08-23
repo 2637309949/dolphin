@@ -262,11 +262,11 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 // @Router /api/sys/menu/sidebar [get]
 func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetBool("isAdmin", ctr.Srv.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
+	q.SetBool("isAdmin", ctr.Srv.DB.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
 	q.SetUser()
 	q.SetRule("sys_menu_sidebar")
 	q.SetTags()
-	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -300,9 +300,9 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	if ctr.Srv.Check(ctx.Request) {
-		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.PageExport(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
+	if ctr.Srv.Report.Check(ctx.Request) {
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
+		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -311,7 +311,7 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -332,7 +332,7 @@ func (ctr *SysMenu) SysMenuTree(ctx *Context) {
 	q.SetString("name")
 	q.SetRule("sys_menu_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

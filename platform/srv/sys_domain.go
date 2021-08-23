@@ -14,7 +14,7 @@ import (
 )
 
 type SysDomain struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysDomain() *SysDomain {

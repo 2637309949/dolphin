@@ -14,7 +14,7 @@ import (
 )
 
 type SysRole struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysRole() *SysRole {

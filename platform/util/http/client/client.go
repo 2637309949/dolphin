@@ -12,7 +12,7 @@
 //	}
 //	fmt.Println(str)
 //
-package http
+package client
 
 import (
 	"bytes"

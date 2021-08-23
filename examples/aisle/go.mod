@@ -6,9 +6,7 @@ replace github.com/2637309949/dolphin => ../../
 
 require (
 	github.com/2637309949/dolphin v1.0.67
-	github.com/gin-contrib/cache v1.1.0 // indirect
-	github.com/gin-gonic/gin v1.7.1
-	github.com/go-redis/redis/v8 v8.8.0
+	github.com/gin-contrib/cache v1.1.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/shopspring/decimal v1.2.0

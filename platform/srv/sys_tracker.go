@@ -16,7 +16,7 @@ import (
 )
 
 type SysTracker struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysTracker() *SysTracker {

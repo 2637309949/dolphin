@@ -58,7 +58,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -81,7 +81,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctx.TreeSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

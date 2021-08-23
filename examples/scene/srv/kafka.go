@@ -22,7 +22,7 @@ func init() {
 }
 
 type Kafka struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewKafka() *Kafka {
@@ -59,7 +59,7 @@ func (srv *Kafka) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (i
 
 // WriteMessages defined TODO
 func (srv *Kafka) WriteMessages(ctx context.Context, params types.KafkaInfo) error {
-	err := srv.Svc.WriteMessages(ctx, "score-topic", params)
+	err := srv.Kafka.WriteMessages(ctx, "score-topic", params)
 	if err != nil {
 		return err
 	}
@@ -70,7 +70,7 @@ func (srv *Kafka) WriteMessages(ctx context.Context, params types.KafkaInfo) err
 func (srv *Kafka) ReadMessage(ctx context.Context) {
 	go func() {
 		time.Sleep(3 * time.Second)
-		new(svc.SvcHepler).ReadMessage(ctx, "score-topic", func(data []byte) {
+		svc.NewXKafka().ReadMessage(ctx, "score-topic", func(data []byte) {
 			value := types.KafkaInfo{}
 			if err := json.Unmarshal(data, &value); err != nil {
 				logrus.Error("failed to unmarshal:", err)

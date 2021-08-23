@@ -15,7 +15,7 @@ import (
 )
 
 type Article struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewArticle() *Article {

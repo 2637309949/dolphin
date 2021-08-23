@@ -14,7 +14,7 @@ import (
 )
 
 type SysScheduleHistory struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysScheduleHistory() *SysScheduleHistory {

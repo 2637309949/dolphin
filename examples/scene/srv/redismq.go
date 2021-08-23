@@ -69,7 +69,7 @@ func init() {
 }
 
 type RedisMq struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewRedisMq() *RedisMq {

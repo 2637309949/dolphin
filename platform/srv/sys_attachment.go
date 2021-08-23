@@ -14,7 +14,7 @@ import (
 )
 
 type SysAttachment struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysAttachment() *SysAttachment {

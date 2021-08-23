@@ -15,7 +15,7 @@ import (
 )
 
 type View struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewView() *View {

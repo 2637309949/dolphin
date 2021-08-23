@@ -15,7 +15,7 @@ import (
 )
 
 type User struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewUser() *User {

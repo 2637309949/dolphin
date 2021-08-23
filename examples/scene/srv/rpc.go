@@ -15,7 +15,7 @@ import (
 )
 
 type RPC struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewRPC() *RPC {

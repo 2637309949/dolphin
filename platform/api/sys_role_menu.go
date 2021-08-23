@@ -244,7 +244,7 @@ func (ctr *SysRoleMenu) SysRoleMenuPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_role_menu", "page", "sys_role_menu", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_role_menu", "page", "sys_role_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

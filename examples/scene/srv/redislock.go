@@ -15,7 +15,7 @@ import (
 )
 
 type RedisLock struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewRedisLock() *RedisLock {

@@ -15,7 +15,7 @@ import (
 )
 
 type Organ struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewOrgan() *Organ {

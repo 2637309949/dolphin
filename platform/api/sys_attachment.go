@@ -337,7 +337,7 @@ func (ctr *SysAttachment) SysAttachmentPage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetRule("sys_attachment_page")
 	q.SetTags()
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_attachment", "page", "sys_attachment", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_attachment", "page", "sys_attachment", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

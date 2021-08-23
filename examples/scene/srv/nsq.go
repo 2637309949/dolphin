@@ -30,7 +30,7 @@ var (
 type messageHandler struct{}
 
 type Nsq struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewNsq() *Nsq {

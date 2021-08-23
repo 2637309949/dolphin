@@ -14,7 +14,7 @@ import (
 )
 
 type SysScheduling struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysScheduling() *SysScheduling {

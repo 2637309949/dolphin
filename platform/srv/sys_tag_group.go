@@ -14,7 +14,7 @@ import (
 )
 
 type SysTagGroup struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysTagGroup() *SysTagGroup {

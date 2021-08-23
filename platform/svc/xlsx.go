@@ -222,7 +222,7 @@ func DefaultFormat(interface{}) func(interface{}) interface{} {
 // OptionsetsFormat defiend
 func OptionsetsFormat(db *xorm.Engine) func(interface{}) func(interface{}) interface{} {
 	return func(format interface{}) func(source interface{}) interface{} {
-		optionsets, err := new(SvcHepler).GetOptions(db, fmt.Sprintf("%v", format))
+		optionsets, err := NewXDB().GetOptions(db, fmt.Sprintf("%v", format))
 		return func(source interface{}) interface{} {
 			if err == nil {
 				target := optionsets[fmt.Sprintf("%v", format)]

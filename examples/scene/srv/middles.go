@@ -15,7 +15,7 @@ import (
 )
 
 type Middles struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewMiddles() *Middles {

@@ -15,7 +15,7 @@ import (
 )
 
 type Sqlmap struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSqlmap() *Sqlmap {

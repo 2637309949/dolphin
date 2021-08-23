@@ -240,9 +240,9 @@ func (ctr *SysTable) SysTablePage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	if ctr.Srv.Check(ctx.Request) {
-		ctr.Srv.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.PageExport(ctx.DB, "sys_table", "page", "sys_table", q.Value())
+	if ctr.Srv.Report.Check(ctx.Request) {
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
+		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "sys_table", "page", "sys_table", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -251,7 +251,7 @@ func (ctr *SysTable) SysTablePage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_table", "page", "sys_table", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_table", "page", "sys_table", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

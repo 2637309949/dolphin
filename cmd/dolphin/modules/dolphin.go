@@ -295,17 +295,9 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 
 	// svc template
 	svcByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "svc.tmpl")).([]byte)
-	helperByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "svc.helper.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(svcByte),
 		FilePath: path.Join(dir, viper.GetString("dir.svc"), "svc.go"),
-		Data:     tmplArgs,
-		Overlap:  parser.OverlapSkip,
-		GOFmt:    true,
-	})
-	tmpls = append(tmpls, &parser.TmplCfg{
-		Text:     string(helperByte),
-		FilePath: path.Join(dir, viper.GetString("dir.svc"), "svc.helper.go"),
 		Data:     tmplArgs,
 		Overlap:  parser.OverlapSkip,
 		GOFmt:    true,

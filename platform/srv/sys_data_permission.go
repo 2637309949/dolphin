@@ -14,7 +14,7 @@ import (
 )
 
 type SysDataPermission struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysDataPermission() *SysDataPermission {

@@ -19,7 +19,7 @@ import (
 )
 
 type Dtm struct {
-	svc.Svc
+	*svc.ServiceContext
 	DtmServer string
 }
 

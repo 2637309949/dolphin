@@ -240,7 +240,7 @@ func (ctr *SysComment) SysCommentPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.PageSearch(ctx.DB, "sys_comment", "page", "sys_comment", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_comment", "page", "sys_comment", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

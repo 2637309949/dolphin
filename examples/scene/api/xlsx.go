@@ -40,7 +40,7 @@ func (ctr *Xlsx) XlsxImport(ctx *Context) {
 		return
 	}
 
-	sheet, err := ctr.Srv.ParseExcel(file, 1)
+	sheet, err := ctr.Srv.Report.ParseExcel(file, 1)
 	for i := range sheet {
 		item := sheet[i]
 		for k, v := range item {

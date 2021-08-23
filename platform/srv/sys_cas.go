@@ -18,7 +18,7 @@ type SysCasQrType int
 
 // SysCas defined TODO
 type SysCas struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 const (

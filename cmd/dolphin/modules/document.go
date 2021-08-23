@@ -25,6 +25,11 @@ func (m *Doc) Name() string {
 
 // Pre defined
 func (m *Doc) Pre(*parser.AppParser) error {
+	return nil
+}
+
+// After defined
+func (m *Doc) After(*parser.AppParser, []*parser.TmplCfg) error {
 	if status := utils.NetWorkStatus(); status {
 		cmd := exec.Command("go", "mod", "tidy")
 		if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
@@ -35,11 +40,6 @@ func (m *Doc) Pre(*parser.AppParser) error {
 			return err
 		}
 	}
-	return nil
-}
-
-// After defined
-func (m *Doc) After(*parser.AppParser, []*parser.TmplCfg) error {
 	return nil
 }
 

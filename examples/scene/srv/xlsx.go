@@ -15,7 +15,7 @@ import (
 )
 
 type Xlsx struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewXlsx() *Xlsx {

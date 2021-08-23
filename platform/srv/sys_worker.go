@@ -14,7 +14,7 @@ import (
 )
 
 type SysWorker struct {
-	svc.Svc
+	*svc.ServiceContext
 }
 
 func NewSysWorker() *SysWorker {
