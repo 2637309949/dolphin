@@ -49,7 +49,10 @@ func (ctx *Context) reset() {
 // LoginInInfo defined TODO
 func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
 	tk := ctx.GetToken()
-	return ctx.PlatformDB.ID(tk.GetUserID()).Get(user)
+	if tk != nil {
+		return ctx.PlatformDB.ID(tk.GetUserID()).Get(user)
+	}
+	return false, nil
 }
 
 // Success defined success result
@@ -274,7 +277,7 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 // ShouldBindWith defined TODO
 // ShouldBindWith is done in following order: 1) path params; 2) query params; 3) request body.
 func (ctx *Context) ShouldBindWith(ptr interface{}) error {
-	if len(ctx.Params) > 0 {
+	if util.UriCheck(ctx.Params) {
 		if err := ctx.ShouldBindUri(ptr); err != nil {
 			return err
 		}

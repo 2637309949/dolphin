@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/gin-gonic/gin"
 	"github.com/go-errors/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -204,6 +205,11 @@ func JsonCheck(req *http.Request) bool {
 		return true
 	}
 	return false
+}
+
+// UriCheck defined TODO
+func UriCheck(params gin.Params) bool {
+	return len(params) > 0
 }
 
 // QueryCheck defined TODO
