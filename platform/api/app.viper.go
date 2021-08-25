@@ -8,6 +8,7 @@ import (
 	"github.com/json-iterator/go/extra"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	_ "github.com/spf13/viper/remote"
 )
 
 func InitViper() {
@@ -65,6 +66,9 @@ func InitViper() {
 	viper.SetDefault("redis.pool_size", 15)
 	viper.SetDefault("redis.min_idle_conns", 15)
 	viper.SetDefault("redis.idle_conns", 10)
+	viper.SetDefault("consul.name", "")
+	viper.SetDefault("consul.endpoint", "")
+	viper.SetDefault("consul.type", "yaml")
 	viper.SetDefault("swag.authorizationUrl", "/api/sys/cas/authorize")
 	viper.SetDefault("swag.license.name", "Apache 2.0")
 	viper.SetDefault("swag.license.url", "http://www.apache.org/licenses/LICENSE-2.0.html")
@@ -87,9 +91,22 @@ func InitViper() {
 	if strings.TrimSpace(viper.GetString("app.host")) == "" {
 		viper.SetDefault("app.host", fmt.Sprintf("localhost:%v", viper.GetString("http.port")))
 	}
+
+	if strings.TrimSpace(viper.GetString("consul.name")) == "" {
+		viper.SetDefault("consul.name", viper.GetString("app.name"))
+	}
+
+	if viper.GetString("consul.endpoint") != "" && viper.GetString("consul.name") != "" {
+		viper.AddRemoteProvider("consul", viper.GetString("consul.endpoint"), viper.GetString("consul.name"))
+		viper.SetConfigType(viper.GetString("consul.type"))
+		if err := viper.ReadRemoteConfig(); err != nil {
+			logrus.Warnf("failed to read remote configuration file [%v]", err)
+		}
+	}
+
 	if viper.GetBool("app.viper") {
 		if err := viper.WriteConfig(); err != nil {
-			logrus.Warn("failed to save configuration file")
+			logrus.Warnf("failed to save configuration file [%v]", err)
 		}
 	}
 }

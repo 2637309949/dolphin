@@ -4,34 +4,89 @@ app:
   mode: debug
   name: scene
   version: "1.0"
-http:
-  port: 8082
+consul:
+  endpoint: 172.30.13.77:8500
+  name: scene
+  type: yaml
 db:
+  connmaxlifetime: 10
   datasource: root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local
   driver: mysql
-redis:
-  mode: stub
-  addr:
-  - localhost:6379
-  password: ""
+  maxidleconns: 15
+  maxopenconns: 50
+dir:
+  api: api
+  doc: ""
+  log: log
+  rpc: rpc
+  script: script
+  sql: sql
+  sqlmap: sqlmap
+  srv: srv
+  svc: svc
+  types: types
+  util: util
 dtm:
   srv: http://localhost:8080/api/dtmsvr
+http:
+  hash: FF61A573-82FC-478B-9AEF-93D6F506DE9A
+  port: 8083
+  prefix: /api
+  static: static
 jwt:
-  secret: 6hy789iu87
   expire: 604800
-oauth:
-  server: http://172.20.10.3:8082
-  client: http://172.20.10.3:8082
-wc:
-  appid: wxd1153e6068a5987d
-  appsecret: 81cfff836726a497e0df15a7f9350725
-rpc:
-  message_srv: localhost:9081
-oss:
-  bucket: 965xx
-  endpoint: 965xx
-  accesskeyid: 965xx
-  accesskeysecret: 965xx
+  secret: 6hy789iu87
 kafka:
   broker:
   - 172.20.10.3:9092
+oauth:
+  affirm: /static/web/affirm.html
+  client: http://172.20.10.3:8082
+  id: Y76U9344RABF4
+  login: /static/web/login.html
+  qrconnect: /static/web/qrconnect.html
+  secret: 8UYO6FVB8UYO6FVB
+  server: http://172.20.10.3:8082
+oss:
+  accesskeyid: 965xx
+  accesskeysecret: 965xx
+  bucket: 965xx
+  endpoint: 965xx
+redis:
+  addr:
+  - localhost:6379
+  db: 0
+  dial_timeout: 10
+  idle_conns: 10
+  max_redirects: 0
+  max_retries: 0
+  min_idle_conns: 15
+  mode: stub
+  network: ""
+  password: ""
+  pool_size: 15
+  read_only: true
+  read_timeout: 10
+  username: ""
+  write_timeout: 10
+rpc:
+  domain_srv: localhost:9081
+  message_srv: localhost:9081
+  port: "9081"
+  user_srv: localhost:9081
+swag:
+  authorizationurl: /api/sys/cas/authorize
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  scope:
+    admin: Grants read and write access to administrative information
+    read: Grants read access
+    write: Grants write access
+  securitydefinitions:
+    oauth2:
+      accesscode: OAuth2AccessCode
+  tokenurl: /api/sys/cas/token
+wc:
+  appid: wxd1153e6068a5987d
+  appsecret: 81cfff836726a497e0df15a7f9350725
