@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// UserSrvClient defined
+// UserSrvClient defined TODO
 var UserSrvClient proto.UserSrvClient
 
 // NewUserSrvClient defined TODO

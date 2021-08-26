@@ -10,7 +10,6 @@ import (
 	"scene/rpc/proto"
 
 	"github.com/2637309949/dolphin/platform/util/trace"
-
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"

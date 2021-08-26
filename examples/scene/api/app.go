@@ -174,24 +174,28 @@ func NewContext(dol *Dolphin) *Context {
 
 // New defined init dol you can custom engine
 func New() *Dolphin {
-	rg := RouterGroup{Handlers: nil, basePath: "/"}
-	dol := Dolphin{Dolphin: api.App, RouterGroup: rg}
+	dol := Dolphin{Dolphin: api.App, RouterGroup: RouterGroup{Handlers: nil, basePath: "/"}}
 	dol.pool.New = func() interface{} { return NewContext(&dol) }
 	dol.RouterGroup.dol = &dol
 	return &dol
 }
 
+// HelloMiddle defiend TODO
+func HelloMiddle(name string) func(ctx *Context) {
+	return func(ctx *Context) {
+		logrus.Infof("dolphin %v middles", name)
+	}
+}
+
 // Default defined TODO
 func Default() *Dolphin {
-	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) { logrus.Infoln("Dolphin local middles") }
-
 	app := New()
-	app.Use(func(ctx *Context) { logrus.Infoln("Dolphin global middles") })
+	app.Use(HelloMiddle("global"))
+	MiddlesInstance.LocalTest.Interceptor = HelloMiddle("local")
 	return app
 }
 
 func init() {
 	app := Default()
-
 	App, Run = app, app.Run
 }

@@ -62,10 +62,10 @@ func (auth *AuthOAuth2) parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
 }
 
 // parseJWTToken defined TODO
-func (auth *AuthOAuth2) parseJWTToken(t jwt.MapClaims) TokenInfo {
+func (auth *AuthOAuth2) parseJWTToken(t *jwt.MapClaims) TokenInfo {
 	auth.ticket = &Token{
-		UserID: t["userId"].(string),
-		Domain: t["domain"].(string),
+		UserID: (*t)["userId"].(string),
+		Domain: (*t)["domain"].(string),
 	}
 	return auth.ticket
 }
@@ -73,13 +73,13 @@ func (auth *AuthOAuth2) parseJWTToken(t jwt.MapClaims) TokenInfo {
 // VerifyToken defined TODO
 func (auth *AuthOAuth2) VerifyToken(ctx *Context) bool {
 	if bearer, ok := auth.oauth2.BearerAuth(ctx.Request); ok {
-		accessToken, err := auth.oauth2.Manager.LoadAccessToken(bearer)
+		tk, err := auth.oauth2.Manager.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.Error(err)
 			return false
 		}
 		return auth.
-			parseOAuth2Token(accessToken).
+			parseOAuth2Token(tk).
 			GetAccessCreateAt().
 			Add(auth.GetToken().GetAccessExpiresIn()).Round(0).Add(-TokenExpiryDelta).
 			After(time.Now())
@@ -90,12 +90,12 @@ func (auth *AuthOAuth2) VerifyToken(ctx *Context) bool {
 // VerifyJWT defined TODO
 func (auth *AuthOAuth2) VerifyJWT(ctx *Context) bool {
 	if bearer, ok := auth.jwt.BearerAuth(ctx.Request); ok {
-		accessToken, err := auth.jwt.LoadAccessToken(bearer)
+		tk, err := auth.jwt.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.Error(err)
 			return false
 		}
-		auth.parseJWTToken(*accessToken)
+		auth.parseJWTToken(tk)
 		return true
 	}
 	return false
