@@ -26,8 +26,8 @@ const (
 	JWTType          = "jwt"
 )
 
-// AuthInfo defined
-type AuthInfo interface {
+// AuthProtocol defined
+type AuthProtocol interface {
 	GetToken() TokenInfo
 	VerifyToken(*Context) bool
 	VerifyEncrypt(*Context) bool
@@ -139,7 +139,7 @@ func AuthToken(ctx *Context) {
 		return
 	}
 	ctx.Set("DB", ctx.DB)
-	ctx.Set("AuthInfo", ctx.AuthInfo)
+	ctx.Set("AuthProtocol", ctx.AuthProtocol)
 	ctx.Next()
 }
 
@@ -156,7 +156,7 @@ func AuthJWT(ctx *Context) {
 		return
 	}
 	ctx.Set("DB", ctx.DB)
-	ctx.Set("AuthInfo", ctx.AuthInfo)
+	ctx.Set("AuthProtocol", ctx.AuthProtocol)
 	ctx.Next()
 }
 

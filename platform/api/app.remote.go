@@ -17,8 +17,8 @@ import (
 	"google.golang.org/grpc"
 )
 
-// RpcHandler defined
-type RpcHandler interface {
+// remoteHandler defined
+type remoteHandler interface {
 	RegisterServer(func(*grpc.Server))
 	OnStart(context.Context) error
 	OnStop(context.Context) error
@@ -54,8 +54,8 @@ func (gh *grpcHandler) OnStop(ctx context.Context) error {
 // RpcClientDailTimeOut defined TODO
 var RpcClientDailTimeOut = 3 * time.Second
 
-// NewRpcClient defined TODO
-func NewRpcClient(_ string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+// NewRemoteClient defined TODO
+func NewRemoteClient(_ string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	opts = append(opts, []grpc.DialOption{grpc.WithInsecure(), grpc.WithBlock(), grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace)}...)
 	ctx, cancel := context.WithTimeout(context.Background(), RpcClientDailTimeOut)
 	defer cancel()
@@ -63,8 +63,8 @@ func NewRpcClient(_ string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
 	return conn, err
 }
 
-// NewRpcHandler defined TODO
-func NewRpcHandler() RpcHandler {
+// NewRemoteHandler defined TODO
+func NewRemoteHandler() remoteHandler {
 	opts := []grpc.ServerOption{grpc.UnaryInterceptor(trace.RpcCliTrace(viper.GetString("app.name")))}
 	net := util.EnsureLeft(net.Listen("tcp", fmt.Sprintf(":%v", viper.GetString("rpc.port")))).(net.Listener)
 	return &grpcHandler{net: net, grpc: grpc.NewServer(opts...)}

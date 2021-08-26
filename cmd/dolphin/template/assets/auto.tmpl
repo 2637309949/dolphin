@@ -75,7 +75,7 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{- range .Services}}
 // {{.ToUpperCase .Name}} defined
 func {{.ToUpperCase .Name}}Service(dol *Dolphin) {
-	dol.RPC.RegisterServer(func(srv *g{{$.Viper.GetString "dir.rpc" }}.Server) {proto.Register{{.ToUpperCase .Name}}Server(srv, &{{$.Viper.GetString "dir.rpc" }}.{{.ToUpperCase .Name}}{})})
+	dol.Remote.RegisterServer(func(srv *g{{$.Viper.GetString "dir.rpc" }}.Server) {proto.Register{{.ToUpperCase .Name}}Server(srv, &{{$.Viper.GetString "dir.rpc" }}.{{.ToUpperCase .Name}}{})})
 }
 {{- end}}
 

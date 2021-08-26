@@ -22,14 +22,14 @@ import (
 const RootRelativePath = "/"
 
 type (
-	// HttpHandler defined TODO
-	HttpHandler interface {
+	// httpHandler defined TODO
+	httpHandler interface {
 		lifeHook
 		ServeHTTP(http.ResponseWriter, *http.Request)
 		Handle(string, string, ...HandlerFunc)
 	}
-	// restful defined TODO
-	restful struct {
+	// ginSrv defined TODO
+	ginSrv struct {
 		*gin.Engine
 		server *http.Server
 		dol    *Dolphin
@@ -37,12 +37,12 @@ type (
 )
 
 // NewRestful defined TODO
-func NewRestful(engine *gin.Engine, dol *Dolphin) *restful {
-	return &restful{Engine: engine, dol: dol}
+func NewRestful(engine *gin.Engine, dol *Dolphin) *ginSrv {
+	return &ginSrv{Engine: engine, dol: dol}
 }
 
 // resolveAddress defined TODO
-func (gh *restful) resolveAddress(addr []string) string {
+func (gh *ginSrv) resolveAddress(addr []string) string {
 	switch len(addr) {
 	case 0:
 		return ":8080"
@@ -54,12 +54,12 @@ func (gh *restful) resolveAddress(addr []string) string {
 }
 
 // Shutdown defined TODO
-func (gh *restful) Shutdown(ctx context.Context) error {
+func (gh *ginSrv) Shutdown(ctx context.Context) error {
 	return gh.server.Shutdown(ctx)
 }
 
 // Run defined TODO
-func (gh *restful) Run(addr ...string) error {
+func (gh *ginSrv) Run(addr ...string) error {
 	address := gh.resolveAddress(addr)
 	if gh.server == nil {
 		gh.server = &http.Server{Addr: address, Handler: gh.Engine}
@@ -69,7 +69,7 @@ func (gh *restful) Run(addr ...string) error {
 }
 
 // OnStart defined TODO
-func (gh *restful) OnStart(ctx context.Context) error {
+func (gh *ginSrv) OnStart(ctx context.Context) error {
 	go func() {
 		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
 		if err := gh.Run(fmt.Sprintf(":%v", viper.GetString("http.port"))); err != nil {
@@ -80,7 +80,7 @@ func (gh *restful) OnStart(ctx context.Context) error {
 }
 
 // rebuildGlobalRoutes gin global handlers
-func (gh *restful) rebuildGlobalRoutes() *restful {
+func (gh *ginSrv) rebuildGlobalRoutes() *ginSrv {
 	hf := gh.unWrapHandler(gh.dol.Handlers...)
 	gh.NoRoute(hf...)
 	gh.NoMethod(hf...)
@@ -88,24 +88,23 @@ func (gh *restful) rebuildGlobalRoutes() *restful {
 }
 
 // OnStop defined TODO
-func (gh *restful) OnStop(ctx context.Context) error {
+func (gh *ginSrv) OnStop(ctx context.Context) error {
 	return gh.Shutdown(ctx)
 }
 
 // unWrapHandler defined TODO
-func (gh *restful) unWrapHandler(h ...HandlerFunc) []gin.HandlerFunc {
+func (gh *ginSrv) unWrapHandler(h ...HandlerFunc) []gin.HandlerFunc {
 	return funk.Map(h, func(hf HandlerFunc) gin.HandlerFunc {
 		return func(ctx *gin.Context) {
 			c := gh.dol.pool.Get().(*Context)
 			c.reset()
 			c.Context = ctx
-			// uwrap Context
 			for k := range ctx.Keys {
 				switch t := ctx.Keys[k].(type) {
 				case *xorm.Engine:
 					c.DB = t
-				case AuthInfo:
-					c.AuthInfo = t
+				case AuthProtocol:
+					c.AuthProtocol = t
 				}
 			}
 			hf(c)
@@ -116,7 +115,7 @@ func (gh *restful) unWrapHandler(h ...HandlerFunc) []gin.HandlerFunc {
 }
 
 // Handle defined TODO
-func (gh *restful) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
+func (gh *ginSrv) Handle(httpMethod, absolutePath string, handlerFuncs ...HandlerFunc) {
 	hls := gh.unWrapHandler(handlerFuncs...)
 	nuHandlers := len(handlerFuncs)
 	handlerName := nameOfFunction(handlerFuncs[nuHandlers-1])
@@ -137,10 +136,10 @@ func nameOfFunction(f interface{}) string {
 }
 
 // NewGinHandler defined TODO
-func NewGinHandler(dol *Dolphin) HttpHandler {
+func NewGinHandler(dol *Dolphin) httpHandler {
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = logrus.StandardLogger().Out
-	h := &restful{Engine: gin.New()}
+	h := &ginSrv{Engine: gin.New()}
 	h.dol = dol
 	return h
 }

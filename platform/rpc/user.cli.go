@@ -26,7 +26,7 @@ func NewUserSrvClient(target string, opts ...grpc.DialOption) (*grpc.ClientConn,
 	}...)
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
-	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), options...)
+	conn, err := grpc.DialContext(ctx, target, options...)
 	return conn, err
 }
 

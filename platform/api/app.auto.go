@@ -2730,17 +2730,17 @@ var SysWorkerInstance = NewSysWorker()
 
 // ClientSrv defined
 func ClientSrvService(dol *Dolphin) {
-	dol.RPC.RegisterServer(func(srv *grpc.Server) { proto.RegisterClientSrvServer(srv, &rpc.ClientSrv{}) })
+	dol.Remote.RegisterServer(func(srv *grpc.Server) { proto.RegisterClientSrvServer(srv, &rpc.ClientSrv{}) })
 }
 
 // DomainSrv defined
 func DomainSrvService(dol *Dolphin) {
-	dol.RPC.RegisterServer(func(srv *grpc.Server) { proto.RegisterDomainSrvServer(srv, &rpc.DomainSrv{}) })
+	dol.Remote.RegisterServer(func(srv *grpc.Server) { proto.RegisterDomainSrvServer(srv, &rpc.DomainSrv{}) })
 }
 
 // UserSrv defined
 func UserSrvService(dol *Dolphin) {
-	dol.RPC.RegisterServer(func(srv *grpc.Server) { proto.RegisterUserSrvServer(srv, &rpc.UserSrv{}) })
+	dol.Remote.RegisterServer(func(srv *grpc.Server) { proto.RegisterUserSrvServer(srv, &rpc.UserSrv{}) })
 }
 
 // SyncModel defined

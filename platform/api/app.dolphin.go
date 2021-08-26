@@ -6,7 +6,6 @@ package api
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -44,8 +43,8 @@ type (
 		Manager    Manager
 		OAuth2     *server.Server
 		JWT        *JWT
-		Http       HttpHandler
-		RPC        RpcHandler
+		Http       httpHandler
+		Remote     remoteHandler
 		pool       sync.Pool
 	}
 )
@@ -227,7 +226,6 @@ func (dol *Dolphin) Reflesh() error {
 		funk.ForEach(platBindModelNames, func(n string) { dol.migration(n, db) })
 		err = new(types.SysRole).InitSysData(s1)
 		if err != nil {
-			fmt.Println(123, err)
 			s1.Rollback()
 			return err
 		}
@@ -318,7 +316,7 @@ func (dol *Dolphin) done() <-chan os.Signal {
 	return c
 }
 
-// LifeCycle start LifeCycle hooks
+// LifeCycle defined TODO
 func (dol *Dolphin) LifeCycle(ctx context.Context) error {
 	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
@@ -337,11 +335,12 @@ func (dol *Dolphin) LifeCycle(ctx context.Context) error {
 
 // Run defined TODO
 func (dol *Dolphin) Run() error {
+	ctx := context.Background()
 	if err := dol.Reflesh(); err != nil {
 		logrus.Errorln(err)
 		return err
 	}
-	if err := dol.LifeCycle(context.Background()); err != nil {
+	if err := dol.LifeCycle(ctx); err != nil {
 		logrus.Errorln(err)
 		return err
 	}

@@ -30,14 +30,14 @@ import (
 // Context defined TODO
 type Context struct {
 	*gin.Context
-	AuthInfo
+	AuthProtocol
 	DB         *xorm.Engine
 	PlatformDB *xorm.Engine
 }
 
 // NewContext defined TODO
 func NewContext(dol *Dolphin) *Context {
-	return &Context{PlatformDB: dol.PlatformDB, AuthInfo: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
+	return &Context{PlatformDB: dol.PlatformDB, AuthProtocol: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
 }
 
 // reset defined clean vars in ctx
@@ -275,7 +275,7 @@ func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
 }
 
 // ShouldBindWith defined TODO
-// ShouldBindWith is done in following order: 1) path params; 2) query params; 3) request body.
+// order: 1) path params; 2) query params; 3) request body.
 func (ctx *Context) ShouldBindWith(ptr interface{}) error {
 	if util.UriCheck(ctx.Params) {
 		if err := ctx.ShouldBindUri(ptr); err != nil {

@@ -27,7 +27,7 @@ func NewDomainSrvClient(target string, opts ...grpc.DialOption) (*grpc.ClientCon
 	}...)
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
-	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), options...)
+	conn, err := grpc.DialContext(ctx, target, options...)
 	return conn, err
 }
 

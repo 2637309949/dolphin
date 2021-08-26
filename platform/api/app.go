@@ -30,14 +30,14 @@ type Hook struct {
 // OnStart defined OnStart
 func (h *Hook) OnStart(ctx context.Context) error {
 	h.dol.Http.OnStart(ctx)
-	h.dol.RPC.OnStart(ctx)
+	h.dol.Remote.OnStart(ctx)
 	return nil
 }
 
 // OnStop defined OnStop
 func (h *Hook) OnStop(ctx context.Context) error {
 	h.dol.Http.OnStop(ctx)
-	h.dol.RPC.OnStop(ctx)
+	h.dol.Remote.OnStop(ctx)
 	return nil
 }
 
@@ -53,10 +53,10 @@ func WithHttpHandler() Option {
 	}
 }
 
-// WithRpcHandler defined TODO
-func WithRpcHandler() Option {
+// WithRemoteHandler defined TODO
+func WithRemoteHandler() Option {
 	return func(dol *Dolphin) {
-		dol.RPC = NewRpcHandler()
+		dol.Remote = NewRemoteHandler()
 	}
 }
 
@@ -106,7 +106,7 @@ func WithOAuth2() Option {
 	}
 }
 
-// IsDebugging returns true if the framework is running in debug mode.
+// IsDebugging defined TODO
 func IsDebugging() bool {
 	return viper.GetString("app.mode") != "release"
 }
@@ -118,7 +118,7 @@ func init() {
 	InitCacheStore()
 	InitSession()
 
-	opts := []Option{WithHttpHandler(), WithRpcHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
+	opts := []Option{WithHttpHandler(), WithRemoteHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
 	app := NewDefault(opts...)
 	StaticRoutes(app)
 	App, Run = app, app.Run

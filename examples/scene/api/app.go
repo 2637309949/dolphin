@@ -19,7 +19,7 @@ import (
 	"github.com/thoas/go-funk"
 )
 
-// vars defined
+// vars defined TODO
 var (
 	App *Dolphin
 	Run func() error
@@ -59,11 +59,12 @@ func (dol *Dolphin) Reflesh() error {
 
 // Run defined TODO
 func (dol *Dolphin) Run() error {
+	ctx := context.Background()
 	if err := dol.Reflesh(); err != nil {
 		logrus.Errorln(err)
 		return err
 	}
-	if err := dol.LifeCycle(context.Background()); err != nil {
+	if err := dol.LifeCycle(ctx); err != nil {
 		logrus.Errorln(err)
 		return err
 	}
