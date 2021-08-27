@@ -17,7 +17,7 @@ import (
 
 	"github.com/go-openapi/spec"
 
-	"github.com/2637309949/dolphin/cmd/dolphin/swag"
+	"github.com/2637309949/dolphin/packages/swag"
 )
 
 // Gen presents a generate tool for swag.

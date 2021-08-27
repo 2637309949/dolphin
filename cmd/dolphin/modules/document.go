@@ -9,8 +9,8 @@ import (
 	"path"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
-	"github.com/2637309949/dolphin/cmd/dolphin/swag/gen"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
+	"github.com/2637309949/dolphin/packages/swag/gen"
 	"github.com/spf13/viper"
 )
 
