@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
@@ -213,8 +214,11 @@ func NetWorkStatus() bool {
 // InstallPackages defined TODO
 func InstallPackages(pkgs ...string) error {
 	for i := range pkgs {
-		if err := exec.Command("go", "get", pkgs[i]).Run(); err != nil && err != exec.ErrNotFound {
-			return err
+		var stderr bytes.Buffer
+		cmd := exec.Command("go", "get", pkgs[i])
+		cmd.Stderr = &stderr
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("%v", stderr.String())
 		}
 	}
 	return nil
@@ -223,7 +227,7 @@ func InstallPackages(pkgs ...string) error {
 // HasBin defined TODO
 func HasBin(bins ...string) bool {
 	for i := range bins {
-		if err := exec.Command(bins[i]).Run(); err == exec.ErrNotFound {
+		if err := exec.Command(bins[i]).Run(); err != nil && strings.Contains(err.Error(), exec.ErrNotFound.Error()) {
 			return false
 		}
 	}
@@ -258,4 +262,14 @@ func FileNameTrimSuffix(fp string) string {
 	extension, filename := filepath.Ext(fp), filepath.Base(fp)
 	filename = filename[0 : len(filename)-len(extension)]
 	return filename
+}
+
+// HasSuffix defined suffix of string
+func HasSuffix(s string, suffix ...string) bool {
+	for _, v := range suffix {
+		if strings.HasSuffix(s, v) {
+			return true
+		}
+	}
+	return false
 }

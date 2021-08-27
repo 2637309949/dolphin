@@ -5,15 +5,22 @@
 package modules
 
 import (
+	"bytes"
+	"encoding/xml"
 	"fmt"
 	"html/template"
+	"io/ioutil"
+	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
+	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
 	"github.com/spf13/viper"
 )
@@ -24,7 +31,7 @@ type Dolphin struct {
 
 // Name defined parser name
 func (m *Dolphin) Name() string {
-	return "dol"
+	return "dolphin"
 }
 
 // Pre defined
@@ -34,6 +41,22 @@ func (m *Dolphin) Pre(*parser.AppParser) error {
 
 // After defined
 func (m *Dolphin) After(*parser.AppParser, []*parser.TmplCfg) error {
+	if status := utils.NetWorkStatus(); status {
+		var stderr bytes.Buffer
+		cmd := exec.Command("go", "mod", "tidy")
+		cmd.Stderr = &stderr
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("%v", stderr.String())
+		}
+		cmd = exec.Command("go", "mod", "download")
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("%v", stderr.String())
+		}
+		cmd = exec.Command("go", "mod", "tidy")
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("%v", stderr.String())
+		}
+	}
 	return nil
 }
 
@@ -91,30 +114,6 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		Overlap:  parser.OverlapSkip,
 	})
 
-	// html template
-	affirm, login, qrconnect := strings.Join(strings.Split(viper.GetString("oauth.affirm"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.login"), "/"), "/"), strings.Join(strings.Split(viper.GetString("oauth.qrconnect"), "/"), "/")
-	affirmPath, loginPath, qrconnectPath := affirm[0:len(affirm)-len(filepath.Ext(affirm))], login[0:len(login)-len(filepath.Ext(login))], qrconnect[0:len(qrconnect)-len(filepath.Ext(qrconnect))]
-	affirmByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/affirm.html")).([]byte)
-	qrconnectByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/qrconnect.html")).([]byte)
-	loginByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "static/web/login.html")).([]byte)
-	tmpls = append(tmpls, &parser.TmplCfg{
-		Text:     string(affirmByte),
-		FilePath: path.Join(dir, affirmPath+".html"),
-		Data:     tmplArgs,
-		Overlap:  parser.OverlapSkip,
-	})
-	tmpls = append(tmpls, &parser.TmplCfg{
-		Text:     string(loginByte),
-		FilePath: path.Join(dir, loginPath+".html"),
-		Data:     tmplArgs,
-		Overlap:  parser.OverlapSkip,
-	})
-	tmpls = append(tmpls, &parser.TmplCfg{
-		Text:     string(qrconnectByte),
-		FilePath: path.Join(dir, qrconnectPath+".html"),
-		Data:     tmplArgs,
-		Overlap:  parser.OverlapSkip,
-	})
 	// tool template
 	toolByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "tool.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
@@ -276,6 +275,63 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 			Overlap:  parser.OverlapSkip,
 		})
 	}
+
+	// sqltpl template
+	var files []struct {
+		Name    string
+		Content template.HTML
+	}
+	sqlByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "sql.tmpl")).([]byte)
+	filepath.Walk(path.Join(dir, viper.GetString("dir.sql")), func(path string, info os.FileInfo, _ error) (err error) {
+		if utils.HasSuffix(path, ".xml") {
+			ct, _ := ioutil.ReadFile(path)
+			var result xorm.XmlSql
+			err = xml.Unmarshal(ct, &result)
+			if err != nil {
+				return err
+			}
+			trg := regexp.MustCompile("(`[a-zA-Z0-9_]*`)")
+			for i := range result.Sql {
+				groups := trg.FindAllStringSubmatch(result.Sql[i].Value, -1)
+				repmap := map[string]string{}
+				for _, v := range groups {
+					repmap[v[0]] = fmt.Sprintf(`%v + "%v" + %v`, "`", v[0], "`")
+				}
+				ctstr := result.Sql[i].Value
+				for key, v := range repmap {
+					ctstr = strings.ReplaceAll(ctstr, key, v)
+				}
+				files = append(files, struct {
+					Name    string
+					Content template.HTML
+				}{Name: result.Sql[i].Id, Content: template.HTML(ctstr)})
+			}
+		} else if utils.HasSuffix(path, ".tpl", ".stpl", ".jet") {
+			ct, _ := ioutil.ReadFile(path)
+			trg := regexp.MustCompile("(`[a-zA-Z1-9_]*`)")
+			groups := trg.FindAllStringSubmatch(string(ct), -1)
+			repmap := map[string]string{}
+			for _, v := range groups {
+				repmap[v[0]] = fmt.Sprintf(`%v+"%v"+%v`, "`", v[0], "`")
+			}
+			ctstr := string(ct)
+			for key, v := range repmap {
+				ctstr = strings.ReplaceAll(ctstr, key, v)
+			}
+			files = append(files, struct {
+				Name    string
+				Content template.HTML
+			}{Name: filepath.Base(path), Content: template.HTML(ctstr)})
+		}
+		return nil
+	})
+	tmplArgs["Files"] = files
+	tmpls = append(tmpls, &parser.TmplCfg{
+		Text:     string(sqlByte),
+		FilePath: path.Join(dir, viper.GetString("dir.sql"), "sql.auto.go"),
+		Data:     tmplArgs,
+		Overlap:  parser.OverlapWrite,
+	})
 
 	// srv template
 	srvByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "srv.tmpl")).([]byte)

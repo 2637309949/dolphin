@@ -141,7 +141,6 @@ var (
 		Short: "Build from the configuration file",
 		RunE: func(_ *cobra.Command, args []string) error {
 			wd, err := os.Getwd()
-			justOne := false
 			if err != nil {
 				return err
 			}
@@ -149,20 +148,11 @@ var (
 			if err := p.Walk(wd); err != nil {
 				return err
 			}
-			var pipes, cupArgs = []string{}, []string{}
-			for _, v := range args {
-				cupArgs = append(cupArgs, strings.ReplaceAll(v, "@", ""))
-				if strings.HasPrefix(v, "@") {
-					justOne = true
-				}
-			}
-			if !justOne {
-				pipes = append(cupArgs, "dol", "tool", "oauth", "script", "deploy", "doc")
-			} else {
-				pipes = cupArgs
+			if len(args) == 0 {
+				args = append(args, "dolphin")
 			}
 			g := New(p)
-			g.AddPipe(GetPipesByName(pipes...)...)
+			g.AddPipe(GetPipesByName(args...)...)
 			if err = g.BuildDir(wd, args); err != nil {
 				return err
 			}
@@ -191,7 +181,7 @@ var (
 			}
 			p := parser.NewTpl(path.Base(wd), path.Base(wd))
 			g := New(p)
-			g.AddPipe(GetPipesByName("more", "dol", "script")...)
+			g.AddPipe(GetPipesByName("more", "dolphin")...)
 			return g.BuildDir(wd, args)
 		},
 	}
@@ -205,7 +195,7 @@ var (
 			}
 			p := parser.NewTpl(path.Base(wd), path.Base(wd))
 			g := New(p)
-			g.AddPipe(GetPipesByName("reverse")...)
+			g.AddPipe(GetPipesByName("reverse", "dolphin")...)
 			return g.BuildDir(wd, args)
 		},
 	}
@@ -223,7 +213,7 @@ var (
 				return err
 			}
 			g := New(p)
-			g.AddPipe(GetPipesByName("boilerplate")...)
+			g.AddPipe(GetPipesByName("boilerplate", "dolphin")...)
 			err = g.BuildDir(wd, args)
 			if err != nil {
 				return err

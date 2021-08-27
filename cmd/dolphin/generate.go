@@ -28,10 +28,10 @@ var lines = []parser.Pipe{
 	&modules.Dolphin{},
 	&modules.Script{},
 	&modules.Doc{},
-	&modules.SQLTPL{},
 	&modules.Boilerplate{},
 	&modules.Reverse{},
 	&modules.Deploy{},
+	&modules.Cas{},
 }
 
 // AddPipe defined addPipe
@@ -113,9 +113,11 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 			}
 		}
 		for i := range filePaths {
+			var stderr bytes.Buffer
 			cmd := exec.Command("goimports", "-w", filePaths[i])
-			if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
-				logrus.Error(err)
+			cmd.Stderr = &stderr
+			if err := cmd.Run(); err != nil {
+				logrus.Error(fmt.Errorf("%v", stderr.String()))
 			}
 		}
 	}
@@ -133,9 +135,12 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 			}
 		}
 		for i := range filePaths {
-			cmd := exec.Command("protoc", "-I", path.Dir(filePaths[i]), filePaths[i], "--go_out=plugins=grpc:"+path.Dir(filePaths[i]))
-			if err := cmd.Run(); err != nil && err != exec.ErrNotFound {
-				logrus.Error(err)
+			var stderr bytes.Buffer
+			logrus.Infoln("protoc", "-I", path.Dir(filePaths[i]), filePaths[i], "--go_out=plugins=grpc:"+path.Dir(path.Dir(filePaths[i])))
+			cmd := exec.Command("protoc", "-I", path.Dir(filePaths[i]), filePaths[i], "--go_out=plugins=grpc:"+path.Dir(path.Dir(filePaths[i])))
+			cmd.Stderr = &stderr
+			if err := cmd.Run(); err != nil {
+				logrus.Error(fmt.Errorf("%v", stderr.String()))
 			}
 		}
 	}

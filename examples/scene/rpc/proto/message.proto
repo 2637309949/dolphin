@@ -5,6 +5,8 @@ syntax = "proto3";
 
 package proto;
 
+option go_package = "./proto";
+
 // MessageSrv defined
 service MessageSrv {
   rpc SendMail (MessageMail) returns (MessageReply) {}

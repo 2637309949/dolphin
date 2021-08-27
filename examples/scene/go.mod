@@ -13,7 +13,7 @@ require (
 	github.com/go-errors/errors v1.1.1
 	github.com/go-redis/redis/v7 v7.4.0
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/golang/protobuf v1.5.2
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20210202160940-bed99a852dfe // indirect
 	github.com/kak-tus/ami v0.1.15
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
@@ -34,6 +34,8 @@ require (
 	github.com/ugorji/go v1.2.4 // indirect
 	github.com/yedf/dtm v0.0.0-20210724072457-bd589bb04ff6
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
+	golang.org/x/tools v0.1.5 // indirect
 	google.golang.org/grpc v1.38.0
+	google.golang.org/protobuf v1.27.1
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )

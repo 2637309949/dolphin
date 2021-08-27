@@ -94,7 +94,6 @@ type (
 // ======================================================================
 // ======================================================================
 // ======================================================================
-
 // Check defined TODO
 func (x *XReport) Check(request *http.Request) bool {
 	xlsx := NewXlsx()
@@ -152,16 +151,13 @@ func (x *XReport) ParseExcel(r io.Reader, sheet interface{}, header ...[]map[str
 
 // NewXReport defined TODO
 func NewXReport() *XReport {
-	return &XReport{
-		xlsx: NewXlsx(),
-	}
+	return &XReport{}
 }
 
 // XClient defined TODO
 // ======================================================================
 // ======================================================================
 // ======================================================================
-
 // Get returns *HttpRequest with GET method.
 func (x *XClient) Get(url string) *client.HttpRequest {
 	return client.NewRequest(url, "GET")
@@ -196,7 +192,6 @@ func NewXClient() *XClient {
 // ======================================================================
 // ======================================================================
 // ======================================================================
-
 // InRole defined TODO
 func (x *XDB) InRole(db *xorm.Engine, userId string, role ...string) bool {
 	var cnt int
@@ -290,23 +285,23 @@ func (x *XDB) TreeSearch(db *xorm.Engine, controller, api, table string, q map[s
 	root, rootArr := "", []*types.TreeNode{}
 	paramsArr, parentValue := rowsSet, root
 
-	for _, params := range paramsArr {
+	for i := range paramsArr {
 		value, parent, name := "", "", ""
-		if params[valueFiled] != nil {
-			value = fmt.Sprintf("%v", params[valueFiled])
+		if paramsArr[i][valueFiled] != nil {
+			value = fmt.Sprintf("%v", paramsArr[i][valueFiled])
 		}
-		if params[parentField] != nil {
-			parent = fmt.Sprintf("%v", params[parentField])
+		if paramsArr[i][parentField] != nil {
+			parent = fmt.Sprintf("%v", paramsArr[i][parentField])
 		}
-		if params[nameFiled] != nil {
-			name = fmt.Sprintf("%v", params[nameFiled])
+		if paramsArr[i][nameFiled] != nil {
+			name = fmt.Sprintf("%v", paramsArr[i][nameFiled])
 		}
 		if (parentValue == "" && parent == "") || value == parentValue || parent == parentValue {
 			node := &types.TreeNode{
 				ID:     value,
 				Name:   name,
 				Parent: parent,
-				Tag:    params,
+				Tag:    paramsArr[i],
 				Nodes:  make([]*types.TreeNode, 0),
 			}
 			treeNodeList.PushBack(node)
@@ -316,7 +311,7 @@ func (x *XDB) TreeSearch(db *xorm.Engine, controller, api, table string, q map[s
 				ID:     value,
 				Name:   name,
 				Parent: parent,
-				Tag:    params,
+				Tag:    paramsArr[i],
 				Nodes:  make([]*types.TreeNode, 0),
 			})
 		}
@@ -365,7 +360,7 @@ func (x *XDB) RemoveFile(db *xorm.Session, cb func([]types.SysAttachment) error,
 // GetOptions defined TODO
 func (x *XDB) GetOptions(db *xorm.Engine, keys ...string) (map[string]map[string]interface{}, error) {
 	var optSets []types.SysOptionset
-	if err := db.Where("is_delete = 0").In("code", keys).Find(&optSets); err != nil {
+	if err := db.Where("is_delete != 1").In("code", keys).Find(&optSets); err != nil {
 		return nil, err
 	}
 	optMap := make(map[string]map[string]interface{})
@@ -396,7 +391,6 @@ func NewXDB() *XDB {
 // ======================================================================
 // ======================================================================
 // ======================================================================
-
 func NewServiceContext(cache persistence.CacheStore) *ServiceContext {
 	return &ServiceContext{
 		Store:  cache,

@@ -9,8 +9,8 @@ import (
 
 // StuSatisfyVisit defined
 type StuSatisfyVisit struct {
-	// 学员满意度回访Id defined
-	学员满意度回访Id null.Int `xorm:"int(11) pk notnull autoincr '学员满意度回访_id'" json:"学员满意度回访_id" form:"学员满意度回访_id" xml:"学员满意度回访_id"`
+	// SSVId defined
+	SSVId null.Int `xorm:"int(11) pk notnull autoincr 's_s_v_id'" json:"s_s_v_id" form:"s_s_v_id" xml:"s_s_v_id"`
 	// StuId defined
 	StuId null.Int `xorm:"int(11) 'stu_id'" json:"stu_id" form:"stu_id" xml:"stu_id"`
 	// SvmId defined
