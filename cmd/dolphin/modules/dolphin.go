@@ -99,7 +99,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	autoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "auto.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(autoByte),
-		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.auto.go"),
+		FilePath: path.Join(dir, viper.GetString("dir.api"), "auto.go"),
 		Data:     tmplArgs,
 		Overlap:  parser.OverlapWrite,
 		GOFmt:    true,

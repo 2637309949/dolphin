@@ -46,7 +46,7 @@ type (
 		RemoveFile(db *xorm.Session, cb func([]types.SysAttachment) error, ids ...string) (int64, error)
 	}
 
-	// XClient defined TODO
+	// Client defined TODO
 	Client interface {
 		// Get returns *HttpRequest with GET method.
 		Get(url string) *client.HttpRequest
@@ -59,6 +59,7 @@ type (
 		// Head returns *HttpRequest with HEAD method.
 		Head(url string) *client.HttpRequest
 	}
+
 	// ServiceContext defined TODO
 	ServiceContext struct {
 		Report Report

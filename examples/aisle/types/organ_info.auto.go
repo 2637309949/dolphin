@@ -3,9 +3,7 @@
 
 package types
 
-import (
-	"github.com/2637309949/dolphin/packages/null"
-)
+import "github.com/2637309949/dolphin/packages/null"
 
 // OrganInfo defined Organ info
 type OrganInfo struct {
