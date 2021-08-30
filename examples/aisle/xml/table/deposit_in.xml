@@ -1,4 +1,4 @@
-<table name="deposit_in" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="deposit_in" desc="">
 	<column name="deposit_in_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="deposit_money" desc="" type="null.Float" xorm="float(10,2)" />
 	<column name="receipt_num" desc="" type="null.String" xorm="varchar(500)" />

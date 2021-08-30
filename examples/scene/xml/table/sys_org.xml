@@ -1,4 +1,4 @@
-<table name="sys_org" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sys_org" desc="">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
 	<column name="parent" desc="上级组织" type="null.String" xorm="varchar(36)" />
 	<column name="inheritance" desc="继承关系" type="null.String" xorm="varchar(500)" />

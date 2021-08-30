@@ -1,4 +1,4 @@
-<table name="sys_table_column" desc="系统字段" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_table_column" desc="系统字段">
     <column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 	<column name="tb_id" desc="表ID" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="name" desc="表名" type="null.String" xorm="varchar(150) notnull" />

@@ -1,4 +1,4 @@
-<bean name="nsq_info" desc="Nsq info" packages="github.com/2637309949/dolphin/packages/null">
+<bean name="nsq_info" desc="Nsq info">
     <prop name="id" desc="id" type="null.String" />
     <prop name="score" desc="score" type="null.Int" />
 </bean>

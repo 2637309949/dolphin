@@ -1,4 +1,4 @@
-<table name="learningpark_book_fileid" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="learningpark_book_fileid" desc="">
 	<column name="l_b_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="unit_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />

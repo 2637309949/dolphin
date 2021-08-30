@@ -1,4 +1,4 @@
-<table name="test_sites" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="test_sites" desc="">
 	<column name="test_sites_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="ts_name" desc="" type="null.String" xorm="varchar(100)" />
 	<column name="ts_remark" desc="" type="null.String" xorm="varchar(200)" />

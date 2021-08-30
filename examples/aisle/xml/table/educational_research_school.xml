@@ -1,4 +1,4 @@
-<table name="educational_research_school" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="educational_research_school" desc="">
 	<column name="e_r_s_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="er_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="school_id" desc="" type="null.Int" xorm="int(11)" />

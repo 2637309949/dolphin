@@ -5,6 +5,8 @@ syntax = "proto3";
 
 package proto;
 
+option go_package = "./proto";
+
 // DomainSrv defined
 service DomainSrv {
   rpc List (DomainCond) returns (DomainReply) {}

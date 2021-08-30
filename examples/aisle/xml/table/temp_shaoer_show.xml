@@ -1,4 +1,4 @@
-<table name="temp_shaoer_show" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="temp_shaoer_show" desc="">
 	<column name="user_name" desc="" type="null.String" xorm="varchar(255)" />
 	<column name="user_phone_num" desc="" type="null.String" xorm="varchar(255)" />
 	<column name="phone_type" desc="" type="null.String" xorm="varchar(255)" />

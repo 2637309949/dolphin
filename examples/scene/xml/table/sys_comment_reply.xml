@@ -1,4 +1,4 @@
-<table name="sys_comment_reply" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sys_comment_reply" desc="">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
 	<column name="comment_id" desc="评论id" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="reply_id" desc="回复目标id" type="null.Int" xorm="bigint(20) notnull" />

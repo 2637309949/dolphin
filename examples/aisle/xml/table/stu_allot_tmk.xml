@@ -1,4 +1,4 @@
-<table name="stu_allot_tmk" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="stu_allot_tmk" desc="">
 	<column name="s_a_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="tmk_userid" desc="" type="null.Int" xorm="int(11)" />

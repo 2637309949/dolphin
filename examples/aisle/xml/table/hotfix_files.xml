@@ -1,4 +1,4 @@
-<table name="hotfix_files" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="hotfix_files" desc="">
 	<column name="h_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="suoshu" desc="" type="null.Int" xorm="int(11)" />
 	<column name="files" desc="" type="null.Int" xorm="int(11)" />

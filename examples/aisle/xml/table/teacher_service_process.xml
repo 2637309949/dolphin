@@ -1,4 +1,4 @@
-<table name="teacher_service_process" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="teacher_service_process" desc="">
 	<column name="t_s_p_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="tsp_remark" desc="" type="null.String" xorm="varchar(2000)" />
 	<column name="tsp_order" desc="" type="null.Int" xorm="int(11)" />

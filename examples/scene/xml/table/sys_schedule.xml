@@ -1,4 +1,4 @@
-<table name="sys_schedule" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sys_schedule" desc="">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
 	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="create_time" desc="创建时间" type="null.Time" xorm="datetime notnull" />

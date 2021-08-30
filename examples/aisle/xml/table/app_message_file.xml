@@ -1,4 +1,4 @@
-<table name="app_message_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="app_message_file" desc="">
 	<column name="a_m_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="amn_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="fileid" desc="" type="null.Int" xorm="int(11)" />

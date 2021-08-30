@@ -1,4 +1,4 @@
-<table name="user_account_trading" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="user_account_trading" desc="">
 	<column name="id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="user_id" desc="" type="null.Int" xorm="int(11) notnull" />
 	<column name="trading_balance" desc="" type="decimal.Decimal" xorm="decimal(10,2) notnull default(0.00)" />

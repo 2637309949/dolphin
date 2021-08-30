@@ -1,4 +1,4 @@
-<table name="sys_user" desc="用户" packages="github.com/2637309949/dolphin/packages/null" bind="platform">
+<table name="sys_user" desc="用户" bind="platform">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 	<column name="password" desc="密码" type="null.String" xorm="varchar(150) notnull" />
 	<column name="salt" desc="盐噪点" type="null.String" xorm="varchar(36) notnull" />

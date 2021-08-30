@@ -1,4 +1,4 @@
-<table name="time_set" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="time_set" desc="">
 	<column name="t_325_0" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="time_name" desc="" type="null.String" xorm="varchar(500) notnull" />
 	<column name="time_code" desc="" type="null.String" xorm="varchar(500) notnull" />

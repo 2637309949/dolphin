@@ -3,7 +3,7 @@
 
 package {{$.Viper.GetString "dir.types" }}
 
-{{.Table.Import .Table.Packages "errors,reflect,encoding/json,github.com/2637309949/dolphin/packages/xormplus/xorm/tags,github.com/2637309949/dolphin/packages/xormplus/xorm/caches,github.com/2637309949/dolphin/packages/xormplus/xorm"}}
+{{.Table.Import .Table.Packages "github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal"}}
 
 // {{.Table.ToUpperCase .Table.Name}} defined {{.Table.Desc}} 
 type {{.Table.ToUpperCase .Table.Name}} struct {

@@ -1,4 +1,4 @@
-<table name="market_fee_budget_files" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="market_fee_budget_files" desc="">
 	<column name="m_f_b_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="mfb_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="mfb_file" desc="" type="null.Int" xorm="int(11)" />

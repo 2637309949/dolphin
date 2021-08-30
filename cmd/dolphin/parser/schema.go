@@ -139,8 +139,8 @@ type (
 
 // Import packages
 func (c *Common) Import(pkgs ...string) template.HTML {
-	pkg := strings.Join(pkgs, ",")
-	if len(pkg) > 0 {
+	pkgs = funk.FilterString(pkgs, func(s string) bool { return strings.TrimSpace(s) != "" })
+	if pkg := strings.Join(pkgs, ","); len(pkg) > 0 {
 		packages := strings.Split(pkg, ",")
 		for i, v := range packages {
 			packages[i] = fmt.Sprintf(`    "%v"`, v)

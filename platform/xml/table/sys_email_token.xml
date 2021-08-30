@@ -1,4 +1,4 @@
-<table name="sys_email_token" desc="邮箱认证令牌" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_email_token" desc="邮箱认证令牌">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 	<column name="token" desc="令牌" type="null.String" xorm="varchar(36) notnull" />
 	<column name="email" desc="邮箱" type="null.String" xorm="varchar(36) notnull" />

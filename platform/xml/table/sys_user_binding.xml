@@ -1,4 +1,4 @@
-<table name="sys_user_binding" desc="帐号绑定" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_user_binding" desc="帐号绑定">
     <column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
     <column name="user_id" desc="用户ID" type="null.Int" xorm="bigint(20) notnull" />
     <column name="open_id" desc="open_id" type="null.String" xorm="varchar(36) notnull" />

@@ -1,4 +1,4 @@
-<table name="files" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="files" desc="">
 	<column name="f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="f_name" desc="" type="null.String" xorm="varchar(500)" />
 	<column name="f_size" desc="" type="null.Float" xorm="float(11,2)" />

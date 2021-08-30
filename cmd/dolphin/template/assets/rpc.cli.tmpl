@@ -19,7 +19,7 @@ import (
 var {{.Service.ToUpperCase .Service.Name}}Client proto.{{.Service.ToUpperCase .Service.Name}}Client
 
 // New{{.Service.ToUpperCase .Service.Name}}Client defined TODO
-func New{{.Service.ToUpperCase .Service.Name}}Client(target string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+func New{{.Service.ToUpperCase .Service.Name}}Client(target string, opts ...grpc.DialOption) (proto.{{.Service.ToUpperCase .Service.Name}}Client, error) {
 	options := append(opts, []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
@@ -28,13 +28,16 @@ func New{{.Service.ToUpperCase .Service.Name}}Client(target string, opts ...grpc
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 	conn, err := grpc.DialContext(ctx, target, options...)
-	return conn, err
+	if err != nil {
+		return nil, err
+	}
+	return proto.New{{.Service.ToUpperCase .Service.Name}}Client(conn), nil
 }
 
 func init() {
-	conn, err := New{{.Service.ToUpperCase .Service.Name}}Client(viper.GetString("rpc.{{.Service.Name}}"))
+	var err error
+	{{.Service.ToUpperCase .Service.Name}}Client, err = New{{.Service.ToUpperCase .Service.Name}}Client(viper.GetString("rpc.{{.Service.Name}}"))
 	if err != nil {
 		logrus.Errorf("grpc dial rpc.{{.Service.Name}} failed: %v", err)
 	}
-	{{.Service.ToUpperCase .Service.Name}}Client = proto.New{{.Service.ToUpperCase .Service.Name}}Client(conn)
 }

@@ -1,4 +1,4 @@
-<table name="sys_area" desc="区域管理" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_area" desc="区域管理">
     <column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
     <column name="name" desc="区域名称" type="null.String" xorm="varchar(200) notnull" />
     <column name="parent" desc="父节点" type="null.String" xorm="varchar(36)" />

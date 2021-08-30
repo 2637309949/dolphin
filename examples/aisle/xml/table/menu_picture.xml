@@ -1,4 +1,4 @@
-<table name="menu_picture" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="menu_picture" desc="">
 	<column name="t_285_0" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="menupic_name" desc="" type="null.String" xorm="varchar(500) notnull" />
 	<column name="menupic_picture" desc="" type="null.Int" xorm="int(11) notnull" />

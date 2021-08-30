@@ -1,4 +1,4 @@
-<table name="phonehistory" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="phonehistory" desc="">
 	<column name="ph_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="callno" desc="" type="null.String" xorm="varchar(11)" />
 	<column name="calledno" desc="" type="null.String" xorm="varchar(11)" />

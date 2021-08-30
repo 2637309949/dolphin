@@ -1,4 +1,4 @@
-<table name="class_type_stage_course" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="class_type_stage_course" desc="">
 	<column name="c_t_s_c_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="cts_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="course_id" desc="" type="null.Int" xorm="int(11)" />

@@ -1,4 +1,4 @@
-<table name="lbf_jl" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="lbf_jl" desc="">
 	<column name="lbf_jl_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="lbf_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="bf_date" desc="" type="null.Time" xorm="datetime" />

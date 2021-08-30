@@ -1,4 +1,4 @@
-<table name="holiday_set" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="holiday_set" desc="">
 	<column name="h_s_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="start_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="end_date" desc="" type="null.Time" xorm="datetime" />

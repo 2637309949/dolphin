@@ -1,4 +1,4 @@
-<table name="language_pack" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="language_pack" desc="">
 	<column name="l_p_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="lp_name" desc="" type="null.String" xorm="varchar(200)" />
 	<column name="lp_begindate" desc="" type="null.Time" xorm="datetime" />

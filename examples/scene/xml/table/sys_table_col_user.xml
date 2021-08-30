@@ -1,4 +1,4 @@
-<table name="sys_table_col_user" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sys_table_col_user" desc="">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
 	<column name="code" desc="编码" type="null.String" xorm="varchar(36) notnull" />
 	<column name="value" desc="内容" type="null.String" xorm="text(0) notnull" />

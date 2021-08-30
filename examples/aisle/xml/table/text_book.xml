@@ -1,4 +1,4 @@
-<table name="text_book" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="text_book" desc="">
 	<column name="text_book_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="tb_name" desc="" type="null.String" xorm="varchar(100)" />
 	<column name="tb_price" desc="" type="null.Float" xorm="float(11,2)" />

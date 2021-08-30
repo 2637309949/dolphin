@@ -1,4 +1,4 @@
-<table name="educational_research" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="educational_research" desc="">
 	<column name="e_r_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="er_date" desc="" type="null.Time" xorm="datetime" />
 	<column name="remark" desc="" type="null.String" xorm="varchar(300)" />

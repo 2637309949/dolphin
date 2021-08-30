@@ -1,4 +1,4 @@
-<table name="sys_table" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sys_table" desc="">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
 	<column name="name" desc="表名" type="null.String" xorm="varchar(200) notnull" />
 	<column name="desc" desc="描述" type="null.String" xorm="varchar(300) notnull" />

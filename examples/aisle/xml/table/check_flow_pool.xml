@@ -1,4 +1,4 @@
-<table name="check_flow_pool" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="check_flow_pool" desc="">
 	<column name="c_f_p_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="flow_name" desc="" type="null.String" xorm="varchar(500)" />
 	<column name="zd_check_state" desc="" type="null.Int" xorm="int(11)" />

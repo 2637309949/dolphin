@@ -1,4 +1,4 @@
-<bean name="trans_req" desc="trans info" packages="github.com/2637309949/dolphin/packages/null">
+<bean name="trans_req" desc="trans info">
     <prop name="amount" desc="amount" type="null.Int" />
     <prop name="trans_in_result" desc="TransInResult" type="null.String" />
     <prop name="trans_out_result" desc="TransOutResult" type="null.String" />

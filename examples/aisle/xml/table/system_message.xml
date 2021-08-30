@@ -1,4 +1,4 @@
-<table name="system_message" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="system_message" desc="">
 	<column name="if_notice" desc="" type="null.Int" xorm="int(11)" />
 	<column name="if_noticecn" desc="" type="null.Int" xorm="int(11)" />
 	<column name="if_see" desc="" type="null.Int" xorm="int(11)" />

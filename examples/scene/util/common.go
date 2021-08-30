@@ -14,14 +14,14 @@ type M map[string]interface{}
 // RandType defined
 type RandType int
 
-// const defined
+// const defined TODO
 const (
 	RandNum RandType = iota
 	RandNumUperChar
 	RandNumChar
 )
 
-// RandString defined
+// RandString defined TODO
 func RandString(randLen int, randType RandType) string {
 	randUint := make([]byte, randLen)
 	rand.Seed(time.Now().UnixNano())

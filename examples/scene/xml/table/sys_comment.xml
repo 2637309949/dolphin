@@ -1,4 +1,4 @@
-<table name="sys_comment" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sys_comment" desc="">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
 	<column name="topic_id" desc="主题ID" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="topic_type" desc="主题类型" type="null.String" xorm="varchar(36) notnull" />

@@ -1,4 +1,4 @@
-<table name="sch_achievement_divide" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sch_achievement_divide" desc="">
 	<column name="s_a_d_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="of_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="sch_id" desc="" type="null.Int" xorm="int(11)" />

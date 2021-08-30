@@ -1,4 +1,4 @@
-<table name="css_cs_task" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="css_cs_task" desc="">
 	<column name="c_c_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="tea_bz_desc" desc="" type="null.String" xorm="" />
 	<column name="tea_bz_yq_desc" desc="" type="null.String" xorm="" />

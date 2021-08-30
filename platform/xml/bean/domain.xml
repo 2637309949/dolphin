@@ -1,4 +1,4 @@
-<bean name="domain" desc="域" packages="github.com/2637309949/dolphin/packages/null">
+<bean name="domain" desc="域">
 	<prop name="name" desc="名字" type="null.String" />
 	<prop name="full_name" desc="全名" type="null.String" />
 	<prop name="contact_name" desc="负责人" type="null.String" />

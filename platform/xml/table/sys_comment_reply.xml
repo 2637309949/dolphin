@@ -3,7 +3,7 @@ comment_id:  表示该回复挂在的根评论id，这样设计也是出于性�
 reply_type： 表示回复的类型，因为回复可以是针对评论的回复(comment)，也可以是针对回复的回复(reply)， 通过这个字段来区分两种情景。
 reply_id：   表示回复目标的id，如果reply_type是comment的话，那么reply_id＝commit_id，如果reply_type是reply的话，这表示这条回复的父回复。
 -->
-<table name="sys_comment_reply" desc="评论回复表" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_comment_reply" desc="评论回复表">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 	<column name="comment_id" desc="评论id" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="reply_id" desc="回复目标id" type="null.Int" xorm="bigint(20) notnull" />

@@ -1,4 +1,4 @@
-<bean name="vote_info" desc="like info" packages="github.com/2637309949/dolphin/packages/null">
+<bean name="vote_info" desc="like info">
     <prop name="post_id" desc="post id" type="null.String" />
     <prop name="user_id" desc="user id" type="null.String" />
     <prop name="type" desc="vote type" type="null.Int" />

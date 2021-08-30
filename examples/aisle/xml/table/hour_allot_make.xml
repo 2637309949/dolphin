@@ -1,4 +1,4 @@
-<table name="hour_allot_make" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="hour_allot_make" desc="">
 	<column name="h_a_m_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="ham_name" desc="" type="null.String" xorm="varchar(20)" />
 	<column name="denominator" desc="" type="null.Int" xorm="int(11)" />

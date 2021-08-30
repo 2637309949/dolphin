@@ -1,4 +1,4 @@
-<table name="article" desc="Article" packages="github.com/2637309949/dolphin/packages/null">
+<table name="article" desc="Article">
     <column name="id" desc="Primary key" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 
 	<column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />

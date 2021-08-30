@@ -2,7 +2,7 @@
 topic_type：为了能复用评论模块，我们引入这个字段来区分主题的类别。
 from_uid：  表示评论人的id，通过该id我们可以检索到评论人的相关信息。
 -->
-<table name="sys_comment" desc="评论表" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_comment" desc="评论表">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 	<column name="topic_id" desc="主题ID" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="topic_type" desc="主题类型" type="null.String" xorm="varchar(36) notnull" />

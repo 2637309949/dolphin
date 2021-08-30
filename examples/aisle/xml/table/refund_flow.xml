@@ -1,4 +1,4 @@
-<table name="refund_flow" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="refund_flow" desc="">
 	<column name="c_flow_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="pk_refund_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="pk_cfs" desc="" type="null.Int" xorm="int(11)" />

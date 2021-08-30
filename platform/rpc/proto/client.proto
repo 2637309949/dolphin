@@ -5,6 +5,8 @@ syntax = "proto3";
 
 package proto;
 
+option go_package = "./proto";
+
 // ClientSrv defined
 service ClientSrv {
   rpc List (ClientCond) returns (ClientReply) {}

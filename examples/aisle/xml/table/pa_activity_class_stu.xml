@@ -1,4 +1,4 @@
-<table name="pa_activity_class_stu" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="pa_activity_class_stu" desc="">
 	<column name="p_a_c_s_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="par_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="stu_id" desc="" type="null.Int" xorm="int(11)" />

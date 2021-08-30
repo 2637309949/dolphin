@@ -3,9 +3,7 @@
 
 package types
 
-import (
-	"github.com/2637309949/dolphin/packages/null"
-)
+import "github.com/2637309949/dolphin/packages/null"
 
 // QrAuth defined 扫码认证
 type QrAuth struct {

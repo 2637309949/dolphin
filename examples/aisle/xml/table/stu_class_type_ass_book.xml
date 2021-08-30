@@ -1,4 +1,4 @@
-<table name="stu_class_type_ass_book" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="stu_class_type_ass_book" desc="">
 	<column name="s_c_t_a_b_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="sct_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="ab_id" desc="" type="null.Int" xorm="int(11)" />

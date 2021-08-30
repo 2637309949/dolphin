@@ -7,7 +7,7 @@
 ### bean
 ```xml
 <bean name="article_info" desc="文章信息" 
-    packages="github.com/2637309949/dolphin/packages/null" extends="$article">
+    extends="$article">
     <prop name="url" desc="地址" type="null.String" />
 </bean>
 ```
@@ -451,7 +451,7 @@ message MessageReply {}
 ### table
 ```xml
 <table name="article" desc="文章" 
-    packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+   >
     <column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
 
     <column name="creater" desc="创建人" type="null.Int" xorm="bigint(20) notnull" />

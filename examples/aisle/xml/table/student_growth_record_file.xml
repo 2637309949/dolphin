@@ -1,4 +1,4 @@
-<table name="student_growth_record_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="student_growth_record_file" desc="">
 	<column name="s_g_r_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="sgr_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="file" desc="" type="null.Int" xorm="int(11)" />

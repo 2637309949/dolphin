@@ -1,4 +1,4 @@
-<table name="class_time_resource" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="class_time_resource" desc="">
 	<column name="c_t_r_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="data_id" desc="" type="null.Float" xorm="float(11,2)" />
 	<column name="table_id" desc="" type="null.Float" xorm="float(11,2)" />

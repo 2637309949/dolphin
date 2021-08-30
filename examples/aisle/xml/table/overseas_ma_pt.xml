@@ -1,4 +1,4 @@
-<table name="overseas_ma_pt" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="overseas_ma_pt" desc="">
 	<column name="o_m_p_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="ma_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="pt_id" desc="" type="null.Int" xorm="int(11)" />

@@ -1,4 +1,4 @@
-<table name="cpc_city" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="cpc_city" desc="">
 	<column name="cpc_city_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="cpc_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="city_id" desc="" type="null.Int" xorm="int(11)" />

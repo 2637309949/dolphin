@@ -1,4 +1,4 @@
-<table name="t_520_login_log" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="t_520_login_log" desc="">
 	<column name="login_log_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="start_time" desc="" type="null.Time" xorm="datetime" />

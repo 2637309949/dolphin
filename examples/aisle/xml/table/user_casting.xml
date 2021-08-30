@@ -1,4 +1,4 @@
-<table name="user_casting" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="user_casting" desc="">
 	<column name="user_cast_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="user_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="cast_id" desc="" type="null.Int" xorm="int(11)" />

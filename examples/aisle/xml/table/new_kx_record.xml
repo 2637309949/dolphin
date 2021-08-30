@@ -1,4 +1,4 @@
-<table name="new_kx_record" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="new_kx_record" desc="">
 	<column name="n_k_r_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="of_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="kx_month" desc="" type="null.Time" xorm="datetime" />

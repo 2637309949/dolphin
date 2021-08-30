@@ -1,4 +1,4 @@
-<table name="sys_user_template_detail" desc="用户信息扩展模板明细" packages="github.com/2637309949/dolphin/packages/null">
+<table name="sys_user_template_detail" desc="用户信息扩展模板明细">
     <column name="id" desc="主键" type="null.Int" xorm="bigint(20) notnull autoincr unique pk" />
     <column name="temp_id" desc="模板ID" type="null.Int" xorm="bigint(20) notnull" />
     <column name="name" desc="名称" type="null.String" xorm="varchar(200) notnull" />

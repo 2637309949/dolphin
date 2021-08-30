@@ -1,4 +1,4 @@
-<table name="class_content_file" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="class_content_file" desc="">
 	<column name="c_c_f_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="class_con_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="file_id" desc="" type="null.Int" xorm="int(11)" />

@@ -1,4 +1,4 @@
-<table name="language_pack_order" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="language_pack_order" desc="">
 	<column name="l_p_o_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="lp_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="order_id" desc="" type="null.Int" xorm="int(11)" />

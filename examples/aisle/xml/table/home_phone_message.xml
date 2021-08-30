@@ -1,4 +1,4 @@
-<table name="home_phone_message" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="home_phone_message" desc="">
 	<column name="t_282_0" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="title" desc="" type="null.String" xorm="varchar(500)" />
 	<column name="content" desc="" type="null.String" xorm="varchar(2000)" />

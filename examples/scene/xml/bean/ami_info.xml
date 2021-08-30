@@ -1,4 +1,4 @@
-<bean name="ami_info" desc="Ami info" packages="github.com/2637309949/dolphin/packages/null">
+<bean name="ami_info" desc="Ami info">
     <prop name="content" desc="Content" type="null.String" />
     <prop name="title" desc="Title" type="null.String" />
 </bean>

@@ -1,4 +1,4 @@
-<bean name="qr_auth" desc="扫码认证" packages="github.com/2637309949/dolphin/packages/null">
+<bean name="qr_auth" desc="扫码认证">
 	<prop name="redirect_uri" desc="回调地址" type="null.String" />
 	<prop name="domain" desc="域" type="null.String" />
 	<prop name="user_id" desc="用户ID" type="null.Int" />

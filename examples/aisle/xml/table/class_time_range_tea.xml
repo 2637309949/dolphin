@@ -1,4 +1,4 @@
-<table name="class_time_range_tea" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="class_time_range_tea" desc="">
 	<column name="c_t_r_t_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="pk_ctr" desc="" type="null.Int" xorm="int(11)" />
 	<column name="pk_tea" desc="" type="null.Int" xorm="int(11)" />

@@ -1,4 +1,4 @@
-<table name="app_message_notification" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="app_message_notification" desc="">
 	<column name="a_m_n_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="message_content" desc="" type="null.String" xorm="varchar(10000)" />
 	<column name="creater" desc="" type="null.String" xorm="varchar(36)"  />

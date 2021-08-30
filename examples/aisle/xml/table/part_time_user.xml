@@ -1,4 +1,4 @@
-<table name="part_time_user" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="part_time_user" desc="">
 	<column name="p_t_u_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="name" desc="" type="null.String" xorm="varchar(50)" />
 	<column name="ipone_number" desc="" type="null.String" xorm="varchar(11)" />

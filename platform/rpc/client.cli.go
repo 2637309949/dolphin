@@ -19,7 +19,7 @@ import (
 var ClientSrvClient proto.ClientSrvClient
 
 // NewClientSrvClient defined TODO
-func NewClientSrvClient(target string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
+func NewClientSrvClient(target string, opts ...grpc.DialOption) (proto.ClientSrvClient, error) {
 	options := append(opts, []grpc.DialOption{
 		grpc.WithInsecure(),
 		grpc.WithBlock(),
@@ -28,16 +28,19 @@ func NewClientSrvClient(target string, opts ...grpc.DialOption) (*grpc.ClientCon
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 	conn, err := grpc.DialContext(ctx, target, options...)
-	return conn, err
+	if err != nil {
+		return nil, err
+	}
+	return proto.NewClientSrvClient(conn), nil
 }
 
 func init() {
 	go func() {
 		time.Sleep(1 * time.Second)
-		conn, err := NewClientSrvClient(viper.GetString("rpc.client_srv"))
+		var err error
+		ClientSrvClient, err = NewClientSrvClient(viper.GetString("rpc.client_srv"))
 		if err != nil {
 			logrus.Errorf("grpc dial rpc.client_srv failed: %v", err)
 		}
-		ClientSrvClient = proto.NewClientSrvClient(conn)
 	}()
 }

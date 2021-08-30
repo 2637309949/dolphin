@@ -1,4 +1,4 @@
-<table name="sys_role_menu" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="sys_role_menu" desc="">
 	<column name="id" desc="主键" type="null.Int" xorm="bigint(20) pk notnull autoincr" />
 	<column name="role_id" desc="用户ID" type="null.Int" xorm="bigint(20) notnull" />
 	<column name="menu_id" desc="菜单ID" type="null.Int" xorm="bigint(20) notnull" />

@@ -1,4 +1,4 @@
-<table name="train_organ" desc="" packages="github.com/2637309949/dolphin/packages/null,github.com/shopspring/decimal">
+<table name="train_organ" desc="">
 	<column name="t_o_id" desc="" type="null.Int" xorm="int(11) pk notnull autoincr" />
 	<column name="train_id" desc="" type="null.Int" xorm="int(11)" />
 	<column name="organ_id" desc="" type="null.Int" xorm="int(11)" />

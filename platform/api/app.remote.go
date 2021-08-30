@@ -56,7 +56,7 @@ var RpcClientDailTimeOut = 3 * time.Second
 
 // NewRemoteClient defined TODO
 func NewRemoteClient(_ string, opts ...grpc.DialOption) (*grpc.ClientConn, error) {
-	opts = append(opts, []grpc.DialOption{grpc.WithInsecure(), grpc.WithBlock(), grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace)}...)
+	opts = append(opts, grpc.WithInsecure(), grpc.WithBlock(), grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace))
 	ctx, cancel := context.WithTimeout(context.Background(), RpcClientDailTimeOut)
 	defer cancel()
 	conn, err := grpc.DialContext(ctx, viper.GetString("rpc.domain_srv"), opts...)
