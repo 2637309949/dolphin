@@ -18,7 +18,7 @@ dir:
   api: api
   doc: ""
   log: log
-  rpc: rpc
+  proto: proto
   script: script
   sql: sql
   sqlmap: sqlmap

@@ -32,6 +32,7 @@ func InitViper() {
 	viper.SetDefault("dir.doc", "")
 	viper.SetDefault("dir.log", "log")
 	viper.SetDefault("dir.types", "types")
+	viper.SetDefault("dir.proto", "proto")
 	viper.SetDefault("dir.rpc", "rpc")
 	viper.SetDefault("dir.script", "script")
 	viper.SetDefault("dir.sql", "sql")

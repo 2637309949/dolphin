@@ -94,6 +94,7 @@ func InitViper(cmd *cobra.Command, args []string) {
 	viper.SetDefault("dir.types", "types")
 	viper.SetDefault("dir.srv", "srv")
 	viper.SetDefault("dir.svc", "svc")
+	viper.SetDefault("dir.proto", "proto")
 	viper.SetDefault("dir.rpc", "rpc")
 	viper.SetDefault("dir.xml", "xml")
 	viper.SetDefault("dir.k8s", "k8s")

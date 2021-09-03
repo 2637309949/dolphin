@@ -8,8 +8,7 @@ import (
 	"{{.PackageName}}/{{$.Viper.GetString "dir.types" }}"
 	"{{.PackageName}}/{{$.Viper.GetString "dir.srv" }}"
 	"{{.PackageName}}/{{$.Viper.GetString "dir.svc" }}"
-	"{{.PackageName}}/{{$.Viper.GetString "dir.rpc" }}"
-	"{{.PackageName}}/{{$.Viper.GetString "dir.rpc" }}/proto"
+	"{{.PackageName}}/{{$.Viper.GetString "dir.proto" }}"
 
 	"google.golang.org/grpc"
 	"github.com/spf13/viper"
@@ -75,7 +74,7 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{- range .Services}}
 // {{.ToUpperCase .Name}} defined
 func {{.ToUpperCase .Name}}Service(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(srv *g{{$.Viper.GetString "dir.rpc" }}.Server) {proto.Register{{.ToUpperCase .Name}}Server(srv, &{{$.Viper.GetString "dir.rpc" }}.{{.ToUpperCase .Name}}{})})
+	dol.Remote.RegisterServer(func(gs *grpc.Server) {proto.Register{{.ToUpperCase .Name}}Server(gs, &{{$.Viper.GetString "dir.rpc" }}.{{.ToUpperCase .Name}}{})})
 }
 {{- end}}
 

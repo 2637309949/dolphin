@@ -4,8 +4,8 @@
 package api
 
 import (
+	"scene/proto"
 	"scene/rpc"
-	"scene/rpc/proto"
 	"scene/srv"
 	"scene/svc"
 	"scene/types"
@@ -703,7 +703,7 @@ var XlsxInstance = NewXlsx()
 
 // MessageSrv defined
 func MessageSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(srv *grpc.Server) { proto.RegisterMessageSrvServer(srv, &rpc.MessageSrv{}) })
+	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterMessageSrvServer(gs, &rpc.MessageSrv{}) })
 }
 
 // SyncModel defined

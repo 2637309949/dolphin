@@ -4,7 +4,7 @@
 package rpc
 
 import (
-	"scene/rpc/proto"
+	"scene/proto"
 
 	"golang.org/x/net/context"
 )

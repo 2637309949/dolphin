@@ -50,7 +50,7 @@ redis:
   min_idle_conns: 15
   mode: stub
   network: ""
-  password: 111111
+  password: ""
   pool_size: 15
   read_only: true
   read_timeout: 10

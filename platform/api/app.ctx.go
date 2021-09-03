@@ -84,7 +84,7 @@ func (ctx *Context) Fail(err error, status ...int) {
 
 // TypeQuery defined failt result
 func (ctx *Context) TypeQuery() *Query {
-	return &Query{m: util.M{}, ctx: ctx}
+	return NewQuery(ctx)
 }
 
 // OmitByZero omit invalid fileds

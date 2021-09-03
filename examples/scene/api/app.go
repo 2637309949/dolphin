@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"regexp"
+	"scene/proto"
 	"scene/svc"
 
 	"github.com/2637309949/dolphin/platform/api"
@@ -21,8 +22,9 @@ import (
 
 // vars defined TODO
 var (
-	App *Dolphin
-	Run func() error
+	App              *Dolphin
+	Run              func() error
+	MessageSrvClient proto.MessageSrvClient
 )
 
 type (

@@ -85,25 +85,30 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		GOFmt:    true,
 	})
 
-	// app template
-	appByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "app.tmpl")).([]byte)
-	tmpls = append(tmpls, &parser.TmplCfg{
-		Text:     string(appByte),
-		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.go"),
-		Data:     tmplArgs,
-		Overlap:  parser.OverlapSkip,
-		GOFmt:    true,
-	})
-
-	// auto template
-	autoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "auto.tmpl")).([]byte)
-	tmpls = append(tmpls, &parser.TmplCfg{
-		Text:     string(autoByte),
-		FilePath: path.Join(dir, viper.GetString("dir.api"), "auto.go"),
-		Data:     tmplArgs,
-		Overlap:  parser.OverlapWrite,
-		GOFmt:    true,
-	})
+	// proto template
+	protoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "proto.tmpl")).([]byte)
+	rpcByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "rpc.tmpl")).([]byte)
+	for i := range appParser.Services {
+		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
+		tmplArgs["Service"] = appParser.Services[i]
+		tmplArgs["Viper"] = viper.GetViper()
+		filename := utils.FileNameTrimSuffix(appParser.Services[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
+			Text:     string(protoByte),
+			FilePath: path.Join(dir, viper.GetString("dir.proto"), filename+".proto"),
+			Data:     tmplArgs,
+			Overlap:  parser.OverlapInc,
+			GOFmt:    false,
+			GOProto:  true,
+		})
+		tmpls = append(tmpls, &parser.TmplCfg{
+			Text:     string(rpcByte),
+			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".go"),
+			Data:     tmplArgs,
+			Overlap:  parser.OverlapInc,
+			GOFmt:    true,
+		})
+	}
 
 	// docker template
 	drByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "docker.tmpl")).([]byte)
@@ -179,39 +184,6 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		Data:     tmplArgs,
 		Overlap:  parser.OverlapSkip,
 	})
-
-	// proto template
-	protoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "proto.tmpl")).([]byte)
-	rpcByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "rpc.tmpl")).([]byte)
-	rpcCliByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "rpc.cli.tmpl")).([]byte)
-	for i := range appParser.Services {
-		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Service"] = appParser.Services[i]
-		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(appParser.Services[i].Path)
-		tmpls = append(tmpls, &parser.TmplCfg{
-			Text:     string(protoByte),
-			FilePath: path.Join(dir, viper.GetString("dir.rpc"), "proto", filename+".proto"),
-			Data:     tmplArgs,
-			Overlap:  parser.OverlapInc,
-			GOFmt:    false,
-			GOProto:  true,
-		})
-		tmpls = append(tmpls, &parser.TmplCfg{
-			Text:     string(rpcByte),
-			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".go"),
-			Data:     tmplArgs,
-			Overlap:  parser.OverlapInc,
-			GOFmt:    true,
-		})
-		tmpls = append(tmpls, &parser.TmplCfg{
-			Text:     string(rpcCliByte),
-			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".cli.go"),
-			Data:     tmplArgs,
-			Overlap:  parser.OverlapSkip,
-			GOFmt:    true,
-		})
-	}
 
 	// sql template
 	tplCache := map[string]bool{}
@@ -356,6 +328,26 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		FilePath: path.Join(dir, viper.GetString("dir.svc"), "svc.go"),
 		Data:     tmplArgs,
 		Overlap:  parser.OverlapSkip,
+		GOFmt:    true,
+	})
+
+	// app template
+	appByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "app.tmpl")).([]byte)
+	tmpls = append(tmpls, &parser.TmplCfg{
+		Text:     string(appByte),
+		FilePath: path.Join(dir, viper.GetString("dir.api"), "app.go"),
+		Data:     tmplArgs,
+		Overlap:  parser.OverlapSkip,
+		GOFmt:    true,
+	})
+
+	// auto template
+	autoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "auto.tmpl")).([]byte)
+	tmpls = append(tmpls, &parser.TmplCfg{
+		Text:     string(autoByte),
+		FilePath: path.Join(dir, viper.GetString("dir.api"), "auto.go"),
+		Data:     tmplArgs,
+		Overlap:  parser.OverlapWrite,
 		GOFmt:    true,
 	})
 

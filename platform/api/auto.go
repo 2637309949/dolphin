@@ -4,8 +4,8 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/platform/proto"
 	"github.com/2637309949/dolphin/platform/rpc"
-	"github.com/2637309949/dolphin/platform/rpc/proto"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/types"
@@ -2730,17 +2730,17 @@ var SysWorkerInstance = NewSysWorker()
 
 // ClientSrv defined
 func ClientSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(srv *grpc.Server) { proto.RegisterClientSrvServer(srv, &rpc.ClientSrv{}) })
+	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterClientSrvServer(gs, &rpc.ClientSrv{}) })
 }
 
 // DomainSrv defined
 func DomainSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(srv *grpc.Server) { proto.RegisterDomainSrvServer(srv, &rpc.DomainSrv{}) })
+	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterDomainSrvServer(gs, &rpc.DomainSrv{}) })
 }
 
 // UserSrv defined
 func UserSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(srv *grpc.Server) { proto.RegisterUserSrvServer(srv, &rpc.UserSrv{}) })
+	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterUserSrvServer(gs, &rpc.UserSrv{}) })
 }
 
 // SyncModel defined

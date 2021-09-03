@@ -4,7 +4,7 @@
 package rpc
 
 import (
-	"github.com/2637309949/dolphin/platform/rpc/proto"
+	"github.com/2637309949/dolphin/platform/proto"
 
 	"golang.org/x/net/context"
 )

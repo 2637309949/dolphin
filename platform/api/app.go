@@ -6,19 +6,26 @@ package api
 import (
 	"context"
 	"path"
+	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
+	"github.com/2637309949/dolphin/platform/proto"
+	"github.com/2637309949/dolphin/platform/util/trace"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
+	"google.golang.org/grpc"
 )
 
 var (
-	App *Dolphin
-	Run func() error
+	App             *Dolphin
+	Run             func() error
+	DomainSrvClient proto.DomainSrvClient
+	ClientSrvClient proto.ClientSrvClient
+	UserSrvClient   proto.UserSrvClient
 )
 
 // A Hook is a pair of start and stop callbacks, either of which can be nil,
@@ -111,6 +118,20 @@ func IsDebugging() bool {
 	return viper.GetString("app.mode") != "release"
 }
 
+// NewDomainSrvClient defined TODO
+func NewDomainSrvClient(ctx context.Context, target string, opts ...grpc.DialOption) (proto.DomainSrvClient, error) {
+	options := append(opts, []grpc.DialOption{
+		grpc.WithInsecure(),
+		grpc.WithBlock(),
+		grpc.WithChainUnaryInterceptor(trace.RpcSrvTrace),
+	}...)
+	conn, err := grpc.DialContext(ctx, target, options...)
+	if err != nil {
+		return nil, err
+	}
+	return proto.NewDomainSrvClient(conn), nil
+}
+
 // init after NewEngine
 func init() {
 	InitViper()
@@ -122,4 +143,14 @@ func init() {
 	app := NewDefault(opts...)
 	StaticRoutes(app)
 	App, Run = app, app.Run
+
+	time.AfterFunc(1*time.Second, func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		DomainSrvClient, err := NewDomainSrvClient(ctx, viper.GetString("rpc.domain_srv"))
+		if err != nil {
+			logrus.Errorf("grpc rpc.domain_srv dial failed: %v", err)
+		}
+		SysUserInstance.Srv.DomainSrvClient = DomainSrvClient
+	})
 }
