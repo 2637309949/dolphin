@@ -4,11 +4,11 @@
 package types
 
 import (
-    "github.com/2637309949/dolphin/packages/null"
-    "github.com/shopspring/decimal"
+	"github.com/2637309949/dolphin/packages/null"
+	"github.com/shopspring/decimal"
 )
 
-// Article defined 文章 
+// Article defined 文章
 type Article struct {
 	// ID defined 主键
 	ID null.Int `xorm:"bigint(20) notnull autoincr unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`
@@ -22,7 +22,7 @@ type Article struct {
 	Excerpt null.String `xorm:"varchar(512) comment('摘录') 'excerpt'" json:"excerpt" form:"excerpt" xml:"excerpt"`
 	// IsVote defined 是否投票
 	IsVote null.Int `xorm:"comment('是否投票') 'is_vote'" json:"is_vote" form:"is_vote" xml:"is_vote"`
-	// IsBlack defined 
+	// IsBlack defined
 	IsBlack null.Int `xorm:"'is_black'" json:"is_black" form:"is_black" xml:"is_black"`
 	// QuestionsCount defined 提问数目
 	QuestionsCount null.Int `xorm:"comment('提问数目') 'questions_count'" json:"questions_count" form:"questions_count" xml:"questions_count"`

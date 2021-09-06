@@ -4,14 +4,15 @@
 package api
 
 import (
-	"time"
-	"scene/types"
+	"scene/proto"
+	"scene/rpc"
 	"scene/srv"
 	"scene/svc"
-	"scene/proto"
+	"scene/types"
+	"time"
 
-	"google.golang.org/grpc"
 	"github.com/spf13/viper"
+	"google.golang.org/grpc"
 )
 
 // Name project
@@ -26,8 +27,9 @@ type Controller struct {
 	Roles,
 	Cache,
 	Interceptor,
-	Handler      HandlerFunc
+	Handler HandlerFunc
 }
+
 // Article defined
 type Article struct {
 	Name string
@@ -51,63 +53,63 @@ func NewArticle() *Article {
 	ctr.Add.Auth = Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
-    ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.ArticleAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/article/batch_add"
 	ctr.BatchAdd.Auth = Auth("token")
 	ctr.BatchAdd.Roles = NopHandlerFunc
 	ctr.BatchAdd.Cache = NopHandlerFunc
-    ctr.BatchAdd.Interceptor = NopHandlerFunc
+	ctr.BatchAdd.Interceptor = NopHandlerFunc
 	ctr.BatchAdd.Handler = ctr.ArticleBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/article/del"
 	ctr.Del.Auth = Auth("token")
 	ctr.Del.Roles = NopHandlerFunc
 	ctr.Del.Cache = NopHandlerFunc
-    ctr.Del.Interceptor = NopHandlerFunc
+	ctr.Del.Interceptor = NopHandlerFunc
 	ctr.Del.Handler = ctr.ArticleDel
 	ctr.BatchDel.Method = "PUT"
 	ctr.BatchDel.RelativePath = "/article/batch_del"
 	ctr.BatchDel.Auth = Auth("token")
 	ctr.BatchDel.Roles = NopHandlerFunc
 	ctr.BatchDel.Cache = NopHandlerFunc
-    ctr.BatchDel.Interceptor = NopHandlerFunc
+	ctr.BatchDel.Interceptor = NopHandlerFunc
 	ctr.BatchDel.Handler = ctr.ArticleBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/article/update"
 	ctr.Update.Auth = Auth("token")
 	ctr.Update.Roles = NopHandlerFunc
 	ctr.Update.Cache = NopHandlerFunc
-    ctr.Update.Interceptor = NopHandlerFunc
+	ctr.Update.Interceptor = NopHandlerFunc
 	ctr.Update.Handler = ctr.ArticleUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/article/batch_update"
 	ctr.BatchUpdate.Auth = Auth("token")
 	ctr.BatchUpdate.Roles = NopHandlerFunc
 	ctr.BatchUpdate.Cache = NopHandlerFunc
-    ctr.BatchUpdate.Interceptor = NopHandlerFunc
+	ctr.BatchUpdate.Interceptor = NopHandlerFunc
 	ctr.BatchUpdate.Handler = ctr.ArticleBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/article/page"
 	ctr.Page.Auth = Auth("token")
 	ctr.Page.Roles = NopHandlerFunc
 	ctr.Page.Cache = NopHandlerFunc
-    ctr.Page.Interceptor = NopHandlerFunc
+	ctr.Page.Interceptor = NopHandlerFunc
 	ctr.Page.Handler = ctr.ArticlePage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/article/get"
 	ctr.Get.Auth = Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
-    ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
 	ctr.Get.Handler = ctr.ArticleGet
 	ctr.Payment.Method = "POST"
 	ctr.Payment.RelativePath = "/article/payment"
 	ctr.Payment.Auth = Auth("token")
 	ctr.Payment.Roles = NopHandlerFunc
 	ctr.Payment.Cache = NopHandlerFunc
-    ctr.Payment.Interceptor = NopHandlerFunc
+	ctr.Payment.Interceptor = NopHandlerFunc
 	ctr.Payment.Handler = ctr.ArticlePayment
 	return ctr
 }
@@ -143,8 +145,8 @@ func NewCaching() *Caching {
 	ctr.Info.RelativePath = "/caching/info"
 	ctr.Info.Auth = NopHandlerFunc
 	ctr.Info.Roles = NopHandlerFunc
-	ctr.Info.Cache = Cache(5*time.Second)
-    ctr.Info.Interceptor = NopHandlerFunc
+	ctr.Info.Cache = Cache(5 * time.Second)
+	ctr.Info.Interceptor = NopHandlerFunc
 	ctr.Info.Handler = ctr.CachingInfo
 	return ctr
 }
@@ -179,49 +181,49 @@ func NewDtm() *Dtm {
 	ctr.Tcc.Auth = NopHandlerFunc
 	ctr.Tcc.Roles = NopHandlerFunc
 	ctr.Tcc.Cache = NopHandlerFunc
-    ctr.Tcc.Interceptor = NopHandlerFunc
+	ctr.Tcc.Interceptor = NopHandlerFunc
 	ctr.Tcc.Handler = ctr.DtmTcc
 	ctr.TransOut.Method = "POST"
 	ctr.TransOut.RelativePath = "/dtm/trans_out"
 	ctr.TransOut.Auth = NopHandlerFunc
 	ctr.TransOut.Roles = NopHandlerFunc
 	ctr.TransOut.Cache = NopHandlerFunc
-    ctr.TransOut.Interceptor = NopHandlerFunc
+	ctr.TransOut.Interceptor = NopHandlerFunc
 	ctr.TransOut.Handler = ctr.DtmTransOut
 	ctr.TransOutConfirm.Method = "POST"
 	ctr.TransOutConfirm.RelativePath = "/dtm/trans_out_confirm"
 	ctr.TransOutConfirm.Auth = NopHandlerFunc
 	ctr.TransOutConfirm.Roles = NopHandlerFunc
 	ctr.TransOutConfirm.Cache = NopHandlerFunc
-    ctr.TransOutConfirm.Interceptor = NopHandlerFunc
+	ctr.TransOutConfirm.Interceptor = NopHandlerFunc
 	ctr.TransOutConfirm.Handler = ctr.DtmTransOutConfirm
 	ctr.TransOutRevert.Method = "POST"
 	ctr.TransOutRevert.RelativePath = "/dtm/trans_out_revert"
 	ctr.TransOutRevert.Auth = NopHandlerFunc
 	ctr.TransOutRevert.Roles = NopHandlerFunc
 	ctr.TransOutRevert.Cache = NopHandlerFunc
-    ctr.TransOutRevert.Interceptor = NopHandlerFunc
+	ctr.TransOutRevert.Interceptor = NopHandlerFunc
 	ctr.TransOutRevert.Handler = ctr.DtmTransOutRevert
 	ctr.TransIn.Method = "POST"
 	ctr.TransIn.RelativePath = "/dtm/trans_in"
 	ctr.TransIn.Auth = NopHandlerFunc
 	ctr.TransIn.Roles = NopHandlerFunc
 	ctr.TransIn.Cache = NopHandlerFunc
-    ctr.TransIn.Interceptor = NopHandlerFunc
+	ctr.TransIn.Interceptor = NopHandlerFunc
 	ctr.TransIn.Handler = ctr.DtmTransIn
 	ctr.TransInConfirm.Method = "POST"
 	ctr.TransInConfirm.RelativePath = "/dtm/trans_in_confirm"
 	ctr.TransInConfirm.Auth = NopHandlerFunc
 	ctr.TransInConfirm.Roles = NopHandlerFunc
 	ctr.TransInConfirm.Cache = NopHandlerFunc
-    ctr.TransInConfirm.Interceptor = NopHandlerFunc
+	ctr.TransInConfirm.Interceptor = NopHandlerFunc
 	ctr.TransInConfirm.Handler = ctr.DtmTransInConfirm
 	ctr.TransInRevert.Method = "POST"
 	ctr.TransInRevert.RelativePath = "/dtm/trans_in_revert"
 	ctr.TransInRevert.Auth = NopHandlerFunc
 	ctr.TransInRevert.Roles = NopHandlerFunc
 	ctr.TransInRevert.Cache = NopHandlerFunc
-    ctr.TransInRevert.Interceptor = NopHandlerFunc
+	ctr.TransInRevert.Interceptor = NopHandlerFunc
 	ctr.TransInRevert.Handler = ctr.DtmTransInRevert
 	return ctr
 }
@@ -257,14 +259,14 @@ func NewEncrypt() *Encrypt {
 	ctr.Add.Auth = Auth("encrypt")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
-    ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.EncryptAdd
 	ctr.Info.Method = "GET"
 	ctr.Info.RelativePath = "/encrypt/info"
 	ctr.Info.Auth = NopHandlerFunc
 	ctr.Info.Roles = NopHandlerFunc
 	ctr.Info.Cache = NopHandlerFunc
-    ctr.Info.Interceptor = NopHandlerFunc
+	ctr.Info.Interceptor = NopHandlerFunc
 	ctr.Info.Handler = ctr.EncryptInfo
 	return ctr
 }
@@ -295,14 +297,14 @@ func NewJwt() *Jwt {
 	ctr.Login.Auth = NopHandlerFunc
 	ctr.Login.Roles = NopHandlerFunc
 	ctr.Login.Cache = NopHandlerFunc
-    ctr.Login.Interceptor = NopHandlerFunc
+	ctr.Login.Interceptor = NopHandlerFunc
 	ctr.Login.Handler = ctr.JwtLogin
 	ctr.Check.Method = "GET"
 	ctr.Check.RelativePath = "/jwt/check"
 	ctr.Check.Auth = Auth("jwt")
 	ctr.Check.Roles = NopHandlerFunc
 	ctr.Check.Cache = NopHandlerFunc
-    ctr.Check.Interceptor = NopHandlerFunc
+	ctr.Check.Interceptor = NopHandlerFunc
 	ctr.Check.Handler = ctr.JwtCheck
 	return ctr
 }
@@ -333,14 +335,14 @@ func NewKafka() *Kafka {
 	ctr.Add.Auth = Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
-    ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.KafkaAdd
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/kafka/get"
 	ctr.Get.Auth = Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
-    ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
 	ctr.Get.Handler = ctr.KafkaGet
 	return ctr
 }
@@ -371,14 +373,14 @@ func NewMiddles() *Middles {
 	ctr.GlobalTest.Auth = NopHandlerFunc
 	ctr.GlobalTest.Roles = NopHandlerFunc
 	ctr.GlobalTest.Cache = NopHandlerFunc
-    ctr.GlobalTest.Interceptor = NopHandlerFunc
+	ctr.GlobalTest.Interceptor = NopHandlerFunc
 	ctr.GlobalTest.Handler = ctr.MiddlesGlobalTest
 	ctr.LocalTest.Method = "GET"
 	ctr.LocalTest.RelativePath = "/middles/localTest"
 	ctr.LocalTest.Auth = NopHandlerFunc
 	ctr.LocalTest.Roles = NopHandlerFunc
 	ctr.LocalTest.Cache = NopHandlerFunc
-    ctr.LocalTest.Interceptor = NopHandlerFunc
+	ctr.LocalTest.Interceptor = NopHandlerFunc
 	ctr.LocalTest.Handler = ctr.MiddlesLocalTest
 	return ctr
 }
@@ -409,14 +411,14 @@ func NewNsq() *Nsq {
 	ctr.Add.Auth = Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
-    ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.NsqAdd
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/nsq/get"
 	ctr.Get.Auth = Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
-    ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
 	ctr.Get.Handler = ctr.NsqGet
 	return ctr
 }
@@ -447,14 +449,14 @@ func NewRedisLock() *RedisLock {
 	ctr.Lock.Auth = Auth("token")
 	ctr.Lock.Roles = NopHandlerFunc
 	ctr.Lock.Cache = NopHandlerFunc
-    ctr.Lock.Interceptor = NopHandlerFunc
+	ctr.Lock.Interceptor = NopHandlerFunc
 	ctr.Lock.Handler = ctr.RedisLockLock
 	ctr.Unlock.Method = "GET"
 	ctr.Unlock.RelativePath = "/redis/lock/unlock"
 	ctr.Unlock.Auth = Auth("token")
 	ctr.Unlock.Roles = NopHandlerFunc
 	ctr.Unlock.Cache = NopHandlerFunc
-    ctr.Unlock.Interceptor = NopHandlerFunc
+	ctr.Unlock.Interceptor = NopHandlerFunc
 	ctr.Unlock.Handler = ctr.RedisLockUnlock
 	return ctr
 }
@@ -485,14 +487,14 @@ func NewRedisMq() *RedisMq {
 	ctr.Add.Auth = Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
-    ctr.Add.Interceptor = NopHandlerFunc
+	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.RedisMqAdd
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/redis/mq/get"
 	ctr.Get.Auth = Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
-    ctr.Get.Interceptor = NopHandlerFunc
+	ctr.Get.Interceptor = NopHandlerFunc
 	ctr.Get.Handler = ctr.RedisMqGet
 	return ctr
 }
@@ -509,8 +511,8 @@ var RedisMqInstance = NewRedisMq()
 
 // RPC defined
 type RPC struct {
-	Name string
-	Srv  *srv.RPC
+	Name    string
+	Srv     *srv.RPC
 	Message Controller
 }
 
@@ -522,7 +524,7 @@ func NewRPC() *RPC {
 	ctr.Message.Auth = Auth("token")
 	ctr.Message.Roles = NopHandlerFunc
 	ctr.Message.Cache = NopHandlerFunc
-    ctr.Message.Interceptor = NopHandlerFunc
+	ctr.Message.Interceptor = NopHandlerFunc
 	ctr.Message.Handler = ctr.RPCMessage
 	return ctr
 }
@@ -538,8 +540,8 @@ var RPCInstance = NewRPC()
 
 // Sqlmap defined
 type Sqlmap struct {
-	Name string
-	Srv  *srv.Sqlmap
+	Name      string
+	Srv       *srv.Sqlmap
 	Selectone Controller
 }
 
@@ -551,7 +553,7 @@ func NewSqlmap() *Sqlmap {
 	ctr.Selectone.Auth = NopHandlerFunc
 	ctr.Selectone.Roles = NopHandlerFunc
 	ctr.Selectone.Cache = NopHandlerFunc
-    ctr.Selectone.Interceptor = NopHandlerFunc
+	ctr.Selectone.Interceptor = NopHandlerFunc
 	ctr.Selectone.Handler = ctr.SqlmapSelectone
 	return ctr
 }
@@ -580,7 +582,7 @@ func NewUser() *User {
 	ctr.Info.Auth = Auth("token")
 	ctr.Info.Roles = NopHandlerFunc
 	ctr.Info.Cache = NopHandlerFunc
-    ctr.Info.Interceptor = NopHandlerFunc
+	ctr.Info.Interceptor = NopHandlerFunc
 	ctr.Info.Handler = ctr.UserInfo
 	return ctr
 }
@@ -611,21 +613,21 @@ func NewView() *View {
 	ctr.File.Auth = NopHandlerFunc
 	ctr.File.Roles = NopHandlerFunc
 	ctr.File.Cache = NopHandlerFunc
-    ctr.File.Interceptor = NopHandlerFunc
+	ctr.File.Interceptor = NopHandlerFunc
 	ctr.File.Handler = ctr.ViewFile
 	ctr.HTML.Method = "GET"
 	ctr.HTML.RelativePath = "/view/html"
 	ctr.HTML.Auth = NopHandlerFunc
 	ctr.HTML.Roles = NopHandlerFunc
 	ctr.HTML.Cache = NopHandlerFunc
-    ctr.HTML.Interceptor = NopHandlerFunc
+	ctr.HTML.Interceptor = NopHandlerFunc
 	ctr.HTML.Handler = ctr.ViewHTML
 	ctr.XML.Method = "GET"
 	ctr.XML.RelativePath = "/view/xml"
 	ctr.XML.Auth = NopHandlerFunc
 	ctr.XML.Roles = NopHandlerFunc
 	ctr.XML.Cache = NopHandlerFunc
-    ctr.XML.Interceptor = NopHandlerFunc
+	ctr.XML.Interceptor = NopHandlerFunc
 	ctr.XML.Handler = ctr.ViewXML
 	return ctr
 }
@@ -656,7 +658,7 @@ func NewVote() *Vote {
 	ctr.Like.Auth = Auth("token")
 	ctr.Like.Roles = NopHandlerFunc
 	ctr.Like.Cache = NopHandlerFunc
-    ctr.Like.Interceptor = NopHandlerFunc
+	ctr.Like.Interceptor = NopHandlerFunc
 	ctr.Like.Handler = ctr.VoteLike
 	return ctr
 }
@@ -672,8 +674,8 @@ var VoteInstance = NewVote()
 
 // Xlsx defined
 type Xlsx struct {
-	Name string
-	Srv  *srv.Xlsx
+	Name   string
+	Srv    *srv.Xlsx
 	Import Controller
 }
 
@@ -685,7 +687,7 @@ func NewXlsx() *Xlsx {
 	ctr.Import.Auth = NopHandlerFunc
 	ctr.Import.Roles = NopHandlerFunc
 	ctr.Import.Cache = NopHandlerFunc
-    ctr.Import.Interceptor = NopHandlerFunc
+	ctr.Import.Interceptor = NopHandlerFunc
 	ctr.Import.Handler = ctr.XlsxImport
 	return ctr
 }
@@ -701,7 +703,7 @@ var XlsxInstance = NewXlsx()
 
 // MessageSrv defined
 func MessageSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(gs *grpc.Server) {proto.RegisterMessageSrvServer(gs, &rpc.MessageSrv{})})
+	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterMessageSrvServer(gs, &rpc.MessageSrv{}) })
 }
 
 // SyncModel defined
@@ -772,22 +774,22 @@ func (dol *Dolphin) SyncController() error {
 
 // SyncSrv defined
 func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
-	ArticleInstance.Srv.ServiceContext = svc
-	CachingInstance.Srv.ServiceContext = svc
-	DtmInstance.Srv.ServiceContext = svc
-	EncryptInstance.Srv.ServiceContext = svc
-	JwtInstance.Srv.ServiceContext = svc
-	KafkaInstance.Srv.ServiceContext = svc
-	MiddlesInstance.Srv.ServiceContext = svc
-	NsqInstance.Srv.ServiceContext = svc
-	RedisLockInstance.Srv.ServiceContext = svc
-	RedisMqInstance.Srv.ServiceContext = svc
-	RPCInstance.Srv.ServiceContext = svc
-	SqlmapInstance.Srv.ServiceContext = svc
-	UserInstance.Srv.ServiceContext = svc
-	ViewInstance.Srv.ServiceContext = svc
-	VoteInstance.Srv.ServiceContext = svc
-	XlsxInstance.Srv.ServiceContext = svc
+	ArticleInstance.Srv.SetServiceContext(svc)
+	CachingInstance.Srv.SetServiceContext(svc)
+	DtmInstance.Srv.SetServiceContext(svc)
+	EncryptInstance.Srv.SetServiceContext(svc)
+	JwtInstance.Srv.SetServiceContext(svc)
+	KafkaInstance.Srv.SetServiceContext(svc)
+	MiddlesInstance.Srv.SetServiceContext(svc)
+	NsqInstance.Srv.SetServiceContext(svc)
+	RedisLockInstance.Srv.SetServiceContext(svc)
+	RedisMqInstance.Srv.SetServiceContext(svc)
+	RPCInstance.Srv.SetServiceContext(svc)
+	SqlmapInstance.Srv.SetServiceContext(svc)
+	UserInstance.Srv.SetServiceContext(svc)
+	ViewInstance.Srv.SetServiceContext(svc)
+	VoteInstance.Srv.SetServiceContext(svc)
+	XlsxInstance.Srv.SetServiceContext(svc)
 	return nil
 }
 

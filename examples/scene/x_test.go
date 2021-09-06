@@ -10,7 +10,6 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
@@ -188,628 +187,611 @@ func TestMain(m *testing.M) {
 func TestSysUserLogin(t *testing.T) {
 	x.Handle("POST", "/api/sys/user/login", XTestSysUserLogin, t, XTestSysUserLoginRequest)
 }
+
 // TestArticleAdd defined TODO
 // go test -v -test.run TestArticleAdd
 func TestArticleAdd(t *testing.T) {
 	x.Handle("POST", "/api/article/add", XTestArticleAdd, t, XTestArticleAddRequest)
 }
+
 // BenchmarkArticleAdd defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticleAdd -test.benchmem=true
 func BenchmarkArticleAdd(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/article/add", XTestArticleAdd, t, XTestArticleAddRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/article/add", XTestArticleAdd, t, XTestArticleAddRequest)
+		}
 	})
 }
-
 
 // TestArticleBatchAdd defined TODO
 // go test -v -test.run TestArticleBatchAdd
 func TestArticleBatchAdd(t *testing.T) {
 	x.Handle("POST", "/api/article/batch_add", XTestArticleBatchAdd, t, XTestArticleBatchAddRequest)
 }
+
 // BenchmarkArticleBatchAdd defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticleBatchAdd -test.benchmem=true
 func BenchmarkArticleBatchAdd(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/article/batch_add", XTestArticleBatchAdd, t, XTestArticleBatchAddRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/article/batch_add", XTestArticleBatchAdd, t, XTestArticleBatchAddRequest)
+		}
 	})
 }
-
 
 // TestArticleDel defined TODO
 // go test -v -test.run TestArticleDel
 func TestArticleDel(t *testing.T) {
 	x.Handle("DELETE", "/api/article/del", XTestArticleDel, t, XTestArticleDelRequest)
 }
+
 // BenchmarkArticleDel defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticleDel -test.benchmem=true
 func BenchmarkArticleDel(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("DELETE", "/api/article/del", XTestArticleDel, t, XTestArticleDelRequest)
-			}
+		for pb.Next() {
+			x.Handle("DELETE", "/api/article/del", XTestArticleDel, t, XTestArticleDelRequest)
+		}
 	})
 }
-
 
 // TestArticleBatchDel defined TODO
 // go test -v -test.run TestArticleBatchDel
 func TestArticleBatchDel(t *testing.T) {
 	x.Handle("PUT", "/api/article/batch_del", XTestArticleBatchDel, t, XTestArticleBatchDelRequest)
 }
+
 // BenchmarkArticleBatchDel defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticleBatchDel -test.benchmem=true
 func BenchmarkArticleBatchDel(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("PUT", "/api/article/batch_del", XTestArticleBatchDel, t, XTestArticleBatchDelRequest)
-			}
+		for pb.Next() {
+			x.Handle("PUT", "/api/article/batch_del", XTestArticleBatchDel, t, XTestArticleBatchDelRequest)
+		}
 	})
 }
-
 
 // TestArticleUpdate defined TODO
 // go test -v -test.run TestArticleUpdate
 func TestArticleUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/article/update", XTestArticleUpdate, t, XTestArticleUpdateRequest)
 }
+
 // BenchmarkArticleUpdate defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticleUpdate -test.benchmem=true
 func BenchmarkArticleUpdate(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("PUT", "/api/article/update", XTestArticleUpdate, t, XTestArticleUpdateRequest)
-			}
+		for pb.Next() {
+			x.Handle("PUT", "/api/article/update", XTestArticleUpdate, t, XTestArticleUpdateRequest)
+		}
 	})
 }
-
 
 // TestArticleBatchUpdate defined TODO
 // go test -v -test.run TestArticleBatchUpdate
 func TestArticleBatchUpdate(t *testing.T) {
 	x.Handle("PUT", "/api/article/batch_update", XTestArticleBatchUpdate, t, XTestArticleBatchUpdateRequest)
 }
+
 // BenchmarkArticleBatchUpdate defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticleBatchUpdate -test.benchmem=true
 func BenchmarkArticleBatchUpdate(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("PUT", "/api/article/batch_update", XTestArticleBatchUpdate, t, XTestArticleBatchUpdateRequest)
-			}
+		for pb.Next() {
+			x.Handle("PUT", "/api/article/batch_update", XTestArticleBatchUpdate, t, XTestArticleBatchUpdateRequest)
+		}
 	})
 }
-
 
 // TestArticlePage defined TODO
 // go test -v -test.run TestArticlePage
 func TestArticlePage(t *testing.T) {
 	x.Handle("GET", "/api/article/page", XTestArticlePage, t, XTestArticlePageRequest)
 }
+
 // BenchmarkArticlePage defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticlePage -test.benchmem=true
 func BenchmarkArticlePage(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/article/page", XTestArticlePage, t, XTestArticlePageRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/article/page", XTestArticlePage, t, XTestArticlePageRequest)
+		}
 	})
 }
-
 
 // TestArticleGet defined TODO
 // go test -v -test.run TestArticleGet
 func TestArticleGet(t *testing.T) {
 	x.Handle("GET", "/api/article/get", XTestArticleGet, t, XTestArticleGetRequest)
 }
+
 // BenchmarkArticleGet defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticleGet -test.benchmem=true
 func BenchmarkArticleGet(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/article/get", XTestArticleGet, t, XTestArticleGetRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/article/get", XTestArticleGet, t, XTestArticleGetRequest)
+		}
 	})
 }
-
 
 // TestArticlePayment defined TODO
 // go test -v -test.run TestArticlePayment
 func TestArticlePayment(t *testing.T) {
 	x.Handle("POST", "/api/article/payment", XTestArticlePayment, t, XTestArticlePaymentRequest)
 }
+
 // BenchmarkArticlePayment defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkArticlePayment -test.benchmem=true
 func BenchmarkArticlePayment(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/article/payment", XTestArticlePayment, t, XTestArticlePaymentRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/article/payment", XTestArticlePayment, t, XTestArticlePaymentRequest)
+		}
 	})
 }
-
-
 
 // TestCachingInfo defined TODO
 // go test -v -test.run TestCachingInfo
 func TestCachingInfo(t *testing.T) {
 	x.Handle("GET", "/api/caching/info", XTestCachingInfo, t, XTestCachingInfoRequest)
 }
+
 // BenchmarkCachingInfo defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkCachingInfo -test.benchmem=true
 func BenchmarkCachingInfo(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/caching/info", XTestCachingInfo, t, XTestCachingInfoRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/caching/info", XTestCachingInfo, t, XTestCachingInfoRequest)
+		}
 	})
 }
-
-
 
 // TestDtmTcc defined TODO
 // go test -v -test.run TestDtmTcc
 func TestDtmTcc(t *testing.T) {
 	x.Handle("GET", "/api/dtm/tcc", XTestDtmTcc, t, XTestDtmTccRequest)
 }
+
 // BenchmarkDtmTcc defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkDtmTcc -test.benchmem=true
 func BenchmarkDtmTcc(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/dtm/tcc", XTestDtmTcc, t, XTestDtmTccRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/dtm/tcc", XTestDtmTcc, t, XTestDtmTccRequest)
+		}
 	})
 }
-
 
 // TestDtmTransOut defined TODO
 // go test -v -test.run TestDtmTransOut
 func TestDtmTransOut(t *testing.T) {
 	x.Handle("POST", "/api/dtm/trans_out", XTestDtmTransOut, t, XTestDtmTransOutRequest)
 }
+
 // BenchmarkDtmTransOut defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkDtmTransOut -test.benchmem=true
 func BenchmarkDtmTransOut(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/dtm/trans_out", XTestDtmTransOut, t, XTestDtmTransOutRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/dtm/trans_out", XTestDtmTransOut, t, XTestDtmTransOutRequest)
+		}
 	})
 }
-
 
 // TestDtmTransOutConfirm defined TODO
 // go test -v -test.run TestDtmTransOutConfirm
 func TestDtmTransOutConfirm(t *testing.T) {
 	x.Handle("POST", "/api/dtm/trans_out_confirm", XTestDtmTransOutConfirm, t, XTestDtmTransOutConfirmRequest)
 }
+
 // BenchmarkDtmTransOutConfirm defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkDtmTransOutConfirm -test.benchmem=true
 func BenchmarkDtmTransOutConfirm(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/dtm/trans_out_confirm", XTestDtmTransOutConfirm, t, XTestDtmTransOutConfirmRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/dtm/trans_out_confirm", XTestDtmTransOutConfirm, t, XTestDtmTransOutConfirmRequest)
+		}
 	})
 }
-
 
 // TestDtmTransOutRevert defined TODO
 // go test -v -test.run TestDtmTransOutRevert
 func TestDtmTransOutRevert(t *testing.T) {
 	x.Handle("POST", "/api/dtm/trans_out_revert", XTestDtmTransOutRevert, t, XTestDtmTransOutRevertRequest)
 }
+
 // BenchmarkDtmTransOutRevert defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkDtmTransOutRevert -test.benchmem=true
 func BenchmarkDtmTransOutRevert(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/dtm/trans_out_revert", XTestDtmTransOutRevert, t, XTestDtmTransOutRevertRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/dtm/trans_out_revert", XTestDtmTransOutRevert, t, XTestDtmTransOutRevertRequest)
+		}
 	})
 }
-
 
 // TestDtmTransIn defined TODO
 // go test -v -test.run TestDtmTransIn
 func TestDtmTransIn(t *testing.T) {
 	x.Handle("POST", "/api/dtm/trans_in", XTestDtmTransIn, t, XTestDtmTransInRequest)
 }
+
 // BenchmarkDtmTransIn defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkDtmTransIn -test.benchmem=true
 func BenchmarkDtmTransIn(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/dtm/trans_in", XTestDtmTransIn, t, XTestDtmTransInRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/dtm/trans_in", XTestDtmTransIn, t, XTestDtmTransInRequest)
+		}
 	})
 }
-
 
 // TestDtmTransInConfirm defined TODO
 // go test -v -test.run TestDtmTransInConfirm
 func TestDtmTransInConfirm(t *testing.T) {
 	x.Handle("POST", "/api/dtm/trans_in_confirm", XTestDtmTransInConfirm, t, XTestDtmTransInConfirmRequest)
 }
+
 // BenchmarkDtmTransInConfirm defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkDtmTransInConfirm -test.benchmem=true
 func BenchmarkDtmTransInConfirm(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/dtm/trans_in_confirm", XTestDtmTransInConfirm, t, XTestDtmTransInConfirmRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/dtm/trans_in_confirm", XTestDtmTransInConfirm, t, XTestDtmTransInConfirmRequest)
+		}
 	})
 }
-
 
 // TestDtmTransInRevert defined TODO
 // go test -v -test.run TestDtmTransInRevert
 func TestDtmTransInRevert(t *testing.T) {
 	x.Handle("POST", "/api/dtm/trans_in_revert", XTestDtmTransInRevert, t, XTestDtmTransInRevertRequest)
 }
+
 // BenchmarkDtmTransInRevert defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkDtmTransInRevert -test.benchmem=true
 func BenchmarkDtmTransInRevert(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/dtm/trans_in_revert", XTestDtmTransInRevert, t, XTestDtmTransInRevertRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/dtm/trans_in_revert", XTestDtmTransInRevert, t, XTestDtmTransInRevertRequest)
+		}
 	})
 }
-
-
 
 // TestEncryptAdd defined TODO
 // go test -v -test.run TestEncryptAdd
 func TestEncryptAdd(t *testing.T) {
 	x.Handle("POST", "/api/encrypt/add", XTestEncryptAdd, t, XTestEncryptAddRequest)
 }
+
 // BenchmarkEncryptAdd defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkEncryptAdd -test.benchmem=true
 func BenchmarkEncryptAdd(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/encrypt/add", XTestEncryptAdd, t, XTestEncryptAddRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/encrypt/add", XTestEncryptAdd, t, XTestEncryptAddRequest)
+		}
 	})
 }
-
 
 // TestEncryptInfo defined TODO
 // go test -v -test.run TestEncryptInfo
 func TestEncryptInfo(t *testing.T) {
 	x.Handle("GET", "/api/encrypt/info", XTestEncryptInfo, t, XTestEncryptInfoRequest)
 }
+
 // BenchmarkEncryptInfo defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkEncryptInfo -test.benchmem=true
 func BenchmarkEncryptInfo(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/encrypt/info", XTestEncryptInfo, t, XTestEncryptInfoRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/encrypt/info", XTestEncryptInfo, t, XTestEncryptInfoRequest)
+		}
 	})
 }
-
-
-
 
 // TestJwtCheck defined TODO
 // go test -v -test.run TestJwtCheck
 func TestJwtCheck(t *testing.T) {
 	x.Handle("GET", "/api/jwt/check", XTestJwtCheck, t, XTestJwtCheckRequest)
 }
+
 // BenchmarkJwtCheck defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkJwtCheck -test.benchmem=true
 func BenchmarkJwtCheck(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/jwt/check", XTestJwtCheck, t, XTestJwtCheckRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/jwt/check", XTestJwtCheck, t, XTestJwtCheckRequest)
+		}
 	})
 }
-
-
 
 // TestKafkaAdd defined TODO
 // go test -v -test.run TestKafkaAdd
 func TestKafkaAdd(t *testing.T) {
 	x.Handle("POST", "/api/kafka/add", XTestKafkaAdd, t, XTestKafkaAddRequest)
 }
+
 // BenchmarkKafkaAdd defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkKafkaAdd -test.benchmem=true
 func BenchmarkKafkaAdd(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/kafka/add", XTestKafkaAdd, t, XTestKafkaAddRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/kafka/add", XTestKafkaAdd, t, XTestKafkaAddRequest)
+		}
 	})
 }
-
 
 // TestKafkaGet defined TODO
 // go test -v -test.run TestKafkaGet
 func TestKafkaGet(t *testing.T) {
 	x.Handle("GET", "/api/kafka/get", XTestKafkaGet, t, XTestKafkaGetRequest)
 }
+
 // BenchmarkKafkaGet defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkKafkaGet -test.benchmem=true
 func BenchmarkKafkaGet(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/kafka/get", XTestKafkaGet, t, XTestKafkaGetRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/kafka/get", XTestKafkaGet, t, XTestKafkaGetRequest)
+		}
 	})
 }
-
-
 
 // TestMiddlesGlobalTest defined TODO
 // go test -v -test.run TestMiddlesGlobalTest
 func TestMiddlesGlobalTest(t *testing.T) {
 	x.Handle("GET", "/api/middles/globalTest", XTestMiddlesGlobalTest, t, XTestMiddlesGlobalTestRequest)
 }
+
 // BenchmarkMiddlesGlobalTest defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkMiddlesGlobalTest -test.benchmem=true
 func BenchmarkMiddlesGlobalTest(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/middles/globalTest", XTestMiddlesGlobalTest, t, XTestMiddlesGlobalTestRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/middles/globalTest", XTestMiddlesGlobalTest, t, XTestMiddlesGlobalTestRequest)
+		}
 	})
 }
-
 
 // TestMiddlesLocalTest defined TODO
 // go test -v -test.run TestMiddlesLocalTest
 func TestMiddlesLocalTest(t *testing.T) {
 	x.Handle("GET", "/api/middles/localTest", XTestMiddlesLocalTest, t, XTestMiddlesLocalTestRequest)
 }
+
 // BenchmarkMiddlesLocalTest defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkMiddlesLocalTest -test.benchmem=true
 func BenchmarkMiddlesLocalTest(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/middles/localTest", XTestMiddlesLocalTest, t, XTestMiddlesLocalTestRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/middles/localTest", XTestMiddlesLocalTest, t, XTestMiddlesLocalTestRequest)
+		}
 	})
 }
-
-
 
 // TestNsqAdd defined TODO
 // go test -v -test.run TestNsqAdd
 func TestNsqAdd(t *testing.T) {
 	x.Handle("POST", "/api/nsq/add", XTestNsqAdd, t, XTestNsqAddRequest)
 }
+
 // BenchmarkNsqAdd defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkNsqAdd -test.benchmem=true
 func BenchmarkNsqAdd(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/nsq/add", XTestNsqAdd, t, XTestNsqAddRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/nsq/add", XTestNsqAdd, t, XTestNsqAddRequest)
+		}
 	})
 }
-
 
 // TestNsqGet defined TODO
 // go test -v -test.run TestNsqGet
 func TestNsqGet(t *testing.T) {
 	x.Handle("GET", "/api/nsq/get", XTestNsqGet, t, XTestNsqGetRequest)
 }
+
 // BenchmarkNsqGet defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkNsqGet -test.benchmem=true
 func BenchmarkNsqGet(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/nsq/get", XTestNsqGet, t, XTestNsqGetRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/nsq/get", XTestNsqGet, t, XTestNsqGetRequest)
+		}
 	})
 }
-
-
 
 // TestRedisLockLock defined TODO
 // go test -v -test.run TestRedisLockLock
 func TestRedisLockLock(t *testing.T) {
 	x.Handle("GET", "/api/redis/lock/lock", XTestRedisLockLock, t, XTestRedisLockLockRequest)
 }
+
 // BenchmarkRedisLockLock defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkRedisLockLock -test.benchmem=true
 func BenchmarkRedisLockLock(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/redis/lock/lock", XTestRedisLockLock, t, XTestRedisLockLockRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/redis/lock/lock", XTestRedisLockLock, t, XTestRedisLockLockRequest)
+		}
 	})
 }
-
 
 // TestRedisLockUnlock defined TODO
 // go test -v -test.run TestRedisLockUnlock
 func TestRedisLockUnlock(t *testing.T) {
 	x.Handle("GET", "/api/redis/lock/unlock", XTestRedisLockUnlock, t, XTestRedisLockUnlockRequest)
 }
+
 // BenchmarkRedisLockUnlock defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkRedisLockUnlock -test.benchmem=true
 func BenchmarkRedisLockUnlock(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/redis/lock/unlock", XTestRedisLockUnlock, t, XTestRedisLockUnlockRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/redis/lock/unlock", XTestRedisLockUnlock, t, XTestRedisLockUnlockRequest)
+		}
 	})
 }
-
-
 
 // TestRedisMqAdd defined TODO
 // go test -v -test.run TestRedisMqAdd
 func TestRedisMqAdd(t *testing.T) {
 	x.Handle("POST", "/api/redis/mq/add", XTestRedisMqAdd, t, XTestRedisMqAddRequest)
 }
+
 // BenchmarkRedisMqAdd defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkRedisMqAdd -test.benchmem=true
 func BenchmarkRedisMqAdd(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/redis/mq/add", XTestRedisMqAdd, t, XTestRedisMqAddRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/redis/mq/add", XTestRedisMqAdd, t, XTestRedisMqAddRequest)
+		}
 	})
 }
-
 
 // TestRedisMqGet defined TODO
 // go test -v -test.run TestRedisMqGet
 func TestRedisMqGet(t *testing.T) {
 	x.Handle("GET", "/api/redis/mq/get", XTestRedisMqGet, t, XTestRedisMqGetRequest)
 }
+
 // BenchmarkRedisMqGet defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkRedisMqGet -test.benchmem=true
 func BenchmarkRedisMqGet(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/redis/mq/get", XTestRedisMqGet, t, XTestRedisMqGetRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/redis/mq/get", XTestRedisMqGet, t, XTestRedisMqGetRequest)
+		}
 	})
 }
-
-
 
 // TestRPCMessage defined TODO
 // go test -v -test.run TestRPCMessage
 func TestRPCMessage(t *testing.T) {
 	x.Handle("GET", "/api/rpc/message", XTestRPCMessage, t, XTestRPCMessageRequest)
 }
+
 // BenchmarkRPCMessage defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkRPCMessage -test.benchmem=true
 func BenchmarkRPCMessage(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/rpc/message", XTestRPCMessage, t, XTestRPCMessageRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/rpc/message", XTestRPCMessage, t, XTestRPCMessageRequest)
+		}
 	})
 }
-
-
 
 // TestSqlmapSelectone defined TODO
 // go test -v -test.run TestSqlmapSelectone
 func TestSqlmapSelectone(t *testing.T) {
 	x.Handle("GET", "/api/sqlmap/selectone", XTestSqlmapSelectone, t, XTestSqlmapSelectoneRequest)
 }
+
 // BenchmarkSqlmapSelectone defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkSqlmapSelectone -test.benchmem=true
 func BenchmarkSqlmapSelectone(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/sqlmap/selectone", XTestSqlmapSelectone, t, XTestSqlmapSelectoneRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/sqlmap/selectone", XTestSqlmapSelectone, t, XTestSqlmapSelectoneRequest)
+		}
 	})
 }
-
-
 
 // TestUserInfo defined TODO
 // go test -v -test.run TestUserInfo
 func TestUserInfo(t *testing.T) {
 	x.Handle("GET", "/api/user/info", XTestUserInfo, t, XTestUserInfoRequest)
 }
+
 // BenchmarkUserInfo defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkUserInfo -test.benchmem=true
 func BenchmarkUserInfo(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/user/info", XTestUserInfo, t, XTestUserInfoRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/user/info", XTestUserInfo, t, XTestUserInfoRequest)
+		}
 	})
 }
-
-
 
 // TestViewFile defined TODO
 // go test -v -test.run TestViewFile
 func TestViewFile(t *testing.T) {
 	x.Handle("GET", "/api/view/file", XTestViewFile, t, XTestViewFileRequest)
 }
+
 // BenchmarkViewFile defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkViewFile -test.benchmem=true
 func BenchmarkViewFile(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/view/file", XTestViewFile, t, XTestViewFileRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/view/file", XTestViewFile, t, XTestViewFileRequest)
+		}
 	})
 }
-
 
 // TestViewHTML defined TODO
 // go test -v -test.run TestViewHTML
 func TestViewHTML(t *testing.T) {
 	x.Handle("GET", "/api/view/html", XTestViewHTML, t, XTestViewHTMLRequest)
 }
+
 // BenchmarkViewHTML defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkViewHTML -test.benchmem=true
 func BenchmarkViewHTML(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/view/html", XTestViewHTML, t, XTestViewHTMLRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/view/html", XTestViewHTML, t, XTestViewHTMLRequest)
+		}
 	})
 }
-
 
 // TestViewXML defined TODO
 // go test -v -test.run TestViewXML
 func TestViewXML(t *testing.T) {
 	x.Handle("GET", "/api/view/xml", XTestViewXML, t, XTestViewXMLRequest)
 }
+
 // BenchmarkViewXML defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkViewXML -test.benchmem=true
 func BenchmarkViewXML(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("GET", "/api/view/xml", XTestViewXML, t, XTestViewXMLRequest)
-			}
+		for pb.Next() {
+			x.Handle("GET", "/api/view/xml", XTestViewXML, t, XTestViewXMLRequest)
+		}
 	})
 }
-
-
 
 // TestVoteLike defined TODO
 // go test -v -test.run TestVoteLike
 func TestVoteLike(t *testing.T) {
 	x.Handle("POST", "/api/vote/like", XTestVoteLike, t, XTestVoteLikeRequest)
 }
+
 // BenchmarkVoteLike defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkVoteLike -test.benchmem=true
 func BenchmarkVoteLike(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/vote/like", XTestVoteLike, t, XTestVoteLikeRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/vote/like", XTestVoteLike, t, XTestVoteLikeRequest)
+		}
 	})
 }
-
-
 
 // TestXlsxImport defined TODO
 // go test -v -test.run TestXlsxImport
 func TestXlsxImport(t *testing.T) {
 	x.Handle("POST", "/api/xlsx/import", XTestXlsxImport, t, XTestXlsxImportRequest)
 }
+
 // BenchmarkXlsxImport defined TODO
 // go test -v -test.run=none -test.bench=^BenchmarkXlsxImport -test.benchmem=true
 func BenchmarkXlsxImport(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
-			for pb.Next() {
-				x.Handle("POST", "/api/xlsx/import", XTestXlsxImport, t, XTestXlsxImportRequest)
-			}
+		for pb.Next() {
+			x.Handle("POST", "/api/xlsx/import", XTestXlsxImport, t, XTestXlsxImportRequest)
+		}
 	})
 }
-
-
-

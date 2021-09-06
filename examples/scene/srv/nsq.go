@@ -38,7 +38,7 @@ func NewNsq() *Nsq {
 }
 
 // SetServiceContext defined TODO
-func (h *messageHandler) SetServiceContext(svc *svc.ServiceContext) {
+func (srv *Nsq) SetServiceContext(svc *svc.ServiceContext) {
 	srv.ServiceContext = svc
 }
 

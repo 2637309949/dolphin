@@ -3,9 +3,9 @@
 
 package types
 
+import "github.com/2637309949/dolphin/packages/null"
 
-
-// EncryptInfo defined 文章信息 
+// EncryptInfo defined 文章信息
 type EncryptInfo struct {
 	// 应用ID
 	AppId null.String `json:"app_id" xml:"app_id"`

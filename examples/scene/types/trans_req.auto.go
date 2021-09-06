@@ -3,9 +3,9 @@
 
 package types
 
+import "github.com/2637309949/dolphin/packages/null"
 
-
-// TransReq defined trans info 
+// TransReq defined trans info
 type TransReq struct {
 	// amount
 	Amount null.Int `json:"amount" xml:"amount"`
