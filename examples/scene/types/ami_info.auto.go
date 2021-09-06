@@ -3,9 +3,9 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
 
-// AmiInfo defined Ami info
+
+// AmiInfo defined Ami info 
 type AmiInfo struct {
 	// Content
 	Content null.String `json:"content" xml:"content"`

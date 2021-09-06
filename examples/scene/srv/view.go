@@ -22,6 +22,11 @@ func NewView() *View {
 	return &View{}
 }
 
+// SetServiceContext defined TODO
+func (srv *View) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined srv
 func (srv *View) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

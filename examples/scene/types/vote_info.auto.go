@@ -3,9 +3,9 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
 
-// VoteInfo defined like info
+
+// VoteInfo defined like info 
 type VoteInfo struct {
 	// post id
 	PostId null.String `json:"post_id" xml:"post_id"`

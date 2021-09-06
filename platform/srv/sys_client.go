@@ -21,6 +21,11 @@ func NewSysClient() *SysClient {
 	return &SysClient{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysClient) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined srv
 func (srv *SysClient) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

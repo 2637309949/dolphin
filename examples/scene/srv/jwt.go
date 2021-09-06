@@ -25,6 +25,11 @@ func NewJwt() *Jwt {
 	return &Jwt{}
 }
 
+// SetServiceContext defined TODO
+func (srv *Jwt) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // CreateJWT defined TODO
 func (srv *Jwt) CreateJWT(ctx context.Context, db *xorm.Engine, params struct{}) (string, error) {
 	return api.App.JWT.GenerateAccessToken(fmt.Sprintf("%v", types.DefaultAdmin.ID.Int64), "localhost")

@@ -21,6 +21,11 @@ func NewSysOrg() *SysOrg {
 	return &SysOrg{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysOrg) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined srv
 func (srv *SysOrg) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

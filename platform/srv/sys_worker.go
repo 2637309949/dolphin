@@ -21,6 +21,11 @@ func NewSysWorker() *SysWorker {
 	return &SysWorker{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysWorker) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // AddJob defined TODO
 func (srv *SysWorker) AddJob() {
 }

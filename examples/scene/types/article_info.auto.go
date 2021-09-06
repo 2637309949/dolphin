@@ -3,9 +3,9 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
 
-// ArticleInfo defined 文章信息
+
+// ArticleInfo defined 文章信息 
 type ArticleInfo struct {
 	*Article
 	// 地址

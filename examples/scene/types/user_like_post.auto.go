@@ -4,10 +4,11 @@
 package types
 
 import (
-	"github.com/2637309949/dolphin/packages/null"
+    "github.com/2637309949/dolphin/packages/null"
+    "github.com/shopspring/decimal"
 )
 
-// UserLikePost defined 用户点赞同记录
+// UserLikePost defined 用户点赞同记录 
 type UserLikePost struct {
 	// ID defined 主键
 	ID null.Int `xorm:"bigint(20) notnull autoincr unique pk comment('主键') 'id'" json:"id" form:"id" xml:"id"`

@@ -21,6 +21,11 @@ func NewSysUserTemplateDetail() *SysUserTemplateDetail {
 	return &SysUserTemplateDetail{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysUserTemplateDetail) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined srv
 func (srv *SysUserTemplateDetail) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

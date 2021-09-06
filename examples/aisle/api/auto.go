@@ -542,7 +542,7 @@ func (dol *Dolphin) SyncController() error {
 
 // SyncSrv defined
 func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
-	OrganInstance.Srv.ServiceContext = svc
+	OrganInstance.Srv.SetServiceContext(svc)
 	return nil
 }
 

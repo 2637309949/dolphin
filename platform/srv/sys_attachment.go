@@ -21,6 +21,11 @@ func NewSysAttachment() *SysAttachment {
 	return &SysAttachment{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysAttachment) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined srv
 func (srv *SysAttachment) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

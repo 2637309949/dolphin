@@ -159,6 +159,11 @@ func NewVote() *Vote {
 	return &Vote{}
 }
 
+// SetServiceContext defined TODO
+func (srv *Vote) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // Like defined srv
 func (srv *Vote) Like(ctx context.Context, db *xorm.Engine, params types.VoteInfo) (interface{}, error) {
 	// 1.写入post_set

@@ -3,9 +3,9 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
 
-// NsqInfo defined Nsq info
+
+// NsqInfo defined Nsq info 
 type NsqInfo struct {
 	// id
 	ID null.String `json:"id" xml:"id"`

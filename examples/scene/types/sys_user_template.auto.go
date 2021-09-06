@@ -4,10 +4,11 @@
 package types
 
 import (
-	"github.com/2637309949/dolphin/packages/null"
+    "github.com/2637309949/dolphin/packages/null"
+    "github.com/shopspring/decimal"
 )
 
-// SysUserTemplate defined
+// SysUserTemplate defined  
 type SysUserTemplate struct {
 	// ID defined 主键
 	ID null.Int `xorm:"bigint(20) pk notnull autoincr comment('主键') 'id'" json:"id" form:"id" xml:"id"`

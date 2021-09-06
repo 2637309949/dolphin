@@ -21,6 +21,11 @@ func NewSysAppFun() *SysAppFun {
 	return &SysAppFun{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysAppFun) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined srv
 func (srv *SysAppFun) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

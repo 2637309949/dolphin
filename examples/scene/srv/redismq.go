@@ -76,6 +76,11 @@ func NewRedisMq() *RedisMq {
 	return &RedisMq{}
 }
 
+// SetServiceContext defined TODO
+func (srv *RedisMq) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // Producer defined TODO
 func (srv *RedisMq) Producer(ctx context.Context, db *xorm.Engine, params types.AmiInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)

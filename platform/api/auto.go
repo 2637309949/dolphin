@@ -2824,37 +2824,37 @@ func (dol *Dolphin) SyncController() error {
 
 // SyncSrv defined
 func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
-	SysAppFunInstance.Srv.ServiceContext = svc
-	SysAreaInstance.Srv.ServiceContext = svc
-	SysAttachmentInstance.Srv.ServiceContext = svc
-	SysCasInstance.Srv.ServiceContext = svc
-	SysClientInstance.Srv.ServiceContext = svc
-	SysCommentInstance.Srv.ServiceContext = svc
-	SysDataPermissionInstance.Srv.ServiceContext = svc
-	DebugInstance.Srv.ServiceContext = svc
-	SysDingtalkInstance.Srv.ServiceContext = svc
-	SysDomainInstance.Srv.ServiceContext = svc
-	SysMenuInstance.Srv.ServiceContext = svc
-	SysNotificationInstance.Srv.ServiceContext = svc
-	SysOptionsetInstance.Srv.ServiceContext = svc
-	SysOrgInstance.Srv.ServiceContext = svc
-	SysPermissionInstance.Srv.ServiceContext = svc
-	SysRoleInstance.Srv.ServiceContext = svc
-	SysRoleMenuInstance.Srv.ServiceContext = svc
-	SysScheduleInstance.Srv.ServiceContext = svc
-	SysScheduleHistoryInstance.Srv.ServiceContext = svc
-	SysSchedulingInstance.Srv.ServiceContext = svc
-	SysSettingInstance.Srv.ServiceContext = svc
-	SysTableInstance.Srv.ServiceContext = svc
-	SysTableColumnInstance.Srv.ServiceContext = svc
-	SysTagInstance.Srv.ServiceContext = svc
-	SysTagGroupInstance.Srv.ServiceContext = svc
-	SysTrackerInstance.Srv.ServiceContext = svc
-	SysUserInstance.Srv.ServiceContext = svc
-	SysUserTemplateInstance.Srv.ServiceContext = svc
-	SysUserTemplateDetailInstance.Srv.ServiceContext = svc
-	SysWechatInstance.Srv.ServiceContext = svc
-	SysWorkerInstance.Srv.ServiceContext = svc
+	SysAppFunInstance.Srv.SetServiceContext(svc)
+	SysAreaInstance.Srv.SetServiceContext(svc)
+	SysAttachmentInstance.Srv.SetServiceContext(svc)
+	SysCasInstance.Srv.SetServiceContext(svc)
+	SysClientInstance.Srv.SetServiceContext(svc)
+	SysCommentInstance.Srv.SetServiceContext(svc)
+	SysDataPermissionInstance.Srv.SetServiceContext(svc)
+	DebugInstance.Srv.SetServiceContext(svc)
+	SysDingtalkInstance.Srv.SetServiceContext(svc)
+	SysDomainInstance.Srv.SetServiceContext(svc)
+	SysMenuInstance.Srv.SetServiceContext(svc)
+	SysNotificationInstance.Srv.SetServiceContext(svc)
+	SysOptionsetInstance.Srv.SetServiceContext(svc)
+	SysOrgInstance.Srv.SetServiceContext(svc)
+	SysPermissionInstance.Srv.SetServiceContext(svc)
+	SysRoleInstance.Srv.SetServiceContext(svc)
+	SysRoleMenuInstance.Srv.SetServiceContext(svc)
+	SysScheduleInstance.Srv.SetServiceContext(svc)
+	SysScheduleHistoryInstance.Srv.SetServiceContext(svc)
+	SysSchedulingInstance.Srv.SetServiceContext(svc)
+	SysSettingInstance.Srv.SetServiceContext(svc)
+	SysTableInstance.Srv.SetServiceContext(svc)
+	SysTableColumnInstance.Srv.SetServiceContext(svc)
+	SysTagInstance.Srv.SetServiceContext(svc)
+	SysTagGroupInstance.Srv.SetServiceContext(svc)
+	SysTrackerInstance.Srv.SetServiceContext(svc)
+	SysUserInstance.Srv.SetServiceContext(svc)
+	SysUserTemplateInstance.Srv.SetServiceContext(svc)
+	SysUserTemplateDetailInstance.Srv.SetServiceContext(svc)
+	SysWechatInstance.Srv.SetServiceContext(svc)
+	SysWorkerInstance.Srv.SetServiceContext(svc)
 	return nil
 }
 

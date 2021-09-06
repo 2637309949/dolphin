@@ -59,7 +59,7 @@ func Open(uri string) error {
 }
 
 // InitViper defined TODO
-func InitViper(cmd *cobra.Command, args []string) {
+func InitViper(cmd *cobra.Command, _ []string) {
 	utils.SetFormatter(term.IsTerminal(unix.Stdout))
 	utils.SetLevel(cmd)
 	viper.SetConfigName("app")

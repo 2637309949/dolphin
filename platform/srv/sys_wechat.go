@@ -36,6 +36,11 @@ func NewSysWechat() *SysWechat {
 	return &SysWechat{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysWechat) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // WinXinBindCheck defined TODO
 func (srv *SysWechat) WinXinBindCheck(ctx context.Context, platformDB *xorm.Engine, db *xorm.Engine, domain string, code string) (*types.SysUser, error) {
 	wcToken := WeiXinToken{}

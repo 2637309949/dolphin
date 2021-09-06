@@ -29,6 +29,11 @@ func NewKafka() *Kafka {
 	return &Kafka{}
 }
 
+// SetServiceContext defined TODO
+func (srv *Kafka) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined TODO
 func (srv *Kafka) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

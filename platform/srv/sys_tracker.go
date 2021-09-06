@@ -23,6 +23,11 @@ func NewSysTracker() *SysTracker {
 	return &SysTracker{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysTracker) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // PageFormatter defined TODO
 func (srv *SysTracker) PageFormatter(db1 *xorm.Engine) func(*xorm.Engine, []map[string]interface{}) ([]map[string]interface{}, error) {
 	return func(_ *xorm.Engine, items []map[string]interface{}) (data []map[string]interface{}, err error) {

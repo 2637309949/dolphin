@@ -21,6 +21,11 @@ func NewSysPermission() *SysPermission {
 	return &SysPermission{}
 }
 
+// SetServiceContext defined TODO
+func (srv *SysPermission) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // TODO defined srv
 func (srv *SysPermission) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)

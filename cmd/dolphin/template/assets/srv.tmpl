@@ -24,8 +24,13 @@ func New{{$.Controller.ToUpperCase $.Controller.Name}}() *{{$.Controller.ToUpper
 	return &{{$.Controller.ToUpperCase $.Controller.Name}}{}
 }
 
-// TODO defined srv
-func (srv *{{$.Controller.ToUpperCase $.Controller.Name}})TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
+// SetServiceContext defined TODO
+func (srv *{{$.Controller.ToUpperCase $.Controller.Name}}) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
+// TODO defined TODO
+func (srv *{{$.Controller.ToUpperCase $.Controller.Name}}) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	cwt, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	ticker := time.NewTicker(1 * time.Second)

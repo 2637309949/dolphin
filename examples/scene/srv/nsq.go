@@ -37,6 +37,11 @@ func NewNsq() *Nsq {
 	return &Nsq{}
 }
 
+// SetServiceContext defined TODO
+func (h *messageHandler) SetServiceContext(svc *svc.ServiceContext) {
+	srv.ServiceContext = svc
+}
+
 // HandleMessage implements the Handler interface.
 func (h *messageHandler) HandleMessage(m *nsq.Message) error {
 	if len(m.Body) == 0 {
