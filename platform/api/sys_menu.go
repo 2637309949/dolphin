@@ -4,11 +4,11 @@
 package api
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -43,7 +43,7 @@ func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 			ctx.Fail(err)
 			return
 		} else if !ext {
-			ctx.Fail(errors.New("the record does not exist"))
+			ctx.Fail(errors.ErrNotFound)
 			return
 		}
 		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v%v", payload.ID.Int64, parent.Inheritance.String))
@@ -185,7 +185,7 @@ func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 			ctx.Fail(err)
 			return
 		} else if !ext {
-			ctx.Fail(errors.New("the record does not exist"))
+			ctx.Fail(errors.ErrNotFound)
 			return
 		}
 		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v%v", payload.ID.Int64, parent.Inheritance.String))
@@ -366,7 +366,7 @@ func (ctr *SysMenu) SysMenuGet(ctx *Context) {
 		return
 	}
 	if !ext {
-		ctx.Fail(types.ErrNotFound)
+		ctx.Fail(errors.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

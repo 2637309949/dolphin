@@ -6,6 +6,7 @@ package api
 import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
@@ -274,7 +275,7 @@ func (ctr *SysSchedule) SysScheduleGet(ctx *Context) {
 		return
 	}
 	if !ext {
-		ctx.Fail(types.ErrNotFound)
+		ctx.Fail(errors.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

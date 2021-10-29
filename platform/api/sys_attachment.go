@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/encode"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
@@ -371,7 +372,7 @@ func (ctr *SysAttachment) SysAttachmentGet(ctx *Context) {
 		return
 	}
 	if !ext {
-		ctx.Fail(types.ErrNotFound)
+		ctx.Fail(errors.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

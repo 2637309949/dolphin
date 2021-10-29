@@ -75,6 +75,30 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		"gt":          template.HTML(">"),
 	}
 
+	// proto template
+	protoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "proto.tmpl")).([]byte)
+	rpcByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "rpc.tmpl")).([]byte)
+	for i := range appParser.Services {
+		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
+		tmplArgs["Service"] = appParser.Services[i]
+		tmplArgs["Viper"] = viper.GetViper()
+		filename := utils.FileNameTrimSuffix(appParser.Services[i].Path)
+		tmpls = append(tmpls, &parser.TmplCfg{
+			Text:     string(protoByte),
+			FilePath: path.Join(dir, viper.GetString("dir.proto"), filename+".proto"),
+			Data:     tmplArgs,
+			Overlap:  parser.OverlapInc,
+			GOProto:  true,
+		})
+		tmpls = append(tmpls, &parser.TmplCfg{
+			Text:     string(rpcByte),
+			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".go"),
+			Data:     tmplArgs,
+			Overlap:  parser.OverlapInc,
+			GOFmt:    true,
+		})
+	}
+
 	// main template
 	mainByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "main.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
@@ -155,7 +179,7 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	errByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "errors.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(errByte),
-		FilePath: path.Join(dir, viper.GetString("dir.types"), "errors.go"),
+		FilePath: path.Join(dir, viper.GetString("dir.util"), "errors/comm.go"),
 		Data:     tmplArgs,
 		Overlap:  parser.OverlapSkip,
 	})
@@ -325,30 +349,6 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 		Overlap:  parser.OverlapWrite,
 		GOFmt:    true,
 	})
-
-	// proto template
-	protoByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "proto.tmpl")).([]byte)
-	rpcByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "rpc.tmpl")).([]byte)
-	for i := range appParser.Services {
-		tmplArgs := utils.Copy(tmplArgs).(map[string]interface{})
-		tmplArgs["Service"] = appParser.Services[i]
-		tmplArgs["Viper"] = viper.GetViper()
-		filename := utils.FileNameTrimSuffix(appParser.Services[i].Path)
-		tmpls = append(tmpls, &parser.TmplCfg{
-			Text:     string(protoByte),
-			FilePath: path.Join(dir, viper.GetString("dir.proto"), filename+".proto"),
-			Data:     tmplArgs,
-			Overlap:  parser.OverlapInc,
-			GOProto:  true,
-		})
-		tmpls = append(tmpls, &parser.TmplCfg{
-			Text:     string(rpcByte),
-			FilePath: path.Join(dir, viper.GetString("dir.rpc"), filename+".go"),
-			Data:     tmplArgs,
-			Overlap:  parser.OverlapInc,
-			GOFmt:    true,
-		})
-	}
 
 	// x_test template
 	xTestByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "x_test.tmpl")).([]byte)

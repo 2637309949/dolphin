@@ -53,6 +53,7 @@ func (m *Boilerplate) Build(dir string, args []string, appParser *parser.AppPars
 		"lt":          template.HTML("<"),
 		"gt":          template.HTML(">"),
 	}
+
 	if len(args) < 1 {
 		return cfgs, errors.New("please provide the project name")
 	}

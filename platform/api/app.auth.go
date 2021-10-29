@@ -10,7 +10,7 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/platform/svc"
-	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/golang-jwt/jwt"
 	"github.com/sirupsen/logrus"
@@ -129,12 +129,12 @@ func (auth *AuthOAuth2) GetToken() TokenInfo {
 // AuthToken defined TODO
 func AuthToken(ctx *Context) {
 	if !ctx.VerifyToken(ctx) {
-		ctx.Fail(types.ErrInvalidAccessToken, 401)
+		ctx.Fail(errors.ErrInvalidAccessToken, 401)
 		ctx.Abort()
 		return
 	}
 	if ctx.DB = App.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
-		ctx.Fail(types.ErrInvalidDomain)
+		ctx.Fail(errors.ErrInvalidDomain)
 		ctx.Abort()
 		return
 	}
@@ -146,12 +146,12 @@ func AuthToken(ctx *Context) {
 // AuthJWT defined TODO
 func AuthJWT(ctx *Context) {
 	if !ctx.VerifyJWT(ctx) {
-		ctx.Fail(types.ErrInvalidAccessToken, 401)
+		ctx.Fail(errors.ErrInvalidAccessToken, 401)
 		ctx.Abort()
 		return
 	}
 	if ctx.DB = App.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
-		ctx.Fail(types.ErrInvalidDomain)
+		ctx.Fail(errors.ErrInvalidDomain)
 		ctx.Abort()
 		return
 	}
@@ -163,7 +163,7 @@ func AuthJWT(ctx *Context) {
 // AuthEncrypt defined TODO
 func AuthEncrypt(ctx *Context) {
 	if !ctx.VerifyEncrypt(ctx) {
-		ctx.Fail(types.ErrInvalidEncryData, 401)
+		ctx.Fail(errors.ErrInvalidEncryData, 401)
 		ctx.Abort()
 		return
 	}
@@ -175,7 +175,7 @@ func Roles(roles ...string) HandlerFunc {
 	return func(ctx *Context) {
 		svc, userId := svc.NewXDB(), ctx.GetToken().GetUserID()
 		if !svc.InRole(ctx.DB, userId, roles...) {
-			ctx.Fail(types.ErrAccessDenied, 403)
+			ctx.Fail(errors.ErrAccessDenied, 403)
 			ctx.Abort()
 			return
 		}

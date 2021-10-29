@@ -76,72 +76,28 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 	}()
 
 	// generate code
-	cfgs := []*parser.TmplCfg{}
 	for i := range gen.Pipes {
-		err := gen.Pipes[i].Pre(gen.Parser)
-		if err != nil {
+		if err := gen.Pipes[i].Pre(gen.Parser); err != nil {
 			return err
 		}
 		items, err := gen.Pipes[i].Build(dir, args, gen.Parser)
 		if err != nil {
 			return err
 		}
-
-		cfgs = append(cfgs, items...)
 		for j := range items {
-			err = gen.Build(items[j])
-			if err != nil {
+			if err = gen.Build(items[j]); err != nil {
+				return err
+			}
+			if err = gen.BuildProto(items[j]); err != nil {
+				return err
+			}
+			if err = gen.GoFmt(items[j]); err != nil {
 				return err
 			}
 		}
 		err = gen.Pipes[i].After(gen.Parser, items)
 		if err != nil {
 			return err
-		}
-	}
-
-	// fmt code
-	filePaths := funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *parser.TmplCfg) bool { return cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" }), func(cfg *parser.TmplCfg) (string, string) { return path.Dir(cfg.FilePath), path.Dir(cfg.FilePath) })).([]string)
-	if len(filePaths) > 0 {
-		if !utils.HasBin("goimports") {
-			if status := utils.NetWorkStatus(); status {
-				if err := utils.InstallPackages("golang.org/x/tools/cmd/goimports"); err != nil {
-					logrus.Error(err)
-				}
-			} else {
-				utils.Ensure(errors.New("not goimports found"))
-			}
-		}
-		for i := range filePaths {
-			var stderr bytes.Buffer
-			cmd := exec.Command("goimports", "-w", filePaths[i])
-			cmd.Stderr = &stderr
-			if err := cmd.Run(); err != nil {
-				logrus.Error(fmt.Errorf("%v", stderr.String()))
-			}
-		}
-	}
-
-	// rpc code
-	filePaths = funk.Keys(funk.Map(funk.Filter(cfgs, func(cfg *parser.TmplCfg) bool { return cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" }), func(cfg *parser.TmplCfg) (string, string) { return cfg.FilePath, cfg.FilePath })).([]string)
-	if len(filePaths) > 0 {
-		if !utils.HasBin("proto") {
-			if status := utils.NetWorkStatus(); status {
-				if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
-					logrus.Error(err)
-				}
-			} else {
-				utils.Ensure(errors.New("not proto found"))
-			}
-		}
-		for i := range filePaths {
-			var stderr bytes.Buffer
-			logrus.Infoln("protoc", "-I", path.Dir(filePaths[i]), filePaths[i], "--go_out=plugins=grpc:"+path.Dir(path.Dir(filePaths[i])))
-			cmd := exec.Command("protoc", "-I", path.Dir(filePaths[i]), filePaths[i], "--go_out=plugins=grpc:"+path.Dir(path.Dir(filePaths[i])))
-			cmd.Stderr = &stderr
-			if err := cmd.Run(); err != nil {
-				logrus.Error(fmt.Errorf("%v", stderr.String()))
-			}
 		}
 	}
 	return nil
@@ -192,6 +148,53 @@ func (gen *Gen) Build(cfg *parser.TmplCfg) error {
 	_, err = w.WriteString(sbt)
 	if err != nil {
 		return err
+	}
+	return nil
+}
+
+// BuildProto defined TODO
+func (gen *Gen) BuildProto(cfg *parser.TmplCfg) error {
+	if cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" {
+		if !utils.HasBin("proto") {
+			if status := utils.NetWorkStatus(); status {
+				if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
+					logrus.Error(err)
+				}
+			} else {
+				return errors.New("not proto bin found")
+			}
+		}
+		var stderr bytes.Buffer
+		logrus.Infoln("protoc", "-I", path.Dir(cfg.FilePath), cfg.FilePath, "--go_out=plugins=grpc:"+path.Dir(path.Dir(cfg.FilePath)))
+		cmd := exec.Command("protoc", "-I", path.Dir(cfg.FilePath), cfg.FilePath, "--go_out=plugins=grpc:"+path.Dir(path.Dir(cfg.FilePath)))
+		cmd.Stderr = &stderr
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("%v", stderr.String())
+		}
+	}
+	return nil
+}
+
+// GoFmt defined TODO
+func (gen *Gen) GoFmt(cfg *parser.TmplCfg) error {
+	if cfg.GOFmt && path.Ext(cfg.FilePath) == ".go" {
+		if !utils.HasBin("goimports") {
+			if !utils.HasBin("goimports") {
+				if status := utils.NetWorkStatus(); status {
+					if err := utils.InstallPackages("golang.org/x/tools/cmd/goimports"); err != nil {
+						return err
+					}
+				} else {
+					return errors.New("not goimports found")
+				}
+			}
+		}
+		var stderr bytes.Buffer
+		cmd := exec.Command("goimports", "-w", cfg.FilePath)
+		cmd.Stderr = &stderr
+		if err := cmd.Run(); err != nil {
+			return fmt.Errorf("%v", stderr.String())
+		}
 	}
 	return nil
 }

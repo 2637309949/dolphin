@@ -4,8 +4,9 @@
 package main
 
 import (
-	// "github.com/go-sql-driver/mysql" init
-	_ "github.com/go-sql-driver/mysql"
+	// "github.com/mattn/go-sqlite3" init
+	_ "github.com/mattn/go-sqlite3"
+
 	// "aisle/api" init
 	"aisle/api"
 )

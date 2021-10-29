@@ -214,7 +214,7 @@ var (
 				return err
 			}
 			g := New(p)
-			g.AddPipe(GetPipesByName("boilerplate", "dolphin")...)
+			g.AddPipe(GetPipesByName("boilerplate")...)
 			err = g.BuildDir(wd, args)
 			if err != nil {
 				return err

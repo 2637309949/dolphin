@@ -2,7 +2,6 @@ module aisle
 
 go 1.13
 
-replace github.com/2637309949/dolphin => ../../
 
 require (
 	github.com/2637309949/dolphin v1.0.67
@@ -15,3 +14,12 @@ require (
 	github.com/thoas/go-funk v0.8.0
 	google.golang.org/grpc v1.38.0
 )
+
+replace github.com/2637309949/dolphin => ../../
+
+// fix io/fs
+replace (
+	github.com/spf13/afero => github.com/spf13/afero v1.5.1
+	golang.org/x/tools => github.com/golang/tools v0.1.0
+)
+

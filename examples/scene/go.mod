@@ -2,7 +2,6 @@ module scene
 
 go 1.13
 
-replace github.com/2637309949/dolphin => ../../
 
 require (
 	github.com/2637309949/dolphin v1.0.57
@@ -37,4 +36,12 @@ require (
 	google.golang.org/grpc v1.38.0
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
+)
+
+replace github.com/2637309949/dolphin => ../../
+
+// fix io/fs
+replace (
+	github.com/spf13/afero => github.com/spf13/afero v1.5.1
+	golang.org/x/tools => github.com/golang/tools v0.1.0
 )

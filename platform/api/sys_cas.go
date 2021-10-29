@@ -5,7 +5,6 @@ package api
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"image/png"
 	"net/http"
@@ -19,6 +18,7 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/utils/uuid"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/qr"
 	"github.com/go-session/session"
@@ -82,9 +82,9 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 		return
 	}
 	if !ext || !account.ValidPassword(password) {
-		err = errors.New("account doesn't exist or password error")
+		err = errors.ErrAccountOrPasswordError
 		logrus.Errorf("SysCasLogin/ValidPassword:%v", err)
-		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+types.ErrInvalidGrant.Error())
+		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+errors.ErrInvalidGrant.Error())
 		return
 	}
 	store.Set("LoggedInUserID", fmt.Sprintf("%v", account.ID.Int64))
@@ -107,13 +107,13 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 func (ctr *SysCas) SysCasLogout(ctx *Context) {
 	state := "domain=" + ctx.Query("domain") + "&redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	if ctx.Query("domain") == "" {
-		logrus.Errorf("SysCasLogout/domain:%v", errors.New("domain not found"))
-		ctx.Fail(errors.New("domain not found"))
+		logrus.Errorf("SysCasLogout/domain:%v", errors.ErrDomainNotFound)
+		ctx.Fail(errors.ErrDomainNotFound)
 		return
 	}
 	if ctx.Query("redirect_uri") == "" {
-		logrus.Errorf("SysCasLogout/redirect_uri:%v", errors.New("redirect_uri not found"))
-		ctx.Fail(errors.New("redirect_uri not found"))
+		logrus.Errorf("SysCasLogout/redirect_uri:%v", errors.ErrRedirectUriNotFound)
+		ctx.Fail(errors.ErrRedirectUriNotFound)
 		return
 	}
 	session.Destroy(context.Background(), ctx.Writer, ctx.Request)
@@ -214,11 +214,11 @@ func (ctr *SysCas) SysCasToken(ctx *Context) {
 // @Router /api/sys/cas/url [get]
 func (ctr *SysCas) SysCasURL(ctx *Context) {
 	if ctx.Query("redirect_uri") == "" {
-		ctx.Fail(errors.New("not found redirect_uri"))
+		ctx.Fail(errors.ErrRedirectUriNotFound)
 		return
 	}
 	if ctx.Query("domain") == "" {
-		ctx.Fail(errors.New("not found domain"))
+		ctx.Fail(errors.ErrDomainNotFound)
 		return
 	}
 	state := "domain=" + ctx.Query("domain") + "&redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
@@ -254,8 +254,8 @@ func (ctr *SysCas) SysCasOauth2(ctx *Context) {
 	code, _ := url.QueryUnescape(f.Get("code"))
 
 	if code == "" {
-		logrus.Errorf("SysCasOauth2/code:%v", errors.New("code not found"))
-		ctx.Fail(errors.New("code not found"))
+		logrus.Errorf("SysCasOauth2/code:%v", errors.ErrCodeNotFound)
+		ctx.Fail(errors.ErrCodeNotFound)
 		return
 	}
 	ret, err := OA2Cfg.Exchange(context.Background(), code)
@@ -291,7 +291,7 @@ func (ctr *SysCas) SysCasQrOauth2(ctx *Context) {
 	q.SetString("code")
 
 	if q.GetString("code") == "" {
-		ctx.Fail(errors.New("not found code"))
+		ctx.Fail(errors.ErrCodeNotFound)
 		return
 	}
 
@@ -333,7 +333,7 @@ func (ctr *SysCas) SysCasRefresh(ctx *Context) {
 	refreshtoken, ok := App.OAuth2.BearerAuth(ctx.Request)
 	if !ok {
 		logrus.Errorf("SysCasRefresh/BearerAuth:%v", ok)
-		ctx.Fail(types.ErrInvalidAccessToken)
+		ctx.Fail(errors.ErrInvalidAccessToken)
 		return
 	}
 
@@ -424,15 +424,15 @@ func (ctr *SysCas) SysCasQrcode(ctx *Context) {
 	q.SetString("uuid")
 
 	if q.GetString("uuid") == "" {
-		ctx.Fail(errors.New("not found uuid"))
+		ctx.Fail(errors.ErrUUIDNotFound)
 		return
 	}
 	if len(q.GetString("uuid")) < 10 {
-		ctx.Fail(errors.New("invalid uuid"))
+		ctx.Fail(errors.ErrInvalidUUID)
 		return
 	}
 	if q.GetString("state") == "" {
-		ctx.Fail(errors.New("not found state"))
+		ctx.Fail(errors.ErrNotFoundState)
 		return
 	}
 
@@ -488,7 +488,7 @@ func (ctr *SysCas) SysCasQrcodeLogin(ctx *Context) {
 	q.SetString("uuid")
 
 	if q.GetString("uuid") == "" {
-		ctx.Fail(errors.New("not found uuid"))
+		ctx.Fail(errors.ErrUUIDNotFound)
 		return
 	}
 
