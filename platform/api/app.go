@@ -30,14 +30,12 @@ type Hook struct {
 // OnStart defined OnStart
 func (h *Hook) OnStart(ctx context.Context) error {
 	h.dol.Http.OnStart(ctx)
-	h.dol.Remote.OnStart(ctx)
 	return nil
 }
 
 // OnStop defined OnStop
 func (h *Hook) OnStop(ctx context.Context) error {
 	h.dol.Http.OnStop(ctx)
-	h.dol.Remote.OnStop(ctx)
 	return nil
 }
 
@@ -50,13 +48,6 @@ func NewLifeHook(e *Dolphin) lifeHook {
 func WithHttpHandler() Option {
 	return func(dol *Dolphin) {
 		dol.Http = NewGinHandler(dol)
-	}
-}
-
-// WithRemoteHandler defined TODO
-func WithRemoteHandler() Option {
-	return func(dol *Dolphin) {
-		dol.Remote = NewRemoteHandler()
 	}
 }
 
@@ -118,7 +109,7 @@ func init() {
 	InitCacheStore()
 	InitSession()
 
-	opts := []Option{WithHttpHandler(), WithRemoteHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
+	opts := []Option{WithHttpHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
 	app := NewDefault(opts...)
 	StaticRoutes(app)
 	App, Run = app, app.Run

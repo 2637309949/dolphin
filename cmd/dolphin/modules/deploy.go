@@ -40,7 +40,6 @@ func (dp *Deploy) Build(dir string, args []string, appParser *parser.AppParser) 
 		"PackageName": appParser.PackageName,
 		"Name":        appParser.Name,
 		"Controllers": appParser.Controllers,
-		"Services":    appParser.Services,
 		"Tables":      appParser.Tables,
 		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),

@@ -229,15 +229,9 @@ func createXLogger() interface{} {
 
 // InitLogger defined TODO
 func InitLogger() {
-	var writer io.Writer
+	var writer io.Writer = os.Stdout
 	util.SetFormatter(term.IsTerminal(unix.Stdout))
-	if term.IsTerminal(unix.Stdout) {
-		if writer != nil {
-			writer = io.MultiWriter(writer, os.Stdout)
-		} else {
-			writer = os.Stdout
-		}
-	}
+
 	if viper.GetString("dir.log") != "" {
 		logf, err := rotatelogs.New(
 			viper.GetString("dir.log")+"/%Y%m%d%H",
@@ -248,12 +242,9 @@ func InitLogger() {
 			logrus.Printf("failed to create rotatelogs: %v", err)
 			return
 		}
-		if writer != nil {
-			writer = io.MultiWriter(writer, logf)
-		} else {
-			writer = logf
-		}
+		writer = io.MultiWriter(writer, logf)
 	}
+
 	logrus.SetOutput(writer)
 	InitTracker()
 }

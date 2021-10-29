@@ -168,7 +168,6 @@ func (app *Reverse) Build(dir string, args []string, appParser *parser.AppParser
 				"PackageName": appParser.PackageName,
 				"Name":        appParser.Name,
 				"Controllers": appParser.Controllers,
-				"Services":    appParser.Services,
 				"Tables":      appParser.Tables,
 				"Table":       meta,
 				"Beans":       appParser.Beans,

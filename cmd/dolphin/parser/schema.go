@@ -65,12 +65,6 @@ type (
 		Prefix string
 	}
 
-	// Service defined TODO
-	Service struct {
-		Common
-		RPCS []*RPC
-	}
-
 	// RPC defined TODO
 	RPC struct {
 		Common
@@ -131,7 +125,6 @@ type (
 		Common
 		PackageName string `validate:"required"`
 		Controllers []*Controller
-		Services    []*Service
 		Beans       []*Bean
 		Tables      []*Table
 	}

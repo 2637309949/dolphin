@@ -8,7 +8,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/gin-contrib/cache/persistence"
+	"github.com/2637309949/dolphin/packages/persistence"
 	"github.com/go-redis/redis/v8"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -38,7 +38,7 @@ func NewRedisClient() redis.Cmdable {
 	min_idle_conns := viper.GetInt("redis.min_idle_conns")
 	idle_conns := viper.GetInt("redis.idle_conns")
 
-	if len(addr) == 0 || mode == "" {
+	if len(addr) == 0 {
 		return nil
 	}
 
@@ -81,18 +81,20 @@ func NewRedisClient() redis.Cmdable {
 	}
 
 	if err != nil {
-		logrus.Warnf("Redis:%v connect failed, %v", addr[0], err)
+		logrus.Warnf("redis:%v connect failed, %v", addr[0], err)
 		return nil
 	}
-	logrus.Infof("Redis:%v connect successfully", addr[0])
+	logrus.Infof("redis:%v connect successfully", addr[0])
 	return rdsCli
 }
 
 // InitCacheStore defined TODO
 func InitCacheStore() {
-	CacheStore = persistence.NewInMemoryStore(60 * time.Second)
-	RedisClient = NewRedisClient()
-	if RedisClient != nil {
-		CacheStore = NewRedisCache(RedisClient, 60*time.Second)
+	if RedisClient = NewRedisClient(); RedisClient != nil {
+		CacheStore = persistence.NewRedisCache(RedisClient, 60*time.Second)
+		logrus.Infof("use Redis as CacheStore")
+	} else {
+		CacheStore = persistence.NewInMemoryStore(60 * time.Second)
+		logrus.Infof("use Memory as CacheStore")
 	}
 }

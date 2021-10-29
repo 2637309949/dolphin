@@ -12,8 +12,8 @@ db:
   driver: sqlite3
   maxidleconns: 15
   maxopenconns: 50
-redis:
-  mode: stub
-  addr:
-  - localhost:6379
-  password: ""
+# redis:
+#   mode: stub
+#   addr:
+#   - localhost:6379
+#   password: ""

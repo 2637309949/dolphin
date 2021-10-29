@@ -46,7 +46,6 @@ func (m *Boilerplate) Build(dir string, args []string, appParser *parser.AppPars
 		"Name":        appParser.Name,
 		"Desc":        appParser.Desc,
 		"Controllers": appParser.Controllers,
-		"Services":    appParser.Services,
 		"Tables":      appParser.Tables,
 		"Beans":       appParser.Beans,
 		"Viper":       viper.GetViper(),

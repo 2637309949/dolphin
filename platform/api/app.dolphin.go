@@ -44,7 +44,6 @@ type (
 		OAuth2     *server.Server
 		JWT        *JWT
 		Http       httpHandler
-		Remote     remoteHandler
 		pool       sync.Pool
 	}
 )

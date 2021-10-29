@@ -155,25 +155,6 @@ func (parser *AppParser) parseParam(xmlPath string, attr []xml.Attr) *Param {
 	return param
 }
 
-func (parser *AppParser) parseService(xmlPath string, attr []xml.Attr) *Service {
-	service := &Service{}
-	service.Path = xmlPath
-	for _, attr := range attr {
-		attrName := attr.Name.Local
-		attrValue := attr.Value
-		if strings.TrimSpace(attrValue) == "" {
-			continue
-		}
-		switch true {
-		case attrName == "name":
-			service.Name = attrValue
-		case attrName == "desc":
-			service.Desc = attrValue
-		}
-	}
-	return service
-}
-
 func (parser *AppParser) parseRPC(xmlPath string, attr []xml.Attr) *RPC {
 	rpc := &RPC{Request: &Request{}, Reply: &Reply{}}
 	for _, attr := range attr {
