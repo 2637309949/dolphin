@@ -1,9 +1,0 @@
-app:
-  mode: release
-  name: test
-db:
-  connmaxlifetime: 10
-  datasource: ./x_test.db
-  driver: sqlite3
-  maxidleconns: 15
-  maxopenconns: 50
