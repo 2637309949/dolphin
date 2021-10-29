@@ -15,7 +15,7 @@ dir:
   api: api
   doc: ""
   k8s: k8s/platform
-  log: log
+  log: ""
   rpc: rpc
   script: script
   sql: sql

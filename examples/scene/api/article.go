@@ -5,6 +5,7 @@ package api
 
 import (
 	"scene/types"
+	"scene/util/errors"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/api"
@@ -289,7 +290,7 @@ func (ctr *Article) ArticleGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	} else if !ext {
-		ctx.Fail(types.ErrNotFound)
+		ctx.Fail(errors.ErrNotFound)
 		return
 	}
 	ctx.Success(entity)

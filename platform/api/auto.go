@@ -4,14 +4,11 @@
 package api
 
 import (
-	"github.com/2637309949/dolphin/platform/proto"
-	"github.com/2637309949/dolphin/platform/rpc"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/types"
 
 	"github.com/spf13/viper"
-	"google.golang.org/grpc"
 )
 
 // Name project
@@ -2728,21 +2725,6 @@ func SysWorkerRoutes(rg *RouterGroup) {
 // SysWorkerInstance defined
 var SysWorkerInstance = NewSysWorker()
 
-// ClientSrv defined
-func ClientSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterClientSrvServer(gs, &rpc.ClientSrv{}) })
-}
-
-// DomainSrv defined
-func DomainSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterDomainSrvServer(gs, &rpc.DomainSrv{}) })
-}
-
-// UserSrv defined
-func UserSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterUserSrvServer(gs, &rpc.UserSrv{}) })
-}
-
 // SyncModel defined
 func (dol *Dolphin) SyncModel() error {
 	mseti := dol.Manager.ModelSet()
@@ -2855,13 +2837,5 @@ func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
 	SysUserTemplateDetailInstance.Srv.SetServiceContext(svc)
 	SysWechatInstance.Srv.SetServiceContext(svc)
 	SysWorkerInstance.Srv.SetServiceContext(svc)
-	return nil
-}
-
-// SyncService defined
-func (dol *Dolphin) SyncService() error {
-	ClientSrvService(dol)
-	DomainSrvService(dol)
-	UserSrvService(dol)
 	return nil
 }

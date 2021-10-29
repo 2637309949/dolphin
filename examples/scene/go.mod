@@ -2,7 +2,6 @@ module scene
 
 go 1.13
 
-
 require (
 	github.com/2637309949/dolphin v1.0.57
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.9+incompatible
@@ -31,10 +30,8 @@ require (
 	github.com/tidwall/pretty v1.1.0 // indirect
 	github.com/ugorji/go v1.2.4 // indirect
 	github.com/yedf/dtm v0.0.0-20210724072457-bd589bb04ff6
-	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	golang.org/x/tools v0.1.5 // indirect
-	google.golang.org/grpc v1.38.0
-	google.golang.org/protobuf v1.27.1
+	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
 

@@ -1,0 +1,4 @@
+<bean name="article_info" desc="Article info" extends="$article">
+    <prop name="content" desc="Content" type="null.String" />
+    <prop name="title" desc="Title" type="null.String" />
+</bean>

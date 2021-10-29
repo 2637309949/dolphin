@@ -54,13 +54,13 @@ require (
 	github.com/tidwall/buntdb v1.1.2
 	go.uber.org/multierr v1.6.0
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
-	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
+	golang.org/x/net v0.0.0-20210525063256-abc453219eb5 // indirect
 	golang.org/x/oauth2 v0.0.0-20210402161424-2e8d93401602
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea
 	golang.org/x/term v0.0.0-20210503060354-a79de5458b56
 	golang.org/x/tools v0.1.3
 	google.golang.org/grpc v1.38.0
-	google.golang.org/protobuf v1.26.0
+	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0
@@ -72,4 +72,3 @@ replace (
 	github.com/spf13/afero => github.com/spf13/afero v1.5.1
 	golang.org/x/tools => github.com/golang/tools v0.1.0
 )
-

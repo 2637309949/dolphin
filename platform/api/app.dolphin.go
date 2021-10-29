@@ -111,7 +111,6 @@ func (dol *Dolphin) Reflesh() error {
 
 	dol.SyncModel()
 	dol.SyncController()
-	dol.SyncService()
 	dol.SyncSrv(svc.NewServiceContext(CacheStore))
 
 	xlogger := createXLogger()

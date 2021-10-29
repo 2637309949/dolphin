@@ -752,7 +752,7 @@ where
     {{if ne .name ""}}
     and sys_app_fun.name = "{{.name}}"
     {{end}}
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_area_page_count.tpl"] = `select
     count(*) records
@@ -842,7 +842,7 @@ LIMIT {{.size}} OFFSET {{.offset}}
 	SQLTPL["sys_data_permission_rule.tpl"] = `select
     sys_data_permission_detail.*
 from
-    ` + "`sys_data_permission`" + `, ` + "`sys_data_permission_detail`" + `,` + "`sys_role_user`" + `
+    `+"`sys_data_permission`"+`, `+"`sys_data_permission_detail`"+`,`+"`sys_role_user`"+`
 where
     sys_data_permission.id = sys_data_permission_detail.data_permission_id
     and sys_role_user.role_id = sys_data_permission_detail.role_id
@@ -883,7 +883,7 @@ where
     sys_menu.hidden,
     sys_menu.icon,
     sys_menu.name,
-    sys_menu.` + "`order`" + `,
+    sys_menu.`+"`order`"+`,
     sys_menu.url,
     sys_menu.type,
     sys_menu.component
@@ -912,7 +912,7 @@ where
     sys_menu.is_delete {{.ne}} 1
 	and
 	sys_menu.hidden = 0
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_menu_tree.tpl"] = `select
     sys_menu.id,
@@ -930,7 +930,7 @@ where
 {{if ne .name ""}}
     and sys_menu.name = "{{.name}}"
 {{end}}
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_notification_page_count.tpl"] = `select
     count(*) records
@@ -1003,7 +1003,7 @@ where
     and sys_org.name = "{{.name}}"
 {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_permission_page_count.tpl"] = `select
     count(*) records
@@ -1044,7 +1044,7 @@ where
     and sys_app_fun.name = "{{.name}}"
 {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_role_menu_tree.tpl"] = `select
     distinct
@@ -1068,7 +1068,7 @@ where
     and sys_menu.name = "{{.name}}"
 {{end}}
 
-order by ` + "`order`" + `
+order by `+"`order`"+`
 `
 	SQLTPL["sys_role_page_count.tpl"] = `select
     count(*) records

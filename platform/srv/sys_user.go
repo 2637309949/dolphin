@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/2637309949/dolphin/platform/proto"
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/slice"
@@ -21,7 +20,6 @@ import (
 
 type SysUser struct {
 	*svc.ServiceContext
-	DomainSrvClient proto.DomainSrvClient
 }
 
 func NewSysUser() *SysUser {

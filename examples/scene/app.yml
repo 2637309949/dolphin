@@ -17,7 +17,7 @@ db:
 dir:
   api: api
   doc: ""
-  log: log
+  log: ""
   proto: proto
   script: script
   sql: sql

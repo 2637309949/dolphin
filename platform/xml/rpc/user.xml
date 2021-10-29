@@ -1,6 +1,0 @@
-<service name="user_srv" desc="用户服务">
-    <rpc name="list" desc="用户列表">
-        <request type="$user_cond" desc="查询"/>
-        <reply type="$user_reply" desc="反馈"/>
-    </rpc>
-</service>

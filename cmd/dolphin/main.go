@@ -89,7 +89,7 @@ func InitViper(cmd *cobra.Command, _ []string) {
 	viper.SetDefault("dir.sql", "sql")
 	viper.SetDefault("dir.sqlmap", "sqlmap")
 	viper.SetDefault("dir.script", "script")
-	viper.SetDefault("dir.log", "log")
+	viper.SetDefault("dir.log", "")
 	viper.SetDefault("dir.util", "util")
 	viper.SetDefault("dir.types", "types")
 	viper.SetDefault("dir.srv", "srv")

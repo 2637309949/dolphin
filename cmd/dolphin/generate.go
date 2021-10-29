@@ -88,9 +88,6 @@ func (gen *Gen) BuildDir(dir string, args []string) (err error) {
 			if err = gen.Build(items[j]); err != nil {
 				return err
 			}
-			if err = gen.BuildProto(items[j]); err != nil {
-				return err
-			}
 			if err = gen.GoFmt(items[j]); err != nil {
 				return err
 			}
@@ -148,29 +145,6 @@ func (gen *Gen) Build(cfg *parser.TmplCfg) error {
 	_, err = w.WriteString(sbt)
 	if err != nil {
 		return err
-	}
-	return nil
-}
-
-// BuildProto defined TODO
-func (gen *Gen) BuildProto(cfg *parser.TmplCfg) error {
-	if cfg.GOProto && path.Ext(cfg.FilePath) == ".proto" {
-		if !utils.HasBin("proto") {
-			if status := utils.NetWorkStatus(); status {
-				if err := utils.InstallPackages("github.com/golang/protobuf/proto", "github.com/golang/protobuf/protoc-gen-go"); err != nil {
-					logrus.Error(err)
-				}
-			} else {
-				return errors.New("not proto bin found")
-			}
-		}
-		var stderr bytes.Buffer
-		logrus.Infoln("protoc", "-I", path.Dir(cfg.FilePath), cfg.FilePath, "--go_out=plugins=grpc:"+path.Dir(path.Dir(cfg.FilePath)))
-		cmd := exec.Command("protoc", "-I", path.Dir(cfg.FilePath), cfg.FilePath, "--go_out=plugins=grpc:"+path.Dir(path.Dir(cfg.FilePath)))
-		cmd.Stderr = &stderr
-		if err := cmd.Run(); err != nil {
-			return fmt.Errorf("%v", stderr.String())
-		}
 	}
 	return nil
 }

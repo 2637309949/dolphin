@@ -4,15 +4,12 @@
 package api
 
 import (
-	"scene/proto"
-	"scene/rpc"
 	"scene/srv"
 	"scene/svc"
 	"scene/types"
 	"time"
 
 	"github.com/spf13/viper"
-	"google.golang.org/grpc"
 )
 
 // Name project
@@ -701,11 +698,6 @@ func XlsxRoutes(rg *RouterGroup) {
 // XlsxInstance defined
 var XlsxInstance = NewXlsx()
 
-// MessageSrv defined
-func MessageSrvService(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(gs *grpc.Server) { proto.RegisterMessageSrvServer(gs, &rpc.MessageSrv{}) })
-}
-
 // SyncModel defined
 func (dol *Dolphin) SyncModel() error {
 	mseti := dol.Manager.ModelSet()
@@ -795,6 +787,5 @@ func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
 
 // SyncService defined
 func (dol *Dolphin) SyncService() error {
-	MessageSrvService(dol)
 	return nil
 }

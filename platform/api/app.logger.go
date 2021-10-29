@@ -232,21 +232,27 @@ func InitLogger() {
 	var writer io.Writer
 	util.SetFormatter(term.IsTerminal(unix.Stdout))
 	if term.IsTerminal(unix.Stdout) {
-		writer = os.Stdout
+		if writer != nil {
+			writer = io.MultiWriter(writer, os.Stdout)
+		} else {
+			writer = os.Stdout
+		}
 	}
-	logf, err := rotatelogs.New(
-		viper.GetString("dir.log")+"/%Y%m%d%H",
-		rotatelogs.WithMaxAge(24*time.Hour),
-		rotatelogs.WithRotationTime(24*time.Hour),
-	)
-	if err != nil {
-		logrus.Printf("failed to create rotatelogs: %v", err)
-		return
-	}
-	if writer != nil {
-		writer = io.MultiWriter(writer, logf)
-	} else {
-		writer = logf
+	if viper.GetString("dir.log") != "" {
+		logf, err := rotatelogs.New(
+			viper.GetString("dir.log")+"/%Y%m%d%H",
+			rotatelogs.WithMaxAge(24*time.Hour),
+			rotatelogs.WithRotationTime(24*time.Hour),
+		)
+		if err != nil {
+			logrus.Printf("failed to create rotatelogs: %v", err)
+			return
+		}
+		if writer != nil {
+			writer = io.MultiWriter(writer, logf)
+		} else {
+			writer = logf
+		}
 	}
 	logrus.SetOutput(writer)
 	InitTracker()

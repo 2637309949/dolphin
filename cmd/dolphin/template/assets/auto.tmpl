@@ -8,9 +8,7 @@ import (
 	"{{.PackageName}}/{{$.Viper.GetString "dir.types" }}"
 	"{{.PackageName}}/{{$.Viper.GetString "dir.srv" }}"
 	"{{.PackageName}}/{{$.Viper.GetString "dir.svc" }}"
-	"{{.PackageName}}/{{$.Viper.GetString "dir.proto" }}"
 
-	"google.golang.org/grpc"
 	"github.com/spf13/viper"
 )
 
@@ -70,14 +68,6 @@ func {{.ToUpperCase .Name}}Routes(rg *RouterGroup) {
 var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{end}}
 
-
-{{- range .Services}}
-// {{.ToUpperCase .Name}} defined
-func {{.ToUpperCase .Name}}Service(dol *Dolphin) {
-	dol.Remote.RegisterServer(func(gs *grpc.Server) {proto.Register{{.ToUpperCase .Name}}Server(gs, &{{$.Viper.GetString "dir.rpc" }}.{{.ToUpperCase .Name}}{})})
-}
-{{- end}}
-
 // SyncModel defined
 func (dol *Dolphin) SyncModel() error {
 	{{- $tLen := len .Tables }}{{- if ne $tLen 0 }}
@@ -101,14 +91,6 @@ func (dol *Dolphin) SyncController() error {
 func (dol *Dolphin) SyncSrv(svc *{{$.Viper.GetString "dir.svc" }}.ServiceContext) error {
 	{{- range .Controllers}}
 	{{.ToUpperCase .Name}}Instance.Srv.SetServiceContext(svc)
-	{{- end}}
-	return nil
-}
-
-// SyncService defined
-func (dol *Dolphin) SyncService() error {
-	{{- range .Services}}
-	{{.ToUpperCase .Name}}Service(dol)
 	{{- end}}
 	return nil
 }
