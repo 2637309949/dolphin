@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // KafkaInfo defined Kafka info
 type KafkaInfo struct {
@@ -11,4 +15,14 @@ type KafkaInfo struct {
 	ID null.String `json:"id" xml:"id"`
 	// score
 	Score null.Int `json:"score" xml:"score"`
+}
+
+func (r *KafkaInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalKafkaInfo(data []byte) (KafkaInfo, error) {
+	var r KafkaInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

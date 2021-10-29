@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type DataDictionary struct {
 // TableName table name of defined DataDictionary
 func (m *DataDictionary) TableName() string {
 	return "data_dictionary"
+}
+
+func (r *DataDictionary) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDataDictionary(data []byte) (DataDictionary, error) {
+	var r DataDictionary
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

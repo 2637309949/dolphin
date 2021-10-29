@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type CcsHomeworkCheckFile struct {
 // TableName table name of defined CcsHomeworkCheckFile
 func (m *CcsHomeworkCheckFile) TableName() string {
 	return "ccs_homework_check_file"
+}
+
+func (r *CcsHomeworkCheckFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCcsHomeworkCheckFile(data []byte) (CcsHomeworkCheckFile, error) {
+	var r CcsHomeworkCheckFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

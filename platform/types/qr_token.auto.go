@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // QrToken defined 扫码tk
 type QrToken struct {
@@ -17,4 +21,14 @@ type QrToken struct {
 	Domain null.String `json:"domain" xml:"domain"`
 	// 用户ID
 	UserId null.Int `json:"user_id" xml:"user_id"`
+}
+
+func (r *QrToken) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalQrToken(data []byte) (QrToken, error) {
+	var r QrToken
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

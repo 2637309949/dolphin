@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type CourseVideoFile struct {
 // TableName table name of defined CourseVideoFile
 func (m *CourseVideoFile) TableName() string {
 	return "course_video_file"
+}
+
+func (r *CourseVideoFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCourseVideoFile(data []byte) (CourseVideoFile, error) {
+	var r CourseVideoFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

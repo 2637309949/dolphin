@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type CspvTea struct {
 // TableName table name of defined CspvTea
 func (m *CspvTea) TableName() string {
 	return "cspv_tea"
+}
+
+func (r *CspvTea) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCspvTea(data []byte) (CspvTea, error) {
+	var r CspvTea
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

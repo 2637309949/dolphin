@@ -784,8 +784,3 @@ func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
 	XlsxInstance.Srv.SetServiceContext(svc)
 	return nil
 }
-
-// SyncService defined
-func (dol *Dolphin) SyncService() error {
-	return nil
-}

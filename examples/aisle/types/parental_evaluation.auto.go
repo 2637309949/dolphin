@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type ParentalEvaluation struct {
 // TableName table name of defined ParentalEvaluation
 func (m *ParentalEvaluation) TableName() string {
 	return "parental_evaluation"
+}
+
+func (r *ParentalEvaluation) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalParentalEvaluation(data []byte) (ParentalEvaluation, error) {
+	var r ParentalEvaluation
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

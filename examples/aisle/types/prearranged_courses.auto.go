@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -45,4 +47,14 @@ type PrearrangedCourses struct {
 // TableName table name of defined PrearrangedCourses
 func (m *PrearrangedCourses) TableName() string {
 	return "prearranged_courses"
+}
+
+func (r *PrearrangedCourses) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPrearrangedCourses(data []byte) (PrearrangedCourses, error) {
+	var r PrearrangedCourses
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

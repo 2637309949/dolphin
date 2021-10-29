@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type KfChangeHistory struct {
 // TableName table name of defined KfChangeHistory
 func (m *KfChangeHistory) TableName() string {
 	return "kf_change_history"
+}
+
+func (r *KfChangeHistory) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalKfChangeHistory(data []byte) (KfChangeHistory, error) {
+	var r KfChangeHistory
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

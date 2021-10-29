@@ -3,6 +3,8 @@
 
 package types
 
+import "encoding/json"
+
 // PageList defined 分页结果
 type PageList struct {
 	// 页码
@@ -15,4 +17,14 @@ type PageList struct {
 	TotalPages int `json:"totalpages" xml:"total_pages"`
 	// 总条目
 	TotalRecords int `json:"totalrecords" xml:"total_records"`
+}
+
+func (r *PageList) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPageList(data []byte) (PageList, error) {
+	var r PageList
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

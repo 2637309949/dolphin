@@ -3,6 +3,8 @@
 
 package types
 
+import "encoding/json"
+
 // ExportInfo defined 导出信息
 type ExportInfo struct {
 	// 文件ID
@@ -11,4 +13,14 @@ type ExportInfo struct {
 	FileName string `json:"file_name" xml:"file_name"`
 	// 文件路径
 	FilePath string `json:"file_path" xml:"file_path"`
+}
+
+func (r *ExportInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalExportInfo(data []byte) (ExportInfo, error) {
+	var r ExportInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

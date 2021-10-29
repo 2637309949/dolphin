@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -57,4 +59,14 @@ type Article struct {
 // TableName table name of defined Article
 func (m *Article) TableName() string {
 	return "article"
+}
+
+func (r *Article) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalArticle(data []byte) (Article, error) {
+	var r Article
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

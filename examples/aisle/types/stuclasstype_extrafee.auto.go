@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type StuclasstypeExtrafee struct {
 // TableName table name of defined StuclasstypeExtrafee
 func (m *StuclasstypeExtrafee) TableName() string {
 	return "stuclasstype_extrafee"
+}
+
+func (r *StuclasstypeExtrafee) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStuclasstypeExtrafee(data []byte) (StuclasstypeExtrafee, error) {
+	var r StuclasstypeExtrafee
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

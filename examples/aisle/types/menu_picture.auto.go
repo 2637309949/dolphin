@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -24,4 +26,14 @@ type MenuPicture struct {
 // TableName table name of defined MenuPicture
 func (m *MenuPicture) TableName() string {
 	return "menu_picture"
+}
+
+func (r *MenuPicture) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalMenuPicture(data []byte) (MenuPicture, error) {
+	var r MenuPicture
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

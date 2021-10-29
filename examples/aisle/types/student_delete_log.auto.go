@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type StudentDeleteLog struct {
 // TableName table name of defined StudentDeleteLog
 func (m *StudentDeleteLog) TableName() string {
 	return "student_delete_log"
+}
+
+func (r *StudentDeleteLog) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStudentDeleteLog(data []byte) (StudentDeleteLog, error) {
+	var r StudentDeleteLog
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

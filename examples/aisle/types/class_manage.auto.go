@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -70,4 +72,14 @@ type ClassManage struct {
 // TableName table name of defined ClassManage
 func (m *ClassManage) TableName() string {
 	return "class_manage"
+}
+
+func (r *ClassManage) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalClassManage(data []byte) (ClassManage, error) {
+	var r ClassManage
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

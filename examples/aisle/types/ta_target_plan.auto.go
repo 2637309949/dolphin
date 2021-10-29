@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -54,4 +56,14 @@ type TaTargetPlan struct {
 // TableName table name of defined TaTargetPlan
 func (m *TaTargetPlan) TableName() string {
 	return "ta_target_plan"
+}
+
+func (r *TaTargetPlan) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTaTargetPlan(data []byte) (TaTargetPlan, error) {
+	var r TaTargetPlan
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

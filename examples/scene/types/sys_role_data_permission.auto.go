@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type SysRoleDataPermission struct {
 // TableName table name of defined SysRoleDataPermission
 func (m *SysRoleDataPermission) TableName() string {
 	return "sys_role_data_permission"
+}
+
+func (r *SysRoleDataPermission) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysRoleDataPermission(data []byte) (SysRoleDataPermission, error) {
+	var r SysRoleDataPermission
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

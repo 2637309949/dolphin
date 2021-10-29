@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type ClassTimeRangeTea struct {
 // TableName table name of defined ClassTimeRangeTea
 func (m *ClassTimeRangeTea) TableName() string {
 	return "class_time_range_tea"
+}
+
+func (r *ClassTimeRangeTea) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalClassTimeRangeTea(data []byte) (ClassTimeRangeTea, error) {
+	var r ClassTimeRangeTea
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type FqorderZx struct {
 // TableName table name of defined FqorderZx
 func (m *FqorderZx) TableName() string {
 	return "fqorder_zx"
+}
+
+func (r *FqorderZx) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalFqorderZx(data []byte) (FqorderZx, error) {
+	var r FqorderZx
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

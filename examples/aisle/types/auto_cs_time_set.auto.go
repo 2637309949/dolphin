@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type AutoCsTimeSet struct {
 // TableName table name of defined AutoCsTimeSet
 func (m *AutoCsTimeSet) TableName() string {
 	return "auto_cs_time_set"
+}
+
+func (r *AutoCsTimeSet) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAutoCsTimeSet(data []byte) (AutoCsTimeSet, error) {
+	var r AutoCsTimeSet
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

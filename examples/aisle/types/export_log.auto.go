@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type ExportLog struct {
 // TableName table name of defined ExportLog
 func (m *ExportLog) TableName() string {
 	return "export_log"
+}
+
+func (r *ExportLog) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalExportLog(data []byte) (ExportLog, error) {
+	var r ExportLog
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

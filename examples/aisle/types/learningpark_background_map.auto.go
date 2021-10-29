@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type LearningparkBackgroundMap struct {
 // TableName table name of defined LearningparkBackgroundMap
 func (m *LearningparkBackgroundMap) TableName() string {
 	return "learningpark_background_map"
+}
+
+func (r *LearningparkBackgroundMap) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLearningparkBackgroundMap(data []byte) (LearningparkBackgroundMap, error) {
+	var r LearningparkBackgroundMap
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

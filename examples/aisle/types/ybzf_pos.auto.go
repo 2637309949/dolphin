@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type YbzfPos struct {
 // TableName table name of defined YbzfPos
 func (m *YbzfPos) TableName() string {
 	return "ybzf_pos"
+}
+
+func (r *YbzfPos) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalYbzfPos(data []byte) (YbzfPos, error) {
+	var r YbzfPos
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

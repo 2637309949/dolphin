@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // EncryptInfo defined 文章信息
 type EncryptInfo struct {
@@ -15,4 +19,14 @@ type EncryptInfo struct {
 	Timestamp null.Int `json:"timestamp" xml:"timestamp"`
 	// 请求参数
 	BizContent null.String `json:"biz_content" xml:"biz_content"`
+}
+
+func (r *EncryptInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalEncryptInfo(data []byte) (EncryptInfo, error) {
+	var r EncryptInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

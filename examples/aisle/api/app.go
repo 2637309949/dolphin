@@ -4,6 +4,7 @@
 package api
 
 import (
+	"fmt"
 	"path"
 	"strings"
 	"sync"
@@ -15,6 +16,7 @@ import (
 
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/thoas/go-funk"
 )
 
@@ -57,8 +59,12 @@ func (dol *Dolphin) Reflesh() error {
 
 // Run defined TODO
 func (dol *Dolphin) Run() {
-	util.Ensure(dol.Reflesh())
-	dol.Dolphin.Run()
+	if err := dol.Reflesh(); err != nil {
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
+	}
+	if err := dol.Dolphin.Run(); err != nil {
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
+	}
 }
 
 // Use defined TODO

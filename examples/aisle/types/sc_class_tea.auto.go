@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -66,4 +68,14 @@ type ScClassTea struct {
 // TableName table name of defined ScClassTea
 func (m *ScClassTea) TableName() string {
 	return "sc_class_tea"
+}
+
+func (r *ScClassTea) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalScClassTea(data []byte) (ScClassTea, error) {
+	var r ScClassTea
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

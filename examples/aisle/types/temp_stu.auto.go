@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -20,4 +22,14 @@ type TempStu struct {
 // TableName table name of defined TempStu
 func (m *TempStu) TableName() string {
 	return "temp_stu"
+}
+
+func (r *TempStu) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTempStu(data []byte) (TempStu, error) {
+	var r TempStu
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

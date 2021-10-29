@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type StudentCzIntegral struct {
 // TableName table name of defined StudentCzIntegral
 func (m *StudentCzIntegral) TableName() string {
 	return "student_cz_integral"
+}
+
+func (r *StudentCzIntegral) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStudentCzIntegral(data []byte) (StudentCzIntegral, error) {
+	var r StudentCzIntegral
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

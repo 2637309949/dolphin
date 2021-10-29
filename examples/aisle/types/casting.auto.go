@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type Casting struct {
 // TableName table name of defined Casting
 func (m *Casting) TableName() string {
 	return "casting"
+}
+
+func (r *Casting) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCasting(data []byte) (Casting, error) {
+	var r Casting
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

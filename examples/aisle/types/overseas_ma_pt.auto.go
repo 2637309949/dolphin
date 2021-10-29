@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type OverseasMaPt struct {
 // TableName table name of defined OverseasMaPt
 func (m *OverseasMaPt) TableName() string {
 	return "overseas_ma_pt"
+}
+
+func (r *OverseasMaPt) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalOverseasMaPt(data []byte) (OverseasMaPt, error) {
+	var r OverseasMaPt
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

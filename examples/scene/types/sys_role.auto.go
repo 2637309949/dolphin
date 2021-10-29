@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type SysRole struct {
 // TableName table name of defined SysRole
 func (m *SysRole) TableName() string {
 	return "sys_role"
+}
+
+func (r *SysRole) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysRole(data []byte) (SysRole, error) {
+	var r SysRole
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

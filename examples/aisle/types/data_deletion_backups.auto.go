@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type DataDeletionBackups struct {
 // TableName table name of defined DataDeletionBackups
 func (m *DataDeletionBackups) TableName() string {
 	return "data_deletion_backups"
+}
+
+func (r *DataDeletionBackups) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDataDeletionBackups(data []byte) (DataDeletionBackups, error) {
+	var r DataDeletionBackups
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

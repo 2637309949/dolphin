@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type FamilyShareNumbe struct {
 // TableName table name of defined FamilyShareNumbe
 func (m *FamilyShareNumbe) TableName() string {
 	return "family_share_numbe"
+}
+
+func (r *FamilyShareNumbe) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalFamilyShareNumbe(data []byte) (FamilyShareNumbe, error) {
+	var r FamilyShareNumbe
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

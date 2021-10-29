@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -44,4 +46,14 @@ type NetworkActivity struct {
 // TableName table name of defined NetworkActivity
 func (m *NetworkActivity) TableName() string {
 	return "network_activity"
+}
+
+func (r *NetworkActivity) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalNetworkActivity(data []byte) (NetworkActivity, error) {
+	var r NetworkActivity
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

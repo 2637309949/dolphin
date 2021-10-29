@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type CsStuTeacher struct {
 // TableName table name of defined CsStuTeacher
 func (m *CsStuTeacher) TableName() string {
 	return "cs_stu_teacher"
+}
+
+func (r *CsStuTeacher) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCsStuTeacher(data []byte) (CsStuTeacher, error) {
+	var r CsStuTeacher
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

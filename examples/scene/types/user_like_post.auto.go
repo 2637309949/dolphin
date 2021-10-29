@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type UserLikePost struct {
 // TableName table name of defined UserLikePost
 func (m *UserLikePost) TableName() string {
 	return "user_like_post"
+}
+
+func (r *UserLikePost) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUserLikePost(data []byte) (UserLikePost, error) {
+	var r UserLikePost
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

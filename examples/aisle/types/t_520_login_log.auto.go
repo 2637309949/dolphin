@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -26,4 +28,14 @@ type T520LoginLog struct {
 // TableName table name of defined T520LoginLog
 func (m *T520LoginLog) TableName() string {
 	return "t_520_login_log"
+}
+
+func (r *T520LoginLog) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalT520LoginLog(data []byte) (T520LoginLog, error) {
+	var r T520LoginLog
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type ClassYpSc struct {
 // TableName table name of defined ClassYpSc
 func (m *ClassYpSc) TableName() string {
 	return "class_yp_sc"
+}
+
+func (r *ClassYpSc) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalClassYpSc(data []byte) (ClassYpSc, error) {
+	var r ClassYpSc
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

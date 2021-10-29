@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -95,4 +97,14 @@ type YeepayReconciliationsRecord struct {
 // TableName table name of defined YeepayReconciliationsRecord
 func (m *YeepayReconciliationsRecord) TableName() string {
 	return "yeepay_reconciliations_record"
+}
+
+func (r *YeepayReconciliationsRecord) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalYeepayReconciliationsRecord(data []byte) (YeepayReconciliationsRecord, error) {
+	var r YeepayReconciliationsRecord
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

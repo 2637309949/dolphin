@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type TmSi struct {
 // TableName table name of defined TmSi
 func (m *TmSi) TableName() string {
 	return "tm_si"
+}
+
+func (r *TmSi) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTmSi(data []byte) (TmSi, error) {
+	var r TmSi
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

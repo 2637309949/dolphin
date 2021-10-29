@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type SaleLanguageModel struct {
 // TableName table name of defined SaleLanguageModel
 func (m *SaleLanguageModel) TableName() string {
 	return "sale_language_model"
+}
+
+func (r *SaleLanguageModel) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSaleLanguageModel(data []byte) (SaleLanguageModel, error) {
+	var r SaleLanguageModel
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

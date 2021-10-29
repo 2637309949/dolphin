@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -62,4 +64,14 @@ type NewStuTransition struct {
 // TableName table name of defined NewStuTransition
 func (m *NewStuTransition) TableName() string {
 	return "new_stu_transition"
+}
+
+func (r *NewStuTransition) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalNewStuTransition(data []byte) (NewStuTransition, error) {
+	var r NewStuTransition
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

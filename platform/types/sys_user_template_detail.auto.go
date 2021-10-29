@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type SysUserTemplateDetail struct {
 // TableName table name of defined SysUserTemplateDetail
 func (m *SysUserTemplateDetail) TableName() string {
 	return "sys_user_template_detail"
+}
+
+func (r *SysUserTemplateDetail) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysUserTemplateDetail(data []byte) (SysUserTemplateDetail, error) {
+	var r SysUserTemplateDetail
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

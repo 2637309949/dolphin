@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // Domain defined 域
 type Domain struct {
@@ -27,4 +31,14 @@ type Domain struct {
 	Theme null.String `json:"theme" xml:"theme"`
 	// 认证模式 0：集成登录 1：单点登录
 	AuthMode null.Int `json:"auth_mode" xml:"auth_mode"`
+}
+
+func (r *Domain) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDomain(data []byte) (Domain, error) {
+	var r Domain
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

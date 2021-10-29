@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -42,4 +44,14 @@ type SystemMessage struct {
 // TableName table name of defined SystemMessage
 func (m *SystemMessage) TableName() string {
 	return "system_message"
+}
+
+func (r *SystemMessage) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSystemMessage(data []byte) (SystemMessage, error) {
+	var r SystemMessage
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

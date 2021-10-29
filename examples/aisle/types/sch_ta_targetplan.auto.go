@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type SchTaTargetplan struct {
 // TableName table name of defined SchTaTargetplan
 func (m *SchTaTargetplan) TableName() string {
 	return "sch_ta_targetplan"
+}
+
+func (r *SchTaTargetplan) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSchTaTargetplan(data []byte) (SchTaTargetplan, error) {
+	var r SchTaTargetplan
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

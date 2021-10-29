@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type WholeCountry struct {
 // TableName table name of defined WholeCountry
 func (m *WholeCountry) TableName() string {
 	return "whole_country"
+}
+
+func (r *WholeCountry) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalWholeCountry(data []byte) (WholeCountry, error) {
+	var r WholeCountry
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

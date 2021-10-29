@@ -3,6 +3,8 @@
 
 package types
 
+import "encoding/json"
+
 // Worker defined work表单
 type Worker struct {
 	// 名称
@@ -21,4 +23,14 @@ type Worker struct {
 	Error interface{} `json:"error,omitempty" xml:"error"`
 	// 用户
 	User SysUser `json:"user,omitempty" xml:"user"`
+}
+
+func (r *Worker) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalWorker(data []byte) (Worker, error) {
+	var r Worker
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

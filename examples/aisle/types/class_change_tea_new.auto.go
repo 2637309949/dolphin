@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type ClassChangeTeaNew struct {
 // TableName table name of defined ClassChangeTeaNew
 func (m *ClassChangeTeaNew) TableName() string {
 	return "class_change_tea_new"
+}
+
+func (r *ClassChangeTeaNew) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalClassChangeTeaNew(data []byte) (ClassChangeTeaNew, error) {
+	var r ClassChangeTeaNew
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

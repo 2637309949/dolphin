@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type RpsSch struct {
 // TableName table name of defined RpsSch
 func (m *RpsSch) TableName() string {
 	return "rps_sch"
+}
+
+func (r *RpsSch) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalRpsSch(data []byte) (RpsSch, error) {
+	var r RpsSch
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

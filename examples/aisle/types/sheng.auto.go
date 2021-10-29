@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type Sheng struct {
 // TableName table name of defined Sheng
 func (m *Sheng) TableName() string {
 	return "sheng"
+}
+
+func (r *Sheng) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSheng(data []byte) (Sheng, error) {
+	var r Sheng
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

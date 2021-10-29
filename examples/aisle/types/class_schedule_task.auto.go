@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -46,4 +48,14 @@ type ClassScheduleTask struct {
 // TableName table name of defined ClassScheduleTask
 func (m *ClassScheduleTask) TableName() string {
 	return "class_schedule_task"
+}
+
+func (r *ClassScheduleTask) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalClassScheduleTask(data []byte) (ClassScheduleTask, error) {
+	var r ClassScheduleTask
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

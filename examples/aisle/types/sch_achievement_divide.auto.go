@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type SchAchievementDivide struct {
 // TableName table name of defined SchAchievementDivide
 func (m *SchAchievementDivide) TableName() string {
 	return "sch_achievement_divide"
+}
+
+func (r *SchAchievementDivide) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSchAchievementDivide(data []byte) (SchAchievementDivide, error) {
+	var r SchAchievementDivide
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

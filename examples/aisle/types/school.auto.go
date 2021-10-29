@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type School struct {
 // TableName table name of defined School
 func (m *School) TableName() string {
 	return "school"
+}
+
+func (r *School) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSchool(data []byte) (School, error) {
+	var r School
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

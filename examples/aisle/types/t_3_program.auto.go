@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type T3Program struct {
 // TableName table name of defined T3Program
 func (m *T3Program) TableName() string {
 	return "t_3_program"
+}
+
+func (r *T3Program) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalT3Program(data []byte) (T3Program, error) {
+	var r T3Program
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

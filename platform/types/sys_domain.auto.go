@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -64,4 +66,14 @@ type SysDomain struct {
 // TableName table name of defined SysDomain
 func (m *SysDomain) TableName() string {
 	return "sys_domain"
+}
+
+func (r *SysDomain) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysDomain(data []byte) (SysDomain, error) {
+	var r SysDomain
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

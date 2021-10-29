@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -42,4 +44,14 @@ type AchievementSendEmailMsg struct {
 // TableName table name of defined AchievementSendEmailMsg
 func (m *AchievementSendEmailMsg) TableName() string {
 	return "achievement_send_email_msg"
+}
+
+func (r *AchievementSendEmailMsg) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAchievementSendEmailMsg(data []byte) (AchievementSendEmailMsg, error) {
+	var r AchievementSendEmailMsg
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type HomeEmailMessage struct {
 // TableName table name of defined HomeEmailMessage
 func (m *HomeEmailMessage) TableName() string {
 	return "home_email_message"
+}
+
+func (r *HomeEmailMessage) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalHomeEmailMessage(data []byte) (HomeEmailMessage, error) {
+	var r HomeEmailMessage
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

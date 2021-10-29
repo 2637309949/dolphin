@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -46,4 +48,14 @@ type InviteVisit struct {
 // TableName table name of defined InviteVisit
 func (m *InviteVisit) TableName() string {
 	return "invite_visit"
+}
+
+func (r *InviteVisit) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalInviteVisit(data []byte) (InviteVisit, error) {
+	var r InviteVisit
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

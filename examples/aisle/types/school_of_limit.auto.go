@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -41,4 +43,14 @@ type SchoolOfLimit struct {
 // TableName table name of defined SchoolOfLimit
 func (m *SchoolOfLimit) TableName() string {
 	return "school_of_limit"
+}
+
+func (r *SchoolOfLimit) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSchoolOfLimit(data []byte) (SchoolOfLimit, error) {
+	var r SchoolOfLimit
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

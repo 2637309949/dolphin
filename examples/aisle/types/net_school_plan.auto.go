@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -39,4 +41,14 @@ type NetSchoolPlan struct {
 // TableName table name of defined NetSchoolPlan
 func (m *NetSchoolPlan) TableName() string {
 	return "net_school_plan"
+}
+
+func (r *NetSchoolPlan) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalNetSchoolPlan(data []byte) (NetSchoolPlan, error) {
+	var r NetSchoolPlan
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

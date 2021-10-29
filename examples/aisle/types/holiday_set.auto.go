@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type HolidaySet struct {
 // TableName table name of defined HolidaySet
 func (m *HolidaySet) TableName() string {
 	return "holiday_set"
+}
+
+func (r *HolidaySet) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalHolidaySet(data []byte) (HolidaySet, error) {
+	var r HolidaySet
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

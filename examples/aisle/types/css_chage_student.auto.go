@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -44,4 +46,14 @@ type CssChageStudent struct {
 // TableName table name of defined CssChageStudent
 func (m *CssChageStudent) TableName() string {
 	return "css_chage_student"
+}
+
+func (r *CssChageStudent) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCssChageStudent(data []byte) (CssChageStudent, error) {
+	var r CssChageStudent
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

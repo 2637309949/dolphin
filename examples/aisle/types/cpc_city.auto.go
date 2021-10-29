@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type CpcCity struct {
 // TableName table name of defined CpcCity
 func (m *CpcCity) TableName() string {
 	return "cpc_city"
+}
+
+func (r *CpcCity) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCpcCity(data []byte) (CpcCity, error) {
+	var r CpcCity
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

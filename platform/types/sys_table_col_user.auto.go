@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type SysTableColUser struct {
 // TableName table name of defined SysTableColUser
 func (m *SysTableColUser) TableName() string {
 	return "sys_table_col_user"
+}
+
+func (r *SysTableColUser) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysTableColUser(data []byte) (SysTableColUser, error) {
+	var r SysTableColUser
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

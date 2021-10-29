@@ -52,7 +52,6 @@ type (
 func (dol *Dolphin) Reflesh() error {
 	dol.SyncModel()
 	dol.SyncSrv(svc.NewServiceContext(api.CacheStore))
-	dol.SyncService()
 	dol.SyncController()
 	return dol.Dolphin.Reflesh()
 }

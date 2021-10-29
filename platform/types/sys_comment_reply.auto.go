@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type SysCommentReply struct {
 // TableName table name of defined SysCommentReply
 func (m *SysCommentReply) TableName() string {
 	return "sys_comment_reply"
+}
+
+func (r *SysCommentReply) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysCommentReply(data []byte) (SysCommentReply, error) {
+	var r SysCommentReply
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

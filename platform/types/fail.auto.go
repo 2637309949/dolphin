@@ -3,10 +3,22 @@
 
 package types
 
+import "encoding/json"
+
 // Fail defined 失败返回
 type Fail struct {
 	// 错误编码
 	Code int `json:"code" xml:"code" example:"500"`
 	// 错误信息
 	Msg string `json:"msg,omitempty" xml:"msg" example:"status bad request"`
+}
+
+func (r *Fail) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalFail(data []byte) (Fail, error) {
+	var r Fail
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

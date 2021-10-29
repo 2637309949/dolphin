@@ -4,10 +4,14 @@
 package errors
 
 import (
-	"errors"
+	"github.com/go-errors/errors"
 )
 
 // errors const defined TODO
 var (
 	ErrNotFound = errors.New("not found")
 )
+
+func Wrap(e interface{}, skip int) *errors.Error {
+	return errors.Wrap(e, skip)
+}

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -50,4 +52,14 @@ type PaActiveReservation struct {
 // TableName table name of defined PaActiveReservation
 func (m *PaActiveReservation) TableName() string {
 	return "pa_active_reservation"
+}
+
+func (r *PaActiveReservation) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPaActiveReservation(data []byte) (PaActiveReservation, error) {
+	var r PaActiveReservation
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

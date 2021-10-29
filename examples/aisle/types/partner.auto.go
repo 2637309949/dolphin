@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type Partner struct {
 // TableName table name of defined Partner
 func (m *Partner) TableName() string {
 	return "partner"
+}
+
+func (r *Partner) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPartner(data []byte) (Partner, error) {
+	var r Partner
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

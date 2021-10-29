@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -57,4 +59,14 @@ type OfDepositDetail struct {
 // TableName table name of defined OfDepositDetail
 func (m *OfDepositDetail) TableName() string {
 	return "of_deposit_detail"
+}
+
+func (r *OfDepositDetail) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalOfDepositDetail(data []byte) (OfDepositDetail, error) {
+	var r OfDepositDetail
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

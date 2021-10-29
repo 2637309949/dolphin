@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type Area struct {
 // TableName table name of defined Area
 func (m *Area) TableName() string {
 	return "area"
+}
+
+func (r *Area) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalArea(data []byte) (Area, error) {
+	var r Area
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

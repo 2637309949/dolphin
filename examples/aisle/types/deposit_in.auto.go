@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -62,4 +64,14 @@ type DepositIn struct {
 // TableName table name of defined DepositIn
 func (m *DepositIn) TableName() string {
 	return "deposit_in"
+}
+
+func (r *DepositIn) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDepositIn(data []byte) (DepositIn, error) {
+	var r DepositIn
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

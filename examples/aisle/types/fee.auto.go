@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -81,4 +83,14 @@ type Fee struct {
 // TableName table name of defined Fee
 func (m *Fee) TableName() string {
 	return "fee"
+}
+
+func (r *Fee) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalFee(data []byte) (Fee, error) {
+	var r Fee
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

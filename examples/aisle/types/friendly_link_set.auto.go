@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type FriendlyLinkSet struct {
 // TableName table name of defined FriendlyLinkSet
 func (m *FriendlyLinkSet) TableName() string {
 	return "friendly_link_set"
+}
+
+func (r *FriendlyLinkSet) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalFriendlyLinkSet(data []byte) (FriendlyLinkSet, error) {
+	var r FriendlyLinkSet
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

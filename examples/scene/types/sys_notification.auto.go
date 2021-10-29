@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type SysNotification struct {
 // TableName table name of defined SysNotification
 func (m *SysNotification) TableName() string {
 	return "sys_notification"
+}
+
+func (r *SysNotification) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysNotification(data []byte) (SysNotification, error) {
+	var r SysNotification
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

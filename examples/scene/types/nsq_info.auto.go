@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // NsqInfo defined Nsq info
 type NsqInfo struct {
@@ -11,4 +15,14 @@ type NsqInfo struct {
 	ID null.String `json:"id" xml:"id"`
 	// score
 	Score null.Int `json:"score" xml:"score"`
+}
+
+func (r *NsqInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalNsqInfo(data []byte) (NsqInfo, error) {
+	var r NsqInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

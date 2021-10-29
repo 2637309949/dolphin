@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -80,4 +82,14 @@ type XlHc struct {
 // TableName table name of defined XlHc
 func (m *XlHc) TableName() string {
 	return "xl_hc"
+}
+
+func (r *XlHc) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalXlHc(data []byte) (XlHc, error) {
+	var r XlHc
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

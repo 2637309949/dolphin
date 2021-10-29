@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type AndroidHotfix struct {
 // TableName table name of defined AndroidHotfix
 func (m *AndroidHotfix) TableName() string {
 	return "android_hotfix"
+}
+
+func (r *AndroidHotfix) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAndroidHotfix(data []byte) (AndroidHotfix, error) {
+	var r AndroidHotfix
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

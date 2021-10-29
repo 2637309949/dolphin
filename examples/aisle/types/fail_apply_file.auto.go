@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type FailApplyFile struct {
 // TableName table name of defined FailApplyFile
 func (m *FailApplyFile) TableName() string {
 	return "fail_apply_file"
+}
+
+func (r *FailApplyFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalFailApplyFile(data []byte) (FailApplyFile, error) {
+	var r FailApplyFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

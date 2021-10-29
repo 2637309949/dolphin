@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type StudentClassTypeUseIntegral struct {
 // TableName table name of defined StudentClassTypeUseIntegral
 func (m *StudentClassTypeUseIntegral) TableName() string {
 	return "student_class_type_use_integral"
+}
+
+func (r *StudentClassTypeUseIntegral) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStudentClassTypeUseIntegral(data []byte) (StudentClassTypeUseIntegral, error) {
+	var r StudentClassTypeUseIntegral
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

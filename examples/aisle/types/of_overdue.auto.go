@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type OfOverdue struct {
 // TableName table name of defined OfOverdue
 func (m *OfOverdue) TableName() string {
 	return "of_overdue"
+}
+
+func (r *OfOverdue) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalOfOverdue(data []byte) (OfOverdue, error) {
+	var r OfOverdue
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

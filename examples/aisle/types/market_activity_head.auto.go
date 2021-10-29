@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type MarketActivityHead struct {
 // TableName table name of defined MarketActivityHead
 func (m *MarketActivityHead) TableName() string {
 	return "market_activity_head"
+}
+
+func (r *MarketActivityHead) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalMarketActivityHead(data []byte) (MarketActivityHead, error) {
+	var r MarketActivityHead
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

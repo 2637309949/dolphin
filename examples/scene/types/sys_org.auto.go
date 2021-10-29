@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -46,4 +48,14 @@ type SysOrg struct {
 // TableName table name of defined SysOrg
 func (m *SysOrg) TableName() string {
 	return "sys_org"
+}
+
+func (r *SysOrg) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysOrg(data []byte) (SysOrg, error) {
+	var r SysOrg
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

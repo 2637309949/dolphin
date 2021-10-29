@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type DoRefapply struct {
 // TableName table name of defined DoRefapply
 func (m *DoRefapply) TableName() string {
 	return "do_refapply"
+}
+
+func (r *DoRefapply) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDoRefapply(data []byte) (DoRefapply, error) {
+	var r DoRefapply
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

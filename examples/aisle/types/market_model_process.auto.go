@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type MarketModelProcess struct {
 // TableName table name of defined MarketModelProcess
 func (m *MarketModelProcess) TableName() string {
 	return "market_model_process"
+}
+
+func (r *MarketModelProcess) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalMarketModelProcess(data []byte) (MarketModelProcess, error) {
+	var r MarketModelProcess
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

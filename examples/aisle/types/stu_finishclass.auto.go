@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type StuFinishclass struct {
 // TableName table name of defined StuFinishclass
 func (m *StuFinishclass) TableName() string {
 	return "stu_finishclass"
+}
+
+func (r *StuFinishclass) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStuFinishclass(data []byte) (StuFinishclass, error) {
+	var r StuFinishclass
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

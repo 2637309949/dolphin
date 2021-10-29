@@ -17,3 +17,13 @@ type {{.Table.ToUpperCase .Table.Name}} struct {
 func (m *{{.Table.ToUpperCase .Table.Name}}) TableName() string {
 	return "{{.Table.Name}}"
 }
+
+func (r *{{.Table.ToUpperCase .Table.Name}}) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func Unmarshal{{.Table.ToUpperCase .Table.Name}}(data []byte) ({{.Table.ToUpperCase .Table.Name}}, error) {
+	var r {{.Table.ToUpperCase .Table.Name}}
+	err := json.Unmarshal(data, &r)
+	return r, err
+}

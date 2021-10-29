@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type NetworkActivityOrgan struct {
 // TableName table name of defined NetworkActivityOrgan
 func (m *NetworkActivityOrgan) TableName() string {
 	return "network_activity_organ"
+}
+
+func (r *NetworkActivityOrgan) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalNetworkActivityOrgan(data []byte) (NetworkActivityOrgan, error) {
+	var r NetworkActivityOrgan
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

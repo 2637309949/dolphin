@@ -3,6 +3,8 @@
 
 package types
 
+import "encoding/json"
+
 // Attach defined 附件结构
 type Attach struct {
 	// 文件ID
@@ -13,4 +15,14 @@ type Attach struct {
 	Hash string `json:"hash" xml:"hash"`
 	// 访问路径
 	URL string `json:"url" xml:"url"`
+}
+
+func (r *Attach) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAttach(data []byte) (Attach, error) {
+	var r Attach
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

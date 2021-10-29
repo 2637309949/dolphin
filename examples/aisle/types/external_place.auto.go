@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type ExternalPlace struct {
 // TableName table name of defined ExternalPlace
 func (m *ExternalPlace) TableName() string {
 	return "external_place"
+}
+
+func (r *ExternalPlace) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalExternalPlace(data []byte) (ExternalPlace, error) {
+	var r ExternalPlace
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

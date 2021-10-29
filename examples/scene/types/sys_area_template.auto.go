@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type SysAreaTemplate struct {
 // TableName table name of defined SysAreaTemplate
 func (m *SysAreaTemplate) TableName() string {
 	return "sys_area_template"
+}
+
+func (r *SysAreaTemplate) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysAreaTemplate(data []byte) (SysAreaTemplate, error) {
+	var r SysAreaTemplate
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

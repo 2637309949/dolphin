@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type SysComment struct {
 // TableName table name of defined SysComment
 func (m *SysComment) TableName() string {
 	return "sys_comment"
+}
+
+func (r *SysComment) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysComment(data []byte) (SysComment, error) {
+	var r SysComment
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

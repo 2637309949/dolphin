@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -42,4 +44,14 @@ type NewKxRecord struct {
 // TableName table name of defined NewKxRecord
 func (m *NewKxRecord) TableName() string {
 	return "new_kx_record"
+}
+
+func (r *NewKxRecord) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalNewKxRecord(data []byte) (NewKxRecord, error) {
+	var r NewKxRecord
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

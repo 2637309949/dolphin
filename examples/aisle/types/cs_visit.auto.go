@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type CsVisit struct {
 // TableName table name of defined CsVisit
 func (m *CsVisit) TableName() string {
 	return "cs_visit"
+}
+
+func (r *CsVisit) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCsVisit(data []byte) (CsVisit, error) {
+	var r CsVisit
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

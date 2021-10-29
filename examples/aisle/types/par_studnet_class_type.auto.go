@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type ParStudnetClassType struct {
 // TableName table name of defined ParStudnetClassType
 func (m *ParStudnetClassType) TableName() string {
 	return "par_studnet_class_type"
+}
+
+func (r *ParStudnetClassType) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalParStudnetClassType(data []byte) (ParStudnetClassType, error) {
+	var r ParStudnetClassType
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

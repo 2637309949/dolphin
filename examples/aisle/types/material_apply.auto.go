@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type MaterialApply struct {
 // TableName table name of defined MaterialApply
 func (m *MaterialApply) TableName() string {
 	return "material_apply"
+}
+
+func (r *MaterialApply) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalMaterialApply(data []byte) (MaterialApply, error) {
+	var r MaterialApply
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -16,7 +16,6 @@ dir:
   doc: ""
   k8s: k8s/platform
   log: ""
-  rpc: rpc
   script: script
   sql: sql
   sqlmap: sqlmap
@@ -56,10 +55,6 @@ redis:
   read_timeout: 10
   username: ""
   write_timeout: 10
-rpc:
-  domain_srv: localhost:9081
-  port: "9081"
-  user_srv: localhost:9081
 swag:
   authorizationurl: /api/sys/cas/authorize
   license:

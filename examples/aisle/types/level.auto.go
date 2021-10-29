@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type Level struct {
 // TableName table name of defined Level
 func (m *Level) TableName() string {
 	return "level"
+}
+
+func (r *Level) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLevel(data []byte) (Level, error) {
+	var r Level
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

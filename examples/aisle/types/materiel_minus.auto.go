@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type MaterielMinus struct {
 // TableName table name of defined MaterielMinus
 func (m *MaterielMinus) TableName() string {
 	return "materiel_minus"
+}
+
+func (r *MaterielMinus) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalMaterielMinus(data []byte) (MaterielMinus, error) {
+	var r MaterielMinus
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

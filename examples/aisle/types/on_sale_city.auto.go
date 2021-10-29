@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type OnSaleCity struct {
 // TableName table name of defined OnSaleCity
 func (m *OnSaleCity) TableName() string {
 	return "on_sale_city"
+}
+
+func (r *OnSaleCity) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalOnSaleCity(data []byte) (OnSaleCity, error) {
+	var r OnSaleCity
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

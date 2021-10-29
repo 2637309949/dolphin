@@ -3,10 +3,22 @@
 
 package types
 
+import "encoding/json"
+
 // Success defined 成功返回
 type Success struct {
 	// 编码
 	Code int `json:"code" xml:"code" example:"200"`
 	// 返回数据
 	Data interface{} `json:"data,omitempty" xml:"data"`
+}
+
+func (r *Success) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSuccess(data []byte) (Success, error) {
+	var r Success
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

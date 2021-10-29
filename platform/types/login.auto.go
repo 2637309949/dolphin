@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // Login defined 登录表单
 type Login struct {
@@ -13,4 +17,14 @@ type Login struct {
 	Password null.String `json:"password" xml:"password"`
 	// 域
 	Domain null.String `json:"domain" xml:"domain"`
+}
+
+func (r *Login) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLogin(data []byte) (Login, error) {
+	var r Login
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

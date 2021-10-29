@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type TeacherServiceProcess struct {
 // TableName table name of defined TeacherServiceProcess
 func (m *TeacherServiceProcess) TableName() string {
 	return "teacher_service_process"
+}
+
+func (r *TeacherServiceProcess) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTeacherServiceProcess(data []byte) (TeacherServiceProcess, error) {
+	var r TeacherServiceProcess
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

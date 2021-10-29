@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type RefundProcessSet struct {
 // TableName table name of defined RefundProcessSet
 func (m *RefundProcessSet) TableName() string {
 	return "refund_process_set"
+}
+
+func (r *RefundProcessSet) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalRefundProcessSet(data []byte) (RefundProcessSet, error) {
+	var r RefundProcessSet
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

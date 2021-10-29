@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type TrainExternalPlace struct {
 // TableName table name of defined TrainExternalPlace
 func (m *TrainExternalPlace) TableName() string {
 	return "train_external_place"
+}
+
+func (r *TrainExternalPlace) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTrainExternalPlace(data []byte) (TrainExternalPlace, error) {
+	var r TrainExternalPlace
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

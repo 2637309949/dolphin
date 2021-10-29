@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type UserUploadFile struct {
 // TableName table name of defined UserUploadFile
 func (m *UserUploadFile) TableName() string {
 	return "user_upload_file"
+}
+
+func (r *UserUploadFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUserUploadFile(data []byte) (UserUploadFile, error) {
+	var r UserUploadFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

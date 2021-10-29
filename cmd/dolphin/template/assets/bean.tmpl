@@ -18,3 +18,13 @@ type {{.Bean.ToUpperCase .Bean.Name}} struct {
 	{{.ToUpperCase .Name}} {{.SRef .Type}} `json:"{{- if ne .JSON ""}}{{.JSON}}{{- else}}{{.Name}}{{- end}}" xml:"{{.Name}}"{{- if ne .Example ""}} example:"{{.Example}}"{{- end}}`
 	{{- end}}
 }
+
+func (r *{{.Bean.ToUpperCase .Bean.Name}}) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func Unmarshal{{.Bean.ToUpperCase .Bean.Name}}(data []byte) ({{.Bean.ToUpperCase .Bean.Name}}, error) {
+	var r {{.Bean.ToUpperCase .Bean.Name}}
+	err := json.Unmarshal(data, &r)
+	return r, err
+}

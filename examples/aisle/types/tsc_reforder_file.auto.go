@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type TscReforderFile struct {
 // TableName table name of defined TscReforderFile
 func (m *TscReforderFile) TableName() string {
 	return "tsc_reforder_file"
+}
+
+func (r *TscReforderFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTscReforderFile(data []byte) (TscReforderFile, error) {
+	var r TscReforderFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

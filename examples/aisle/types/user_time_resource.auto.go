@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -44,4 +46,14 @@ type UserTimeResource struct {
 // TableName table name of defined UserTimeResource
 func (m *UserTimeResource) TableName() string {
 	return "user_time_resource"
+}
+
+func (r *UserTimeResource) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUserTimeResource(data []byte) (UserTimeResource, error) {
+	var r UserTimeResource
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

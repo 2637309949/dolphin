@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type Unit struct {
 // TableName table name of defined Unit
 func (m *Unit) TableName() string {
 	return "unit"
+}
+
+func (r *Unit) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUnit(data []byte) (Unit, error) {
+	var r Unit
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

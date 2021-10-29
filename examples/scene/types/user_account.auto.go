@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -25,4 +27,14 @@ type UserAccount struct {
 // TableName table name of defined UserAccount
 func (m *UserAccount) TableName() string {
 	return "user_account"
+}
+
+func (r *UserAccount) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUserAccount(data []byte) (UserAccount, error) {
+	var r UserAccount
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

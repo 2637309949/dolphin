@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type PaActivityClassFile struct {
 // TableName table name of defined PaActivityClassFile
 func (m *PaActivityClassFile) TableName() string {
 	return "pa_activity_class_file"
+}
+
+func (r *PaActivityClassFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPaActivityClassFile(data []byte) (PaActivityClassFile, error) {
+	var r PaActivityClassFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // VoteInfo defined like info
 type VoteInfo struct {
@@ -13,4 +17,14 @@ type VoteInfo struct {
 	UserId null.String `json:"user_id" xml:"user_id"`
 	// vote type
 	Type null.Int `json:"type" xml:"type"`
+}
+
+func (r *VoteInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalVoteInfo(data []byte) (VoteInfo, error) {
+	var r VoteInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

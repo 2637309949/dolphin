@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -56,4 +58,14 @@ type UserMessageNotification struct {
 // TableName table name of defined UserMessageNotification
 func (m *UserMessageNotification) TableName() string {
 	return "user_message_notification"
+}
+
+func (r *UserMessageNotification) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUserMessageNotification(data []byte) (UserMessageNotification, error) {
+	var r UserMessageNotification
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

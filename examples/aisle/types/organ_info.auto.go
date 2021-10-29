@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // OrganInfo defined Organ info
 type OrganInfo struct {
@@ -12,4 +16,14 @@ type OrganInfo struct {
 	Content null.String `json:"content" xml:"content"`
 	// Title
 	Title null.String `json:"title" xml:"title"`
+}
+
+func (r *OrganInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalOrganInfo(data []byte) (OrganInfo, error) {
+	var r OrganInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -44,4 +46,14 @@ type StuCtTimeRange struct {
 // TableName table name of defined StuCtTimeRange
 func (m *StuCtTimeRange) TableName() string {
 	return "stu_ct_time_range"
+}
+
+func (r *StuCtTimeRange) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStuCtTimeRange(data []byte) (StuCtTimeRange, error) {
+	var r StuCtTimeRange
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

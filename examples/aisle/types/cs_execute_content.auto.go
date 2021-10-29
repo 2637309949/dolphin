@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type CsExecuteContent struct {
 // TableName table name of defined CsExecuteContent
 func (m *CsExecuteContent) TableName() string {
 	return "cs_execute_content"
+}
+
+func (r *CsExecuteContent) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCsExecuteContent(data []byte) (CsExecuteContent, error) {
+	var r CsExecuteContent
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

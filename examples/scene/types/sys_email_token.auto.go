@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type SysEmailToken struct {
 // TableName table name of defined SysEmailToken
 func (m *SysEmailToken) TableName() string {
 	return "sys_email_token"
+}
+
+func (r *SysEmailToken) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysEmailToken(data []byte) (SysEmailToken, error) {
+	var r SysEmailToken
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

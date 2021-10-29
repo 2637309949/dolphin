@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -58,4 +60,14 @@ type ClassFeedback struct {
 // TableName table name of defined ClassFeedback
 func (m *ClassFeedback) TableName() string {
 	return "class_feedback"
+}
+
+func (r *ClassFeedback) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalClassFeedback(data []byte) (ClassFeedback, error) {
+	var r ClassFeedback
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type CssHFFile struct {
 // TableName table name of defined CssHFFile
 func (m *CssHFFile) TableName() string {
 	return "css_h_f_file"
+}
+
+func (r *CssHFFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCssHFFile(data []byte) (CssHFFile, error) {
+	var r CssHFFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

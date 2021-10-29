@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type CssDeleteRecord struct {
 // TableName table name of defined CssDeleteRecord
 func (m *CssDeleteRecord) TableName() string {
 	return "css_delete_record"
+}
+
+func (r *CssDeleteRecord) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCssDeleteRecord(data []byte) (CssDeleteRecord, error) {
+	var r CssDeleteRecord
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

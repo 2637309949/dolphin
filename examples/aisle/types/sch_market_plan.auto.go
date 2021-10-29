@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type SchMarketPlan struct {
 // TableName table name of defined SchMarketPlan
 func (m *SchMarketPlan) TableName() string {
 	return "sch_market_plan"
+}
+
+func (r *SchMarketPlan) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSchMarketPlan(data []byte) (SchMarketPlan, error) {
+	var r SchMarketPlan
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

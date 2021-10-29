@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type SystemOperaLogs struct {
 // TableName table name of defined SystemOperaLogs
 func (m *SystemOperaLogs) TableName() string {
 	return "system_opera_logs"
+}
+
+func (r *SystemOperaLogs) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSystemOperaLogs(data []byte) (SystemOperaLogs, error) {
+	var r SystemOperaLogs
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

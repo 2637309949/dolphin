@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type RegularDictionary struct {
 // TableName table name of defined RegularDictionary
 func (m *RegularDictionary) TableName() string {
 	return "regular_dictionary"
+}
+
+func (r *RegularDictionary) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalRegularDictionary(data []byte) (RegularDictionary, error) {
+	var r RegularDictionary
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

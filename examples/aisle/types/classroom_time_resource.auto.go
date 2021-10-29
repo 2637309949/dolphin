@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -44,4 +46,14 @@ type ClassroomTimeResource struct {
 // TableName table name of defined ClassroomTimeResource
 func (m *ClassroomTimeResource) TableName() string {
 	return "classroom_time_resource"
+}
+
+func (r *ClassroomTimeResource) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalClassroomTimeResource(data []byte) (ClassroomTimeResource, error) {
+	var r ClassroomTimeResource
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -45,4 +47,14 @@ type PeriodViolateAbnormalApply struct {
 // TableName table name of defined PeriodViolateAbnormalApply
 func (m *PeriodViolateAbnormalApply) TableName() string {
 	return "period_violate_abnormal_apply"
+}
+
+func (r *PeriodViolateAbnormalApply) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPeriodViolateAbnormalApply(data []byte) (PeriodViolateAbnormalApply, error) {
+	var r PeriodViolateAbnormalApply
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

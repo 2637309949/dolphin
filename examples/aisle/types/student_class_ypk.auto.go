@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -45,4 +47,14 @@ type StudentClassYpk struct {
 // TableName table name of defined StudentClassYpk
 func (m *StudentClassYpk) TableName() string {
 	return "student_class_ypk"
+}
+
+func (r *StudentClassYpk) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStudentClassYpk(data []byte) (StudentClassYpk, error) {
+	var r StudentClassYpk
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

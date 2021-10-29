@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type JfscOrder struct {
 // TableName table name of defined JfscOrder
 func (m *JfscOrder) TableName() string {
 	return "jfsc_order"
+}
+
+func (r *JfscOrder) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalJfscOrder(data []byte) (JfscOrder, error) {
+	var r JfscOrder
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

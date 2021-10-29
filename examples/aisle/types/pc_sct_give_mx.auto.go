@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -52,4 +54,14 @@ type PcSctGiveMx struct {
 // TableName table name of defined PcSctGiveMx
 func (m *PcSctGiveMx) TableName() string {
 	return "pc_sct_give_mx"
+}
+
+func (r *PcSctGiveMx) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPcSctGiveMx(data []byte) (PcSctGiveMx, error) {
+	var r PcSctGiveMx
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

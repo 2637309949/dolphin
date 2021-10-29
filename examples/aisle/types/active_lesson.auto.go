@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -56,4 +58,14 @@ type ActiveLesson struct {
 // TableName table name of defined ActiveLesson
 func (m *ActiveLesson) TableName() string {
 	return "active_lesson"
+}
+
+func (r *ActiveLesson) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalActiveLesson(data []byte) (ActiveLesson, error) {
+	var r ActiveLesson
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

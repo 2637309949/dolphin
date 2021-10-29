@@ -90,13 +90,6 @@ func EnsureRight(err error, right interface{}) interface{} {
 	return right
 }
 
-// Ensure defined
-func Ensure(err error) {
-	if err != nil {
-		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
-	}
-}
-
 // SetFormatter defined
 func SetFormatter(isTerminal bool) {
 	if !isTerminal {

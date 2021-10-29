@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -110,4 +112,14 @@ type T0UserInfo struct {
 // TableName table name of defined T0UserInfo
 func (m *T0UserInfo) TableName() string {
 	return "t_0_user_info"
+}
+
+func (r *T0UserInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalT0UserInfo(data []byte) (T0UserInfo, error) {
+	var r T0UserInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

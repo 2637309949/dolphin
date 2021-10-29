@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -20,4 +22,14 @@ type Loginlanguageset struct {
 // TableName table name of defined Loginlanguageset
 func (m *Loginlanguageset) TableName() string {
 	return "loginlanguageset"
+}
+
+func (r *Loginlanguageset) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLoginlanguageset(data []byte) (Loginlanguageset, error) {
+	var r Loginlanguageset
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -44,4 +46,14 @@ type TeaLeaveManagement struct {
 // TableName table name of defined TeaLeaveManagement
 func (m *TeaLeaveManagement) TableName() string {
 	return "tea_leave_management"
+}
+
+func (r *TeaLeaveManagement) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTeaLeaveManagement(data []byte) (TeaLeaveManagement, error) {
+	var r TeaLeaveManagement
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

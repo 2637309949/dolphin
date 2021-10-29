@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -50,4 +52,14 @@ type SysAppFun struct {
 // TableName table name of defined SysAppFun
 func (m *SysAppFun) TableName() string {
 	return "sys_app_fun"
+}
+
+func (r *SysAppFun) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysAppFun(data []byte) (SysAppFun, error) {
+	var r SysAppFun
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

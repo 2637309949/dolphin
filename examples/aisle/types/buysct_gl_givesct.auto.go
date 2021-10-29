@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type BuysctGlGivesct struct {
 // TableName table name of defined BuysctGlGivesct
 func (m *BuysctGlGivesct) TableName() string {
 	return "buysct_gl_givesct"
+}
+
+func (r *BuysctGlGivesct) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalBuysctGlGivesct(data []byte) (BuysctGlGivesct, error) {
+	var r BuysctGlGivesct
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

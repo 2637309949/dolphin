@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type ParFile struct {
 // TableName table name of defined ParFile
 func (m *ParFile) TableName() string {
 	return "par_file"
+}
+
+func (r *ParFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalParFile(data []byte) (ParFile, error) {
+	var r ParFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

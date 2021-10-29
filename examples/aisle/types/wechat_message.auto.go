@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -42,4 +44,14 @@ type WechatMessage struct {
 // TableName table name of defined WechatMessage
 func (m *WechatMessage) TableName() string {
 	return "wechat_message"
+}
+
+func (r *WechatMessage) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalWechatMessage(data []byte) (WechatMessage, error) {
+	var r WechatMessage
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

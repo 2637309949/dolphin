@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type UserOnoffRz struct {
 // TableName table name of defined UserOnoffRz
 func (m *UserOnoffRz) TableName() string {
 	return "user_onoff_rz"
+}
+
+func (r *UserOnoffRz) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUserOnoffRz(data []byte) (UserOnoffRz, error) {
+	var r UserOnoffRz
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

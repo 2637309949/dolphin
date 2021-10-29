@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type GaiFile struct {
 // TableName table name of defined GaiFile
 func (m *GaiFile) TableName() string {
 	return "gai_file"
+}
+
+func (r *GaiFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalGaiFile(data []byte) (GaiFile, error) {
+	var r GaiFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type LabelInfo struct {
 // TableName table name of defined LabelInfo
 func (m *LabelInfo) TableName() string {
 	return "label_info"
+}
+
+func (r *LabelInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLabelInfo(data []byte) (LabelInfo, error) {
+	var r LabelInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -3,10 +3,22 @@
 
 package types
 
+import "encoding/json"
+
 // Scheduling defined 调度
 type Scheduling struct {
 	// 编码
 	Code int `json:"code" xml:"code"`
 	// 名称
 	Name string `json:"name" xml:"name"`
+}
+
+func (r *Scheduling) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalScheduling(data []byte) (Scheduling, error) {
+	var r Scheduling
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

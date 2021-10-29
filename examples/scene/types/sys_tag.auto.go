@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type SysTag struct {
 // TableName table name of defined SysTag
 func (m *SysTag) TableName() string {
 	return "sys_tag"
+}
+
+func (r *SysTag) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysTag(data []byte) (SysTag, error) {
+	var r SysTag
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

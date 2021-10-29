@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type AppMessageSch struct {
 // TableName table name of defined AppMessageSch
 func (m *AppMessageSch) TableName() string {
 	return "app_message_sch"
+}
+
+func (r *AppMessageSch) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAppMessageSch(data []byte) (AppMessageSch, error) {
+	var r AppMessageSch
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

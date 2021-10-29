@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -54,4 +56,14 @@ type MessageNotice struct {
 // TableName table name of defined MessageNotice
 func (m *MessageNotice) TableName() string {
 	return "message_notice"
+}
+
+func (r *MessageNotice) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalMessageNotice(data []byte) (MessageNotice, error) {
+	var r MessageNotice
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

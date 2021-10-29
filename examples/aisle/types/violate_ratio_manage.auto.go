@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type ViolateRatioManage struct {
 // TableName table name of defined ViolateRatioManage
 func (m *ViolateRatioManage) TableName() string {
 	return "violate_ratio_manage"
+}
+
+func (r *ViolateRatioManage) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalViolateRatioManage(data []byte) (ViolateRatioManage, error) {
+	var r ViolateRatioManage
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

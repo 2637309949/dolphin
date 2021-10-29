@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type LanguagePackOrder struct {
 // TableName table name of defined LanguagePackOrder
 func (m *LanguagePackOrder) TableName() string {
 	return "language_pack_order"
+}
+
+func (r *LanguagePackOrder) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLanguagePackOrder(data []byte) (LanguagePackOrder, error) {
+	var r LanguagePackOrder
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

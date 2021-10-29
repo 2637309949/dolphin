@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type CssCsTaskFile struct {
 // TableName table name of defined CssCsTaskFile
 func (m *CssCsTaskFile) TableName() string {
 	return "css_cs_task_file"
+}
+
+func (r *CssCsTaskFile) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCssCsTaskFile(data []byte) (CssCsTaskFile, error) {
+	var r CssCsTaskFile
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

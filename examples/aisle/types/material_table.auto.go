@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type MaterialTable struct {
 // TableName table name of defined MaterialTable
 func (m *MaterialTable) TableName() string {
 	return "material_table"
+}
+
+func (r *MaterialTable) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalMaterialTable(data []byte) (MaterialTable, error) {
+	var r MaterialTable
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

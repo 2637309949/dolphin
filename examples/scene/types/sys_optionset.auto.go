@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type SysOptionset struct {
 // TableName table name of defined SysOptionset
 func (m *SysOptionset) TableName() string {
 	return "sys_optionset"
+}
+
+func (r *SysOptionset) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysOptionset(data []byte) (SysOptionset, error) {
+	var r SysOptionset
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

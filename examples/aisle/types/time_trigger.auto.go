@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type TimeTrigger struct {
 // TableName table name of defined TimeTrigger
 func (m *TimeTrigger) TableName() string {
 	return "time_trigger"
+}
+
+func (r *TimeTrigger) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTimeTrigger(data []byte) (TimeTrigger, error) {
+	var r TimeTrigger
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

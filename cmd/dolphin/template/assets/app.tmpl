@@ -15,12 +15,13 @@ import (
 	"github.com/spf13/viper"
 	"github.com/2637309949/dolphin/platform/{{$.Viper.GetString "dir.api" }}"
 	"github.com/2637309949/dolphin/platform/util"
+    "github.com/2637309949/dolphin/platform/util/errors"
 )
 
 // vars defined TODO
 var (
 	App *Dolphin
-	Run func() error
+	Run func()
 )
 
 type (
@@ -55,16 +56,13 @@ func (dol *Dolphin) Reflesh() error {
 }
 
 // Run defined TODO
-func (dol *Dolphin) Run() error {
+func (dol *Dolphin) Run() {
 	if err := dol.Reflesh(); err != nil {
-		logrus.Errorln(err)
-		return err
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
 	if err := dol.LifeCycle(context.Background()); err != nil {
-		logrus.Errorln(err)
-		return err
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
-	return nil
 }
 
 // Use defined TODO

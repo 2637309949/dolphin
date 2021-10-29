@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -44,4 +46,14 @@ type LanguagePack struct {
 // TableName table name of defined LanguagePack
 func (m *LanguagePack) TableName() string {
 	return "language_pack"
+}
+
+func (r *LanguagePack) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLanguagePack(data []byte) (LanguagePack, error) {
+	var r LanguagePack
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

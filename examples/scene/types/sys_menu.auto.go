@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -50,4 +52,14 @@ type SysMenu struct {
 // TableName table name of defined SysMenu
 func (m *SysMenu) TableName() string {
 	return "sys_menu"
+}
+
+func (r *SysMenu) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysMenu(data []byte) (SysMenu, error) {
+	var r SysMenu
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

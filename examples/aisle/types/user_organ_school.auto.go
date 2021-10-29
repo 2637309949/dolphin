@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type UserOrganSchool struct {
 // TableName table name of defined UserOrganSchool
 func (m *UserOrganSchool) TableName() string {
 	return "user_organ_school"
+}
+
+func (r *UserOrganSchool) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalUserOrganSchool(data []byte) (UserOrganSchool, error) {
+	var r UserOrganSchool
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

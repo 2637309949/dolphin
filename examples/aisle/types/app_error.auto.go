@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type AppError struct {
 // TableName table name of defined AppError
 func (m *AppError) TableName() string {
 	return "app_error"
+}
+
+func (r *AppError) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAppError(data []byte) (AppError, error) {
+	var r AppError
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type TmLevel struct {
 // TableName table name of defined TmLevel
 func (m *TmLevel) TableName() string {
 	return "tm_level"
+}
+
+func (r *TmLevel) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTmLevel(data []byte) (TmLevel, error) {
+	var r TmLevel
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

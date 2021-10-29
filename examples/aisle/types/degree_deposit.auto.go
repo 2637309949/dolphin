@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -33,4 +35,14 @@ type DegreeDeposit struct {
 // TableName table name of defined DegreeDeposit
 func (m *DegreeDeposit) TableName() string {
 	return "degree_deposit"
+}
+
+func (r *DegreeDeposit) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDegreeDeposit(data []byte) (DegreeDeposit, error) {
+	var r DegreeDeposit
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

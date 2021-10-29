@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type StuGwcGef struct {
 // TableName table name of defined StuGwcGef
 func (m *StuGwcGef) TableName() string {
 	return "stu_gwc_gef"
+}
+
+func (r *StuGwcGef) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStuGwcGef(data []byte) (StuGwcGef, error) {
+	var r StuGwcGef
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -20,4 +22,14 @@ type TempShaoerShow struct {
 // TableName table name of defined TempShaoerShow
 func (m *TempShaoerShow) TableName() string {
 	return "temp_shaoer_show"
+}
+
+func (r *TempShaoerShow) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTempShaoerShow(data []byte) (TempShaoerShow, error) {
+	var r TempShaoerShow
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

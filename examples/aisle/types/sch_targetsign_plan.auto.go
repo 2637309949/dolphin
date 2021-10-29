@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -50,4 +52,14 @@ type SchTargetsignPlan struct {
 // TableName table name of defined SchTargetsignPlan
 func (m *SchTargetsignPlan) TableName() string {
 	return "sch_targetsign_plan"
+}
+
+func (r *SchTargetsignPlan) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSchTargetsignPlan(data []byte) (SchTargetsignPlan, error) {
+	var r SchTargetsignPlan
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

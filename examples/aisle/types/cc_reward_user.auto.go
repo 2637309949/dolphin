@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -32,4 +34,14 @@ type CcRewardUser struct {
 // TableName table name of defined CcRewardUser
 func (m *CcRewardUser) TableName() string {
 	return "cc_reward_user"
+}
+
+func (r *CcRewardUser) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCcRewardUser(data []byte) (CcRewardUser, error) {
+	var r CcRewardUser
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

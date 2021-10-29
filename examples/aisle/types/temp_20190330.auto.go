@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -50,4 +52,14 @@ type Temp20190330 struct {
 // TableName table name of defined Temp20190330
 func (m *Temp20190330) TableName() string {
 	return "temp_20190330"
+}
+
+func (r *Temp20190330) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTemp20190330(data []byte) (Temp20190330, error) {
+	var r Temp20190330
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

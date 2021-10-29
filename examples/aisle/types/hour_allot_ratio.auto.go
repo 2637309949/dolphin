@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type HourAllotRatio struct {
 // TableName table name of defined HourAllotRatio
 func (m *HourAllotRatio) TableName() string {
 	return "hour_allot_ratio"
+}
+
+func (r *HourAllotRatio) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalHourAllotRatio(data []byte) (HourAllotRatio, error) {
+	var r HourAllotRatio
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

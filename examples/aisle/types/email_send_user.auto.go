@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type EmailSendUser struct {
 // TableName table name of defined EmailSendUser
 func (m *EmailSendUser) TableName() string {
 	return "email_send_user"
+}
+
+func (r *EmailSendUser) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalEmailSendUser(data []byte) (EmailSendUser, error) {
+	var r EmailSendUser
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

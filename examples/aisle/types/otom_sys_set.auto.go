@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -58,4 +60,14 @@ type OtomSysSet struct {
 // TableName table name of defined OtomSysSet
 func (m *OtomSysSet) TableName() string {
 	return "otom_sys_set"
+}
+
+func (r *OtomSysSet) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalOtomSysSet(data []byte) (OtomSysSet, error) {
+	var r OtomSysSet
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

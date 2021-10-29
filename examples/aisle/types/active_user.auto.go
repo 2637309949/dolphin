@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type ActiveUser struct {
 // TableName table name of defined ActiveUser
 func (m *ActiveUser) TableName() string {
 	return "active_user"
+}
+
+func (r *ActiveUser) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalActiveUser(data []byte) (ActiveUser, error) {
+	var r ActiveUser
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type CheckFlowSetFloorCasting struct {
 // TableName table name of defined CheckFlowSetFloorCasting
 func (m *CheckFlowSetFloorCasting) TableName() string {
 	return "check_flow_set_floor_casting"
+}
+
+func (r *CheckFlowSetFloorCasting) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCheckFlowSetFloorCasting(data []byte) (CheckFlowSetFloorCasting, error) {
+	var r CheckFlowSetFloorCasting
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

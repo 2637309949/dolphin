@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -60,4 +62,14 @@ type Complaint struct {
 // TableName table name of defined Complaint
 func (m *Complaint) TableName() string {
 	return "complaint"
+}
+
+func (r *Complaint) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalComplaint(data []byte) (Complaint, error) {
+	var r Complaint
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type NetworkDetail struct {
 // TableName table name of defined NetworkDetail
 func (m *NetworkDetail) TableName() string {
 	return "network_detail"
+}
+
+func (r *NetworkDetail) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalNetworkDetail(data []byte) (NetworkDetail, error) {
+	var r NetworkDetail
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

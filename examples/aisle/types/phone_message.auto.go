@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -42,4 +44,14 @@ type PhoneMessage struct {
 // TableName table name of defined PhoneMessage
 func (m *PhoneMessage) TableName() string {
 	return "phone_message"
+}
+
+func (r *PhoneMessage) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPhoneMessage(data []byte) (PhoneMessage, error) {
+	var r PhoneMessage
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

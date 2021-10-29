@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type SystemNotice struct {
 // TableName table name of defined SystemNotice
 func (m *SystemNotice) TableName() string {
 	return "system_notice"
+}
+
+func (r *SystemNotice) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSystemNotice(data []byte) (SystemNotice, error) {
+	var r SystemNotice
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

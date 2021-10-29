@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -42,4 +44,14 @@ type YbPayOut struct {
 // TableName table name of defined YbPayOut
 func (m *YbPayOut) TableName() string {
 	return "yb_pay_out"
+}
+
+func (r *YbPayOut) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalYbPayOut(data []byte) (YbPayOut, error) {
+	var r YbPayOut
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

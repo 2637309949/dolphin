@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type WastageFollowupRecord struct {
 // TableName table name of defined WastageFollowupRecord
 func (m *WastageFollowupRecord) TableName() string {
 	return "wastage_followup_record"
+}
+
+func (r *WastageFollowupRecord) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalWastageFollowupRecord(data []byte) (WastageFollowupRecord, error) {
+	var r WastageFollowupRecord
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

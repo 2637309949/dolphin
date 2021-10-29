@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type CustomerServiceProcessVisit struct {
 // TableName table name of defined CustomerServiceProcessVisit
 func (m *CustomerServiceProcessVisit) TableName() string {
 	return "customer_service_process_visit"
+}
+
+func (r *CustomerServiceProcessVisit) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalCustomerServiceProcessVisit(data []byte) (CustomerServiceProcessVisit, error) {
+	var r CustomerServiceProcessVisit
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -38,4 +40,14 @@ type AddAgreementMb struct {
 // TableName table name of defined AddAgreementMb
 func (m *AddAgreementMb) TableName() string {
 	return "add_agreement_mb"
+}
+
+func (r *AddAgreementMb) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAddAgreementMb(data []byte) (AddAgreementMb, error) {
+	var r AddAgreementMb
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

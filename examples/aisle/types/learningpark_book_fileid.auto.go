@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type LearningparkBookFileid struct {
 // TableName table name of defined LearningparkBookFileid
 func (m *LearningparkBookFileid) TableName() string {
 	return "learningpark_book_fileid"
+}
+
+func (r *LearningparkBookFileid) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalLearningparkBookFileid(data []byte) (LearningparkBookFileid, error) {
+	var r LearningparkBookFileid
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

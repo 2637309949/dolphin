@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -26,4 +28,14 @@ type ButtonPicture struct {
 // TableName table name of defined ButtonPicture
 func (m *ButtonPicture) TableName() string {
 	return "button_picture"
+}
+
+func (r *ButtonPicture) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalButtonPicture(data []byte) (ButtonPicture, error) {
+	var r ButtonPicture
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

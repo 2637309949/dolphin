@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type JfscSyTu struct {
 // TableName table name of defined JfscSyTu
 func (m *JfscSyTu) TableName() string {
 	return "jfsc_sy_tu"
+}
+
+func (r *JfscSyTu) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalJfscSyTu(data []byte) (JfscSyTu, error) {
+	var r JfscSyTu
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

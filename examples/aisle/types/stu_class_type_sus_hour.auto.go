@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/shopspring/decimal"
 )
@@ -47,4 +49,14 @@ type StuClassTypeSusHour struct {
 // TableName table name of defined StuClassTypeSusHour
 func (m *StuClassTypeSusHour) TableName() string {
 	return "stu_class_type_sus_hour"
+}
+
+func (r *StuClassTypeSusHour) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalStuClassTypeSusHour(data []byte) (StuClassTypeSusHour, error) {
+	var r StuClassTypeSusHour
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

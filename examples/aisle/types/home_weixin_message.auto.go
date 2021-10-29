@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type HomeWeixinMessage struct {
 // TableName table name of defined HomeWeixinMessage
 func (m *HomeWeixinMessage) TableName() string {
 	return "home_weixin_message"
+}
+
+func (r *HomeWeixinMessage) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalHomeWeixinMessage(data []byte) (HomeWeixinMessage, error) {
+	var r HomeWeixinMessage
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

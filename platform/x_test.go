@@ -11,7 +11,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/2637309949/dolphin/platform/util"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/spf13/viper"
 
 	"github.com/2637309949/dolphin/platform/api"
@@ -178,7 +178,9 @@ func SetToken(tk string) {
 // TestMain defined
 func TestMain(m *testing.M) {
 	x = &XTest{}
-	util.Ensure(api.App.Reflesh())
+	if err := api.App.Reflesh(); err != nil {
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
+	}
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }

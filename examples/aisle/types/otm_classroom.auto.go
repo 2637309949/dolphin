@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type OtmClassroom struct {
 // TableName table name of defined OtmClassroom
 func (m *OtmClassroom) TableName() string {
 	return "otm_classroom"
+}
+
+func (r *OtmClassroom) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalOtmClassroom(data []byte) (OtmClassroom, error) {
+	var r OtmClassroom
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

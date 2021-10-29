@@ -3,7 +3,11 @@
 
 package types
 
-import "github.com/2637309949/dolphin/packages/null"
+import (
+	"encoding/json"
+
+	"github.com/2637309949/dolphin/packages/null"
+)
 
 // AmiInfo defined Ami info
 type AmiInfo struct {
@@ -11,4 +15,14 @@ type AmiInfo struct {
 	Content null.String `json:"content" xml:"content"`
 	// Title
 	Title null.String `json:"title" xml:"title"`
+}
+
+func (r *AmiInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalAmiInfo(data []byte) (AmiInfo, error) {
+	var r AmiInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

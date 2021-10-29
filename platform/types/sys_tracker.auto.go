@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -48,4 +50,14 @@ type SysTracker struct {
 // TableName table name of defined SysTracker
 func (m *SysTracker) TableName() string {
 	return "sys_tracker"
+}
+
+func (r *SysTracker) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysTracker(data []byte) (SysTracker, error) {
+	var r SysTracker
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

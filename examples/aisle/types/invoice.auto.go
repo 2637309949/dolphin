@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -40,4 +42,14 @@ type Invoice struct {
 // TableName table name of defined Invoice
 func (m *Invoice) TableName() string {
 	return "invoice"
+}
+
+func (r *Invoice) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalInvoice(data []byte) (Invoice, error) {
+	var r Invoice
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

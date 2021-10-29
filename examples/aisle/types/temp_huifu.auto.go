@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type TempHuifu struct {
 // TableName table name of defined TempHuifu
 func (m *TempHuifu) TableName() string {
 	return "temp_huifu"
+}
+
+func (r *TempHuifu) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTempHuifu(data []byte) (TempHuifu, error) {
+	var r TempHuifu
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

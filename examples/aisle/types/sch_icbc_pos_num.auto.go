@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type SchIcbcPosNum struct {
 // TableName table name of defined SchIcbcPosNum
 func (m *SchIcbcPosNum) TableName() string {
 	return "sch_icbc_pos_num"
+}
+
+func (r *SchIcbcPosNum) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSchIcbcPosNum(data []byte) (SchIcbcPosNum, error) {
+	var r SchIcbcPosNum
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

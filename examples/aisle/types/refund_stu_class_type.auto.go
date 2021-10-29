@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -50,4 +52,14 @@ type RefundStuClassType struct {
 // TableName table name of defined RefundStuClassType
 func (m *RefundStuClassType) TableName() string {
 	return "refund_stu_class_type"
+}
+
+func (r *RefundStuClassType) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalRefundStuClassType(data []byte) (RefundStuClassType, error) {
+	var r RefundStuClassType
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

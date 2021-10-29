@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -28,4 +30,14 @@ type SysSchedule struct {
 // TableName table name of defined SysSchedule
 func (m *SysSchedule) TableName() string {
 	return "sys_schedule"
+}
+
+func (r *SysSchedule) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSysSchedule(data []byte) (SysSchedule, error) {
+	var r SysSchedule
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

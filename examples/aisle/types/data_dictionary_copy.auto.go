@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type DataDictionaryCopy struct {
 // TableName table name of defined DataDictionaryCopy
 func (m *DataDictionaryCopy) TableName() string {
 	return "data_dictionary_copy"
+}
+
+func (r *DataDictionaryCopy) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDataDictionaryCopy(data []byte) (DataDictionaryCopy, error) {
+	var r DataDictionaryCopy
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

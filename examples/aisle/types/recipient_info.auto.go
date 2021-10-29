@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -42,4 +44,14 @@ type RecipientInfo struct {
 // TableName table name of defined RecipientInfo
 func (m *RecipientInfo) TableName() string {
 	return "recipient_info"
+}
+
+func (r *RecipientInfo) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalRecipientInfo(data []byte) (RecipientInfo, error) {
+	var r RecipientInfo
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

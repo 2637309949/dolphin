@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -52,4 +54,14 @@ type Phonehistory struct {
 // TableName table name of defined Phonehistory
 func (m *Phonehistory) TableName() string {
 	return "phonehistory"
+}
+
+func (r *Phonehistory) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalPhonehistory(data []byte) (Phonehistory, error) {
+	var r Phonehistory
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

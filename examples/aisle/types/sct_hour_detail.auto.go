@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -36,4 +38,14 @@ type SctHourDetail struct {
 // TableName table name of defined SctHourDetail
 func (m *SctHourDetail) TableName() string {
 	return "sct_hour_detail"
+}
+
+func (r *SctHourDetail) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSctHourDetail(data []byte) (SctHourDetail, error) {
+	var r SctHourDetail
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

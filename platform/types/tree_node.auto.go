@@ -3,6 +3,8 @@
 
 package types
 
+import "encoding/json"
+
 // TreeNode defined 树形结构
 type TreeNode struct {
 	// 标识
@@ -15,4 +17,14 @@ type TreeNode struct {
 	Nodes []*TreeNode `json:"nodes" xml:"nodes"`
 	// 内容
 	Tag interface{} `json:"tag" xml:"tag"`
+}
+
+func (r *TreeNode) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalTreeNode(data []byte) (TreeNode, error) {
+	var r TreeNode
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

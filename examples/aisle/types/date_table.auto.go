@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -34,4 +36,14 @@ type DateTable struct {
 // TableName table name of defined DateTable
 func (m *DateTable) TableName() string {
 	return "date_table"
+}
+
+func (r *DateTable) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalDateTable(data []byte) (DateTable, error) {
+	var r DateTable
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

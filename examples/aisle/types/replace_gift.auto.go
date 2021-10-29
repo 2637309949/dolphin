@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type ReplaceGift struct {
 // TableName table name of defined ReplaceGift
 func (m *ReplaceGift) TableName() string {
 	return "replace_gift"
+}
+
+func (r *ReplaceGift) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalReplaceGift(data []byte) (ReplaceGift, error) {
+	var r ReplaceGift
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -26,4 +28,14 @@ type T2LoginLog struct {
 // TableName table name of defined T2LoginLog
 func (m *T2LoginLog) TableName() string {
 	return "t_2_login_log"
+}
+
+func (r *T2LoginLog) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalT2LoginLog(data []byte) (T2LoginLog, error) {
+	var r T2LoginLog
+	err := json.Unmarshal(data, &r)
+	return r, err
 }

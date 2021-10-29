@@ -4,6 +4,8 @@
 package types
 
 import (
+	"encoding/json"
+
 	"github.com/2637309949/dolphin/packages/null"
 )
 
@@ -30,4 +32,14 @@ type SatisfyVisitModel struct {
 // TableName table name of defined SatisfyVisitModel
 func (m *SatisfyVisitModel) TableName() string {
 	return "satisfy_visit_model"
+}
+
+func (r *SatisfyVisitModel) Marshal() ([]byte, error) {
+	return json.Marshal(r)
+}
+
+func UnmarshalSatisfyVisitModel(data []byte) (SatisfyVisitModel, error) {
+	var r SatisfyVisitModel
+	err := json.Unmarshal(data, &r)
+	return r, err
 }
