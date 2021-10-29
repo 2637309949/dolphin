@@ -1,8 +1,8 @@
 package svc
 
 import (
+	"github.com/2637309949/dolphin/packages/persistence"
 	"github.com/2637309949/dolphin/platform/svc"
-	"github.com/gin-contrib/cache/persistence"
 )
 
 // ServiceContext defined TODO
