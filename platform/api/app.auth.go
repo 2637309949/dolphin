@@ -5,6 +5,7 @@
 package api
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
@@ -29,9 +30,9 @@ const (
 // AuthProtocol defined
 type AuthProtocol interface {
 	GetToken() TokenInfo
-	VerifyToken(*Context) bool
-	VerifyEncrypt(*Context) bool
-	VerifyJWT(*Context) bool
+	VerifyToken(*http.Request) bool
+	VerifyEncrypt(*http.Request) bool
+	VerifyJWT(*http.Request) bool
 }
 
 // AuthOAuth2 deifned
@@ -71,8 +72,8 @@ func (auth *AuthOAuth2) parseJWTToken(t *jwt.MapClaims) TokenInfo {
 }
 
 // VerifyToken defined TODO
-func (auth *AuthOAuth2) VerifyToken(ctx *Context) bool {
-	if bearer, ok := auth.oauth2.BearerAuth(ctx.Request); ok {
+func (auth *AuthOAuth2) VerifyToken(req *http.Request) bool {
+	if bearer, ok := auth.oauth2.BearerAuth(req); ok {
 		tk, err := auth.oauth2.Manager.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.Error(err)
@@ -88,8 +89,8 @@ func (auth *AuthOAuth2) VerifyToken(ctx *Context) bool {
 }
 
 // VerifyJWT defined TODO
-func (auth *AuthOAuth2) VerifyJWT(ctx *Context) bool {
-	if bearer, ok := auth.jwt.BearerAuth(ctx.Request); ok {
+func (auth *AuthOAuth2) VerifyJWT(req *http.Request) bool {
+	if bearer, ok := auth.jwt.BearerAuth(req); ok {
 		tk, err := auth.jwt.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.Error(err)
@@ -128,8 +129,8 @@ func (auth *AuthOAuth2) GetToken() TokenInfo {
 
 // AuthToken defined TODO
 func AuthToken(ctx *Context) {
-	if !ctx.VerifyToken(ctx) {
-		ctx.Fail(errors.ErrInvalidAccessToken, 401)
+	if !ctx.VerifyToken(ctx.Request()) {
+		ctx.Fail(errors.ErrInvalidAccessToken)
 		ctx.Abort()
 		return
 	}
@@ -146,7 +147,7 @@ func AuthToken(ctx *Context) {
 // AuthJWT defined TODO
 func AuthJWT(ctx *Context) {
 	if !ctx.VerifyJWT(ctx) {
-		ctx.Fail(errors.ErrInvalidAccessToken, 401)
+		ctx.Fail(errors.ErrInvalidAccessToken)
 		ctx.Abort()
 		return
 	}
@@ -161,9 +162,9 @@ func AuthJWT(ctx *Context) {
 }
 
 // AuthEncrypt defined TODO
-func AuthEncrypt(ctx *Context) {
+func AuthEncrypt(ctx Context) {
 	if !ctx.VerifyEncrypt(ctx) {
-		ctx.Fail(errors.ErrInvalidEncryData, 401)
+		ctx.Fail(errors.ErrInvalidEncryData)
 		ctx.Abort()
 		return
 	}
@@ -172,10 +173,10 @@ func AuthEncrypt(ctx *Context) {
 
 // Roles middles TODO
 func Roles(roles ...string) HandlerFunc {
-	return func(ctx *Context) {
+	return func(ctx Context) {
 		svc, userId := svc.NewXDB(), ctx.GetToken().GetUserID()
 		if !svc.InRole(ctx.DB, userId, roles...) {
-			ctx.Fail(errors.ErrAccessDenied, 403)
+			ctx.Fail(errors.ErrAccessDenied)
 			ctx.Abort()
 			return
 		}
@@ -195,7 +196,7 @@ func Auth(auth ...string) HandlerFunc {
 	if slice.StrSliceContains(auth, JWTType) {
 		hlfs = append(hlfs, AuthJWT)
 	}
-	return func(ctx *Context) {
+	return func(ctx Context) {
 		for i := range hlfs {
 			hlfs[i](ctx)
 		}

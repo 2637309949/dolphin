@@ -2,19 +2,20 @@ package gin
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
-	"reflect"
+	"os"
 
-	"github.com/2637309949/dolphin/packages/web/core"
+	"github.com/eriklott/mustache"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
+	"github.com/sirupsen/logrus"
 )
 
 type Context struct {
-	engine  *gin.Engine
 	context *gin.Context
 }
 
@@ -116,6 +117,16 @@ func (c *Context) Next() {
 	c.context.Next()
 }
 
+// Abort defined TODO
+func (c *Context) Abort() {
+	c.context.Abort()
+}
+
+// IsAborted defined TODO
+func (c *Context) IsAborted() bool {
+	return c.context.IsAborted()
+}
+
 // Success defined TODO
 func (c *Context) Success(data interface{}) {
 	c.context.JSON(http.StatusOK, map[string]interface{}{
@@ -133,63 +144,94 @@ func (c *Context) Fail(err error) {
 }
 
 // HTML defined TODO
-func (c *Context) HTML(io.Reader, ...interface{}) {
+func (c *Context) HTML(r io.Reader, context ...interface{}) {
+	c.context.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
+	file, err := ioutil.TempFile("", "*")
+	if err != nil {
+
+		return
+	}
+	defer os.Remove(file.Name())
+	bte, err := ioutil.ReadAll(r)
+	if err != nil {
+		return
+	}
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
+		return
+	}
+	http.ServeFile(c.context.Writer, c.context.Request, file.Name())
 }
 
 // XML defined TODO
-func (c *Context) XML(io.Reader, ...interface{}) {
+func (c *Context) XML(r io.Reader, context ...interface{}) {
+	c.context.Writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
+	file, err := ioutil.TempFile("", "*")
+	if err != nil {
+		return
+	}
+	defer os.Remove(file.Name())
+	bte, err := ioutil.ReadAll(r)
+	if err != nil {
+		return
+	}
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
+		return
+	}
+	http.ServeFile(c.context.Writer, c.context.Request, file.Name())
+}
+
+// XML defined TODO
+func (c *Context) String(data string, context ...interface{}) {
+	str, err := mustache.NewTemplate().Render(data, context...)
+	if err != nil {
+		return
+	}
+	c.context.String(200, str)
+}
+
+// Request defined TODO
+func (c *Context) Request() *http.Request {
+	return c.context.Request
+}
+
+// Request defined TODO
+func (c *Context) ResponseWriter() http.ResponseWriter {
+	return c.context.Writer
 }
 
 // File defined TODO
-func (c *Context) File(io.Reader, string, ...interface{}) {
-}
-
-// Handler defined TODO
-func (c *Context) Handler() http.Handler {
-	return c.engine
-}
-
-// Handler defined TODO
-func (c *Context) Handle(httpMethod string, relativePath string, handlers ...core.HandlerFunc) {
-	hfc := []gin.HandlerFunc{}
-	for i := range handlers {
-		fv := reflect.ValueOf(handlers[i])
-		ft := fv.Type()
-		if ft.NumIn() != 1 {
-			panic("invalid handler: wrong numIn")
-		}
-		in := reflect.New(ft.In(0))
-		_, ok := in.Interface().(core.Context)
-		if ft.In(0).String() != "core.Context" && !ok {
-			panic("invalid handler context: should extend core.Context")
-		}
-		hfc = append(hfc, func(v reflect.Value) func(ct *gin.Context) {
-			funcType := v.Type()
-			return func(ctx *gin.Context) {
-				switch true {
-				case ft.In(0).String() == "core.Context":
-					v.Call([]reflect.Value{reflect.ValueOf(&Context{context: ctx})})
-				default:
-					in := reflect.New(funcType.In(0)).Elem()
-					ct := in.FieldByName("Context")
-					if ct.CanSet() {
-						ct.Set(reflect.ValueOf(&Context{context: ctx}))
-						v.Call([]reflect.Value{in})
-						return
-					}
-				}
-			}
-		}(fv))
+func (c *Context) File(r io.Reader, filename string, context ...interface{}) {
+	c.context.Writer.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
+	file, err := ioutil.TempFile("", "*")
+	if err != nil {
+		return
 	}
-	c.engine.Handle(httpMethod, relativePath, hfc...)
+	defer os.Remove(file.Name())
+	bte, err := ioutil.ReadAll(r)
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	str, err := mustache.NewTemplate().Render(string(bte), context...)
+	if err != nil {
+		logrus.Error(err)
+		return
+	}
+	if _, err = file.WriteString(str); err != nil {
+		logrus.Error(err)
+		return
+	}
+	http.ServeFile(c.context.Writer, c.context.Request, file.Name())
 }
 
 func NewContext() *Context {
-	return &Context{
-		engine: gin.New(),
-	}
-}
-
-func init() {
-	core.SetEngine(NewContext())
+	return &Context{}
 }

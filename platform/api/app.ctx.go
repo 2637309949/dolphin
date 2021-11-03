@@ -6,30 +6,18 @@ package api
 
 import (
 	"encoding/json"
-	"errors"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-	"net/url"
-	"os"
 	"reflect"
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/null"
+	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/2637309949/dolphin/platform/util"
-	rft "github.com/2637309949/dolphin/platform/util/reflect"
-	"github.com/eriklott/mustache"
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"github.com/sirupsen/logrus"
 )
 
 // Context defined TODO
 type Context struct {
-	*gin.Context
+	core.Context
 	AuthProtocol
 	DB         *xorm.Engine
 	PlatformDB *xorm.Engine
@@ -55,31 +43,12 @@ func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
 	return false, nil
 }
 
-// Success defined success result
-func (ctx *Context) Success(data interface{}, status ...int) {
-	ctx.JSON(http.StatusOK, types.Success{
-		Code: util.SomeOne(status, 200).(int),
-		Data: data,
-	})
-}
-
 // unWrapError defined TODO
 func unWrapError(err error) int {
 	if mErr, ok := err.(types.Error); ok {
 		return mErr.Code
 	}
 	return 0
-}
-
-// Fail defined failt result
-func (ctx *Context) Fail(err error, status ...int) {
-	code, msg := 500, err.Error()
-	code = rft.OrOne(unWrapError(err), code).(int)
-	code = util.SomeOne(status, code).(int)
-	ctx.JSON(http.StatusOK, types.Fail{
-		Code: code,
-		Msg:  msg,
-	})
 }
 
 // TypeQuery defined failt result
@@ -172,214 +141,4 @@ func (ctx *Context) QueryString(key string, init ...string) string {
 // BusinessDB defined TODO
 func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
 	return App.Manager.GetBusinessDB(domain)
-}
-
-// String defined TODO
-func (ctx *Context) String(code int, data string, context ...interface{}) error {
-	str, err := mustache.NewTemplate().Render(data, context...)
-	if err != nil {
-		return err
-	}
-	ctx.Context.String(code, str)
-	return nil
-}
-
-// RenderFile defined TODO
-func (ctx *Context) RenderFile(filepath string, filename string, context ...interface{}) {
-	ctx.Writer.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
-	file, err := ioutil.TempFile("", "*")
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	defer os.Remove(file.Name())
-	bte, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	str, err := mustache.NewTemplate().Render(string(bte), context...)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	if _, err = file.WriteString(str); err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
-}
-
-// RenderHTL defined TODO
-func (ctx *Context) RenderHTML(filepath string, context ...interface{}) {
-	ctx.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
-	file, err := ioutil.TempFile("", "*")
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	defer os.Remove(file.Name())
-	bte, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	str, err := mustache.NewTemplate().Render(string(bte), context...)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	if _, err = file.WriteString(str); err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
-}
-
-// RenderXML defined TODO
-func (ctx *Context) RenderXML(filepath string, context ...interface{}) {
-	ctx.Writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
-	file, err := ioutil.TempFile("", "*")
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	defer os.Remove(file.Name())
-	bte, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	str, err := mustache.NewTemplate().Render(string(bte), context...)
-	if err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	if _, err = file.WriteString(str); err != nil {
-		logrus.Error(err)
-		ctx.Fail(err)
-		return
-	}
-	http.ServeFile(ctx.Writer, ctx.Request, file.Name())
-}
-
-// ShouldBindWith defined TODO
-// order: 1) path params; 2) query params; 3) request body.
-func (ctx *Context) ShouldBindWith(ptr interface{}) error {
-	if util.UriCheck(ctx.Params) {
-		if err := ctx.ShouldBindUri(ptr); err != nil {
-			return err
-		}
-	}
-	if util.QueryCheck(ctx.Request) {
-		if err := ctx.ShouldBindQuery(ptr); err != nil {
-			return err
-		}
-	}
-	if util.JsonCheck(ctx.Request) {
-		if err := ctx.ShouldBindBody(ptr); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// ShouldBindBody defined TODO
-func (ctx *Context) ShouldBindBody(ptr interface{}) error {
-	var err error
-	var body []byte
-
-	if ptr == nil {
-		return errors.New("first parameter must be an pointer")
-	}
-	if cb, ok := ctx.Get(gin.BodyBytesKey); ok {
-		if cbb, ok := cb.([]byte); ok {
-			body = cbb
-		}
-	}
-	if body == nil {
-		body, err = ioutil.ReadAll(ctx.Request.Body)
-		if err != nil {
-			return err
-		}
-		ctx.Set(gin.BodyBytesKey, body)
-	}
-	return binding.JSON.BindBody(body, ptr)
-}
-
-// ShouldBindQuery defined TODO, support for nullType
-func (ctx *Context) ShouldBindQuery(ptr interface{}) error {
-	if ptr == nil {
-		return errors.New("first parameter must be an pointer")
-	}
-	rawQuery := ctx.Request.URL.RawQuery
-	urls, err := url.ParseQuery(rawQuery)
-	if err != nil {
-		return err
-	}
-	ptrVal := reflect.ValueOf(ptr)
-	if ptrVal.Kind() == reflect.Ptr {
-		ptrVal = ptrVal.Elem()
-	}
-	if ptrVal.Kind() == reflect.Map &&
-		ptrVal.Type().Key().Kind() == reflect.String {
-		return binding.Query.Bind(ctx.Request, ptr)
-	}
-	var head = func(str, sep string) (head string, tail string) {
-		idx := strings.Index(str, sep)
-		if idx < 0 {
-			return str, ""
-		}
-		return str[:idx], str[idx+len(sep):]
-	}
-	var vKind = ptrVal.Kind()
-	if vKind == reflect.Struct {
-		tValue := ptrVal.Type()
-		for i := 0; i < ptrVal.NumField(); i++ {
-			sf := tValue.Field(i)
-			if (sf.PkgPath != "" && !sf.Anonymous) || sf.Tag.Get("form") == "-" {
-				continue
-			}
-			tagValue, _ := head(sf.Tag.Get("form"), ",")
-			if tagValue == "" {
-				tagValue = sf.Name
-				if tagValue == "" {
-					continue
-				}
-			}
-			switch sf.Type {
-			case reflect.TypeOf(""), reflect.TypeOf(null.String{}), reflect.TypeOf(null.Time{}):
-				if u, ok := urls[tagValue]; ok {
-					urls[tagValue] = []string{}
-					for i := range u {
-						istr := u[i]
-						if !json.Valid([]byte(istr)) {
-							bte, err := json.Marshal(u[i])
-							if err != nil {
-								return err
-							}
-							urls[tagValue] = append(urls[tagValue], string(bte))
-						} else {
-							urls[tagValue] = append(urls[tagValue], istr)
-						}
-					}
-				}
-			}
-		}
-	}
-	ctx.Request.URL.RawQuery = urls.Encode()
-	err = binding.Query.Bind(ctx.Request, ptr)
-	ctx.Request.URL.RawQuery = rawQuery
-	return err
 }

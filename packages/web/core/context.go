@@ -3,6 +3,7 @@ package core
 import (
 	"io"
 	"mime/multipart"
+	"net/http"
 )
 
 // Context defined TODO
@@ -36,9 +37,16 @@ type Context interface {
 	HTML(io.Reader, ...interface{})
 	XML(io.Reader, ...interface{})
 	File(io.Reader, string, ...interface{})
+	String(string, ...interface{})
 
 	// next
 	Next()
+	Abort()
+	IsAborted() bool
+
+	// net/http
+	Request() *http.Request
+	ResponseWriter() http.ResponseWriter
 
 	// std reponse json
 	Success(interface{})

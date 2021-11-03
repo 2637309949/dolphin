@@ -27,8 +27,8 @@ func NewJWT(secret string, expire int64) *JWT {
 }
 
 // BearerAuth defined TODO
-func (j *JWT) BearerAuth(r *http.Request) (string, bool) {
-	prefix, auth := "Bearer ", r.Header.Get("Authorization")
+func (j *JWT) BearerAuth(req *http.Request) (string, bool) {
+	prefix, auth := "Bearer ", req.Header.Get("Authorization")
 	if strings.HasPrefix(auth, prefix) {
 		return auth[len(prefix):], true
 	}

@@ -149,8 +149,8 @@ func CachePage(store cache.CacheStore, expire time.Duration) gin.HandlerFunc {
 }
 
 // Cache middles
-func Cache(time time.Duration) HandlerFunc {
-	return func(ctx *Context) {
-		CachePage(CacheStore, time)(ctx.Context)
+func Cache(time time.Duration) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		CachePage(CacheStore, time)(ctx)
 	}
 }

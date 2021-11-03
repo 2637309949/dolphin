@@ -16,7 +16,7 @@ import (
 
 type (
 	// HandlerFunc defined TODO
-	HandlerFunc func(ctx *Context)
+	HandlerFunc func(ctx Context)
 	// HandlersChain defined TODO
 	HandlersChain []HandlerFunc
 	// RouterGroup defined TODO
