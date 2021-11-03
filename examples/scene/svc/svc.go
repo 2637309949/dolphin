@@ -1,7 +1,7 @@
 package svc
 
 import (
-	"github.com/2637309949/dolphin/packages/persistence"
+	"github.com/2637309949/dolphin/packages/cache"
 	"github.com/2637309949/dolphin/platform/svc"
 )
 
@@ -17,7 +17,7 @@ type ServiceContext struct {
 }
 
 // NewServiceContext defined TODO
-func NewServiceContext(cache persistence.CacheStore) *ServiceContext {
+func NewServiceContext(cache cache.CacheStore) *ServiceContext {
 	svc := svc.NewServiceContext(cache)
 	return &ServiceContext{
 		Store:  svc.Store,

@@ -7,6 +7,7 @@ import (
 
 	"github.com/2637309949/dolphin/platform/{{$.Viper.GetString "dir.svc" }}"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
+	"github.com/2637309949/dolphin/packages/cache"
 	"github.com/2637309949/dolphin/platform/{{$.Viper.GetString "dir.types" }}"
 	"github.com/2637309949/dolphin/platform/util/http/client"
 	"github.com/gin-gonic/gin"
@@ -21,7 +22,7 @@ type ServiceContext struct {
 }
 
 // NewServiceContext defined TODO
-func NewServiceContext(cache persistence.CacheStore) *ServiceContext {
+func NewServiceContext(cache cache.CacheStore) *ServiceContext {
 	svc := svc.NewServiceContext(cache)
 	return &ServiceContext{
 		Store:  svc.Store,
