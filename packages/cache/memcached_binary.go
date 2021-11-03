@@ -1,9 +1,9 @@
-package persistence
+package cache
 
 import (
 	"time"
 
-	"github.com/2637309949/dolphin/packages/persistence/utils"
+	"github.com/2637309949/dolphin/packages/cache/utils"
 	"github.com/memcachier/mc/v3"
 )
 

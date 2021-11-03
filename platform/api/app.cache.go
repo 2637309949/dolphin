@@ -14,9 +14,8 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/persistence"
+	"github.com/2637309949/dolphin/packages/cache"
 	"github.com/gin-gonic/gin"
-	"github.com/go-redis/redis/v8"
 	"github.com/sirupsen/logrus"
 )
 
@@ -32,15 +31,9 @@ type cachedWriter struct {
 	gin.ResponseWriter
 	status  int
 	written bool
-	store   persistence.CacheStore
+	store   cache.CacheStore
 	expire  time.Duration
 	key     string
-}
-
-// RedisStore represents the cache with redis persistence
-type RedisStore struct {
-	redisClient       redis.Cmdable
-	defaultExpiration time.Duration
 }
 
 // RegisterResponseCacheGob registers the responseCache type with the encoding/gob package
@@ -67,7 +60,7 @@ func urlEscape(prefix string, u string) string {
 	return buffer.String()
 }
 
-func newCachedWriter(store persistence.CacheStore, expire time.Duration, writer gin.ResponseWriter, key string) *cachedWriter {
+func newCachedWriter(store cache.CacheStore, expire time.Duration, writer gin.ResponseWriter, key string) *cachedWriter {
 	return &cachedWriter{writer, 0, false, store, expire, key}
 }
 
@@ -125,13 +118,13 @@ func (w *cachedWriter) WriteString(data string) (n int, err error) {
 }
 
 // CachePage Decorator
-func CachePage(store persistence.CacheStore, expire time.Duration) gin.HandlerFunc {
+func CachePage(store cache.CacheStore, expire time.Duration) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var cache responseCache
+		var rsp responseCache
 		url := c.Request.URL
 		key := CreateKey(url.RequestURI())
-		if err := store.Get(key, &cache); err != nil {
-			if err != persistence.ErrCacheMiss {
+		if err := store.Get(key, &rsp); err != nil {
+			if err != cache.ErrCacheMiss {
 				log.Println(err.Error())
 			}
 			// replace writer
@@ -143,13 +136,13 @@ func CachePage(store persistence.CacheStore, expire time.Duration) gin.HandlerFu
 				store.Delete(key)
 			}
 		} else {
-			c.Writer.WriteHeader(cache.Status)
-			for k, vals := range cache.Header {
+			c.Writer.WriteHeader(rsp.Status)
+			for k, vals := range rsp.Header {
 				for _, v := range vals {
 					c.Writer.Header().Set(k, v)
 				}
 			}
-			c.Writer.Write(cache.Data)
+			c.Writer.Write(rsp.Data)
 			c.Abort()
 		}
 	}

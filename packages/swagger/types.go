@@ -1,8 +1,9 @@
-package swag
+package swagger
 
 import (
-	"github.com/go-openapi/spec"
 	"go/ast"
+
+	"github.com/go-openapi/spec"
 )
 
 //Schema parsed schema

@@ -8,7 +8,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/2637309949/dolphin/packages/persistence"
+	"github.com/2637309949/dolphin/packages/cache"
 	"github.com/go-redis/redis/v8"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -18,7 +18,7 @@ import (
 var RedisClient redis.Cmdable
 
 // CacheStore defined TODO
-var CacheStore persistence.CacheStore
+var CacheStore cache.CacheStore
 
 // NewRedisClient defined TODO
 func NewRedisClient() redis.Cmdable {
@@ -91,10 +91,10 @@ func NewRedisClient() redis.Cmdable {
 // InitCacheStore defined TODO
 func InitCacheStore() {
 	if RedisClient = NewRedisClient(); RedisClient != nil {
-		CacheStore = persistence.NewRedisCache(RedisClient, 60*time.Second)
+		CacheStore = cache.NewRedisCache(RedisClient, 60*time.Second)
 		logrus.Infof("use Redis as CacheStore")
 	} else {
-		CacheStore = persistence.NewInMemoryStore(60 * time.Second)
+		CacheStore = cache.NewInMemoryStore(60 * time.Second)
 		logrus.Infof("use Memory as CacheStore")
 	}
 }
