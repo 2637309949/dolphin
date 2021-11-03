@@ -103,8 +103,8 @@ func (auth *AuthOAuth2) VerifyJWT(req *http.Request) bool {
 }
 
 // VerifyEncrypt defined TODO
-func (auth *AuthOAuth2) VerifyEncrypt(ctx *Context) bool {
-	secret, err := NewSecret(ctx)
+func (auth *AuthOAuth2) VerifyEncrypt(req *http.Request) bool {
+	secret, err := NewSecret(req)
 	if err != nil {
 		logrus.Error(err)
 		return false
@@ -146,7 +146,7 @@ func AuthToken(ctx *Context) {
 
 // AuthJWT defined TODO
 func AuthJWT(ctx *Context) {
-	if !ctx.VerifyJWT(ctx) {
+	if !ctx.VerifyJWT(ctx.Request()) {
 		ctx.Fail(errors.ErrInvalidAccessToken)
 		ctx.Abort()
 		return
@@ -162,8 +162,8 @@ func AuthJWT(ctx *Context) {
 }
 
 // AuthEncrypt defined TODO
-func AuthEncrypt(ctx Context) {
-	if !ctx.VerifyEncrypt(ctx) {
+func AuthEncrypt(ctx *Context) {
+	if !ctx.VerifyEncrypt(ctx.Request()) {
 		ctx.Fail(errors.ErrInvalidEncryData)
 		ctx.Abort()
 		return
@@ -173,7 +173,7 @@ func AuthEncrypt(ctx Context) {
 
 // Roles middles TODO
 func Roles(roles ...string) HandlerFunc {
-	return func(ctx Context) {
+	return func(ctx *Context) {
 		svc, userId := svc.NewXDB(), ctx.GetToken().GetUserID()
 		if !svc.InRole(ctx.DB, userId, roles...) {
 			ctx.Fail(errors.ErrAccessDenied)
@@ -196,7 +196,7 @@ func Auth(auth ...string) HandlerFunc {
 	if slice.StrSliceContains(auth, JWTType) {
 		hlfs = append(hlfs, AuthJWT)
 	}
-	return func(ctx Context) {
+	return func(ctx *Context) {
 		for i := range hlfs {
 			hlfs[i](ctx)
 		}
