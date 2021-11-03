@@ -59,9 +59,3 @@ type Context interface {
 	Success(interface{})
 	Fail(error)
 }
-
-var defaultContext Context
-
-func GetContext() Context {
-	return defaultContext
-}

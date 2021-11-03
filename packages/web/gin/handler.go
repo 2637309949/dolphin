@@ -53,12 +53,12 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 			return func(ctx *gin.Context) {
 				switch true {
 				case fti.String() == "core.Context":
-					v.Call([]reflect.Value{reflect.ValueOf(&Context{ctx})})
+					v.Call([]reflect.Value{reflect.ValueOf(NewContext(ctx))})
 				case isContext:
 					in := reflect.New(fti)
 					ct := in.Elem().FieldByName("Context")
 					if ct.CanSet() {
-						ct.Set(reflect.ValueOf(&Context{ctx}))
+						ct.Set(reflect.ValueOf(NewContext(ctx)))
 						if isPtr {
 							v.Call([]reflect.Value{in})
 						} else {
@@ -72,7 +72,11 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 	c.Engine.Handle(httpMethod, relativePath, hfc...)
 }
 
-func NewHandle() *handler {
+func NewHandler() core.Handler {
 	gin.SetMode(gin.ReleaseMode)
 	return &handler{gin.New()}
+}
+
+func init() {
+	core.SetHandler(NewHandler())
 }

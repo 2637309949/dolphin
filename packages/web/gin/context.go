@@ -256,6 +256,6 @@ func (c *Context) File(r io.Reader, filename string, context ...interface{}) {
 	http.ServeFile(c.Context.Writer, c.Context.Request, file.Name())
 }
 
-func NewContext() *Context {
-	return &Context{}
+func NewContext(ctx *gin.Context) *Context {
+	return &Context{ctx}
 }

@@ -15,3 +15,7 @@ var defaultHandler Handler
 func GetHandler() Handler {
 	return defaultHandler
 }
+
+func SetHandler(e Handler) {
+	defaultHandler = e
+}
