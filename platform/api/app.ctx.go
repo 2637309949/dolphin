@@ -6,6 +6,9 @@ package api
 
 import (
 	"encoding/json"
+	"io"
+	"mime/multipart"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
@@ -54,6 +57,24 @@ func unWrapError(err error) int {
 // TypeQuery defined failt result
 func (ctx *Context) TypeQuery() *Query {
 	return NewQuery(ctx)
+}
+
+// TypeQuery defined failt result
+func (ctx *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) error {
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, src)
+	return err
 }
 
 // OmitByZero omit invalid fileds

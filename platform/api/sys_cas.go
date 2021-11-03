@@ -21,6 +21,7 @@ import (
 	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/qr"
+	"github.com/gin-gonic/gin"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -40,7 +41,7 @@ import (
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/login [post]
-func (ctr *SysCas) SysCasLogin(ctx *Context) {
+func (ctr *SysCas) SysCasLogin(ctx *gin.Context) {
 	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasLogin/Start:%v", err)
@@ -75,7 +76,7 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 		account.Domain = null.StringFrom(base[0][2])
 	}
 
-	ext, err := ctx.PlatformDB.Where("is_delete = 0 and status = 1").Get(&account)
+	ext, err := App.PlatformDB.Where("is_delete = 0 and status = 1").Get(&account)
 	if err != nil {
 		logrus.Errorf("SysCasLogin/Where:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
@@ -104,16 +105,24 @@ func (ctr *SysCas) SysCasLogin(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/logout [get]
-func (ctr *SysCas) SysCasLogout(ctx *Context) {
+func (ctr *SysCas) SysCasLogout(ctx *gin.Context) {
 	state := "domain=" + ctx.Query("domain") + "&redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	if ctx.Query("domain") == "" {
 		logrus.Errorf("SysCasLogout/domain:%v", errors.ErrDomainNotFound)
-		ctx.Fail(errors.ErrDomainNotFound)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": "ErrDomainNotFound",
+			"status": "",
+		})
 		return
 	}
 	if ctx.Query("redirect_uri") == "" {
 		logrus.Errorf("SysCasLogout/redirect_uri:%v", errors.ErrRedirectUriNotFound)
-		ctx.Fail(errors.ErrRedirectUriNotFound)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": "ErrRedirectUriNotFound",
+			"status": "",
+		})
 		return
 	}
 	session.Destroy(context.Background(), ctx.Writer, ctx.Request)
@@ -129,7 +138,7 @@ func (ctr *SysCas) SysCasLogout(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/affirm [post]
-func (ctr *SysCas) SysCasAffirm(ctx *Context) {
+func (ctr *SysCas) SysCasAffirm(ctx *gin.Context) {
 	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAffirm/Start:%v", err)
@@ -159,12 +168,16 @@ func (ctr *SysCas) SysCasAffirm(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/authorize [get]
-func (ctr *SysCas) SysCasAuthorize(ctx *Context) {
+func (ctr *SysCas) SysCasAuthorize(ctx *gin.Context) {
 	var form url.Values
 	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAuthorize/Start:%v", err)
-		ctx.Fail(err)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": err.Error(),
+			"status": "",
+		})
 		return
 	}
 	ctx.Request.ParseForm()
@@ -180,7 +193,11 @@ func (ctr *SysCas) SysCasAuthorize(ctx *Context) {
 	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasAuthorize/HandleAuthorizeRequest:%v", err)
-		ctx.Fail(err)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": err.Error(),
+			"status": "",
+		})
 		return
 	}
 }
@@ -194,11 +211,15 @@ func (ctr *SysCas) SysCasAuthorize(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/token [post]
-func (ctr *SysCas) SysCasToken(ctx *Context) {
+func (ctr *SysCas) SysCasToken(ctx *gin.Context) {
 	err := App.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
 	if err != nil {
 		logrus.Errorf("SysCasToken/HandleTokenRequest:%v", err)
-		ctx.Fail(err)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": err.Error(),
+			"status": "",
+		})
 	}
 }
 
@@ -212,19 +233,31 @@ func (ctr *SysCas) SysCasToken(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/url [get]
-func (ctr *SysCas) SysCasURL(ctx *Context) {
+func (ctr *SysCas) SysCasURL(ctx *gin.Context) {
 	if ctx.Query("redirect_uri") == "" {
-		ctx.Fail(errors.ErrRedirectUriNotFound)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": "ErrRedirectUriNotFound",
+			"status": "",
+		})
 		return
 	}
 	if ctx.Query("domain") == "" {
-		ctx.Fail(errors.ErrDomainNotFound)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": "ErrDomainNotFound",
+			"status": "ErrDomainNotFound",
+		})
 		return
 	}
 	state := "domain=" + ctx.Query("domain") + "&redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	uri, err := url.Parse(ctx.Query("redirect_uri"))
 	if err != nil {
-		ctx.Fail(err)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": err.Error(),
+			"status": "",
+		})
 		return
 	}
 	if uri.Scheme == "" {
@@ -247,7 +280,7 @@ func (ctr *SysCas) SysCasURL(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/oauth2 [get]
-func (ctr *SysCas) SysCasOauth2(ctx *Context) {
+func (ctr *SysCas) SysCasOauth2(ctx *gin.Context) {
 	ctx.Request.ParseForm()
 	f := ctx.Request.Form
 	state, _ := url.QueryUnescape(f.Get("state"))
@@ -255,23 +288,34 @@ func (ctr *SysCas) SysCasOauth2(ctx *Context) {
 
 	if code == "" {
 		logrus.Errorf("SysCasOauth2/code:%v", errors.ErrCodeNotFound)
-		ctx.Fail(errors.ErrCodeNotFound)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": "ErrCodeNotFound",
+			"status": "",
+		})
 		return
 	}
 	ret, err := OA2Cfg.Exchange(context.Background(), code)
 	if err != nil {
 		logrus.Errorf("SysCasOauth2/Exchange:%v", err)
-		ctx.Fail(err)
+		ctx.JSON(200, map[string]interface{}{
+			"code":   "500",
+			"detail": err.Error(),
+			"status": "",
+		})
 		return
 	}
 	reg := regexp.MustCompile("redirect_uri=([^&]*)?&state=([^&]*)?$")
 	groups := reg.FindAllStringSubmatch(state, -1)
 	redirect := groups[0][1]
 	state = groups[0][2]
-	ctx.Success(map[string]interface{}{
-		"access_token":  ret.AccessToken,
-		"refresh_token": ret.RefreshToken,
-		"redirect_uri":  redirect + "?state=" + state,
+	ctx.JSON(200, map[string]interface{}{
+		"code": "200",
+		"data": map[string]interface{}{
+			"access_token":  ret.AccessToken,
+			"refresh_token": ret.RefreshToken,
+			"redirect_uri":  redirect + "?state=" + state,
+		},
 	})
 }
 
@@ -307,7 +351,7 @@ func (ctr *SysCas) SysCasQrOauth2(ctx *Context) {
 		Domain:       qrToken.Domain.String,
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),
-		Request:      ctx.Request,
+		Request:      ctx.Request(),
 	})
 
 	if err != nil {
@@ -330,7 +374,7 @@ func (ctr *SysCas) SysCasQrOauth2(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/refresh [get]
 func (ctr *SysCas) SysCasRefresh(ctx *Context) {
-	refreshtoken, ok := App.OAuth2.BearerAuth(ctx.Request)
+	refreshtoken, ok := App.OAuth2.BearerAuth(ctx.Request())
 	if !ok {
 		logrus.Errorf("SysCasRefresh/BearerAuth:%v", ok)
 		ctx.Fail(errors.ErrInvalidAccessToken)
@@ -455,7 +499,7 @@ func (ctr *SysCas) SysCasQrcode(ctx *Context) {
 
 	qrCode, _ := qr.Encode(qrconnect, qr.L, qr.Auto)
 	qrCode, _ = barcode.Scale(qrCode, q.GetInt("width"), q.GetInt("height"))
-	png.Encode(ctx.Writer, qrCode)
+	png.Encode(ctx.ResponseWriter(), qrCode)
 }
 
 // SysCasQrconnect api implementation
@@ -466,8 +510,8 @@ func (ctr *SysCas) SysCasQrcode(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/qrconnect [get]
-func (ctr *SysCas) SysCasQrconnect(ctx *Context) {
-	rq := ctx.Context.Request.URL.RawQuery
+func (ctr *SysCas) SysCasQrconnect(ctx *gin.Context) {
+	rq := ctx.Request.URL.RawQuery
 	if rq != "" {
 		rq = "?" + rq
 	}
@@ -499,7 +543,7 @@ func (ctr *SysCas) SysCasQrcodeLogin(ctx *Context) {
 	for range ticker.C {
 		select {
 		case <-cwt.Done():
-			ctx.Status(http.StatusNoContent)
+			ctx.ResponseWriter().WriteHeader(http.StatusNoContent)
 			return
 		default:
 			qrAuth := types.QrAuth{}
@@ -514,5 +558,5 @@ func (ctr *SysCas) SysCasQrcodeLogin(ctx *Context) {
 			}
 		}
 	}
-	ctx.Status(http.StatusNoContent)
+	ctx.ResponseWriter().WriteHeader(http.StatusNoContent)
 }

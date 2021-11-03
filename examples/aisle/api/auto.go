@@ -7,7 +7,9 @@ import (
 	"aisle/srv"
 	"aisle/svc"
 	"aisle/types"
-
+	"github.com/2637309949/dolphin/packages/web"
+	"github.com/2637309949/dolphin/packages/web/core"
+	"github.com/2637309949/dolphin/platform/api"
 	"github.com/spf13/viper"
 )
 
@@ -23,7 +25,7 @@ type Controller struct {
 	Roles,
 	Cache,
 	Interceptor,
-	Handler HandlerFunc
+	Handler core.HandlerFunc
 }
 
 // Organ defined
@@ -45,56 +47,56 @@ func NewOrgan() *Organ {
 	ctr := &Organ{Name: "organ", Srv: srv.NewOrgan()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/organ/add"
-	ctr.Add.Auth = Auth("token")
+	ctr.Add.Auth = api.Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
 	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.OrganAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/organ/batch_add"
-	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Auth = api.Auth("token")
 	ctr.BatchAdd.Roles = NopHandlerFunc
 	ctr.BatchAdd.Cache = NopHandlerFunc
 	ctr.BatchAdd.Interceptor = NopHandlerFunc
 	ctr.BatchAdd.Handler = ctr.OrganBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/organ/del"
-	ctr.Del.Auth = Auth("token")
+	ctr.Del.Auth = api.Auth("token")
 	ctr.Del.Roles = NopHandlerFunc
 	ctr.Del.Cache = NopHandlerFunc
 	ctr.Del.Interceptor = NopHandlerFunc
 	ctr.Del.Handler = ctr.OrganDel
 	ctr.BatchDel.Method = "PUT"
 	ctr.BatchDel.RelativePath = "/organ/batch_del"
-	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Auth = api.Auth("token")
 	ctr.BatchDel.Roles = NopHandlerFunc
 	ctr.BatchDel.Cache = NopHandlerFunc
 	ctr.BatchDel.Interceptor = NopHandlerFunc
 	ctr.BatchDel.Handler = ctr.OrganBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/organ/update"
-	ctr.Update.Auth = Auth("token")
+	ctr.Update.Auth = api.Auth("token")
 	ctr.Update.Roles = NopHandlerFunc
 	ctr.Update.Cache = NopHandlerFunc
 	ctr.Update.Interceptor = NopHandlerFunc
 	ctr.Update.Handler = ctr.OrganUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/organ/batch_update"
-	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Auth = api.Auth("token")
 	ctr.BatchUpdate.Roles = NopHandlerFunc
 	ctr.BatchUpdate.Cache = NopHandlerFunc
 	ctr.BatchUpdate.Interceptor = NopHandlerFunc
 	ctr.BatchUpdate.Handler = ctr.OrganBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/organ/page"
-	ctr.Page.Auth = Auth("token")
+	ctr.Page.Auth = api.Auth("token")
 	ctr.Page.Roles = NopHandlerFunc
 	ctr.Page.Cache = NopHandlerFunc
 	ctr.Page.Interceptor = NopHandlerFunc
 	ctr.Page.Handler = ctr.OrganPage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/organ/get"
-	ctr.Get.Auth = Auth("token")
+	ctr.Get.Auth = api.Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
 	ctr.Get.Interceptor = NopHandlerFunc
@@ -103,8 +105,8 @@ func NewOrgan() *Organ {
 }
 
 // OrganRoutes defined
-func OrganRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), OrganInstance
+func OrganRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), OrganInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
 	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
@@ -536,7 +538,7 @@ func (dol *Dolphin) SyncModel() error {
 
 // SyncController defined
 func (dol *Dolphin) SyncController() error {
-	OrganRoutes(&dol.RouterGroup)
+	OrganRoutes()
 	return nil
 }
 

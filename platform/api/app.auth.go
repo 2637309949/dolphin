@@ -37,8 +37,8 @@ type AuthProtocol interface {
 
 // AuthOAuth2 deifned
 type AuthOAuth2 struct {
-	oauth2 *server.Server
 	jwt    *JWT
+	oauth2 *server.Server
 	ticket *Token
 }
 
@@ -172,7 +172,7 @@ func AuthEncrypt(ctx *Context) {
 }
 
 // Roles middles TODO
-func Roles(roles ...string) HandlerFunc {
+func Roles(roles ...string) func(ctx *Context) {
 	return func(ctx *Context) {
 		svc, userId := svc.NewXDB(), ctx.GetToken().GetUserID()
 		if !svc.InRole(ctx.DB, userId, roles...) {
@@ -185,8 +185,8 @@ func Roles(roles ...string) HandlerFunc {
 }
 
 // Auth middles TODO
-func Auth(auth ...string) HandlerFunc {
-	hlfs := []HandlerFunc{}
+func Auth(auth ...string) func(ctx *Context) {
+	hlfs := []func(ctx *Context){}
 	if slice.StrSliceContains(auth, TokenType) {
 		hlfs = append(hlfs, AuthToken)
 	}

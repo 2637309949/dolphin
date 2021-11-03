@@ -323,7 +323,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		}
 		q.SetUnescaped("cn_org_id", strings.Join(ids, ","))
 	}
-	if ctr.Srv.Report.Check(ctx.Request) {
+	if ctr.Srv.Report.Check(ctx.Request()) {
 		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
 		ret, err := ctr.Srv.Report.PageExport(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
 		if err != nil {
@@ -399,7 +399,7 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 	}
 	if payload.Domain.String == "" {
 		reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
-		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
+		base := reg.FindAllStringSubmatch(ctx.Request().Host, -1)
 		payload.Domain = null.StringFrom(base[0][2])
 	}
 	account.Domain = payload.Domain
@@ -419,7 +419,7 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 		Domain:       account.Domain.String,
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),
-		Request:      ctx.Request,
+		Request:      ctx.Request(),
 	})
 	if err != nil {
 		logrus.Errorf("SysUserLogin/GenerateAccessToken:%v", err)

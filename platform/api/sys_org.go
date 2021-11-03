@@ -245,7 +245,7 @@ func (ctr *SysOrg) SysOrgPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	if ctr.Srv.Report.Check(ctx.Request) {
+	if ctr.Srv.Report.Check(ctx.Request()) {
 		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
 		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "sys_org", "page", "sys_org", q.Value())
 		if err != nil {

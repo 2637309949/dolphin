@@ -6,7 +6,6 @@ package api
 
 import (
 	"bytes"
-	"fmt"
 	"net/http/httputil"
 	"os"
 	"time"
@@ -29,8 +28,8 @@ func Hostname() string {
 }
 
 // HttpTrace defined TODO
-func HttpTrace() HandlerFunc {
-	return func(ctx *Context) {
+func HttpTrace() func(ctx *gin.Context) {
+	return func(ctx *gin.Context) {
 		carrier, err := trace.Extract(trace.HttpFormat, ctx.Request.Header)
 		if err != nil && err != trace.ErrInvalidCarrier {
 			logrus.Error(err)
@@ -43,8 +42,8 @@ func HttpTrace() HandlerFunc {
 }
 
 // Cors defined TODO
-func Cors(origin string, headers string) HandlerFunc {
-	return func(ctx *Context) {
+func Cors(origin string, headers string) func(ctx *gin.Context) {
+	return func(ctx *gin.Context) {
 		ctx.Writer.Header().Set("Access-Control-Allow-Origin", origin)
 		ctx.Writer.Header().Set("Access-Control-Max-Age", "86400")
 		ctx.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
@@ -60,15 +59,19 @@ func Cors(origin string, headers string) HandlerFunc {
 }
 
 // Recovery defined TODO
-func Recovery() HandlerFunc {
-	return func(ctx *Context) {
+func Recovery() func(ctx *gin.Context) {
+	return func(ctx *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
 				httprequest, _ := httputil.DumpRequest(ctx.Request, false)
 				goErr := errors.Wrap(err, 3)
 				reset := string([]byte{27, 91, 48, 109})
 				logrus.Errorf("[Nice Recovery] panic recovered:\n\n%s%s\n\n%s%s", httprequest, goErr.Error(), goErr.Stack(), reset)
-				ctx.Fail(fmt.Errorf("%v", err))
+				ctx.JSON(200, map[string]interface{}{
+					"code":   "500",
+					"detail": goErr.Error(),
+					"status": "",
+				})
 			}
 		}()
 		ctx.Next()
@@ -76,7 +79,7 @@ func Recovery() HandlerFunc {
 }
 
 // DumpBody instance a Logger middleware with config.
-func DumpBody(dumpCall func(*Context, *LogFormatterParams)) HandlerFunc {
+func DumpBody(dumpCall func(*gin.Context, *LogFormatterParams)) func(ctx *gin.Context) {
 	formatter := Formatter
 	notlogged := []string{}
 	skip := map[string]struct{}{}
@@ -89,7 +92,7 @@ func DumpBody(dumpCall func(*Context, *LogFormatterParams)) HandlerFunc {
 		}
 	}
 
-	return func(c *Context) {
+	return func(c *gin.Context) {
 		var bufWriter bytes.Buffer
 		var bufReader bytes.Buffer
 		var buf []byte

@@ -27,7 +27,7 @@ type Secret struct {
 // NewSecret defined TODO
 func NewSecret(req *http.Request) (*Secret, error) {
 	secret := Secret{}
-	123
+	// TODO
 	return &secret, nil
 }
 

@@ -8,13 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var _ core.Handler = &handler{}
+
 type handler struct {
-	engine *gin.Engine
+	*gin.Engine
 }
 
 // Handler defined TODO
 func (c *handler) Handler() http.Handler {
-	return c.engine
+	return c.Engine
 }
 
 // Handler defined TODO
@@ -51,12 +53,12 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 			return func(ctx *gin.Context) {
 				switch true {
 				case fti.String() == "core.Context":
-					v.Call([]reflect.Value{reflect.ValueOf(&Context{context: ctx})})
+					v.Call([]reflect.Value{reflect.ValueOf(&Context{ctx})})
 				case isContext:
 					in := reflect.New(fti)
 					ct := in.Elem().FieldByName("Context")
 					if ct.CanSet() {
-						ct.Set(reflect.ValueOf(&Context{context: ctx}))
+						ct.Set(reflect.ValueOf(&Context{ctx}))
 						if isPtr {
 							v.Call([]reflect.Value{in})
 						} else {
@@ -67,11 +69,10 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 			}
 		}(fv))
 	}
-	c.engine.Handle(httpMethod, relativePath, hfc...)
+	c.Engine.Handle(httpMethod, relativePath, hfc...)
 }
 
 func NewHandle() *handler {
-	return &handler{
-		engine: gin.New(),
-	}
+	gin.SetMode(gin.ReleaseMode)
+	return &handler{gin.New()}
 }

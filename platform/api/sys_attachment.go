@@ -5,6 +5,7 @@ package api
 
 import (
 	"fmt"
+	"os"
 	"path"
 	"path/filepath"
 
@@ -170,7 +171,8 @@ func (ctr *SysAttachment) SysAttachmentExport(ctx *Context) {
 	ctx.Header("Content-Transfer-Encoding", "binary")
 	ctx.Header("Content-Disposition", "attachment; filename="+encode.URIComponent(ctx.QueryString("file_name")))
 	ctx.Header("Content-Type", "application/octet-stream")
-	ctx.File(filePath)
+	r, _ := os.Open(filePath)
+	ctx.File(r, ctx.QueryString("file_name"))
 }
 
 // SysAttachmentDel api implementation

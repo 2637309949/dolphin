@@ -12,8 +12,16 @@ func init() {
 	defaultApp = app
 }
 
+func Group(relativePath string, handlers ...core.HandlerFunc) *core.RouterGroup {
+	return defaultApp.Group(relativePath, handlers...)
+}
+
 func Handle(m string, r string, h ...core.HandlerFunc) {
 	defaultApp.Handle(m, r, h...)
+}
+
+func Static(relativePath, root string) {
+	defaultApp.Static(relativePath, root)
 }
 
 func Use(middleware ...core.HandlerFunc) {

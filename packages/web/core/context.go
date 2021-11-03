@@ -4,6 +4,7 @@ import (
 	"io"
 	"mime/multipart"
 	"net/http"
+	"time"
 )
 
 // Context defined TODO
@@ -47,6 +48,12 @@ type Context interface {
 	// net/http
 	Request() *http.Request
 	ResponseWriter() http.ResponseWriter
+
+	// context
+	Deadline() (time.Time, bool)
+	Done() <-chan struct{}
+	Err() error
+	Value(interface{}) interface{}
 
 	// std reponse json
 	Success(interface{})

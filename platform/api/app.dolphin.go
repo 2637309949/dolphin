@@ -17,6 +17,8 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
+	"github.com/2637309949/dolphin/packages/web"
+	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
 	"github.com/2637309949/dolphin/platform/sql"
@@ -36,14 +38,11 @@ type (
 	Option func(*Dolphin)
 	// Dolphin defined parse app engine
 	Dolphin struct {
-		http.Handler
-		RouterGroup
 		Lifecycle
 		PlatformDB *xorm.Engine
 		Manager    Manager
 		OAuth2     *server.Server
 		JWT        *JWT
-		Http       httpHandler
 		pool       sync.Pool
 	}
 )
@@ -101,7 +100,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 
 // ServeHTTP defined TODO
 func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	dol.Http.ServeHTTP(w, r)
+	core.GetHandler().Handler().ServeHTTP(w, r)
 }
 
 // Reflesh defined init data before bootinh
@@ -331,6 +330,16 @@ func (dol *Dolphin) LifeCycle(ctx context.Context) error {
 	return nil
 }
 
+// Use defined TODO
+func (dol *Dolphin) Use(middleware ...core.HandlerFunc) {
+	web.Use(middleware...)
+}
+
+// Static defined TODO
+func (dol *Dolphin) Static(relativePath, root string) {
+	web.Static(relativePath, root)
+}
+
 // Run defined TODO
 func (dol *Dolphin) Run() error {
 	ctx := context.Background()
@@ -352,18 +361,13 @@ func NewDefault(options ...Option) *Dolphin {
 	dol.Use(HttpTrace())
 	dol.Use(Cors("*", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization"))
 	dol.Static(viper.GetString("http.static"), path.Join(file.Getwd(), viper.GetString("http.static")))
-	dol.Use(DumpBody(DumpRecv(dol)))
+	dol.Use(DumpBody(DumpRecv()))
 	return dol
 }
 
 // NewDolphin defined TODO
 func New(options ...Option) *Dolphin {
 	dol := &Dolphin{}
-	dol.RouterGroup = RouterGroup{Handlers: []HandlerFunc{}, basePath: "/"}
-	dol.RouterGroup.dol = dol
-	dol.pool.New = func() interface{} {
-		return NewContext(dol)
-	}
 	for i := range options {
 		options[i](dol)
 	}

@@ -11,6 +11,7 @@ import (
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
+	"github.com/2637309949/dolphin/packages/web"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
@@ -29,26 +30,18 @@ type Hook struct {
 
 // OnStart defined OnStart
 func (h *Hook) OnStart(ctx context.Context) error {
-	h.dol.Http.OnStart(ctx)
+	web.Run(viper.GetString("http.port"))
 	return nil
 }
 
 // OnStop defined OnStop
 func (h *Hook) OnStop(ctx context.Context) error {
-	h.dol.Http.OnStop(ctx)
 	return nil
 }
 
 // NewLifeHook defined TODO
 func NewLifeHook(e *Dolphin) lifeHook {
 	return &Hook{dol: e}
-}
-
-// WithHttpHandler defined TODO
-func WithHttpHandler() Option {
-	return func(dol *Dolphin) {
-		dol.Http = NewGinHandler(dol)
-	}
 }
 
 // WithLifecycle defined TODO
@@ -109,7 +102,7 @@ func init() {
 	InitCacheStore()
 	InitSession()
 
-	opts := []Option{WithHttpHandler(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
+	opts := []Option{WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
 	app := NewDefault(opts...)
 	StaticRoutes(app)
 	App, Run = app, app.Run

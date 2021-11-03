@@ -118,7 +118,7 @@ func (w *cachedWriter) WriteString(data string) (n int, err error) {
 }
 
 // CachePage Decorator
-func CachePage(store cache.CacheStore, expire time.Duration) gin.HandlerFunc {
+func CachePage(store cache.CacheStore, expire time.Duration) func(*gin.Context) {
 	return func(c *gin.Context) {
 		var rsp responseCache
 		url := c.Request.URL
@@ -149,7 +149,7 @@ func CachePage(store cache.CacheStore, expire time.Duration) gin.HandlerFunc {
 }
 
 // Cache middles
-func Cache(time time.Duration) gin.HandlerFunc {
+func Cache(time time.Duration) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
 		CachePage(CacheStore, time)(ctx)
 	}

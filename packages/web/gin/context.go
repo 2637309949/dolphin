@@ -8,65 +8,69 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"time"
 
+	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/eriklott/mustache"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/sirupsen/logrus"
 )
 
+var _ core.Context = &Context{}
+
 type Context struct {
-	context *gin.Context
+	*gin.Context
 }
 
 // Set defined TODO
 func (c *Context) Set(k string, v interface{}) {
-	c.context.Set(k, v)
+	c.Context.Set(k, v)
 }
 
 // Get defined TODO
 func (c *Context) Get(k string) (interface{}, bool) {
-	return c.context.Get(k)
+	return c.Context.Get(k)
 }
 
 // Param defined TODO
 func (c *Context) Param(k string) string {
-	return c.context.Param(k)
+	return c.Context.Param(k)
 }
 
 // Query defined TODO
 func (c *Context) Query(k string) string {
-	return c.context.Query(k)
+	return c.Context.Query(k)
 }
 
 // MultipartForm defined TODO
 func (c *Context) MultipartForm() (*multipart.Form, error) {
-	return c.context.MultipartForm()
+	return c.Context.MultipartForm()
 }
 
 // Header defined TODO
 func (c *Context) Header(key, value string) {
-	c.context.Header(key, value)
+	c.Context.Header(key, value)
 }
 
 // GetHeader defined TODO
 func (c *Context) GetHeader(key string) string {
-	return c.context.GetHeader(key)
+	return c.Context.GetHeader(key)
 }
 
 // ShouldBindWith defined TODO
 func (c *Context) ShouldBindWith(v interface{}) error {
-	if UriCheck(c.context.Params) {
-		if err := c.context.ShouldBindUri(v); err != nil {
+	if UriCheck(c.Context.Params) {
+		if err := c.Context.ShouldBindUri(v); err != nil {
 			return err
 		}
 	}
-	if QueryCheck(c.context.Request) {
-		if err := c.context.ShouldBindQuery(v); err != nil {
+	if QueryCheck(c.Context.Request) {
+		if err := c.Context.ShouldBindQuery(v); err != nil {
 			return err
 		}
 	}
-	if JsonCheck(c.context.Request) {
+	if JsonCheck(c.Context.Request) {
 		if err := c.ShouldBindBody(v); err != nil {
 			return err
 		}
@@ -88,7 +92,7 @@ func (c *Context) ShouldBindBody(ptr interface{}) error {
 		}
 	}
 	if body == nil {
-		body, err = ioutil.ReadAll(c.context.Request.Body)
+		body, err = ioutil.ReadAll(c.Context.Request.Body)
 		if err != nil {
 			return err
 		}
@@ -99,37 +103,37 @@ func (c *Context) ShouldBindBody(ptr interface{}) error {
 
 // GetRawData defined TODO
 func (c *Context) GetRawData() ([]byte, error) {
-	return c.context.GetRawData()
+	return c.Context.GetRawData()
 }
 
 // SetCookie defined TODO
 func (c *Context) SetCookie(name, value string, maxAge int, path, domain string, secure, httpOnly bool) {
-	c.context.SetCookie(name, value, maxAge, path, domain, secure, httpOnly)
+	c.Context.SetCookie(name, value, maxAge, path, domain, secure, httpOnly)
 }
 
 // Cookie defined TODO
 func (c *Context) Cookie(name string) (string, error) {
-	return c.context.Cookie(name)
+	return c.Context.Cookie(name)
 }
 
 // Next defined TODO
 func (c *Context) Next() {
-	c.context.Next()
+	c.Context.Next()
 }
 
 // Abort defined TODO
 func (c *Context) Abort() {
-	c.context.Abort()
+	c.Context.Abort()
 }
 
 // IsAborted defined TODO
 func (c *Context) IsAborted() bool {
-	return c.context.IsAborted()
+	return c.Context.IsAborted()
 }
 
 // Success defined TODO
 func (c *Context) Success(data interface{}) {
-	c.context.JSON(http.StatusOK, map[string]interface{}{
+	c.Context.JSON(http.StatusOK, map[string]interface{}{
 		"code": 200,
 		"data": data,
 	})
@@ -137,7 +141,7 @@ func (c *Context) Success(data interface{}) {
 
 // Fail defined TODO
 func (c *Context) Fail(err error) {
-	c.context.JSON(http.StatusOK, map[string]interface{}{
+	c.Context.JSON(http.StatusOK, map[string]interface{}{
 		"code":   500,
 		"detail": err.Error(),
 	})
@@ -145,7 +149,7 @@ func (c *Context) Fail(err error) {
 
 // HTML defined TODO
 func (c *Context) HTML(r io.Reader, context ...interface{}) {
-	c.context.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
+	c.Context.Writer.Header().Set("Content-Type", "text/html; charset=utf-8")
 	file, err := ioutil.TempFile("", "*")
 	if err != nil {
 
@@ -163,12 +167,12 @@ func (c *Context) HTML(r io.Reader, context ...interface{}) {
 	if _, err = file.WriteString(str); err != nil {
 		return
 	}
-	http.ServeFile(c.context.Writer, c.context.Request, file.Name())
+	http.ServeFile(c.Context.Writer, c.Context.Request, file.Name())
 }
 
 // XML defined TODO
 func (c *Context) XML(r io.Reader, context ...interface{}) {
-	c.context.Writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
+	c.Context.Writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
 	file, err := ioutil.TempFile("", "*")
 	if err != nil {
 		return
@@ -185,7 +189,7 @@ func (c *Context) XML(r io.Reader, context ...interface{}) {
 	if _, err = file.WriteString(str); err != nil {
 		return
 	}
-	http.ServeFile(c.context.Writer, c.context.Request, file.Name())
+	http.ServeFile(c.Context.Writer, c.Context.Request, file.Name())
 }
 
 // XML defined TODO
@@ -194,22 +198,42 @@ func (c *Context) String(data string, context ...interface{}) {
 	if err != nil {
 		return
 	}
-	c.context.String(200, str)
+	c.Context.String(200, str)
 }
 
 // Request defined TODO
 func (c *Context) Request() *http.Request {
-	return c.context.Request
+	return c.Context.Request
 }
 
 // Request defined TODO
 func (c *Context) ResponseWriter() http.ResponseWriter {
-	return c.context.Writer
+	return c.Context.Writer
+}
+
+// Request defined TODO
+func (c *Context) Deadline() (deadline time.Time, ok bool) {
+	return c.Context.Deadline()
+}
+
+// Done defined TODO
+func (c *Context) Done() <-chan struct{} {
+	return c.Context.Done()
+}
+
+// Err defined TODO
+func (c *Context) Err() error {
+	return c.Context.Err()
+}
+
+// Value defined TODO
+func (c *Context) Value(key interface{}) interface{} {
+	return c.Context.Value(key)
 }
 
 // File defined TODO
 func (c *Context) File(r io.Reader, filename string, context ...interface{}) {
-	c.context.Writer.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
+	c.Context.Writer.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", filename))
 	file, err := ioutil.TempFile("", "*")
 	if err != nil {
 		return
@@ -229,7 +253,7 @@ func (c *Context) File(r io.Reader, filename string, context ...interface{}) {
 		logrus.Error(err)
 		return
 	}
-	http.ServeFile(c.context.Writer, c.context.Request, file.Name())
+	http.ServeFile(c.Context.Writer, c.Context.Request, file.Name())
 }
 
 func NewContext() *Context {
