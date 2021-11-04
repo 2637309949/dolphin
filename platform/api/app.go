@@ -25,12 +25,17 @@ var (
 // A Hook is a pair of start and stop callbacks, either of which can be nil,
 // plus a string identifying the supplier of the hook.
 type Hook struct {
-	dol *Dolphin
 }
 
 // OnStart defined OnStart
 func (h *Hook) OnStart(ctx context.Context) error {
-	web.Run(viper.GetString("http.port"))
+	go func() {
+		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
+		err := web.Run(viper.GetString("http.port"))
+		if err != nil {
+			logrus.Fatal(err)
+		}
+	}()
 	return nil
 }
 
@@ -40,15 +45,15 @@ func (h *Hook) OnStop(ctx context.Context) error {
 }
 
 // NewLifeHook defined TODO
-func NewLifeHook(e *Dolphin) lifeHook {
-	return &Hook{dol: e}
+func NewLifeHook() lifeHook {
+	return &Hook{}
 }
 
 // WithLifecycle defined TODO
 func WithLifecycle() Option {
 	return func(dol *Dolphin) {
 		dol.Lifecycle = &lifecycleWrapper{}
-		dol.Append(NewLifeHook(dol))
+		dol.Append(NewLifeHook())
 	}
 }
 

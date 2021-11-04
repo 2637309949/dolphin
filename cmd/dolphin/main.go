@@ -71,7 +71,7 @@ func InitViper(cmd *cobra.Command, _ []string) {
 	viper.SetDefault("app.auth", "token")
 	viper.SetDefault("app.viper", false)
 	viper.SetDefault("http.hash", "FF61A573-82FC-478B-9AEF-93D6F506DE9A")
-	viper.SetDefault("http.port", "8081")
+	viper.SetDefault("http.port", ":8081")
 	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("http.static", "static")
 	viper.SetDefault("http.temp", "temp")

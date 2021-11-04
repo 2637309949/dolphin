@@ -8,6 +8,8 @@ import (
 	"mime/multipart"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/2637309949/dolphin/packages/web/core"
@@ -29,8 +31,12 @@ func (c *Context) Set(k string, v interface{}) {
 }
 
 // Get defined TODO
-func (c *Context) Get(k string) (interface{}, bool) {
-	return c.Context.Get(k)
+func (c *Context) Get(k string) interface{} {
+	v, ok := c.Context.Get(k)
+	if !ok {
+		return nil
+	}
+	return v
 }
 
 // Param defined TODO
@@ -86,7 +92,7 @@ func (c *Context) ShouldBindBody(ptr interface{}) error {
 	if ptr == nil {
 		return errors.New("first parameter must be an pointer")
 	}
-	if cb, ok := c.Get(gin.BodyBytesKey); ok {
+	if cb, ok := c.Context.Get(gin.BodyBytesKey); ok {
 		if cbb, ok := cb.([]byte); ok {
 			body = cbb
 		}
@@ -201,9 +207,72 @@ func (c *Context) String(data string, context ...interface{}) {
 	c.Context.String(200, str)
 }
 
+// QueryRange defined TODO
+func (ctx *Context) QueryRange(key string, init ...string) (string, string) {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) >= 2 {
+			return init[0], init[1]
+		}
+	}
+	values := strings.Split(v, ",")
+	if len(values) >= 2 {
+		return values[0], values[1]
+	}
+	return "", ""
+}
+
+// QueryInt defined TODO
+func (ctx *Context) QueryInt(key string, init ...int) int {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			return init[0]
+		}
+		return 0
+	}
+	i, err := strconv.ParseInt(v, 10, 64)
+	if err != nil {
+		panic(err)
+	}
+	return int(i)
+}
+
+// QueryBool defined TODO
+func (ctx *Context) QueryBool(key string, init ...bool) bool {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			return init[0]
+		}
+		return false
+	}
+	i, err := strconv.ParseBool(v)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+
+// QueryString defined TODO
+func (ctx *Context) QueryString(key string, init ...string) string {
+	v := ctx.Query(key)
+	if strings.TrimSpace(v) == "" {
+		if len(init) > 0 {
+			return init[0]
+		}
+	}
+	return v
+}
+
 // Request defined TODO
 func (c *Context) Request() *http.Request {
 	return c.Context.Request
+}
+
+// Request defined TODO
+func (c *Context) SetRequest(r *http.Request) {
+	c.Context.Request = r
 }
 
 // Status defined TODO
@@ -259,6 +328,24 @@ func (c *Context) File(r io.Reader, filename string, context ...interface{}) {
 		return
 	}
 	http.ServeFile(c.Context.Writer, c.Context.Request, file.Name())
+}
+
+// TypeQuery defined failt result
+func (ctx *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) error {
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	_, err = io.Copy(out, src)
+	return err
 }
 
 func NewContext(ctx *gin.Context) *Context {

@@ -1,6 +1,7 @@
 package core
 
 import (
+	"errors"
 	"net/http"
 )
 
@@ -17,5 +18,8 @@ func GetHandler() Handler {
 }
 
 func SetHandler(e Handler) {
+	if defaultHandler != nil {
+		panic(errors.New("handler has been registered"))
+	}
 	defaultHandler = e
 }

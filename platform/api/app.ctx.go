@@ -6,11 +6,7 @@ package api
 
 import (
 	"encoding/json"
-	"io"
-	"mime/multipart"
-	"os"
 	"reflect"
-	"strconv"
 	"strings"
 
 	"github.com/2637309949/dolphin/packages/web/gin"
@@ -50,24 +46,6 @@ func (ctx *Context) TypeQuery() *Query {
 	return NewQuery(ctx)
 }
 
-// TypeQuery defined failt result
-func (ctx *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) error {
-	src, err := file.Open()
-	if err != nil {
-		return err
-	}
-	defer src.Close()
-
-	out, err := os.Create(dst)
-	if err != nil {
-		return err
-	}
-	defer out.Close()
-
-	_, err = io.Copy(out, src)
-	return err
-}
-
 // OmitByZero omit invalid fileds
 func (ctx *Context) OmitByZero(source interface{}) (target interface{}) {
 	sv := []reflect.StructField{}
@@ -90,62 +68,4 @@ func (ctx *Context) OmitByZero(source interface{}) (target interface{}) {
 	sbt, _ := json.Marshal(source)
 	json.Unmarshal(sbt, &target)
 	return
-}
-
-// QueryRange defined TODO
-func (ctx *Context) QueryRange(key string, init ...string) (string, string) {
-	v := ctx.Query(key)
-	if strings.TrimSpace(v) == "" {
-		if len(init) >= 2 {
-			return init[0], init[1]
-		}
-	}
-	values := strings.Split(v, ",")
-	if len(values) >= 2 {
-		return values[0], values[1]
-	}
-	return "", ""
-}
-
-// QueryInt defined TODO
-func (ctx *Context) QueryInt(key string, init ...int) int {
-	v := ctx.Query(key)
-	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			return init[0]
-		}
-		return 0
-	}
-	i, err := strconv.ParseInt(v, 10, 64)
-	if err != nil {
-		panic(err)
-	}
-	return int(i)
-}
-
-// QueryBool defined TODO
-func (ctx *Context) QueryBool(key string, init ...bool) bool {
-	v := ctx.Query(key)
-	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			return init[0]
-		}
-		return false
-	}
-	i, err := strconv.ParseBool(v)
-	if err != nil {
-		panic(err)
-	}
-	return i
-}
-
-// QueryString defined TODO
-func (ctx *Context) QueryString(key string, init ...string) string {
-	v := ctx.Query(key)
-	if strings.TrimSpace(v) == "" {
-		if len(init) > 0 {
-			return init[0]
-		}
-	}
-	return v
 }

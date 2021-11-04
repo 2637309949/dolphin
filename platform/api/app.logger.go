@@ -127,9 +127,9 @@ func Formatter(param gin.LogFormatterParams) string {
 }
 
 // DumpRecv defined tracker recorder
-func DumpRecv() func(ctx *gin.Context, p *LogFormatterParams) {
-	return func(ctx *gin.Context, p *LogFormatterParams) {
-		token, _ := App.OAuth2.BearerAuth(ctx.Request)
+func DumpRecv() func(ctx *Context, p *LogFormatterParams) {
+	return func(ctx *Context, p *LogFormatterParams) {
+		token, _ := App.OAuth2.BearerAuth(ctx.Request())
 		p.Token = token
 		if tokenInfo, err := App.OAuth2.Manager.LoadAccessToken(token); err == nil {
 			p.Domain = tokenInfo.GetDomain()
@@ -137,8 +137,6 @@ func DumpRecv() func(ctx *gin.Context, p *LogFormatterParams) {
 			p.UserID = it
 		}
 
-		// would not be block <-logWorkerPool
-		// but <- p will
 		jobChannel := <-logWorkerPool
 		go func(p *LogFormatterParams) {
 			jobChannel <- p

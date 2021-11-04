@@ -118,20 +118,19 @@ func (w *cachedWriter) WriteString(data string) (n int, err error) {
 }
 
 // CachePage Decorator
-func CachePage(store cache.CacheStore, expire time.Duration) func(*gin.Context) {
-	return func(c *gin.Context) {
+func CachePage(store cache.CacheStore, expire time.Duration) func(*Context) {
+	return func(c *Context) {
 		var rsp responseCache
-		url := c.Request.URL
+		url := c.Request().URL
 		key := CreateKey(url.RequestURI())
 		if err := store.Get(key, &rsp); err != nil {
 			if err != cache.ErrCacheMiss {
 				log.Println(err.Error())
 			}
-			// replace writer
 			writer := newCachedWriter(store, expire, c.Writer, key)
 			c.Writer = writer
 			c.Next()
-			// Drop caches of aborted contexts
+
 			if c.IsAborted() {
 				store.Delete(key)
 			}
@@ -149,8 +148,8 @@ func CachePage(store cache.CacheStore, expire time.Duration) func(*gin.Context) 
 }
 
 // Cache middles
-func Cache(time time.Duration) func(ctx *gin.Context) {
-	return func(ctx *gin.Context) {
+func Cache(time time.Duration) func(ctx *Context) {
+	return func(ctx *Context) {
 		CachePage(CacheStore, time)(ctx)
 	}
 }

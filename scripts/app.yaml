@@ -12,7 +12,7 @@ data:
     app.name = aisle
     app.mode = release
     db.datasource = root:111111@tcp(172.20.10.3:3306)/dolphin?charset=utf8&parseTime=True&loc=Local
-    http.port = 80
+    http.port = :80
 ---
 apiVersion: apps/v1
 kind: Deployment

@@ -11,7 +11,11 @@ import (
 type Context interface {
 	// Set/Get is used to store a new key/value pair exclusively for this context.
 	Set(string, interface{})
-	Get(string) (interface{}, bool)
+	Get(string) interface{}
+
+	// Next
+	Next()
+	Abort()
 
 	// /user/:id
 	Param(string) string
@@ -40,13 +44,10 @@ type Context interface {
 	File(io.Reader, string, ...interface{})
 	String(string, ...interface{})
 
-	// next
-	Next()
-	Abort()
-	IsAborted() bool
-
 	// net/http
 	Request() *http.Request
+	SetRequest(r *http.Request)
+
 	ResponseWriter() http.ResponseWriter
 
 	// context

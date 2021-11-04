@@ -39,7 +39,7 @@ func InitViper() {
 	viper.SetDefault("dir.srv", "srv")
 	viper.SetDefault("dir.util", "util")
 	viper.SetDefault("http.hash", "FF61A573-82FC-478B-9AEF-93D6F506DE9A")
-	viper.SetDefault("http.port", "8081")
+	viper.SetDefault("http.port", ":8081")
 	viper.SetDefault("http.prefix", "/api")
 	viper.SetDefault("http.static", "static")
 	viper.SetDefault("oauth.id", types.DefaultClient.Client.String)
@@ -79,13 +79,13 @@ func InitViper() {
 		logrus.Warn("configuration file not found")
 	}
 	if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
-		viper.SetDefault("oauth.server", fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
+		viper.SetDefault("oauth.server", fmt.Sprintf("http://localhost%v", viper.GetString("http.port")))
 	}
 	if strings.TrimSpace(viper.GetString("oauth.client")) == "" {
-		viper.SetDefault("oauth.client", fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
+		viper.SetDefault("oauth.client", fmt.Sprintf("http://localhost%v", viper.GetString("http.port")))
 	}
 	if strings.TrimSpace(viper.GetString("app.host")) == "" {
-		viper.SetDefault("app.host", fmt.Sprintf("localhost:%v", viper.GetString("http.port")))
+		viper.SetDefault("app.host", fmt.Sprintf("localhost%v", viper.GetString("http.port")))
 	}
 
 	if strings.TrimSpace(viper.GetString("consul.name")) == "" {

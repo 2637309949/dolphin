@@ -316,11 +316,13 @@ func (dol *Dolphin) done() <-chan os.Signal {
 func (dol *Dolphin) LifeCycle(ctx context.Context) error {
 	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
+
 	signal := dol.done()
 	if err := dol.Start(ctx); err != nil {
 		return err
 	}
 	<-signal
+
 	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 	if err := dol.Stop(ctx); err != nil {

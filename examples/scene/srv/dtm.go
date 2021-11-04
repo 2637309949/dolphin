@@ -63,7 +63,7 @@ func (srv *Dtm) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (int
 // Trans defined srv
 func (srv *Dtm) Trans(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
 	logrus.Printf("tcc transaction begin")
-	srvAddress := "http://localhost:" + viper.GetString("http.port") + "/api/dtm"
+	srvAddress := "http://localhost" + viper.GetString("http.port") + "/api/dtm"
 	gid := dtmcli.MustGenGid(viper.GetString("dtm.srv"))
 	err := dtmcli.TccGlobalTransaction(viper.GetString("dtm.srv"), gid, func(tcc *dtmcli.Tcc) (rerr error) {
 		res1, rerr := tcc.CallBranch(&types.TransReq{Amount: null.IntFrom(30)}, srvAddress+"/trans_out", srvAddress+"/trans_out_confirm", srvAddress+"/trans_out_revert")
