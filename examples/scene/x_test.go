@@ -11,10 +11,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/2637309949/dolphin/platform/util"
 	"github.com/spf13/viper"
 
 	"scene/api"
+	"scene/util/errors"
 )
 
 var token string
@@ -178,7 +178,9 @@ func SetToken(tk string) {
 // TestMain defined
 func TestMain(m *testing.M) {
 	x = &XTest{}
-	util.Ensure(api.App.Reflesh())
+	if err := api.App.Reflesh(); err != nil {
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
+	}
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }
@@ -664,22 +666,6 @@ func BenchmarkRedisMqGet(t *testing.B) {
 	t.RunParallel(func(pb *testing.PB) {
 		for pb.Next() {
 			x.Handle("GET", "/api/redis/mq/get", XTestRedisMqGet, t, XTestRedisMqGetRequest)
-		}
-	})
-}
-
-// TestRPCMessage defined TODO
-// go test -v -test.run TestRPCMessage
-func TestRPCMessage(t *testing.T) {
-	x.Handle("GET", "/api/rpc/message", XTestRPCMessage, t, XTestRPCMessageRequest)
-}
-
-// BenchmarkRPCMessage defined TODO
-// go test -v -test.run=none -test.bench=^BenchmarkRPCMessage -test.benchmem=true
-func BenchmarkRPCMessage(t *testing.B) {
-	t.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			x.Handle("GET", "/api/rpc/message", XTestRPCMessage, t, XTestRPCMessageRequest)
 		}
 	})
 }

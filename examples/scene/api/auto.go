@@ -9,6 +9,9 @@ import (
 	"scene/types"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/web"
+	"github.com/2637309949/dolphin/packages/web/core"
+	"github.com/2637309949/dolphin/platform/api"
 	"github.com/spf13/viper"
 )
 
@@ -24,7 +27,7 @@ type Controller struct {
 	Roles,
 	Cache,
 	Interceptor,
-	Handler HandlerFunc
+	Handler core.HandlerFunc
 }
 
 // Article defined
@@ -47,63 +50,63 @@ func NewArticle() *Article {
 	ctr := &Article{Name: "article", Srv: srv.NewArticle()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/article/add"
-	ctr.Add.Auth = Auth("token")
+	ctr.Add.Auth = api.Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
 	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.ArticleAdd
 	ctr.BatchAdd.Method = "POST"
 	ctr.BatchAdd.RelativePath = "/article/batch_add"
-	ctr.BatchAdd.Auth = Auth("token")
+	ctr.BatchAdd.Auth = api.Auth("token")
 	ctr.BatchAdd.Roles = NopHandlerFunc
 	ctr.BatchAdd.Cache = NopHandlerFunc
 	ctr.BatchAdd.Interceptor = NopHandlerFunc
 	ctr.BatchAdd.Handler = ctr.ArticleBatchAdd
 	ctr.Del.Method = "DELETE"
 	ctr.Del.RelativePath = "/article/del"
-	ctr.Del.Auth = Auth("token")
+	ctr.Del.Auth = api.Auth("token")
 	ctr.Del.Roles = NopHandlerFunc
 	ctr.Del.Cache = NopHandlerFunc
 	ctr.Del.Interceptor = NopHandlerFunc
 	ctr.Del.Handler = ctr.ArticleDel
 	ctr.BatchDel.Method = "PUT"
 	ctr.BatchDel.RelativePath = "/article/batch_del"
-	ctr.BatchDel.Auth = Auth("token")
+	ctr.BatchDel.Auth = api.Auth("token")
 	ctr.BatchDel.Roles = NopHandlerFunc
 	ctr.BatchDel.Cache = NopHandlerFunc
 	ctr.BatchDel.Interceptor = NopHandlerFunc
 	ctr.BatchDel.Handler = ctr.ArticleBatchDel
 	ctr.Update.Method = "PUT"
 	ctr.Update.RelativePath = "/article/update"
-	ctr.Update.Auth = Auth("token")
+	ctr.Update.Auth = api.Auth("token")
 	ctr.Update.Roles = NopHandlerFunc
 	ctr.Update.Cache = NopHandlerFunc
 	ctr.Update.Interceptor = NopHandlerFunc
 	ctr.Update.Handler = ctr.ArticleUpdate
 	ctr.BatchUpdate.Method = "PUT"
 	ctr.BatchUpdate.RelativePath = "/article/batch_update"
-	ctr.BatchUpdate.Auth = Auth("token")
+	ctr.BatchUpdate.Auth = api.Auth("token")
 	ctr.BatchUpdate.Roles = NopHandlerFunc
 	ctr.BatchUpdate.Cache = NopHandlerFunc
 	ctr.BatchUpdate.Interceptor = NopHandlerFunc
 	ctr.BatchUpdate.Handler = ctr.ArticleBatchUpdate
 	ctr.Page.Method = "GET"
 	ctr.Page.RelativePath = "/article/page"
-	ctr.Page.Auth = Auth("token")
+	ctr.Page.Auth = api.Auth("token")
 	ctr.Page.Roles = NopHandlerFunc
 	ctr.Page.Cache = NopHandlerFunc
 	ctr.Page.Interceptor = NopHandlerFunc
 	ctr.Page.Handler = ctr.ArticlePage
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/article/get"
-	ctr.Get.Auth = Auth("token")
+	ctr.Get.Auth = api.Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
 	ctr.Get.Interceptor = NopHandlerFunc
 	ctr.Get.Handler = ctr.ArticleGet
 	ctr.Payment.Method = "POST"
 	ctr.Payment.RelativePath = "/article/payment"
-	ctr.Payment.Auth = Auth("token")
+	ctr.Payment.Auth = api.Auth("token")
 	ctr.Payment.Roles = NopHandlerFunc
 	ctr.Payment.Cache = NopHandlerFunc
 	ctr.Payment.Interceptor = NopHandlerFunc
@@ -112,8 +115,8 @@ func NewArticle() *Article {
 }
 
 // ArticleRoutes defined
-func ArticleRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), ArticleInstance
+func ArticleRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), ArticleInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
 	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
@@ -142,15 +145,15 @@ func NewCaching() *Caching {
 	ctr.Info.RelativePath = "/caching/info"
 	ctr.Info.Auth = NopHandlerFunc
 	ctr.Info.Roles = NopHandlerFunc
-	ctr.Info.Cache = Cache(5 * time.Second)
+	ctr.Info.Cache = api.Cache(5 * time.Second)
 	ctr.Info.Interceptor = NopHandlerFunc
 	ctr.Info.Handler = ctr.CachingInfo
 	return ctr
 }
 
 // CachingRoutes defined
-func CachingRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), CachingInstance
+func CachingRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), CachingInstance
 	group.Handle(instance.Info.Method, instance.Info.RelativePath, instance.Info.Auth, instance.Info.Roles, instance.Info.Cache, instance.Info.Interceptor, instance.Info.Handler)
 }
 
@@ -226,8 +229,8 @@ func NewDtm() *Dtm {
 }
 
 // DtmRoutes defined
-func DtmRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), DtmInstance
+func DtmRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), DtmInstance
 	group.Handle(instance.Tcc.Method, instance.Tcc.RelativePath, instance.Tcc.Auth, instance.Tcc.Roles, instance.Tcc.Cache, instance.Tcc.Interceptor, instance.Tcc.Handler)
 	group.Handle(instance.TransOut.Method, instance.TransOut.RelativePath, instance.TransOut.Auth, instance.TransOut.Roles, instance.TransOut.Cache, instance.TransOut.Interceptor, instance.TransOut.Handler)
 	group.Handle(instance.TransOutConfirm.Method, instance.TransOutConfirm.RelativePath, instance.TransOutConfirm.Auth, instance.TransOutConfirm.Roles, instance.TransOutConfirm.Cache, instance.TransOutConfirm.Interceptor, instance.TransOutConfirm.Handler)
@@ -253,7 +256,7 @@ func NewEncrypt() *Encrypt {
 	ctr := &Encrypt{Name: "encrypt", Srv: srv.NewEncrypt()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/encrypt/add"
-	ctr.Add.Auth = Auth("encrypt")
+	ctr.Add.Auth = api.Auth("encrypt")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
 	ctr.Add.Interceptor = NopHandlerFunc
@@ -269,8 +272,8 @@ func NewEncrypt() *Encrypt {
 }
 
 // EncryptRoutes defined
-func EncryptRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), EncryptInstance
+func EncryptRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), EncryptInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.Info.Method, instance.Info.RelativePath, instance.Info.Auth, instance.Info.Roles, instance.Info.Cache, instance.Info.Interceptor, instance.Info.Handler)
 }
@@ -298,7 +301,7 @@ func NewJwt() *Jwt {
 	ctr.Login.Handler = ctr.JwtLogin
 	ctr.Check.Method = "GET"
 	ctr.Check.RelativePath = "/jwt/check"
-	ctr.Check.Auth = Auth("jwt")
+	ctr.Check.Auth = api.Auth("jwt")
 	ctr.Check.Roles = NopHandlerFunc
 	ctr.Check.Cache = NopHandlerFunc
 	ctr.Check.Interceptor = NopHandlerFunc
@@ -307,8 +310,8 @@ func NewJwt() *Jwt {
 }
 
 // JwtRoutes defined
-func JwtRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), JwtInstance
+func JwtRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), JwtInstance
 	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Auth, instance.Login.Roles, instance.Login.Cache, instance.Login.Interceptor, instance.Login.Handler)
 	group.Handle(instance.Check.Method, instance.Check.RelativePath, instance.Check.Auth, instance.Check.Roles, instance.Check.Cache, instance.Check.Interceptor, instance.Check.Handler)
 }
@@ -329,14 +332,14 @@ func NewKafka() *Kafka {
 	ctr := &Kafka{Name: "kafka", Srv: srv.NewKafka()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/kafka/add"
-	ctr.Add.Auth = Auth("token")
+	ctr.Add.Auth = api.Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
 	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.KafkaAdd
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/kafka/get"
-	ctr.Get.Auth = Auth("token")
+	ctr.Get.Auth = api.Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
 	ctr.Get.Interceptor = NopHandlerFunc
@@ -345,8 +348,8 @@ func NewKafka() *Kafka {
 }
 
 // KafkaRoutes defined
-func KafkaRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), KafkaInstance
+func KafkaRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), KafkaInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
@@ -383,8 +386,8 @@ func NewMiddles() *Middles {
 }
 
 // MiddlesRoutes defined
-func MiddlesRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), MiddlesInstance
+func MiddlesRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), MiddlesInstance
 	group.Handle(instance.GlobalTest.Method, instance.GlobalTest.RelativePath, instance.GlobalTest.Auth, instance.GlobalTest.Roles, instance.GlobalTest.Cache, instance.GlobalTest.Interceptor, instance.GlobalTest.Handler)
 	group.Handle(instance.LocalTest.Method, instance.LocalTest.RelativePath, instance.LocalTest.Auth, instance.LocalTest.Roles, instance.LocalTest.Cache, instance.LocalTest.Interceptor, instance.LocalTest.Handler)
 }
@@ -405,14 +408,14 @@ func NewNsq() *Nsq {
 	ctr := &Nsq{Name: "nsq", Srv: srv.NewNsq()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/nsq/add"
-	ctr.Add.Auth = Auth("token")
+	ctr.Add.Auth = api.Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
 	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.NsqAdd
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/nsq/get"
-	ctr.Get.Auth = Auth("token")
+	ctr.Get.Auth = api.Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
 	ctr.Get.Interceptor = NopHandlerFunc
@@ -421,8 +424,8 @@ func NewNsq() *Nsq {
 }
 
 // NsqRoutes defined
-func NsqRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), NsqInstance
+func NsqRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), NsqInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
@@ -443,14 +446,14 @@ func NewRedisLock() *RedisLock {
 	ctr := &RedisLock{Name: "redis_lock", Srv: srv.NewRedisLock()}
 	ctr.Lock.Method = "GET"
 	ctr.Lock.RelativePath = "/redis/lock/lock"
-	ctr.Lock.Auth = Auth("token")
+	ctr.Lock.Auth = api.Auth("token")
 	ctr.Lock.Roles = NopHandlerFunc
 	ctr.Lock.Cache = NopHandlerFunc
 	ctr.Lock.Interceptor = NopHandlerFunc
 	ctr.Lock.Handler = ctr.RedisLockLock
 	ctr.Unlock.Method = "GET"
 	ctr.Unlock.RelativePath = "/redis/lock/unlock"
-	ctr.Unlock.Auth = Auth("token")
+	ctr.Unlock.Auth = api.Auth("token")
 	ctr.Unlock.Roles = NopHandlerFunc
 	ctr.Unlock.Cache = NopHandlerFunc
 	ctr.Unlock.Interceptor = NopHandlerFunc
@@ -459,8 +462,8 @@ func NewRedisLock() *RedisLock {
 }
 
 // RedisLockRoutes defined
-func RedisLockRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), RedisLockInstance
+func RedisLockRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), RedisLockInstance
 	group.Handle(instance.Lock.Method, instance.Lock.RelativePath, instance.Lock.Auth, instance.Lock.Roles, instance.Lock.Cache, instance.Lock.Interceptor, instance.Lock.Handler)
 	group.Handle(instance.Unlock.Method, instance.Unlock.RelativePath, instance.Unlock.Auth, instance.Unlock.Roles, instance.Unlock.Cache, instance.Unlock.Interceptor, instance.Unlock.Handler)
 }
@@ -481,14 +484,14 @@ func NewRedisMq() *RedisMq {
 	ctr := &RedisMq{Name: "redis_mq", Srv: srv.NewRedisMq()}
 	ctr.Add.Method = "POST"
 	ctr.Add.RelativePath = "/redis/mq/add"
-	ctr.Add.Auth = Auth("token")
+	ctr.Add.Auth = api.Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
 	ctr.Add.Interceptor = NopHandlerFunc
 	ctr.Add.Handler = ctr.RedisMqAdd
 	ctr.Get.Method = "GET"
 	ctr.Get.RelativePath = "/redis/mq/get"
-	ctr.Get.Auth = Auth("token")
+	ctr.Get.Auth = api.Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
 	ctr.Get.Interceptor = NopHandlerFunc
@@ -497,43 +500,14 @@ func NewRedisMq() *RedisMq {
 }
 
 // RedisMqRoutes defined
-func RedisMqRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), RedisMqInstance
+func RedisMqRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), RedisMqInstance
 	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
 	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
 }
 
 // RedisMqInstance defined
 var RedisMqInstance = NewRedisMq()
-
-// RPC defined
-type RPC struct {
-	Name    string
-	Srv     *srv.RPC
-	Message Controller
-}
-
-// NewRPC defined
-func NewRPC() *RPC {
-	ctr := &RPC{Name: "rpc", Srv: srv.NewRPC()}
-	ctr.Message.Method = "GET"
-	ctr.Message.RelativePath = "/rpc/message"
-	ctr.Message.Auth = Auth("token")
-	ctr.Message.Roles = NopHandlerFunc
-	ctr.Message.Cache = NopHandlerFunc
-	ctr.Message.Interceptor = NopHandlerFunc
-	ctr.Message.Handler = ctr.RPCMessage
-	return ctr
-}
-
-// RPCRoutes defined
-func RPCRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), RPCInstance
-	group.Handle(instance.Message.Method, instance.Message.RelativePath, instance.Message.Auth, instance.Message.Roles, instance.Message.Cache, instance.Message.Interceptor, instance.Message.Handler)
-}
-
-// RPCInstance defined
-var RPCInstance = NewRPC()
 
 // Sqlmap defined
 type Sqlmap struct {
@@ -556,8 +530,8 @@ func NewSqlmap() *Sqlmap {
 }
 
 // SqlmapRoutes defined
-func SqlmapRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), SqlmapInstance
+func SqlmapRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), SqlmapInstance
 	group.Handle(instance.Selectone.Method, instance.Selectone.RelativePath, instance.Selectone.Auth, instance.Selectone.Roles, instance.Selectone.Cache, instance.Selectone.Interceptor, instance.Selectone.Handler)
 }
 
@@ -576,7 +550,7 @@ func NewUser() *User {
 	ctr := &User{Name: "user", Srv: srv.NewUser()}
 	ctr.Info.Method = "GET"
 	ctr.Info.RelativePath = "/user/info"
-	ctr.Info.Auth = Auth("token")
+	ctr.Info.Auth = api.Auth("token")
 	ctr.Info.Roles = NopHandlerFunc
 	ctr.Info.Cache = NopHandlerFunc
 	ctr.Info.Interceptor = NopHandlerFunc
@@ -585,8 +559,8 @@ func NewUser() *User {
 }
 
 // UserRoutes defined
-func UserRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), UserInstance
+func UserRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), UserInstance
 	group.Handle(instance.Info.Method, instance.Info.RelativePath, instance.Info.Auth, instance.Info.Roles, instance.Info.Cache, instance.Info.Interceptor, instance.Info.Handler)
 }
 
@@ -630,8 +604,8 @@ func NewView() *View {
 }
 
 // ViewRoutes defined
-func ViewRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), ViewInstance
+func ViewRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), ViewInstance
 	group.Handle(instance.File.Method, instance.File.RelativePath, instance.File.Auth, instance.File.Roles, instance.File.Cache, instance.File.Interceptor, instance.File.Handler)
 	group.Handle(instance.HTML.Method, instance.HTML.RelativePath, instance.HTML.Auth, instance.HTML.Roles, instance.HTML.Cache, instance.HTML.Interceptor, instance.HTML.Handler)
 	group.Handle(instance.XML.Method, instance.XML.RelativePath, instance.XML.Auth, instance.XML.Roles, instance.XML.Cache, instance.XML.Interceptor, instance.XML.Handler)
@@ -652,7 +626,7 @@ func NewVote() *Vote {
 	ctr := &Vote{Name: "vote", Srv: srv.NewVote()}
 	ctr.Like.Method = "POST"
 	ctr.Like.RelativePath = "/vote/like"
-	ctr.Like.Auth = Auth("token")
+	ctr.Like.Auth = api.Auth("token")
 	ctr.Like.Roles = NopHandlerFunc
 	ctr.Like.Cache = NopHandlerFunc
 	ctr.Like.Interceptor = NopHandlerFunc
@@ -661,8 +635,8 @@ func NewVote() *Vote {
 }
 
 // VoteRoutes defined
-func VoteRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), VoteInstance
+func VoteRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), VoteInstance
 	group.Handle(instance.Like.Method, instance.Like.RelativePath, instance.Like.Auth, instance.Like.Roles, instance.Like.Cache, instance.Like.Interceptor, instance.Like.Handler)
 }
 
@@ -690,8 +664,8 @@ func NewXlsx() *Xlsx {
 }
 
 // XlsxRoutes defined
-func XlsxRoutes(rg *RouterGroup) {
-	group, instance := rg.Group(viper.GetString("http.prefix")), XlsxInstance
+func XlsxRoutes() {
+	group, instance := web.Group(viper.GetString("http.prefix")), XlsxInstance
 	group.Handle(instance.Import.Method, instance.Import.RelativePath, instance.Import.Auth, instance.Import.Roles, instance.Import.Cache, instance.Import.Interceptor, instance.Import.Handler)
 }
 
@@ -699,8 +673,8 @@ func XlsxRoutes(rg *RouterGroup) {
 var XlsxInstance = NewXlsx()
 
 // SyncModel defined
-func (dol *Dolphin) SyncModel() error {
-	mseti := dol.Manager.ModelSet()
+func SyncModel() error {
+	mseti := App.Manager.ModelSet()
 	mseti.Add(new(types.Article))
 	mseti.Add(new(types.PostLike))
 	mseti.Add(new(types.SysAppFun))
@@ -744,28 +718,27 @@ func (dol *Dolphin) SyncModel() error {
 }
 
 // SyncController defined
-func (dol *Dolphin) SyncController() error {
-	ArticleRoutes(&dol.RouterGroup)
-	CachingRoutes(&dol.RouterGroup)
-	DtmRoutes(&dol.RouterGroup)
-	EncryptRoutes(&dol.RouterGroup)
-	JwtRoutes(&dol.RouterGroup)
-	KafkaRoutes(&dol.RouterGroup)
-	MiddlesRoutes(&dol.RouterGroup)
-	NsqRoutes(&dol.RouterGroup)
-	RedisLockRoutes(&dol.RouterGroup)
-	RedisMqRoutes(&dol.RouterGroup)
-	RPCRoutes(&dol.RouterGroup)
-	SqlmapRoutes(&dol.RouterGroup)
-	UserRoutes(&dol.RouterGroup)
-	ViewRoutes(&dol.RouterGroup)
-	VoteRoutes(&dol.RouterGroup)
-	XlsxRoutes(&dol.RouterGroup)
+func SyncController() error {
+	ArticleRoutes()
+	CachingRoutes()
+	DtmRoutes()
+	EncryptRoutes()
+	JwtRoutes()
+	KafkaRoutes()
+	MiddlesRoutes()
+	NsqRoutes()
+	RedisLockRoutes()
+	RedisMqRoutes()
+	SqlmapRoutes()
+	UserRoutes()
+	ViewRoutes()
+	VoteRoutes()
+	XlsxRoutes()
 	return nil
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
+func SyncSrv(svc *svc.ServiceContext) error {
 	ArticleInstance.Srv.SetServiceContext(svc)
 	CachingInstance.Srv.SetServiceContext(svc)
 	DtmInstance.Srv.SetServiceContext(svc)
@@ -776,7 +749,6 @@ func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
 	NsqInstance.Srv.SetServiceContext(svc)
 	RedisLockInstance.Srv.SetServiceContext(svc)
 	RedisMqInstance.Srv.SetServiceContext(svc)
-	RPCInstance.Srv.SetServiceContext(svc)
 	SqlmapInstance.Srv.SetServiceContext(svc)
 	UserInstance.Srv.SetServiceContext(svc)
 	ViewInstance.Srv.SetServiceContext(svc)

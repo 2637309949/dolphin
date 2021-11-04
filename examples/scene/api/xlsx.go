@@ -31,7 +31,7 @@ func (ctr *Xlsx) XlsxImport(ctx *Context) {
 	}
 
 	var err error
-	file, headers, _ := ctx.Request.FormFile("file")
+	file, headers, _ := ctx.Request().FormFile("file")
 	defer file.Close()
 
 	isXlsx := strings.Contains(headers.Filename, ".xlsx")

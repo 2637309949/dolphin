@@ -3,6 +3,8 @@
 
 package api
 
+import "os"
+
 // ViewFile api implementation
 // @Summary 文件下载
 // @Tags 视图
@@ -13,7 +15,8 @@ package api
 // @Failure 500 {object} types.Fail
 // @Router /api/view/file [get]
 func (ctr *View) ViewFile(ctx *Context) {
-	ctx.RenderFile("static/tmpl/view.tmpl", "view.txt", map[string]interface{}{"app": 100})
+	r, _ := os.Open("static/tmpl/view.tmpl")
+	ctx.File(r, "view.txt", map[string]interface{}{"app": 100})
 }
 
 // ViewHTML api implementation
@@ -26,7 +29,8 @@ func (ctr *View) ViewFile(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/view/html [get]
 func (ctr *View) ViewHTML(ctx *Context) {
-	ctx.RenderHTML("static/tmpl/view.tmpl", map[string]interface{}{"app": 100})
+	r, _ := os.Open("static/tmpl/view.tmpl")
+	ctx.HTML(r, map[string]interface{}{"app": 100})
 }
 
 // ViewXML api implementation
@@ -38,5 +42,6 @@ func (ctr *View) ViewHTML(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/view/xml [get]
 func (ctr *View) ViewXML(ctx *Context) {
-	ctx.RenderXML("static/tmpl/view.tmpl", map[string]interface{}{"app": 100})
+	r, _ := os.Open("static/tmpl/view.tmpl")
+	ctx.XML(r, map[string]interface{}{"app": 100})
 }

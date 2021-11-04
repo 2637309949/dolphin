@@ -48,9 +48,9 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 	{{- range .APIS}}
 	ctr.{{.ToUpperCase .Name}}.Method = "{{.ToUpper .Method}}"
 	ctr.{{.ToUpperCase .Name}}.RelativePath = "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"
-	ctr.{{.ToUpperCase .Name}}.Auth = {{- if gt (len .Auth) 0}} Auth({{.FormatString .Auth ","}}){{- else}} NopHandlerFunc{{- end}}
-	ctr.{{.ToUpperCase .Name}}.Roles = {{- if gt (len .Roles) 0}} Roles({{.FormatString .Roles ","}}){{- else}} NopHandlerFunc{{- end}}
-	ctr.{{.ToUpperCase .Name}}.Cache = {{- if gt .Cache 0}} Cache({{.Cache}}*time.Second){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Auth = {{- if gt (len .Auth) 0}} api.Auth({{.FormatString .Auth ","}}){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Roles = {{- if gt (len .Roles) 0}} api.Roles({{.FormatString .Roles ","}}){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Cache = {{- if gt .Cache 0}} api.Cache({{.Cache}}*time.Second){{- else}} NopHandlerFunc{{- end}}
     ctr.{{.ToUpperCase .Name}}.Interceptor = NopHandlerFunc
 	ctr.{{.ToUpperCase .Name}}.Handler = ctr.{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
 	{{- end}}
