@@ -19,7 +19,7 @@ import (
 // @Router /api/sqlmap/selectone [get]
 func (ctr *Sqlmap) SqlmapSelectone(ctx *Context) {
 	var user types.SysUser
-	_, err := ctx.PlatformDB.SqlMapClient("selectone_sys_user", &map[string]interface{}{"id": types.DefaultAdmin.ID.ValueOrZero()}).Get(&user)
+	_, err := App.PlatformDB.SqlMapClient("selectone_sys_user", &map[string]interface{}{"id": types.DefaultAdmin.ID.ValueOrZero()}).Get(&user)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

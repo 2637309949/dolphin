@@ -51,7 +51,7 @@ func (ctr *SysWechat) SysWechatOauth2(ctx *Context) {
 		return
 	}
 
-	user, err := ctr.Srv.WinXinBindCheck(ctx, ctx.PlatformDB, db, domain, q.GetString("code"))
+	user, err := ctr.Srv.WinXinBindCheck(ctx, App.PlatformDB, db, domain, q.GetString("code"))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

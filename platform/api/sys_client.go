@@ -36,7 +36,7 @@ func (ctr *SysClient) SysClientAdd(ctx *Context) {
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
-	ret, err := ctx.PlatformDB.Insert(&payload)
+	ret, err := App.PlatformDB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -97,7 +97,7 @@ func (ctr *SysClient) SysClientDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysClient{
+	ret, err := App.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysClient{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -129,7 +129,7 @@ func (ctr *SysClient) SysClientBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.SysClient) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.PlatformDB.In("id", ids).Update(&types.SysClient{
+	ret, err := App.PlatformDB.In("id", ids).Update(&types.SysClient{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -162,7 +162,7 @@ func (ctr *SysClient) SysClientUpdate(ctx *Context) {
 	}
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
+	ret, err := App.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -245,7 +245,7 @@ func (ctr *SysClient) SysClientPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.PlatformDB, "sys_client", "page", "sys_client", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_client", "page", "sys_client", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

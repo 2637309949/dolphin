@@ -36,7 +36,7 @@ func (ctr *SysDomain) SysDomainAdd(ctx *Context) {
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
-	ret, err := ctx.PlatformDB.Insert(&payload)
+	ret, err := App.PlatformDB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -97,7 +97,7 @@ func (ctr *SysDomain) SysDomainDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysDomain{
+	ret, err := App.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysDomain{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -162,7 +162,7 @@ func (ctr *SysDomain) SysDomainUpdate(ctx *Context) {
 	}
 	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.PlatformDB.ID(payload.ID).Update(&payload)
+	ret, err := App.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -245,7 +245,7 @@ func (ctr *SysDomain) SysDomainPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.PlatformDB, "sys_domain", "page", "sys_domain", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_domain", "page", "sys_domain", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

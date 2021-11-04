@@ -18,20 +18,14 @@ import (
 type Context struct {
 	*gin.Context
 	AuthProtocol
-	DB         *xorm.Engine
-	PlatformDB *xorm.Engine
-}
-
-// NewContext defined TODO
-func NewContext(dol *Dolphin) *Context {
-	return &Context{PlatformDB: dol.PlatformDB, AuthProtocol: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
+	DB *xorm.Engine
 }
 
 // LoginInInfo defined TODO
 func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
 	tk := ctx.GetToken()
 	if tk != nil {
-		return ctx.PlatformDB.ID(tk.GetUserID()).Get(user)
+		return App.PlatformDB.ID(tk.GetUserID()).Get(user)
 	}
 	return false, nil
 }

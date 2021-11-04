@@ -46,7 +46,7 @@ func (ctr *SysUser) SysUserAdd(ctx *Context) {
 		payload.Avatar = null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg?imageView2/1/w/80/h/80")
 	}
 	payload.SetPassword("123456")
-	ret, err := ctx.PlatformDB.Insert(&payload)
+	ret, err := App.PlatformDB.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -107,7 +107,7 @@ func (ctr *SysUser) SysUserDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysUser{
+	ret, err := App.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysUser{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -139,7 +139,7 @@ func (ctr *SysUser) SysUserBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.SysUser) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.PlatformDB.In("id", ids).Update(&types.SysUser{
+	ret, err := App.PlatformDB.In("id", ids).Update(&types.SysUser{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -178,7 +178,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
 
-	ps := ctx.PlatformDB.NewSession()
+	ps := App.PlatformDB.NewSession()
 	ds := ctx.DB.NewSession()
 	defer ps.Close()
 	defer ds.Close()
@@ -325,7 +325,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 	}
 	if ctr.Srv.Report.Check(ctx.Request()) {
 		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.Report.PageExport(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
+		ret, err := ctr.Srv.Report.PageExport(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -334,7 +334,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(ctx.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
+	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -369,7 +369,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 func (ctr *SysUser) SysUserGet(ctx *Context) {
 	var entity types.SysUser
 	id := ctx.Query("id")
-	_, err := ctx.PlatformDB.ID(id).Get(&entity)
+	_, err := App.PlatformDB.ID(id).Get(&entity)
 	entity.Password.Valid = false
 	entity.Salt.Valid = false
 	if err != nil {
@@ -404,7 +404,7 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 	}
 	account.Domain = payload.Domain
 	account.Name = payload.Name
-	ext, err := ctx.PlatformDB.Where("is_delete != 1 and status = 1").Get(&account)
+	ext, err := App.PlatformDB.Where("is_delete != 1 and status = 1").Get(&account)
 	if err != nil || !ext || !account.ValidPassword(payload.Password.String) {
 		if err == nil {
 			err = errors.New("account doesn't exist or password error")
