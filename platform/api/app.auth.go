@@ -43,8 +43,8 @@ type AuthOAuth2 struct {
 }
 
 // parseOAuth2Token defined TODO
-func (auth *AuthOAuth2) parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
-	auth.ticket = &Token{
+func parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
+	return &Token{
 		ClientID:        t.GetClientID(),
 		UserID:          t.GetUserID(),
 		Domain:          t.GetDomain(),
@@ -59,7 +59,6 @@ func (auth *AuthOAuth2) parseOAuth2Token(t oauth2.TokenInfo) TokenInfo {
 		Refresh:         t.GetRefresh(),
 		RefreshCreateAt: t.GetRefreshCreateAt(),
 	}
-	return auth.ticket
 }
 
 // parseJWTToken defined TODO
@@ -79,8 +78,7 @@ func (auth *AuthOAuth2) VerifyToken(req *http.Request) bool {
 			logrus.Error(err)
 			return false
 		}
-		return auth.
-			parseOAuth2Token(tk).
+		return parseOAuth2Token(tk).
 			GetAccessCreateAt().
 			Add(auth.GetToken().GetAccessExpiresIn()).Round(0).Add(-TokenExpiryDelta).
 			After(time.Now())
@@ -129,16 +127,31 @@ func (auth *AuthOAuth2) GetToken() TokenInfo {
 
 // AuthToken defined TODO
 func AuthToken(ctx *Context) {
-	if !ctx.VerifyToken(ctx.Request()) {
+	bearer, ok := App.OAuth2.BearerAuth(ctx.Request())
+	if !ok {
 		ctx.Fail(errors.ErrInvalidAccessToken)
-		ctx.Abort()
 		return
 	}
-	if ctx.DB = App.Manager.GetBusinessDB(ctx.GetToken().GetDomain()); ctx.DB == nil {
+
+	tk, err := App.OAuth2.Manager.LoadAccessToken(bearer)
+	if err != nil {
+		ctx.Fail(errors.ErrInvalidAccessToken)
+		return
+	}
+	if !parseOAuth2Token(tk).
+		GetAccessCreateAt().
+		Add(tk.GetAccessExpiresIn()).Round(0).Add(-TokenExpiryDelta).
+		After(time.Now()) {
+		ctx.Fail(errors.ErrInvalidAccessToken)
+		return
+	}
+
+	db := App.Manager.GetBusinessDB(ctx.GetToken().GetDomain())
+	if db == nil {
 		ctx.Fail(errors.ErrInvalidDomain)
-		ctx.Abort()
 		return
 	}
+	ctx.DB = db
 	ctx.Set("DB", ctx.DB)
 	ctx.Set("AuthProtocol", ctx.AuthProtocol)
 	ctx.Next()

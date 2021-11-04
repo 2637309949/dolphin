@@ -13,14 +13,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/2637309949/dolphin/packages/web/core"
+	"github.com/2637309949/dolphin/packages/web/gin"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 )
 
 // Context defined TODO
 type Context struct {
-	core.Context
+	*gin.Context
 	AuthProtocol
 	DB         *xorm.Engine
 	PlatformDB *xorm.Engine
@@ -29,12 +29,6 @@ type Context struct {
 // NewContext defined TODO
 func NewContext(dol *Dolphin) *Context {
 	return &Context{PlatformDB: dol.PlatformDB, AuthProtocol: &AuthOAuth2{oauth2: dol.OAuth2, jwt: dol.JWT}}
-}
-
-// reset defined clean vars in ctx
-func (ctx *Context) reset() {
-	ctx.DB = nil
-	ctx.Context = nil
 }
 
 // LoginInInfo defined TODO
@@ -46,12 +40,9 @@ func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
 	return false, nil
 }
 
-// unWrapError defined TODO
-func unWrapError(err error) int {
-	if mErr, ok := err.(types.Error); ok {
-		return mErr.Code
-	}
-	return 0
+// BusinessDB defined TODO
+func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
+	return App.Manager.GetBusinessDB(domain)
 }
 
 // TypeQuery defined failt result
@@ -157,9 +148,4 @@ func (ctx *Context) QueryString(key string, init ...string) string {
 		}
 	}
 	return v
-}
-
-// BusinessDB defined TODO
-func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
-	return App.Manager.GetBusinessDB(domain)
 }

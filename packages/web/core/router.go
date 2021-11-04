@@ -1,10 +1,15 @@
 package core
 
 import (
+	"errors"
 	"net/http"
 	"os"
 	"path"
+	"reflect"
+	"runtime"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 type (
@@ -18,7 +23,17 @@ type (
 	}
 )
 
-// RouterGroup defined TODO
+// nameOfFunction defined TODO
+func nameOfFunction(f interface{}) string {
+	return runtime.FuncForPC(reflect.ValueOf(f).Pointer()).Name()
+}
+
+// DebugPrintRoute defined TODO
+func DebugPrintRoute(httpMethod, absolutePath, _ string, _ int) {
+	logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
+}
+
+// routerGroup defined TODO
 type RouterGroup struct {
 	web      *Web
 	Handlers []HandlerFunc
@@ -54,7 +69,16 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs .
 	for i := 0; i < len(methods); i++ {
 		hls := group.combineHandlers(handlerFuncs)
 		relativePath = group.calculateAbsolutePath(relativePath)
-		GetHandler().Handle(methods[i], relativePath, hls...)
+
+		nuHandlers := len(handlerFuncs)
+		handlerName := nameOfFunction(handlerFuncs[nuHandlers-1])
+		DebugPrintRoute(httpMethod, relativePath, handlerName, nuHandlers)
+
+		if h := GetHandler(); h != nil {
+			h.Handle(methods[i], relativePath, hls...)
+		} else {
+			panic(errors.New("no handler found"))
+		}
 	}
 }
 

@@ -1,11 +1,7 @@
 package core
 
 import (
-	"log"
 	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 type Web struct {
@@ -31,22 +27,8 @@ func (w *Web) resolveAddress(addr []string) string {
 	}
 }
 
-// Done returns a channel of signals to block on after starting the
-func (w *Web) done() <-chan os.Signal {
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
-	return c
-}
-
 func (w *Web) Run(addr ...string) error {
 	address := w.resolveAddress(addr)
 	srv := http.Server{Addr: address, Handler: GetHandler().Handler()}
-	err := srv.ListenAndServe()
-	if err != nil {
-		log.Print(err)
-		return err
-	}
-	signal := w.done()
-	<-signal
-	return nil
+	return srv.ListenAndServe()
 }

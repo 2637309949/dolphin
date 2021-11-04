@@ -43,7 +43,6 @@ type (
 		Manager    Manager
 		OAuth2     *server.Server
 		JWT        *JWT
-		pool       sync.Pool
 	}
 )
 
@@ -107,9 +106,9 @@ func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func (dol *Dolphin) Reflesh() error {
 	defer dol.Manager.ModelSet().Release()
 
-	dol.SyncModel()
-	dol.SyncController()
-	dol.SyncSrv(svc.NewServiceContext(CacheStore))
+	SyncModel()
+	SyncController()
+	SyncSrv(svc.NewServiceContext(CacheStore))
 
 	xlogger := createXLogger()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))

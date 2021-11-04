@@ -121,8 +121,8 @@ func OrganRoutes() {
 var OrganInstance = NewOrgan()
 
 // SyncModel defined
-func (dol *Dolphin) SyncModel() error {
-	mseti := dol.Manager.ModelSet()
+func SyncModel() error {
+	mseti := api.App.Manager.ModelSet()
 	mseti.Add(new(types.AboutUs))
 	mseti.Add(new(types.AboutusContentPic))
 	mseti.Add(new(types.AchievementSendEmailMsg))
@@ -537,13 +537,13 @@ func (dol *Dolphin) SyncModel() error {
 }
 
 // SyncController defined
-func (dol *Dolphin) SyncController() error {
+func SyncController() error {
 	OrganRoutes()
 	return nil
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
+func SyncSrv(svc *svc.ServiceContext) error {
 	OrganInstance.Srv.SetServiceContext(svc)
 	return nil
 }

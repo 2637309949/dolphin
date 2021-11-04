@@ -73,10 +73,10 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 }
 
 func NewHandler() core.Handler {
-	gin.SetMode(gin.ReleaseMode)
 	return &handler{gin.New()}
 }
 
 func init() {
+	gin.SetMode(gin.ReleaseMode)
 	core.SetHandler(NewHandler())
 }

@@ -4,57 +4,24 @@
 package api
 
 import (
-	"fmt"
-
 	"aisle/svc"
 
-	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/2637309949/dolphin/platform/api"
-	"github.com/2637309949/dolphin/platform/util/errors"
 )
 
-// vars defined
-var (
-	App *Dolphin
-	Run func()
-)
+var App = api.App
 
-type (
-	// Dolphin defined parse app engine
-	Dolphin struct {
-		*api.Dolphin
-	}
-	// Context defined http handle hook context
-	Context struct {
-		core.Context
-	}
-)
-
-// Reflesh defined TODO
-func (dol *Dolphin) Reflesh() error {
-	dol.SyncModel()
-	dol.SyncSrv(svc.NewServiceContext(api.CacheStore))
-	dol.SyncController()
-	return nil
+type Context struct {
+	*api.Context
 }
 
 // Run defined TODO
-func (dol *Dolphin) Run() {
-	if err := dol.Reflesh(); err != nil {
-		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
+func Run() {
+	SyncModel()
+	SyncSrv(svc.NewServiceContext(api.CacheStore))
+	SyncController()
+	err := api.Run()
+	if err != nil {
+		panic(err)
 	}
-	if err := dol.Dolphin.Run(); err != nil {
-		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
-	}
-}
-
-// New defined init dol you can custom engine
-func New() *Dolphin {
-	dol := Dolphin{Dolphin: api.App}
-	return &dol
-}
-
-func init() {
-	app := New()
-	App, Run = app, app.Run
 }

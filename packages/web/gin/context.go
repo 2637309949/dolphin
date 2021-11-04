@@ -133,7 +133,7 @@ func (c *Context) IsAborted() bool {
 
 // Success defined TODO
 func (c *Context) Success(data interface{}) {
-	c.Context.JSON(http.StatusOK, map[string]interface{}{
+	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
 		"code": 200,
 		"data": data,
 	})
@@ -141,7 +141,7 @@ func (c *Context) Success(data interface{}) {
 
 // Fail defined TODO
 func (c *Context) Fail(err error) {
-	c.Context.JSON(http.StatusOK, map[string]interface{}{
+	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
 		"code":   500,
 		"detail": err.Error(),
 	})
@@ -204,6 +204,11 @@ func (c *Context) String(data string, context ...interface{}) {
 // Request defined TODO
 func (c *Context) Request() *http.Request {
 	return c.Context.Request
+}
+
+// Status defined TODO
+func (c *Context) Status(code int) {
+	c.Context.Status(code)
 }
 
 // Request defined TODO

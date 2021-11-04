@@ -2728,8 +2728,8 @@ func SysWorkerRoutes() {
 var SysWorkerInstance = NewSysWorker()
 
 // SyncModel defined
-func (dol *Dolphin) SyncModel() error {
-	mseti := dol.Manager.ModelSet()
+func SyncModel() error {
+	mseti := App.Manager.ModelSet()
 	mseti.Add(new(types.SysAppFun))
 	mseti.Add(new(types.SysArea))
 	mseti.Add(new(types.SysAreaTemplate))
@@ -2771,7 +2771,7 @@ func (dol *Dolphin) SyncModel() error {
 }
 
 // SyncController defined
-func (dol *Dolphin) SyncController() error {
+func SyncController() error {
 	SysAppFunRoutes()
 	SysAreaRoutes()
 	SysAttachmentRoutes()
@@ -2807,7 +2807,7 @@ func (dol *Dolphin) SyncController() error {
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(svc *svc.ServiceContext) error {
+func SyncSrv(svc *svc.ServiceContext) error {
 	SysAppFunInstance.Srv.SetServiceContext(svc)
 	SysAreaInstance.Srv.SetServiceContext(svc)
 	SysAttachmentInstance.Srv.SetServiceContext(svc)

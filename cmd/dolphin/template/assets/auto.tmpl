@@ -71,9 +71,9 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{end}}
 
 // SyncModel defined
-func (dol *Dolphin) SyncModel() error {
+func SyncModel() error {
 	{{- $tLen := len .Tables }}{{- if ne $tLen 0 }}
-	mseti := dol.Manager.ModelSet()
+	mseti := App.Manager.ModelSet()
 	{{- range .Tables}}
 	mseti.Add(new({{$.Viper.GetString "dir.types" }}.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
 	{{- end}}
@@ -82,7 +82,7 @@ func (dol *Dolphin) SyncModel() error {
 }
 
 // SyncController defined
-func (dol *Dolphin) SyncController() error {
+func SyncController() error {
 	{{- range .Controllers}}
 	{{.ToUpperCase .Name}}Routes()
 	{{- end}}
@@ -90,7 +90,7 @@ func (dol *Dolphin) SyncController() error {
 }
 
 // SyncSrv defined
-func (dol *Dolphin) SyncSrv(svc *{{$.Viper.GetString "dir.svc" }}.ServiceContext) error {
+func SyncSrv(svc *{{$.Viper.GetString "dir.svc" }}.ServiceContext) error {
 	{{- range .Controllers}}
 	{{.ToUpperCase .Name}}Instance.Srv.SetServiceContext(svc)
 	{{- end}}
