@@ -64,22 +64,8 @@ func WithManager() Option {
 	}
 }
 
-// WithWeb defined TODO
-func WithWeb() Option {
-	return func(dol *Dolphin) {
-		dol.Web = web.Web()
-	}
-}
-
-// WithJWT defined TODO
-func WithJWT() Option {
-	return func(dol *Dolphin) {
-		dol.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
-	}
-}
-
-// WithOAuth2 defined TODO
-func WithOAuth2() Option {
+// WithManager defined TODO
+func WithIdentity() Option {
 	osHost, httpPrefix := viper.GetString("oauth.server"), viper.GetString("http.prefix")
 	authUrl := osHost + path.Join(httpPrefix, SysCasInstance.Authorize.RelativePath)
 	tokenUrl := osHost + path.Join(httpPrefix, SysCasInstance.Token.RelativePath)
@@ -95,12 +81,58 @@ func WithOAuth2() Option {
 		manager.MapAccessGenerate(generates.NewAccessGenerate())
 		manager.MapClientStorage(NewClientStore())
 		manager.SetValidateURIHandler(ValidateURIHandler)
-		dol.OAuth2 = server.NewServer(server.NewConfig(), manager)
-		dol.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
-		dol.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
-		dol.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+
+		dol.Identity = &Identity{}
+		dol.Identity.jwt = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
+		dol.Identity.OAuth2 = server.NewServer(server.NewConfig(), manager)
+		dol.Identity.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
+		dol.Identity.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
+		dol.Identity.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+
+		providers := []Provider{&TokenProvider{}, &JWTProvider{}, &RSAProvider{}}
+		for _, p := range providers {
+			dol.Identity.RegisterProvider(p)
+		}
 	}
 }
+
+// WithWeb defined TODO
+func WithWeb() Option {
+	return func(dol *Dolphin) {
+		dol.Web = web.Web()
+	}
+}
+
+// // WithJWT defined TODO
+// func WithJWT() Option {
+// 	return func(dol *Dolphin) {
+// 		dol.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
+// 	}
+// }
+
+// // WithOAuth2 defined TODO
+// func WithOAuth2() Option {
+// 	osHost, httpPrefix := viper.GetString("oauth.server"), viper.GetString("http.prefix")
+// 	authUrl := osHost + path.Join(httpPrefix, SysCasInstance.Authorize.RelativePath)
+// 	tokenUrl := osHost + path.Join(httpPrefix, SysCasInstance.Token.RelativePath)
+// 	endpoint := oauth2.Endpoint{AuthURL: authUrl, TokenURL: tokenUrl}
+// 	redirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.Oauth2.RelativePath)
+// 	OA2Cfg = oauth2.Config{ClientID: viper.GetString("oauth.id"), ClientSecret: viper.GetString("oauth.secret"), Scopes: []string{"admin"}, RedirectURL: redirectURL, Endpoint: endpoint}
+// 	qrRedirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.QrOauth2.RelativePath)
+// 	QrOA2Cfg = oauth2.Config{Scopes: []string{"admin"}, RedirectURL: qrRedirectURL}
+// 	return func(dol *Dolphin) {
+// 		manager := manage.NewDefaultManager()
+// 		manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
+// 		manager.MapTokenStorage(dol.Manager.GetTokenStore())
+// 		manager.MapAccessGenerate(generates.NewAccessGenerate())
+// 		manager.MapClientStorage(NewClientStore())
+// 		manager.SetValidateURIHandler(ValidateURIHandler)
+// 		dol.OAuth2 = server.NewServer(server.NewConfig(), manager)
+// 		dol.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
+// 		dol.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
+// 		dol.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+// 	}
+// }
 
 // IsDebugging defined TODO
 func IsDebugging() bool {
@@ -114,7 +146,7 @@ func init() {
 	InitCacheStore()
 	InitSession()
 
-	opts := []Option{WithWeb(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
+	opts := []Option{WithWeb(), WithLifecycle(), WithManager(), WithIdentity()}
 	app := NewDefault(opts...)
 	StaticRoutes(app)
 	App, Run = app, app.Run

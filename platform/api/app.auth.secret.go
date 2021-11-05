@@ -92,3 +92,44 @@ func (secret *Secret) Verify(cli oauth2.ClientInfo) (bool, error) {
 	}
 	return true, nil
 }
+
+var _ Provider = &TokenProvider{}
+
+type RSAProvider struct {
+}
+
+// GetName defined TODO
+func (p *RSAProvider) GetName() string {
+	return "rsa"
+}
+
+// Config defined TODO
+func (p *RSAProvider) Config(i *Identity) {
+}
+
+// Verify defined TODO
+func (p *RSAProvider) Verify(ctx *Context) (TokenInfo, bool) {
+	secret, err := NewSecret(ctx)
+	if err != nil {
+		logrus.Error(err)
+		return nil, false
+	}
+
+	cli, err := NewClientStore().GetByID(secret.AppID)
+	if err != nil {
+		logrus.Error(err)
+		return nil, false
+	}
+
+	valid, err := secret.Verify(cli)
+	if err != nil {
+		logrus.Error(err)
+		return nil, false
+	}
+	return &Token{ClientID: cli.GetID()}, valid
+}
+
+// Verify defined TODO
+func (p *RSAProvider) Ticket(userId, extra string, ctx *Context) (TokenInfo, error) {
+	return nil, nil
+}

@@ -10,9 +10,11 @@ import (
 	"net"
 	"net/http"
 	"regexp"
+	"time"
 
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
+	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/go-session/session"
@@ -98,4 +100,72 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 		return errors.New("invalid redirect uri")
 	}
 	return nil
+}
+
+var _ Provider = &TokenProvider{}
+
+type TokenProvider struct {
+	oauth2 *server.Server
+}
+
+// GetName defined TODO
+func (p *TokenProvider) GetName() string {
+	return "token"
+}
+
+// Config defined TODO
+func (p *TokenProvider) Config(i *Identity) {
+	p.oauth2 = i.OAuth2
+}
+
+// parseToken defined TODO
+func (p *TokenProvider) parseToken(t oauth2.TokenInfo) TokenInfo {
+	return &Token{
+		ClientID:        t.GetClientID(),
+		UserID:          t.GetUserID(),
+		Domain:          t.GetDomain(),
+		RedirectURI:     t.GetRedirectURI(),
+		Scope:           t.GetScope(),
+		Code:            t.GetCode(),
+		CodeCreateAt:    t.GetCodeCreateAt(),
+		CodeExpiresIn:   t.GetCodeExpiresIn(),
+		Access:          t.GetAccess(),
+		AccessCreateAt:  t.GetAccessCreateAt(),
+		AccessExpiresIn: t.GetAccessExpiresIn(),
+		Refresh:         t.GetRefresh(),
+		RefreshCreateAt: t.GetRefreshCreateAt(),
+	}
+}
+
+// Verify defined TODO
+func (p *TokenProvider) Verify(ctx *Context) (TokenInfo, bool) {
+	if bearer, ok := p.oauth2.BearerAuth(ctx.Request()); ok {
+		tk, err := p.oauth2.Manager.LoadAccessToken(bearer)
+		if err != nil {
+			logrus.Error(err)
+			return nil, false
+		}
+		info := p.parseToken(tk)
+		return info, info.
+			GetAccessCreateAt().
+			Add(info.GetAccessExpiresIn()).Round(0).Add(-TokenExpiryDelta).
+			After(time.Now())
+	}
+	return nil, false
+}
+
+// Verify defined TODO
+func (p *TokenProvider) Ticket(userId, extra string, ctx *Context) (TokenInfo, error) {
+	tk, err := p.oauth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
+		UserID:       userId,
+		Domain:       extra,
+		ClientID:     viper.GetString("oauth.id"),
+		ClientSecret: viper.GetString("oauth.secret"),
+		Request:      ctx.Request(),
+	})
+	if err != nil {
+
+		return nil, err
+	}
+	return p.parseToken(tk), nil
 }

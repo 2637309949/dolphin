@@ -129,9 +129,9 @@ func Formatter(param gin.LogFormatterParams) string {
 // DumpRecv defined tracker recorder
 func DumpRecv() func(ctx *Context, p *LogFormatterParams) {
 	return func(ctx *Context, p *LogFormatterParams) {
-		token, _ := App.OAuth2.BearerAuth(ctx.Request())
+		token, _ := App.Identity.OAuth2.BearerAuth(ctx.Request())
 		p.Token = token
-		if tokenInfo, err := App.OAuth2.Manager.LoadAccessToken(token); err == nil {
+		if tokenInfo, err := App.Identity.OAuth2.Manager.LoadAccessToken(token); err == nil {
 			p.Domain = tokenInfo.GetDomain()
 			it, _ := strconv.ParseInt(tokenInfo.GetUserID(), 10, 64)
 			p.UserID = it

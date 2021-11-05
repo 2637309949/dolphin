@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/sirupsen/logrus"
 )
 
 //  JWT defined TODO
@@ -61,4 +62,51 @@ func (j *JWT) GenerateAccessToken(userId, domain string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims = claims
 	return token.SignedString([]byte(j.Secret))
+}
+
+var _ Provider = &TokenProvider{}
+
+type JWTProvider struct {
+	jwt *JWT
+}
+
+// GetName defined TODO
+func (p *JWTProvider) GetName() string {
+	return "jwt"
+}
+
+// Config defined TODO
+func (p *JWTProvider) Config(i *Identity) {
+	p.jwt = i.jwt
+}
+
+// parseToken defined TODO
+func (p *JWTProvider) parseJWTToken(t *jwt.MapClaims) TokenInfo {
+	return &Token{
+		UserID: (*t)["userId"].(string),
+		Domain: (*t)["domain"].(string),
+	}
+}
+
+// Verify defined TODO
+func (p *JWTProvider) Verify(ctx *Context) (TokenInfo, bool) {
+	if bearer, ok := p.jwt.BearerAuth(ctx.Request()); ok {
+		tk, err := p.jwt.LoadAccessToken(bearer)
+		if err != nil {
+			logrus.Error(err)
+			return nil, false
+		}
+		return p.parseJWTToken(tk), true
+	}
+	return nil, false
+}
+
+// Verify defined TODO
+func (p *JWTProvider) Ticket(userId, extra string, ctx *Context) (TokenInfo, error) {
+	tk, err := p.jwt.GenerateAccessToken(userId, extra)
+	if err != nil {
+
+		return nil, err
+	}
+	return &Token{Access: tk}, nil
 }
