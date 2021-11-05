@@ -15,11 +15,6 @@ type Handler interface {
 	Handle(string, string, ...HandlerFunc)
 }
 
-// GetHandler defined TODO
-func GetHandler() Handler {
-	return defaultHandler
-}
-
 // MustHandler defined TODO
 func MustHandler() Handler {
 	if defaultHandler == nil {

@@ -137,6 +137,11 @@ func (c *Context) IsAborted() bool {
 	return c.Context.IsAborted()
 }
 
+// JSON defined TODO
+func (c *Context) JSON(code int, i interface{}) {
+	c.Context.JSON(code, i)
+}
+
 // Success defined TODO
 func (c *Context) Success(data interface{}) {
 	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
@@ -147,9 +152,17 @@ func (c *Context) Success(data interface{}) {
 
 // Fail defined TODO
 func (c *Context) Fail(err error) {
+	num := uint32(500)
+	detail := err.Error()
+	status := "internal service error"
+	if e, ok := err.(core.Error); ok {
+		num = e.Code()
+		status = e.Status()
+	}
 	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
-		"code":   500,
-		"detail": err.Error(),
+		"code":   num,
+		"detail": detail,
+		"status": status,
 	})
 }
 
@@ -286,7 +299,7 @@ func (c *Context) ResponseWriter() http.ResponseWriter {
 }
 
 // Request defined TODO
-func (c *Context) Deadline() (deadline time.Time, ok bool) {
+func (c *Context) Deadline() (time.Time, bool) {
 	return c.Context.Deadline()
 }
 

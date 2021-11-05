@@ -3,15 +3,7 @@
 
 package errors
 
-import (
-	"github.com/go-errors/errors"
-)
-
-// errors const defined TODO
+// known errors
 var (
-	ErrNotFound = errors.New("not found")
+	ErrNotFound = New(Code(100002), "record has not found", "not found")
 )
-
-func Wrap(e interface{}, skip int) *errors.Error {
-	return errors.Wrap(e, skip)
-}

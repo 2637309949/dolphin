@@ -3,34 +3,25 @@
 
 package errors
 
-import (
-	"github.com/go-errors/errors"
-)
-
-// known errors
 var (
-	ErrNotFound                = errors.New("not found")
-	ErrInvalidRedirectURI      = errors.New("invalid redirect uri")
-	ErrInvalidAuthorizeCode    = errors.New("invalid authorize code")
-	ErrInvalidAccessToken      = errors.New("invalid access token")
-	ErrInvalidEncryData        = errors.New("invalid encry data")
-	ErrInvalidRefreshToken     = errors.New("invalid refresh token")
-	ErrExpiredAccessToken      = errors.New("expired access token")
-	ErrExpiredRefreshToken     = errors.New("expired refresh token")
-	ErrInvalidRequest          = errors.New("invalid request")
-	ErrUnauthorizedClient      = errors.New("unauthorized client")
-	ErrAccessDenied            = errors.New("access denied")
-	ErrUnsupportedResponseType = errors.New("unsupported response_type")
-	ErrInvalidScope            = errors.New("invalid scope")
-	ErrServerError             = errors.New("server error")
-	ErrTemporarilyUnavailable  = errors.New("temporarily unavailable")
-	ErrInvalidClient           = errors.New("invalid client")
-	ErrInvalidGrant            = errors.New("invalid grant")
-	ErrUnsupportedGrantType    = errors.New("unsupported grant_type")
-	ErrInvalidDomain           = errors.New("invalid domain")
-	ErrNotFoundDB              = errors.New("not found db")
+	ErrNotFound                = New(Code(100002), "record has not found", "not found")
+	ErrInvalidRedirectURI      = New(Code(100004), "invalid redirect uri", "invalid redirect uri")
+	ErrInvalidAuthorizeCode    = New(Code(100005), "invalid authorize code", "invalid authorize code")
+	ErrInvalidAccessToken      = New(Code(100006), "invalid access token", "invalid access token")
+	ErrInvalidEncryData        = New(Code(100007), "invalid encry data", "invalid encry data")
+	ErrInvalidRefreshToken     = New(Code(100008), "invalid refresh token", "invalid refresh token")
+	ErrExpiredAccessToken      = New(Code(100009), "expired access token", "expired access token")
+	ErrExpiredRefreshToken     = New(Code(100010), "expired refresh token", "expired refresh token")
+	ErrInvalidRequest          = New(Code(100011), "invalid request", "invalid request")
+	ErrUnauthorizedClient      = New(Code(100012), "unauthorized client", "unauthorized client")
+	ErrAccessDenied            = New(Code(100013), "access denied", "access denied")
+	ErrUnsupportedResponseType = New(Code(100014), "unsupported response_type", "unsupported response_type")
+	ErrInvalidScope            = New(Code(100015), "invalid scope", "invalid scope")
+	ErrServerError             = New(Code(100016), "server error", "server error")
+	ErrTemporarilyUnavailable  = New(Code(100017), "temporarily unavailable", "temporarily unavailable")
+	ErrInvalidClient           = New(Code(100018), "invalid client", "invalid client")
+	ErrInvalidGrant            = New(Code(100019), "invalid grant", "invalid grant")
+	ErrUnsupportedGrantType    = New(Code(100020), "unsupported grant_type", "unsupported grant_type")
+	ErrInvalidDomain           = New(Code(100021), "invalid domain", "invalid domain")
+	ErrNotFoundDB              = New(Code(100022), "not found db", "not found db")
 )
-
-func Wrap(e interface{}, skip int) *errors.Error {
-	return errors.Wrap(e, skip)
-}

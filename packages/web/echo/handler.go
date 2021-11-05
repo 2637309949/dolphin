@@ -76,7 +76,7 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 			}
 		}(fv))
 
-		hfcMiddles = append(hfcMiddles, func(v reflect.Value) func(hf echo.HandlerFunc) echo.HandlerFunc {
+		hfcMiddles = append(hfcMiddles, func(v reflect.Value) func(echo.HandlerFunc) echo.HandlerFunc {
 			ft := v.Type()
 			fti := ft.In(0)
 			isPtr := false

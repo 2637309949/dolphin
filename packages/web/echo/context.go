@@ -112,6 +112,11 @@ func (c *Context) Success(data interface{}) {
 	})
 }
 
+// JSON defined TODO
+func (c *Context) JSON(code int, i interface{}) {
+	c.Context.JSON(code, i)
+}
+
 // Next defined TODO
 func (c *Context) Next() {
 	if c.next != nil {

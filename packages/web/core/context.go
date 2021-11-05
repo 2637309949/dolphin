@@ -57,6 +57,7 @@ type Context interface {
 	Value(interface{}) interface{}
 
 	// std reponse json
+	JSON(code int, i interface{})
 	Success(interface{})
 	Fail(error)
 }

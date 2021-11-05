@@ -151,10 +151,17 @@ func (m *Dolphin) Build(dir string, args []string, appParser *parser.AppParser) 
 	}
 
 	// errors template
-	errByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "errors.tmpl")).([]byte)
+	errByte := utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "comm.tmpl")).([]byte)
 	tmpls = append(tmpls, &parser.TmplCfg{
 		Text:     string(errByte),
 		FilePath: path.Join(dir, viper.GetString("dir.util"), "errors/comm.go"),
+		Data:     tmplArgs,
+		Overlap:  parser.OverlapSkip,
+	})
+	errByte = utils.EnsureLeft(vfsutil.ReadFile(dist.Assets, "errors.tmpl")).([]byte)
+	tmpls = append(tmpls, &parser.TmplCfg{
+		Text:     string(errByte),
+		FilePath: path.Join(dir, viper.GetString("dir.util"), "errors/errors.go"),
 		Data:     tmplArgs,
 		Overlap:  parser.OverlapSkip,
 	})
