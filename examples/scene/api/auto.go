@@ -116,16 +116,16 @@ func NewArticle() *Article {
 
 // ArticleRoutes defined
 func ArticleRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), ArticleInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
-	group.Handle(instance.Payment.Method, instance.Payment.RelativePath, instance.Payment.Auth, instance.Payment.Roles, instance.Payment.Cache, instance.Payment.Interceptor, instance.Payment.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), ArticleInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
+	g.Handle(i.Payment.Method, i.Payment.RelativePath, i.Payment.Auth, i.Payment.Roles, i.Payment.Cache, i.Payment.Interceptor, i.Payment.Handler)
 }
 
 // ArticleInstance defined
@@ -153,8 +153,8 @@ func NewCaching() *Caching {
 
 // CachingRoutes defined
 func CachingRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), CachingInstance
-	group.Handle(instance.Info.Method, instance.Info.RelativePath, instance.Info.Auth, instance.Info.Roles, instance.Info.Cache, instance.Info.Interceptor, instance.Info.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), CachingInstance
+	g.Handle(i.Info.Method, i.Info.RelativePath, i.Info.Auth, i.Info.Roles, i.Info.Cache, i.Info.Interceptor, i.Info.Handler)
 }
 
 // CachingInstance defined
@@ -230,14 +230,14 @@ func NewDtm() *Dtm {
 
 // DtmRoutes defined
 func DtmRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), DtmInstance
-	group.Handle(instance.Tcc.Method, instance.Tcc.RelativePath, instance.Tcc.Auth, instance.Tcc.Roles, instance.Tcc.Cache, instance.Tcc.Interceptor, instance.Tcc.Handler)
-	group.Handle(instance.TransOut.Method, instance.TransOut.RelativePath, instance.TransOut.Auth, instance.TransOut.Roles, instance.TransOut.Cache, instance.TransOut.Interceptor, instance.TransOut.Handler)
-	group.Handle(instance.TransOutConfirm.Method, instance.TransOutConfirm.RelativePath, instance.TransOutConfirm.Auth, instance.TransOutConfirm.Roles, instance.TransOutConfirm.Cache, instance.TransOutConfirm.Interceptor, instance.TransOutConfirm.Handler)
-	group.Handle(instance.TransOutRevert.Method, instance.TransOutRevert.RelativePath, instance.TransOutRevert.Auth, instance.TransOutRevert.Roles, instance.TransOutRevert.Cache, instance.TransOutRevert.Interceptor, instance.TransOutRevert.Handler)
-	group.Handle(instance.TransIn.Method, instance.TransIn.RelativePath, instance.TransIn.Auth, instance.TransIn.Roles, instance.TransIn.Cache, instance.TransIn.Interceptor, instance.TransIn.Handler)
-	group.Handle(instance.TransInConfirm.Method, instance.TransInConfirm.RelativePath, instance.TransInConfirm.Auth, instance.TransInConfirm.Roles, instance.TransInConfirm.Cache, instance.TransInConfirm.Interceptor, instance.TransInConfirm.Handler)
-	group.Handle(instance.TransInRevert.Method, instance.TransInRevert.RelativePath, instance.TransInRevert.Auth, instance.TransInRevert.Roles, instance.TransInRevert.Cache, instance.TransInRevert.Interceptor, instance.TransInRevert.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), DtmInstance
+	g.Handle(i.Tcc.Method, i.Tcc.RelativePath, i.Tcc.Auth, i.Tcc.Roles, i.Tcc.Cache, i.Tcc.Interceptor, i.Tcc.Handler)
+	g.Handle(i.TransOut.Method, i.TransOut.RelativePath, i.TransOut.Auth, i.TransOut.Roles, i.TransOut.Cache, i.TransOut.Interceptor, i.TransOut.Handler)
+	g.Handle(i.TransOutConfirm.Method, i.TransOutConfirm.RelativePath, i.TransOutConfirm.Auth, i.TransOutConfirm.Roles, i.TransOutConfirm.Cache, i.TransOutConfirm.Interceptor, i.TransOutConfirm.Handler)
+	g.Handle(i.TransOutRevert.Method, i.TransOutRevert.RelativePath, i.TransOutRevert.Auth, i.TransOutRevert.Roles, i.TransOutRevert.Cache, i.TransOutRevert.Interceptor, i.TransOutRevert.Handler)
+	g.Handle(i.TransIn.Method, i.TransIn.RelativePath, i.TransIn.Auth, i.TransIn.Roles, i.TransIn.Cache, i.TransIn.Interceptor, i.TransIn.Handler)
+	g.Handle(i.TransInConfirm.Method, i.TransInConfirm.RelativePath, i.TransInConfirm.Auth, i.TransInConfirm.Roles, i.TransInConfirm.Cache, i.TransInConfirm.Interceptor, i.TransInConfirm.Handler)
+	g.Handle(i.TransInRevert.Method, i.TransInRevert.RelativePath, i.TransInRevert.Auth, i.TransInRevert.Roles, i.TransInRevert.Cache, i.TransInRevert.Interceptor, i.TransInRevert.Handler)
 }
 
 // DtmInstance defined
@@ -273,9 +273,9 @@ func NewEncrypt() *Encrypt {
 
 // EncryptRoutes defined
 func EncryptRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), EncryptInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Info.Method, instance.Info.RelativePath, instance.Info.Auth, instance.Info.Roles, instance.Info.Cache, instance.Info.Interceptor, instance.Info.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), EncryptInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.Info.Method, i.Info.RelativePath, i.Info.Auth, i.Info.Roles, i.Info.Cache, i.Info.Interceptor, i.Info.Handler)
 }
 
 // EncryptInstance defined
@@ -311,9 +311,9 @@ func NewJwt() *Jwt {
 
 // JwtRoutes defined
 func JwtRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), JwtInstance
-	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Auth, instance.Login.Roles, instance.Login.Cache, instance.Login.Interceptor, instance.Login.Handler)
-	group.Handle(instance.Check.Method, instance.Check.RelativePath, instance.Check.Auth, instance.Check.Roles, instance.Check.Cache, instance.Check.Interceptor, instance.Check.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), JwtInstance
+	g.Handle(i.Login.Method, i.Login.RelativePath, i.Login.Auth, i.Login.Roles, i.Login.Cache, i.Login.Interceptor, i.Login.Handler)
+	g.Handle(i.Check.Method, i.Check.RelativePath, i.Check.Auth, i.Check.Roles, i.Check.Cache, i.Check.Interceptor, i.Check.Handler)
 }
 
 // JwtInstance defined
@@ -349,9 +349,9 @@ func NewKafka() *Kafka {
 
 // KafkaRoutes defined
 func KafkaRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), KafkaInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), KafkaInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // KafkaInstance defined
@@ -387,9 +387,9 @@ func NewMiddles() *Middles {
 
 // MiddlesRoutes defined
 func MiddlesRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), MiddlesInstance
-	group.Handle(instance.GlobalTest.Method, instance.GlobalTest.RelativePath, instance.GlobalTest.Auth, instance.GlobalTest.Roles, instance.GlobalTest.Cache, instance.GlobalTest.Interceptor, instance.GlobalTest.Handler)
-	group.Handle(instance.LocalTest.Method, instance.LocalTest.RelativePath, instance.LocalTest.Auth, instance.LocalTest.Roles, instance.LocalTest.Cache, instance.LocalTest.Interceptor, instance.LocalTest.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), MiddlesInstance
+	g.Handle(i.GlobalTest.Method, i.GlobalTest.RelativePath, i.GlobalTest.Auth, i.GlobalTest.Roles, i.GlobalTest.Cache, i.GlobalTest.Interceptor, i.GlobalTest.Handler)
+	g.Handle(i.LocalTest.Method, i.LocalTest.RelativePath, i.LocalTest.Auth, i.LocalTest.Roles, i.LocalTest.Cache, i.LocalTest.Interceptor, i.LocalTest.Handler)
 }
 
 // MiddlesInstance defined
@@ -425,9 +425,9 @@ func NewNsq() *Nsq {
 
 // NsqRoutes defined
 func NsqRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), NsqInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), NsqInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // NsqInstance defined
@@ -463,9 +463,9 @@ func NewRedisLock() *RedisLock {
 
 // RedisLockRoutes defined
 func RedisLockRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), RedisLockInstance
-	group.Handle(instance.Lock.Method, instance.Lock.RelativePath, instance.Lock.Auth, instance.Lock.Roles, instance.Lock.Cache, instance.Lock.Interceptor, instance.Lock.Handler)
-	group.Handle(instance.Unlock.Method, instance.Unlock.RelativePath, instance.Unlock.Auth, instance.Unlock.Roles, instance.Unlock.Cache, instance.Unlock.Interceptor, instance.Unlock.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), RedisLockInstance
+	g.Handle(i.Lock.Method, i.Lock.RelativePath, i.Lock.Auth, i.Lock.Roles, i.Lock.Cache, i.Lock.Interceptor, i.Lock.Handler)
+	g.Handle(i.Unlock.Method, i.Unlock.RelativePath, i.Unlock.Auth, i.Unlock.Roles, i.Unlock.Cache, i.Unlock.Interceptor, i.Unlock.Handler)
 }
 
 // RedisLockInstance defined
@@ -501,9 +501,9 @@ func NewRedisMq() *RedisMq {
 
 // RedisMqRoutes defined
 func RedisMqRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), RedisMqInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), RedisMqInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // RedisMqInstance defined
@@ -531,8 +531,8 @@ func NewSqlmap() *Sqlmap {
 
 // SqlmapRoutes defined
 func SqlmapRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SqlmapInstance
-	group.Handle(instance.Selectone.Method, instance.Selectone.RelativePath, instance.Selectone.Auth, instance.Selectone.Roles, instance.Selectone.Cache, instance.Selectone.Interceptor, instance.Selectone.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SqlmapInstance
+	g.Handle(i.Selectone.Method, i.Selectone.RelativePath, i.Selectone.Auth, i.Selectone.Roles, i.Selectone.Cache, i.Selectone.Interceptor, i.Selectone.Handler)
 }
 
 // SqlmapInstance defined
@@ -560,8 +560,8 @@ func NewUser() *User {
 
 // UserRoutes defined
 func UserRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), UserInstance
-	group.Handle(instance.Info.Method, instance.Info.RelativePath, instance.Info.Auth, instance.Info.Roles, instance.Info.Cache, instance.Info.Interceptor, instance.Info.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), UserInstance
+	g.Handle(i.Info.Method, i.Info.RelativePath, i.Info.Auth, i.Info.Roles, i.Info.Cache, i.Info.Interceptor, i.Info.Handler)
 }
 
 // UserInstance defined
@@ -605,10 +605,10 @@ func NewView() *View {
 
 // ViewRoutes defined
 func ViewRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), ViewInstance
-	group.Handle(instance.File.Method, instance.File.RelativePath, instance.File.Auth, instance.File.Roles, instance.File.Cache, instance.File.Interceptor, instance.File.Handler)
-	group.Handle(instance.HTML.Method, instance.HTML.RelativePath, instance.HTML.Auth, instance.HTML.Roles, instance.HTML.Cache, instance.HTML.Interceptor, instance.HTML.Handler)
-	group.Handle(instance.XML.Method, instance.XML.RelativePath, instance.XML.Auth, instance.XML.Roles, instance.XML.Cache, instance.XML.Interceptor, instance.XML.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), ViewInstance
+	g.Handle(i.File.Method, i.File.RelativePath, i.File.Auth, i.File.Roles, i.File.Cache, i.File.Interceptor, i.File.Handler)
+	g.Handle(i.HTML.Method, i.HTML.RelativePath, i.HTML.Auth, i.HTML.Roles, i.HTML.Cache, i.HTML.Interceptor, i.HTML.Handler)
+	g.Handle(i.XML.Method, i.XML.RelativePath, i.XML.Auth, i.XML.Roles, i.XML.Cache, i.XML.Interceptor, i.XML.Handler)
 }
 
 // ViewInstance defined
@@ -636,8 +636,8 @@ func NewVote() *Vote {
 
 // VoteRoutes defined
 func VoteRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), VoteInstance
-	group.Handle(instance.Like.Method, instance.Like.RelativePath, instance.Like.Auth, instance.Like.Roles, instance.Like.Cache, instance.Like.Interceptor, instance.Like.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), VoteInstance
+	g.Handle(i.Like.Method, i.Like.RelativePath, i.Like.Auth, i.Like.Roles, i.Like.Cache, i.Like.Interceptor, i.Like.Handler)
 }
 
 // VoteInstance defined
@@ -665,8 +665,8 @@ func NewXlsx() *Xlsx {
 
 // XlsxRoutes defined
 func XlsxRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), XlsxInstance
-	group.Handle(instance.Import.Method, instance.Import.RelativePath, instance.Import.Auth, instance.Import.Roles, instance.Import.Cache, instance.Import.Interceptor, instance.Import.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), XlsxInstance
+	g.Handle(i.Import.Method, i.Import.RelativePath, i.Import.Auth, i.Import.Roles, i.Import.Cache, i.Import.Interceptor, i.Import.Handler)
 }
 
 // XlsxInstance defined

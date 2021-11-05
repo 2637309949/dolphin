@@ -9,7 +9,6 @@ require (
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/go-errors/errors v1.1.1
 	github.com/go-redis/redis/v7 v7.4.0
-	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gopherjs/gopherjs v0.0.0-20210202160940-bed99a852dfe // indirect
 	github.com/kak-tus/ami v0.1.15
 	github.com/lestrrat-go/strftime v1.0.4 // indirect
