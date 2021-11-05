@@ -4,8 +4,8 @@
 package api
 
 import (
-	"fmt"
 	"scene/types"
+	"scene/util/errors"
 
 	"github.com/2637309949/dolphin/platform/util/reflect"
 	"github.com/sirupsen/logrus"
@@ -51,10 +51,8 @@ func (ctr *Dtm) DtmTransOut(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ? where a.balance + t.trading_balance + ? >= 0", 1, -payload.Amount.Int64, -payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{
-			"code":    500,
-			"message": fmt.Errorf("update error, balance not enough"),
-		})
+		ctx.Fail(errors.New(errors.Code(310001), "update error, balance not enough", "update error"))
+		return
 	}
 	ctx.JSON(200, map[string]interface{}{
 		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
@@ -82,10 +80,8 @@ func (ctr *Dtm) DtmTransOutConfirm(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ?", 1, payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{
-			"code":    500,
-			"message": fmt.Errorf("update error, balance not enough"),
-		})
+		ctx.Fail(errors.New(errors.Code(310001), "update error, balance not enough", "update error"))
+		return
 	}
 	ctx.JSON(200, map[string]interface{}{
 		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
@@ -113,7 +109,7 @@ func (ctr *Dtm) DtmTransOutRevert(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ? where a.balance + t.trading_balance + ? >= 0", 1, payload.Amount.Int64, payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
+		ctx.Fail(errors.New(errors.Code(310001), "update error, balance not enough", "update error"))
 	}
 	ctx.JSON(200, map[string]interface{}{
 		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
@@ -140,7 +136,7 @@ func (ctr *Dtm) DtmTransIn(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ? where a.balance + t.trading_balance + ? >= 0", 2, payload.Amount.Int64, payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
+		ctx.Fail(errors.New(errors.Code(310001), "update error, balance not enough", "update error"))
 	}
 	ctx.JSON(200, map[string]interface{}{
 		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
@@ -168,10 +164,7 @@ func (ctr *Dtm) DtmTransInConfirm(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ?", 2, -payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{
-			"code":    500,
-			"message": fmt.Errorf("update error, balance not enough"),
-		})
+		ctx.Fail(errors.New(errors.Code(310001), "update error, balance not enough", "update error"))
 	}
 	ctx.JSON(200, map[string]interface{}{
 		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),
@@ -199,7 +192,7 @@ func (ctr *Dtm) DtmTransInRevert(ctx *Context) {
 	ret, dbr := ctx.BusinessDB("localhost").SQL("update user_account_trading t join user_account a on t.user_id=a.user_id and t.user_id=? set t.trading_balance=t.trading_balance + ? where a.balance + t.trading_balance + ? >= 0", 2, -payload.Amount.Int64, payload.Amount.Int64).Execute()
 	ra, _ := ret.RowsAffected()
 	if dbr == nil && ra == 0 { // 如果余额不足，返回错误
-		ctx.JSON(500, map[string]interface{}{"code": 500, "message": fmt.Errorf("update error, balance not enough")})
+		ctx.Fail(errors.New(errors.Code(310001), "update error, balance not enough", "update error"))
 	}
 	ctx.JSON(200, map[string]interface{}{
 		"dtm_result": reflect.OrOne(payload.TransInResult.String, "SUCCESS").(string),

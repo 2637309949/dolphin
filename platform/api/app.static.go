@@ -10,9 +10,9 @@ import (
 	"regexp"
 
 	"github.com/2637309949/dolphin/packages/web"
+	"github.com/2637309949/dolphin/packages/web/gin"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
-	"github.com/gin-gonic/gin"
 )
 
 // Static defined
@@ -39,7 +39,7 @@ func DomainFormat(ct string) []byte {
 func (ctr *Static) Domain(ctx *gin.Context) {
 	reg := regexp.MustCompile("^([^:?]+)(:.*)?$")
 	contentType := "application/javascript"
-	groups := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
+	groups := reg.FindAllStringSubmatch(ctx.Request().Host, -1)
 	domain := types.SysDomain{}
 	ext, err := App.PlatformDB.Where("domain_url=? and is_delete=0 and status=1", groups[0][1]).Get(&domain)
 	if err != nil || !ext {

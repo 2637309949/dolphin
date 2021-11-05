@@ -22,11 +22,7 @@ type Context struct {
 
 // LoginInInfo defined TODO
 func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
-	tk := ctx.MustToken()
-	if tk != nil {
-		return App.PlatformDB.ID(tk.GetUserID()).Get(user)
-	}
-	return false, nil
+	return App.PlatformDB.ID(ctx.MustToken().GetUserID()).Get(user)
 }
 
 // BusinessDB defined TODO

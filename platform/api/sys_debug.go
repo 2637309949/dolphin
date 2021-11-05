@@ -6,7 +6,7 @@ package api
 import (
 	"net/http/pprof"
 
-	"github.com/gin-gonic/gin"
+	"github.com/2637309949/dolphin/packages/web/gin"
 )
 
 // DebugPprof api implementation
@@ -20,7 +20,7 @@ import (
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof [GET]
 func (ctr *Debug) DebugPprof(ctx *gin.Context) {
-	pprof.Index(ctx.Writer, ctx.Request)
+	pprof.Index(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugHeap api implementation
@@ -34,7 +34,7 @@ func (ctr *Debug) DebugPprof(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/heap [GET]
 func (ctr *Debug) DebugHeap(ctx *gin.Context) {
-	pprof.Handler("heap").ServeHTTP(ctx.Writer, ctx.Request)
+	pprof.Handler("heap").ServeHTTP(ctx.Writer, ctx.Request())
 }
 
 // DebugGoroutine api implementation
@@ -48,7 +48,7 @@ func (ctr *Debug) DebugHeap(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/goroutine [GET]
 func (ctr *Debug) DebugGoroutine(ctx *gin.Context) {
-	pprof.Handler("goroutine").ServeHTTP(ctx.Writer, ctx.Request)
+	pprof.Handler("goroutine").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugAllocs api implementation
@@ -62,7 +62,7 @@ func (ctr *Debug) DebugGoroutine(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/allocs [GET]
 func (ctr *Debug) DebugAllocs(ctx *gin.Context) {
-	pprof.Handler("allocs").ServeHTTP(ctx.Writer, ctx.Request)
+	pprof.Handler("allocs").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugBlock api implementation
@@ -76,7 +76,7 @@ func (ctr *Debug) DebugAllocs(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/block [GET]
 func (ctr *Debug) DebugBlock(ctx *gin.Context) {
-	pprof.Handler("block").ServeHTTP(ctx.Writer, ctx.Request)
+	pprof.Handler("block").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugThreadcreate api implementation
@@ -90,7 +90,7 @@ func (ctr *Debug) DebugBlock(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/threadcreate [GET]
 func (ctr *Debug) DebugThreadcreate(ctx *gin.Context) {
-	pprof.Handler("threadcreate").ServeHTTP(ctx.Writer, ctx.Request)
+	pprof.Handler("threadcreate").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugCmdline api implementation
@@ -104,7 +104,7 @@ func (ctr *Debug) DebugThreadcreate(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/cmdline [GET]
 func (ctr *Debug) DebugCmdline(ctx *gin.Context) {
-	pprof.Cmdline(ctx.Writer, ctx.Request)
+	pprof.Cmdline(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugProfile api implementation
@@ -118,7 +118,7 @@ func (ctr *Debug) DebugCmdline(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/profile [GET]
 func (ctr *Debug) DebugProfile(ctx *gin.Context) {
-	pprof.Profile(ctx.Writer, ctx.Request)
+	pprof.Profile(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugSymbol api implementation
@@ -132,7 +132,7 @@ func (ctr *Debug) DebugProfile(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/symbol [GET,POST]
 func (ctr *Debug) DebugSymbol(ctx *gin.Context) {
-	pprof.Symbol(ctx.Writer, ctx.Request)
+	pprof.Symbol(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugTrace api implementation
@@ -146,7 +146,7 @@ func (ctr *Debug) DebugSymbol(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/trace [GET]
 func (ctr *Debug) DebugTrace(ctx *gin.Context) {
-	pprof.Trace(ctx.Writer, ctx.Request)
+	pprof.Trace(ctx.ResponseWriter(), ctx.Request())
 }
 
 // DebugMutex api implementation
@@ -160,5 +160,5 @@ func (ctr *Debug) DebugTrace(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/mutex [GET]
 func (ctr *Debug) DebugMutex(ctx *gin.Context) {
-	pprof.Handler("mutex").ServeHTTP(ctx.Writer, ctx.Request)
+	pprof.Handler("mutex").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }

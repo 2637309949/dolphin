@@ -34,6 +34,9 @@ func Handle(m string, r string, h ...core.HandlerFunc) {
 func Static(relativePath, root string) {
 	defaultApp.Static(relativePath, root)
 }
+func StaticFS(relativePath string, fs http.FileSystem) {
+	defaultApp.StaticFS(relativePath, fs)
+}
 
 func Use(middleware ...core.HandlerFunc) {
 	defaultApp.Use(middleware...)

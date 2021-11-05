@@ -16,12 +16,12 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/utils/uuid"
+	"github.com/2637309949/dolphin/packages/web/gin"
 	"github.com/2637309949/dolphin/platform/srv"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/qr"
-	"github.com/gin-gonic/gin"
 	"github.com/go-session/session"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -42,14 +42,14 @@ import (
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/login [post]
 func (ctr *SysCas) SysCasLogin(ctx *gin.Context) {
-	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
+	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasLogin/Start:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.login")+"?error="+err.Error())
 		return
 	}
-	ctx.Request.ParseForm()
-	f := ctx.Request.Form
+	ctx.Request().ParseForm()
+	f := ctx.Request().Form
 	domain, username, password := f.Get("domain"), f.Get("username"), f.Get("password")
 	account := types.SysUser{
 		Name:   null.StringFrom(username),
@@ -72,7 +72,7 @@ func (ctr *SysCas) SysCasLogin(ctx *gin.Context) {
 	// load domain from request
 	if account.Domain.String == "" {
 		reg := regexp.MustCompile(`^(http://|https://)?([^/?:]+)(:[0-9]*)?(/[^?]*)?(\\?.*)?$`)
-		base := reg.FindAllStringSubmatch(ctx.Request.Host, -1)
+		base := reg.FindAllStringSubmatch(ctx.Request().Host, -1)
 		account.Domain = null.StringFrom(base[0][2])
 	}
 
@@ -125,7 +125,7 @@ func (ctr *SysCas) SysCasLogout(ctx *gin.Context) {
 		})
 		return
 	}
-	session.Destroy(context.Background(), ctx.Writer, ctx.Request)
+	session.Destroy(context.Background(), ctx.Writer, ctx.Request())
 	ctx.Redirect(302, OA2Cfg.AuthCodeURL(state))
 }
 
@@ -139,7 +139,7 @@ func (ctr *SysCas) SysCasLogout(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/affirm [post]
 func (ctr *SysCas) SysCasAffirm(ctx *gin.Context) {
-	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
+	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasAffirm/Start:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
@@ -149,10 +149,10 @@ func (ctr *SysCas) SysCasAffirm(ctx *gin.Context) {
 	if v, ok := store.Get("ReturnUri"); ok {
 		form = v.(url.Values)
 	}
-	ctx.Request.Form = form
+	ctx.Request().Form = form
 	store.Delete("ReturnUri")
 	store.Save()
-	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
+	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasAffirm/HandleAuthorizeRequest:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
@@ -170,34 +170,26 @@ func (ctr *SysCas) SysCasAffirm(ctx *gin.Context) {
 // @Router /api/sys/cas/authorize [get]
 func (ctr *SysCas) SysCasAuthorize(ctx *gin.Context) {
 	var form url.Values
-	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request)
+	store, err := session.Start(context.Background(), ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasAuthorize/Start:%v", err)
-		ctx.JSON(200, map[string]interface{}{
-			"code":   "500",
-			"detail": err.Error(),
-			"status": "",
-		})
+		ctx.Fail(err)
 		return
 	}
-	ctx.Request.ParseForm()
+	ctx.Request().ParseForm()
 	if v, ok := store.Get("ReturnUri"); ok {
 		form = v.(url.Values)
-		for k, v := range ctx.Request.Form {
+		for k, v := range ctx.Request().Form {
 			form.Set(k, v[0])
 		}
-		ctx.Request.Form = form
+		ctx.Request().Form = form
 	}
 	store.Delete("ReturnUri")
 	store.Save()
-	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request)
+	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasAuthorize/HandleAuthorizeRequest:%v", err)
-		ctx.JSON(200, map[string]interface{}{
-			"code":   "500",
-			"detail": err.Error(),
-			"status": "",
-		})
+		ctx.Fail(err)
 		return
 	}
 }
@@ -212,14 +204,10 @@ func (ctr *SysCas) SysCasAuthorize(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/token [post]
 func (ctr *SysCas) SysCasToken(ctx *gin.Context) {
-	err := App.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request)
+	err := App.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasToken/HandleTokenRequest:%v", err)
-		ctx.JSON(200, map[string]interface{}{
-			"code":   "500",
-			"detail": err.Error(),
-			"status": "",
-		})
+		ctx.Fail(err)
 	}
 }
 
@@ -253,11 +241,7 @@ func (ctr *SysCas) SysCasURL(ctx *gin.Context) {
 	state := "domain=" + ctx.Query("domain") + "&redirect_uri=" + ctx.Query("redirect_uri") + "&state=" + ctx.Query("state")
 	uri, err := url.Parse(ctx.Query("redirect_uri"))
 	if err != nil {
-		ctx.JSON(200, map[string]interface{}{
-			"code":   "500",
-			"detail": err.Error(),
-			"status": "",
-		})
+		ctx.Fail(err)
 		return
 	}
 	if uri.Scheme == "" {
@@ -281,8 +265,8 @@ func (ctr *SysCas) SysCasURL(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/oauth2 [get]
 func (ctr *SysCas) SysCasOauth2(ctx *gin.Context) {
-	ctx.Request.ParseForm()
-	f := ctx.Request.Form
+	ctx.Request().ParseForm()
+	f := ctx.Request().Form
 	state, _ := url.QueryUnescape(f.Get("state"))
 	code, _ := url.QueryUnescape(f.Get("code"))
 
@@ -511,7 +495,7 @@ func (ctr *SysCas) SysCasQrcode(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/qrconnect [get]
 func (ctr *SysCas) SysCasQrconnect(ctx *gin.Context) {
-	rq := ctx.Request.URL.RawQuery
+	rq := ctx.Request().URL.RawQuery
 	if rq != "" {
 		rq = "?" + rq
 	}
