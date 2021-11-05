@@ -114,16 +114,16 @@ func NewSysAppFun() *SysAppFun {
 
 // SysAppFunRoutes defined
 func SysAppFunRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysAppFunInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, instance.Tree.Auth, instance.Tree.Roles, instance.Tree.Cache, instance.Tree.Interceptor, instance.Tree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysAppFunInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Tree.Method, i.Tree.RelativePath, i.Tree.Auth, i.Tree.Roles, i.Tree.Cache, i.Tree.Interceptor, i.Tree.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysAppFunInstance defined
@@ -207,15 +207,15 @@ func NewSysArea() *SysArea {
 
 // SysAreaRoutes defined
 func SysAreaRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysAreaInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysAreaInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysAreaInstance defined
@@ -315,17 +315,17 @@ func NewSysAttachment() *SysAttachment {
 
 // SysAttachmentRoutes defined
 func SysAttachmentRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysAttachmentInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Upload.Method, instance.Upload.RelativePath, instance.Upload.Auth, instance.Upload.Roles, instance.Upload.Cache, instance.Upload.Interceptor, instance.Upload.Handler)
-	group.Handle(instance.Export.Method, instance.Export.RelativePath, instance.Export.Auth, instance.Export.Roles, instance.Export.Cache, instance.Export.Interceptor, instance.Export.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysAttachmentInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Upload.Method, i.Upload.RelativePath, i.Upload.Auth, i.Upload.Roles, i.Upload.Cache, i.Upload.Interceptor, i.Upload.Handler)
+	g.Handle(i.Export.Method, i.Export.RelativePath, i.Export.Auth, i.Export.Roles, i.Export.Cache, i.Export.Interceptor, i.Export.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysAttachmentInstance defined
@@ -457,21 +457,21 @@ func NewSysCas() *SysCas {
 
 // SysCasRoutes defined
 func SysCasRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysCasInstance
-	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Auth, instance.Login.Roles, instance.Login.Cache, instance.Login.Interceptor, instance.Login.Handler)
-	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, instance.Logout.Auth, instance.Logout.Roles, instance.Logout.Cache, instance.Logout.Interceptor, instance.Logout.Handler)
-	group.Handle(instance.Affirm.Method, instance.Affirm.RelativePath, instance.Affirm.Auth, instance.Affirm.Roles, instance.Affirm.Cache, instance.Affirm.Interceptor, instance.Affirm.Handler)
-	group.Handle(instance.Authorize.Method, instance.Authorize.RelativePath, instance.Authorize.Auth, instance.Authorize.Roles, instance.Authorize.Cache, instance.Authorize.Interceptor, instance.Authorize.Handler)
-	group.Handle(instance.Token.Method, instance.Token.RelativePath, instance.Token.Auth, instance.Token.Roles, instance.Token.Cache, instance.Token.Interceptor, instance.Token.Handler)
-	group.Handle(instance.URL.Method, instance.URL.RelativePath, instance.URL.Auth, instance.URL.Roles, instance.URL.Cache, instance.URL.Interceptor, instance.URL.Handler)
-	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Auth, instance.Oauth2.Roles, instance.Oauth2.Cache, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
-	group.Handle(instance.QrOauth2.Method, instance.QrOauth2.RelativePath, instance.QrOauth2.Auth, instance.QrOauth2.Roles, instance.QrOauth2.Cache, instance.QrOauth2.Interceptor, instance.QrOauth2.Handler)
-	group.Handle(instance.Refresh.Method, instance.Refresh.RelativePath, instance.Refresh.Auth, instance.Refresh.Roles, instance.Refresh.Cache, instance.Refresh.Interceptor, instance.Refresh.Handler)
-	group.Handle(instance.Check.Method, instance.Check.RelativePath, instance.Check.Auth, instance.Check.Roles, instance.Check.Cache, instance.Check.Interceptor, instance.Check.Handler)
-	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, instance.Profile.Auth, instance.Profile.Roles, instance.Profile.Cache, instance.Profile.Interceptor, instance.Profile.Handler)
-	group.Handle(instance.Qrcode.Method, instance.Qrcode.RelativePath, instance.Qrcode.Auth, instance.Qrcode.Roles, instance.Qrcode.Cache, instance.Qrcode.Interceptor, instance.Qrcode.Handler)
-	group.Handle(instance.Qrconnect.Method, instance.Qrconnect.RelativePath, instance.Qrconnect.Auth, instance.Qrconnect.Roles, instance.Qrconnect.Cache, instance.Qrconnect.Interceptor, instance.Qrconnect.Handler)
-	group.Handle(instance.QrcodeLogin.Method, instance.QrcodeLogin.RelativePath, instance.QrcodeLogin.Auth, instance.QrcodeLogin.Roles, instance.QrcodeLogin.Cache, instance.QrcodeLogin.Interceptor, instance.QrcodeLogin.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysCasInstance
+	g.Handle(i.Login.Method, i.Login.RelativePath, i.Login.Auth, i.Login.Roles, i.Login.Cache, i.Login.Interceptor, i.Login.Handler)
+	g.Handle(i.Logout.Method, i.Logout.RelativePath, i.Logout.Auth, i.Logout.Roles, i.Logout.Cache, i.Logout.Interceptor, i.Logout.Handler)
+	g.Handle(i.Affirm.Method, i.Affirm.RelativePath, i.Affirm.Auth, i.Affirm.Roles, i.Affirm.Cache, i.Affirm.Interceptor, i.Affirm.Handler)
+	g.Handle(i.Authorize.Method, i.Authorize.RelativePath, i.Authorize.Auth, i.Authorize.Roles, i.Authorize.Cache, i.Authorize.Interceptor, i.Authorize.Handler)
+	g.Handle(i.Token.Method, i.Token.RelativePath, i.Token.Auth, i.Token.Roles, i.Token.Cache, i.Token.Interceptor, i.Token.Handler)
+	g.Handle(i.URL.Method, i.URL.RelativePath, i.URL.Auth, i.URL.Roles, i.URL.Cache, i.URL.Interceptor, i.URL.Handler)
+	g.Handle(i.Oauth2.Method, i.Oauth2.RelativePath, i.Oauth2.Auth, i.Oauth2.Roles, i.Oauth2.Cache, i.Oauth2.Interceptor, i.Oauth2.Handler)
+	g.Handle(i.QrOauth2.Method, i.QrOauth2.RelativePath, i.QrOauth2.Auth, i.QrOauth2.Roles, i.QrOauth2.Cache, i.QrOauth2.Interceptor, i.QrOauth2.Handler)
+	g.Handle(i.Refresh.Method, i.Refresh.RelativePath, i.Refresh.Auth, i.Refresh.Roles, i.Refresh.Cache, i.Refresh.Interceptor, i.Refresh.Handler)
+	g.Handle(i.Check.Method, i.Check.RelativePath, i.Check.Auth, i.Check.Roles, i.Check.Cache, i.Check.Interceptor, i.Check.Handler)
+	g.Handle(i.Profile.Method, i.Profile.RelativePath, i.Profile.Auth, i.Profile.Roles, i.Profile.Cache, i.Profile.Interceptor, i.Profile.Handler)
+	g.Handle(i.Qrcode.Method, i.Qrcode.RelativePath, i.Qrcode.Auth, i.Qrcode.Roles, i.Qrcode.Cache, i.Qrcode.Interceptor, i.Qrcode.Handler)
+	g.Handle(i.Qrconnect.Method, i.Qrconnect.RelativePath, i.Qrconnect.Auth, i.Qrconnect.Roles, i.Qrconnect.Cache, i.Qrconnect.Interceptor, i.Qrconnect.Handler)
+	g.Handle(i.QrcodeLogin.Method, i.QrcodeLogin.RelativePath, i.QrcodeLogin.Auth, i.QrcodeLogin.Roles, i.QrcodeLogin.Cache, i.QrcodeLogin.Interceptor, i.QrcodeLogin.Handler)
 }
 
 // SysCasInstance defined
@@ -555,15 +555,15 @@ func NewSysClient() *SysClient {
 
 // SysClientRoutes defined
 func SysClientRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysClientInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysClientInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysClientInstance defined
@@ -647,15 +647,15 @@ func NewSysComment() *SysComment {
 
 // SysCommentRoutes defined
 func SysCommentRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysCommentInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysCommentInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysCommentInstance defined
@@ -739,15 +739,15 @@ func NewSysDataPermission() *SysDataPermission {
 
 // SysDataPermissionRoutes defined
 func SysDataPermissionRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysDataPermissionInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysDataPermissionInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysDataPermissionInstance defined
@@ -855,18 +855,18 @@ func NewDebug() *Debug {
 
 // DebugRoutes defined
 func DebugRoutes() {
-	group, instance := web.Group("/debug"), DebugInstance
-	group.Handle(instance.Pprof.Method, instance.Pprof.RelativePath, instance.Pprof.Auth, instance.Pprof.Roles, instance.Pprof.Cache, instance.Pprof.Interceptor, instance.Pprof.Handler)
-	group.Handle(instance.Heap.Method, instance.Heap.RelativePath, instance.Heap.Auth, instance.Heap.Roles, instance.Heap.Cache, instance.Heap.Interceptor, instance.Heap.Handler)
-	group.Handle(instance.Goroutine.Method, instance.Goroutine.RelativePath, instance.Goroutine.Auth, instance.Goroutine.Roles, instance.Goroutine.Cache, instance.Goroutine.Interceptor, instance.Goroutine.Handler)
-	group.Handle(instance.Allocs.Method, instance.Allocs.RelativePath, instance.Allocs.Auth, instance.Allocs.Roles, instance.Allocs.Cache, instance.Allocs.Interceptor, instance.Allocs.Handler)
-	group.Handle(instance.Block.Method, instance.Block.RelativePath, instance.Block.Auth, instance.Block.Roles, instance.Block.Cache, instance.Block.Interceptor, instance.Block.Handler)
-	group.Handle(instance.Threadcreate.Method, instance.Threadcreate.RelativePath, instance.Threadcreate.Auth, instance.Threadcreate.Roles, instance.Threadcreate.Cache, instance.Threadcreate.Interceptor, instance.Threadcreate.Handler)
-	group.Handle(instance.Cmdline.Method, instance.Cmdline.RelativePath, instance.Cmdline.Auth, instance.Cmdline.Roles, instance.Cmdline.Cache, instance.Cmdline.Interceptor, instance.Cmdline.Handler)
-	group.Handle(instance.Profile.Method, instance.Profile.RelativePath, instance.Profile.Auth, instance.Profile.Roles, instance.Profile.Cache, instance.Profile.Interceptor, instance.Profile.Handler)
-	group.Handle(instance.Symbol.Method, instance.Symbol.RelativePath, instance.Symbol.Auth, instance.Symbol.Roles, instance.Symbol.Cache, instance.Symbol.Interceptor, instance.Symbol.Handler)
-	group.Handle(instance.Trace.Method, instance.Trace.RelativePath, instance.Trace.Auth, instance.Trace.Roles, instance.Trace.Cache, instance.Trace.Interceptor, instance.Trace.Handler)
-	group.Handle(instance.Mutex.Method, instance.Mutex.RelativePath, instance.Mutex.Auth, instance.Mutex.Roles, instance.Mutex.Cache, instance.Mutex.Interceptor, instance.Mutex.Handler)
+	g, i := web.Group("/debug"), DebugInstance
+	g.Handle(i.Pprof.Method, i.Pprof.RelativePath, i.Pprof.Auth, i.Pprof.Roles, i.Pprof.Cache, i.Pprof.Interceptor, i.Pprof.Handler)
+	g.Handle(i.Heap.Method, i.Heap.RelativePath, i.Heap.Auth, i.Heap.Roles, i.Heap.Cache, i.Heap.Interceptor, i.Heap.Handler)
+	g.Handle(i.Goroutine.Method, i.Goroutine.RelativePath, i.Goroutine.Auth, i.Goroutine.Roles, i.Goroutine.Cache, i.Goroutine.Interceptor, i.Goroutine.Handler)
+	g.Handle(i.Allocs.Method, i.Allocs.RelativePath, i.Allocs.Auth, i.Allocs.Roles, i.Allocs.Cache, i.Allocs.Interceptor, i.Allocs.Handler)
+	g.Handle(i.Block.Method, i.Block.RelativePath, i.Block.Auth, i.Block.Roles, i.Block.Cache, i.Block.Interceptor, i.Block.Handler)
+	g.Handle(i.Threadcreate.Method, i.Threadcreate.RelativePath, i.Threadcreate.Auth, i.Threadcreate.Roles, i.Threadcreate.Cache, i.Threadcreate.Interceptor, i.Threadcreate.Handler)
+	g.Handle(i.Cmdline.Method, i.Cmdline.RelativePath, i.Cmdline.Auth, i.Cmdline.Roles, i.Cmdline.Cache, i.Cmdline.Interceptor, i.Cmdline.Handler)
+	g.Handle(i.Profile.Method, i.Profile.RelativePath, i.Profile.Auth, i.Profile.Roles, i.Profile.Cache, i.Profile.Interceptor, i.Profile.Handler)
+	g.Handle(i.Symbol.Method, i.Symbol.RelativePath, i.Symbol.Auth, i.Symbol.Roles, i.Symbol.Cache, i.Symbol.Interceptor, i.Symbol.Handler)
+	g.Handle(i.Trace.Method, i.Trace.RelativePath, i.Trace.Auth, i.Trace.Roles, i.Trace.Cache, i.Trace.Interceptor, i.Trace.Handler)
+	g.Handle(i.Mutex.Method, i.Mutex.RelativePath, i.Mutex.Auth, i.Mutex.Roles, i.Mutex.Cache, i.Mutex.Interceptor, i.Mutex.Handler)
 }
 
 // DebugInstance defined
@@ -894,8 +894,8 @@ func NewSysDingtalk() *SysDingtalk {
 
 // SysDingtalkRoutes defined
 func SysDingtalkRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysDingtalkInstance
-	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Auth, instance.Oauth2.Roles, instance.Oauth2.Cache, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysDingtalkInstance
+	g.Handle(i.Oauth2.Method, i.Oauth2.RelativePath, i.Oauth2.Auth, i.Oauth2.Roles, i.Oauth2.Cache, i.Oauth2.Interceptor, i.Oauth2.Handler)
 }
 
 // SysDingtalkInstance defined
@@ -979,15 +979,15 @@ func NewSysDomain() *SysDomain {
 
 // SysDomainRoutes defined
 func SysDomainRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysDomainInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysDomainInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysDomainInstance defined
@@ -1087,17 +1087,17 @@ func NewSysMenu() *SysMenu {
 
 // SysMenuRoutes defined
 func SysMenuRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysMenuInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Sidebar.Method, instance.Sidebar.RelativePath, instance.Sidebar.Auth, instance.Sidebar.Roles, instance.Sidebar.Cache, instance.Sidebar.Interceptor, instance.Sidebar.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, instance.Tree.Auth, instance.Tree.Roles, instance.Tree.Cache, instance.Tree.Interceptor, instance.Tree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysMenuInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Sidebar.Method, i.Sidebar.RelativePath, i.Sidebar.Auth, i.Sidebar.Roles, i.Sidebar.Cache, i.Sidebar.Interceptor, i.Sidebar.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Tree.Method, i.Tree.RelativePath, i.Tree.Auth, i.Tree.Roles, i.Tree.Cache, i.Tree.Interceptor, i.Tree.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysMenuInstance defined
@@ -1181,15 +1181,15 @@ func NewSysNotification() *SysNotification {
 
 // SysNotificationRoutes defined
 func SysNotificationRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysNotificationInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysNotificationInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysNotificationInstance defined
@@ -1273,15 +1273,15 @@ func NewSysOptionset() *SysOptionset {
 
 // SysOptionsetRoutes defined
 func SysOptionsetRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysOptionsetInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysOptionsetInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysOptionsetInstance defined
@@ -1373,16 +1373,16 @@ func NewSysOrg() *SysOrg {
 
 // SysOrgRoutes defined
 func SysOrgRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysOrgInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Tree.Method, instance.Tree.RelativePath, instance.Tree.Auth, instance.Tree.Roles, instance.Tree.Cache, instance.Tree.Interceptor, instance.Tree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysOrgInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Tree.Method, i.Tree.RelativePath, i.Tree.Auth, i.Tree.Roles, i.Tree.Cache, i.Tree.Interceptor, i.Tree.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysOrgInstance defined
@@ -1466,15 +1466,15 @@ func NewSysPermission() *SysPermission {
 
 // SysPermissionRoutes defined
 func SysPermissionRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysPermissionInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysPermissionInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysPermissionInstance defined
@@ -1574,17 +1574,17 @@ func NewSysRole() *SysRole {
 
 // SysRoleRoutes defined
 func SysRoleRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysRoleInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.RoleMenuTree.Method, instance.RoleMenuTree.RelativePath, instance.RoleMenuTree.Auth, instance.RoleMenuTree.Roles, instance.RoleMenuTree.Cache, instance.RoleMenuTree.Interceptor, instance.RoleMenuTree.Handler)
-	group.Handle(instance.RoleAppFunTree.Method, instance.RoleAppFunTree.RelativePath, instance.RoleAppFunTree.Auth, instance.RoleAppFunTree.Roles, instance.RoleAppFunTree.Cache, instance.RoleAppFunTree.Interceptor, instance.RoleAppFunTree.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysRoleInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.RoleMenuTree.Method, i.RoleMenuTree.RelativePath, i.RoleMenuTree.Auth, i.RoleMenuTree.Roles, i.RoleMenuTree.Cache, i.RoleMenuTree.Interceptor, i.RoleMenuTree.Handler)
+	g.Handle(i.RoleAppFunTree.Method, i.RoleAppFunTree.RelativePath, i.RoleAppFunTree.Auth, i.RoleAppFunTree.Roles, i.RoleAppFunTree.Cache, i.RoleAppFunTree.Interceptor, i.RoleAppFunTree.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysRoleInstance defined
@@ -1668,15 +1668,15 @@ func NewSysRoleMenu() *SysRoleMenu {
 
 // SysRoleMenuRoutes defined
 func SysRoleMenuRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysRoleMenuInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysRoleMenuInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysRoleMenuInstance defined
@@ -1760,15 +1760,15 @@ func NewSysSchedule() *SysSchedule {
 
 // SysScheduleRoutes defined
 func SysScheduleRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysScheduleInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysScheduleInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysScheduleInstance defined
@@ -1796,8 +1796,8 @@ func NewSysScheduleHistory() *SysScheduleHistory {
 
 // SysScheduleHistoryRoutes defined
 func SysScheduleHistoryRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysScheduleHistoryInstance
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysScheduleHistoryInstance
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 }
 
 // SysScheduleHistoryInstance defined
@@ -1857,12 +1857,12 @@ func NewSysScheduling() *SysScheduling {
 
 // SysSchedulingRoutes defined
 func SysSchedulingRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysSchedulingInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysSchedulingInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysSchedulingInstance defined
@@ -1946,15 +1946,15 @@ func NewSysSetting() *SysSetting {
 
 // SysSettingRoutes defined
 func SysSettingRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysSettingInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysSettingInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysSettingInstance defined
@@ -2038,15 +2038,15 @@ func NewSysTable() *SysTable {
 
 // SysTableRoutes defined
 func SysTableRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysTableInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysTableInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysTableInstance defined
@@ -2130,15 +2130,15 @@ func NewSysTableColumn() *SysTableColumn {
 
 // SysTableColumnRoutes defined
 func SysTableColumnRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysTableColumnInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysTableColumnInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysTableColumnInstance defined
@@ -2222,15 +2222,15 @@ func NewSysTag() *SysTag {
 
 // SysTagRoutes defined
 func SysTagRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysTagInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysTagInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysTagInstance defined
@@ -2314,15 +2314,15 @@ func NewSysTagGroup() *SysTagGroup {
 
 // SysTagGroupRoutes defined
 func SysTagGroupRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysTagGroupInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysTagGroupInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysTagGroupInstance defined
@@ -2358,9 +2358,9 @@ func NewSysTracker() *SysTracker {
 
 // SysTrackerRoutes defined
 func SysTrackerRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysTrackerInstance
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysTrackerInstance
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysTrackerInstance defined
@@ -2460,17 +2460,17 @@ func NewSysUser() *SysUser {
 
 // SysUserRoutes defined
 func SysUserRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysUserInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
-	group.Handle(instance.Login.Method, instance.Login.RelativePath, instance.Login.Auth, instance.Login.Roles, instance.Login.Cache, instance.Login.Interceptor, instance.Login.Handler)
-	group.Handle(instance.Logout.Method, instance.Logout.RelativePath, instance.Logout.Auth, instance.Logout.Roles, instance.Logout.Cache, instance.Logout.Interceptor, instance.Logout.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysUserInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
+	g.Handle(i.Login.Method, i.Login.RelativePath, i.Login.Auth, i.Login.Roles, i.Login.Cache, i.Login.Interceptor, i.Login.Handler)
+	g.Handle(i.Logout.Method, i.Logout.RelativePath, i.Logout.Auth, i.Logout.Roles, i.Logout.Cache, i.Logout.Interceptor, i.Logout.Handler)
 }
 
 // SysUserInstance defined
@@ -2554,15 +2554,15 @@ func NewSysUserTemplate() *SysUserTemplate {
 
 // SysUserTemplateRoutes defined
 func SysUserTemplateRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysUserTemplateInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysUserTemplateInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysUserTemplateInstance defined
@@ -2646,15 +2646,15 @@ func NewSysUserTemplateDetail() *SysUserTemplateDetail {
 
 // SysUserTemplateDetailRoutes defined
 func SysUserTemplateDetailRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysUserTemplateDetailInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysUserTemplateDetailInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysUserTemplateDetailInstance defined
@@ -2682,8 +2682,8 @@ func NewSysWechat() *SysWechat {
 
 // SysWechatRoutes defined
 func SysWechatRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysWechatInstance
-	group.Handle(instance.Oauth2.Method, instance.Oauth2.RelativePath, instance.Oauth2.Auth, instance.Oauth2.Roles, instance.Oauth2.Cache, instance.Oauth2.Interceptor, instance.Oauth2.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysWechatInstance
+	g.Handle(i.Oauth2.Method, i.Oauth2.RelativePath, i.Oauth2.Auth, i.Oauth2.Roles, i.Oauth2.Cache, i.Oauth2.Interceptor, i.Oauth2.Handler)
 }
 
 // SysWechatInstance defined
@@ -2719,9 +2719,9 @@ func NewSysWorker() *SysWorker {
 
 // SysWorkerRoutes defined
 func SysWorkerRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), SysWorkerInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+	g, i := web.Group(viper.GetString("http.prefix")), SysWorkerInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
 // SysWorkerInstance defined

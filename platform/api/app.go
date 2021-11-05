@@ -30,7 +30,7 @@ type Hook struct {
 // OnStart defined OnStart
 func (h *Hook) OnStart(ctx context.Context) error {
 	go func() {
-		logrus.Infof("http listen on port:%v", viper.GetString("http.port"))
+		logrus.Infof("http listen on port%v", viper.GetString("http.port"))
 		err := web.Run(viper.GetString("http.port"))
 		if err != nil {
 			logrus.Fatal(err)

@@ -7,7 +7,6 @@ package api
 import (
 	"encoding/json"
 	"errors"
-	"net/http"
 	"sort"
 	"time"
 
@@ -25,9 +24,12 @@ type Secret struct {
 }
 
 // NewSecret defined TODO
-func NewSecret(req *http.Request) (*Secret, error) {
+func NewSecret(ctx *Context) (*Secret, error) {
 	secret := Secret{}
-	// TODO
+	err := ctx.ShouldBind(&secret)
+	if err != nil {
+		return nil, err
+	}
 	return &secret, nil
 }
 

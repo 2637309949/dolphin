@@ -29,7 +29,7 @@ func (ctr *SysScheduleHistory) SysScheduleHistoryPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_schedule_history", "page", "sys_schedule", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_schedule_history", "page", "sys_schedule", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

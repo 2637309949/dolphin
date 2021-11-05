@@ -52,8 +52,8 @@ func (ctr *Kafka) KafkaGet(ctx *Context) {
 
 	// logrus.Info(ctx.InAdmin())
 	// logrus.Info(ctx.InRole("admin"))
-	// ctx.Persist(ctx.DB, "0586e250-5b6c-4a79-9f4a-767a742b7890")
-	// ctx.Remove(ctx.DB, "6ebce24f-6887-4d6d-a62a-2a706fcf1c3f")
+	// ctx.Persist(ctx.MustDB(), "0586e250-5b6c-4a79-9f4a-767a742b7890")
+	// ctx.Remove(ctx.MustDB(), "6ebce24f-6887-4d6d-a62a-2a706fcf1c3f")
 	// ret, err := srv.KafkaConsumer(context.Background(), q.Value())
 	// if err != nil {
 	// 	logrus.Error(err)

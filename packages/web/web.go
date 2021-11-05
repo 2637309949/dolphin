@@ -1,6 +1,8 @@
 package web
 
 import (
+	"net/http"
+
 	"github.com/2637309949/dolphin/packages/web/core"
 	_ "github.com/2637309949/dolphin/packages/web/gin"
 	// _ "github.com/2637309949/dolphin/packages/web/echo"
@@ -15,6 +17,10 @@ func init() {
 
 func Group(relativePath string, handlers ...core.HandlerFunc) *core.RouterGroup {
 	return defaultApp.Group(relativePath, handlers...)
+}
+
+func ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	defaultApp.ServeHTTP(w, r)
 }
 
 func Handle(m string, r string, h ...core.HandlerFunc) {

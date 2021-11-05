@@ -27,7 +27,7 @@ func (ctr *RedisMq) RedisMqAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.Producer(ctx, ctx.DB, payload)
+	ret, err := ctr.Srv.Producer(ctx, ctx.MustDB(), payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -49,7 +49,7 @@ func (ctr *RedisMq) RedisMqAdd(ctx *Context) {
 func (ctr *RedisMq) RedisMqGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
-	ret, err := ctr.Srv.Consumer(ctx, ctx.DB, q.Value())
+	ret, err := ctr.Srv.Consumer(ctx, ctx.MustDB(), q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

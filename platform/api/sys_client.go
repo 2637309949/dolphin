@@ -31,9 +31,9 @@ func (ctr *SysClient) SysClientAdd(ctx *Context) {
 		return
 	}
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := App.PlatformDB.Insert(&payload)
@@ -65,12 +65,12 @@ func (ctr *SysClient) SysClientBatchAdd(ctx *Context) {
 	}
 	for i := range payload {
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -99,7 +99,7 @@ func (ctr *SysClient) SysClientDel(ctx *Context) {
 	}
 	ret, err := App.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysClient{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -131,7 +131,7 @@ func (ctr *SysClient) SysClientBatchDel(ctx *Context) {
 	var ids = funk.Map(payload, func(form types.SysClient) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := App.PlatformDB.In("id", ids).Update(&types.SysClient{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -160,7 +160,7 @@ func (ctr *SysClient) SysClientUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
 	ret, err := App.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
@@ -192,12 +192,12 @@ func (ctr *SysClient) SysClientBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
@@ -272,7 +272,7 @@ func (ctr *SysClient) SysClientGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.DB.Get(&entity)
+	ext, err := ctx.MustDB().Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

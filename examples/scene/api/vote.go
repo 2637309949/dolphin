@@ -28,8 +28,8 @@ func (ctr *Vote) VoteLike(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.UserId = null.StringFrom(ctx.GetToken().GetUserID())
-	ret, err := ctr.Srv.Like(ctx, ctx.DB, payload)
+	payload.UserId = null.StringFrom(ctx.MustToken().GetUserID())
+	ret, err := ctr.Srv.Like(ctx, ctx.MustDB(), payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

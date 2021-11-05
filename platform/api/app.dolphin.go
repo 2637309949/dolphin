@@ -99,7 +99,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 
 // ServeHTTP defined TODO
 func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	core.GetHandler().Handler().ServeHTTP(w, r)
+	web.ServeHTTP(w, r)
 }
 
 // Reflesh defined init data before bootinh

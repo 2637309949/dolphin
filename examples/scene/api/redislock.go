@@ -21,7 +21,7 @@ func (ctr *RedisLock) RedisLockLock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -44,7 +44,7 @@ func (ctr *RedisLock) RedisLockUnlock(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -221,8 +221,8 @@ func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
 // SetRule defined TODO, role_rule for data`permission
 func (q *Query) SetRule(rule string) {
 	var roleRules []types.SysDataPermissionDetail
-	userID := q.ctx.GetToken().GetUserID()
-	q.ctx.DB.SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
+	userID := q.ctx.MustToken().GetUserID()
+	q.ctx.MustDB().SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
 	for i := range roleRules {
 		q.sm["is_role_rule_"+roleRules[i].Rule.String] = true
 	}
@@ -230,7 +230,7 @@ func (q *Query) SetRule(rule string) {
 
 // SetUser defined TODO
 func (q *Query) SetUser(uid ...int64) {
-	it, _ := strconv.ParseInt(q.ctx.GetToken().GetUserID(), 10, 64)
+	it, _ := strconv.ParseInt(q.ctx.MustToken().GetUserID(), 10, 64)
 	q.sm["uid"] = util.SomeOne(uid, it).(int64)
 }
 

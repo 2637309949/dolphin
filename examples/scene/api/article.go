@@ -32,11 +32,11 @@ func (ctr *Article) ArticleAdd(ctx *Context) {
 		return
 	}
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -65,12 +65,12 @@ func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 	}
 	for i := range payload {
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -97,9 +97,9 @@ func (ctr *Article) ArticleDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&types.Article{
+	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.Article{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -129,9 +129,9 @@ func (ctr *Article) ArticleBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.Article) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.DB.In("id", ids).Update(&types.Article{
+	ret, err := ctx.MustDB().In("id", ids).Update(&types.Article{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -160,9 +160,9 @@ func (ctr *Article) ArticleUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
+	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -192,14 +192,14 @@ func (ctr *Article) ArticleBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			logrus.Error(err)
@@ -248,8 +248,8 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(api.OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "article", "page", "article", q.Value())
+		ctr.Srv.Report.SetOptionsetsFormat(api.OptionsetsFormat(ctx.MustDB()))
+		ret, err := ctr.Srv.Report.PageExport(ctx.MustDB(), "article", "page", "article", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -258,7 +258,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "article", "page", "article", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "article", "page", "article", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -285,7 +285,7 @@ func (ctr *Article) ArticleGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	if ext, err := ctx.DB.Get(&entity); err != nil {
+	if ext, err := ctx.MustDB().Get(&entity); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -314,7 +314,7 @@ func (ctr *Article) ArticlePayment(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

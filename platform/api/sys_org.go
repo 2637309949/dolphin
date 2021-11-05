@@ -30,11 +30,11 @@ func (ctr *SysOrg) SysOrgAdd(ctx *Context) {
 		return
 	}
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -63,12 +63,12 @@ func (ctr *SysOrg) SysOrgBatchAdd(ctx *Context) {
 	}
 	for i := range payload {
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -95,9 +95,9 @@ func (ctr *SysOrg) SysOrgDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&types.SysOrg{
+	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.SysOrg{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -127,9 +127,9 @@ func (ctr *SysOrg) SysOrgBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.SysDomain) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.DB.In("id", ids).Update(&types.SysOrg{
+	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysOrg{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -158,9 +158,9 @@ func (ctr *SysOrg) SysOrgUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
+	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -190,12 +190,12 @@ func (ctr *SysOrg) SysOrgBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
@@ -246,8 +246,8 @@ func (ctr *SysOrg) SysOrgPage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "sys_org", "page", "sys_org", q.Value())
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.MustDB()))
+		ret, err := ctr.Srv.Report.PageExport(ctx.MustDB(), "sys_org", "page", "sys_org", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -256,7 +256,7 @@ func (ctr *SysOrg) SysOrgPage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_org", "page", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_org", "page", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -277,7 +277,7 @@ func (ctr *SysOrg) SysOrgTree(ctx *Context) {
 	q.SetString("name")
 	q.SetRule("sys_org_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_org", "tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_org", "tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -304,7 +304,7 @@ func (ctr *SysOrg) SysOrgGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.DB.Get(&entity)
+	ext, err := ctx.MustDB().Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -8,10 +8,16 @@ consul:
   endpoint: 172.30.13.77:8500
   name: scene
   type: yaml
+# db:
+#   connmaxlifetime: 10
+#   datasource: root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local
+#   driver: mysql
+#   maxidleconns: 15
+#   maxopenconns: 50
 db:
   connmaxlifetime: 10
-  datasource: root:111111@/dolphin?charset=utf8&parseTime=True&loc=Local
-  driver: mysql
+  datasource: ./x_test.db
+  driver: sqlite3
   maxidleconns: 15
   maxopenconns: 50
 dir:
@@ -30,7 +36,7 @@ dtm:
   srv: http://localhost:8080/api/dtmsvr
 http:
   hash: FF61A573-82FC-478B-9AEF-93D6F506DE9A
-  port: 8083
+  port: :8083
   prefix: /api
   static: static
 jwt:
@@ -69,11 +75,6 @@ redis:
   read_timeout: 10
   username: ""
   write_timeout: 10
-rpc:
-  domain_srv: localhost:9081
-  message_srv: localhost:9081
-  port: "9081"
-  user_srv: localhost:9081
 swag:
   authorizationurl: /api/sys/cas/authorize
   license:

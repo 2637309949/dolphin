@@ -32,11 +32,11 @@ func (ctr *Organ) OrganAdd(ctx *Context) {
 		return
 	}
 	payload.CreateDate = null.TimeFromNow()
-	payload.Creater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Creater = null.StringFrom(ctx.MustToken().GetUserID())
 	payload.UpdateDate = null.TimeFromNow()
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -65,12 +65,12 @@ func (ctr *Organ) OrganBatchAdd(ctx *Context) {
 	}
 	for i := range payload {
 		payload[i].CreateDate = null.TimeFromNow()
-		payload[i].Creater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.StringFrom(ctx.MustToken().GetUserID())
 		payload[i].UpdateDate = null.TimeFromNow()
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -97,9 +97,9 @@ func (ctr *Organ) OrganDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.OrganId.Int64).Update(&types.Organ{
+	ret, err := ctx.MustDB().In("id", payload.OrganId.Int64).Update(&types.Organ{
 		UpdateDate: null.TimeFromNow(),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.StringFrom(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -129,9 +129,9 @@ func (ctr *Organ) OrganBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.Organ) int64 { return form.OrganId.Int64 }).([]int64)
-	ret, err := ctx.DB.In("id", ids).Update(&types.Organ{
+	ret, err := ctx.MustDB().In("id", ids).Update(&types.Organ{
 		UpdateDate: null.TimeFromNow(),
-		Updater:    null.StringFrom(ctx.GetToken().GetUserID()),
+		Updater:    null.StringFrom(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -160,9 +160,9 @@ func (ctr *Organ) OrganUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.StringFrom(ctx.GetToken().GetUserID())
+	payload.Updater = null.StringFrom(ctx.MustToken().GetUserID())
 	payload.UpdateDate = null.TimeFromNow()
-	ret, err := ctx.DB.ID(payload.OrganId.Int64).Update(&payload)
+	ret, err := ctx.MustDB().ID(payload.OrganId.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -192,14 +192,14 @@ func (ctr *Organ) OrganBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateDate = null.TimeFromNow()
-		payload[i].Updater = null.StringFrom(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.StringFrom(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].OrganId.Int64).Update(&payload[i])
 		if err != nil {
 			logrus.Error(err)
@@ -247,7 +247,7 @@ func (ctr *Organ) OrganPage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "organ", "page", "organ", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "organ", "page", "organ", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -274,7 +274,7 @@ func (ctr *Organ) OrganGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	if ext, err := ctx.DB.Get(&entity); err != nil {
+	if ext, err := ctx.MustDB().Get(&entity); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

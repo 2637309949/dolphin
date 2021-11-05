@@ -32,13 +32,13 @@ func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 		return
 	}
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	if !payload.Parent.IsZero() {
 		parent := types.SysMenu{}
-		ext, err := ctx.DB.SqlMapClient("selectone_sys_menu", &map[string]int64{"id": payload.Parent.Int64}).Get(&parent)
+		ext, err := ctx.MustDB().SqlMapClient("selectone_sys_menu", &map[string]int64{"id": payload.Parent.Int64}).Get(&parent)
 		if err != nil || !ext {
 			ctx.Fail(err)
 			return
@@ -51,7 +51,7 @@ func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v|", payload.ID.Int64))
 	}
 
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -80,12 +80,12 @@ func (ctr *SysMenu) SysMenuBatchAdd(ctx *Context) {
 	}
 	for i := range payload {
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -112,9 +112,9 @@ func (ctr *SysMenu) SysMenuDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&types.SysMenu{
+	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.SysMenu{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -144,9 +144,9 @@ func (ctr *SysMenu) SysMenuBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.SysDomain) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.DB.In("id", ids).Update(&types.SysMenu{
+	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysMenu{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -175,12 +175,12 @@ func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
 
 	if !payload.Parent.IsZero() {
 		parent := types.SysMenu{}
-		ext, err := ctx.DB.SqlMapClient("selectone_sys_menu", &map[string]int64{"id": payload.Parent.Int64}).Get(&parent)
+		ext, err := ctx.MustDB().SqlMapClient("selectone_sys_menu", &map[string]int64{"id": payload.Parent.Int64}).Get(&parent)
 		if err != nil || !ext {
 			ctx.Fail(err)
 			return
@@ -193,7 +193,7 @@ func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 		payload.Inheritance = null.StringFrom(fmt.Sprintf("|%v|", payload.ID.Int64))
 	}
 
-	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
+	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -223,12 +223,12 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
@@ -262,11 +262,11 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 // @Router /api/sys/menu/sidebar [get]
 func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
 	q := ctx.TypeQuery()
-	q.SetBool("isAdmin", ctr.Srv.DB.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
+	q.SetBool("isAdmin", ctr.Srv.DB.InAdmin(ctx.MustDB(), ctx.MustToken().GetUserID()))
 	q.SetUser()
 	q.SetRule("sys_menu_sidebar")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_menu", "sidebar", "sys_menu", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_menu", "sidebar", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -301,8 +301,8 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.MustDB()))
+		ret, err := ctr.Srv.Report.PageExport(ctx.MustDB(), "sys_menu", "page", "sys_menu", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -311,7 +311,7 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_menu", "page", "sys_menu", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -332,7 +332,7 @@ func (ctr *SysMenu) SysMenuTree(ctx *Context) {
 	q.SetString("name")
 	q.SetRule("sys_menu_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_menu", "tree", "sys_menu", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_menu", "tree", "sys_menu", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -359,7 +359,7 @@ func (ctr *SysMenu) SysMenuGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.DB.Get(&entity)
+	ext, err := ctx.MustDB().Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

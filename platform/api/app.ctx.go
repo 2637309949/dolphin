@@ -12,18 +12,17 @@ import (
 	"github.com/2637309949/dolphin/packages/web/gin"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util/errors"
 )
 
 // Context defined TODO
 type Context struct {
 	*gin.Context
-	AuthProtocol
-	DB *xorm.Engine
 }
 
 // LoginInInfo defined TODO
 func (ctx *Context) LoginInInfo(user *types.SysUser) (bool, error) {
-	tk := ctx.GetToken()
+	tk := ctx.MustToken()
 	if tk != nil {
 		return App.PlatformDB.ID(tk.GetUserID()).Get(user)
 	}
@@ -35,7 +34,41 @@ func (ctx *Context) BusinessDB(domain string) *xorm.Engine {
 	return App.Manager.GetBusinessDB(domain)
 }
 
-// TypeQuery defined failt result
+// DB defined TODO
+func (ctx *Context) DB() (*xorm.Engine, bool) {
+	if db := ctx.Get("DB"); db != nil {
+		return db.(*xorm.Engine), true
+	}
+	return nil, false
+}
+
+// MustDB defined TODO
+func (ctx *Context) MustDB() *xorm.Engine {
+	db, ok := ctx.DB()
+	if !ok {
+		panic(errors.ErrNotFoundDB)
+	}
+	return db
+}
+
+// Token defined TODO
+func (ctx *Context) Token() (TokenInfo, bool) {
+	if info := ctx.Get("AuthInfo"); info != nil {
+		return info.(TokenInfo), true
+	}
+	return nil, false
+}
+
+// MustToken defined TODO
+func (ctx *Context) MustToken() TokenInfo {
+	tk, ok := ctx.Token()
+	if !ok {
+		panic(errors.ErrAccessDenied)
+	}
+	return tk
+}
+
+// TypeQuery defined TODO
 func (ctx *Context) TypeQuery() *Query {
 	return NewQuery(ctx)
 }

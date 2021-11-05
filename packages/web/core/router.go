@@ -1,7 +1,6 @@
 package core
 
 import (
-	"errors"
 	"net/http"
 	"os"
 	"path"
@@ -74,11 +73,9 @@ func (group *RouterGroup) Handle(httpMethod, relativePath string, handlerFuncs .
 		handlerName := nameOfFunction(handlerFuncs[nuHandlers-1])
 		DebugPrintRoute(httpMethod, relativePath, handlerName, nuHandlers)
 
-		if h := GetHandler(); h != nil {
-			h.Handle(methods[i], relativePath, hls...)
-		} else {
-			panic(errors.New("no handler found"))
-		}
+		// handler request
+		handler := MustHandler()
+		handler.Handle(methods[i], relativePath, hls...)
 	}
 }
 

@@ -22,7 +22,7 @@ import (
 func (ctr *Dtm) DtmTcc(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := ctr.Srv.Trans(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.Trans(ctx, ctx.MustDB(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

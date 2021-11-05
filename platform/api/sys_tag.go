@@ -30,11 +30,11 @@ func (ctr *SysTag) SysTagAdd(ctx *Context) {
 		return
 	}
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -63,12 +63,12 @@ func (ctr *SysTag) SysTagBatchAdd(ctx *Context) {
 	}
 	for i := range payload {
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -95,9 +95,9 @@ func (ctr *SysTag) SysTagDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&types.SysUserTemplate{
+	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.SysUserTemplate{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -127,9 +127,9 @@ func (ctr *SysTag) SysTagBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.SysTag) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.DB.In("id", ids).Update(&types.SysTag{
+	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysTag{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -158,9 +158,9 @@ func (ctr *SysTag) SysTagUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
+	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -190,12 +190,12 @@ func (ctr *SysTag) SysTagBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
@@ -242,7 +242,7 @@ func (ctr *SysTag) SysTagPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_tag", "page", "sys_tag", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_tag", "page", "sys_tag", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -269,7 +269,7 @@ func (ctr *SysTag) SysTagGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.DB.Get(&entity)
+	ext, err := ctx.MustDB().Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

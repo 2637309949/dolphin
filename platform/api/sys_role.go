@@ -30,11 +30,11 @@ func (ctr *SysRole) SysRoleAdd(ctx *Context) {
 		return
 	}
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	cnt, err := ctx.DB.Where("code=? and is_delete !=1", payload.Code.String).Count(new(types.SysRole))
+	cnt, err := ctx.MustDB().Where("code=? and is_delete !=1", payload.Code.String).Count(new(types.SysRole))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -44,7 +44,7 @@ func (ctr *SysRole) SysRoleAdd(ctx *Context) {
 		ctx.Fail(errors.ErrRecordExisted)
 		return
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -74,12 +74,12 @@ func (ctr *SysRole) SysRoleBatchAdd(ctx *Context) {
 	for i := range payload {
 
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	cnt, err := ctx.DB.Where("is_delete !=1").In("code", (funk.Map(payload, func(item types.SysRole) interface{} {
+	cnt, err := ctx.MustDB().Where("is_delete !=1").In("code", (funk.Map(payload, func(item types.SysRole) interface{} {
 		return item.Code.String
 	}).([]interface{}))...).Count(new(types.SysRole))
 	if err != nil {
@@ -91,7 +91,7 @@ func (ctr *SysRole) SysRoleBatchAdd(ctx *Context) {
 		ctx.Fail(errors.ErrRecordExisted)
 		return
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -118,9 +118,9 @@ func (ctr *SysRole) SysRoleDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&types.SysRole{
+	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.SysRole{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -150,9 +150,9 @@ func (ctr *SysRole) SysRoleBatchDel(ctx *Context) {
 		return
 	}
 	var ids = funk.Map(payload, func(form types.SysRole) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.DB.In("id", ids).Update(&types.SysRole{
+	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysRole{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -181,9 +181,9 @@ func (ctr *SysRole) SysRoleUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
+	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -213,12 +213,12 @@ func (ctr *SysRole) SysRoleBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
@@ -266,8 +266,8 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.Report.PageExport(ctx.DB, "sys_role", "page", "sys_role", q.Value())
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.MustDB()))
+		ret, err := ctr.Srv.Report.PageExport(ctx.MustDB(), "sys_role", "page", "sys_role", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -276,7 +276,7 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "sys_role", "page", "sys_role", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_role", "page", "sys_role", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -296,10 +296,10 @@ func (ctr *SysRole) SysRoleRoleMenuTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
+	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.MustDB(), ctx.MustToken().GetUserID()))
 	q.SetRule("sys_role_menu_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_role", "menu_tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_role", "menu_tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -319,10 +319,10 @@ func (ctr *SysRole) SysRoleRoleAppFunTree(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.DB, ctx.GetToken().GetUserID()))
+	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.MustDB(), ctx.MustToken().GetUserID()))
 	q.SetRule("sys_role_app_fun_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "sys_role", "app_fun_tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_role", "app_fun_tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -349,7 +349,7 @@ func (ctr *SysRole) SysRoleGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.DB.Get(&entity)
+	ext, err := ctx.MustDB().Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

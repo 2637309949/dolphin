@@ -36,11 +36,11 @@ func (ctr *SysUser) SysUserAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Domain = null.StringFrom(ctx.GetToken().GetDomain())
+	payload.Domain = null.StringFrom(ctx.MustToken().GetDomain())
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	if payload.Avatar.IsZero() {
 		payload.Avatar = null.StringFrom("http://pic.616pic.com/ys_bnew_img/00/06/27/TWk2P5YJ5k.jpg?imageView2/1/w/80/h/80")
@@ -75,12 +75,12 @@ func (ctr *SysUser) SysUserBatchAdd(ctx *Context) {
 	}
 	for i := range payload {
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -109,7 +109,7 @@ func (ctr *SysUser) SysUserDel(ctx *Context) {
 	}
 	ret, err := App.PlatformDB.In("id", payload.ID.Int64).Update(&types.SysUser{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -141,7 +141,7 @@ func (ctr *SysUser) SysUserBatchDel(ctx *Context) {
 	var ids = funk.Map(payload, func(form types.SysUser) int64 { return form.ID.Int64 }).([]int64)
 	ret, err := App.PlatformDB.In("id", ids).Update(&types.SysUser{
 		UpdateTime: null.TimeFromNow(),
-		Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
@@ -173,13 +173,13 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
 
 	ps := App.PlatformDB.NewSession()
-	ds := ctx.DB.NewSession()
+	ds := ctx.MustDB().NewSession()
 	defer ps.Close()
 	defer ds.Close()
 	ret, err := ps.Table(new(types.SysUser)).ID(payload.ID.Int64).Omit("user_role").Update(&payload)
@@ -205,9 +205,9 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 			UserId:     payload.ID,
 			RoleId:     null.IntFrom(r),
 			CreateTime: null.TimeFromNow(),
-			Creater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+			Creater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 			UpdateTime: null.TimeFromNow(),
-			Updater:    null.IntFromStr(ctx.GetToken().GetUserID()),
+			Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 			IsDelete:   null.IntFrom(0),
 		}
 	}).([]types.SysRoleUser)
@@ -259,12 +259,12 @@ func (ctr *SysUser) SysUserBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
@@ -316,7 +316,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
 	if q.GetString("cn_org_id") != "" {
-		ids, err := ctr.Srv.GetOrgsFromInheritance(ctx.DB, q.GetString("cn_org_id"))
+		ids, err := ctr.Srv.GetOrgsFromInheritance(ctx.MustDB(), q.GetString("cn_org_id"))
 		if err != nil {
 			ctx.Fail(err)
 			return
@@ -324,8 +324,8 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		q.SetUnescaped("cn_org_id", strings.Join(ids, ","))
 	}
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.DB))
-		ret, err := ctr.Srv.Report.PageExport(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.MustDB()))
+		ret, err := ctr.Srv.Report.PageExport(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.MustDB()))
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -334,7 +334,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.DB))
+	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.MustDB()))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -442,7 +442,7 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/user/logout [get]
 func (ctr *SysUser) SysUserLogout(ctx *Context) {
-	err := App.OAuth2.Manager.RemoveAccessToken(ctx.GetToken().GetAccess())
+	err := App.OAuth2.Manager.RemoveAccessToken(ctx.MustToken().GetAccess())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

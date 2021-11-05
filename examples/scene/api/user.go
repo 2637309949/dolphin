@@ -21,7 +21,7 @@ import (
 func (ctr *User) UserInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	articles, err := ctx.DB.SqlMapClient("selectall_article").Query().List()
+	articles, err := ctx.MustDB().SqlMapClient("selectall_article").Query().List()
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

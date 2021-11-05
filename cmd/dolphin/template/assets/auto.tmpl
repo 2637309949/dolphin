@@ -48,9 +48,9 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 	{{- range .APIS}}
 	ctr.{{.ToUpperCase .Name}}.Method = "{{.ToUpper .Method}}"
 	ctr.{{.ToUpperCase .Name}}.RelativePath = "{{.APIPrefix .Version}}{{.APIPath $ctr.Name .Name .Path}}"
-	ctr.{{.ToUpperCase .Name}}.Auth = {{- if gt (len .Auth) 0}} api.Auth({{.FormatString .Auth ","}}){{- else}} NopHandlerFunc{{- end}}
-	ctr.{{.ToUpperCase .Name}}.Roles = {{- if gt (len .Roles) 0}} api.Roles({{.FormatString .Roles ","}}){{- else}} NopHandlerFunc{{- end}}
-	ctr.{{.ToUpperCase .Name}}.Cache = {{- if gt .Cache 0}} api.Cache({{.Cache}}*time.Second){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Auth = {{- if gt (len .Auth) 0}} {{- if ne $.Name "platform"}}api.{{- end}}Auth({{.FormatString .Auth ","}}){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Roles = {{- if gt (len .Roles) 0}} {{- if ne $.Name "platform"}}api.{{- end}}Roles({{.FormatString .Roles ","}}){{- else}} NopHandlerFunc{{- end}}
+	ctr.{{.ToUpperCase .Name}}.Cache = {{- if gt .Cache 0}} {{- if ne $.Name "platform"}}api.{{- end}}Cache({{.Cache}}*time.Second){{- else}} NopHandlerFunc{{- end}}
     ctr.{{.ToUpperCase .Name}}.Interceptor = NopHandlerFunc
 	ctr.{{.ToUpperCase .Name}}.Handler = ctr.{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}
 	{{- end}}
@@ -60,9 +60,9 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 // {{.ToUpperCase .Name}}Routes defined
 {{- $ctrName := .Name}}
 func {{.ToUpperCase .Name}}Routes() {
-	group, instance := web.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
+	g, i := web.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
-	group.Handle(instance.{{.ToUpperCase .Name}}.Method, instance.{{.ToUpperCase .Name}}.RelativePath, instance.{{.ToUpperCase .Name}}.Auth, instance.{{.ToUpperCase .Name}}.Roles, instance.{{.ToUpperCase .Name}}.Cache, instance.{{.ToUpperCase .Name}}.Interceptor, instance.{{.ToUpperCase .Name}}.Handler)
+	g.Handle(i.{{.ToUpperCase .Name}}.Method, i.{{.ToUpperCase .Name}}.RelativePath, i.{{.ToUpperCase .Name}}.Auth, i.{{.ToUpperCase .Name}}.Roles, i.{{.ToUpperCase .Name}}.Cache, i.{{.ToUpperCase .Name}}.Interceptor, i.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
 }
 

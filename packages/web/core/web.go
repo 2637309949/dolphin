@@ -27,8 +27,12 @@ func (w *Web) resolveAddress(addr []string) string {
 	}
 }
 
+func (w *Web) ServeHTTP(rwr http.ResponseWriter, req *http.Request) {
+	MustHandler().Handler().ServeHTTP(rwr, req)
+}
+
 func (w *Web) Run(addr ...string) error {
 	address := w.resolveAddress(addr)
-	srv := http.Server{Addr: address, Handler: GetHandler().Handler()}
+	srv := http.Server{Addr: address, Handler: MustHandler().Handler()}
 	return srv.ListenAndServe()
 }

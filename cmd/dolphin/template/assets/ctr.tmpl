@@ -58,7 +58,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -81,7 +81,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.DB, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -103,9 +103,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		payload[i].{{- $v}} = null.StringFromUUID()
 		{{- end }}
 		payload[i].CreateTime = null.TimeFromNow()
-		payload[i].Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
 	{{- else}}
@@ -113,12 +113,12 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	payload.{{- $v}} = null.StringFromUUID()
 	{{- end}}
 	payload.CreateTime = null.TimeFromNow()
-	payload.Creater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Creater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	{{- end}}
-	ret, err := ctx.DB.Insert(&payload)
+	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -135,9 +135,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	}
 	{{- if .ISArray $bp.Type}}
 	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.DB.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
+	ret, err := ctx.MustDB().In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFromNow(),
-		Updater:   null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:   null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
@@ -147,9 +147,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	}
 	ctx.Success(ret)
 	{{- else }}
-	ret, err := ctx.DB.In("id", payload.ID.Int64).Update(&{{$bp.ORef $bp.Type}}{
+	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFromNow(),
-		Updater:   null.IntFromStr(ctx.GetToken().GetUserID()),
+		Updater:   null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
@@ -173,14 +173,14 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		return
 	}
 	{{- if .ISArray $bp.Type}}
-	s := ctx.DB.NewSession()
+	s := ctx.MustDB().NewSession()
 	s.Begin()
 	defer s.Close()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
 		payload[i].UpdateTime = null.TimeFromNow()
-		payload[i].Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if  err != nil {
 			logrus.Error(err)
@@ -204,9 +204,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	}
 	ctx.Success(ret)
 	{{- else }}
-	payload.Updater = null.IntFromStr(ctx.GetToken().GetUserID())
+	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.DB.ID(payload.ID.Int64).Update(&payload)
+	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -222,7 +222,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		ctx.Fail(err)
 		return
 	}
-	if ext, err := ctx.DB.Get(&one); err != nil {
+	if ext, err := ctx.MustDB().Get(&one); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -239,7 +239,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -258,7 +258,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.TODO(ctx, ctx.DB, struct{}{})
+	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
