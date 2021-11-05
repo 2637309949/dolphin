@@ -32,7 +32,8 @@ func (srv *Jwt) SetServiceContext(svc *svc.ServiceContext) {
 
 // CreateJWT defined TODO
 func (srv *Jwt) CreateJWT(ctx context.Context, db *xorm.Engine, params struct{}) (string, error) {
-	return api.App.JWT.GenerateAccessToken(fmt.Sprintf("%v", types.DefaultAdmin.ID.Int64), "localhost")
+	tk, err := api.App.Identity.GetProvider(new(api.JWTProvider).GetName()).Ticket(fmt.Sprintf("%v", types.DefaultAdmin.ID.Int64), "localhost", nil)
+	return tk.GetAccess(), err
 }
 
 // TODO defined srv
