@@ -7,7 +7,7 @@ import (
 	"aisle/srv"
 	"aisle/svc"
 	"aisle/types"
-	"github.com/2637309949/dolphin/packages/web"
+
 	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/spf13/viper"
@@ -28,10 +28,10 @@ type Controller struct {
 	Handler core.HandlerFunc
 }
 
-// Organ defined
-type Organ struct {
+// BaseOrgan defined
+type BaseOrgan struct {
 	Name string
-	Srv  *srv.Organ
+	Srv  *srv.BaseOrgan
 	Add,
 	BatchAdd,
 	Del,
@@ -42,87 +42,87 @@ type Organ struct {
 	Get Controller
 }
 
-// NewOrgan defined
-func NewOrgan() *Organ {
-	ctr := &Organ{Name: "organ", Srv: srv.NewOrgan()}
+// NewBaseOrgan defined
+func NewBaseOrgan() *BaseOrgan {
+	ctr := &BaseOrgan{Name: "base_organ", Srv: srv.NewBaseOrgan()}
 	ctr.Add.Method = "POST"
-	ctr.Add.RelativePath = "/organ/add"
+	ctr.Add.RelativePath = "/base/organ/add"
 	ctr.Add.Auth = api.Auth("token")
 	ctr.Add.Roles = NopHandlerFunc
 	ctr.Add.Cache = NopHandlerFunc
 	ctr.Add.Interceptor = NopHandlerFunc
-	ctr.Add.Handler = ctr.OrganAdd
+	ctr.Add.Handler = ctr.BaseOrganAdd
 	ctr.BatchAdd.Method = "POST"
-	ctr.BatchAdd.RelativePath = "/organ/batch_add"
+	ctr.BatchAdd.RelativePath = "/base/organ/batch_add"
 	ctr.BatchAdd.Auth = api.Auth("token")
 	ctr.BatchAdd.Roles = NopHandlerFunc
 	ctr.BatchAdd.Cache = NopHandlerFunc
 	ctr.BatchAdd.Interceptor = NopHandlerFunc
-	ctr.BatchAdd.Handler = ctr.OrganBatchAdd
+	ctr.BatchAdd.Handler = ctr.BaseOrganBatchAdd
 	ctr.Del.Method = "DELETE"
-	ctr.Del.RelativePath = "/organ/del"
+	ctr.Del.RelativePath = "/base/organ/del"
 	ctr.Del.Auth = api.Auth("token")
 	ctr.Del.Roles = NopHandlerFunc
 	ctr.Del.Cache = NopHandlerFunc
 	ctr.Del.Interceptor = NopHandlerFunc
-	ctr.Del.Handler = ctr.OrganDel
+	ctr.Del.Handler = ctr.BaseOrganDel
 	ctr.BatchDel.Method = "PUT"
-	ctr.BatchDel.RelativePath = "/organ/batch_del"
+	ctr.BatchDel.RelativePath = "/base/organ/batch_del"
 	ctr.BatchDel.Auth = api.Auth("token")
 	ctr.BatchDel.Roles = NopHandlerFunc
 	ctr.BatchDel.Cache = NopHandlerFunc
 	ctr.BatchDel.Interceptor = NopHandlerFunc
-	ctr.BatchDel.Handler = ctr.OrganBatchDel
+	ctr.BatchDel.Handler = ctr.BaseOrganBatchDel
 	ctr.Update.Method = "PUT"
-	ctr.Update.RelativePath = "/organ/update"
+	ctr.Update.RelativePath = "/base/organ/update"
 	ctr.Update.Auth = api.Auth("token")
 	ctr.Update.Roles = NopHandlerFunc
 	ctr.Update.Cache = NopHandlerFunc
 	ctr.Update.Interceptor = NopHandlerFunc
-	ctr.Update.Handler = ctr.OrganUpdate
+	ctr.Update.Handler = ctr.BaseOrganUpdate
 	ctr.BatchUpdate.Method = "PUT"
-	ctr.BatchUpdate.RelativePath = "/organ/batch_update"
+	ctr.BatchUpdate.RelativePath = "/base/organ/batch_update"
 	ctr.BatchUpdate.Auth = api.Auth("token")
 	ctr.BatchUpdate.Roles = NopHandlerFunc
 	ctr.BatchUpdate.Cache = NopHandlerFunc
 	ctr.BatchUpdate.Interceptor = NopHandlerFunc
-	ctr.BatchUpdate.Handler = ctr.OrganBatchUpdate
+	ctr.BatchUpdate.Handler = ctr.BaseOrganBatchUpdate
 	ctr.Page.Method = "GET"
-	ctr.Page.RelativePath = "/organ/page"
+	ctr.Page.RelativePath = "/base/organ/page"
 	ctr.Page.Auth = api.Auth("token")
 	ctr.Page.Roles = NopHandlerFunc
 	ctr.Page.Cache = NopHandlerFunc
 	ctr.Page.Interceptor = NopHandlerFunc
-	ctr.Page.Handler = ctr.OrganPage
+	ctr.Page.Handler = ctr.BaseOrganPage
 	ctr.Get.Method = "GET"
-	ctr.Get.RelativePath = "/organ/get"
+	ctr.Get.RelativePath = "/base/organ/get"
 	ctr.Get.Auth = api.Auth("token")
 	ctr.Get.Roles = NopHandlerFunc
 	ctr.Get.Cache = NopHandlerFunc
 	ctr.Get.Interceptor = NopHandlerFunc
-	ctr.Get.Handler = ctr.OrganGet
+	ctr.Get.Handler = ctr.BaseOrganGet
 	return ctr
 }
 
-// OrganRoutes defined
-func OrganRoutes() {
-	group, instance := web.Group(viper.GetString("http.prefix")), OrganInstance
-	group.Handle(instance.Add.Method, instance.Add.RelativePath, instance.Add.Auth, instance.Add.Roles, instance.Add.Cache, instance.Add.Interceptor, instance.Add.Handler)
-	group.Handle(instance.BatchAdd.Method, instance.BatchAdd.RelativePath, instance.BatchAdd.Auth, instance.BatchAdd.Roles, instance.BatchAdd.Cache, instance.BatchAdd.Interceptor, instance.BatchAdd.Handler)
-	group.Handle(instance.Del.Method, instance.Del.RelativePath, instance.Del.Auth, instance.Del.Roles, instance.Del.Cache, instance.Del.Interceptor, instance.Del.Handler)
-	group.Handle(instance.BatchDel.Method, instance.BatchDel.RelativePath, instance.BatchDel.Auth, instance.BatchDel.Roles, instance.BatchDel.Cache, instance.BatchDel.Interceptor, instance.BatchDel.Handler)
-	group.Handle(instance.Update.Method, instance.Update.RelativePath, instance.Update.Auth, instance.Update.Roles, instance.Update.Cache, instance.Update.Interceptor, instance.Update.Handler)
-	group.Handle(instance.BatchUpdate.Method, instance.BatchUpdate.RelativePath, instance.BatchUpdate.Auth, instance.BatchUpdate.Roles, instance.BatchUpdate.Cache, instance.BatchUpdate.Interceptor, instance.BatchUpdate.Handler)
-	group.Handle(instance.Page.Method, instance.Page.RelativePath, instance.Page.Auth, instance.Page.Roles, instance.Page.Cache, instance.Page.Interceptor, instance.Page.Handler)
-	group.Handle(instance.Get.Method, instance.Get.RelativePath, instance.Get.Auth, instance.Get.Roles, instance.Get.Cache, instance.Get.Interceptor, instance.Get.Handler)
+// BaseOrganRoutes defined
+func BaseOrganRoutes() {
+	g, i := App.Web.Group(viper.GetString("http.prefix")), BaseOrganInstance
+	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
+	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
+	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
+	g.Handle(i.BatchDel.Method, i.BatchDel.RelativePath, i.BatchDel.Auth, i.BatchDel.Roles, i.BatchDel.Cache, i.BatchDel.Interceptor, i.BatchDel.Handler)
+	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
+	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
+	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
+	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// OrganInstance defined
-var OrganInstance = NewOrgan()
+// BaseOrganInstance defined
+var BaseOrganInstance = NewBaseOrgan()
 
 // SyncModel defined
 func SyncModel() error {
-	mseti := api.App.Manager.ModelSet()
+	mseti := App.Manager.ModelSet()
 	mseti.Add(new(types.AboutUs))
 	mseti.Add(new(types.AboutusContentPic))
 	mseti.Add(new(types.AchievementSendEmailMsg))
@@ -538,12 +538,12 @@ func SyncModel() error {
 
 // SyncController defined
 func SyncController() error {
-	OrganRoutes()
+	BaseOrganRoutes()
 	return nil
 }
 
 // SyncSrv defined
 func SyncSrv(svc *svc.ServiceContext) error {
-	OrganInstance.Srv.SetServiceContext(svc)
+	BaseOrganInstance.Srv.SetServiceContext(svc)
 	return nil
 }

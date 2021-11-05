@@ -43,6 +43,7 @@ func Code(u uint32) uint32 {
 	if ok {
 		panic(New(100001, "code already exists", "code already exists"))
 	}
+	fix[u] = u
 	return u
 }
 

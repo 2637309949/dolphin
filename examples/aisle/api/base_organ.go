@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/add [post]
-func (ctr *Organ) OrganAdd(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
 	var payload types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -56,7 +56,7 @@ func (ctr *Organ) OrganAdd(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/batch_add [post]
-func (ctr *Organ) OrganBatchAdd(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganBatchAdd(ctx *Context) {
 	var payload []types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -90,7 +90,7 @@ func (ctr *Organ) OrganBatchAdd(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/del [delete]
-func (ctr *Organ) OrganDel(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganDel(ctx *Context) {
 	var payload types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -121,7 +121,7 @@ func (ctr *Organ) OrganDel(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/batch_del [put]
-func (ctr *Organ) OrganBatchDel(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganBatchDel(ctx *Context) {
 	var payload []types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -153,7 +153,7 @@ func (ctr *Organ) OrganBatchDel(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/update [put]
-func (ctr *Organ) OrganUpdate(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganUpdate(ctx *Context) {
 	var payload types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
@@ -182,7 +182,7 @@ func (ctr *Organ) OrganUpdate(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/batch_update [put]
-func (ctr *Organ) OrganBatchUpdate(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganBatchUpdate(ctx *Context) {
 	var payload []types.Organ
 	var err error
 	var ret []int64
@@ -235,7 +235,7 @@ func (ctr *Organ) OrganBatchUpdate(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/page [get]
-func (ctr *Organ) OrganPage(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
 	q.SetInt("size", 15)
@@ -266,7 +266,7 @@ func (ctr *Organ) OrganPage(ctx *Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/get [get]
-func (ctr *Organ) OrganGet(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganGet(ctx *Context) {
 	var entity types.Organ
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {

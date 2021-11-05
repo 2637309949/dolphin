@@ -128,10 +128,10 @@ func AuthToken(ctx *Context) {
 		ctx.Abort()
 		return
 	}
+
 	db := App.Manager.GetBusinessDB(identity.GetToken().GetDomain())
 	if db == nil {
 		ctx.Fail(errors.ErrInvalidDomain)
-		ctx.Abort()
 		return
 	}
 	ctx.Set("DB", db)
@@ -150,7 +150,6 @@ func AuthJWT(ctx *Context) {
 	db := App.Manager.GetBusinessDB(identity.GetToken().GetDomain())
 	if db == nil {
 		ctx.Fail(errors.ErrInvalidDomain)
-		ctx.Abort()
 		return
 	}
 	ctx.Set("DB", ctx.DB)
@@ -163,7 +162,6 @@ func AuthEncrypt(ctx *Context) {
 	id := Identity{}
 	if !id.VerifyEncrypt(ctx) {
 		ctx.Fail(errors.ErrInvalidEncryData)
-		ctx.Abort()
 		return
 	}
 	ctx.Next()
@@ -175,7 +173,6 @@ func Roles(roles ...string) func(ctx *Context) {
 		svc, userId := svc.NewXDB(), ctx.MustToken().GetUserID()
 		if !svc.InRole(ctx.MustDB(), userId, roles...) {
 			ctx.Fail(errors.ErrAccessDenied)
-			ctx.Abort()
 			return
 		}
 		ctx.Next()
@@ -185,13 +182,14 @@ func Roles(roles ...string) func(ctx *Context) {
 // Auth middles TODO
 func Auth(auth ...string) func(ctx *Context) {
 	hlfs := []func(ctx *Context){}
-	if slice.StrSliceContains(auth, TokenType) {
+	switch true {
+	case slice.StrSliceContains(auth, TokenType):
 		hlfs = append(hlfs, AuthToken)
-	}
-	if slice.StrSliceContains(auth, EncryptType) {
+		fallthrough
+	case slice.StrSliceContains(auth, EncryptType):
 		hlfs = append(hlfs, AuthEncrypt)
-	}
-	if slice.StrSliceContains(auth, JWTType) {
+		fallthrough
+	case slice.StrSliceContains(auth, JWTType):
 		hlfs = append(hlfs, AuthJWT)
 	}
 	return func(ctx *Context) {
