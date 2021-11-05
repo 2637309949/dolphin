@@ -739,7 +739,7 @@ func NewSysDataPermission() *SysDataPermission {
 
 // SysDataPermissionRoutes defined
 func SysDataPermissionRoutes() {
-	g, i := web.Group(viper.GetString("http.prefix")), SysDataPermissionInstance
+	g, i := App.Web.Group(viper.GetString("http.prefix")), SysDataPermissionInstance
 	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
 	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
 	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)

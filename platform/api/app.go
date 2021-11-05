@@ -64,6 +64,13 @@ func WithManager() Option {
 	}
 }
 
+// WithWeb defined TODO
+func WithWeb() Option {
+	return func(dol *Dolphin) {
+		dol.Web = web.Web()
+	}
+}
+
 // WithJWT defined TODO
 func WithJWT() Option {
 	return func(dol *Dolphin) {
@@ -107,7 +114,7 @@ func init() {
 	InitCacheStore()
 	InitSession()
 
-	opts := []Option{WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
+	opts := []Option{WithWeb(), WithLifecycle(), WithManager(), WithOAuth2(), WithJWT()}
 	app := NewDefault(opts...)
 	StaticRoutes(app)
 	App, Run = app, app.Run

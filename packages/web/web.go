@@ -15,6 +15,10 @@ func init() {
 	defaultApp = app
 }
 
+func Web() *core.Web {
+	return defaultApp
+}
+
 func Group(relativePath string, handlers ...core.HandlerFunc) *core.RouterGroup {
 	return defaultApp.Group(relativePath, handlers...)
 }

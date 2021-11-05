@@ -17,7 +17,6 @@ import (
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/packages/web"
 	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
@@ -43,6 +42,7 @@ type (
 		Manager    Manager
 		OAuth2     *server.Server
 		JWT        *JWT
+		Web        *core.Web
 	}
 )
 
@@ -99,7 +99,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 
 // ServeHTTP defined TODO
 func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	web.ServeHTTP(w, r)
+	dol.Web.ServeHTTP(w, r)
 }
 
 // Reflesh defined init data before bootinh
@@ -333,12 +333,12 @@ func (dol *Dolphin) LifeCycle(ctx context.Context) error {
 
 // Use defined TODO
 func (dol *Dolphin) Use(middleware ...core.HandlerFunc) {
-	web.Use(middleware...)
+	dol.Web.Use(middleware...)
 }
 
 // Static defined TODO
 func (dol *Dolphin) Static(relativePath, root string) {
-	web.Static(relativePath, root)
+	dol.Web.Static(relativePath, root)
 }
 
 // Run defined TODO

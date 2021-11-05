@@ -60,7 +60,7 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 // {{.ToUpperCase .Name}}Routes defined
 {{- $ctrName := .Name}}
 func {{.ToUpperCase .Name}}Routes() {
-	g, i := web.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
+	g, i := App.Web.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
 	g.Handle(i.{{.ToUpperCase .Name}}.Method, i.{{.ToUpperCase .Name}}.RelativePath, i.{{.ToUpperCase .Name}}.Auth, i.{{.ToUpperCase .Name}}.Roles, i.{{.ToUpperCase .Name}}.Cache, i.{{.ToUpperCase .Name}}.Interceptor, i.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
