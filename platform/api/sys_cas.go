@@ -152,7 +152,7 @@ func (ctr *SysCas) SysCasAffirm(ctx *gin.Context) {
 	ctx.Request().Form = form
 	store.Delete("ReturnUri")
 	store.Save()
-	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request())
+	err = App.Identity.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasAffirm/HandleAuthorizeRequest:%v", err)
 		ctx.Redirect(http.StatusFound, viper.GetString("oauth.affirm")+"?error="+err.Error())
@@ -186,7 +186,7 @@ func (ctr *SysCas) SysCasAuthorize(ctx *gin.Context) {
 	}
 	store.Delete("ReturnUri")
 	store.Save()
-	err = App.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request())
+	err = App.Identity.OAuth2.HandleAuthorizeRequest(ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasAuthorize/HandleAuthorizeRequest:%v", err)
 		ctx.Fail(err)
@@ -204,7 +204,7 @@ func (ctr *SysCas) SysCasAuthorize(ctx *gin.Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/token [post]
 func (ctr *SysCas) SysCasToken(ctx *gin.Context) {
-	err := App.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request())
+	err := App.Identity.OAuth2.HandleTokenRequest(ctx.Writer, ctx.Request())
 	if err != nil {
 		logrus.Errorf("SysCasToken/HandleTokenRequest:%v", err)
 		ctx.Fail(err)
@@ -330,14 +330,13 @@ func (ctr *SysCas) SysCasQrOauth2(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	token, err := App.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
+	token, err := App.Identity.OAuth2.Manager.GenerateAccessToken(oauth2.PasswordCredentials, &oauth2.TokenGenerateRequest{
 		UserID:       fmt.Sprintf("%v", qrToken.UserId.Int64),
 		Domain:       qrToken.Domain.String,
 		ClientID:     viper.GetString("oauth.id"),
 		ClientSecret: viper.GetString("oauth.secret"),
 		Request:      ctx.Request(),
 	})
-
 	if err != nil {
 		ctx.Fail(err)
 		return
@@ -358,7 +357,7 @@ func (ctr *SysCas) SysCasQrOauth2(ctx *Context) {
 // @Failure 500 {object} types.Fail
 // @Router /api/sys/cas/refresh [get]
 func (ctr *SysCas) SysCasRefresh(ctx *Context) {
-	refreshtoken, ok := App.OAuth2.BearerAuth(ctx.Request())
+	refreshtoken, ok := App.Identity.OAuth2.BearerAuth(ctx.Request())
 	if !ok {
 		logrus.Errorf("SysCasRefresh/BearerAuth:%v", ok)
 		ctx.Fail(errors.ErrInvalidAccessToken)

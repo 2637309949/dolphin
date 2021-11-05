@@ -16,7 +16,6 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
@@ -40,8 +39,7 @@ type (
 		Lifecycle
 		PlatformDB *xorm.Engine
 		Manager    Manager
-		OAuth2     *server.Server
-		JWT        *JWT
+		Identity   *Identity
 		Web        *core.Web
 	}
 )

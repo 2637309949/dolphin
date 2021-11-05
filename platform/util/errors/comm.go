@@ -24,4 +24,6 @@ var (
 	ErrUnsupportedGrantType    = New(Code(100020), "unsupported grant_type", "unsupported grant_type")
 	ErrInvalidDomain           = New(Code(100021), "invalid domain", "invalid domain")
 	ErrNotFoundDB              = New(Code(100022), "not found db", "not found db")
+	ErrNotFoundProvider        = New(Code(100023), "not found auth provider", "not found auth provider")
+	ErrAuthenticationFailed    = New(Code(100024), "authentication failed", "authentication failed")
 )
