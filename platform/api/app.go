@@ -117,6 +117,7 @@ func init() {
 	opts := []Option{WithWeb(), WithLifecycle(), WithManager(), WithIdentity()}
 	app := NewDefault(opts...)
 	StaticRoutes(app)
-	PromHttpRoutes(app)
+	MetricsRoutes(app)
+	AdminRoutes(app)
 	App, Run = app, app.Run
 }
