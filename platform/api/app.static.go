@@ -9,8 +9,6 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/2637309949/dolphin/packages/web"
-	"github.com/2637309949/dolphin/packages/web/gin"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
 )
@@ -27,7 +25,8 @@ func NewStatic() *Static {
 
 // StaticRoutes defined TODO
 func StaticRoutes(dol *Dolphin) {
-	web.Handle("GET", "/domain.js", DomainInstance.Domain)
+	g, i := dol.Group("/"), DomainInstance
+	g.Handle("GET", "/domain.js", i.Domain)
 }
 
 // DomainFormat defined TODO
@@ -36,7 +35,7 @@ func DomainFormat(ct string) []byte {
 }
 
 // Domain defined TODO
-func (ctr *Static) Domain(ctx *gin.Context) {
+func (ctr *Static) Domain(ctx *Context) {
 	reg := regexp.MustCompile("^([^:?]+)(:.*)?$")
 	contentType := "application/javascript"
 	groups := reg.FindAllStringSubmatch(ctx.Request().Host, -1)

@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/2637309949/dolphin/packages/web/core"
-	_ "github.com/2637309949/dolphin/packages/web/gin"
+	// _ "github.com/2637309949/dolphin/packages/web/gin"
 	// _ "github.com/2637309949/dolphin/packages/web/echo"
 )
 

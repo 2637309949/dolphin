@@ -5,8 +5,6 @@ package api
 
 import (
 	"net/http/pprof"
-
-	"github.com/2637309949/dolphin/packages/web/gin"
 )
 
 // DebugPprof api implementation
@@ -19,7 +17,7 @@ import (
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof [GET]
-func (ctr *Debug) DebugPprof(ctx *gin.Context) {
+func (ctr *Debug) DebugPprof(ctx *Context) {
 	pprof.Index(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -33,7 +31,7 @@ func (ctr *Debug) DebugPprof(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/heap [GET]
-func (ctr *Debug) DebugHeap(ctx *gin.Context) {
+func (ctr *Debug) DebugHeap(ctx *Context) {
 	pprof.Handler("heap").ServeHTTP(ctx.Writer, ctx.Request())
 }
 
@@ -47,7 +45,7 @@ func (ctr *Debug) DebugHeap(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/goroutine [GET]
-func (ctr *Debug) DebugGoroutine(ctx *gin.Context) {
+func (ctr *Debug) DebugGoroutine(ctx *Context) {
 	pprof.Handler("goroutine").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -61,7 +59,7 @@ func (ctr *Debug) DebugGoroutine(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/allocs [GET]
-func (ctr *Debug) DebugAllocs(ctx *gin.Context) {
+func (ctr *Debug) DebugAllocs(ctx *Context) {
 	pprof.Handler("allocs").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -75,7 +73,7 @@ func (ctr *Debug) DebugAllocs(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/block [GET]
-func (ctr *Debug) DebugBlock(ctx *gin.Context) {
+func (ctr *Debug) DebugBlock(ctx *Context) {
 	pprof.Handler("block").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -89,7 +87,7 @@ func (ctr *Debug) DebugBlock(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/threadcreate [GET]
-func (ctr *Debug) DebugThreadcreate(ctx *gin.Context) {
+func (ctr *Debug) DebugThreadcreate(ctx *Context) {
 	pprof.Handler("threadcreate").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -103,7 +101,7 @@ func (ctr *Debug) DebugThreadcreate(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/cmdline [GET]
-func (ctr *Debug) DebugCmdline(ctx *gin.Context) {
+func (ctr *Debug) DebugCmdline(ctx *Context) {
 	pprof.Cmdline(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -117,7 +115,7 @@ func (ctr *Debug) DebugCmdline(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/profile [GET]
-func (ctr *Debug) DebugProfile(ctx *gin.Context) {
+func (ctr *Debug) DebugProfile(ctx *Context) {
 	pprof.Profile(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -131,7 +129,7 @@ func (ctr *Debug) DebugProfile(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/symbol [GET,POST]
-func (ctr *Debug) DebugSymbol(ctx *gin.Context) {
+func (ctr *Debug) DebugSymbol(ctx *Context) {
 	pprof.Symbol(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -145,7 +143,7 @@ func (ctr *Debug) DebugSymbol(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/trace [GET]
-func (ctr *Debug) DebugTrace(ctx *gin.Context) {
+func (ctr *Debug) DebugTrace(ctx *Context) {
 	pprof.Trace(ctx.ResponseWriter(), ctx.Request())
 }
 
@@ -159,6 +157,6 @@ func (ctr *Debug) DebugTrace(ctx *gin.Context) {
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router/debug/pprof/mutex [GET]
-func (ctr *Debug) DebugMutex(ctx *gin.Context) {
+func (ctr *Debug) DebugMutex(ctx *Context) {
 	pprof.Handler("mutex").ServeHTTP(ctx.ResponseWriter(), ctx.Request())
 }

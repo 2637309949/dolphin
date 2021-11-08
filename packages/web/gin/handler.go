@@ -19,6 +19,18 @@ func (c *handler) Handler() http.Handler {
 	return c.Engine
 }
 
+func (c *handler) injectContext(in reflect.Value, ctx *gin.Context) {
+	ct := in.Elem().FieldByName("Context")
+	if ct.CanSet() {
+		switch ct.Interface().(type) {
+		case *gin.Context:
+			ct.Set(reflect.ValueOf(ctx))
+		case *Context:
+			ct.Set(reflect.ValueOf(NewContext(ctx)))
+		}
+	}
+}
+
 // Handler defined TODO
 func (c *handler) Handle(httpMethod string, relativePath string, handlers ...core.HandlerFunc) {
 	hfc := []gin.HandlerFunc{}
@@ -56,14 +68,11 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 					v.Call([]reflect.Value{reflect.ValueOf(NewContext(ctx))})
 				case isContext:
 					in := reflect.New(fti)
-					ct := in.Elem().FieldByName("Context")
-					if ct.CanSet() {
-						ct.Set(reflect.ValueOf(NewContext(ctx)))
-						if isPtr {
-							v.Call([]reflect.Value{in})
-						} else {
-							v.Call([]reflect.Value{in.Elem()})
-						}
+					c.injectContext(in, ctx)
+					if isPtr {
+						v.Call([]reflect.Value{in})
+					} else {
+						v.Call([]reflect.Value{in.Elem()})
 					}
 				}
 			}
