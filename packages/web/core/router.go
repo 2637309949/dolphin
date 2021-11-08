@@ -34,9 +34,9 @@ func DebugPrintRoute(httpMethod, absolutePath, _ string, _ int) {
 
 // routerGroup defined TODO
 type RouterGroup struct {
-	web      *Web
 	Handlers []HandlerFunc
 	basePath string
+	web      *Web
 }
 
 // Dir defined TODO

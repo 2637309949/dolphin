@@ -334,6 +334,11 @@ func (dol *Dolphin) Use(middleware ...core.HandlerFunc) {
 	dol.Web.Use(middleware...)
 }
 
+// Group defined TODO
+func (dol *Dolphin) Group(relativePath string, handlers ...core.HandlerFunc) *core.RouterGroup {
+	return dol.Web.Group(relativePath, handlers...)
+}
+
 // Static defined TODO
 func (dol *Dolphin) Static(relativePath, root string) {
 	dol.Web.Static(relativePath, root)

@@ -931,6 +931,6 @@ func (session *Session) PingContext(ctx context.Context) error {
 		defer session.Close()
 	}
 
-	session.engine.logger.Infof("PING DATABASE %v", session.engine.DriverName())
+	session.engine.logger.Infof("ping database %v", session.engine.DriverName())
 	return session.DB().PingContext(ctx)
 }

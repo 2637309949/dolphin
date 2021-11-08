@@ -106,7 +106,7 @@ func NewBaseOrgan() *BaseOrgan {
 
 // BaseOrganRoutes defined
 func BaseOrganRoutes() {
-	g, i := App.Web.Group(viper.GetString("http.prefix")), BaseOrganInstance
+	g, i := api.App.Group(viper.GetString("http.prefix")), BaseOrganInstance
 	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
 	g.Handle(i.BatchAdd.Method, i.BatchAdd.RelativePath, i.BatchAdd.Auth, i.BatchAdd.Roles, i.BatchAdd.Cache, i.BatchAdd.Interceptor, i.BatchAdd.Handler)
 	g.Handle(i.Del.Method, i.Del.RelativePath, i.Del.Auth, i.Del.Roles, i.Del.Cache, i.Del.Interceptor, i.Del.Handler)
@@ -122,7 +122,7 @@ var BaseOrganInstance = NewBaseOrgan()
 
 // SyncModel defined
 func SyncModel() error {
-	mseti := App.Manager.ModelSet()
+	mseti := api.App.Manager.ModelSet()
 	mseti.Add(new(types.AboutUs))
 	mseti.Add(new(types.AboutusContentPic))
 	mseti.Add(new(types.AchievementSendEmailMsg))

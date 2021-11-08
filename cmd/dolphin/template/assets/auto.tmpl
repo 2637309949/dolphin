@@ -11,6 +11,7 @@ import (
 
 	"github.com/2637309949/dolphin/packages/web"
 	"github.com/2637309949/dolphin/packages/web/core"
+    "github.com/2637309949/dolphin/platform/api"
 	"github.com/spf13/viper"
 )
 
@@ -60,7 +61,7 @@ func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 // {{.ToUpperCase .Name}}Routes defined
 {{- $ctrName := .Name}}
 func {{.ToUpperCase .Name}}Routes() {
-	g, i := App.Web.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
+	g, i := {{- if ne $.Name "platform"}}api.{{- end}}App.Group({{- if ne .Prefix ""}}"{{.Prefix}}"{{- else}}viper.GetString("http.prefix"){{- end}}), {{.ToUpperCase $ctrName}}Instance
 	{{- range .APIS}}
 	g.Handle(i.{{.ToUpperCase .Name}}.Method, i.{{.ToUpperCase .Name}}.RelativePath, i.{{.ToUpperCase .Name}}.Auth, i.{{.ToUpperCase .Name}}.Roles, i.{{.ToUpperCase .Name}}.Cache, i.{{.ToUpperCase .Name}}.Interceptor, i.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
@@ -73,7 +74,7 @@ var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 // SyncModel defined
 func SyncModel() error {
 	{{- $tLen := len .Tables }}{{- if ne $tLen 0 }}
-	mseti := App.Manager.ModelSet()
+	mseti := {{- if ne $.Name "platform"}}api.{{- end}}App.Manager.ModelSet()
 	{{- range .Tables}}
 	mseti.Add(new({{$.Viper.GetString "dir.types" }}.{{.ToUpperCase .Name}}){{- if ne .Bind "" }}, "{{.Bind}}"{{- end}})
 	{{- end}}

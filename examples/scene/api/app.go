@@ -10,17 +10,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// var defined TODO
-var (
-	App = api.App
-)
-
 // type defined TODO
-type (
-	Context struct {
-		*api.Context
-	}
-)
+type Context struct{ *api.Context }
 
 // HelloMiddle defiend TODO
 func HelloMiddle(name string) func(ctx *Context) {
@@ -37,8 +28,8 @@ func Run() {
 	SyncSrv(svc.NewServiceContext(api.CacheStore))
 	SyncController()
 
-	App.Use(HelloMiddle("global"))
-	err := App.Run()
+	api.App.Use(HelloMiddle("global"))
+	err := api.App.Run()
 	if err != nil {
 		panic(err)
 	}

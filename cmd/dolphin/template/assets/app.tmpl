@@ -9,24 +9,15 @@ import (
 	"github.com/2637309949/dolphin/platform/api"
 )
 
-// var defined TODO
-var (
-	App = api.App
-)
-
 // type defined TODO
-type (
-	Context struct {
-		*api.Context
-	}
-)
+type Context struct{ *api.Context }
 
 // Run defined TODO
 func Run() {
 	SyncModel()
 	SyncSrv(svc.NewServiceContext(api.CacheStore))
 	SyncController()
-	err := App.Run()
+	err := api.App.Run()
 	if err != nil {
 		panic(err)
 	}
