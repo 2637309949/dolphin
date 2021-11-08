@@ -11,8 +11,9 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/trace"
+	"github.com/2637309949/dolphin/platform/svc"
+	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/gin-gonic/gin"
-	"github.com/go-errors/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -25,6 +26,49 @@ func Hostname() string {
 		hostname = trace.RandId()
 	}
 	return hostname
+}
+
+// Roles middles TODO
+func Roles(roles ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		svc, userId := svc.NewXDB(), ctx.MustToken().GetUserID()
+		if !svc.InRole(ctx.MustDB(), userId, roles...) {
+			ctx.Fail(errors.ErrAccessDenied)
+			return
+		}
+		ctx.Next()
+	}
+}
+
+// Auth middles TODO
+func Auth(auth ...string) func(ctx *Context) {
+	return func(ctx *Context) {
+		for _, a := range auth {
+			p := App.Identity.GetProvider(a)
+			if p == nil {
+				ctx.Fail(errors.ErrNotFoundProvider)
+				return
+			}
+
+			tk, ok := p.Verify(ctx)
+			if !ok {
+				ctx.Fail(errors.ErrAuthenticationFailed)
+				return
+			}
+
+			if tk.GetDomain() != "" {
+				db := App.Manager.GetBusinessDB(tk.GetDomain())
+				if db == nil {
+					ctx.Fail(errors.ErrInvalidDomain)
+					return
+				}
+				ctx.Set("DB", db)
+			}
+
+			ctx.Set("AuthInfo", tk)
+			ctx.Next()
+		}
+	}
 }
 
 // HttpTrace defined TODO

@@ -148,7 +148,7 @@ func (p *TokenProvider) Verify(ctx *Context) (TokenInfo, bool) {
 		info := p.parseToken(tk)
 		return info, info.
 			GetAccessCreateAt().
-			Add(info.GetAccessExpiresIn()).Round(0).Add(-TokenExpiryDelta).
+			Add(info.GetAccessExpiresIn()).Round(0).Add(-10 * time.Second).
 			After(time.Now())
 	}
 	return nil, false

@@ -1,6 +1,6 @@
 module github.com/2637309949/dolphin
 
-go 1.13
+go 1.17
 
 require (
 	github.com/360EntSecGroup-Skylar/excelize v1.4.1
@@ -69,9 +69,9 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 )
 
-// fix io/fs
-replace (
-	github.com/golang-jwt/jwt => github.com/golang-jwt/jwt v3.2.1+incompatible
-	github.com/spf13/afero => github.com/spf13/afero v1.5.1
-	golang.org/x/tools => github.com/golang/tools v0.1.0
-)
+// fix go version
+// replace (
+// 	github.com/golang-jwt/jwt => github.com/golang-jwt/jwt v3.2.1+incompatible
+// 	github.com/spf13/afero => github.com/spf13/afero v1.5.1
+// 	golang.org/x/tools => github.com/golang/tools v0.1.0
+// )

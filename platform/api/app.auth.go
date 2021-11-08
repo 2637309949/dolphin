@@ -5,17 +5,8 @@
 package api
 
 import (
-	"time"
-
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/2637309949/dolphin/platform/svc"
-	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/sirupsen/logrus"
-)
-
-// TokenExpiryDelta determines how earlier a token should be considered
-const (
-	TokenExpiryDelta = 10 * time.Second
 )
 
 // Provider deifned TODO
@@ -54,47 +45,4 @@ func (i *Identity) GetProvider(name string) Provider {
 		}
 	}
 	return nil
-}
-
-// Roles middles TODO
-func Roles(roles ...string) func(ctx *Context) {
-	return func(ctx *Context) {
-		svc, userId := svc.NewXDB(), ctx.MustToken().GetUserID()
-		if !svc.InRole(ctx.MustDB(), userId, roles...) {
-			ctx.Fail(errors.ErrAccessDenied)
-			return
-		}
-		ctx.Next()
-	}
-}
-
-// Auth middles TODO
-func Auth(auth ...string) func(ctx *Context) {
-	return func(ctx *Context) {
-		for _, a := range auth {
-			p := App.Identity.GetProvider(a)
-			if p == nil {
-				ctx.Fail(errors.ErrNotFoundProvider)
-				return
-			}
-
-			tk, ok := p.Verify(ctx)
-			if !ok {
-				ctx.Fail(errors.ErrAuthenticationFailed)
-				return
-			}
-
-			if tk.GetDomain() != "" {
-				db := App.Manager.GetBusinessDB(tk.GetDomain())
-				if db == nil {
-					ctx.Fail(errors.ErrInvalidDomain)
-					return
-				}
-				ctx.Set("DB", db)
-			}
-
-			ctx.Set("AuthInfo", tk)
-			ctx.Next()
-		}
-	}
 }
