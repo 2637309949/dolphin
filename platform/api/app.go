@@ -118,6 +118,5 @@ func init() {
 	app := NewDefault(opts...)
 	StaticRoutes(app)
 	MetricsRoutes(app)
-	AdminRoutes(app)
 	App, Run = app, app.Run
 }
