@@ -25,7 +25,7 @@ import (
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/add [post]
 func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
-	var payload types.Organ
+	var payload = types.Organ{}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -36,7 +36,9 @@ func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
 	payload.UpdateDate = null.TimeFromNow()
 	payload.Updater = null.StringFrom(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -70,7 +72,9 @@ func (ctr *BaseOrgan) BaseOrganBatchAdd(ctx *Context) {
 		payload[i].Updater = null.StringFrom(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -97,7 +101,9 @@ func (ctr *BaseOrgan) BaseOrganDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.MustDB().In("id", payload.OrganId.Int64).Update(&types.Organ{
+
+	db := ctx.MustDB()
+	ret, err := db.In("id", payload.OrganId.Int64).Update(&types.Organ{
 		UpdateDate: null.TimeFromNow(),
 		Updater:    null.StringFrom(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -128,8 +134,10 @@ func (ctr *BaseOrgan) BaseOrganBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
+	db := ctx.MustDB()
 	var ids = funk.Map(payload, func(form types.Organ) int64 { return form.OrganId.Int64 }).([]int64)
-	ret, err := ctx.MustDB().In("id", ids).Update(&types.Organ{
+	ret, err := db.In("id", ids).Update(&types.Organ{
 		UpdateDate: null.TimeFromNow(),
 		Updater:    null.StringFrom(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -162,7 +170,9 @@ func (ctr *BaseOrgan) BaseOrganUpdate(ctx *Context) {
 	}
 	payload.Updater = null.StringFrom(ctx.MustToken().GetUserID())
 	payload.UpdateDate = null.TimeFromNow()
-	ret, err := ctx.MustDB().ID(payload.OrganId.Int64).Update(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.ID(payload.OrganId.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -192,7 +202,9 @@ func (ctr *BaseOrgan) BaseOrganBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.MustDB().NewSession()
+
+	db := ctx.MustDB()
+	s := db.NewSession()
 	s.Begin()
 	defer s.Close()
 	s.Begin()
@@ -247,7 +259,9 @@ func (ctr *BaseOrgan) BaseOrganPage(ctx *Context) {
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "organ", "page", "organ", q.Value())
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.DB.PageSearch(db, "organ", "page", "organ", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -274,7 +288,9 @@ func (ctr *BaseOrgan) BaseOrganGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	if ext, err := ctx.MustDB().Get(&entity); err != nil {
+
+	db := ctx.MustDB()
+	if ext, err := db.Get(&entity); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return

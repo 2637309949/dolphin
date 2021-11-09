@@ -27,7 +27,9 @@ func (ctr *Nsq) NsqAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.Producer(ctx, ctx.MustDB(), payload)
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.Producer(ctx, db, payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

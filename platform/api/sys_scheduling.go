@@ -26,7 +26,9 @@ func (ctr *SysScheduling) SysSchedulingAdd(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -53,7 +55,9 @@ func (ctr *SysScheduling) SysSchedulingDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -80,7 +84,9 @@ func (ctr *SysScheduling) SysSchedulingUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -109,7 +115,9 @@ func (ctr *SysScheduling) SysSchedulingPage(ctx *Context) {
 	q.SetRange("create_time")
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -131,7 +139,9 @@ func (ctr *SysScheduling) SysSchedulingPage(ctx *Context) {
 func (ctr *SysScheduling) SysSchedulingGet(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("id")
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

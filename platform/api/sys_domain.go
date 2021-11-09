@@ -70,7 +70,9 @@ func (ctr *SysDomain) SysDomainBatchAdd(ctx *Context) {
 		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -128,8 +130,10 @@ func (ctr *SysDomain) SysDomainBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
+	db := ctx.MustDB()
 	var ids = funk.Map(payload, func(form types.SysDomain) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysDomain{
+	ret, err := db.In("id", ids).Update(&types.SysDomain{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -192,7 +196,9 @@ func (ctr *SysDomain) SysDomainBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.MustDB().NewSession()
+
+	db := ctx.MustDB()
+	s := db.NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
@@ -272,7 +278,9 @@ func (ctr *SysDomain) SysDomainGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.MustDB().Get(&entity)
+
+	db := ctx.MustDB()
+	ext, err := db.Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

@@ -80,7 +80,9 @@ func (ctr *SysUser) SysUserBatchAdd(ctx *Context) {
 		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -178,8 +180,9 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 	payload.Password.Valid = false
 	payload.Salt.Valid = false
 
+	db := ctx.MustDB()
 	ps := App.PlatformDB.NewSession()
-	ds := ctx.MustDB().NewSession()
+	ds := db.NewSession()
 	defer ps.Close()
 	defer ds.Close()
 	ret, err := ps.Table(new(types.SysUser)).ID(payload.ID.Int64).Omit("user_role").Update(&payload)
@@ -259,7 +262,9 @@ func (ctr *SysUser) SysUserBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.MustDB().NewSession()
+
+	db := ctx.MustDB()
+	s := db.NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
@@ -315,8 +320,10 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
+
+	db := ctx.MustDB()
 	if q.GetString("cn_org_id") != "" {
-		ids, err := ctr.Srv.GetOrgsFromInheritance(ctx.MustDB(), q.GetString("cn_org_id"))
+		ids, err := ctr.Srv.GetOrgsFromInheritance(db, q.GetString("cn_org_id"))
 		if err != nil {
 			ctx.Fail(err)
 			return
@@ -324,8 +331,8 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		q.SetUnescaped("cn_org_id", strings.Join(ids, ","))
 	}
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.MustDB()))
-		ret, err := ctr.Srv.Report.PageExport(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.MustDB()))
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(db))
+		ret, err := ctr.Srv.Report.PageExport(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(db))
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -334,7 +341,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(ctx.MustDB()))
+	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(db))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

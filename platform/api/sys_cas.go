@@ -387,7 +387,9 @@ func (ctr *SysCas) SysCasRefresh(ctx *Context) {
 func (ctr *SysCas) SysCasCheck(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetString("openid")
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -413,8 +415,10 @@ func (ctr *SysCas) SysCasProfile(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
+	db := ctx.MustDB()
 	roles := []types.SysRole{}
-	err = ctx.MustDB().SqlTemplateClient("sys_cas_role.tpl", &map[string]interface{}{"user_id": user.ID.Int64}).Find(&roles)
+	err = db.SqlTemplateClient("sys_cas_role.tpl", &map[string]interface{}{"user_id": user.ID.Int64}).Find(&roles)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

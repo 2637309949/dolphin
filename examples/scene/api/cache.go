@@ -18,7 +18,9 @@ import (
 func (ctr *Caching) CachingInfo(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

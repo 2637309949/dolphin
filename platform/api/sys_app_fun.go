@@ -34,7 +34,9 @@ func (ctr *SysAppFun) SysAppFunAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFromNow()
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -68,7 +70,9 @@ func (ctr *SysAppFun) SysAppFunBatchAdd(ctx *Context) {
 		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -95,7 +99,9 @@ func (ctr *SysAppFun) SysAppFunDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.SysAppFun{
+
+	db := ctx.MustDB()
+	ret, err := db.In("id", payload.ID.Int64).Update(&types.SysAppFun{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -126,8 +132,10 @@ func (ctr *SysAppFun) SysAppFunBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
+	db := ctx.MustDB()
 	var ids = funk.Map(payload, func(form types.SysAppFun) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysAppFun{
+	ret, err := db.In("id", ids).Update(&types.SysAppFun{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -160,7 +168,9 @@ func (ctr *SysAppFun) SysAppFunUpdate(ctx *Context) {
 	}
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -190,7 +200,8 @@ func (ctr *SysAppFun) SysAppFunBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.MustDB().NewSession()
+	db := ctx.MustDB()
+	s := db.NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
@@ -237,7 +248,9 @@ func (ctr *SysAppFun) SysAppFunPage(ctx *Context) {
 	q.SetInt("size", 10)
 	q.SetRule("sys_app_fun_page")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_app_fun", "page", "sys_app_fun", q.Value())
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.DB.PageSearch(db, "sys_app_fun", "page", "sys_app_fun", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -258,7 +271,9 @@ func (ctr *SysAppFun) SysAppFunTree(ctx *Context) {
 	q.SetString("name")
 	q.SetRule("sys_app_fun_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_app_fun", "tree", "sys_app_fun", q.Value())
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.DB.TreeSearch(db, "sys_app_fun", "tree", "sys_app_fun", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -285,7 +300,9 @@ func (ctr *SysAppFun) SysAppFunGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.MustDB().Get(&entity)
+
+	db := ctx.MustDB()
+	ext, err := db.Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

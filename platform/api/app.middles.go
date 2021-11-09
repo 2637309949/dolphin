@@ -31,8 +31,9 @@ func Hostname() string {
 // Roles middles TODO
 func Roles(roles ...string) func(ctx *Context) {
 	return func(ctx *Context) {
+		db := ctx.MustDB()
 		svc, userId := svc.NewXDB(), ctx.MustToken().GetUserID()
-		if !svc.InRole(ctx.MustDB(), userId, roles...) {
+		if !svc.InRole(db, userId, roles...) {
 			ctx.Fail(errors.ErrAccessDenied)
 			return
 		}

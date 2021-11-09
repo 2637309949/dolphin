@@ -23,7 +23,9 @@ func (ctr *Jwt) JwtLogin(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.CreateJWT(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.CreateJWT(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -46,7 +48,9 @@ func (ctr *Jwt) JwtCheck(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("id")
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

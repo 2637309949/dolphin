@@ -34,7 +34,9 @@ func (ctr *SysRole) SysRoleAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFromNow()
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	cnt, err := ctx.MustDB().Where("code=? and is_delete !=1", payload.Code.String).Count(new(types.SysRole))
+
+	db := ctx.MustDB()
+	cnt, err := db.Where("code=? and is_delete !=1", payload.Code.String).Count(new(types.SysRole))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -44,7 +46,7 @@ func (ctr *SysRole) SysRoleAdd(ctx *Context) {
 		ctx.Fail(errors.ErrRecordExisted)
 		return
 	}
-	ret, err := ctx.MustDB().Insert(&payload)
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -79,7 +81,9 @@ func (ctr *SysRole) SysRoleBatchAdd(ctx *Context) {
 		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	cnt, err := ctx.MustDB().Where("is_delete !=1").In("code", (funk.Map(payload, func(item types.SysRole) interface{} {
+
+	db := ctx.MustDB()
+	cnt, err := db.Where("is_delete !=1").In("code", (funk.Map(payload, func(item types.SysRole) interface{} {
 		return item.Code.String
 	}).([]interface{}))...).Count(new(types.SysRole))
 	if err != nil {
@@ -91,7 +95,7 @@ func (ctr *SysRole) SysRoleBatchAdd(ctx *Context) {
 		ctx.Fail(errors.ErrRecordExisted)
 		return
 	}
-	ret, err := ctx.MustDB().Insert(&payload)
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -118,7 +122,9 @@ func (ctr *SysRole) SysRoleDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.SysRole{
+
+	db := ctx.MustDB()
+	ret, err := db.In("id", payload.ID.Int64).Update(&types.SysRole{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -149,8 +155,10 @@ func (ctr *SysRole) SysRoleBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
+	db := ctx.MustDB()
 	var ids = funk.Map(payload, func(form types.SysRole) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysRole{
+	ret, err := db.In("id", ids).Update(&types.SysRole{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -183,7 +191,9 @@ func (ctr *SysRole) SysRoleUpdate(ctx *Context) {
 	}
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -213,7 +223,9 @@ func (ctr *SysRole) SysRoleBatchUpdate(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.MustDB().NewSession()
+
+	db := ctx.MustDB()
+	s := db.NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
@@ -265,9 +277,11 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
+
+	db := ctx.MustDB()
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.MustDB()))
-		ret, err := ctr.Srv.Report.PageExport(ctx.MustDB(), "sys_role", "page", "sys_role", q.Value())
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(db))
+		ret, err := ctr.Srv.Report.PageExport(db, "sys_role", "page", "sys_role", q.Value())
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -276,7 +290,7 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_role", "page", "sys_role", q.Value())
+	ret, err := ctr.Srv.DB.PageSearch(db, "sys_role", "page", "sys_role", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -293,13 +307,14 @@ func (ctr *SysRole) SysRolePage(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/role/role_menu_tree [get]
 func (ctr *SysRole) SysRoleRoleMenuTree(ctx *Context) {
+	db := ctx.MustDB()
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.MustDB(), ctx.MustToken().GetUserID()))
+	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(db, ctx.MustToken().GetUserID()))
 	q.SetRule("sys_role_menu_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_role", "menu_tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(db, "sys_role", "menu_tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -316,13 +331,14 @@ func (ctr *SysRole) SysRoleRoleMenuTree(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Router /api/sys/role/role_app_fun_tree [get]
 func (ctr *SysRole) SysRoleRoleAppFunTree(ctx *Context) {
+	db := ctx.MustDB()
 	q := ctx.TypeQuery()
 	q.SetString("name")
 	q.SetString("role_id")
-	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(ctx.MustDB(), ctx.MustToken().GetUserID()))
+	q.SetBool("is_admin", ctr.Srv.DB.InAdmin(db, ctx.MustToken().GetUserID()))
 	q.SetRule("sys_role_app_fun_tree")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "sys_role", "app_fun_tree", "sys_org", q.Value())
+	ret, err := ctr.Srv.DB.TreeSearch(db, "sys_role", "app_fun_tree", "sys_org", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -349,7 +365,9 @@ func (ctr *SysRole) SysRoleGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.MustDB().Get(&entity)
+
+	db := ctx.MustDB()
+	ext, err := db.Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

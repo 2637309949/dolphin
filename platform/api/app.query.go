@@ -222,7 +222,9 @@ func (q *Query) GetArrayBool(key string, init ...[]bool) []bool {
 func (q *Query) SetRule(rule string) {
 	var roleRules []types.SysDataPermissionDetail
 	userID := q.ctx.MustToken().GetUserID()
-	q.ctx.MustDB().SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
+
+	db := q.ctx.MustDB()
+	db.SqlMapClient("get_user_rule_by_code", rule, userID).Find(&roleRules)
 	for i := range roleRules {
 		q.sm["is_role_rule_"+roleRules[i].Rule.String] = true
 	}

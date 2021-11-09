@@ -34,7 +34,9 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailAdd(ctx *Context) {
 	payload.UpdateTime = null.TimeFromNow()
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -68,7 +70,9 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailBatchAdd(ctx *Context) {
 		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		payload[i].IsDelete = null.IntFrom(0)
 	}
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -95,7 +99,9 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&types.SysUserTemplateDetail{
+
+	db := ctx.MustDB()
+	ret, err := db.In("id", payload.ID.Int64).Update(&types.SysUserTemplateDetail{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -125,8 +131,10 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailBatchDel(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
+
+	db := ctx.MustDB()
 	var ids = funk.Map(payload, func(form types.SysUserTemplateDetail) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.MustDB().In("id", ids).Update(&types.SysUserTemplateDetail{
+	ret, err := db.In("id", ids).Update(&types.SysUserTemplateDetail{
 		UpdateTime: null.TimeFromNow(),
 		Updater:    null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:   null.IntFrom(1),
@@ -159,7 +167,9 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailUpdate(ctx *Context) {
 	}
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -189,7 +199,9 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailBatchUpdate(ctx *Context)
 		ctx.Fail(err)
 		return
 	}
-	s := ctx.MustDB().NewSession()
+
+	db := ctx.MustDB()
+	s := db.NewSession()
 	s.Begin()
 	defer s.Close()
 	for i := range payload {
@@ -242,7 +254,9 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_user_template_detail", "page", "sys_user_template_detail", q.Value())
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.DB.PageSearch(db, "sys_user_template_detail", "page", "sys_user_template_detail", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -269,7 +283,9 @@ func (ctr *SysUserTemplateDetail) SysUserTemplateDetailGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.MustDB().Get(&entity)
+
+	db := ctx.MustDB()
+	ext, err := db.Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

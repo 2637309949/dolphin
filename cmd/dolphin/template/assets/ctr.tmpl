@@ -58,7 +58,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.DB.PageSearch(db, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -81,7 +83,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.SetInt("is_delete", 0)()
 	q.SetString("sort", "update_time desc")
 	q.SetTags()
-	ret, err := ctr.Srv.DB.TreeSearch(ctx.MustDB(), "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.DB.TreeSearch(db, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -118,7 +122,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.IsDelete = null.IntFrom(0)
 	{{- end}}
-	ret, err := ctx.MustDB().Insert(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.Insert(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -134,8 +140,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		return
 	}
 	{{- if .ISArray $bp.Type}}
+    db := ctx.MustDB()
 	var ids = funk.Map(payload, func(form {{$bp.ORef $bp.Type}}) int64 { return form.ID.Int64 }).([]int64)
-	ret, err := ctx.MustDB().In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
+	ret, err := db.In("id", ids).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFromNow(),
 		Updater:   null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
@@ -147,7 +154,8 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	}
 	ctx.Success(ret)
 	{{- else }}
-	ret, err := ctx.MustDB().In("id", payload.ID.Int64).Update(&{{$bp.ORef $bp.Type}}{
+	db := ctx.MustDB()
+	ret, err := db.In("id", payload.ID.Int64).Update(&{{$bp.ORef $bp.Type}}{
 		UpdateTime: null.TimeFromNow(),
 		Updater:   null.IntFromStr(ctx.MustToken().GetUserID()),
 		IsDelete:    null.IntFrom(1),
@@ -173,7 +181,8 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		return
 	}
 	{{- if .ISArray $bp.Type}}
-	s := ctx.MustDB().NewSession()
+    db := ctx.MustDB()
+	s := db.NewSession()
 	s.Begin()
 	defer s.Close()
 	s.Begin()
@@ -206,7 +215,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	{{- else }}
 	payload.Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 	payload.UpdateTime = null.TimeFromNow()
-	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
+
+	db := ctx.MustDB()
+	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -222,7 +233,8 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		ctx.Fail(err)
 		return
 	}
-	if ext, err := ctx.MustDB().Get(&one); err != nil {
+
+	if ext, err := db.Get(&one); err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
 		return
@@ -239,7 +251,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	q.Set{{.ToTitle .Type}}("{{.Name}}"{{- if ne "" $tv}}, {{$tv}}{{- end}})
 	{{- end}}
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -258,7 +272,9 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		ctx.Fail(err)
 		return
 	}
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)

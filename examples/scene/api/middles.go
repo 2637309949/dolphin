@@ -20,7 +20,9 @@ import (
 func (ctr *Middles) MiddlesGlobalTest(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil && err != context.Canceled {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -40,7 +42,9 @@ func (ctr *Middles) MiddlesGlobalTest(ctx *Context) {
 func (ctr *Middles) MiddlesLocalTest(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.Value()
-	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
+
+	db := ctx.MustDB()
+	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil && err != context.Canceled {
 		logrus.Error(err)
 		ctx.Fail(err)

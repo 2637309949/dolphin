@@ -32,9 +32,11 @@ func (ctr *SysTracker) SysTrackerPage(ctx *Context) {
 	q.SetRange("update_time")
 	q.SetInt("is_delete", 0)()
 	q.SetTags()
+
+	db := ctx.MustDB()
 	if ctr.Srv.Report.Check(ctx.Request()) {
-		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(ctx.MustDB()))
-		ret, err := ctr.Srv.Report.PageExport(ctx.MustDB(), "sys_tracker", "page", "sys_tracker", q.Value(), ctr.Srv.PageFormatter(App.PlatformDB))
+		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(db))
+		ret, err := ctr.Srv.Report.PageExport(db, "sys_tracker", "page", "sys_tracker", q.Value(), ctr.Srv.PageFormatter(App.PlatformDB))
 		if err != nil {
 			logrus.Error(err)
 			ctx.Fail(err)
@@ -43,7 +45,7 @@ func (ctr *SysTracker) SysTrackerPage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
-	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "sys_tracker", "page", "sys_tracker", q.Value(), ctr.Srv.PageFormatter(App.PlatformDB))
+	ret, err := ctr.Srv.DB.PageSearch(db, "sys_tracker", "page", "sys_tracker", q.Value(), ctr.Srv.PageFormatter(App.PlatformDB))
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
@@ -75,7 +77,9 @@ func (ctr *SysTracker) SysTrackerGet(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ext, err := ctx.MustDB().Cols("id", "header", "req_body", "res_body").Get(&entity)
+
+	db := ctx.MustDB()
+	ext, err := db.Cols("id", "header", "req_body", "res_body").Get(&entity)
 	if err != nil {
 		logrus.Error(err)
 		ctx.Fail(err)
