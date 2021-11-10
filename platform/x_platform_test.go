@@ -668,7 +668,7 @@ var XTestSysClientBatchUpdate, XTestSysClientBatchUpdateRequest = func(ctx *xtes
 	if rsp.Code != 200 {
 		ctx.Errorf("XTestSysClientBatchUpdate = %v want %v", rsp.Code, 200)
 	}
-}, map[string]interface{}{}
+}, []map[string]interface{}{}
 
 // XTestSysClientPage, XTestSysClientPageRequest defined TODO
 var XTestSysClientPage, XTestSysClientPageRequest = func(ctx *xtest.Context) {

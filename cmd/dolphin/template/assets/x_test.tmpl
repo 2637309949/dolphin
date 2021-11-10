@@ -17,16 +17,24 @@ import (
 
 	"{{.PackageName}}/{{$.Viper.GetString "dir.util" }}/errors"
 	"{{.PackageName}}/{{$.Viper.GetString "dir.api" }}"
+	{{if ne $.Name "platform"}} appApi "github.com/2637309949/dolphin/platform/api"{{end}}
+	{{if ne $.Name "platform"}} appSvc "github.com/2637309949/dolphin/platform/svc"{{end}}
 )
 
 var x *xtest.XTest
 
 // TestMain defined
 func TestMain(m *testing.M) {
-	x = xtest.New(api.App)
+	x = xtest.New({{if ne $.Name "platform"}}appApi{{end}}.App)
+	{{- if ne $.Name "platform"}}
+	api.SyncModel()
+	api.SyncSrv(appSvc.NewServiceContext(appApi.CacheStore))
+	api.SyncController()
+	{{- else}}
 	if err := api.App.Reflesh(); err != nil {
 		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
+	{{- end}}
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }
