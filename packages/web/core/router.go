@@ -29,7 +29,9 @@ func nameOfFunction(f interface{}) string {
 
 // DebugPrintRoute defined TODO
 func DebugPrintRoute(httpMethod, absolutePath, _ string, _ int) {
-	logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
+	if IsDebugging() {
+		logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
+	}
 }
 
 // routerGroup defined TODO
