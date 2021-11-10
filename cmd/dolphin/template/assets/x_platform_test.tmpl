@@ -5,13 +5,14 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/2637309949/dolphin/packages/xtest"
 
 	// "github.com/mattn/go-sqlite3"
 	_ "github.com/mattn/go-sqlite3"
 )
 
 // XTestSysUserLogin defined TODO
-var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
+var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *xtest.Context) {
 	ret := struct {
 		Code int `json:"code"`
 		Data struct {
@@ -19,9 +20,12 @@ var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
 			RefreshToken string `json:"refresh_token"`
 		} `json:"data"`
 	}{}
-	json.Unmarshal(ctx.Body.Bytes(), &ret)
-	SetToken(ret.Data.AccessToken)
-}, Payload{"domain": "localhost", "name": "admin", "password": "admin"}
+	err := ctx.Bind(&ret)
+	if err != nil {
+		ctx.Error(err)
+	}
+	x.SetToken(ret.Data.AccessToken)
+}, map[string]interface{}{"domain": "localhost", "name": "admin", "password": "admin"}
 
 {{- range .Controllers}}
 {{- $ctr := .}}
@@ -29,19 +33,18 @@ var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *Context) {
 {{- $api := .}}
 {{- if ne $api.Name "login" }}
 // XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request defined TODO
-var XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request = func (ctx *Context) {
-	ret := Response{}
+var XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}, XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}}Request = func (ctx *xtest.Context) {
     if ctx.Code != 200 {
-		ctx.testingT.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", ctx.Code, 200)
+		ctx.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", ctx.Code, 200)
 	}
-	err := ctx.ParseBody(&ret)
+	rsp, err := ctx.Body()
 	if err != nil {
-		ctx.testingT.Error(err)
+		ctx.Error(err)
 	}
-	if ret.Code != 200 {
-		ctx.testingT.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", ret.Code, 200)
+	if rsp.Code != 200 {
+		ctx.Errorf("XTest{{$ctr.ToUpperCase $ctr.Name}}{{.ToUpperCase .Name}} = %v want %v", rsp.Code, 200)
 	}
-}, Payload{}
+}, map[string]interface{}{}
 {{end }}
 {{end }}
 {{end }}
