@@ -81,7 +81,7 @@ func NewRedisClient() redis.Cmdable {
 	}
 
 	if err != nil {
-		logrus.Warnf("redis:%v connect failed, %v", addr[0], err)
+		logrus.Warnf("redis:%v", err)
 		return nil
 	}
 	logrus.Infof("redis:%v connect successfully", addr[0])

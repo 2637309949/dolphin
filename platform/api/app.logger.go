@@ -229,7 +229,6 @@ func createXLogger() interface{} {
 func InitLogger() {
 	var writer io.Writer = os.Stdout
 	util.SetFormatter(term.IsTerminal(unix.Stdout))
-
 	if viper.GetString("dir.log") != "" {
 		logf, err := rotatelogs.New(
 			viper.GetString("dir.log")+"/%Y%m%d%H",

@@ -92,18 +92,12 @@ func EnsureRight(err error, right interface{}) interface{} {
 
 // SetFormatter defined
 func SetFormatter(isTerminal bool) {
-	if !isTerminal {
-		logrus.SetFormatter(&logrus.JSONFormatter{
-			TimestampFormat: "02/01 15:04:05",
-		})
-	} else {
-		logrus.SetFormatter(&logrus.TextFormatter{
-			FullTimestamp:   true,
-			DisableQuote:    true,
-			ForceColors:     true,
-			TimestampFormat: "02/01 15:04:05",
-		})
-	}
+	logrus.SetFormatter(&logrus.TextFormatter{
+		FullTimestamp:   true,
+		DisableQuote:    true,
+		ForceColors:     true,
+		TimestampFormat: "02/01 15:04:05",
+	})
 }
 
 // UserHomeDir defined

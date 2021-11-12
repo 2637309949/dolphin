@@ -13,23 +13,18 @@ import (
 // type defined TODO
 type Context struct{ *api.Context }
 
-// HelloMiddle defiend TODO
-func HelloMiddle(name string) func(ctx *Context) {
-	return func(ctx *Context) {
-		logrus.Infof("dolphin %v middles", name)
-	}
-}
-
 // Run defined TODO
 func Run() {
-	MiddlesInstance.LocalTest.Interceptor = HelloMiddle("local")
-
+	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) {
+		logrus.Infof("dolphin local middles")
+	}
+	api.App.Use(func(ctx *Context) {
+		logrus.Infof("dolphin global middles")
+	})
 	SyncModel()
 	SyncSrv(svc.NewServiceContext(api.CacheStore))
 	SyncController()
-
-	api.App.Use(HelloMiddle("global"))
-	err := api.App.Run()
+	err := api.Run()
 	if err != nil {
 		panic(err)
 	}

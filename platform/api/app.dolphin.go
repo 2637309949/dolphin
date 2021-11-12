@@ -100,8 +100,8 @@ func (dol *Dolphin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	dol.Web.ServeHTTP(w, r)
 }
 
-// Reflesh defined init data before bootinh
-func (dol *Dolphin) Reflesh() error {
+// Initialize defined init data before bootinh
+func (dol *Dolphin) Initialize() error {
 	defer dol.Manager.ModelSet().Release()
 
 	SyncModel()
@@ -346,13 +346,12 @@ func (dol *Dolphin) Static(relativePath, root string) {
 
 // Run defined TODO
 func (dol *Dolphin) Run() error {
-	ctx := context.Background()
-	if err := dol.Reflesh(); err != nil {
-		logrus.Errorln(err)
+	if err := dol.Initialize(); err != nil {
+		logrus.Error(err)
 		return err
 	}
-	if err := dol.LifeCycle(ctx); err != nil {
-		logrus.Errorln(err)
+	if err := dol.LifeCycle(context.Background()); err != nil {
+		logrus.Error(err)
 		return err
 	}
 	return nil

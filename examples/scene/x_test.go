@@ -8,19 +8,24 @@ import (
 
 	"github.com/2637309949/dolphin/packages/xtest"
 
+	"fmt"
 	appApi "github.com/2637309949/dolphin/platform/api"
 	"scene/api"
 	"scene/svc"
+	"scene/util/errors"
 )
 
 var x *xtest.XTest
 
 // TestMain defined
 func TestMain(m *testing.M) {
-	x = xtest.New(appApi.App)
 	api.SyncModel()
 	api.SyncSrv(svc.NewServiceContext(appApi.CacheStore))
 	api.SyncController()
+	x = xtest.New(appApi.App)
+	if err := appApi.App.Initialize(); err != nil {
+		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
+	}
 	TestSysUserLogin(nil)
 	os.Exit(m.Run())
 }

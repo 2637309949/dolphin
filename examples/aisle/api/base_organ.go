@@ -24,7 +24,7 @@ import (
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
 // @Router /api/organ/add [post]
-func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
+func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context2) {
 	var payload = types.Organ{}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
 		logrus.Error(err)

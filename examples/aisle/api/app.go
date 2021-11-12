@@ -10,6 +10,7 @@ import (
 )
 
 // type defined TODO
+type Context2 struct{ *api.Context }
 type Context struct{ *api.Context }
 
 // Run defined TODO

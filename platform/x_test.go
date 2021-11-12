@@ -18,7 +18,7 @@ var x *xtest.XTest
 // TestMain defined
 func TestMain(m *testing.M) {
 	x = xtest.New(api.App)
-	if err := api.App.Reflesh(); err != nil {
+	if err := api.App.Initialize(); err != nil {
 		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
 	TestSysUserLogin(nil)

@@ -10,15 +10,21 @@ import (
 	"github.com/2637309949/dolphin/packages/xtest"
 
 	"aisle/api"
+	"aisle/svc"
 	"aisle/util/errors"
+
+	pApi "github.com/2637309949/dolphin/platform/api"
 )
 
 var x *xtest.XTest
 
 // TestMain defined
 func TestMain(m *testing.M) {
-	x = xtest.New(api.App)
-	if err := api.App.Reflesh(); err != nil {
+	api.SyncModel()
+	api.SyncSrv(svc.NewServiceContext(pApi.CacheStore))
+	api.SyncController()
+	x = xtest.New(pApi.App)
+	if err := pApi.App.Initialize(); err != nil {
 		panic(fmt.Errorf("%v\n%v", err, string(errors.Wrap(err, 2).Stack())))
 	}
 	TestSysUserLogin(nil)
