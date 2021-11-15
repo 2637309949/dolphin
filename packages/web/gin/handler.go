@@ -19,8 +19,9 @@ func (c *handler) Handler() http.Handler {
 	return c.Engine
 }
 
-func (c *handler) setContext(in reflect.Value, ctx *gin.Context) reflect.Value {
-	ct := in.Elem().Field(0)
+// set defined TODO
+func (c *handler) set(numIn reflect.Value, ctx *gin.Context) reflect.Value {
+	ct := numIn.Elem().Field(0)
 	switch ct.Interface().(type) {
 	case *gin.Context: //gin
 		ct.Set(reflect.ValueOf(ctx))
@@ -33,31 +34,33 @@ func (c *handler) setContext(in reflect.Value, ctx *gin.Context) reflect.Value {
 		cField.Set(reflect.ValueOf(NewContext(ctx)))
 		ct.Set(cValue)
 	}
-	return in
+	return numIn
 }
 
+// handlerFunc defined TODO
 func (c *handler) handlerFunc(h core.HandlerFunc) func(*gin.Context) {
 	return func(ctx *gin.Context) {
 		fv := reflect.ValueOf(h)
 		ft := fv.Type()
-		fti := ft.In(0)
+		in0 := ft.In(0)
 		isPtr := false
-		if fti.Kind() == reflect.Ptr {
-			fti = fti.Elem()
-			isPtr = true
+		if in0.Kind() == reflect.Ptr {
+			isPtr, in0 = true, in0.Elem()
 		}
-		in := reflect.New(fti).Elem()
+		in := reflect.New(in0).Elem()
 		_, isContext := in.Interface().(core.Context)
+		_, isGinContext := in.Interface().(*gin.Context)
 		switch true {
-		case fti.String() == "core.Context":
+		case in0.String() == "core.Context":
 			fv.Call([]reflect.Value{reflect.ValueOf(NewContext(ctx))})
+		case isGinContext:
+			fv.Call([]reflect.Value{reflect.ValueOf(ctx)})
 		case isContext:
-			in := c.setContext(reflect.New(fti), ctx)
-			if isPtr {
-				fv.Call([]reflect.Value{in})
-			} else {
-				fv.Call([]reflect.Value{in.Elem()})
+			in := c.set(reflect.New(in0), ctx)
+			if !isPtr {
+				in = in.Elem()
 			}
+			fv.Call([]reflect.Value{in})
 		}
 	}
 }
@@ -65,24 +68,26 @@ func (c *handler) handlerFunc(h core.HandlerFunc) func(*gin.Context) {
 // Handler defined TODO
 func (c *handler) Handle(httpMethod string, relativePath string, handlers ...core.HandlerFunc) {
 	hfc := []gin.HandlerFunc{}
-	for i := range handlers {
-		fv := reflect.ValueOf(handlers[i])
+	for _, hlr := range handlers {
+		fv := reflect.ValueOf(hlr)
 		ft := fv.Type()
 		if ft.NumIn() != 1 {
 			panic("invalid handler: wrong numIn")
 		}
-		in := reflect.New(ft.In(0)).Elem()
+		in0 := ft.In(0)
+		in := reflect.New(in0).Elem()
 		_, isContext := in.Interface().(core.Context)
 		_, isGinContext := in.Interface().(*gin.Context)
 		switch true {
-		case isContext, ft.In(0).String() == "core.Context":
 		case isGinContext:
-			hfc = append(hfc, handlers[i].(func(*gin.Context)))
-			continue
+			hfc = append(hfc, c.handlerFunc(hlr))
+		case isContext:
+			hfc = append(hfc, c.handlerFunc(hlr))
+		case in0.String() == "core.Context":
+			hfc = append(hfc, c.handlerFunc(hlr))
 		default:
 			panic("invalid handler context: should extend core.Context")
 		}
-		hfc = append(hfc, c.handlerFunc(handlers[i]))
 	}
 	c.Engine.Handle(httpMethod, relativePath, hfc...)
 }

@@ -11,8 +11,7 @@ import (
 var defaultApp *core.Web
 
 func init() {
-	app := core.New()
-	defaultApp = app
+	defaultApp = core.New()
 }
 
 func Web() *core.Web {
@@ -34,6 +33,7 @@ func Handle(m string, r string, h ...core.HandlerFunc) {
 func Static(relativePath, root string) {
 	defaultApp.Static(relativePath, root)
 }
+
 func StaticFS(relativePath string, fs http.FileSystem) {
 	defaultApp.StaticFS(relativePath, fs)
 }
