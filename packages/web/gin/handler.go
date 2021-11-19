@@ -48,10 +48,12 @@ func (c *handler) handlerFunc(h core.HandlerFunc) func(*gin.Context) {
 			isPtr, in0 = true, in0.Elem()
 		}
 		in := reflect.New(in0).Elem()
+
 		_, isContext := in.Interface().(core.Context)
 		_, isGinContext := in.Interface().(*gin.Context)
+		isInterface := in0.Kind() == reflect.Interface
 		switch true {
-		case in0.String() == "core.Context":
+		case isInterface:
 			fv.Call([]reflect.Value{reflect.ValueOf(NewContext(ctx))})
 		case isGinContext:
 			fv.Call([]reflect.Value{reflect.ValueOf(ctx)})
@@ -71,19 +73,17 @@ func (c *handler) Handle(httpMethod string, relativePath string, handlers ...cor
 	for _, hlr := range handlers {
 		fv := reflect.ValueOf(hlr)
 		ft := fv.Type()
-		if ft.NumIn() != 1 {
+		if !IsFunction(hlr, 1) {
 			panic("invalid handler: wrong numIn")
 		}
+		
 		in0 := ft.In(0)
 		in := reflect.New(in0).Elem()
 		_, isContext := in.Interface().(core.Context)
 		_, isGinContext := in.Interface().(*gin.Context)
+		isInterface := in0.Kind() == reflect.Interface
 		switch true {
-		case isGinContext:
-			hfc = append(hfc, c.handlerFunc(hlr))
-		case isContext:
-			hfc = append(hfc, c.handlerFunc(hlr))
-		case in0.String() == "core.Context":
+		case isGinContext, isContext, isInterface:
 			hfc = append(hfc, c.handlerFunc(hlr))
 		default:
 			panic("invalid handler context: should extend core.Context")

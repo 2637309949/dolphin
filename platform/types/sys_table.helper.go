@@ -6,18 +6,23 @@ import (
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm/schemas"
-	"github.com/2637309949/dolphin/platform/util"
 )
 
 // TruncateTable defined
-func (m *SysTable) TruncateTable(session *xorm.Engine) {
-	switch session.DriverName() {
+func (m *SysTable) TruncateTable(session *xorm.Session) error {
+	switch session.Engine().DriverName() {
 	case "sqlite3":
-		util.EnsureLeft(session.Exec(fmt.Sprintf("delete from %v", new(SysTable).TableName())))
+		_, err := session.Exec(fmt.Sprintf("delete from %v", new(SysTable).TableName()))
+		if err != nil {
+			return err
+		}
 	default:
-		util.EnsureLeft(session.Exec(fmt.Sprintf("truncate table %v", new(SysTable).TableName())))
-
+		_, err := session.Exec(fmt.Sprintf("truncate table %v", new(SysTable).TableName()))
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
 // TableInfo defined inital system data

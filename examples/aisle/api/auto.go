@@ -15,9 +15,7 @@ import (
 
 // Name project
 var Name = "aisle"
-var NopHandlerFunc = func(ctx *Context) {
-	ctx.Next()
-}
+var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
 
 // Controller defined
 type Controller struct {

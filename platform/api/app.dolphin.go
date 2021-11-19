@@ -10,10 +10,7 @@ import (
 	"os"
 	"os/signal"
 	"path"
-	"path/filepath"
-	"sync"
 	"syscall"
-	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/web/core"
@@ -25,29 +22,28 @@ import (
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/2637309949/dolphin/platform/util/http/uri"
 	"github.com/2637309949/dolphin/platform/util/slice"
+	"github.com/2637309949/dolphin/platform/util/db"
 
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
 
-type (
-	// Option is a functional option type for Dolphin objects.
-	Option func(*Dolphin)
-	// Dolphin defined parse app engine
-	Dolphin struct {
-		Lifecycle
-		PlatformDB *xorm.Engine
-		Manager    Manager
-		Identity   *Identity
-		Web        *core.Web
-	}
-)
+// Option is a functional option type for Dolphin objects.
+type Option func(*Dolphin)
+
+// Dolphin defined parse app engine
+type Dolphin struct {
+	Lifecycle
+	PlatformDB *xorm.Engine
+	Manager    Manager
+	Identity   *Identity
+	Web        *core.Web
+}
 
 // migration defined TODO
 func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
-	tables := []types.SysTable{}
-	columns := []types.SysTableColumn{}
+	tables, columns := []types.SysTable{}, []types.SysTableColumn{}
 	err := db.Sync2(new(types.SysTable), new(types.SysTableColumn))
 	if err != nil {
 		return err
@@ -76,22 +72,86 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 		}).([]types.SysTableColumn)...)
 	}
 
-	new(types.SysTable).TruncateTable(db)
-	new(types.SysTableColumn).TruncateTable(db)
-	stb, stc := slice.Chunk(tables, 50).([][]types.SysTable), slice.Chunk(columns, 50).([][]types.SysTableColumn)
+	dol.truncateTable(db.NewSession(), new(types.SysTable), new(types.SysTableColumn))
+	for _, v := range []interface{}{tables, columns} {
+		chunk := slice.Chunk(v, 50)
+		switch ck := chunk.(type) {
+		case  [][]types.SysTable :
+			for i := range ck {
+				_, err = db.Insert(ck[i])
+				if err != nil {
+					return err
+				}
+			}
+		case [][]types.SysTableColumn:
+			for i := range ck {
+				_, err = db.Insert(ck[i])
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}
 
-	for i := range stb {
-		_, err = db.Insert(stb[i])
+// initSysData defined TODO
+func (dol *Dolphin) initSysData(s *xorm.Session, bean ...interface{InitSysData(*xorm.Session)error}) error {
+	for i := range bean {
+		err := bean[i].InitSysData(s)
 		if err != nil {
 			return err
 		}
 	}
-	for i := range stc {
-		_, err = db.Insert(stc[i])
+	return nil
+}
+
+// truncateTable defined TODO
+func (dol *Dolphin) truncateTable(s *xorm.Session, bean ...interface{TruncateTable(*xorm.Session)error}) error {
+	for i := range bean {
+		err := bean[i].TruncateTable(s)
 		if err != nil {
 			return err
 		}
 	}
+	return nil
+}
+
+// initDomain defined TODO
+func (dol *Dolphin) initDomain(domain types.SysDomain) error {
+	platBindModelNames := dol.Manager.ModelSet().NameSpaces(Name)
+	db := dol.Manager.GetBusinessDB(domain.Domain.String)
+	s1 := db.NewSession()
+	s1.Begin()
+	defer s1.Close()
+
+	funk.ForEach(platBindModelNames, func(n string) { dol.migration(n, db) })
+	err := dol.initSysData(s1, new(types.SysRole), new(types.SysOrg), new(types.SysRoleUser), new(types.SysMenu), new(types.SysOptionset), new(types.SysUserTemplate), new(types.SysUserTemplateDetail))
+	if err != nil {
+		s1.Rollback()
+		return err
+	}
+	dol.PlatformDB.ID(domain.ID.Int64).Cols("is_sync").Update(&types.SysDomain{IsSync: null.IntFrom(1)})
+	return s1.Commit()
+}
+
+// initBusinessDB defined TODO
+func (dol *Dolphin) initBusinessDB(domain types.SysDomain) error {
+	logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
+	xlogger := createXLogger()
+	uri, err := uri.Parse(domain.DataSource.String)
+	if err != nil {
+		return err
+	}
+	err = domain.CreateDataBase(dol.PlatformDB, domain.DriverName.String, uri.DbName)
+	if err != nil {
+		return err
+	}
+	engine, err :=  db.InitDB(domain.DriverName.String, domain.DataSource.String, db.LoggerOpt(xlogger), db.RegisterSQLOpt(), db.RegisterSQLMapOpt(sql.SQLTPL))
+	if err != nil {
+		return err
+	}
+	dol.Manager.AddBusinessDB(domain.Domain.String, engine)
 	return nil
 }
 
@@ -110,197 +170,43 @@ func (dol *Dolphin) Initialize() error {
 
 	xlogger := createXLogger()
 	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
-	db, err := xorm.NewEngine(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
-	db.SetLogger(xlogger)
+	engine, err := db.InitDB(viper.GetString("db.driver"), viper.GetString("db.dataSource"), db.LoggerOpt(xlogger), db.RegisterSQLOpt(), db.RegisterSQLMapOpt(sql.SQLTPL))
 	if err != nil {
 		return err
 	}
-	err = db.Ping()
-	if err != nil {
-		return err
-	}
-
-	dol.PlatformDB = db
-	dol.PlatformDB.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
-	dol.PlatformDB.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
-	dol.PlatformDB.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
-
-	err = dol.RegisterSQLDir(dol.PlatformDB, path.Join(".", viper.GetString("dir.sql")))
-	if err != nil {
-		return err
-	}
-	// load map
-	err = dol.RegisterSQLMap(dol.PlatformDB, sql.SQLTPL)
-	if err != nil {
-		return err
-	}
-	new(types.SysDomain).Ensure(db)
-	err = new(types.SysDomain).InitSysData(db)
-	if err != nil {
-		return err
-	}
-	asyncOnce, domains := sync.Once{}, []types.SysDomain{}
-	err = db.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains)
+	dol.PlatformDB = engine
+	new(types.SysDomain).Ensure(dol.PlatformDB)
+	err = new(types.SysDomain).InitSysData(dol.PlatformDB)
 	if err != nil {
 		return err
 	}
 
-	s := db.NewSession()
-	s.Begin()
-	defer s.Close()
-	defer func() {
-		if err := recover(); err != nil {
-			s.Rollback()
-			panic(err)
-		}
-	}()
-
-	for i := range domains {
-		domain := domains[i]
-		logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
-		uri, err := uri.Parse(domain.DataSource.String)
-		if err != nil {
-			return err
-		}
-		err = domain.CreateDataBase(dol.PlatformDB, domain.DriverName.String, uri.DbName)
-		if err != nil {
-			return err
-		}
-		db, err := xorm.NewEngine(domain.DriverName.String, domain.DataSource.String)
-		db.SetLogger(xlogger)
-		if err != nil {
-			return err
-		}
-		err = db.Ping()
-		if err != nil {
-			return err
-		}
-
-		db.SetConnMaxLifetime(time.Duration(viper.GetInt("db.connMaxLifetime")) * time.Minute)
-		db.SetMaxIdleConns(viper.GetInt("db.maxIdleConns"))
-		db.SetMaxOpenConns(viper.GetInt("db.maxOpenConns"))
-		err = dol.RegisterSQLDir(db, path.Join(".", viper.GetString("dir.sql")))
-		if err != nil {
-			return err
-		}
-		err = dol.RegisterSQLMap(db, sql.SQLTPL)
-		if err != nil {
-			return err
-		}
-		dol.Manager.AddBusinessDB(domain.Domain.String, db)
+    domains := []types.SysDomain{}
+	err = dol.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains)
+	if err != nil {
+		return err 
 	}
 
-	platBindModelNames := dol.Manager.ModelSet().NameSpaces(Name)
-	filtedDomains := funk.Filter(domains, func(domain types.SysDomain) bool { return domain.IsSync.Int64 != 1 }).([]types.SysDomain)
-	for i := range filtedDomains {
-		asyncOnce.Do(func() {
-			err = dol.migration(Name, dol.PlatformDB)
-			if err != nil {
-				return
-			}
-			err = new(types.SysClient).InitSysData(s)
-			if err != nil {
-				return
-			}
-			err = new(types.SysUser).InitSysData(s)
-			if err != nil {
-				return
-			}
-		})
+	funk.ForEach(domains, func(d types.SysDomain) { dol.initBusinessDB(d) })
+	{
+		s := dol.PlatformDB.NewSession()
+		s.Begin()
+		defer s.Close()
+		defer s.Commit()
+		err = dol.migration(Name, dol.PlatformDB)
+		if err != nil {
+			return err 
+		}
+		err = dol.initSysData(s, new(types.SysClient), new(types.SysUser))
 		if err != nil {
 			s.Rollback()
 			return err
 		}
-
-		domain := filtedDomains[i]
-		db := dol.Manager.GetBusinessDB(domain.Domain.String)
-		s1 := db.NewSession()
-		s1.Begin()
-		defer s1.Close()
-		funk.ForEach(platBindModelNames, func(n string) { dol.migration(n, db) })
-		err = new(types.SysRole).InitSysData(s1)
-		if err != nil {
-			s1.Rollback()
-			return err
-		}
-
-		err = new(types.SysOrg).InitSysData(s1)
-		if err != nil {
-			s1.Rollback()
-			return err
-		}
-		err = new(types.SysRoleUser).InitSysData(s1)
-		if err != nil {
-			s1.Rollback()
-			return err
-		}
-		err = new(types.SysMenu).InitSysData(s1)
-		if err != nil {
-			s1.Rollback()
-		}
-		err = new(types.SysOptionset).InitSysData(s1)
-		if err != nil {
-			s1.Rollback()
-			return err
-		}
-
-		err = new(types.SysUserTemplate).InitSysData(s1)
-		if err != nil {
-			s1.Rollback()
-			return err
-		}
-		err = new(types.SysUserTemplateDetail).InitSysData(s1)
-		if err != nil {
-			s1.Rollback()
-			return err
-		}
-
-		_, err = s.ID(domain.ID.Int64).Cols("is_sync").Update(&types.SysDomain{IsSync: null.IntFrom(1)})
-		if err != nil {
-			s.Rollback()
-			return err
-		}
-		s1.Commit()
 	}
 
-	return s.Commit()
-}
-
-// RegisterSQLMap defined TODO
-func (dol *Dolphin) RegisterSQLMap(db *xorm.Engine, sqlMap map[string]string) error {
-	for key, value := range sqlMap {
-		if filepath.Ext(key) == "" {
-			db.AddSql(key, value)
-		} else {
-			err := db.AddSqlTemplate(key, value)
-			if err != nil {
-				return err
-			}
-		}
-	}
+	syncDomain := funk.Filter(domains, func(domain types.SysDomain) bool { return domain.IsSync.Int64 != 1 }).([]types.SysDomain)
+	funk.ForEach(syncDomain, func(d types.SysDomain) { dol.initDomain(d) })
 	return nil
-}
-
-// RegisterSQLDir defined TODO
-func (dol *Dolphin) RegisterSQLDir(db *xorm.Engine, sqlDir string) error {
-	err := os.MkdirAll(sqlDir, os.ModePerm)
-	if err != nil {
-		return err
-	}
-	err = db.RegisterSqlMap(xorm.Xml(sqlDir, ".xml"))
-	if err != nil {
-		return err
-	}
-	err = db.RegisterSqlTemplate(xorm.Pongo2(sqlDir, ".stpl"))
-	if err != nil {
-		return err
-	}
-	err = db.RegisterSqlTemplate(xorm.Jet(sqlDir, ".jet"))
-	if err != nil {
-		return err
-	}
-	err = db.RegisterSqlTemplate(xorm.Default(sqlDir, ".tpl"))
-	return err
 }
 
 // Done returns a channel of signals to block on after starting the
@@ -312,17 +218,10 @@ func (dol *Dolphin) done() <-chan os.Signal {
 
 // LifeCycle defined TODO
 func (dol *Dolphin) LifeCycle(ctx context.Context) error {
-	ctx, cancel := context.WithTimeout(ctx, 15*time.Second)
-	defer cancel()
-
-	signal := dol.done()
 	if err := dol.Start(ctx); err != nil {
 		return err
 	}
-	<-signal
-
-	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
-	defer cancel()
+	<-dol.done()
 	if err := dol.Stop(ctx); err != nil {
 		return err
 	}
@@ -371,9 +270,9 @@ func NewDefault(options ...Option) *Dolphin {
 // NewDolphin defined TODO
 func New(options ...Option) *Dolphin {
 	dol := &Dolphin{}
+
 	for i := range options {
 		options[i](dol)
 	}
-
 	return dol
 }

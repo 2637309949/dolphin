@@ -3,9 +3,27 @@ package gin
 import (
 	"net/http"
 	"strings"
+	"reflect"
 
 	"github.com/gin-gonic/gin"
 )
+
+// IsFunction defined TODO
+func IsFunction(in interface{}, num ...int) bool {
+	funcType := reflect.TypeOf(in)
+
+	result := funcType != nil && funcType.Kind() == reflect.Func
+
+	if len(num) >= 1 {
+		result = result && funcType.NumIn() == num[0]
+	}
+
+	if len(num) == 2 {
+		result = result && funcType.NumOut() == num[1]
+	}
+
+	return result
+}
 
 // JsonCheck defined TODO
 func JsonCheck(req *http.Request) bool {
