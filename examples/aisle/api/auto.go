@@ -13,34 +13,32 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Name project
-var Name = "aisle"
-var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
+var (
+	Name              = "aisle"
+	NopHandlerFunc    = func(ctx *Context) { ctx.Next() }
+	BaseOrganInstance = NewBaseOrgan()
+)
 
 // Controller defined
-type Controller struct {
-	Method       string
-	RelativePath string
-	Auth,
-	Roles,
-	Cache,
-	Interceptor,
-	Handler core.HandlerFunc
-}
-
-// BaseOrgan defined
-type BaseOrgan struct {
-	Name string
-	Srv  *srv.BaseOrgan
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
+type (
+	Controller struct {
+		Method                                   string
+		RelativePath                             string
+		Auth, Roles, Cache, Interceptor, Handler core.HandlerFunc
+	}
+	BaseOrgan struct {
+		Name string
+		Srv  *srv.BaseOrgan
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+)
 
 // NewBaseOrgan defined
 func NewBaseOrgan() *BaseOrgan {
@@ -116,9 +114,6 @@ func BaseOrganRoutes() {
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
-
-// BaseOrganInstance defined
-var BaseOrganInstance = NewBaseOrgan()
 
 // SyncModel defined
 func SyncModel() error {

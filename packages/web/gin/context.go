@@ -152,12 +152,9 @@ func (c *Context) Success(data interface{}) {
 
 // Fail defined TODO
 func (c *Context) Fail(err error) {
-	num := uint32(500)
-	detail := err.Error()
-	status := "internal service error"
+	num, detail, status := uint32(500), err.Error(), "internal service error"
 	if e, ok := err.(core.Error); ok {
-		num = e.Code()
-		status = e.Status()
+		num, status = e.Code(), e.Status()
 	}
 	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
 		"code":   num,

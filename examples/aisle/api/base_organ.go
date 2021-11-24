@@ -23,7 +23,7 @@ import (
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/add [post]
+// @Router /api/base/organ/add [post]
 func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
 	var payload = types.Organ{}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
@@ -57,7 +57,7 @@ func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/batch_add [post]
+// @Router /api/base/organ/batch_add [post]
 func (ctr *BaseOrgan) BaseOrganBatchAdd(ctx *Context) {
 	var payload []types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
@@ -93,7 +93,7 @@ func (ctr *BaseOrgan) BaseOrganBatchAdd(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/del [delete]
+// @Router /api/base/organ/del [delete]
 func (ctr *BaseOrgan) BaseOrganDel(ctx *Context) {
 	var payload types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
@@ -126,7 +126,7 @@ func (ctr *BaseOrgan) BaseOrganDel(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/batch_del [put]
+// @Router /api/base/organ/batch_del [put]
 func (ctr *BaseOrgan) BaseOrganBatchDel(ctx *Context) {
 	var payload []types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
@@ -160,7 +160,7 @@ func (ctr *BaseOrgan) BaseOrganBatchDel(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/update [put]
+// @Router /api/base/organ/update [put]
 func (ctr *BaseOrgan) BaseOrganUpdate(ctx *Context) {
 	var payload types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
@@ -191,7 +191,7 @@ func (ctr *BaseOrgan) BaseOrganUpdate(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/batch_update [put]
+// @Router /api/base/organ/batch_update [put]
 func (ctr *BaseOrgan) BaseOrganBatchUpdate(ctx *Context) {
 	var payload []types.Organ
 	var err error
@@ -246,7 +246,7 @@ func (ctr *BaseOrgan) BaseOrganBatchUpdate(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/page [get]
+// @Router /api/base/organ/page [get]
 func (ctr *BaseOrgan) BaseOrganPage(ctx *Context) {
 	q := ctx.TypeQuery()
 	q.SetInt("page", 1)
@@ -279,7 +279,7 @@ func (ctr *BaseOrgan) BaseOrganPage(ctx *Context) {
 // @Failure 403 {object} types.Fail
 // @Success 200 {object} types.Success
 // @Failure 500 {object} types.Fail
-// @Router /api/organ/get [get]
+// @Router /api/base/organ/get [get]
 func (ctr *BaseOrgan) BaseOrganGet(ctx *Context) {
 	var entity types.Organ
 	err := ctx.ShouldBindWith(&entity)

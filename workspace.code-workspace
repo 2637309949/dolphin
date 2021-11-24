@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "./platform"
+		},
+		{
+			"path": "./examples/scene"
+		},
+		{
+			"path": "./examples/aisle"
+		},
+                {
+                        "path": "./"
+                },
+    ],
+    "settings": {}
+}

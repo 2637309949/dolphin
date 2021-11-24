@@ -105,7 +105,6 @@ func (p *JWTProvider) Verify(ctx *Context) (TokenInfo, bool) {
 func (p *JWTProvider) Ticket(userId, extra string, ctx *Context) (TokenInfo, error) {
 	tk, err := p.jwt.GenerateAccessToken(userId, extra)
 	if err != nil {
-
 		return nil, err
 	}
 	return &Token{Access: tk}, nil

@@ -4,7 +4,6 @@
 package api
 
 import (
-	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/sirupsen/logrus"
@@ -26,26 +25,14 @@ func (ctr *Sqlmap) SqlmapSelectone(ctx *Context) {
 		ctx.Fail(err)
 		return
 	}
-	ctx.Success(struct {
-		ID        null.Int    `json:"id" xml:"id"`
-		Name      null.String `json:"name" xml:"name"`
-		NickName  null.String `json:"nickname" xml:"nickname"`
-		Mobile    null.String `json:"mobile" xml:"mobile"`
-		Email     null.String `json:"email" xml:"email"`
-		RoleName  null.String `json:"role_name" xml:"role_name"`
-		UserRole  null.String `json:"user_role" xml:"user_role"`
-		OrgName   null.String `json:"org_name" xml:"org_name"`
-		OrgId     null.Int    `json:"org_id" xml:"org_id"`
-		TempId    null.Int    `json:"temp_id" xml:"temp_id"`
-		TempValue null.String `json:"temp_value" xml:"temp_value"`
-	}{
-		ID:        user.ID,
-		Name:      user.Name,
-		NickName:  user.Nickname,
-		Mobile:    user.Mobile,
-		Email:     user.Email,
-		OrgId:     user.OrgId,
-		TempId:    user.TempId,
-		TempValue: user.TempValue,
+	ctx.Success(map[string]interface{}{
+		"id":        user.ID,
+		"name":      user.Name,
+		"nickname":  user.Nickname,
+		"mobile":    user.Mobile,
+		"email":     user.Email,
+		"org_id":     user.OrgId,
+		"temp_id":    user.TempId,
+		"temp_value": user.TempValue,
 	})
 }

@@ -164,7 +164,6 @@ func (p *TokenProvider) Ticket(userId, extra string, ctx *Context) (TokenInfo, e
 		Request:      ctx.Request(),
 	})
 	if err != nil {
-
 		return nil, err
 	}
 	return p.parseToken(tk), nil

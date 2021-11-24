@@ -9,7 +9,7 @@ import (
 	"github.com/2637309949/dolphin/platform/api"
 )
 
-// type defined TODO
+// Context defined TODO
 type Context struct{ *api.Context }
 
 // Run defined TODO

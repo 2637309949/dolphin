@@ -14,35 +14,132 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Name project
-var Name = "scene"
-var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
+var (
+	Name              = "scene"
+	NopHandlerFunc    = func(ctx *Context) { ctx.Next() }
+	ArticleInstance   = NewArticle()
+	CachingInstance   = NewCaching()
+	DtmInstance       = NewDtm()
+	EncryptInstance   = NewEncrypt()
+	JwtInstance       = NewJwt()
+	KafkaInstance     = NewKafka()
+	MiddlesInstance   = NewMiddles()
+	NsqInstance       = NewNsq()
+	RedisLockInstance = NewRedisLock()
+	RedisMqInstance   = NewRedisMq()
+	SqlmapInstance    = NewSqlmap()
+	UserInstance      = NewUser()
+	ViewInstance      = NewView()
+	VoteInstance      = NewVote()
+	XlsxInstance      = NewXlsx()
+)
 
 // Controller defined
-type Controller struct {
-	Method       string
-	RelativePath string
-	Auth,
-	Roles,
-	Cache,
-	Interceptor,
-	Handler core.HandlerFunc
-}
-
-// Article defined
-type Article struct {
-	Name string
-	Srv  *srv.Article
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get,
-	Payment Controller
-}
+type (
+	Controller struct {
+		Method                                   string
+		RelativePath                             string
+		Auth, Roles, Cache, Interceptor, Handler core.HandlerFunc
+	}
+	Article struct {
+		Name string
+		Srv  *srv.Article
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get,
+		Payment Controller
+	}
+	Caching struct {
+		Name string
+		Srv  *srv.Caching
+		Info Controller
+	}
+	Dtm struct {
+		Name string
+		Srv  *srv.Dtm
+		Tcc,
+		TransOut,
+		TransOutConfirm,
+		TransOutRevert,
+		TransIn,
+		TransInConfirm,
+		TransInRevert Controller
+	}
+	Encrypt struct {
+		Name string
+		Srv  *srv.Encrypt
+		Add,
+		Info Controller
+	}
+	Jwt struct {
+		Name string
+		Srv  *srv.Jwt
+		Login,
+		Check Controller
+	}
+	Kafka struct {
+		Name string
+		Srv  *srv.Kafka
+		Add,
+		Get Controller
+	}
+	Middles struct {
+		Name string
+		Srv  *srv.Middles
+		GlobalTest,
+		LocalTest Controller
+	}
+	Nsq struct {
+		Name string
+		Srv  *srv.Nsq
+		Add,
+		Get Controller
+	}
+	RedisLock struct {
+		Name string
+		Srv  *srv.RedisLock
+		Lock,
+		Unlock Controller
+	}
+	RedisMq struct {
+		Name string
+		Srv  *srv.RedisMq
+		Add,
+		Get Controller
+	}
+	Sqlmap struct {
+		Name      string
+		Srv       *srv.Sqlmap
+		Selectone Controller
+	}
+	User struct {
+		Name string
+		Srv  *srv.User
+		Info Controller
+	}
+	View struct {
+		Name string
+		Srv  *srv.View
+		File,
+		HTML,
+		XML Controller
+	}
+	Vote struct {
+		Name string
+		Srv  *srv.Vote
+		Like Controller
+	}
+	Xlsx struct {
+		Name   string
+		Srv    *srv.Xlsx
+		Import Controller
+	}
+)
 
 // NewArticle defined
 func NewArticle() *Article {
@@ -127,16 +224,6 @@ func ArticleRoutes() {
 	g.Handle(i.Payment.Method, i.Payment.RelativePath, i.Payment.Auth, i.Payment.Roles, i.Payment.Cache, i.Payment.Interceptor, i.Payment.Handler)
 }
 
-// ArticleInstance defined
-var ArticleInstance = NewArticle()
-
-// Caching defined
-type Caching struct {
-	Name string
-	Srv  *srv.Caching
-	Info Controller
-}
-
 // NewCaching defined
 func NewCaching() *Caching {
 	ctr := &Caching{Name: "caching", Srv: srv.NewCaching()}
@@ -154,22 +241,6 @@ func NewCaching() *Caching {
 func CachingRoutes() {
 	g, i := api.App.Group(viper.GetString("http.prefix")), CachingInstance
 	g.Handle(i.Info.Method, i.Info.RelativePath, i.Info.Auth, i.Info.Roles, i.Info.Cache, i.Info.Interceptor, i.Info.Handler)
-}
-
-// CachingInstance defined
-var CachingInstance = NewCaching()
-
-// Dtm defined
-type Dtm struct {
-	Name string
-	Srv  *srv.Dtm
-	Tcc,
-	TransOut,
-	TransOutConfirm,
-	TransOutRevert,
-	TransIn,
-	TransInConfirm,
-	TransInRevert Controller
 }
 
 // NewDtm defined
@@ -239,17 +310,6 @@ func DtmRoutes() {
 	g.Handle(i.TransInRevert.Method, i.TransInRevert.RelativePath, i.TransInRevert.Auth, i.TransInRevert.Roles, i.TransInRevert.Cache, i.TransInRevert.Interceptor, i.TransInRevert.Handler)
 }
 
-// DtmInstance defined
-var DtmInstance = NewDtm()
-
-// Encrypt defined
-type Encrypt struct {
-	Name string
-	Srv  *srv.Encrypt
-	Add,
-	Info Controller
-}
-
 // NewEncrypt defined
 func NewEncrypt() *Encrypt {
 	ctr := &Encrypt{Name: "encrypt", Srv: srv.NewEncrypt()}
@@ -275,17 +335,6 @@ func EncryptRoutes() {
 	g, i := api.App.Group(viper.GetString("http.prefix")), EncryptInstance
 	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
 	g.Handle(i.Info.Method, i.Info.RelativePath, i.Info.Auth, i.Info.Roles, i.Info.Cache, i.Info.Interceptor, i.Info.Handler)
-}
-
-// EncryptInstance defined
-var EncryptInstance = NewEncrypt()
-
-// Jwt defined
-type Jwt struct {
-	Name string
-	Srv  *srv.Jwt
-	Login,
-	Check Controller
 }
 
 // NewJwt defined
@@ -315,17 +364,6 @@ func JwtRoutes() {
 	g.Handle(i.Check.Method, i.Check.RelativePath, i.Check.Auth, i.Check.Roles, i.Check.Cache, i.Check.Interceptor, i.Check.Handler)
 }
 
-// JwtInstance defined
-var JwtInstance = NewJwt()
-
-// Kafka defined
-type Kafka struct {
-	Name string
-	Srv  *srv.Kafka
-	Add,
-	Get Controller
-}
-
 // NewKafka defined
 func NewKafka() *Kafka {
 	ctr := &Kafka{Name: "kafka", Srv: srv.NewKafka()}
@@ -351,17 +389,6 @@ func KafkaRoutes() {
 	g, i := api.App.Group(viper.GetString("http.prefix")), KafkaInstance
 	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// KafkaInstance defined
-var KafkaInstance = NewKafka()
-
-// Middles defined
-type Middles struct {
-	Name string
-	Srv  *srv.Middles
-	GlobalTest,
-	LocalTest Controller
 }
 
 // NewMiddles defined
@@ -391,17 +418,6 @@ func MiddlesRoutes() {
 	g.Handle(i.LocalTest.Method, i.LocalTest.RelativePath, i.LocalTest.Auth, i.LocalTest.Roles, i.LocalTest.Cache, i.LocalTest.Interceptor, i.LocalTest.Handler)
 }
 
-// MiddlesInstance defined
-var MiddlesInstance = NewMiddles()
-
-// Nsq defined
-type Nsq struct {
-	Name string
-	Srv  *srv.Nsq
-	Add,
-	Get Controller
-}
-
 // NewNsq defined
 func NewNsq() *Nsq {
 	ctr := &Nsq{Name: "nsq", Srv: srv.NewNsq()}
@@ -427,17 +443,6 @@ func NsqRoutes() {
 	g, i := api.App.Group(viper.GetString("http.prefix")), NsqInstance
 	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// NsqInstance defined
-var NsqInstance = NewNsq()
-
-// RedisLock defined
-type RedisLock struct {
-	Name string
-	Srv  *srv.RedisLock
-	Lock,
-	Unlock Controller
 }
 
 // NewRedisLock defined
@@ -467,17 +472,6 @@ func RedisLockRoutes() {
 	g.Handle(i.Unlock.Method, i.Unlock.RelativePath, i.Unlock.Auth, i.Unlock.Roles, i.Unlock.Cache, i.Unlock.Interceptor, i.Unlock.Handler)
 }
 
-// RedisLockInstance defined
-var RedisLockInstance = NewRedisLock()
-
-// RedisMq defined
-type RedisMq struct {
-	Name string
-	Srv  *srv.RedisMq
-	Add,
-	Get Controller
-}
-
 // NewRedisMq defined
 func NewRedisMq() *RedisMq {
 	ctr := &RedisMq{Name: "redis_mq", Srv: srv.NewRedisMq()}
@@ -505,16 +499,6 @@ func RedisMqRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// RedisMqInstance defined
-var RedisMqInstance = NewRedisMq()
-
-// Sqlmap defined
-type Sqlmap struct {
-	Name      string
-	Srv       *srv.Sqlmap
-	Selectone Controller
-}
-
 // NewSqlmap defined
 func NewSqlmap() *Sqlmap {
 	ctr := &Sqlmap{Name: "sqlmap", Srv: srv.NewSqlmap()}
@@ -534,16 +518,6 @@ func SqlmapRoutes() {
 	g.Handle(i.Selectone.Method, i.Selectone.RelativePath, i.Selectone.Auth, i.Selectone.Roles, i.Selectone.Cache, i.Selectone.Interceptor, i.Selectone.Handler)
 }
 
-// SqlmapInstance defined
-var SqlmapInstance = NewSqlmap()
-
-// User defined
-type User struct {
-	Name string
-	Srv  *srv.User
-	Info Controller
-}
-
 // NewUser defined
 func NewUser() *User {
 	ctr := &User{Name: "user", Srv: srv.NewUser()}
@@ -561,18 +535,6 @@ func NewUser() *User {
 func UserRoutes() {
 	g, i := api.App.Group(viper.GetString("http.prefix")), UserInstance
 	g.Handle(i.Info.Method, i.Info.RelativePath, i.Info.Auth, i.Info.Roles, i.Info.Cache, i.Info.Interceptor, i.Info.Handler)
-}
-
-// UserInstance defined
-var UserInstance = NewUser()
-
-// View defined
-type View struct {
-	Name string
-	Srv  *srv.View
-	File,
-	HTML,
-	XML Controller
 }
 
 // NewView defined
@@ -610,16 +572,6 @@ func ViewRoutes() {
 	g.Handle(i.XML.Method, i.XML.RelativePath, i.XML.Auth, i.XML.Roles, i.XML.Cache, i.XML.Interceptor, i.XML.Handler)
 }
 
-// ViewInstance defined
-var ViewInstance = NewView()
-
-// Vote defined
-type Vote struct {
-	Name string
-	Srv  *srv.Vote
-	Like Controller
-}
-
 // NewVote defined
 func NewVote() *Vote {
 	ctr := &Vote{Name: "vote", Srv: srv.NewVote()}
@@ -637,16 +589,6 @@ func NewVote() *Vote {
 func VoteRoutes() {
 	g, i := api.App.Group(viper.GetString("http.prefix")), VoteInstance
 	g.Handle(i.Like.Method, i.Like.RelativePath, i.Like.Auth, i.Like.Roles, i.Like.Cache, i.Like.Interceptor, i.Like.Handler)
-}
-
-// VoteInstance defined
-var VoteInstance = NewVote()
-
-// Xlsx defined
-type Xlsx struct {
-	Name   string
-	Srv    *srv.Xlsx
-	Import Controller
 }
 
 // NewXlsx defined
@@ -667,9 +609,6 @@ func XlsxRoutes() {
 	g, i := api.App.Group(viper.GetString("http.prefix")), XlsxInstance
 	g.Handle(i.Import.Method, i.Import.RelativePath, i.Import.Auth, i.Import.Roles, i.Import.Cache, i.Import.Interceptor, i.Import.Handler)
 }
-
-// XlsxInstance defined
-var XlsxInstance = NewXlsx()
 
 // SyncModel defined
 func SyncModel() error {

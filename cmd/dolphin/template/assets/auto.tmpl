@@ -15,34 +15,35 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Name project
-{{- $pName := .Name }}
-var Name = "{{.Name}}"
-var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
+var (
+	Name = "{{.Name}}"
+	NopHandlerFunc = func(ctx *Context) { ctx.Next() }
+{{- range .Controllers}}
+    {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
+{{- end}}
+)
 
 // Controller defined
-type Controller struct {
-	Method       string
-	RelativePath string
-	Auth,
-	Roles,
-	Cache,
-	Interceptor,
-	Handler      core.HandlerFunc
-}
+type (
+	Controller struct {
+		Method       string
+		RelativePath string
+		Auth, Roles, Cache, Interceptor, Handler core.HandlerFunc
+	}
+{{- range .Controllers}}
+	{{.ToUpperCase .Name}} struct {
+		Name string
+		Srv  *{{$.Viper.GetString "dir.srv" }}.{{.ToUpperCase .Name}}
+		{{- $APIS := .APIS}}
+		{{- range $index, $api := .APIS}}
+		{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} Controller{{- else}},{{- end}}
+		{{- end}}
+	}
+{{- end}}
+)
 
 {{- range .Controllers}}
 {{- $ctr := .}}
-// {{.ToUpperCase .Name}} defined
-type {{.ToUpperCase .Name}} struct {
-	Name string
-	Srv  *{{$.Viper.GetString "dir.srv" }}.{{.ToUpperCase .Name}}
-	{{- $APIS := .APIS}}
-	{{- range $index, $api := .APIS}}
-	{{.ToUpperCase $api.Name}}{{- if last $index $APIS}} Controller{{- else}},{{- end}}
-	{{- end}}
-}
-
 // New{{.ToUpperCase .Name}} defined
 func New{{.ToUpperCase .Name}}() *{{.ToUpperCase .Name}} {
 	ctr := &{{.ToUpperCase .Name}}{Name: "{{.Name}}", Srv: {{$.Viper.GetString "dir.srv" }}.New{{.ToUpperCase .Name}}()}
@@ -66,9 +67,6 @@ func {{.ToUpperCase .Name}}Routes() {
 	g.Handle(i.{{.ToUpperCase .Name}}.Method, i.{{.ToUpperCase .Name}}.RelativePath, i.{{.ToUpperCase .Name}}.Auth, i.{{.ToUpperCase .Name}}.Roles, i.{{.ToUpperCase .Name}}.Cache, i.{{.ToUpperCase .Name}}.Interceptor, i.{{.ToUpperCase .Name}}.Handler)
 	{{- end}}
 }
-
-// {{.ToUpperCase .Name}}Instance defined
-var {{.ToUpperCase .Name}}Instance = New{{.ToUpperCase .Name}}()
 {{end}}
 
 // SyncModel defined

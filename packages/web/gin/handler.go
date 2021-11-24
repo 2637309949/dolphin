@@ -25,7 +25,7 @@ func (c *handler) set(numIn reflect.Value, ctx *gin.Context) reflect.Value {
 	switch ct.Interface().(type) {
 	case *gin.Context: //gin
 		ct.Set(reflect.ValueOf(ctx))
-	case *Context: //web/Context
+	case *Context: //gin/Context
 		ct.Set(reflect.ValueOf(NewContext(ctx)))
 	default: //platform/Context
 		cType := ct.Type().Elem()

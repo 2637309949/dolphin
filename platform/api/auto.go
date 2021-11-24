@@ -12,35 +12,405 @@ import (
 	"github.com/spf13/viper"
 )
 
-// Name project
-var Name = "platform"
-var NopHandlerFunc = func(ctx *Context) { ctx.Next() }
+var (
+	Name                          = "platform"
+	NopHandlerFunc                = func(ctx *Context) { ctx.Next() }
+	SysAppFunInstance             = NewSysAppFun()
+	SysAreaInstance               = NewSysArea()
+	SysAttachmentInstance         = NewSysAttachment()
+	SysCasInstance                = NewSysCas()
+	SysClientInstance             = NewSysClient()
+	SysCommentInstance            = NewSysComment()
+	SysDataPermissionInstance     = NewSysDataPermission()
+	DebugInstance                 = NewDebug()
+	SysDingtalkInstance           = NewSysDingtalk()
+	SysDomainInstance             = NewSysDomain()
+	SysMenuInstance               = NewSysMenu()
+	SysNotificationInstance       = NewSysNotification()
+	SysOptionsetInstance          = NewSysOptionset()
+	SysOrgInstance                = NewSysOrg()
+	SysPermissionInstance         = NewSysPermission()
+	SysRoleInstance               = NewSysRole()
+	SysRoleMenuInstance           = NewSysRoleMenu()
+	SysScheduleInstance           = NewSysSchedule()
+	SysScheduleHistoryInstance    = NewSysScheduleHistory()
+	SysSchedulingInstance         = NewSysScheduling()
+	SysSettingInstance            = NewSysSetting()
+	SysTableInstance              = NewSysTable()
+	SysTableColumnInstance        = NewSysTableColumn()
+	SysTagInstance                = NewSysTag()
+	SysTagGroupInstance           = NewSysTagGroup()
+	SysTrackerInstance            = NewSysTracker()
+	SysUserInstance               = NewSysUser()
+	SysUserTemplateInstance       = NewSysUserTemplate()
+	SysUserTemplateDetailInstance = NewSysUserTemplateDetail()
+	SysWechatInstance             = NewSysWechat()
+	SysWorkerInstance             = NewSysWorker()
+)
 
 // Controller defined
-type Controller struct {
-	Method       string
-	RelativePath string
-	Auth,
-	Roles,
-	Cache,
-	Interceptor,
-	Handler core.HandlerFunc
-}
-
-// SysAppFun defined
-type SysAppFun struct {
-	Name string
-	Srv  *srv.SysAppFun
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Tree,
-	Get Controller
-}
+type (
+	Controller struct {
+		Method                                   string
+		RelativePath                             string
+		Auth, Roles, Cache, Interceptor, Handler core.HandlerFunc
+	}
+	SysAppFun struct {
+		Name string
+		Srv  *srv.SysAppFun
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Tree,
+		Get Controller
+	}
+	SysArea struct {
+		Name string
+		Srv  *srv.SysArea
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysAttachment struct {
+		Name string
+		Srv  *srv.SysAttachment
+		Add,
+		BatchAdd,
+		Upload,
+		Export,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysCas struct {
+		Name string
+		Srv  *srv.SysCas
+		Login,
+		Logout,
+		Affirm,
+		Authorize,
+		Token,
+		URL,
+		Oauth2,
+		QrOauth2,
+		Refresh,
+		Check,
+		Profile,
+		Qrcode,
+		Qrconnect,
+		QrcodeLogin Controller
+	}
+	SysClient struct {
+		Name string
+		Srv  *srv.SysClient
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysComment struct {
+		Name string
+		Srv  *srv.SysComment
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysDataPermission struct {
+		Name string
+		Srv  *srv.SysDataPermission
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	Debug struct {
+		Name string
+		Srv  *srv.Debug
+		Pprof,
+		Heap,
+		Goroutine,
+		Allocs,
+		Block,
+		Threadcreate,
+		Cmdline,
+		Profile,
+		Symbol,
+		Trace,
+		Mutex Controller
+	}
+	SysDingtalk struct {
+		Name   string
+		Srv    *srv.SysDingtalk
+		Oauth2 Controller
+	}
+	SysDomain struct {
+		Name string
+		Srv  *srv.SysDomain
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysMenu struct {
+		Name string
+		Srv  *srv.SysMenu
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Sidebar,
+		Page,
+		Tree,
+		Get Controller
+	}
+	SysNotification struct {
+		Name string
+		Srv  *srv.SysNotification
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysOptionset struct {
+		Name string
+		Srv  *srv.SysOptionset
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysOrg struct {
+		Name string
+		Srv  *srv.SysOrg
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Tree,
+		Get Controller
+	}
+	SysPermission struct {
+		Name string
+		Srv  *srv.SysPermission
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysRole struct {
+		Name string
+		Srv  *srv.SysRole
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		RoleMenuTree,
+		RoleAppFunTree,
+		Get Controller
+	}
+	SysRoleMenu struct {
+		Name string
+		Srv  *srv.SysRoleMenu
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysSchedule struct {
+		Name string
+		Srv  *srv.SysSchedule
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysScheduleHistory struct {
+		Name string
+		Srv  *srv.SysScheduleHistory
+		Page Controller
+	}
+	SysScheduling struct {
+		Name string
+		Srv  *srv.SysScheduling
+		Add,
+		Del,
+		Update,
+		Page,
+		Get Controller
+	}
+	SysSetting struct {
+		Name string
+		Srv  *srv.SysSetting
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysTable struct {
+		Name string
+		Srv  *srv.SysTable
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysTableColumn struct {
+		Name string
+		Srv  *srv.SysTableColumn
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysTag struct {
+		Name string
+		Srv  *srv.SysTag
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysTagGroup struct {
+		Name string
+		Srv  *srv.SysTagGroup
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysTracker struct {
+		Name string
+		Srv  *srv.SysTracker
+		Page,
+		Get Controller
+	}
+	SysUser struct {
+		Name string
+		Srv  *srv.SysUser
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get,
+		Login,
+		Logout Controller
+	}
+	SysUserTemplate struct {
+		Name string
+		Srv  *srv.SysUserTemplate
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysUserTemplateDetail struct {
+		Name string
+		Srv  *srv.SysUserTemplateDetail
+		Add,
+		BatchAdd,
+		Del,
+		BatchDel,
+		Update,
+		BatchUpdate,
+		Page,
+		Get Controller
+	}
+	SysWechat struct {
+		Name   string
+		Srv    *srv.SysWechat
+		Oauth2 Controller
+	}
+	SysWorker struct {
+		Name string
+		Srv  *srv.SysWorker
+		Add,
+		Get Controller
+	}
+)
 
 // NewSysAppFun defined
 func NewSysAppFun() *SysAppFun {
@@ -125,23 +495,6 @@ func SysAppFunRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysAppFunInstance defined
-var SysAppFunInstance = NewSysAppFun()
-
-// SysArea defined
-type SysArea struct {
-	Name string
-	Srv  *srv.SysArea
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysArea defined
 func NewSysArea() *SysArea {
 	ctr := &SysArea{Name: "sys_area", Srv: srv.NewSysArea()}
@@ -215,25 +568,6 @@ func SysAreaRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysAreaInstance defined
-var SysAreaInstance = NewSysArea()
-
-// SysAttachment defined
-type SysAttachment struct {
-	Name string
-	Srv  *srv.SysAttachment
-	Add,
-	BatchAdd,
-	Upload,
-	Export,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysAttachment defined
@@ -325,29 +659,6 @@ func SysAttachmentRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysAttachmentInstance defined
-var SysAttachmentInstance = NewSysAttachment()
-
-// SysCas defined
-type SysCas struct {
-	Name string
-	Srv  *srv.SysCas
-	Login,
-	Logout,
-	Affirm,
-	Authorize,
-	Token,
-	URL,
-	Oauth2,
-	QrOauth2,
-	Refresh,
-	Check,
-	Profile,
-	Qrcode,
-	Qrconnect,
-	QrcodeLogin Controller
 }
 
 // NewSysCas defined
@@ -473,23 +784,6 @@ func SysCasRoutes() {
 	g.Handle(i.QrcodeLogin.Method, i.QrcodeLogin.RelativePath, i.QrcodeLogin.Auth, i.QrcodeLogin.Roles, i.QrcodeLogin.Cache, i.QrcodeLogin.Interceptor, i.QrcodeLogin.Handler)
 }
 
-// SysCasInstance defined
-var SysCasInstance = NewSysCas()
-
-// SysClient defined
-type SysClient struct {
-	Name string
-	Srv  *srv.SysClient
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysClient defined
 func NewSysClient() *SysClient {
 	ctr := &SysClient{Name: "sys_client", Srv: srv.NewSysClient()}
@@ -563,23 +857,6 @@ func SysClientRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysClientInstance defined
-var SysClientInstance = NewSysClient()
-
-// SysComment defined
-type SysComment struct {
-	Name string
-	Srv  *srv.SysComment
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysComment defined
@@ -657,23 +934,6 @@ func SysCommentRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysCommentInstance defined
-var SysCommentInstance = NewSysComment()
-
-// SysDataPermission defined
-type SysDataPermission struct {
-	Name string
-	Srv  *srv.SysDataPermission
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysDataPermission defined
 func NewSysDataPermission() *SysDataPermission {
 	ctr := &SysDataPermission{Name: "sys_data_permission", Srv: srv.NewSysDataPermission()}
@@ -747,26 +1007,6 @@ func SysDataPermissionRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysDataPermissionInstance defined
-var SysDataPermissionInstance = NewSysDataPermission()
-
-// Debug defined
-type Debug struct {
-	Name string
-	Srv  *srv.Debug
-	Pprof,
-	Heap,
-	Goroutine,
-	Allocs,
-	Block,
-	Threadcreate,
-	Cmdline,
-	Profile,
-	Symbol,
-	Trace,
-	Mutex Controller
 }
 
 // NewDebug defined
@@ -868,16 +1108,6 @@ func DebugRoutes() {
 	g.Handle(i.Mutex.Method, i.Mutex.RelativePath, i.Mutex.Auth, i.Mutex.Roles, i.Mutex.Cache, i.Mutex.Interceptor, i.Mutex.Handler)
 }
 
-// DebugInstance defined
-var DebugInstance = NewDebug()
-
-// SysDingtalk defined
-type SysDingtalk struct {
-	Name   string
-	Srv    *srv.SysDingtalk
-	Oauth2 Controller
-}
-
 // NewSysDingtalk defined
 func NewSysDingtalk() *SysDingtalk {
 	ctr := &SysDingtalk{Name: "sys_dingtalk", Srv: srv.NewSysDingtalk()}
@@ -895,23 +1125,6 @@ func NewSysDingtalk() *SysDingtalk {
 func SysDingtalkRoutes() {
 	g, i := App.Group(viper.GetString("http.prefix")), SysDingtalkInstance
 	g.Handle(i.Oauth2.Method, i.Oauth2.RelativePath, i.Oauth2.Auth, i.Oauth2.Roles, i.Oauth2.Cache, i.Oauth2.Interceptor, i.Oauth2.Handler)
-}
-
-// SysDingtalkInstance defined
-var SysDingtalkInstance = NewSysDingtalk()
-
-// SysDomain defined
-type SysDomain struct {
-	Name string
-	Srv  *srv.SysDomain
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysDomain defined
@@ -987,25 +1200,6 @@ func SysDomainRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysDomainInstance defined
-var SysDomainInstance = NewSysDomain()
-
-// SysMenu defined
-type SysMenu struct {
-	Name string
-	Srv  *srv.SysMenu
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Sidebar,
-	Page,
-	Tree,
-	Get Controller
 }
 
 // NewSysMenu defined
@@ -1099,23 +1293,6 @@ func SysMenuRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysMenuInstance defined
-var SysMenuInstance = NewSysMenu()
-
-// SysNotification defined
-type SysNotification struct {
-	Name string
-	Srv  *srv.SysNotification
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysNotification defined
 func NewSysNotification() *SysNotification {
 	ctr := &SysNotification{Name: "sys_notification", Srv: srv.NewSysNotification()}
@@ -1191,23 +1368,6 @@ func SysNotificationRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysNotificationInstance defined
-var SysNotificationInstance = NewSysNotification()
-
-// SysOptionset defined
-type SysOptionset struct {
-	Name string
-	Srv  *srv.SysOptionset
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysOptionset defined
 func NewSysOptionset() *SysOptionset {
 	ctr := &SysOptionset{Name: "sys_optionset", Srv: srv.NewSysOptionset()}
@@ -1281,24 +1441,6 @@ func SysOptionsetRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysOptionsetInstance defined
-var SysOptionsetInstance = NewSysOptionset()
-
-// SysOrg defined
-type SysOrg struct {
-	Name string
-	Srv  *srv.SysOrg
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Tree,
-	Get Controller
 }
 
 // NewSysOrg defined
@@ -1384,23 +1526,6 @@ func SysOrgRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysOrgInstance defined
-var SysOrgInstance = NewSysOrg()
-
-// SysPermission defined
-type SysPermission struct {
-	Name string
-	Srv  *srv.SysPermission
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysPermission defined
 func NewSysPermission() *SysPermission {
 	ctr := &SysPermission{Name: "sys_permission", Srv: srv.NewSysPermission()}
@@ -1474,25 +1599,6 @@ func SysPermissionRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysPermissionInstance defined
-var SysPermissionInstance = NewSysPermission()
-
-// SysRole defined
-type SysRole struct {
-	Name string
-	Srv  *srv.SysRole
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	RoleMenuTree,
-	RoleAppFunTree,
-	Get Controller
 }
 
 // NewSysRole defined
@@ -1586,23 +1692,6 @@ func SysRoleRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysRoleInstance defined
-var SysRoleInstance = NewSysRole()
-
-// SysRoleMenu defined
-type SysRoleMenu struct {
-	Name string
-	Srv  *srv.SysRoleMenu
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysRoleMenu defined
 func NewSysRoleMenu() *SysRoleMenu {
 	ctr := &SysRoleMenu{Name: "sys_role_menu", Srv: srv.NewSysRoleMenu()}
@@ -1676,23 +1765,6 @@ func SysRoleMenuRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysRoleMenuInstance defined
-var SysRoleMenuInstance = NewSysRoleMenu()
-
-// SysSchedule defined
-type SysSchedule struct {
-	Name string
-	Srv  *srv.SysSchedule
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysSchedule defined
@@ -1770,16 +1842,6 @@ func SysScheduleRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysScheduleInstance defined
-var SysScheduleInstance = NewSysSchedule()
-
-// SysScheduleHistory defined
-type SysScheduleHistory struct {
-	Name string
-	Srv  *srv.SysScheduleHistory
-	Page Controller
-}
-
 // NewSysScheduleHistory defined
 func NewSysScheduleHistory() *SysScheduleHistory {
 	ctr := &SysScheduleHistory{Name: "sys_schedule_history", Srv: srv.NewSysScheduleHistory()}
@@ -1797,20 +1859,6 @@ func NewSysScheduleHistory() *SysScheduleHistory {
 func SysScheduleHistoryRoutes() {
 	g, i := App.Group(viper.GetString("http.prefix")), SysScheduleHistoryInstance
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
-}
-
-// SysScheduleHistoryInstance defined
-var SysScheduleHistoryInstance = NewSysScheduleHistory()
-
-// SysScheduling defined
-type SysScheduling struct {
-	Name string
-	Srv  *srv.SysScheduling
-	Add,
-	Del,
-	Update,
-	Page,
-	Get Controller
 }
 
 // NewSysScheduling defined
@@ -1862,23 +1910,6 @@ func SysSchedulingRoutes() {
 	g.Handle(i.Update.Method, i.Update.RelativePath, i.Update.Auth, i.Update.Roles, i.Update.Cache, i.Update.Interceptor, i.Update.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysSchedulingInstance defined
-var SysSchedulingInstance = NewSysScheduling()
-
-// SysSetting defined
-type SysSetting struct {
-	Name string
-	Srv  *srv.SysSetting
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysSetting defined
@@ -1956,23 +1987,6 @@ func SysSettingRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysSettingInstance defined
-var SysSettingInstance = NewSysSetting()
-
-// SysTable defined
-type SysTable struct {
-	Name string
-	Srv  *srv.SysTable
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysTable defined
 func NewSysTable() *SysTable {
 	ctr := &SysTable{Name: "sys_table", Srv: srv.NewSysTable()}
@@ -2046,23 +2060,6 @@ func SysTableRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysTableInstance defined
-var SysTableInstance = NewSysTable()
-
-// SysTableColumn defined
-type SysTableColumn struct {
-	Name string
-	Srv  *srv.SysTableColumn
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysTableColumn defined
@@ -2140,23 +2137,6 @@ func SysTableColumnRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysTableColumnInstance defined
-var SysTableColumnInstance = NewSysTableColumn()
-
-// SysTag defined
-type SysTag struct {
-	Name string
-	Srv  *srv.SysTag
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysTag defined
 func NewSysTag() *SysTag {
 	ctr := &SysTag{Name: "sys_tag", Srv: srv.NewSysTag()}
@@ -2230,23 +2210,6 @@ func SysTagRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysTagInstance defined
-var SysTagInstance = NewSysTag()
-
-// SysTagGroup defined
-type SysTagGroup struct {
-	Name string
-	Srv  *srv.SysTagGroup
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysTagGroup defined
@@ -2324,17 +2287,6 @@ func SysTagGroupRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysTagGroupInstance defined
-var SysTagGroupInstance = NewSysTagGroup()
-
-// SysTracker defined
-type SysTracker struct {
-	Name string
-	Srv  *srv.SysTracker
-	Page,
-	Get Controller
-}
-
 // NewSysTracker defined
 func NewSysTracker() *SysTracker {
 	ctr := &SysTracker{Name: "sys_tracker", Srv: srv.NewSysTracker()}
@@ -2360,25 +2312,6 @@ func SysTrackerRoutes() {
 	g, i := App.Group(viper.GetString("http.prefix")), SysTrackerInstance
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysTrackerInstance defined
-var SysTrackerInstance = NewSysTracker()
-
-// SysUser defined
-type SysUser struct {
-	Name string
-	Srv  *srv.SysUser
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get,
-	Login,
-	Logout Controller
 }
 
 // NewSysUser defined
@@ -2472,23 +2405,6 @@ func SysUserRoutes() {
 	g.Handle(i.Logout.Method, i.Logout.RelativePath, i.Logout.Auth, i.Logout.Roles, i.Logout.Cache, i.Logout.Interceptor, i.Logout.Handler)
 }
 
-// SysUserInstance defined
-var SysUserInstance = NewSysUser()
-
-// SysUserTemplate defined
-type SysUserTemplate struct {
-	Name string
-	Srv  *srv.SysUserTemplate
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
-}
-
 // NewSysUserTemplate defined
 func NewSysUserTemplate() *SysUserTemplate {
 	ctr := &SysUserTemplate{Name: "sys_user_template", Srv: srv.NewSysUserTemplate()}
@@ -2562,23 +2478,6 @@ func SysUserTemplateRoutes() {
 	g.Handle(i.BatchUpdate.Method, i.BatchUpdate.RelativePath, i.BatchUpdate.Auth, i.BatchUpdate.Roles, i.BatchUpdate.Cache, i.BatchUpdate.Interceptor, i.BatchUpdate.Handler)
 	g.Handle(i.Page.Method, i.Page.RelativePath, i.Page.Auth, i.Page.Roles, i.Page.Cache, i.Page.Interceptor, i.Page.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
-}
-
-// SysUserTemplateInstance defined
-var SysUserTemplateInstance = NewSysUserTemplate()
-
-// SysUserTemplateDetail defined
-type SysUserTemplateDetail struct {
-	Name string
-	Srv  *srv.SysUserTemplateDetail
-	Add,
-	BatchAdd,
-	Del,
-	BatchDel,
-	Update,
-	BatchUpdate,
-	Page,
-	Get Controller
 }
 
 // NewSysUserTemplateDetail defined
@@ -2656,16 +2555,6 @@ func SysUserTemplateDetailRoutes() {
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
 
-// SysUserTemplateDetailInstance defined
-var SysUserTemplateDetailInstance = NewSysUserTemplateDetail()
-
-// SysWechat defined
-type SysWechat struct {
-	Name   string
-	Srv    *srv.SysWechat
-	Oauth2 Controller
-}
-
 // NewSysWechat defined
 func NewSysWechat() *SysWechat {
 	ctr := &SysWechat{Name: "sys_wechat", Srv: srv.NewSysWechat()}
@@ -2683,17 +2572,6 @@ func NewSysWechat() *SysWechat {
 func SysWechatRoutes() {
 	g, i := App.Group(viper.GetString("http.prefix")), SysWechatInstance
 	g.Handle(i.Oauth2.Method, i.Oauth2.RelativePath, i.Oauth2.Auth, i.Oauth2.Roles, i.Oauth2.Cache, i.Oauth2.Interceptor, i.Oauth2.Handler)
-}
-
-// SysWechatInstance defined
-var SysWechatInstance = NewSysWechat()
-
-// SysWorker defined
-type SysWorker struct {
-	Name string
-	Srv  *srv.SysWorker
-	Add,
-	Get Controller
 }
 
 // NewSysWorker defined
@@ -2722,9 +2600,6 @@ func SysWorkerRoutes() {
 	g.Handle(i.Add.Method, i.Add.RelativePath, i.Add.Auth, i.Add.Roles, i.Add.Cache, i.Add.Interceptor, i.Add.Handler)
 	g.Handle(i.Get.Method, i.Get.RelativePath, i.Get.Auth, i.Get.Roles, i.Get.Cache, i.Get.Interceptor, i.Get.Handler)
 }
-
-// SysWorkerInstance defined
-var SysWorkerInstance = NewSysWorker()
 
 // SyncModel defined
 func SyncModel() error {
