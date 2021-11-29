@@ -82,7 +82,7 @@ func WithIdentity() Option {
 		manager.SetValidateURIHandler(ValidateURIHandler)
 
 		dol.Identity = &Identity{}
-		dol.Identity.jwt = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
+		dol.Identity.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
 		dol.Identity.OAuth2 = server.NewServer(server.NewConfig(), manager)
 		dol.Identity.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
 		dol.Identity.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })

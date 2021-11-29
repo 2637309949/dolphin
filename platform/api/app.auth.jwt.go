@@ -27,8 +27,8 @@ func NewJWT(secret string, expire int64) *JWT {
 	}
 }
 
-// BearerAuth defined TODO
-func (j *JWT) BearerAuth(req *http.Request) (string, bool) {
+// Bearer defined TODO
+func (j *JWT) Bearer(req *http.Request) (string, bool) {
 	prefix, auth := "Bearer ", req.Header.Get("Authorization")
 	if strings.HasPrefix(auth, prefix) {
 		return auth[len(prefix):], true
@@ -77,7 +77,7 @@ func (p *JWTProvider) GetName() string {
 
 // Config defined TODO
 func (p *JWTProvider) Config(i *Identity) {
-	p.jwt = i.jwt
+	p.jwt = i.JWT
 }
 
 // parseToken defined TODO
@@ -90,7 +90,7 @@ func (p *JWTProvider) parseJWTToken(t *jwt.MapClaims) TokenInfo {
 
 // Verify defined TODO
 func (p *JWTProvider) Verify(ctx *Context) (TokenInfo, bool) {
-	if bearer, ok := p.jwt.BearerAuth(ctx.Request()); ok {
+	if bearer, ok := p.jwt.Bearer(ctx.Request()); ok {
 		tk, err := p.jwt.LoadAccessToken(bearer)
 		if err != nil {
 			logrus.Error(err)
