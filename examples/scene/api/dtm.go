@@ -7,8 +7,8 @@ import (
 	"scene/types"
 	"scene/util/errors"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/util/reflect"
-	"github.com/sirupsen/logrus"
 )
 
 // DtmTcc api implementation
@@ -26,7 +26,7 @@ func (ctr *Dtm) DtmTcc(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.Trans(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -46,7 +46,7 @@ func (ctr *Dtm) DtmTcc(ctx *Context) {
 func (ctr *Dtm) DtmTransOut(ctx *Context) {
 	var payload types.TransReq
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -74,7 +74,7 @@ func (ctr *Dtm) DtmTransOut(ctx *Context) {
 func (ctr *Dtm) DtmTransOutConfirm(ctx *Context) {
 	var payload types.TransReq
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -103,7 +103,7 @@ func (ctr *Dtm) DtmTransOutConfirm(ctx *Context) {
 func (ctr *Dtm) DtmTransOutRevert(ctx *Context) {
 	var payload types.TransReq
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -131,7 +131,7 @@ func (ctr *Dtm) DtmTransOutRevert(ctx *Context) {
 func (ctr *Dtm) DtmTransIn(ctx *Context) {
 	var payload types.TransReq
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -158,7 +158,7 @@ func (ctr *Dtm) DtmTransIn(ctx *Context) {
 func (ctr *Dtm) DtmTransInConfirm(ctx *Context) {
 	var payload types.TransReq
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -186,7 +186,7 @@ func (ctr *Dtm) DtmTransInConfirm(ctx *Context) {
 func (ctr *Dtm) DtmTransInRevert(ctx *Context) {
 	var payload types.TransReq
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

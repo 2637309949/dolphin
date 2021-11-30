@@ -1,12 +1,13 @@
 package api
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/json-iterator/go/extra"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	_ "github.com/spf13/viper/remote"
 )
@@ -76,7 +77,7 @@ func InitViper() {
 	viper.AutomaticEnv()
 
 	if err := viper.ReadInConfig(); err != nil {
-		logrus.Warn("configuration file not found")
+		logrus.Warn(context.TODO(), "configuration file not found")
 	}
 	if strings.TrimSpace(viper.GetString("oauth.server")) == "" {
 		viper.SetDefault("oauth.server", fmt.Sprintf("http://localhost%v", viper.GetString("http.port")))
@@ -96,13 +97,13 @@ func InitViper() {
 		viper.AddRemoteProvider("consul", viper.GetString("consul.endpoint"), viper.GetString("consul.name"))
 		viper.SetConfigType(viper.GetString("consul.type"))
 		if err := viper.ReadRemoteConfig(); err != nil {
-			logrus.Warnf("failed to read remote configuration file [%v]", err)
+			logrus.Warnf(context.TODO(), "failed to read remote configuration file [%v]", err)
 		}
 	}
 
 	if viper.GetBool("app.viper") {
 		if err := viper.WriteConfig(); err != nil {
-			logrus.Warnf("failed to save configuration file [%v]", err)
+			logrus.Warnf(context.TODO(), "failed to save configuration file [%v]", err)
 		}
 	}
 }

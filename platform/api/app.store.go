@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/cache"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/go-redis/redis/v8"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -77,14 +77,14 @@ func NewRedisClient() redis.Cmdable {
 		})
 		_, err = rdsCli.Ping(context.Background()).Result()
 	default:
-		logrus.Fatal("redis mode must be one of (stub, cluster)")
+		logrus.Fatal(context.TODO(), "redis mode must be one of (stub, cluster)")
 	}
 
 	if err != nil {
-		logrus.Warnf("redis:%v", err)
+		logrus.Warnf(context.TODO(), "redis:%v", err)
 		return nil
 	}
-	logrus.Infof("redis:%v connect successfully", addr[0])
+	logrus.Infof(context.TODO(), "redis:%v connect successfully", addr[0])
 	return rdsCli
 }
 
@@ -92,9 +92,9 @@ func NewRedisClient() redis.Cmdable {
 func InitCacheStore() {
 	if RedisClient = NewRedisClient(); RedisClient != nil {
 		CacheStore = cache.NewRedisCache(RedisClient, 60*time.Second)
-		logrus.Infof("use Redis as CacheStore")
+		logrus.Infof(context.TODO(), "use Redis as CacheStore")
 	} else {
 		CacheStore = cache.NewInMemoryStore(60 * time.Second)
-		logrus.Infof("use Memory as CacheStore")
+		logrus.Infof(context.TODO(), "use Memory as CacheStore")
 	}
 }

@@ -5,9 +5,11 @@
 package api
 
 import (
+	"context"
 	"fmt"
 	"sync"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/store"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
@@ -15,7 +17,6 @@ import (
 	"github.com/2637309949/dolphin/platform/util/worker"
 	"github.com/go-errors/errors"
 	"github.com/robfig/cron/v3"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -126,7 +127,7 @@ func (d *DefaultWorker) Update(w types.Worker) error {
 // AddJobHandler defined TODO
 func (d *DefaultWorker) AddJobHandler(code string, funk func(types.Worker) (interface{}, error)) {
 	if d.JobHandlers[code] != nil {
-		logrus.Fatalf("JobHandlers:%v already existed", code)
+		logrus.Fatalf(context.TODO(), "JobHandlers:%v already existed", code)
 	}
 	d.JobHandlers[code] = funk
 }

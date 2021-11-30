@@ -7,7 +7,7 @@ import (
 	"context"
 	"scene/types"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // KafkaAdd api implementation
@@ -24,12 +24,12 @@ import (
 func (ctr *Kafka) KafkaAdd(ctx *Context) {
 	var payload types.KafkaInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	if err := ctr.Srv.WriteMessages(context.Background(), payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

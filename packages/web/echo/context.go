@@ -10,10 +10,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/eriklott/mustache"
 	"github.com/labstack/echo/v4"
-	"github.com/sirupsen/logrus"
 )
 
 var _ core.Context = &Context{}
@@ -147,16 +147,16 @@ func (c *Context) File(r io.Reader, filename string, context ...interface{}) {
 	defer os.Remove(file.Name())
 	bte, err := ioutil.ReadAll(r)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(c, err)
 		return
 	}
 	str, err := mustache.NewTemplate().Render(string(bte), context...)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(c, err)
 		return
 	}
 	if _, err = file.WriteString(str); err != nil {
-		logrus.Error(err)
+		logrus.Error(c, err)
 		return
 	}
 	http.ServeFile(c.Context.Response().Writer, c.Context.Request(), file.Name())

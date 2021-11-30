@@ -5,8 +5,10 @@
 package api
 
 import (
+	"context"
+
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
-	"github.com/sirupsen/logrus"
 )
 
 // Provider deifned TODO
@@ -29,7 +31,7 @@ func (i *Identity) RegisterProvider(provider Provider) {
 	name := provider.GetName()
 	for _, p := range i.providers {
 		if p.GetName() == name {
-			logrus.Infof("warning: auth provider %v already registered", name)
+			logrus.Infof(context.TODO(), "warning: auth provider %v already registered", name)
 			return
 		}
 	}

@@ -4,9 +4,10 @@
 package types
 
 import (
+	"context"
 	"encoding/json"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 const (
@@ -23,11 +24,11 @@ func (m *Worker) Unmarshal(v interface{}) error {
 		err error
 	)
 	if bs, err = json.Marshal(m.Payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	if err := json.Unmarshal(bs, v); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	return nil

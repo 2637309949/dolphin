@@ -8,8 +8,8 @@ import (
 
 	"aisle/util/errors"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -27,7 +27,7 @@ import (
 func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
 	var payload = types.Organ{}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -40,7 +40,7 @@ func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -61,7 +61,7 @@ func (ctr *BaseOrgan) BaseOrganAdd(ctx *Context) {
 func (ctr *BaseOrgan) BaseOrganBatchAdd(ctx *Context) {
 	var payload []types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -76,7 +76,7 @@ func (ctr *BaseOrgan) BaseOrganBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -97,7 +97,7 @@ func (ctr *BaseOrgan) BaseOrganBatchAdd(ctx *Context) {
 func (ctr *BaseOrgan) BaseOrganDel(ctx *Context) {
 	var payload types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -109,7 +109,7 @@ func (ctr *BaseOrgan) BaseOrganDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -130,7 +130,7 @@ func (ctr *BaseOrgan) BaseOrganDel(ctx *Context) {
 func (ctr *BaseOrgan) BaseOrganBatchDel(ctx *Context) {
 	var payload []types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -143,7 +143,7 @@ func (ctr *BaseOrgan) BaseOrganBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -164,7 +164,7 @@ func (ctr *BaseOrgan) BaseOrganBatchDel(ctx *Context) {
 func (ctr *BaseOrgan) BaseOrganUpdate(ctx *Context) {
 	var payload types.Organ
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -174,7 +174,7 @@ func (ctr *BaseOrgan) BaseOrganUpdate(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.OrganId.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -198,7 +198,7 @@ func (ctr *BaseOrgan) BaseOrganBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -214,7 +214,7 @@ func (ctr *BaseOrgan) BaseOrganBatchUpdate(ctx *Context) {
 		payload[i].Updater = null.StringFrom(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].OrganId.Int64).Update(&payload[i])
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			s.Rollback()
 			ctx.Fail(err)
 			return
@@ -222,14 +222,14 @@ func (ctr *BaseOrgan) BaseOrganBatchUpdate(ctx *Context) {
 		ret = append(ret, r)
 	}
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		s.Rollback()
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -263,7 +263,7 @@ func (ctr *BaseOrgan) BaseOrganPage(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.PageSearch(db, "organ", "page", "organ", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -284,14 +284,14 @@ func (ctr *BaseOrgan) BaseOrganGet(ctx *Context) {
 	var entity types.Organ
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 
 	db := ctx.MustDB()
 	if ext, err := db.Get(&entity); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	} else if !ext {

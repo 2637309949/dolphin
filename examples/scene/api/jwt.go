@@ -4,7 +4,7 @@
 package api
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // JwtLogin api implementation
@@ -19,7 +19,7 @@ import (
 func (ctr *Jwt) JwtLogin(ctx *Context) {
 	var payload struct{}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -27,7 +27,7 @@ func (ctr *Jwt) JwtLogin(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.CreateJWT(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -52,7 +52,7 @@ func (ctr *Jwt) JwtCheck(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

@@ -6,7 +6,7 @@ package api
 import (
 	"context"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // MiddlesGlobalTest api implementation
@@ -24,7 +24,7 @@ func (ctr *Middles) MiddlesGlobalTest(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil && err != context.Canceled {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -46,7 +46,7 @@ func (ctr *Middles) MiddlesLocalTest(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil && err != context.Canceled {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

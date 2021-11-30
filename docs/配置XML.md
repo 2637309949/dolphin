@@ -113,7 +113,7 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/null"
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -131,7 +131,7 @@ import (
 func (ctr *Article) ArticleAdd(ctx *Context) {
 	var payload types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -142,7 +142,7 @@ func (ctr *Article) ArticleAdd(ctx *Context) {
 	payload.IsDelete = null.IntFrom(0)
 	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -163,7 +163,7 @@ func (ctr *Article) ArticleAdd(ctx *Context) {
 func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 	var payload []types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -176,7 +176,7 @@ func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 	}
 	ret, err := ctx.MustDB().Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -197,7 +197,7 @@ func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 func (ctr *Article) ArticleDel(ctx *Context) {
 	var payload types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -207,7 +207,7 @@ func (ctr *Article) ArticleDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -228,7 +228,7 @@ func (ctr *Article) ArticleDel(ctx *Context) {
 func (ctr *Article) ArticleBatchDel(ctx *Context) {
 	var payload []types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -239,7 +239,7 @@ func (ctr *Article) ArticleBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -260,7 +260,7 @@ func (ctr *Article) ArticleBatchDel(ctx *Context) {
 func (ctr *Article) ArticleUpdate(ctx *Context) {
 	var payload types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -268,7 +268,7 @@ func (ctr *Article) ArticleUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFromNow()
 	ret, err := ctx.MustDB().ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -292,7 +292,7 @@ func (ctr *Article) ArticleBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -321,7 +321,7 @@ func (ctr *Article) ArticleBatchUpdate(ctx *Context) {
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -353,7 +353,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctr.Srv.DB.PageSearch(ctx.MustDB(), "article", "page", "article", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -374,12 +374,12 @@ func (ctr *Article) ArticleGet(ctx *Context) {
 	var entity types.Article
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	if ext, err := ctx.MustDB().Get(&entity); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	} else if !ext {
@@ -403,13 +403,13 @@ func (ctr *Article) ArticleGet(ctx *Context) {
 func (ctr *Article) ArticlePayment(ctx *Context) {
 	var payload types.ArticleInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	ret, err := ctr.Srv.TODO(ctx, ctx.MustDB(), struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

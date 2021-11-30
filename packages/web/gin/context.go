@@ -12,11 +12,12 @@ import (
 	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
+	"github.com/2637309949/dolphin/packages/trace/tracespec"
 	"github.com/2637309949/dolphin/packages/web/core"
 	"github.com/eriklott/mustache"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/sirupsen/logrus"
 )
 
 var _ core.Context = &Context{}
@@ -145,8 +146,9 @@ func (c *Context) JSON(code int, i interface{}) {
 // Success defined TODO
 func (c *Context) Success(data interface{}) {
 	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
-		"code": 200,
-		"data": data,
+		"request_id": c.TraceId(),
+		"code":       200,
+		"data":       data,
 	})
 }
 
@@ -157,9 +159,10 @@ func (c *Context) Fail(err error) {
 		num, status = e.Code(), e.Status()
 	}
 	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
-		"code":   num,
-		"detail": detail,
-		"status": status,
+		"request_id": c.TraceId(),
+		"code":       num,
+		"detail":     detail,
+		"status":     status,
 	})
 }
 
@@ -325,16 +328,16 @@ func (c *Context) File(r io.Reader, filename string, context ...interface{}) {
 	defer os.Remove(file.Name())
 	bte, err := ioutil.ReadAll(r)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(c, err)
 		return
 	}
 	str, err := mustache.NewTemplate().Render(string(bte), context...)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(c, err)
 		return
 	}
 	if _, err = file.WriteString(str); err != nil {
-		logrus.Error(err)
+		logrus.Error(c, err)
 		return
 	}
 	http.ServeFile(c.Context.Writer, c.Context.Request, file.Name())
@@ -356,6 +359,28 @@ func (ctx *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) err
 
 	_, err = io.Copy(out, src)
 	return err
+}
+
+// TraceId defined TODO
+func (ctx *Context) TraceId() string {
+	span := ctx.Value(string(tracespec.TracingKey))
+	if span != nil {
+		return (span.(tracespec.Trace)).TraceId()
+	}
+	return ""
+}
+
+// SpanId defined TODO
+func (ctx *Context) SpanId() string {
+	span := ctx.Value(string(tracespec.TracingKey))
+	if span != nil {
+		return (span.(tracespec.Trace)).SpanId()
+	}
+	return ""
+}
+
+// Visit defined TODO
+func (ctx *Context) Visit(fn func(key, val string) bool) {
 }
 
 func NewContext(ctx *gin.Context) *Context {

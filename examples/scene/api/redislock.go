@@ -4,7 +4,7 @@
 package api
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // RedisLockLock api implementation
@@ -25,7 +25,7 @@ func (ctr *RedisLock) RedisLockLock(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -50,7 +50,7 @@ func (ctr *RedisLock) RedisLockUnlock(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

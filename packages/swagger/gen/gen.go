@@ -1,14 +1,15 @@
 package gen
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/swagger"
 	"github.com/ghodss/yaml"
-	"github.com/sirupsen/logrus"
 )
 
 // Gen presents a generate tool for swagger.
@@ -72,7 +73,7 @@ func (g *Gen) Build(config *Config) error {
 		return fmt.Errorf("dir: %s is not exist", config.SearchDir)
 	}
 
-	logrus.Println("Generate swagger docs....")
+	logrus.Println(context.TODO(), "Generate swagger docs....")
 	p := swagger.New(swagger.SetMarkdownFileDirectory(config.MarkdownFilesDir),
 		swagger.SetExcludedDirsAndFiles(config.Excludes),
 		swagger.SetCodeExamplesDirectory(config.CodeExampleFilesDir))
@@ -133,7 +134,7 @@ func (g *Gen) Build(config *Config) error {
 
 	// log.Printf("create docs.go at %+v", docFileName)
 	// logrus.Printf("create swagger.json at %+v", jsonFileName)
-	logrus.Printf("create swagger.yaml at %+v", yamlFileName)
+	logrus.Printf(context.TODO(), "create swagger.yaml at %+v", yamlFileName)
 
 	return nil
 }

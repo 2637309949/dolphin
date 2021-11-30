@@ -6,7 +6,7 @@ package api
 import (
 	"scene/types"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // EncryptAdd api implementation
@@ -23,7 +23,7 @@ import (
 func (ctr *Encrypt) EncryptAdd(ctx *Context) {
 	var payload types.EncryptInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -45,7 +45,7 @@ func (ctr *Encrypt) EncryptInfo(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

@@ -6,8 +6,8 @@ package api
 import (
 	"scene/svc"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/api"
-	"github.com/sirupsen/logrus"
 )
 
 // type defined TODO
@@ -16,10 +16,10 @@ type Context struct{ *api.Context }
 // Run defined TODO
 func Run() {
 	MiddlesInstance.LocalTest.Interceptor = func(ctx *Context) {
-		logrus.Infof("dolphin local middles")
+		logrus.Infof(ctx, "dolphin local middles")
 	}
 	api.App.Use(func(ctx *Context) {
-		logrus.Infof("dolphin global middles")
+		logrus.Infof(ctx, "dolphin global middles")
 	})
 	SyncModel()
 	SyncSrv(svc.NewServiceContext(api.CacheStore))

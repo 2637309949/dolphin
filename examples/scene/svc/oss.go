@@ -1,8 +1,10 @@
 package svc
 
 import (
+	"context"
+
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -55,12 +57,12 @@ func NewXOss() *XOss {
 	accesskeysecret := viper.GetString("oss.accesskeysecret")
 	client, err := oss.New(endpoint, accesskeyid, accesskeysecret)
 	if err != nil {
-		logrus.Errorln(err)
+		logrus.Errorln(context.TODO(), err)
 	}
 
 	bk, err := client.Bucket(bucket)
 	if err != nil {
-		logrus.Errorln(err)
+		logrus.Errorln(context.TODO(), err)
 	}
 	return &XOss{bucket: bk}
 }

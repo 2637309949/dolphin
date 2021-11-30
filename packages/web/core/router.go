@@ -1,6 +1,7 @@
 package core
 
 import (
+	"context"
 	"net/http"
 	"os"
 	"path"
@@ -8,7 +9,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 type (
@@ -30,7 +31,7 @@ func nameOfFunction(f interface{}) string {
 // DebugPrintRoute defined TODO
 func DebugPrintRoute(httpMethod, absolutePath, _ string, _ int) {
 	if IsDebugging() {
-		logrus.Infof("%-6s %-25s ", httpMethod, absolutePath)
+		logrus.Infof(context.TODO(), "%-6s %-25s ", httpMethod, absolutePath)
 	}
 }
 

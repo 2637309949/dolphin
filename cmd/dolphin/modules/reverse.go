@@ -5,6 +5,7 @@
 package modules
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"html/template"
@@ -15,9 +16,9 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/shurcooL/httpfs/vfsutil"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -86,7 +87,7 @@ func (app *Reverse) Build(dir string, args []string, appParser *parser.AppParser
 			return tmplCfgs, err
 		}
 		for i2 := range tables {
-			logrus.Infoln(tables[i2].Name)
+			logrus.Infoln(context.TODO(), tables[i2].Name)
 			meta := parser.Table{}
 			meta.Name = tables[i2].Name
 			meta.Desc = strings.ReplaceAll(tables[i2].Comment, "\n", "")

@@ -5,6 +5,7 @@
 package modules
 
 import (
+	"context"
 	"html/template"
 	"io/ioutil"
 	"path"
@@ -13,8 +14,8 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/template/dist"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/shurcooL/httpfs/vfsutil"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
@@ -51,7 +52,7 @@ func (m *More) Build(dir string, args []string, appParser *parser.AppParser) ([]
 		return []*parser.TmplCfg{}, err
 	}
 	if len(args) < 1 {
-		logrus.Warn("Please give the path to generate the table")
+		logrus.Warn(context.TODO(), "Please give the path to generate the table")
 		return tmplCfgs, nil
 	}
 	ctrPath := utils.SearchFileInDirWithSuffix(dir, ".xml", func(s string) bool {

@@ -4,11 +4,12 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/google/uuid"
-	"github.com/sirupsen/logrus"
 )
 
 // Job defined
@@ -22,11 +23,11 @@ func (p Job) Do() error {
 		err error
 	)
 	if bs, err = json.Marshal(&p); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	if err := json.Unmarshal(bs, &w); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 
@@ -34,22 +35,22 @@ func (p Job) Do() error {
 	worker := App.Manager.Worker()
 	b, err := worker.Find(p.Code)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	b.Status = types.WorkerStatusProccessing
 	if err := worker.Update(b); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	// Run a worker
 	ret, err := worker.GetJobHandler(p.Name)(w)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		b.Status = types.WorkerStatusInterrupt
 		b.Error = err.Error()
 		if err := worker.Update(b); err != nil {
-			logrus.Error(err)
+			logrus.Error(context.TODO(), err)
 			return err
 		}
 		return err
@@ -57,7 +58,7 @@ func (p Job) Do() error {
 	b.Status = types.WorkerStatusFinish
 	b.Result = ret
 	if err := worker.Update(b); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	return nil
@@ -82,25 +83,25 @@ func (ctr *SysWorker) SysWorkerAdd(ctx *Context) {
 		err     error
 	)
 	if err = ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	payload.Code = uuid.New().String()
 	_, err = ctx.LoginInInfo(&payload.User)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	payload.Status = types.WorkerStatusInitial
 	if bs, err = json.Marshal(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	if err := json.Unmarshal(bs, &w); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -130,7 +131,7 @@ func (ctr *SysWorker) SysWorkerGet(ctx *Context) {
 	worker := App.Manager.Worker()
 	w, err := worker.Find(q.GetString("code"))
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

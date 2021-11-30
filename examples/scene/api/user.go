@@ -4,10 +4,10 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/slice"
-	"github.com/sirupsen/logrus"
 )
 
 // UserInfo api implementation
@@ -26,7 +26,7 @@ func (ctr *User) UserInfo(ctx *Context) {
 	db := ctx.MustDB()
 	articles, err := db.SqlMapClient("selectall_article").Query().List()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -34,13 +34,13 @@ func (ctr *User) UserInfo(ctx *Context) {
 		users := []types.SysUser{}
 		err := api.App.PlatformDB.Table("sys_user").In("id", uids).Where("is_delete != !").Cols("id", "name").Find(&users)
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
 		articles, err = slice.PatchSliceByField(articles, users, "creater", "id", "creater_name#name")
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}

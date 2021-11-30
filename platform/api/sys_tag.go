@@ -4,10 +4,10 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/errors"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -25,7 +25,7 @@ import (
 func (ctr *SysTag) SysTagAdd(ctx *Context) {
 	var payload types.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -38,7 +38,7 @@ func (ctr *SysTag) SysTagAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -59,7 +59,7 @@ func (ctr *SysTag) SysTagAdd(ctx *Context) {
 func (ctr *SysTag) SysTagBatchAdd(ctx *Context) {
 	var payload []types.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -74,7 +74,7 @@ func (ctr *SysTag) SysTagBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -95,7 +95,7 @@ func (ctr *SysTag) SysTagBatchAdd(ctx *Context) {
 func (ctr *SysTag) SysTagDel(ctx *Context) {
 	var payload types.SysUserTemplate
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -107,7 +107,7 @@ func (ctr *SysTag) SysTagDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -128,7 +128,7 @@ func (ctr *SysTag) SysTagDel(ctx *Context) {
 func (ctr *SysTag) SysTagBatchDel(ctx *Context) {
 	var payload []*types.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -141,7 +141,7 @@ func (ctr *SysTag) SysTagBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -162,7 +162,7 @@ func (ctr *SysTag) SysTagBatchDel(ctx *Context) {
 func (ctr *SysTag) SysTagUpdate(ctx *Context) {
 	var payload types.SysTag
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -172,7 +172,7 @@ func (ctr *SysTag) SysTagUpdate(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -196,7 +196,7 @@ func (ctr *SysTag) SysTagBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -211,7 +211,7 @@ func (ctr *SysTag) SysTagBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -219,13 +219,13 @@ func (ctr *SysTag) SysTagBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -258,7 +258,7 @@ func (ctr *SysTag) SysTagPage(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_tag", "page", "sys_tag", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -279,7 +279,7 @@ func (ctr *SysTag) SysTagGet(ctx *Context) {
 	var entity types.SysTag
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -287,7 +287,7 @@ func (ctr *SysTag) SysTagGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

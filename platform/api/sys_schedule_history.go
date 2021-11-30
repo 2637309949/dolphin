@@ -4,7 +4,7 @@
 package api
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // SysScheduleHistoryPage api implementation
@@ -33,7 +33,7 @@ func (ctr *SysScheduleHistory) SysScheduleHistoryPage(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_schedule_history", "page", "sys_schedule", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

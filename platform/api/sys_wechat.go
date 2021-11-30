@@ -8,9 +8,9 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/sirupsen/logrus"
 )
 
 // SysWechatOauth2 api implementation
@@ -29,7 +29,7 @@ func (ctr *SysWechat) SysWechatOauth2(ctx *Context) {
 	state := q.GetString("state")
 	sri, err := url.ParseQuery(state)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -40,7 +40,7 @@ func (ctr *SysWechat) SysWechatOauth2(ctx *Context) {
 	qrAuth := types.QrAuth{}
 	err = CacheStore.Get("wechat:qrcode:"+uuid, &qrAuth)
 	if err == nil {
-		logrus.Error(errors.New("invalid qrcode"))
+		logrus.Error(ctx, errors.New("invalid qrcode"))
 		ctx.Fail(errors.New("invalid qrcode"))
 		return
 	}
@@ -53,7 +53,7 @@ func (ctr *SysWechat) SysWechatOauth2(ctx *Context) {
 
 	user, err := ctr.Srv.WinXinBindCheck(ctx, App.PlatformDB, db, domain, q.GetString("code"))
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -63,7 +63,7 @@ func (ctr *SysWechat) SysWechatOauth2(ctx *Context) {
 	qrAuth.UserId = user.ID
 	err = CacheStore.Set("wechat:qrcode:"+uuid, qrAuth, 30*time.Second)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

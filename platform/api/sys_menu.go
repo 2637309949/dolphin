@@ -6,10 +6,10 @@ package api
 import (
 	"fmt"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/errors"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -27,7 +27,7 @@ import (
 func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 	var payload types.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -55,7 +55,7 @@ func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -76,7 +76,7 @@ func (ctr *SysMenu) SysMenuAdd(ctx *Context) {
 func (ctr *SysMenu) SysMenuBatchAdd(ctx *Context) {
 	var payload []types.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -91,7 +91,7 @@ func (ctr *SysMenu) SysMenuBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -112,7 +112,7 @@ func (ctr *SysMenu) SysMenuBatchAdd(ctx *Context) {
 func (ctr *SysMenu) SysMenuDel(ctx *Context) {
 	var payload types.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -124,7 +124,7 @@ func (ctr *SysMenu) SysMenuDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -145,7 +145,7 @@ func (ctr *SysMenu) SysMenuDel(ctx *Context) {
 func (ctr *SysMenu) SysMenuBatchDel(ctx *Context) {
 	var payload []types.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -158,7 +158,7 @@ func (ctr *SysMenu) SysMenuBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -179,7 +179,7 @@ func (ctr *SysMenu) SysMenuBatchDel(ctx *Context) {
 func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 	var payload types.SysMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -204,7 +204,7 @@ func (ctr *SysMenu) SysMenuUpdate(ctx *Context) {
 
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -228,7 +228,7 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -243,7 +243,7 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -251,13 +251,13 @@ func (ctr *SysMenu) SysMenuBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -280,7 +280,7 @@ func (ctr *SysMenu) SysMenuSidebar(ctx *Context) {
 	q.SetTags()
 	ret, err := ctr.Srv.DB.TreeSearch(db, "sys_menu", "sidebar", "sys_menu", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -318,7 +318,7 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(db))
 		ret, err := ctr.Srv.Report.PageExport(db, "sys_menu", "page", "sys_menu", q.Value())
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -327,7 +327,7 @@ func (ctr *SysMenu) SysMenuPage(ctx *Context) {
 	}
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_menu", "page", "sys_menu", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -350,7 +350,7 @@ func (ctr *SysMenu) SysMenuTree(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.TreeSearch(db, "sys_menu", "tree", "sys_menu", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -371,7 +371,7 @@ func (ctr *SysMenu) SysMenuGet(ctx *Context) {
 	var entity types.SysMenu
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -379,7 +379,7 @@ func (ctr *SysMenu) SysMenuGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

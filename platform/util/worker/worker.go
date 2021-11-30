@@ -1,7 +1,9 @@
 package worker
 
 import (
-	"github.com/sirupsen/logrus"
+	"context"
+
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // Example:
@@ -61,7 +63,7 @@ func (d *Dispatcher) dispatch() {
 	for {
 		select {
 		case job := <-d.JobQueue:
-			logrus.Info("Store a job into jobChannel")
+			logrus.Info(context.TODO(), "Store a job into jobChannel")
 			jobChannel := <-d.WorkerPool
 			go func(job Job) {
 				jobChannel <- job
@@ -104,7 +106,7 @@ func (w Worker) Start() {
 			select {
 			case job := <-w.JobChannel:
 				if err := job.Do(); err != nil {
-					logrus.Errorf("Error do payload function:%v", err.Error())
+					logrus.Errorf(context.TODO(), "Error do payload function:%v", err.Error())
 				}
 			case <-w.quit:
 				return

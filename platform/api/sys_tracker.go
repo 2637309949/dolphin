@@ -4,9 +4,9 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/errors"
-	"github.com/sirupsen/logrus"
 )
 
 // SysTrackerPage api implementation
@@ -38,7 +38,7 @@ func (ctr *SysTracker) SysTrackerPage(ctx *Context) {
 		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(db))
 		ret, err := ctr.Srv.Report.PageExport(db, "sys_tracker", "page", "sys_tracker", q.Value(), ctr.Srv.PageFormatter(App.PlatformDB))
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -47,12 +47,12 @@ func (ctr *SysTracker) SysTrackerPage(ctx *Context) {
 	}
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_tracker", "page", "sys_tracker", q.Value(), ctr.Srv.PageFormatter(App.PlatformDB))
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -73,7 +73,7 @@ func (ctr *SysTracker) SysTrackerGet(ctx *Context) {
 	var entity types.SysTracker
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -81,7 +81,7 @@ func (ctr *SysTracker) SysTrackerGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Cols("id", "header", "req_body", "res_body").Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

@@ -4,10 +4,10 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/errors"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -25,7 +25,7 @@ import (
 func (ctr *SysComment) SysCommentAdd(ctx *Context) {
 	var payload types.SysComment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -38,7 +38,7 @@ func (ctr *SysComment) SysCommentAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -59,7 +59,7 @@ func (ctr *SysComment) SysCommentAdd(ctx *Context) {
 func (ctr *SysComment) SysCommentBatchAdd(ctx *Context) {
 	var payload []types.SysComment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -74,7 +74,7 @@ func (ctr *SysComment) SysCommentBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -95,7 +95,7 @@ func (ctr *SysComment) SysCommentBatchAdd(ctx *Context) {
 func (ctr *SysComment) SysCommentDel(ctx *Context) {
 	var payload types.SysUserTemplate
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -127,7 +127,7 @@ func (ctr *SysComment) SysCommentDel(ctx *Context) {
 func (ctr *SysComment) SysCommentBatchDel(ctx *Context) {
 	var payload []types.SysUserTemplate
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -140,7 +140,7 @@ func (ctr *SysComment) SysCommentBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -161,7 +161,7 @@ func (ctr *SysComment) SysCommentBatchDel(ctx *Context) {
 func (ctr *SysComment) SysCommentUpdate(ctx *Context) {
 	var payload types.SysComment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -171,7 +171,7 @@ func (ctr *SysComment) SysCommentUpdate(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -195,7 +195,7 @@ func (ctr *SysComment) SysCommentBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -210,7 +210,7 @@ func (ctr *SysComment) SysCommentBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -218,13 +218,13 @@ func (ctr *SysComment) SysCommentBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -257,7 +257,7 @@ func (ctr *SysComment) SysCommentPage(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_comment", "page", "sys_comment", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -278,7 +278,7 @@ func (ctr *SysComment) SysCommentGet(ctx *Context) {
 	var entity types.SysComment
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -286,7 +286,7 @@ func (ctr *SysComment) SysCommentGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

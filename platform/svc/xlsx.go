@@ -2,19 +2,20 @@ package svc
 
 import (
 	"archive/zip"
+	"context"
 	"fmt"
 	"io"
 	"os"
 	"path"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/google/uuid"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -200,11 +201,11 @@ func NewXlsx(header ...[]map[string]interface{}) *Xlsx {
 	uuid := uuid.New().String()
 	filePath := path.Join(xlsx.TmplPath, fmt.Sprintf("%v.zip", uuid))
 	if err := os.MkdirAll(path.Dir(filePath), os.ModePerm); err != nil {
-		logrus.Errorln(err)
+		logrus.Errorln(context.TODO(), err)
 	}
 	zipFile, err := os.Create(filePath)
 	if err != nil {
-		logrus.Errorln(err)
+		logrus.Errorln(context.TODO(), err)
 	}
 	xlsx.zipFile = zip.NewWriter(zipFile)
 	xlsx.zipPath = filePath

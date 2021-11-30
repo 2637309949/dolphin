@@ -12,13 +12,13 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/packages/oauth2/models"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/go-session/session"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	xoauth2 "golang.org/x/oauth2"
 )
@@ -96,7 +96,7 @@ var ValidateURIHandler = func(baseURI string, redirectURI string) error {
 		}
 	}
 	if base[0][2] != redirect[0][2] {
-		logrus.Errorf("baseURI=%v, redirectURI=%v", base[0][2], redirect[0][2])
+		logrus.Errorf(context.TODO(), "baseURI=%v, redirectURI=%v", base[0][2], redirect[0][2])
 		return errors.New("invalid redirect uri")
 	}
 	return nil
@@ -142,7 +142,7 @@ func (p *TokenProvider) Verify(ctx *Context) (TokenInfo, bool) {
 	if bearer, ok := p.oauth2.BearerAuth(ctx.Request()); ok {
 		tk, err := p.oauth2.Manager.LoadAccessToken(bearer)
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			return nil, false
 		}
 		info := p.parseToken(tk)

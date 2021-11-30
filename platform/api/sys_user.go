@@ -10,10 +10,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
@@ -32,7 +32,7 @@ import (
 func (ctr *SysUser) SysUserAdd(ctx *Context) {
 	var payload types.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -48,7 +48,7 @@ func (ctr *SysUser) SysUserAdd(ctx *Context) {
 	payload.SetPassword("123456")
 	ret, err := App.PlatformDB.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -69,7 +69,7 @@ func (ctr *SysUser) SysUserAdd(ctx *Context) {
 func (ctr *SysUser) SysUserBatchAdd(ctx *Context) {
 	var payload []types.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -84,7 +84,7 @@ func (ctr *SysUser) SysUserBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -105,7 +105,7 @@ func (ctr *SysUser) SysUserBatchAdd(ctx *Context) {
 func (ctr *SysUser) SysUserDel(ctx *Context) {
 	var payload types.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -115,7 +115,7 @@ func (ctr *SysUser) SysUserDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -136,7 +136,7 @@ func (ctr *SysUser) SysUserDel(ctx *Context) {
 func (ctr *SysUser) SysUserBatchDel(ctx *Context) {
 	var payload []*types.SysUser
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -147,7 +147,7 @@ func (ctr *SysUser) SysUserBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -171,7 +171,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 		UserRole      null.String `json:"user_role" xml:"user_role"`
 	}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -187,7 +187,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 	defer ds.Close()
 	ret, err := ps.Table(new(types.SysUser)).ID(payload.ID.Int64).Omit("user_role").Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		ps.Rollback()
 		return
@@ -195,7 +195,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 
 	_, err = ds.SQL("delete from sys_role_user where user_id=?", payload.ID.Int64).Execute()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		ps.Rollback()
 		ds.Rollback()
@@ -216,7 +216,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 	}).([]types.SysRoleUser)
 	_, err = ds.Insert(&roleUsers)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		ps.Rollback()
 		ds.Rollback()
@@ -224,7 +224,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 	}
 	err = ps.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		ps.Rollback()
 		ds.Rollback()
@@ -232,7 +232,7 @@ func (ctr *SysUser) SysUserUpdate(ctx *Context) {
 	}
 	err = ds.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		ps.Rollback()
 		ds.Rollback()
@@ -258,7 +258,7 @@ func (ctr *SysUser) SysUserBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -273,7 +273,7 @@ func (ctr *SysUser) SysUserBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -281,13 +281,13 @@ func (ctr *SysUser) SysUserBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -334,7 +334,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(db))
 		ret, err := ctr.Srv.Report.PageExport(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(db))
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -343,7 +343,7 @@ func (ctr *SysUser) SysUserPage(ctx *Context) {
 	}
 	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_user", "page", "sys_user", q.Value(), ctr.Srv.PageFormatter(db))
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -380,7 +380,7 @@ func (ctr *SysUser) SysUserGet(ctx *Context) {
 	entity.Password.Valid = false
 	entity.Salt.Valid = false
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -400,7 +400,7 @@ func (ctr *SysUser) SysUserGet(ctx *Context) {
 func (ctr *SysUser) SysUserLogin(ctx *Context) {
 	var payload, account = types.Login{}, types.SysUser{}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -416,7 +416,7 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 		if err == nil {
 			err = errors.New("account doesn't exist or password error")
 		}
-		logrus.Errorf("SysUserLogin/ValidPassword:%v", err)
+		logrus.Errorf(ctx, "SysUserLogin/ValidPassword:%v", err)
 		ctx.Fail(err)
 		return
 	}
@@ -429,7 +429,7 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 		Request:      ctx.Request(),
 	})
 	if err != nil {
-		logrus.Errorf("SysUserLogin/GenerateAccessToken:%v", err)
+		logrus.Errorf(ctx, "SysUserLogin/GenerateAccessToken:%v", err)
 		ctx.Fail(err)
 		return
 	}
@@ -451,7 +451,7 @@ func (ctr *SysUser) SysUserLogin(ctx *Context) {
 func (ctr *SysUser) SysUserLogout(ctx *Context) {
 	err := App.Identity.OAuth2.Manager.RemoveAccessToken(ctx.MustToken().GetAccess())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

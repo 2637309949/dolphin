@@ -8,9 +8,9 @@ import (
 	"errors"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/svc"
-	"github.com/sirupsen/logrus"
 )
 
 // SysCasQrType defined TODO
@@ -54,10 +54,10 @@ func (srv *SysCas) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (
 	for range ticker.C {
 		select {
 		case <-cwt.Done():
-			logrus.Infoln("child process interrupt...")
+			logrus.Infoln(ctx, "child process interrupt...")
 			return <-chi, cwt.Err()
 		default:
-			logrus.Infoln("awaiting job...")
+			logrus.Infoln(ctx, "awaiting job...")
 		}
 	}
 	return nil, errors.New("no implementation found")

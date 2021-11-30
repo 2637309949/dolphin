@@ -7,12 +7,12 @@ import (
 	"context"
 	"path"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2/errors"
 	"github.com/2637309949/dolphin/packages/oauth2/generates"
 	"github.com/2637309949/dolphin/packages/oauth2/manage"
 	"github.com/2637309949/dolphin/packages/oauth2/server"
 	"github.com/2637309949/dolphin/packages/web"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
 )
@@ -29,10 +29,10 @@ type Hook struct {
 // OnStart defined OnStart
 func (h *Hook) OnStart(ctx context.Context) error {
 	go func() {
-		logrus.Infof("http listen on port%v", viper.GetString("http.port"))
+		logrus.Infof(context.TODO(), "http listen on port%v", viper.GetString("http.port"))
 		err := web.Run(viper.GetString("http.port"))
 		if err != nil {
-			logrus.Fatal(err)
+			logrus.Fatal(context.TODO(), err)
 		}
 	}()
 	return nil
@@ -85,8 +85,8 @@ func WithIdentity() Option {
 		dol.Identity.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
 		dol.Identity.OAuth2 = server.NewServer(server.NewConfig(), manager)
 		dol.Identity.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
-		dol.Identity.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(err); return })
-		dol.Identity.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(re.Error) })
+		dol.Identity.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(context.TODO(), err); return })
+		dol.Identity.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(context.TODO(), re.Error) })
 
 		providers := []Provider{&TokenProvider{}, &JWTProvider{}, &RSAProvider{}}
 		for _, p := range providers {

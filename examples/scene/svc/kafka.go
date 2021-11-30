@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/platform/util"
 	"github.com/segmentio/kafka-go"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -61,7 +61,7 @@ func (x *XKafka) ReadMessage(ctx context.Context, topic string, cb func([]byte),
 	for {
 		msg, err := reader.ReadMessage(ctx)
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			return err
 		}
 		WokerCntChannel <- true

@@ -5,14 +5,15 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"sort"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/oauth2"
 	"github.com/2637309949/dolphin/platform/util/encrypt"
-	"github.com/sirupsen/logrus"
 )
 
 // Secret defines Common request parameter
@@ -84,7 +85,7 @@ func (secret *Secret) Verify(cli oauth2.ClientInfo) (bool, error) {
 	}
 	sn, err := secret.sign(cli)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return false, err
 	}
 	if string(sn) != secret.Sign {
@@ -111,19 +112,19 @@ func (p *RSAProvider) Config(i *Identity) {
 func (p *RSAProvider) Verify(ctx *Context) (TokenInfo, bool) {
 	secret, err := NewSecret(ctx)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return nil, false
 	}
 
 	cli, err := NewClientStore().GetByID(secret.AppID)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return nil, false
 	}
 
 	valid, err := secret.Verify(cli)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return nil, false
 	}
 	return &Token{ClientID: cli.GetID()}, valid

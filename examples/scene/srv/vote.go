@@ -14,45 +14,45 @@ import (
 	"scene/svc"
 	"scene/types"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/api"
 	"github.com/2637309949/dolphin/platform/util/slice"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
 func init() {
 	api.App.Manager.Cron().AddCron("*/10 * * * * *", func() {
-		logrus.Infoln("scan vote")
+		logrus.Infoln(context.TODO(), "scan vote")
 		num1, err := api.RedisClient.SCard(context.Background(), "post_set").Result()
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(context.TODO(), err)
 			return
 		}
 		ulpsIncr, ulpsDecr := []types.UserLikePost{}, []types.UserLikePost{}
 		for i := int64(0); i < num1; i++ {
 			postId, err := api.RedisClient.SPop(context.Background(), "post_set").Result()
 			if err != nil {
-				logrus.Error(err)
+				logrus.Error(context.TODO(), err)
 				break
 			}
 			num2, err := api.RedisClient.SCard(context.Background(),
 				fmt.Sprintf("post_user_like_set_%v", postId)).Result()
 			if err != nil {
-				logrus.Error(err)
+				logrus.Error(context.TODO(), err)
 				break
 			}
 			for i := int64(0); i < num2; i++ {
 				ulp := types.UserLikePost{}
 				userId, err := api.RedisClient.SPop(context.Background(), fmt.Sprintf("post_user_like_set_%v", postId)).Result()
 				if err != nil {
-					logrus.Error(err)
+					logrus.Error(context.TODO(), err)
 					break
 				}
 				field, err := api.RedisClient.HMGet(context.Background(), fmt.Sprintf("post_user_like_%v%v", postId, userId), "create_time", "type").Result()
 				if err != nil {
-					logrus.Error(err)
+					logrus.Error(context.TODO(), err)
 					break
 				}
 				te, _ := time.Parse("2006-01-02 15:04", fmt.Sprintf("%v", field[0]))
@@ -71,12 +71,12 @@ func init() {
 				}
 				if _, err := api.RedisClient.Del(context.Background(),
 					fmt.Sprintf("post_user_like_%v%v", postId, userId)).Result(); err != nil {
-					logrus.Error(err)
+					logrus.Error(context.TODO(), err)
 					break
 				}
 				if _, err := api.RedisClient.Decr(context.Background(),
 					fmt.Sprintf("post%v_counter", postId)).Result(); err != nil {
-					logrus.Error(err)
+					logrus.Error(context.TODO(), err)
 					break
 				}
 			}
@@ -107,7 +107,7 @@ func init() {
 		for k, v := range domainDecr {
 			db := api.App.Manager.GetBusinessDB(k)
 			if db != nil {
-				logrus.Println("domainDecr:", len(v))
+				logrus.Println(context.TODO(), "domainDecr:", len(v))
 				sql := "false"
 				for i2 := range v {
 					sql += " or (user_id=" + fmt.Sprintf("%v", v[i2].UserId.Int64) + " and " + "post_id=" + fmt.Sprintf("%v", v[i2].PostId.Int64) + ")"
@@ -115,7 +115,7 @@ func init() {
 				if _, err := db.Table(new(types.UserLikePost)).Where(sql).Update(&map[string]interface{}{
 					"is_delete": 1,
 				}); err != nil {
-					logrus.Error(err)
+					logrus.Error(context.TODO(), err)
 					break
 				}
 			}
@@ -123,14 +123,14 @@ func init() {
 		for k, v := range domainIncr {
 			db := api.App.Manager.GetBusinessDB(k)
 			if db != nil {
-				logrus.Println("domainIncr:", len(v))
+				logrus.Println(context.TODO(), "domainIncr:", len(v))
 				extList := []types.UserLikePost{}
 				sql := "false"
 				for i2 := range v {
 					sql += " or (user_id=" + fmt.Sprintf("%v", v[i2].UserId.Int64) + " and " + "post_id=" + fmt.Sprintf("%v", v[i2].PostId.Int64) + ")"
 				}
 				if err := db.Table(new(types.UserLikePost)).Where(sql).Find(&extList); err != nil {
-					logrus.Error(err)
+					logrus.Error(context.TODO(), err)
 					break
 				}
 				items := funk.Filter(v, func(v1 types.UserLikePost) bool {
@@ -143,7 +143,7 @@ func init() {
 					return true
 				}).([]types.UserLikePost)
 				if _, err := db.Table(new(types.UserLikePost)).Insert(&items); err != nil {
-					logrus.Error(err)
+					logrus.Error(context.TODO(), err)
 					break
 				}
 			}
@@ -210,7 +210,7 @@ func (srv *Vote) Like(ctx context.Context, db *xorm.Engine, params types.VoteInf
 	num, err := api.RedisClient.SCard(context.Background(),
 		fmt.Sprintf("post_user_like_set_incr_%v", params.PostId.String)).Result()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return nil, err
 	}
 	if _, err := api.RedisClient.Set(context.Background(),
@@ -239,10 +239,10 @@ func (srv *Vote) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (in
 	for range ticker.C {
 		select {
 		case <-cwt.Done():
-			logrus.Infoln("child process interrupt...")
+			logrus.Infoln(ctx, "child process interrupt...")
 			return <-chi, cwt.Err()
 		default:
-			logrus.Infoln("awaiting job...")
+			logrus.Infoln(ctx, "awaiting job...")
 		}
 	}
 	return nil, errors.New("no implementation found")

@@ -1,7 +1,9 @@
 package swagger
 
 import (
-	"github.com/sirupsen/logrus"
+	"context"
+
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 const (
@@ -18,13 +20,13 @@ func isRelease() bool {
 // Println calls Output to print to the standard logger when release mode.
 func Println(v ...interface{}) {
 	if isRelease() {
-		logrus.Info(v...)
+		logrus.Info(context.TODO(), v...)
 	}
 }
 
 // Printf calls Output to print to the standard logger when release mode.
 func Printf(format string, v ...interface{}) {
 	if isRelease() {
-		logrus.Infof(format, v...)
+		logrus.Infof(context.TODO(), format, v...)
 	}
 }

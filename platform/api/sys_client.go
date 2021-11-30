@@ -4,10 +4,10 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/errors"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
@@ -26,7 +26,7 @@ import (
 func (ctr *SysClient) SysClientAdd(ctx *Context) {
 	var payload types.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -38,7 +38,7 @@ func (ctr *SysClient) SysClientAdd(ctx *Context) {
 	payload.AppName = null.StringFrom(viper.GetString("app.name"))
 	ret, err := App.PlatformDB.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -59,7 +59,7 @@ func (ctr *SysClient) SysClientAdd(ctx *Context) {
 func (ctr *SysClient) SysClientBatchAdd(ctx *Context) {
 	var payload []types.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -74,7 +74,7 @@ func (ctr *SysClient) SysClientBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -95,7 +95,7 @@ func (ctr *SysClient) SysClientBatchAdd(ctx *Context) {
 func (ctr *SysClient) SysClientDel(ctx *Context) {
 	var payload types.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -105,7 +105,7 @@ func (ctr *SysClient) SysClientDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -126,7 +126,7 @@ func (ctr *SysClient) SysClientDel(ctx *Context) {
 func (ctr *SysClient) SysClientBatchDel(ctx *Context) {
 	var payload []types.SysClient
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -137,7 +137,7 @@ func (ctr *SysClient) SysClientBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -158,7 +158,7 @@ func (ctr *SysClient) SysClientBatchDel(ctx *Context) {
 func (ctr *SysClient) SysClientUpdate(ctx *Context) {
 	var payload types.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -166,7 +166,7 @@ func (ctr *SysClient) SysClientUpdate(ctx *Context) {
 	payload.UpdateTime = null.TimeFromNow()
 	ret, err := App.PlatformDB.ID(payload.ID).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -190,7 +190,7 @@ func (ctr *SysClient) SysClientBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -205,7 +205,7 @@ func (ctr *SysClient) SysClientBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -213,13 +213,13 @@ func (ctr *SysClient) SysClientBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -251,7 +251,7 @@ func (ctr *SysClient) SysClientPage(ctx *Context) {
 	q.SetTags()
 	ret, err := ctr.Srv.DB.PageSearch(App.PlatformDB, "sys_client", "page", "sys_client", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -272,7 +272,7 @@ func (ctr *SysClient) SysClientGet(ctx *Context) {
 	var entity types.SysClient
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -280,7 +280,7 @@ func (ctr *SysClient) SysClientGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

@@ -10,11 +10,12 @@ import (
 	"os"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/trace"
+	"github.com/2637309949/dolphin/packages/trace/tracespec"
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
 // Hostname returns the name of the host, if no hostname, a random id is returned.
@@ -44,21 +45,21 @@ func Roles(roles ...string) func(ctx *Context) {
 // Auth middles TODO
 func Auth(auth ...string) func(ctx *Context) {
 	return func(ctx *Context) {
-		for _, a := range auth {
-			p := App.Identity.GetProvider(a)
-			if p == nil {
+		for _, ah := range auth {
+			provider := App.Identity.GetProvider(ah)
+			if provider == nil {
 				ctx.Fail(errors.ErrNotFoundProvider)
 				return
 			}
 
-			tk, ok := p.Verify(ctx)
+			tokenInfo, ok := provider.Verify(ctx)
 			if !ok {
 				ctx.Fail(errors.ErrAuthenticationFailed)
 				return
 			}
 
-			if tk.GetDomain() != "" {
-				db := App.Manager.GetBusinessDB(tk.GetDomain())
+			if tokenInfo.GetDomain() != "" {
+				db := App.Manager.GetBusinessDB(tokenInfo.GetDomain())
 				if db == nil {
 					ctx.Fail(errors.ErrInvalidDomain)
 					return
@@ -66,7 +67,7 @@ func Auth(auth ...string) func(ctx *Context) {
 				ctx.Set("DB", db)
 			}
 
-			ctx.Set("AuthInfo", tk)
+			ctx.Set("AuthInfo", tokenInfo)
 			ctx.Next()
 		}
 	}
@@ -75,13 +76,16 @@ func Auth(auth ...string) func(ctx *Context) {
 // HttpTrace defined TODO
 func HttpTrace() func(ctx *Context) {
 	return func(ctx *Context) {
-		carrier, err := trace.Extract(trace.HttpFormat, ctx.Request().Header)
+		req := ctx.Request()
+		carrier, err := trace.Extract(trace.HttpFormat, req.Header)
 		if err != nil && err != trace.ErrInvalidCarrier {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 		}
-		c, span := trace.StartServerSpan(ctx.Request().Context(), carrier, Hostname(), ctx.Request().RequestURI)
+		c, span := trace.StartServerSpan(req.Context(), carrier, Hostname(), req.RequestURI)
 		defer span.Finish()
-		ctx.SetRequest(ctx.Request().WithContext(c))
+
+		ctx.Set(string(tracespec.TracingKey), span)
+		ctx.SetRequest(req.WithContext(c))
 		ctx.Next()
 	}
 }
@@ -112,7 +116,7 @@ func Recovery() func(ctx *Context) {
 				httprequest, _ := httputil.DumpRequest(ctx.Request(), false)
 				goErr := errors.Wrap(err, 3)
 				reset := string([]byte{27, 91, 48, 109})
-				logrus.Errorf("[Nice Recovery] panic recovered:\n\n%s%s\n\n%s%s", httprequest, goErr.Error(), goErr.Stack(), reset)
+				logrus.Errorf(ctx, "[Nice Recovery] panic recovered:\n\n%s%s\n\n%s%s", httprequest, goErr.Error(), goErr.Stack(), reset)
 				ctx.Fail(goErr)
 			}
 		}()
@@ -194,7 +198,7 @@ func DumpBody(dumpCall func(*Context, *LogFormatterParams)) func(ctx *Context) {
 
 			param.Path = path
 
-			logrus.Info(formatter(param.LogFormatterParams))
+			logrus.Info(c, formatter(param.LogFormatterParams))
 
 			// LogFormatterParams defined recorder
 			dumpCall(c, &param)

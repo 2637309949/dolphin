@@ -12,11 +12,11 @@ import (
 	"scene/svc"
 	"scene/types"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/go-errors/errors"
 	"github.com/go-redis/redis/v7"
 	"github.com/kak-tus/ami"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
@@ -47,7 +47,7 @@ func init() {
 		WriteTimeout: time.Second * 60,
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 	}
 	RedisConsumer, err = ami.NewConsumer(ami.ConsumerOptions{
 		Name:              "ami",
@@ -64,7 +64,7 @@ func init() {
 		WriteTimeout: time.Second * 60,
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 	}
 }
 
@@ -85,7 +85,7 @@ func (srv *RedisMq) SetServiceContext(svc *svc.ServiceContext) {
 func (srv *RedisMq) Producer(ctx context.Context, db *xorm.Engine, params types.AmiInfo) (interface{}, error) {
 	aiStr, err := json.Marshal(params)
 	if err != nil {
-		logrus.Error("failed to marshal:", err)
+		logrus.Error(ctx, "failed to marshal:", err)
 		return nil, err
 	}
 	RedisProducer.Send(string(aiStr))
@@ -114,7 +114,7 @@ func (srv *RedisMq) Consumer(ctx context.Context, db *xorm.Engine, params map[st
 				RedisConsumer.Ack(m)
 				value := types.AmiInfo{}
 				if err := json.Unmarshal([]byte(m.Body), &value); err != nil {
-					logrus.Error("failed to unmarshal:", err)
+					logrus.Error(ctx, "failed to unmarshal:", err)
 				}
 				items = append(items, value)
 			case <-time.After(3 * time.Second):
@@ -147,10 +147,10 @@ func (srv *RedisMq) TODO(ctx context.Context, db *xorm.Engine, params struct{}) 
 	for range ticker.C {
 		select {
 		case <-cwt.Done():
-			logrus.Infoln("child process interrupt...")
+			logrus.Infoln(ctx, "child process interrupt...")
 			return <-chi, cwt.Err()
 		default:
-			logrus.Infoln("awaiting job...")
+			logrus.Infoln(ctx, "awaiting job...")
 		}
 	}
 	return nil, errors.New("no implementation found")

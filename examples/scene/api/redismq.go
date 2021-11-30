@@ -6,7 +6,7 @@ package api
 import (
 	"scene/types"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // RedisMqAdd api implementation
@@ -23,7 +23,7 @@ import (
 func (ctr *RedisMq) RedisMqAdd(ctx *Context) {
 	var payload types.AmiInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -31,7 +31,7 @@ func (ctr *RedisMq) RedisMqAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.Producer(ctx, db, payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -55,7 +55,7 @@ func (ctr *RedisMq) RedisMqGet(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.Consumer(ctx, db, q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

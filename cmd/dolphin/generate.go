@@ -6,6 +6,7 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"html/template"
 	"io"
@@ -18,8 +19,8 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/modules"
 	"github.com/2637309949/dolphin/cmd/dolphin/parser"
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/go-errors/errors"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -122,11 +123,11 @@ func (gen *Gen) Build(cfg *parser.TmplCfg) error {
 	if _, err = os.Stat(genFilePath); !os.IsNotExist(err) {
 		if cfg.Overlap == parser.OverlapInc {
 			genFilePath = genFilePath + ".new"
-			logrus.Info(fmt.Sprintf("%s inc generate", genFilePath))
+			logrus.Info(context.TODO(), fmt.Sprintf("%s inc generate", genFilePath))
 		} else if cfg.Overlap == parser.OverlapWrite {
-			logrus.Warn(fmt.Sprintf("%s over generate", genFilePath))
+			logrus.Warn(context.TODO(), fmt.Sprintf("%s over generate", genFilePath))
 		} else if cfg.Overlap == parser.OverlapSkip {
-			logrus.Info(fmt.Sprintf("%s skip generate", genFilePath))
+			logrus.Info(context.TODO(), fmt.Sprintf("%s skip generate", genFilePath))
 			return nil
 		}
 	}

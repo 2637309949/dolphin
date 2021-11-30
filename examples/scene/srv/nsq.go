@@ -13,9 +13,9 @@ import (
 	"scene/svc"
 	"scene/types"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/nsqio/go-nsq"
-	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -48,7 +48,7 @@ func (h *messageHandler) HandleMessage(m *nsq.Message) error {
 		// Returning nil will automatically send a FIN command to NSQ to mark the message as processed.
 		return nil
 	}
-	logrus.Infoln("NSQL HandleMessage: ", string(m.Body))
+	logrus.Infoln(context.TODO(), "NSQL HandleMessage: ", string(m.Body))
 	// Returning a non-nil error will automatically send a REQ command to NSQ to re-queue the message.
 	m.Finish()
 	return nil
@@ -86,10 +86,10 @@ func (srv *Nsq) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (int
 	for range ticker.C {
 		select {
 		case <-cwt.Done():
-			logrus.Infoln("child process interrupt...")
+			logrus.Infoln(ctx, "child process interrupt...")
 			return <-chi, cwt.Err()
 		default:
-			logrus.Infoln("awaiting job...")
+			logrus.Infoln(ctx, "awaiting job...")
 		}
 	}
 	return nil, errors.New("no implementation found")
@@ -100,7 +100,7 @@ func NConsumer() (interface{}, error) {
 	defer func() {
 		if err := recover(); err != nil {
 			goErr := errors.Wrap(err.(error), 3)
-			logrus.Error(string(goErr.Stack()))
+			logrus.Error(context.TODO(), string(goErr.Stack()))
 		}
 	}()
 
@@ -118,11 +118,11 @@ func init() {
 	cfg.LookupdPollInterval = 10 * time.Second
 	NsqConsumer, err = nsq.NewConsumer("nsq-test", "test-channel", cfg)
 	if err != nil {
-		logrus.Errorf(err.Error())
+		logrus.Errorf(context.TODO(), err.Error())
 	}
 	NsqProducer, err = nsq.NewProducer(tcpNsqdAddrr, cfg)
 	if err != nil {
-		logrus.Errorf(err.Error())
+		logrus.Errorf(context.TODO(), err.Error())
 	}
 	go NConsumer()
 }

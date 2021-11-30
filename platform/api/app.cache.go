@@ -6,6 +6,7 @@ package api
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha1"
 	"encoding/gob"
 	"io"
@@ -15,8 +16,8 @@ import (
 	"time"
 
 	"github.com/2637309949/dolphin/packages/cache"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
 var PageCachePrefix = "dolphin.page.cache"
@@ -95,7 +96,7 @@ func (w *cachedWriter) Write(data []byte) (int, error) {
 			}
 			err = store.Set(w.key, val, w.expire)
 			if err != nil {
-				logrus.Errorln(err)
+				logrus.Errorln(context.TODO(), err)
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 package api
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 )
 
 // CachingInfo api implementation
@@ -22,7 +22,7 @@ func (ctr *Caching) CachingInfo(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

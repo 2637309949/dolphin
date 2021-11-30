@@ -9,13 +9,13 @@ import (
 	"path"
 	"path/filepath"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/encode"
 	"github.com/2637309949/dolphin/platform/util/errors"
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/google/uuid"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
@@ -34,7 +34,7 @@ import (
 func (ctr *SysAttachment) SysAttachmentAdd(ctx *Context) {
 	var payload types.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -47,7 +47,7 @@ func (ctr *SysAttachment) SysAttachmentAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -68,7 +68,7 @@ func (ctr *SysAttachment) SysAttachmentAdd(ctx *Context) {
 func (ctr *SysAttachment) SysAttachmentBatchAdd(ctx *Context) {
 	var payload []types.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -83,7 +83,7 @@ func (ctr *SysAttachment) SysAttachmentBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -144,7 +144,7 @@ func (ctr *SysAttachment) SysAttachmentUpload(ctx *Context) {
 
 	db := ctx.MustDB()
 	if _, err = db.Insert(attachments); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -195,7 +195,7 @@ func (ctr *SysAttachment) SysAttachmentExport(ctx *Context) {
 func (ctr *SysAttachment) SysAttachmentDel(ctx *Context) {
 	var payload types.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -207,7 +207,7 @@ func (ctr *SysAttachment) SysAttachmentDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -228,7 +228,7 @@ func (ctr *SysAttachment) SysAttachmentDel(ctx *Context) {
 func (ctr *SysAttachment) SysAttachmentBatchDel(ctx *Context) {
 	var payload []types.SysAttachment
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -241,7 +241,7 @@ func (ctr *SysAttachment) SysAttachmentBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -262,7 +262,7 @@ func (ctr *SysAttachment) SysAttachmentBatchDel(ctx *Context) {
 func (ctr *SysAttachment) SysAttachmentUpdate(ctx *Context) {
 	var payload types.SysRole
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -272,7 +272,7 @@ func (ctr *SysAttachment) SysAttachmentUpdate(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -296,7 +296,7 @@ func (ctr *SysAttachment) SysAttachmentBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -310,7 +310,7 @@ func (ctr *SysAttachment) SysAttachmentBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -318,13 +318,13 @@ func (ctr *SysAttachment) SysAttachmentBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -357,7 +357,7 @@ func (ctr *SysAttachment) SysAttachmentPage(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_attachment", "page", "sys_attachment", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -378,7 +378,7 @@ func (ctr *SysAttachment) SysAttachmentGet(ctx *Context) {
 	var entity types.SysAttachment
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -386,7 +386,7 @@ func (ctr *SysAttachment) SysAttachmentGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

@@ -5,6 +5,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
@@ -18,8 +19,8 @@ import (
 	"github.com/2637309949/dolphin/cmd/dolphin/utils"
 	"github.com/2637309949/dolphin/packages/web"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/shurcooL/vfsgen"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -107,14 +108,14 @@ func InitViper(cmd *cobra.Command, _ []string) {
 	viper.SetDefault("swag.scope.admin", "Grants read and write access to administrative information")
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
-		logrus.Warn("configuration file not found")
+		logrus.Warn(context.TODO(), "configuration file not found")
 	}
 	utils.ViperSetDefault("oauth.server", strings.TrimSpace(viper.GetString("oauth.server")), fmt.Sprintf("http://localhost:%v", viper.GetString("http.port")))
 	utils.ViperSetDefault("oauth.client", strings.TrimSpace(viper.GetString("oauth.client")), viper.GetString("http.port"))
 	utils.ViperSetDefault("app.host", strings.TrimSpace(viper.GetString("app.host")), fmt.Sprintf("localhost:%v", viper.GetString("http.port")))
 	if viper.GetBool("app.viper") {
 		if err := viper.WriteConfig(); err != nil {
-			logrus.Warn("failed to save configuration file")
+			logrus.Warn(context.TODO(), "failed to save configuration file")
 		}
 	}
 }
@@ -218,7 +219,7 @@ var (
 			if err != nil {
 				return err
 			}
-			logrus.Infof("new project success, cd to %v dir and run `dolphin build`", args[0])
+			logrus.Infof(context.TODO(), "new project success, cd to %v dir and run `dolphin build`", args[0])
 			return nil
 		},
 	}
@@ -264,6 +265,6 @@ func main() {
 	rootCmd.AddCommand(serve)
 	rootCmd.AddCommand(assert)
 	if err := rootCmd.Execute(); err != nil {
-		logrus.Fatal(err)
+		logrus.Fatal(context.TODO(), err)
 	}
 }

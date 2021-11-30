@@ -2,6 +2,7 @@ package svc
 
 import (
 	"container/list"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -9,13 +10,13 @@ import (
 	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/http/client"
 	"github.com/2637309949/dolphin/platform/util/maps"
 	"github.com/2637309949/dolphin/platform/util/slice"
 	"github.com/gin-contrib/cache/persistence"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -204,7 +205,7 @@ func (x *XDB) InRole(db *xorm.Engine, userId string, role ...string) bool {
 		where sys_role.code in (%v) and sys_role_user.user_id = ? and sys_role_user.is_delete != 1`,
 			strings.Join(funk.Map(role, func(id string) string { return fmt.Sprintf("'%v'", id) }).([]string), ",")),
 		userId).Get(&cnt); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return false
 	}
 	return cnt == len(role)
@@ -222,7 +223,7 @@ func (x *XDB) InAdmin(db *xorm.Engine, userId string, role ...string) bool {
 		where sys_role_user.user_id = ? and sys_role.code in (%v) and sys_role_user.is_delete != 1`,
 			strings.Join(funk.Map(role, func(id string) string { return fmt.Sprintf("'%v'", id) }).([]string), ",")),
 		userId).Get(&cnt); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return false
 	}
 	return cnt > 0

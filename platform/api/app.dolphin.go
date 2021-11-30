@@ -19,12 +19,12 @@ import (
 	"github.com/2637309949/dolphin/platform/sql"
 	"github.com/2637309949/dolphin/platform/svc"
 	"github.com/2637309949/dolphin/platform/types"
+	"github.com/2637309949/dolphin/platform/util/db"
 	"github.com/2637309949/dolphin/platform/util/file"
 	"github.com/2637309949/dolphin/platform/util/http/uri"
 	"github.com/2637309949/dolphin/platform/util/slice"
-	"github.com/2637309949/dolphin/platform/util/db"
 
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )
@@ -52,7 +52,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	models := dol.Manager.ModelSet().ByName(name)
 	for i := range models {
 		if IsDebugging() {
-			logrus.Infof("Sync Model[%v]:%v", name, models[i].TableName())
+			logrus.Infof(context.TODO(), "Sync Model[%v]:%v", name, models[i].TableName())
 		}
 		err = db.Sync2(models[i])
 		if err != nil {
@@ -76,7 +76,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 	for _, v := range []interface{}{tables, columns} {
 		chunk := slice.Chunk(v, 50)
 		switch ck := chunk.(type) {
-		case  [][]types.SysTable :
+		case [][]types.SysTable:
 			for i := range ck {
 				_, err = db.Insert(ck[i])
 				if err != nil {
@@ -96,7 +96,7 @@ func (dol *Dolphin) migration(name string, db *xorm.Engine) error {
 }
 
 // initSysData defined TODO
-func (dol *Dolphin) initSysData(s *xorm.Session, bean ...interface{InitSysData(*xorm.Session)error}) error {
+func (dol *Dolphin) initSysData(s *xorm.Session, bean ...interface{ InitSysData(*xorm.Session) error }) error {
 	for i := range bean {
 		err := bean[i].InitSysData(s)
 		if err != nil {
@@ -107,7 +107,7 @@ func (dol *Dolphin) initSysData(s *xorm.Session, bean ...interface{InitSysData(*
 }
 
 // truncateTable defined TODO
-func (dol *Dolphin) truncateTable(s *xorm.Session, bean ...interface{TruncateTable(*xorm.Session)error}) error {
+func (dol *Dolphin) truncateTable(s *xorm.Session, bean ...interface{ TruncateTable(*xorm.Session) error }) error {
 	for i := range bean {
 		err := bean[i].TruncateTable(s)
 		if err != nil {
@@ -137,7 +137,7 @@ func (dol *Dolphin) initDomain(domain types.SysDomain) error {
 
 // initBusinessDB defined TODO
 func (dol *Dolphin) initBusinessDB(domain types.SysDomain) error {
-	logrus.Infoln(domain.DriverName.String, domain.DataSource.String)
+	logrus.Infoln(context.TODO(), domain.DriverName.String, domain.DataSource.String)
 	xlogger := createXLogger()
 	uri, err := uri.Parse(domain.DataSource.String)
 	if err != nil {
@@ -147,7 +147,7 @@ func (dol *Dolphin) initBusinessDB(domain types.SysDomain) error {
 	if err != nil {
 		return err
 	}
-	engine, err :=  db.InitDB(domain.DriverName.String, domain.DataSource.String, db.LoggerOpt(xlogger), db.RegisterSQLOpt(), db.RegisterSQLMapOpt(sql.SQLTPL))
+	engine, err := db.InitDB(domain.DriverName.String, domain.DataSource.String, db.LoggerOpt(xlogger), db.RegisterSQLOpt(), db.RegisterSQLMapOpt(sql.SQLTPL))
 	if err != nil {
 		return err
 	}
@@ -169,7 +169,7 @@ func (dol *Dolphin) Initialize() error {
 	SyncSrv(svc.NewServiceContext(CacheStore))
 
 	xlogger := createXLogger()
-	logrus.Infoln(viper.GetString("db.driver"), viper.GetString("db.dataSource"))
+	logrus.Infoln(context.TODO(), viper.GetString("db.driver"), viper.GetString("db.dataSource"))
 	engine, err := db.InitDB(viper.GetString("db.driver"), viper.GetString("db.dataSource"), db.LoggerOpt(xlogger), db.RegisterSQLOpt(), db.RegisterSQLMapOpt(sql.SQLTPL))
 	if err != nil {
 		return err
@@ -181,10 +181,10 @@ func (dol *Dolphin) Initialize() error {
 		return err
 	}
 
-    domains := []types.SysDomain{}
+	domains := []types.SysDomain{}
 	err = dol.PlatformDB.Where("data_source <> '' and domain <> '' and app_name = ? and is_delete != 1", viper.GetString("app.name")).Find(&domains)
 	if err != nil {
-		return err 
+		return err
 	}
 
 	funk.ForEach(domains, func(d types.SysDomain) { dol.initBusinessDB(d) })
@@ -195,7 +195,7 @@ func (dol *Dolphin) Initialize() error {
 		defer s.Commit()
 		err = dol.migration(Name, dol.PlatformDB)
 		if err != nil {
-			return err 
+			return err
 		}
 		err = dol.initSysData(s, new(types.SysClient), new(types.SysUser))
 		if err != nil {
@@ -246,11 +246,11 @@ func (dol *Dolphin) Static(relativePath, root string) {
 // Run defined TODO
 func (dol *Dolphin) Run() error {
 	if err := dol.Initialize(); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	if err := dol.LifeCycle(context.Background()); err != nil {
-		logrus.Error(err)
+		logrus.Error(context.TODO(), err)
 		return err
 	}
 	return nil

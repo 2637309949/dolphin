@@ -12,10 +12,10 @@ import (
 	"time"
 
 	"github.com/go-errors/errors"
+	"github.com/sirupsen/logrus"
 
 	"github.com/spf13/cobra"
 
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/thoas/go-funk"
 )

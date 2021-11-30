@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/golang-jwt/jwt"
-	"github.com/sirupsen/logrus"
 )
 
 //  JWT defined TODO
@@ -93,7 +93,7 @@ func (p *JWTProvider) Verify(ctx *Context) (TokenInfo, bool) {
 	if bearer, ok := p.jwt.Bearer(ctx.Request()); ok {
 		tk, err := p.jwt.LoadAccessToken(bearer)
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			return nil, false
 		}
 		return p.parseJWTToken(tk), true

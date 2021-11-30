@@ -11,9 +11,9 @@ import (
 	"scene/svc"
 	"scene/types"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
 	"github.com/go-errors/errors"
-	"github.com/sirupsen/logrus"
 )
 
 // init kafka read task
@@ -53,10 +53,10 @@ func (srv *Kafka) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (i
 	for range ticker.C {
 		select {
 		case <-cwt.Done():
-			logrus.Infoln("child process interrupt...")
+			logrus.Infoln(ctx, "child process interrupt...")
 			return <-chi, cwt.Err()
 		default:
-			logrus.Infoln("awaiting job...")
+			logrus.Infoln(ctx, "awaiting job...")
 		}
 	}
 	return nil, errors.New("no implementation found")
@@ -78,9 +78,9 @@ func (srv *Kafka) ReadMessage(ctx context.Context) {
 		svc.NewXKafka().ReadMessage(ctx, "score-topic", func(data []byte) {
 			value := types.KafkaInfo{}
 			if err := json.Unmarshal(data, &value); err != nil {
-				logrus.Error("failed to unmarshal:", err)
+				logrus.Error(ctx, "failed to unmarshal:", err)
 			}
-			logrus.Infof("kafka#%v", value)
+			logrus.Infof(ctx, "kafka#%v", value)
 		}, 2)
 	}()
 }

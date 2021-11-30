@@ -4,10 +4,10 @@
 package api
 
 import (
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
 	"github.com/2637309949/dolphin/platform/util/errors"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -25,7 +25,7 @@ import (
 func (ctr *SysRoleMenu) SysRoleMenuAdd(ctx *Context) {
 	var payload types.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -38,7 +38,7 @@ func (ctr *SysRoleMenu) SysRoleMenuAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -59,7 +59,7 @@ func (ctr *SysRoleMenu) SysRoleMenuAdd(ctx *Context) {
 func (ctr *SysRoleMenu) SysRoleMenuBatchAdd(ctx *Context) {
 	var payload []*types.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -78,7 +78,7 @@ func (ctr *SysRoleMenu) SysRoleMenuBatchAdd(ctx *Context) {
 	}).([]*types.SysRoleMenu)
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -99,7 +99,7 @@ func (ctr *SysRoleMenu) SysRoleMenuBatchAdd(ctx *Context) {
 func (ctr *SysRoleMenu) SysRoleMenuDel(ctx *Context) {
 	var payload types.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -131,7 +131,7 @@ func (ctr *SysRoleMenu) SysRoleMenuDel(ctx *Context) {
 func (ctr *SysRoleMenu) SysRoleMenuBatchDel(ctx *Context) {
 	var payload []*types.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -144,7 +144,7 @@ func (ctr *SysRoleMenu) SysRoleMenuBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -165,7 +165,7 @@ func (ctr *SysRoleMenu) SysRoleMenuBatchDel(ctx *Context) {
 func (ctr *SysRoleMenu) SysRoleMenuUpdate(ctx *Context) {
 	var payload types.SysRoleMenu
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -175,7 +175,7 @@ func (ctr *SysRoleMenu) SysRoleMenuUpdate(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -199,7 +199,7 @@ func (ctr *SysRoleMenu) SysRoleMenuBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -214,7 +214,7 @@ func (ctr *SysRoleMenu) SysRoleMenuBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -222,13 +222,13 @@ func (ctr *SysRoleMenu) SysRoleMenuBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -261,7 +261,7 @@ func (ctr *SysRoleMenu) SysRoleMenuPage(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_role_menu", "page", "sys_role_menu", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -282,7 +282,7 @@ func (ctr *SysRoleMenu) SysRoleMenuGet(ctx *Context) {
 	var entity types.SysRoleMenu
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -290,7 +290,7 @@ func (ctr *SysRoleMenu) SysRoleMenuGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Get(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

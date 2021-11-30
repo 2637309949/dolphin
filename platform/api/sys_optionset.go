@@ -6,9 +6,9 @@ package api
 import (
 	"errors"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/types"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -26,7 +26,7 @@ import (
 func (ctr *SysOptionset) SysOptionsetAdd(ctx *Context) {
 	var payload types.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -39,7 +39,7 @@ func (ctr *SysOptionset) SysOptionsetAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -60,7 +60,7 @@ func (ctr *SysOptionset) SysOptionsetAdd(ctx *Context) {
 func (ctr *SysOptionset) SysOptionsetBatchAdd(ctx *Context) {
 	var payload []types.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -75,7 +75,7 @@ func (ctr *SysOptionset) SysOptionsetBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -96,7 +96,7 @@ func (ctr *SysOptionset) SysOptionsetBatchAdd(ctx *Context) {
 func (ctr *SysOptionset) SysOptionsetDel(ctx *Context) {
 	var payload types.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -108,7 +108,7 @@ func (ctr *SysOptionset) SysOptionsetDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -129,7 +129,7 @@ func (ctr *SysOptionset) SysOptionsetDel(ctx *Context) {
 func (ctr *SysOptionset) SysOptionsetBatchDel(ctx *Context) {
 	var payload []*types.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -142,7 +142,7 @@ func (ctr *SysOptionset) SysOptionsetBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -163,7 +163,7 @@ func (ctr *SysOptionset) SysOptionsetBatchDel(ctx *Context) {
 func (ctr *SysOptionset) SysOptionsetUpdate(ctx *Context) {
 	var payload types.SysOptionset
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -173,7 +173,7 @@ func (ctr *SysOptionset) SysOptionsetUpdate(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -197,7 +197,7 @@ func (ctr *SysOptionset) SysOptionsetBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -212,7 +212,7 @@ func (ctr *SysOptionset) SysOptionsetBatchUpdate(ctx *Context) {
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
 			s.Rollback()
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -220,13 +220,13 @@ func (ctr *SysOptionset) SysOptionsetBatchUpdate(ctx *Context) {
 	}
 	if err != nil {
 		s.Rollback()
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -261,7 +261,7 @@ func (ctr *SysOptionset) SysOptionsetPage(ctx *Context) {
 		ctr.Srv.Report.SetOptionsetsFormat(OptionsetsFormat(db))
 		ret, err := ctr.Srv.Report.PageExport(db, "sys_optionset", "page", "sys_optionset", q.Value())
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -270,7 +270,7 @@ func (ctr *SysOptionset) SysOptionsetPage(ctx *Context) {
 	}
 	ret, err := ctr.Srv.DB.PageSearch(db, "sys_optionset", "page", "sys_optionset", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -291,7 +291,7 @@ func (ctr *SysOptionset) SysOptionsetGet(ctx *Context) {
 	var entity types.SysOptionset
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Errorf("SysOptionsetGet#ShouldBindQuery#%v", err)
+		logrus.Errorf(ctx, "SysOptionsetGet#ShouldBindQuery#%v", err)
 		ctx.Fail(err)
 		return
 	}
@@ -299,7 +299,7 @@ func (ctr *SysOptionset) SysOptionsetGet(ctx *Context) {
 	db := ctx.MustDB()
 	ext, err := db.Get(&entity)
 	if err != nil {
-		logrus.Errorf("SysOptionsetGet#Get#%v", err)
+		logrus.Errorf(ctx, "SysOptionsetGet#Get#%v", err)
 		ctx.Fail(err)
 		return
 	}

@@ -7,9 +7,9 @@ import (
 	"scene/types"
 	"scene/util/errors"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/platform/api"
-	"github.com/sirupsen/logrus"
 	"github.com/thoas/go-funk"
 )
 
@@ -27,7 +27,7 @@ import (
 func (ctr *Article) ArticleAdd(ctx *Context) {
 	var payload types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -40,7 +40,7 @@ func (ctr *Article) ArticleAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -61,7 +61,7 @@ func (ctr *Article) ArticleAdd(ctx *Context) {
 func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 	var payload []types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -76,7 +76,7 @@ func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -97,7 +97,7 @@ func (ctr *Article) ArticleBatchAdd(ctx *Context) {
 func (ctr *Article) ArticleDel(ctx *Context) {
 	var payload types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -109,7 +109,7 @@ func (ctr *Article) ArticleDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -130,7 +130,7 @@ func (ctr *Article) ArticleDel(ctx *Context) {
 func (ctr *Article) ArticleBatchDel(ctx *Context) {
 	var payload []types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -143,7 +143,7 @@ func (ctr *Article) ArticleBatchDel(ctx *Context) {
 		IsDelete:   null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -164,7 +164,7 @@ func (ctr *Article) ArticleBatchDel(ctx *Context) {
 func (ctr *Article) ArticleUpdate(ctx *Context) {
 	var payload types.Article
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -174,7 +174,7 @@ func (ctr *Article) ArticleUpdate(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -198,7 +198,7 @@ func (ctr *Article) ArticleBatchUpdate(ctx *Context) {
 	var ret []int64
 	var r int64
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -214,7 +214,7 @@ func (ctr *Article) ArticleBatchUpdate(ctx *Context) {
 		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			s.Rollback()
 			ctx.Fail(err)
 			return
@@ -222,14 +222,14 @@ func (ctr *Article) ArticleBatchUpdate(ctx *Context) {
 		ret = append(ret, r)
 	}
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		s.Rollback()
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -265,7 +265,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 		ctr.Srv.Report.SetOptionsetsFormat(api.OptionsetsFormat(db))
 		ret, err := ctr.Srv.Report.PageExport(db, "article", "page", "article", q.Value())
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			ctx.Fail(err)
 			return
 		}
@@ -274,7 +274,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 	}
 	ret, err := ctr.Srv.DB.PageSearch(db, "article", "page", "article", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -295,14 +295,14 @@ func (ctr *Article) ArticleGet(ctx *Context) {
 	var entity types.Article
 	err := ctx.ShouldBindWith(&entity)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 
 	db := ctx.MustDB()
 	if ext, err := db.Get(&entity); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	} else if !ext {
@@ -326,7 +326,7 @@ func (ctr *Article) ArticleGet(ctx *Context) {
 func (ctr *Article) ArticlePayment(ctx *Context) {
 	var payload types.ArticleInfo
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -334,7 +334,7 @@ func (ctr *Article) ArticlePayment(ctx *Context) {
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}

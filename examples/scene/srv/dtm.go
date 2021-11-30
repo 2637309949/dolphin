@@ -11,9 +11,9 @@ import (
 	"scene/svc"
 	"scene/types"
 
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"github.com/2637309949/dolphin/packages/xormplus/xorm"
-	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/yedf/dtm/dtmcli"
 )
@@ -51,10 +51,10 @@ func (srv *Dtm) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (int
 	for range ticker.C {
 		select {
 		case <-cwt.Done():
-			logrus.Infoln("child process interrupt...")
+			logrus.Infoln(ctx, "child process interrupt...")
 			return <-chi, cwt.Err()
 		default:
-			logrus.Infoln("awaiting job...")
+			logrus.Infoln(ctx, "awaiting job...")
 		}
 	}
 	return nil, errors.New("no implementation found")
@@ -62,7 +62,7 @@ func (srv *Dtm) TODO(ctx context.Context, db *xorm.Engine, params struct{}) (int
 
 // Trans defined srv
 func (srv *Dtm) Trans(ctx context.Context, db *xorm.Engine, params struct{}) (interface{}, error) {
-	logrus.Printf("tcc transaction begin")
+	logrus.Infoln(ctx, "tcc transaction begin")
 	srvAddress := "http://localhost" + viper.GetString("http.port") + "/api/dtm"
 	gid := dtmcli.MustGenGid(viper.GetString("dtm.srv"))
 	err := dtmcli.TccGlobalTransaction(viper.GetString("dtm.srv"), gid, func(tcc *dtmcli.Tcc) (rerr error) {
@@ -74,7 +74,7 @@ func (srv *Dtm) Trans(ctx context.Context, db *xorm.Engine, params struct{}) (in
 		if rerr != nil {
 			return rerr
 		}
-		logrus.Printf("tcc returns: %s, %s", res1.String(), res2.String())
+		logrus.Printf(ctx, "tcc returns: %s, %s", res1.String(), res2.String())
 		return
 	})
 	return gid, err

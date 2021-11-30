@@ -10,7 +10,7 @@ import (
 
 	"github.com/gin-gonic/gin/binding"
 	"github.com/thoas/go-funk"
-	"github.com/sirupsen/logrus"
+	"github.com/2637309949/dolphin/packages/logrus"
 	"github.com/2637309949/dolphin/packages/null"
 	"{{.PackageName}}/util/errors"
 	"time"
@@ -62,7 +62,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.PageSearch(db, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -87,7 +87,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.DB.TreeSearch(db, "{{$.Controller.Name}}", "{{.Name}}", "{{.Table}}", q.Value())
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -126,7 +126,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	db := ctx.MustDB()
 	ret, err := db.Insert(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -135,7 +135,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	{{- $bp := index .Params 0}}
 	var payload {{$bp.Ref $bp.Type}}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -148,7 +148,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -161,7 +161,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		IsDelete:    null.IntFrom(1),
 	})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -176,7 +176,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	var r int64
 	{{- end}}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -192,7 +192,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		payload[i].Updater = null.IntFromStr(ctx.MustToken().GetUserID())
 		r, err = s.ID(payload[i].ID.Int64).Update(&payload[i])
 		if  err != nil {
-			logrus.Error(err)
+			logrus.Error(ctx, err)
 			s.Rollback()
 			ctx.Fail(err)
 			return
@@ -200,14 +200,14 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		ret = append(ret, r)
 	}
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		s.Rollback()
 		ctx.Fail(err)
 		return
 	}
 	err = s.Commit()
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -219,7 +219,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	db := ctx.MustDB()
 	ret, err := db.ID(payload.ID.Int64).Update(&payload)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -229,13 +229,13 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	var one {{$.Viper.GetString "dir.types" }}.{{.ToUpperCase .Table}}
 	err := ctx.ShouldBindWith(&one)
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
 
 	if ext, err := db.Get(&one); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	} else if !ext {
@@ -255,7 +255,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -268,7 +268,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	var payload struct{}
 	{{- end}}
 	if err := ctx.ShouldBindWith(&payload); err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
@@ -276,7 +276,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 	db := ctx.MustDB()
 	ret, err := ctr.Srv.TODO(ctx, db, struct{}{})
 	if err != nil {
-		logrus.Error(err)
+		logrus.Error(ctx, err)
 		ctx.Fail(err)
 		return
 	}
