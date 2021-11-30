@@ -1,6 +1,7 @@
 package gin
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -145,11 +146,18 @@ func (c *Context) JSON(code int, i interface{}) {
 
 // Success defined TODO
 func (c *Context) Success(data interface{}) {
-	c.Context.AbortWithStatusJSON(http.StatusOK, map[string]interface{}{
-		"request_id": c.TraceId(),
-		"code":       200,
-		"data":       data,
-	})
+	rspMap, rspStr := map[string]interface{}{}, ""
+	rspData, _ := json.Marshal(data)
+	if strings.HasPrefix(string(rspData), "{") {
+		rspStr = strings.Replace(string(rspData), "{", "{\"request_id\": \""+c.TraceId()+"\",", 1)
+		rspStr = strings.Replace(rspStr, "{", "{\"code\": 200,", 1)
+		json.Unmarshal([]byte(rspStr), &rspMap)
+	} else {
+		rspMap["code"] = 200
+		rspMap["request_id"] = c.TraceId()
+		rspMap["data"] = data
+	}
+	c.Context.AbortWithStatusJSON(http.StatusOK, rspMap)
 }
 
 // Fail defined TODO
