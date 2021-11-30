@@ -234,6 +234,7 @@ func (ctr *{{$.Controller.ToUpperCase $.Controller.Name}}) {{$.Controller.ToUppe
 		return
 	}
 
+	db := ctx.MustDB()
 	if ext, err := db.Get(&one); err != nil {
 		logrus.Error(ctx, err)
 		ctx.Fail(err)
