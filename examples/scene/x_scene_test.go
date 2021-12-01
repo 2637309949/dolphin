@@ -12,18 +12,16 @@ import (
 
 // XTestSysUserLogin defined TODO
 var XTestSysUserLogin, XTestSysUserLoginRequest = func(ctx *xtest.Context) {
-	ret := struct {
-		Code int `json:"code"`
-		Data struct {
-			AccessToken  string `json:"access_token"`
-			RefreshToken string `json:"refresh_token"`
-		} `json:"data"`
+	rsp := struct {
+		Code         int    `json:"code"`
+		AccessToken  string `json:"access_token"`
+		RefreshToken string `json:"refresh_token"`
 	}{}
-	err := ctx.Bind(&ret)
+	err := ctx.Bind(&rsp)
 	if err != nil {
 		ctx.Error(err)
 	}
-	x.SetToken(ret.Data.AccessToken)
+	x.SetToken(rsp.AccessToken)
 }, map[string]interface{}{"domain": "localhost", "name": "admin", "password": "admin"}
 
 // XTestArticleAdd, XTestArticleAddRequest defined TODO

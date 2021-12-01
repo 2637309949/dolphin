@@ -24,4 +24,4 @@ jobs:
       - run: go env -w GO111MODULE=on
       - run: go env -w GOPROXY=https://goproxy.cn,direct
       - run: go get -v -t -d ./... 
-      - run: go test -v ./platform -test.run TestSysAppFunPage
+      - run: go test -v -timeout 10m -run ^TestSysAppFunPage$ github.com/2637309949/dolphin/platform 

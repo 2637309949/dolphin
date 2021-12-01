@@ -272,6 +272,7 @@ func (ctr *Article) ArticlePage(ctx *Context) {
 		ctx.Success(ret)
 		return
 	}
+
 	ret, err := ctr.Srv.DB.PageSearch(db, "article", "page", "article", q.Value())
 	if err != nil {
 		logrus.Error(ctx, err)
