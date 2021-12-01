@@ -74,20 +74,19 @@ func WithIdentity() Option {
 	qrRedirectURL := viper.GetString("oauth.client") + path.Join(viper.GetString("http.prefix"), SysCasInstance.QrOauth2.RelativePath)
 	QrOA2Cfg = oauth2.Config{Scopes: []string{"admin"}, RedirectURL: qrRedirectURL}
 	return func(dol *Dolphin) {
-		manager := manage.NewDefaultManager()
-		manager.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
-		manager.MapTokenStorage(dol.Manager.GetTokenStore())
-		manager.MapAccessGenerate(generates.NewAccessGenerate())
-		manager.MapClientStorage(NewClientStore())
-		manager.SetValidateURIHandler(ValidateURIHandler)
+		mgr := manage.NewDefaultManager()
+		mgr.SetAuthorizeCodeTokenCfg(manage.DefaultAuthorizeCodeTokenCfg)
+		mgr.MapTokenStorage(dol.Manager.GetTokenStore())
+		mgr.MapAccessGenerate(generates.NewAccessGenerate())
+		mgr.MapClientStorage(NewClientStore())
+		mgr.SetValidateURIHandler(ValidateURIHandler)
 
-		dol.Identity = &Identity{}
-		dol.Identity.JWT = NewJWT(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))
-		dol.Identity.OAuth2 = server.NewServer(server.NewConfig(), manager)
-		dol.Identity.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
-		dol.Identity.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(context.TODO(), err); return })
-		dol.Identity.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(context.TODO(), re.Error) })
-
+		idt := Identity{JWT: NewJsonWebToken(viper.GetString("jwt.secret"), viper.GetInt64("jwt.expire"))}
+		idt.OAuth2 = server.NewServer(server.NewConfig(), mgr)
+		idt.OAuth2.SetUserAuthorizationHandler(UserAuthorizationHandler)
+		idt.OAuth2.SetInternalErrorHandler(func(err error) (re *errors.Response) { logrus.Error(context.TODO(), err); return })
+		idt.OAuth2.SetResponseErrorHandler(func(re *errors.Response) { logrus.Error(context.TODO(), re.Error) })
+		dol.Identity = &idt
 		providers := []Provider{&TokenProvider{}, &JWTProvider{}, &RSAProvider{}}
 		for _, p := range providers {
 			dol.Identity.RegisterProvider(p)

@@ -13,22 +13,22 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-//  JWT defined TODO
-type JWT struct {
+//  JsonWebToken defined TODO
+type JsonWebToken struct {
 	Secret string
 	Expire int64
 }
 
-// NewJWT defined TODO
-func NewJWT(secret string, expire int64) *JWT {
-	return &JWT{
+// NewJsonWebToken defined TODO
+func NewJsonWebToken(secret string, expire int64) *JsonWebToken {
+	return &JsonWebToken{
 		Secret: secret,
 		Expire: expire,
 	}
 }
 
 // Bearer defined TODO
-func (j *JWT) Bearer(req *http.Request) (string, bool) {
+func (j *JsonWebToken) Bearer(req *http.Request) (string, bool) {
 	prefix, auth := "Bearer ", req.Header.Get("Authorization")
 	if strings.HasPrefix(auth, prefix) {
 		return auth[len(prefix):], true
@@ -37,7 +37,7 @@ func (j *JWT) Bearer(req *http.Request) (string, bool) {
 }
 
 // LoadAccessToken defined TODO
-func (j *JWT) LoadAccessToken(tk string) (*jwt.MapClaims, error) {
+func (j *JsonWebToken) LoadAccessToken(tk string) (*jwt.MapClaims, error) {
 	jc := jwt.MapClaims{}
 	_, err := jwt.ParseWithClaims(tk, jc, func(token *jwt.Token) (interface{}, error) {
 		return []byte(j.Secret), nil
@@ -49,7 +49,7 @@ func (j *JWT) LoadAccessToken(tk string) (*jwt.MapClaims, error) {
 }
 
 // GenerateAccessToken defined TODO
-func (j *JWT) GenerateAccessToken(userId, domain string) (string, error) {
+func (j *JsonWebToken) GenerateAccessToken(userId, domain string) (string, error) {
 	payloads, now, claims := map[string]interface{}{
 		"userId": userId,
 		"domain": domain,
@@ -67,7 +67,7 @@ func (j *JWT) GenerateAccessToken(userId, domain string) (string, error) {
 var _ Provider = &TokenProvider{}
 
 type JWTProvider struct {
-	jwt *JWT
+	jwt *JsonWebToken
 }
 
 // GetName defined TODO

@@ -12,19 +12,19 @@ import (
 )
 
 // Provider deifned TODO
-type (
-	Provider interface {
-		GetName() string
-		Config(*Identity)
-		Verify(*Context) (TokenInfo, bool)
-		Ticket(userId, extra string, ctx *Context) (TokenInfo, error)
-	}
-	Identity struct {
-		JWT       *JWT
-		OAuth2    *server.Server
-		providers []Provider
-	}
-)
+type Provider interface {
+	GetName() string
+	Config(*Identity)
+	Verify(*Context) (TokenInfo, bool)
+	Ticket(userId, extra string, ctx *Context) (TokenInfo, error)
+}
+
+// Identity deifned TODO
+type Identity struct {
+	JWT       *JsonWebToken
+	OAuth2    *server.Server
+	providers []Provider
+}
 
 // RegisterProvider register auth provider
 func (i *Identity) RegisterProvider(provider Provider) {
