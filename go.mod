@@ -14,7 +14,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/ghodss/yaml v1.0.0
 	github.com/gin-contrib/cache v1.1.0
-	github.com/gin-gonic/gin v1.7.1
+	github.com/gin-gonic/gin v1.7.7
 	github.com/go-errors/errors v1.0.1
 	github.com/go-openapi/spec v0.20.3
 	github.com/go-redis/redis/v8 v8.8.0
