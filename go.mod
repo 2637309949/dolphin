@@ -66,7 +66,7 @@ require (
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/lestrrat-go/strftime v1.0.1 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/prometheus/client_golang v1.11.0
+	github.com/prometheus/client_golang v1.11.1
 	github.com/tealeg/xlsx v1.0.5 // indirect
 	github.com/tebeka/strftime v0.1.3 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
